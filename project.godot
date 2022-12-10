@@ -8,12 +8,29 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Node",
+"class": &"Inventory",
+"language": &"GDScript",
+"path": "res://addons/inventory-system/core/inventory.gd"
+}, {
+"base": "Object",
+"class": &"Slot",
+"language": &"GDScript",
+"path": "res://addons/inventory-system/core/slot.gd"
+}]
+_global_script_class_icons={
+"Inventory": "",
+"Slot": ""
+}
+
 [application]
 
 config/name="inventory-system"
+run/main_scene="res://addons/inventory-system/demos/fps/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/inventory_system/plugin.cfg")
+enabled=PackedStringArray("res://addons/inventory-system/plugin.cfg")

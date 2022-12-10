@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bj3vlxjayr7gf"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="1_qwn2b"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_1xgci")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("1_qwn2b")
+slots = [{
+"amount": 2,
+"capacity": 16,
+"id": 0
+}]
