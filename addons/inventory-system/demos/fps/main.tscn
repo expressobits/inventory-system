@@ -11,5 +11,7 @@ script = ExtResource("1_qwn2b")
 slots = [{
 "amount": 2,
 "capacity": 16,
-"id": 0
+"item": 0
 }]
+
+[connection signal="inventory_changed" from="Inventory" to="." method="_on_inventory_inventory_changed"]
