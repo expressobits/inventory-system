@@ -1,11 +1,8 @@
-extends Node
-class_name Inventory
+extends Inventory
 
 signal inventory_changed
 
-@export var fixed_size := false
 @export var slots = [{ "item" = 0, "amount" = 0, "capacity" = 16}]
-
 
 func add(item : int, amount := 1) -> int:
 	var amount_in_interact = amount

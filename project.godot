@@ -9,18 +9,12 @@
 config_version=5
 
 _global_script_classes=[{
-"base": "Node",
-"class": &"Inventory",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/core/inventory.gd"
-}, {
 "base": "Object",
 "class": &"Slot",
 "language": &"GDScript",
 "path": "res://addons/inventory-system/core/slot.gd"
 }]
 _global_script_class_icons={
-"Inventory": "",
 "Slot": ""
 }
 
