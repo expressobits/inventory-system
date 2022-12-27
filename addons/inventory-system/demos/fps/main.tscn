@@ -1,31 +1,29 @@
-[gd_scene load_steps=7 format=3 uid="uid://bj3vlxjayr7gf"]
+[gd_scene load_steps=10 format=3 uid="uid://bj3vlxjayr7gf"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="1_qwn2b"]
+[ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
+[ext_resource type="Item" uid="uid://engnewbn5imx" path="res://addons/inventory-system/demos/fps/items/metal.tres" id="3_0e08x"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_imdk7"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/inventory_ui.gd" id="3_l0ufg"]
 [ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/fps/textures/inventory-bg.png" id="3_v70sq"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="5_cm0hh"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
-texture = ExtResource("3_imdk7")
-region_rect = Rect2(0, 0, 16, 16)
+[ext_resource type="PackedScene" uid="uid://dxqpe4hqmjaxg" path="res://addons/inventory-system/demos/fps/ui/slot_ui.tscn" id="6_ce5kl"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_1xgci")
+item_wood = ExtResource("2_punj4")
+item_metal = ExtResource("3_0e08x")
 
 [node name="Inventory" type="Inventory" parent="."]
 script = ExtResource("1_qwn2b")
-slots = [{
-"amount": 2,
-"capacity": 16,
-"item": 0
-}]
+slots = []
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 0, 0)
 
-[node name="Control" type="Control" parent="CanvasLayer"]
+[node name="Inventory System UI" type="Control" parent="CanvasLayer"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -36,9 +34,9 @@ offset_bottom = -486.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/Control"]
+[node name="Inventory UI" type="Control" parent="CanvasLayer/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
 custom_minimum_size = Vector2(128, 128)
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -50,9 +48,12 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_l0ufg")
+inventory = NodePath("../../../Inventory")
+slot_ui_scene = ExtResource("6_ce5kl")
+slots_container = NodePath("Control/MarginContainer/UI Inventory")
 
-[node name="ColorRect" type="NinePatchRect" parent="CanvasLayer/Control/Control"]
-layout_mode = 1
+[node name="ColorRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Inventory UI"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -67,8 +68,8 @@ patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="Control" type="Control" parent="CanvasLayer/Control/Control"]
-layout_mode = 1
+[node name="Control" type="Control" parent="CanvasLayer/Inventory System UI/Inventory UI"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -79,8 +80,7 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Control/Control/Control"]
-layout_mode = 1
+[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -92,8 +92,7 @@ patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Control/Control"]
-layout_mode = 1
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -104,149 +103,19 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="UI Inventory" type="GridContainer" parent="CanvasLayer/Control/Control/Control/MarginContainer"]
-layout_mode = 2
+[node name="UI Inventory" type="GridContainer" parent="CanvasLayer/Inventory System UI/Inventory UI/Control/MarginContainer"]
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
 columns = 5
 
-[node name="Slot" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-tooltip_text = "UM SLOT"
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot2" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot3" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot4" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot5" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot6" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot7" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot8" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot9" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot10" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot11" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot12" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot13" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot14" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot15" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot16" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot17" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot18" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot19" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot20" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot21" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot22" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot23" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot24" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Slot25" type="Panel" parent="CanvasLayer/Control/Control/Control/MarginContainer/UI Inventory"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/Control/Control"]
-layout_mode = 0
+[node name="Label" type="Label" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
 offset_left = 1.25
 offset_top = -14.0
 offset_right = 104.25
 offset_bottom = 10.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
-text = "Inventory 4/16"
+text = "Inventory"
 
 [node name="SubViewport" type="SubViewport" parent="."]
 canvas_item_default_texture_filter = 0
-
-[connection signal="inventory_changed" from="Inventory" to="." method="_on_inventory_inventory_changed"]
