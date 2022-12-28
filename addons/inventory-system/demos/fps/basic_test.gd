@@ -21,6 +21,7 @@ func _process(delta):
 		
 	if Input.is_action_just_released("Has"):
 		print(inventory.has(item_metal))
+		$"CanvasLayer/Inventory System UI/Inventory UI"._update_slots()
 	if Input.is_action_just_released("GetAmountOf"):
 		print(inventory.get_amount_of(item_metal))
 

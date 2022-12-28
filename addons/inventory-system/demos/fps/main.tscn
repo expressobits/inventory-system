@@ -16,8 +16,9 @@ item_wood = ExtResource("2_punj4")
 item_metal = ExtResource("3_0e08x")
 
 [node name="Inventory" type="Inventory" parent="."]
+fixed_size = true
+slots = [null]
 script = ExtResource("1_qwn2b")
-slots = []
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(4, 4)
@@ -36,7 +37,7 @@ grow_vertical = 2
 
 [node name="Inventory UI" type="Control" parent="CanvasLayer/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
 custom_minimum_size = Vector2(128, 128)
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -54,6 +55,7 @@ slot_ui_scene = ExtResource("6_ce5kl")
 slots_container = NodePath("Control/MarginContainer/UI Inventory")
 
 [node name="ColorRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Inventory UI"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -69,7 +71,7 @@ patch_margin_right = 4
 patch_margin_bottom = 4
 
 [node name="Control" type="Control" parent="CanvasLayer/Inventory System UI/Inventory UI"]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -81,6 +83,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
+layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -93,6 +96,7 @@ patch_margin_right = 4
 patch_margin_bottom = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -104,11 +108,13 @@ theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
 [node name="UI Inventory" type="GridContainer" parent="CanvasLayer/Inventory System UI/Inventory UI/Control/MarginContainer"]
+layout_mode = 2
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
 columns = 5
 
 [node name="Label" type="Label" parent="CanvasLayer/Inventory System UI/Inventory UI/Control"]
+layout_mode = 0
 offset_left = 1.25
 offset_top = -14.0
 offset_right = 104.25
