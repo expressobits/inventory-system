@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bj3vlxjayr7gf"]
+[gd_scene load_steps=11 format=3 uid="uid://bj3vlxjayr7gf"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="1_qwn2b"]
@@ -10,14 +10,14 @@
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="PackedScene" uid="uid://dxqpe4hqmjaxg" path="res://addons/inventory-system/demos/fps/ui/slot_ui.tscn" id="6_ce5kl"]
 
+[sub_resource type="Curve3D" id="Curve3D_a4jk2"]
+
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_1xgci")
 item_wood = ExtResource("2_punj4")
 item_metal = ExtResource("3_0e08x")
 
 [node name="Inventory" type="Inventory" parent="."]
-fixed_size = true
-slots = [null]
 script = ExtResource("1_qwn2b")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -125,3 +125,6 @@ text = "Inventory"
 
 [node name="SubViewport" type="SubViewport" parent="."]
 canvas_item_default_texture_filter = 0
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_a4jk2")
