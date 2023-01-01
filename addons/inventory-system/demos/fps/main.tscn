@@ -18,7 +18,11 @@ item_wood = ExtResource("2_punj4")
 item_metal = ExtResource("3_0e08x")
 
 [node name="Inventory" type="Inventory" parent="."]
+create_slot_if_needed = true
+remove_slot_if_empty = true
 script = ExtResource("1_qwn2b")
+
+[node name="Camera2D" type="Camera2D" parent="Inventory"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 scale = Vector2(4, 4)
