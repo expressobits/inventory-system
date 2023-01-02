@@ -16,3 +16,4 @@ func update_info(slot : Dictionary):
 		amount_label.visible = slot.amount > 1
 	else:
 		amount_label.visible = false
+		

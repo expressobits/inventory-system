@@ -20,6 +20,7 @@ item_metal = ExtResource("3_0e08x")
 [node name="Inventory" type="Inventory" parent="."]
 create_slot_if_needed = true
 remove_slot_if_empty = true
+slots = [{}, {}]
 script = ExtResource("1_qwn2b")
 
 [node name="Camera2D" type="Camera2D" parent="Inventory"]
