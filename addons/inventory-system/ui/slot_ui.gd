@@ -9,14 +9,18 @@ var amount_label_path := NodePath("Amount")
 
 func update_info(slot : Dictionary):
 	if slot.has("item") and slot.item != null:
-		item_icon.texture = slot.item.icon
+		update_info_data(slot.item, slot.amount)
 	else:
 		item_icon.texture = null
-	if slot.has("amount") and slot.amount != null:
-		amount_label.text = str(slot.amount)
-		amount_label.visible = slot.amount > 1
-	else:
 		amount_label.visible = false
+
+func update_info_data(item : Item, amount := 1):
+	if item != null:
+		item_icon.texture = item.icon
+	else:
+		item_icon.texture = null
+	amount_label.text = str(amount)
+	amount_label.visible = amount > 1
 		
 func clear_info():
 		item_icon.texture = null

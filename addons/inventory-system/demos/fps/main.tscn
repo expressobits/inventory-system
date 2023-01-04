@@ -1,7 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dpx74uqgtro7e"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="1_qwn2b"]
 [ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
 [ext_resource type="Item" uid="uid://engnewbn5imx" path="res://addons/inventory-system/demos/fps/items/metal.tres" id="3_0e08x"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_imdk7"]
@@ -13,23 +12,18 @@
 [ext_resource type="PackedScene" uid="uid://dq1xhnfpa474w" path="res://addons/inventory-system/ui/inventory_ui.tscn" id="7_yftkd"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/drag_slot.gd" id="8_8m1ia"]
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
 item_wood = ExtResource("2_punj4")
 item_metal = ExtResource("3_0e08x")
 
-[node name="Player Inventory" type="Inventory" parent="."]
-create_slot_if_needed = true
-remove_slot_if_empty = true
-slots = [{}, {}]
-script = ExtResource("1_qwn2b")
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 0, 0)
 
-[node name="Inventory System UI" type="Control" parent="CanvasLayer"]
+[node name="Inventory System UI" type="Control" parent="UI"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -43,14 +37,14 @@ theme = ExtResource("5_yem3h")
 script = ExtResource("6_xslqw")
 inventory_ui = ExtResource("7_yftkd")
 
-[node name="DragSlotUI" parent="CanvasLayer/Inventory System UI" instance=ExtResource("8_g661m")]
+[node name="DragSlotUI" parent="UI/Inventory System UI" instance=ExtResource("8_g661m")]
 z_index = 1
 layout_mode = 0
 offset_right = 16.0
 offset_bottom = 16.0
 script = ExtResource("8_8m1ia")
 
-[node name="Player Inventory UI" type="Control" parent="CanvasLayer/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
+[node name="Player Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
 custom_minimum_size = Vector2(104, 96)
 layout_mode = 1
 anchors_preset = 8
@@ -69,7 +63,7 @@ inventory = NodePath("")
 slot_ui_scene = ExtResource("8_g661m")
 slots_container = NodePath("Control/MarginContainer/UI Inventory")
 
-[node name="ColorRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Player Inventory UI"]
+[node name="ColorRect" type="NinePatchRect" parent="UI/Inventory System UI/Player Inventory UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -82,7 +76,7 @@ patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="Control" type="Control" parent="CanvasLayer/Inventory System UI/Player Inventory UI"]
+[node name="Control" type="Control" parent="UI/Inventory System UI/Player Inventory UI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -94,7 +88,7 @@ offset_bottom = -5.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="CanvasLayer/Inventory System UI/Player Inventory UI/Control"]
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/Inventory System UI/Player Inventory UI/Control"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -107,7 +101,7 @@ patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Inventory System UI/Player Inventory UI/Control"]
+[node name="MarginContainer" type="MarginContainer" parent="UI/Inventory System UI/Player Inventory UI/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,13 +113,13 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="UI Inventory" type="GridContainer" parent="CanvasLayer/Inventory System UI/Player Inventory UI/Control/MarginContainer"]
+[node name="UI Inventory" type="GridContainer" parent="UI/Inventory System UI/Player Inventory UI/Control/MarginContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
 columns = 5
 
-[node name="Label" type="Label" parent="CanvasLayer/Inventory System UI/Player Inventory UI/Control"]
+[node name="Label" type="Label" parent="UI/Inventory System UI/Player Inventory UI/Control"]
 layout_mode = 0
 offset_left = 1.25
 offset_top = -14.0
@@ -134,3 +128,16 @@ offset_bottom = 10.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Inventory"
+
+[node name="InventoryHandler" type="Node" parent="."]
+script = ExtResource("13_2jsv8")
+inventory_path = NodePath("PlayerInventory")
+
+[node name="PlayerInventory" type="Inventory" parent="InventoryHandler"]
+create_slot_if_needed = false
+slots = [{}, {}, {}, {}, {}, {}, {}, {}]
+
+[node name="LootInventory" type="Inventory" parent="."]
+create_slot_if_needed = true
+remove_slot_if_empty = true
+slots = [{}, {}]

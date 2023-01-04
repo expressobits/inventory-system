@@ -8,8 +8,10 @@ class_name InventoryUI
 
 var slots : Array
 
-signal slot_point_down(slot_index : int, inventory : Inventory)
-signal slot_point_up(slot_index : int, inventory : Inventory)
+var drop_index := -1
+
+signal slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory)
+signal slot_point_up(event : InputEvent, slot_index : int, inventory : Inventory)
 
 func _ready():
 	if inventory != null:
@@ -51,7 +53,15 @@ func _on_slot_removed(index):
 	slots[index].queue_free()
 	slots.remove_at(index)
 	
+var dropping := false
+	
 func _on_gui_input(event : InputEvent, index : int):
+	if event is InputEventMouseMotion:
+		drop_index = index
+		if dropping:
+			dropping = false
+			emit_signal("slot_point_up", event, drop_index, inventory)
 	if event is InputEventMouseButton:
-		if event.button_index == 1 and event.pressed:
-			emit_signal("slot_point_down",index, inventory)
+		emit_signal("slot_point_down", event, index, inventory)
+		if !event.pressed:
+			dropping = true
