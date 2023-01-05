@@ -6,12 +6,19 @@ signal picked
 signal added(item : Item, amount : int)
 signal opened(inventory : Inventory)
 signal closed(inventory : Inventory)
+signal started_transaction(item : Item, amount : int)
+signal stopped_transaction
 
 @export_node_path(Inventory) var inventory_path := NodePath("Player Inventory")
 @onready var inventory = get_node(inventory_path)
 
 var opened_inventories : Array
-var temp_slot : Dictionary
+var transaction_slot := {
+	"item": null,
+	"amount": 0,
+	"inventory": null,
+	"last_slot_index": -1
+}
 
 # Example: Drop 3D item (For extending?)
 func drop(item : Item, amount := 1) -> bool:
@@ -114,3 +121,70 @@ func close_all_containers():
 	for i in range(opened_inventories.size() - 1, -1, -1):
 		var inv = opened_inventories[0]
 		close(inv)
+		
+# Temp Slot
+func add_to_transaction_slot(slot_index : int, inventory : Inventory, amount : int):
+	var slot = inventory.slots[slot_index];
+	var item = slot.item
+	var no_remove = inventory.remove_at(slot_index, item, amount)
+	amount = amount - no_remove
+	transaction_slot.item = item
+	transaction_slot.amount = amount
+	transaction_slot.last_slot_index = slot_index
+	transaction_slot.inventory = inventory
+	emit_signal("started_transaction", item, amount)
+
+# Cancel transaction operation (Drag and drop)
+func cancel_transaction_operation():
+	if not is_transaction_active():
+		return
+	var inventory = transaction_slot.inventory
+	var slot_index = transaction_slot.last_slot_index
+	var item = transaction_slot.item
+	var amount = transaction_slot.amount
+	var amount_no_add = inventory.add_at(slot_index, item, amount)
+	
+	# Drop amount no add
+	if amount_no_add:
+		drop(item, amount_no_add)
+	clear_transaction()
+	
+func clear_transaction():
+	transaction_slot.inventory = null
+	transaction_slot.last_slot_index = -1
+	transaction_slot.amount = 0
+	transaction_slot.item = null
+	emit_signal("stopped_transaction")
+	
+func finish_transaction_to(slot_index : int, inventory : Inventory):
+	if not is_transaction_active():
+		return
+	var slot = inventory.slots[slot_index]
+	var item = transaction_slot.item
+	if inventory.is_empty_slot(slot_index) or slot.item == item:
+		var amount_no_add = inventory.add_at(slot_index, item, transaction_slot.amount)
+		if amount_no_add > 0:
+			print(amount_no_add)
+			transaction_slot.amount = amount_no_add
+			cancel_transaction_operation()
+		else:
+			clear_transaction()
+	else:
+		# Different items in slot and other_slot
+		# Check if transaction_slot amount is equal of origin_slot amount
+		# TODO See in minecraft
+		var origin_slot = transaction_slot.inventory.slots[transaction_slot.last_slot_index]
+		if origin_slot.amount == 0:
+			inventory.slots[slot_index].item = transaction_slot.item
+			inventory.slots[slot_index].amount = transaction_slot.amount
+			transaction_slot.item = slot.item
+			transaction_slot.amount = slot.amount
+			inventory.emit_signal("updated_slot",slot_index)
+			transaction_slot.inventory.emit_signal("updated_slot",transaction_slot.last_slot_index)
+			cancel_transaction_operation()
+	if transaction_slot.amount == 0:
+		cancel_transaction_operation()
+	
+
+func is_transaction_active() -> bool:
+	return transaction_slot.item != null

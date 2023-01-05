@@ -27,7 +27,7 @@ func _ready():
 #	dropArea.gameObject.SetActive(false);
 #	hotBarUI.gameObject.SetActive(false);
 	player_inventory_ui.slot_point_down.connect(slot_point_down.bind());
-	player_inventory_ui.slot_point_up.connect(slot_point_up.bind());
+	drag_slot.inventory_handler = player_inventory_handler
 #	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
 #	lootContainer.OnPointerDownSlotUI += PointerDownSlotUI;
 	
@@ -35,6 +35,8 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	player_inventory_ui.set_inventory(handler.inventory)
 	player_inventory_handler.opened.connect(open_player_inventory)
 	player_inventory_handler.closed.connect(close_player_inventory)
+	player_inventory_handler.started_transaction.connect(_on_started_transaction)
+	player_inventory_handler.stopped_transaction.connect(_on_stopped_transaction)
 
 # Open Inventory of player	
 func open_player_inventory(inventory : Inventory):
@@ -47,24 +49,33 @@ func close_player_inventory(inventory : Inventory):
 
 
 func slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
-	if inventory.is_empty_slot(slot_index):
+	if event.button_index == 3:
 		return
-	var slot = inventory.slots[slot_index]
-	if not drag_slot.has_slot():
-		var amount = slot.amount
-		if event.button_index == 2:
-			amount = 1
-		if event.button_index == 3:
-			amount = slot.amount/2
-		drag_slot.update_drag_info(slot_index, inventory, amount, -event.position)
+	if player_inventory_handler.is_transaction_active():
+		player_inventory_handler.finish_transaction_to(slot_index, inventory)
+	else:
+		if inventory.is_empty_slot(slot_index):
+			return
+		var slot = inventory.slots[slot_index]
+		if not player_inventory_handler.is_transaction_active():
+			var amount = slot.amount
+			if event.button_index == 2:
+				amount = ceili(slot.amount/2.0)
+			drag_slot.offset = -event.position
+			player_inventory_handler.add_to_transaction_slot(slot_index, inventory, amount)	
 
-func slot_point_up(event : InputEvent, slot_index : int, inventory : Inventory):
-	print(slot_index)
-	if drag_slot.has_slot():
-		drop_slot(slot_index, inventory, drag_slot.amount)
-		
+
 func drop_slot(slot_index : int, inventory : Inventory, amount := 1):
 	swap_inventories(slot_index, inventory, amount)
+
+
+func _on_started_transaction(item : Item, amount : int):
+	drag_slot.update_data(item, amount)
+
+
+func _on_stopped_transaction():
+	drag_slot.clear_info()
+
 
 func swap_inventories(slot_index : int, inventory : Inventory, amount := 1):
 	if drag_slot.has_slot():

@@ -38,6 +38,7 @@ script = ExtResource("6_xslqw")
 inventory_ui = ExtResource("7_yftkd")
 
 [node name="DragSlotUI" parent="UI/Inventory System UI" instance=ExtResource("8_g661m")]
+modulate = Color(1, 1, 1, 0.686275)
 z_index = 1
 layout_mode = 0
 offset_right = 16.0
@@ -134,7 +135,6 @@ script = ExtResource("13_2jsv8")
 inventory_path = NodePath("PlayerInventory")
 
 [node name="PlayerInventory" type="Inventory" parent="InventoryHandler"]
-create_slot_if_needed = false
 slots = [{}, {}, {}, {}, {}, {}, {}, {}]
 
 [node name="LootInventory" type="Inventory" parent="."]
