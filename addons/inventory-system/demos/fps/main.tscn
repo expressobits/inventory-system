@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dpx74uqgtro7e"]
+[gd_scene load_steps=16 format=3 uid="uid://dpx74uqgtro7e"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://dq1xhnfpa474w" path="res://addons/inventory-system/ui/inventory_ui.tscn" id="7_yftkd"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/drag_slot.gd" id="8_8m1ia"]
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
+[ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
@@ -46,6 +47,14 @@ layout_mode = 0
 offset_right = 16.0
 offset_bottom = 16.0
 script = ExtResource("8_8m1ia")
+
+[node name="DropIcon" type="TextureRect" parent="UI/Inventory System UI/DragSlotUI"]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 28.0
+offset_bottom = 28.0
+texture = ExtResource("10_il8h0")
 
 [node name="DropArea" type="Control" parent="UI/Inventory System UI"]
 layout_mode = 1

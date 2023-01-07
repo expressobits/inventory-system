@@ -30,6 +30,8 @@ func _ready():
 	drop_area.gui_input.connect(drop_area_input.bind())
 
 func drop_area_input(event : InputEvent):
+	if event is InputEventMouseMotion:
+		drag_slot.enter_in_drop_area()
 	if event is InputEventMouseButton:
 		if event.pressed:
 			player_inventory_handler.drop_transaction()
