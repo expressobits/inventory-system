@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dpx74uqgtro7e"]
+[gd_scene load_steps=15 format=3 uid="uid://dpx74uqgtro7e"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
@@ -14,14 +14,16 @@
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
+
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
 item_wood = ExtResource("2_punj4")
 item_metal = ExtResource("3_0e08x")
 
 [node name="UI" type="CanvasLayer" parent="."]
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
 
 [node name="Inventory System UI" type="Control" parent="UI"]
 texture_filter = 1
@@ -46,17 +48,17 @@ offset_bottom = 16.0
 script = ExtResource("8_8m1ia")
 
 [node name="Player Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
-custom_minimum_size = Vector2(104, 96)
+custom_minimum_size = Vector2(220, 192)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -64.0
+offset_top = -51.0
+offset_right = 144.0
+offset_bottom = 141.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("7_wlbgp")
@@ -118,7 +120,7 @@ theme_override_constants/margin_bottom = 4
 layout_mode = 2
 theme_override_constants/h_separation = 2
 theme_override_constants/v_separation = 2
-columns = 5
+columns = 8
 
 [node name="Label" type="Label" parent="UI/Inventory System UI/Player Inventory UI/Control"]
 layout_mode = 0
@@ -126,18 +128,108 @@ offset_left = 1.25
 offset_top = -14.0
 offset_right = 104.25
 offset_bottom = 10.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Inventory"
+
+[node name="Loot Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
+custom_minimum_size = Vector2(220, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 186.0
+offset_top = -51.0
+offset_right = 406.0
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_wlbgp")
+inventory = NodePath("")
+slot_ui_scene = ExtResource("8_g661m")
+slots_container = NodePath("Control/MarginContainer/UI Inventory")
+
+[node name="ColorRect" type="NinePatchRect" parent="UI/Inventory System UI/Loot Inventory UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_imdk7")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="Control" type="Control" parent="UI/Inventory System UI/Loot Inventory UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 15.0
+offset_right = -4.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/Inventory System UI/Loot Inventory UI/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_v70sq")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Inventory System UI/Loot Inventory UI/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="UI Inventory" type="GridContainer" parent="UI/Inventory System UI/Loot Inventory UI/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 8
+
+[node name="Label" type="Label" parent="UI/Inventory System UI/Loot Inventory UI/Control"]
+layout_mode = 0
+offset_left = 1.25
+offset_top = -14.0
+offset_right = 104.25
+offset_bottom = 10.0
+theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "Loot"
 
 [node name="InventoryHandler" type="Node" parent="."]
 script = ExtResource("13_2jsv8")
 inventory_path = NodePath("PlayerInventory")
 
 [node name="PlayerInventory" type="Inventory" parent="InventoryHandler"]
-slots = [{}, {}, {}, {}, {}, {}, {}, {}]
+slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 [node name="LootInventory" type="Inventory" parent="."]
-create_slot_if_needed = true
-remove_slot_if_empty = true
-slots = [{}, {}]
+slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_ccrms")
+
+[node name="Inventory" type="Inventory" parent="."]

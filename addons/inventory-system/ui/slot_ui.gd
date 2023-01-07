@@ -17,8 +17,10 @@ func update_info(slot : Dictionary):
 func update_info_data(item : Item, amount := 1):
 	if item != null:
 		item_icon.texture = item.icon
+		tooltip_text = item.name
 	else:
 		item_icon.texture = null
+		tooltip_text = ""
 	amount_label.text = str(amount)
 	amount_label.visible = amount > 1
 		

@@ -7,19 +7,25 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
 texture = ExtResource("1_lw6iu")
-region_rect = Rect2(0, 0, 16, 16)
+region_rect = Rect2(0, 0, 24, 24)
 
 [node name="SlotUI" type="Panel"]
-custom_minimum_size = Vector2(16, 16)
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
 tooltip_text = "UM SLOT"
 theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 script = ExtResource("2_w8o8v")
 
 [node name="Item Icon" type="TextureRect" parent="."]
 texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_sa2s1")
@@ -28,7 +34,8 @@ texture = ExtResource("3_sa2s1")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -1.0
+offset_right = -2.0
+offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)

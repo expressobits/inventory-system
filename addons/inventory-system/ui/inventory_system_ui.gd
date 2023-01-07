@@ -17,6 +17,8 @@ func add_inventory_ui(inventory : Inventory):
 # Specific Inventories
 @export_node_path(InventoryUI) var player_inventory_ui_path := NodePath("Player Inventory UI") 
 @onready var player_inventory_ui : InventoryUI = get_node(player_inventory_ui_path)
+@export_node_path(InventoryUI) var loot_inventory_ui_path := NodePath("Loot Inventory UI") 
+@onready var loot_inventory_ui : InventoryUI = get_node(loot_inventory_ui_path)
 @onready var player_inventory_handler: InventoryHandler = get_node("../../InventoryHandler")
 @onready var loot_inventory: Inventory = get_node("../../LootInventory")
 
