@@ -1,55 +1,80 @@
 extends Control
 class_name InventorySystemUI
 
-@export var inventory_ui : PackedScene
 var ui_inventories : Array
 var selected_slot : SlotUI
 var drag_slot_path := NodePath("DragSlotUI")
+
+@export_node_path(InventoryUI) var player_inventory_ui_path := NodePath("Player Inventory UI") 
+@export_node_path(InventoryUI) var loot_inventory_ui_path := NodePath("Loot Inventory UI") 
+@export_node_path(Control) var drop_area_path := NodePath("DropArea")
 @onready var drag_slot : DragSlotUI = get_node(drag_slot_path)
+@export var inventory_ui : PackedScene
+
+@onready var player_inventory_ui : InventoryUI = get_node(player_inventory_ui_path)
+@onready var loot_inventory_ui : InventoryUI = get_node(loot_inventory_ui_path)
+@onready var player_inventory_handler: InventoryHandler = get_node("../../InventoryHandler")
+@onready var drop_area: Control = get_node(drop_area_path)
+
+
+func _ready():
+	player_inventory_ui.visible = false
+	loot_inventory_ui.visible = false
+	drag_slot.clear_info()
+	drop_area.visible = false
+#	hotBarUI.gameObject.SetActive(false);
+	player_inventory_ui.slot_point_down.connect(slot_point_down.bind());
+	drag_slot.inventory_handler = player_inventory_handler
+#	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
+	loot_inventory_ui.slot_point_down.connect(slot_point_down.bind());
+	drop_area.gui_input.connect(drop_area_input.bind())
+
+func drop_area_input(event : InputEvent):
+	if event is InputEventMouseButton:
+		if event.pressed:
+			player_inventory_handler.drop_transaction()
 
 func add_inventory_ui(inventory : Inventory):
 	var inv_ui = inventory_ui.instantiate()
 	add_child(inv_ui)
 	inv_ui.set_inventory(inventory)
 	ui_inventories.append(ui_inventories)
-	
-	
-# Specific Inventories
-@export_node_path(InventoryUI) var player_inventory_ui_path := NodePath("Player Inventory UI") 
-@onready var player_inventory_ui : InventoryUI = get_node(player_inventory_ui_path)
-@export_node_path(InventoryUI) var loot_inventory_ui_path := NodePath("Loot Inventory UI") 
-@onready var loot_inventory_ui : InventoryUI = get_node(loot_inventory_ui_path)
-@onready var player_inventory_handler: InventoryHandler = get_node("../../InventoryHandler")
-@onready var loot_inventory: Inventory = get_node("../../LootInventory")
 
 
-func _ready():
-	player_inventory_ui.visible = false
-	drag_slot.clear_info()
-#	dropArea.gameObject.SetActive(false);
-#	hotBarUI.gameObject.SetActive(false);
-	player_inventory_ui.slot_point_down.connect(slot_point_down.bind());
-	drag_slot.inventory_handler = player_inventory_handler
-#	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
-#	lootContainer.OnPointerDownSlotUI += PointerDownSlotUI;
-
-	
 func set_player_inventory_handler(handler : InventoryHandler):
 	player_inventory_ui.set_inventory(handler.inventory)
-	player_inventory_handler.opened.connect(open_player_inventory)
-	player_inventory_handler.closed.connect(close_player_inventory)
+	player_inventory_handler.opened.connect(_on_open_inventory)
+	player_inventory_handler.closed.connect(_on_close_inventory)
 	player_inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
+
+func _open_player_inventory():
+	player_inventory_ui.visible = true;
+#	hotbarContainer.gameObject.SetActive(true);
+	drop_area.visible = true
+#	ClearSelected();
+#	hotBarUI.gameObject.SetActive(false);
 
 
 # Open Inventory of player	
-func open_player_inventory(inventory : Inventory):
+func _on_open_inventory(inventory : Inventory):
+	if inventory != player_inventory_handler.inventory:
+		loot_inventory_ui.set_inventory(inventory)
+		loot_inventory_ui.visible = true
+	else:
+		_open_player_inventory()
+
+
+func _on_close_inventory(inventory : Inventory):
 	if inventory == player_inventory_handler.inventory:
-		player_inventory_ui.visible = true
+		close_player_inventory(inventory)
 
 
 func close_player_inventory(inventory : Inventory):
-	if inventory == player_inventory_handler.inventory:
-		player_inventory_ui.visible = false
+	player_inventory_ui.visible = false
+	loot_inventory_ui.visible = false
+#    hotbarContainer.gameObject.SetActive(false);
+	drop_area.visible = false
+#    hotBarUI.gameObject.SetActive(true);
 
 
 func slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):

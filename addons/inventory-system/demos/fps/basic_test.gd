@@ -33,8 +33,13 @@ func _process(delta):
 			player_inventory_handler.close_all_containers()
 		else:
 			player_inventory_handler.open_personal_inventory()
-	
-		
+			
+	if Input.is_action_just_released("Open Loot"):
+		if not player_inventory_handler.is_open($LootInventory):
+			player_inventory_handler.open($LootInventory)
+		if not player_inventory_handler.is_open_personal_inventory():
+			player_inventory_handler.open_personal_inventory()
+
 	if Input.is_action_just_released("Has"):
 		print(player_inventory_handler.inventory.contains(item_metal))
 		$"CanvasLayer/Inventory System UI/Inventory UI"._update_slots()

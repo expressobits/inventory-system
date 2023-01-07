@@ -123,6 +123,14 @@ func close(inventory : Inventory) -> bool:
 
 
 func is_open_personal_inventory() -> bool:
+	return is_open(inventory)
+
+
+func is_open_any_inventory() -> bool:
+	return opened_inventories.size() > 0
+	
+
+func is_open(inventory : Inventory) -> bool:
 	return opened_inventories.has(inventory)
 
 
@@ -169,3 +177,8 @@ func set_transaction_slot(item : Item, amount : int):
 
 func is_transaction_active() -> bool:
 	return transaction_slot.amount > 0
+	
+func drop_transaction():
+	if is_transaction_active():
+		drop(transaction_slot.item, transaction_slot.amount)
+	set_transaction_slot(null, 0)
