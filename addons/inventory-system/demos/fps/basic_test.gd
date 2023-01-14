@@ -21,7 +21,7 @@ func _process(delta):
 	if Input.is_action_just_released("Add item"):
 		player_inventory_handler.inventory.add_at(1,item_wood)
 	if Input.is_action_just_released("Remove item"):
-		player_inventory_handler.inventory.player_inventory_handler.remove(item_wood, 2)
+		player_inventory_handler.inventory.remove(item_wood, 2)
 		
 	if Input.is_action_just_released("Add item B"):
 		player_inventory_handler.inventory.add(item_metal)

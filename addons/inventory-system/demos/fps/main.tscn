@@ -26,6 +26,79 @@ item_metal = ExtResource("3_0e08x")
 scale = Vector2(2, 2)
 transform = Transform2D(2, 0, 0, 2, 0, 0)
 
+[node name="Labels" type="Control" parent="UI"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Labels"]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 16.0
+offset_right = 138.0
+offset_bottom = 56.0
+
+[node name="Label" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "Test Keys"
+
+[node name="Label7" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "E - Open Loot"
+
+[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "I - Open Inventory"
+
+[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "F1 - Add wood item"
+
+[node name="Label4" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "F2 - Remove 2 wood item"
+
+[node name="Label5" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "F3 - Add metal item"
+
+[node name="Label6" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "F3 - Remove 2 metal item"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/Labels"]
+layout_mode = 0
+offset_left = 256.0
+offset_top = 16.0
+offset_right = 393.0
+offset_bottom = 132.0
+
+[node name="Label" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "Mouse in Items"
+
+[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "Left Mouse - Get all itens from slot"
+
+[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "Right Mouse - Get half itens from slot"
+
 [node name="Inventory System UI" type="Control" parent="UI"]
 texture_filter = 1
 layout_mode = 3
@@ -49,7 +122,7 @@ offset_bottom = 16.0
 script = ExtResource("8_8m1ia")
 
 [node name="DropIcon" type="TextureRect" parent="UI/Inventory System UI/DragSlotUI"]
-layout_mode = 1
+layout_mode = 0
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 28.0
@@ -65,23 +138,24 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Player Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
-custom_minimum_size = Vector2(220, 192)
+custom_minimum_size = Vector2(220, 127)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -51.0
-offset_right = -36.0
-offset_bottom = 141.0
+anchor_bottom = 1.0
+offset_left = -238.0
+offset_top = -159.0
+offset_right = -18.0
+offset_bottom = -32.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 script = ExtResource("7_wlbgp")
 inventory = NodePath("")
 slot_ui_scene = ExtResource("8_g661m")
 slots_container = NodePath("Control/MarginContainer/UI Inventory")
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="NinePatchRect" parent="UI/Inventory System UI/Player Inventory UI"]
 layout_mode = 1
@@ -104,7 +178,7 @@ anchor_bottom = 1.0
 offset_left = 4.0
 offset_top = 15.0
 offset_right = -4.0
-offset_bottom = -5.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -150,19 +224,19 @@ theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Inventory"
 
 [node name="Loot Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("inventory", "slots_container")]
-custom_minimum_size = Vector2(220, 96)
+custom_minimum_size = Vector2(220, 73)
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -51.0
-offset_right = 188.0
-offset_bottom = 45.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -161.0
+offset_right = 238.0
+offset_bottom = -88.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 script = ExtResource("7_wlbgp")
 inventory = NodePath("")
 slot_ui_scene = ExtResource("8_g661m")
@@ -198,6 +272,7 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_v70sq")
@@ -207,10 +282,13 @@ patch_margin_right = 4
 patch_margin_bottom = 4
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Inventory System UI/Loot Inventory UI/Control"]
+clip_contents = true
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 2.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 4

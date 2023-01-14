@@ -19,7 +19,7 @@ script = ExtResource("2_w8o8v")
 [node name="Item Icon" type="TextureRect" parent="."]
 texture_filter = 1
 custom_minimum_size = Vector2(16, 16)
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
@@ -31,7 +31,7 @@ grow_vertical = 2
 texture = ExtResource("3_sa2s1")
 
 [node name="Amount" type="Label" parent="."]
-anchors_preset = 15
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -2.0
