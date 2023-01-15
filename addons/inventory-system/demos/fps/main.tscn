@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dpx74uqgtro7e"]
+[gd_scene load_steps=18 format=3 uid="uid://dpx74uqgtro7e"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/Player.gd" id="15_q7rtw"]
+[ext_resource type="PackedScene" uid="uid://qkl5mglva3d8" path="res://addons/inventory-system/demos/level.tscn" id="16_l51m0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
@@ -323,8 +325,15 @@ slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {},
 slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
 
 [node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("15_q7rtw")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_ccrms")
 
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396227, 0)
+
 [node name="Inventory" type="Inventory" parent="."]
+
+[node name="Level" parent="." instance=ExtResource("16_l51m0")]

@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://sedvavuhjcea"]
+
+[ext_resource type="Texture2D" uid="uid://dtghlpfd86a8c" path="res://addons/inventory-system/demos/fps/textures/rock2.png" id="1_2nqxu"]
+
+[resource]
+albedo_color = Color(0.341176, 0.690196, 0.458824, 1)
+albedo_texture = ExtResource("1_2nqxu")
+uv1_scale = Vector3(16, 16, 16)

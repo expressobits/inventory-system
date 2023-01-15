@@ -102,8 +102,8 @@ func swap_between_containers(inventory : Inventory, slot_index : int, other_inve
 func open(inventory : Inventory) -> bool:
 	if opened_inventories.has(inventory):
 		return false 
-	emit_signal("opened", inventory)
 	opened_inventories.append(inventory)
+	emit_signal("opened", inventory)
 	return true
 
 
