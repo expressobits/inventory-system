@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dpx74uqgtro7e"]
+[gd_scene load_steps=19 format=3 uid="uid://df5dpm5oq8r57"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_punj4"]
@@ -14,8 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/Player.gd" id="15_q7rtw"]
-[ext_resource type="PackedScene" uid="uid://qkl5mglva3d8" path="res://addons/inventory-system/demos/level.tscn" id="16_l51m0"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="14_ud307"]
+[ext_resource type="PackedScene" uid="uid://qkl5mglva3d8" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="17_0ifuj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
@@ -48,11 +49,6 @@ offset_bottom = 56.0
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Test Keys"
-
-[node name="Label7" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("5_cm0hh")
-text = "E - Open Loot"
 
 [node name="Label2" type="Label" parent="UI/Labels/VBoxContainer"]
 layout_mode = 2
@@ -100,6 +96,23 @@ text = "Left Mouse - Get all itens from slot"
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Right Mouse - Get half itens from slot"
+
+[node name="InteractMessage" type="Label" parent="UI/Labels"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -165.0
+offset_right = -224.0
+offset_bottom = -149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_cm0hh")
+text = "E - Open Loot"
+horizontal_alignment = 1
 
 [node name="Inventory System UI" type="Control" parent="UI"]
 texture_filter = 1
@@ -314,26 +327,32 @@ theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Loot"
 
-[node name="InventoryHandler" type="Node" parent="."]
-script = ExtResource("13_2jsv8")
-inventory_path = NodePath("PlayerInventory")
-
-[node name="PlayerInventory" type="Inventory" parent="InventoryHandler"]
-slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-
-[node name="LootInventory" type="Inventory" parent="."]
-slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
-
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-script = ExtResource("15_q7rtw")
+collision_mask = 3
+script = ExtResource("14_ud307")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 shape = SubResource("CapsuleShape3D_ccrms")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396227, 0)
+current = true
 
-[node name="Inventory" type="Inventory" parent="."]
+[node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D"]
+target_position = Vector3(0, 0, -1)
+collision_mask = 2
 
-[node name="Level" parent="." instance=ExtResource("16_l51m0")]
+[node name="InventoryHandler" type="Node" parent="Player"]
+script = ExtResource("13_2jsv8")
+inventory_path = NodePath("PlayerInventory")
+
+[node name="PlayerInventory" type="Inventory" parent="Player/InventoryHandler"]
+slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+
+[node name="Level" parent="." instance=ExtResource("16_46jkf")]
+
+[node name="Box Inventory" parent="Level" instance=ExtResource("17_0ifuj")]
+
+[node name="Box Inventory2" parent="Level" instance=ExtResource("17_0ifuj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26745, 0, -3.28112)

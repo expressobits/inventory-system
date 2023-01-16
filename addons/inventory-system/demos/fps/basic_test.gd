@@ -1,6 +1,6 @@
 extends Node3D
 
-var player_inventory_handler_path := NodePath("InventoryHandler")
+var player_inventory_handler_path := NodePath("Player/InventoryHandler")
 @onready var player_inventory_handler: InventoryHandler = get_node(player_inventory_handler_path)
 
 var inventory_system_ui_path := NodePath("UI/Inventory System UI")
@@ -40,18 +40,6 @@ func _process(delta):
 	if Input.is_action_just_released("Escape"):
 		if player_inventory_handler.is_open_personal_inventory():
 			player_inventory_handler.close_all_containers()
-			
-	if Input.is_action_just_released("Open Loot"):
-		if not player_inventory_handler.is_open($LootInventory):
-			player_inventory_handler.open($LootInventory)
-		if not player_inventory_handler.is_open_personal_inventory():
-			player_inventory_handler.open_personal_inventory()
-
-	if Input.is_action_just_released("Has"):
-		print(player_inventory_handler.inventory.contains(item_metal))
-		$"CanvasLayer/Inventory System UI/Inventory UI"._update_slots()
-	if Input.is_action_just_released("GetAmountOf"):
-		print(player_inventory_handler.inventory.get_amount_of(item_metal))
 
 
 func _on_empty():

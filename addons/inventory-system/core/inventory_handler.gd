@@ -153,7 +153,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 	set_transaction_slot(item, amount - amount_no_removed)
 
 
-func transaction_to(slot_index : int, inventory : Inventory):
+func transaction_to_at(slot_index : int, inventory : Inventory):
 	if not is_transaction_active():
 		return
 	var slot = inventory.slots[slot_index]
@@ -169,6 +169,14 @@ func transaction_to(slot_index : int, inventory : Inventory):
 		inventory.set_slot(slot_index, item, new_amount)
 
 
+func transaction_to(inventory : Inventory):
+	if not is_transaction_active():
+		return
+	var item = transaction_slot.item
+	var amount_no_add = inventory.add(item, transaction_slot.amount)
+	set_transaction_slot(transaction_slot.item, amount_no_add)
+
+
 func set_transaction_slot(item : Item, amount : int):
 	transaction_slot.item = item
 	transaction_slot.amount = amount
@@ -177,7 +185,8 @@ func set_transaction_slot(item : Item, amount : int):
 
 func is_transaction_active() -> bool:
 	return transaction_slot.amount > 0
-	
+
+
 func drop_transaction():
 	if is_transaction_active():
 		drop(transaction_slot.item, transaction_slot.amount)

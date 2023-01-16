@@ -13,7 +13,7 @@ var drag_slot_path := NodePath("DragSlotUI")
 
 @onready var player_inventory_ui : InventoryUI = get_node(player_inventory_ui_path)
 @onready var loot_inventory_ui : InventoryUI = get_node(loot_inventory_ui_path)
-@onready var player_inventory_handler: InventoryHandler = get_node("../../InventoryHandler")
+@onready var player_inventory_handler: InventoryHandler = get_node("../../Player/InventoryHandler")
 @onready var drop_area: Control = get_node(drop_area_path)
 
 
@@ -23,10 +23,12 @@ func _ready():
 	drag_slot.clear_info()
 	drop_area.visible = false
 #	hotBarUI.gameObject.SetActive(false);
-	player_inventory_ui.slot_point_down.connect(slot_point_down.bind());
+	player_inventory_ui.slot_point_down.connect(slot_point_down.bind())
+	player_inventory_ui.inventory_point_down.connect(inventory_point_down.bind())
 	drag_slot.inventory_handler = player_inventory_handler
 #	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
-	loot_inventory_ui.slot_point_down.connect(slot_point_down.bind());
+	loot_inventory_ui.slot_point_down.connect(slot_point_down.bind())
+	loot_inventory_ui.inventory_point_down.connect(inventory_point_down.bind())
 	drop_area.gui_input.connect(drop_area_input.bind())
 
 func drop_area_input(event : InputEvent):
@@ -83,7 +85,7 @@ func slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory
 	if event.button_index == 3:
 		return
 	if player_inventory_handler.is_transaction_active():
-		player_inventory_handler.transaction_to(slot_index, inventory)
+		player_inventory_handler.transaction_to_at(slot_index, inventory)
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return
@@ -93,6 +95,13 @@ func slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory
 			amount = ceili(slot.amount/2.0)
 		drag_slot.offset = -event.position
 		player_inventory_handler.to_transaction(slot_index, inventory, amount)	
+		
+
+func inventory_point_down(event : InputEvent, inventory : Inventory):
+	if event.button_index == 3:
+		return
+	if player_inventory_handler.is_transaction_active():
+		player_inventory_handler.transaction_to(inventory)
 
 
 func drop_slot(slot_index : int, inventory : Inventory, amount := 1):

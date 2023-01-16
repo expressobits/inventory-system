@@ -6,3 +6,4 @@
 albedo_color = Color(0.341176, 0.690196, 0.458824, 1)
 albedo_texture = ExtResource("1_2nqxu")
 uv1_scale = Vector3(16, 16, 16)
+texture_filter = 0
