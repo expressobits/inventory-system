@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://cfhuqf7bn5348"]
+
+[ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="1_lw6iu"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/slot_ui.gd" id="2_w8o8v"]
+[ext_resource type="Texture2D" uid="uid://cdt6ogkb6730n" path="res://addons/inventory-system/demos/fps/textures/wood-item.png" id="3_sa2s1"]
+[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="4_cn5pr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
+texture = ExtResource("1_lw6iu")
+region_rect = Rect2(0, 0, 24, 24)
+
+[node name="SlotUI" type="Panel"]
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
+tooltip_text = "UM SLOT"
+theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
+script = ExtResource("2_w8o8v")
+
+[node name="Item Icon" type="TextureRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_sa2s1")
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_cn5pr")
+text = "2"
+horizontal_alignment = 2
+vertical_alignment = 2
