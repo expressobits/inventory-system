@@ -348,7 +348,8 @@ script = ExtResource("13_2jsv8")
 inventory_path = NodePath("PlayerInventory")
 
 [node name="PlayerInventory" type="Inventory" parent="Player/InventoryHandler"]
-slots = [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+create_slot_if_needed = true
+remove_slot_if_empty = true
 
 [node name="Level" parent="." instance=ExtResource("16_46jkf")]
 

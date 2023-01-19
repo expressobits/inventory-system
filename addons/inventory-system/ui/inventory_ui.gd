@@ -64,7 +64,6 @@ func _on_slot_gui_input(event : InputEvent, slot_obj):
 	if event is InputEventMouseButton:
 		if event.pressed:	
 			var index = slots.find(slot_obj)
-			print(index)
 			if index < 0:
 				return 
 			emit_signal("slot_point_down", event, index, inventory)
@@ -72,5 +71,4 @@ func _on_slot_gui_input(event : InputEvent, slot_obj):
 func _on_inventory_gui_input(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			print("ok")
 			emit_signal("inventory_point_down", event, inventory)

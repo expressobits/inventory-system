@@ -41,6 +41,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
 
+
 func rotate_camera(mouse_axis : Vector2) -> void:
 	# Horizontal mouse look.
 	rot.y -= mouse_axis.x * mouse_sensitivity
@@ -49,7 +50,8 @@ func rotate_camera(mouse_axis : Vector2) -> void:
 	
 	rotation.y = rot.y
 	$Camera3D.rotation.x = rot.x
-	1
+
+
 func interact():
 	var raycast : RayCast3D = $Camera3D/RayCast3D
 	if raycast.is_colliding():
@@ -62,7 +64,8 @@ func interact():
 				open_inventory(inv)
 			return
 	$"../UI/Labels/InteractMessage".visible = false
-	
+
+
 func open_inventory(inventory : Inventory):
 	var player_inventory_handler : InventoryHandler = $InventoryHandler
 	if not player_inventory_handler.is_open(inventory):
