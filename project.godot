@@ -8,58 +8,16 @@
 
 config_version=5
 
-_global_script_classes=[{
-"base": "SlotUI",
-"class": &"DragSlotUI",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/ui/drag_slot.gd"
-}, {
-"base": "Resource",
-"class": &"InventoryDatabase",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/core/database.gd"
-}, {
-"base": "Node",
-"class": &"InventoryGD",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/core/inventory.gd"
-}, {
-"base": "Node",
-"class": &"InventoryHandler",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/core/inventory_handler.gd"
-}, {
-"base": "Control",
-"class": &"InventorySystemUI",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/ui/inventory_system_ui.gd"
-}, {
-"base": "Control",
-"class": &"InventoryUI",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/ui/inventory_ui.gd"
-}, {
-"base": "Control",
-"class": &"SlotUI",
-"language": &"GDScript",
-"path": "res://addons/inventory-system/ui/slot_ui.gd"
-}]
-_global_script_class_icons={
-"DragSlotUI": "",
-"InventoryDatabase": "",
-"InventoryGD": "",
-"InventoryHandler": "",
-"InventorySystemUI": "",
-"InventoryUI": "",
-"SlotUI": ""
-}
-
 [application]
 
 config/name="inventory-system"
 run/main_scene="res://addons/inventory-system/demos/fps/main.tscn"
 config/features=PackedStringArray("4.0", "Forward Plus")
 config/icon="res://icon.svg"
+
+[editor]
+
+export/convert_text_resources_to_binary=true
 
 [editor_plugins]
 
