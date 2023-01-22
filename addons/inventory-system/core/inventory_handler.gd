@@ -2,7 +2,7 @@ extends Node
 class_name InventoryHandler
 
 signal dropped
-signal picked
+signal picked(pickable_item : PickableItem)
 signal added(item : Item, amount : int)
 signal opened(inventory : Inventory)
 signal closed(inventory : Inventory)
@@ -47,15 +47,15 @@ func drop_from_inventory(inventory : Inventory, slot_index : int, amount := 1):
 
 
 # Pick a item_object to inventory
-#func pick_to_inventory(inventory : Inventory, item_object : ItemObject):
-#	if (!itemObject.IsPickable):
-#		return false;
-#		Item item = item_object.item;
-#		if add_to_inventory(container, item) == 0:
-#			OnPick?.Invoke(itemObject);
-#			Destroy(itemObject.gameObject);
-#			return true;
-#	return false;
+func pick_to_inventory(pickable_item : PickableItem, inventory := self.inventory):
+	if not pickable_item.is_pickable:
+		return false
+	var item := pickable_item.item
+	if add_to_inventory(inventory, item) == 0:
+#		emit_signal("picked", pickable_item)
+#		pickable_item.queue_free()
+		return true;
+	return false;
 
 #func pick(item_object : ItemObject):
 #	return pick_to_inventory(inventory, item_object)

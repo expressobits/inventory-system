@@ -11,6 +11,9 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var vertical_angle_limit := 90.0
 var rot := Vector3()
 
+@export_node_path(InventoryHandler) var inventory_handler_path = NodePath("/InventoryHandler")
+@onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -56,19 +59,31 @@ func interact():
 	var raycast : RayCast3D = $Camera3D/RayCast3D
 	if raycast.is_colliding():
 		var object = raycast.get_collider()
-		var inv = object.get_inventory()
-		if inv != null:
-			var player_inventory_handler : InventoryHandler = $InventoryHandler
-			$"../UI/Labels/InteractMessage".visible = !player_inventory_handler.is_open(inv)
-			if Input.is_action_just_pressed("Interact"):
-				open_inventory(inv)
+		var box := object as BoxInventory
+		if box != null:
+			var inv = object.get_inventory()
+			if inv != null:
+				$"../UI/Labels/InteractMessage".visible = !inventory_handler.is_open(inv)
+				$"../UI/Labels/InteractMessage".text = "E to Open Inventory"
+				if Input.is_action_just_pressed("Interact"):
+					open_inventory(inv)
+				return
+		var dropped_item := object as PickableItem
+		if dropped_item != null:
+			if dropped_item.is_pickable:
+				$"../UI/Labels/InteractMessage".visible = true
+				$"../UI/Labels/InteractMessage".text = "E to Pickup"
+				if Input.is_action_just_pressed("Interact"):
+					inventory_handler.pick_to_inventory(dropped_item)
 			return
 	$"../UI/Labels/InteractMessage".visible = false
 
 
 func open_inventory(inventory : Inventory):
-	var player_inventory_handler : InventoryHandler = $InventoryHandler
-	if not player_inventory_handler.is_open(inventory):
-		player_inventory_handler.open(inventory)
-	if not player_inventory_handler.is_open_personal_inventory():
-		player_inventory_handler.open_personal_inventory()
+	if not inventory_handler.is_open(inventory):
+		inventory_handler.open(inventory)
+	if not inventory_handler.is_open_personal_inventory():
+		inventory_handler.open_personal_inventory()
+		
+func pickup_item(item : PickableItem):
+	pass
