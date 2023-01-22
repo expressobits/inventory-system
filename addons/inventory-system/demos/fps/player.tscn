@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://3s6ivqcb3ni4"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_k1gqr"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_laatm"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_k1gqr")
+inventory_handler_path = NodePath("InventoryHandler")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ccrms")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396227, 0)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 16
+
+[node name="InventoryHandler" type="Node" parent="."]
+script = ExtResource("2_0npow")
+inventory_path = NodePath("PlayerInventory")
+database = ExtResource("3_laatm")
+
+[node name="PlayerInventory" type="Node" parent="InventoryHandler"]
+script = ExtResource("4_cio1o")
+create_slot_if_needed = true
+remove_slot_if_empty = true
