@@ -9,8 +9,8 @@ size = Vector3(1.25, 1.25, 1.25)
 
 [node name="Box Inventory" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.28112)
-collision_layer = 2
-collision_mask = 2
+collision_layer = 18
+collision_mask = 3
 script = ExtResource("1_f8i83")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

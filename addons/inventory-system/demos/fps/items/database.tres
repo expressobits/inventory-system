@@ -1,12 +1,19 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://d0trnaf0ks5vx"]
+[gd_resource type="Resource" load_steps=6 format=3]
 
-[ext_resource type="Item" uid="uid://cpyxkjpnf1qwv" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
+[ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/database.gd" id="1_mqjrc"]
-[ext_resource type="Item" uid="uid://engnewbn5imx" path="res://addons/inventory-system/demos/fps/items/metal.tres" id="2_yi83s"]
+[ext_resource type="PackedScene" uid="uid://gvvw2gshlni3" path="res://addons/inventory-system/demos/fps/pickable_items/wood.tscn" id="2_rae2b"]
+[ext_resource type="Resource" uid="uid://bki5aitnsalro" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_sa1ed"]
+[ext_resource type="PackedScene" uid="uid://cfjvbk3avagcb" path="res://addons/inventory-system/demos/fps/pickable_items/rock.tscn" id="4_00dl6"]
 
 [resource]
 script = ExtResource("1_mqjrc")
-items = {
-1: ExtResource("1_lhq5f"),
-2: ExtResource("2_yi83s")
-}
+items = [{
+"id": 1,
+"item": ExtResource("1_lhq5f"),
+"pickable_item": ExtResource("2_rae2b")
+}, {
+"id": 2,
+"item": ExtResource("3_sa1ed"),
+"pickable_item": ExtResource("4_00dl6")
+}]
