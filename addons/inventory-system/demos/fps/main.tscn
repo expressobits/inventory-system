@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://drbtylbyj1f0j"]
+[gd_scene load_steps=23 format=3 uid="uid://drbtylbyj1f0j"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
+[ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_imdk7"]
+[ext_resource type="Resource" uid="uid://bki5aitnsalro" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_l6rt8"]
 [ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/fps/textures/inventory-bg.png" id="3_v70sq"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="Theme" uid="uid://bo0xp3x8vk40w" path="res://addons/inventory-system/demos/fps/ui/inventory.tres" id="5_yem3h"]
@@ -13,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="14_ud307"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="14_yomkn"]
 [ext_resource type="PackedScene" uid="uid://qkl5mglva3d8" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="17_0ifuj"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/pickable_item.gd" id="18_vldfa"]
@@ -25,6 +28,8 @@ size = Vector3(0.5, 0.25, 0.5)
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
+item_wood = ExtResource("2_h5xaf")
+item_metal = ExtResource("3_l6rt8")
 
 [node name="UI" type="CanvasLayer" parent="."]
 scale = Vector2(2, 2)
@@ -153,7 +158,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Player Inventory UI" type="Control" parent="UI/Inventory System UI"]
+[node name="Player Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("slots_container")]
 custom_minimum_size = Vector2(220, 127)
 layout_mode = 1
 anchors_preset = 7
@@ -169,6 +174,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("7_wlbgp")
 slot_ui_scene = ExtResource("8_g661m")
+slots_container = NodePath("Control/MarginContainer/UI Inventory")
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="NinePatchRect" parent="UI/Inventory System UI/Player Inventory UI"]
@@ -237,7 +243,7 @@ theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Inventory"
 
-[node name="Loot Inventory UI" type="Control" parent="UI/Inventory System UI"]
+[node name="Loot Inventory UI" type="Control" parent="UI/Inventory System UI" node_paths=PackedStringArray("slots_container")]
 custom_minimum_size = Vector2(220, 73)
 layout_mode = 1
 anchors_preset = 7
@@ -253,6 +259,7 @@ grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("7_wlbgp")
 slot_ui_scene = ExtResource("8_g661m")
+slots_container = NodePath("Control/MarginContainer/UI Inventory")
 
 [node name="ColorRect" type="NinePatchRect" parent="UI/Inventory System UI/Loot Inventory UI"]
 layout_mode = 1
@@ -345,7 +352,8 @@ collision_mask = 3
 script = ExtResource("13_2jsv8")
 inventory_path = NodePath("PlayerInventory")
 
-[node name="PlayerInventory" type="Inventory" parent="Player/InventoryHandler"]
+[node name="PlayerInventory" type="Node" parent="Player/InventoryHandler"]
+script = ExtResource("14_yomkn")
 create_slot_if_needed = true
 remove_slot_if_empty = true
 
@@ -360,6 +368,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26745, 0, -3.28112)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99029, 0, 0)
 collision_layer = 3
 script = ExtResource("18_vldfa")
+item = ExtResource("2_h5xaf")
 
 [node name="resourceWood" parent="Wood Dropped Item" instance=ExtResource("19_kup1e")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

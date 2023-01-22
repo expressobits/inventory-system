@@ -1,8 +1,0 @@
-[gd_resource type="Item" load_steps=2 format=3 uid="uid://engnewbn5imx"]
-
-[ext_resource type="Texture2D" uid="uid://pmqvv5mlaxrg" path="res://addons/inventory-system/demos/fps/textures/metal-item.png" id="1_mhhh0"]
-
-[resource]
-max_stack = 8
-name = "Metal"
-icon = ExtResource("1_mhhh0")
