@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://dfo7e4s8uwiwi"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/core/pickable_item.gd" id="1_qx0iq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6n6kg"]
+size = Vector3(0.5, 0.25, 0.5)
+
+[node name="PickableItem" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 17
+can_sleep = false
+script = ExtResource("1_qx0iq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.116, 0)
+shape = SubResource("BoxShape3D_6n6kg")
+
+[node name="Visual" type="Node3D" parent="."]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://drbtylbyj1f0j"]
+[gd_scene load_steps=16 format=3 uid="uid://bkrmsonfn7a3s"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
@@ -13,18 +13,8 @@
 [ext_resource type="Script" path="res://addons/inventory-system/ui/drag_slot.gd" id="8_8m1ia"]
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="13_2jsv8"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="14_ud307"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="14_yomkn"]
-[ext_resource type="PackedScene" uid="uid://qkl5mglva3d8" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
-[ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="17_0ifuj"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/pickable_item.gd" id="18_vldfa"]
-[ext_resource type="PackedScene" uid="uid://dd4p8bydodqwr" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/resourceWood.glb" id="19_kup1e"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_aib2b"]
-size = Vector3(0.5, 0.25, 0.5)
+[ext_resource type="PackedScene" uid="uid://3s6ivqcb3ni4" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
@@ -331,48 +321,6 @@ theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
 theme_override_fonts/font = ExtResource("5_cm0hh")
 text = "Loot"
 
-[node name="Player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-collision_mask = 3
-script = ExtResource("14_ud307")
-inventory_handler_path = NodePath("InventoryHandler")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
-shape = SubResource("CapsuleShape3D_ccrms")
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396227, 0)
-current = true
-
-[node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D"]
-target_position = Vector3(0, 0, -2)
-collision_mask = 3
-
-[node name="InventoryHandler" type="Node" parent="Player"]
-script = ExtResource("13_2jsv8")
-inventory_path = NodePath("PlayerInventory")
-
-[node name="PlayerInventory" type="Node" parent="Player/InventoryHandler"]
-script = ExtResource("14_yomkn")
-create_slot_if_needed = true
-remove_slot_if_empty = true
+[node name="Player" parent="." instance=ExtResource("14_kqlku")]
 
 [node name="Level" parent="." instance=ExtResource("16_46jkf")]
-
-[node name="Box Inventory" parent="Level" instance=ExtResource("17_0ifuj")]
-
-[node name="Box Inventory2" parent="Level" instance=ExtResource("17_0ifuj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26745, 0, -3.28112)
-
-[node name="Wood Dropped Item" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.99029, 0, 0)
-collision_layer = 3
-script = ExtResource("18_vldfa")
-item = ExtResource("2_h5xaf")
-
-[node name="resourceWood" parent="Wood Dropped Item" instance=ExtResource("19_kup1e")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Wood Dropped Item"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.116, 0)
-shape = SubResource("BoxShape3D_aib2b")

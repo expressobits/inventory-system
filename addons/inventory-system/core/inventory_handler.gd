@@ -1,7 +1,7 @@
 extends Node
 class_name InventoryHandler
 
-signal dropped
+signal dropped(pickable_item : PickableItem)
 signal picked(pickable_item : PickableItem)
 signal added(item : Item, amount : int)
 signal opened(inventory : Inventory)
@@ -10,6 +10,10 @@ signal updated_transaction_slot(item : Item, amount : int)
 
 @export_node_path(Inventory) var inventory_path := NodePath("Player Inventory")
 @onready var inventory := get_node(inventory_path)
+@export_node_path var drop_parent_path := NodePath("../..")
+@onready var drop_parent := get_node(drop_parent_path)
+
+@export var database : InventoryDatabase
 
 var opened_inventories : Array
 var transaction_slot := {
@@ -20,6 +24,15 @@ var transaction_slot := {
 
 # Example: Drop 3D item (For extending?)
 func drop(item : Item, amount := 1) -> bool:
+	var item_id = database.get_id_from_item(item)
+	var pickable_item = database.get_pickable_item(item_id)
+	for i in amount:
+		var obj = pickable_item.instantiate()
+		var pick_item = obj as PickableItem
+		emit_signal("dropped", pick_item)
+		drop_parent.add_child(pick_item)
+		pick_item.position = get_parent().position
+		pick_item.rotation = get_parent().rotation
 	return true
 
 
@@ -50,15 +63,15 @@ func drop_from_inventory(inventory : Inventory, slot_index : int, amount := 1):
 func pick_to_inventory(pickable_item : PickableItem, inventory := self.inventory):
 	if not pickable_item.is_pickable:
 		return false
-	var item := pickable_item.item
+	var item = pickable_item.item
+	if item == null:
+		printerr("item in pickable_item is null!")
 	if add_to_inventory(inventory, item) == 0:
-#		emit_signal("picked", pickable_item)
-#		pickable_item.queue_free()
+		emit_signal("picked", pickable_item)
+		pickable_item.queue_free()
 		return true;
 	return false;
 
-#func pick(item_object : ItemObject):
-#	return pick_to_inventory(inventory, item_object)
 
 # Exchanges a quantity of an item between inventories.
 # First remove from the "from" inventory, then the successfully removed value is added to the "to" inventory,

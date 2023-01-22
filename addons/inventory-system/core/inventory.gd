@@ -119,7 +119,7 @@ func add_at(slot_index : int, item : Item, amount := 1) -> int:
 func remove(item : Item, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
-	for i in range(0, slots.size() - 1, -1):
+	for i in range(slots.size()-1, -1, -1):
 		var slot = slots[i]
 		amount_in_interact = remove_from_slot(i, item, amount_in_interact)
 		if remove_slot_if_empty and slot.amount == 0:

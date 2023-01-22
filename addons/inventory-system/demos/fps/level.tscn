@@ -1,6 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://qkl5mglva3d8"]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Material" uid="uid://sedvavuhjcea" path="res://addons/inventory-system/demos/fps/materials/level.tres" id="1_7nkpw"]
+[ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="2_abwbn"]
+[ext_resource type="PackedScene" uid="uid://gvvw2gshlni3" path="res://addons/inventory-system/demos/fps/pickable_items/wood.tscn" id="3_tic68"]
+[ext_resource type="PackedScene" uid="uid://cfjvbk3avagcb" path="res://addons/inventory-system/demos/fps/pickable_items/rock.tscn" id="4_hv5pj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4wr8p"]
 size = Vector3(10, 1, 10)
@@ -74,3 +77,32 @@ surface_material_override/0 = ExtResource("1_7nkpw")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.86167, 0)
 omni_range = 6.785
 omni_attenuation = 0.287176
+
+[node name="Box Inventory" parent="." instance=ExtResource("2_abwbn")]
+
+[node name="Box Inventory2" parent="." instance=ExtResource("2_abwbn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.26745, 0, -3.28112)
+
+[node name="Wood Dropped Item" parent="." instance=ExtResource("3_tic68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5755, 4.05171, 0)
+
+[node name="Wood Dropped Item2" parent="." instance=ExtResource("3_tic68")]
+transform = Transform3D(0.0835213, 0, -0.996506, 0, 1, 0, 0.996506, 0, 0.0835213, 3.22251, 4.05171, 0.347026)
+
+[node name="Wood Dropped Item3" parent="." instance=ExtResource("3_tic68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5755, 4.05171, -0.597461)
+
+[node name="Wood Dropped Item4" parent="." instance=ExtResource("3_tic68")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5755, 4.05171, 0.752135)
+
+[node name="Rock Dropped Item" parent="." instance=ExtResource("4_hv5pj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15752, -0.5, -2.09731)
+
+[node name="Rock Dropped Item2" parent="." instance=ExtResource("4_hv5pj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.14084, -0.5, -2.61318)
+
+[node name="Rock Dropped Item3" parent="." instance=ExtResource("4_hv5pj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.71857, -0.5, -0.976501)
+
+[node name="Rock Dropped Item4" parent="." instance=ExtResource("4_hv5pj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.19383, -0.5, -1.50729)

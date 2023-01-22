@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://gvvw2gshlni3"]
+
+[ext_resource type="PackedScene" uid="uid://dfo7e4s8uwiwi" path="res://addons/inventory-system/demos/fps/pickable_items/pickable_item.tscn" id="1_0i1lv"]
+[ext_resource type="PackedScene" uid="uid://dd4p8bydodqwr" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/resourceWood.glb" id="2_gq6sv"]
+[ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_k7ojq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jfsq4"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="PickableItem" instance=ExtResource("1_0i1lv")]
+item = ExtResource("2_k7ojq")
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_jfsq4")
+
+[node name="resourceWood" parent="Visual" index="0" instance=ExtResource("2_gq6sv")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
