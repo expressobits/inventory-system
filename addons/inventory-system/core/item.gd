@@ -1,3 +1,4 @@
+@icon("res://addons/inventory-system/icons/box-svgrepo-com.svg")
 extends Resource
 class_name Item
 
