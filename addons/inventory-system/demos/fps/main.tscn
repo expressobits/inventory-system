@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="PackedScene" uid="uid://3s6ivqcb3ni4" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" uid="uid://c0a1hmmkmbly" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
