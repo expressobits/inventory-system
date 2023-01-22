@@ -1,3 +1,4 @@
+@icon("res://addons/inventory-system/icons/bag-2-svgrepo-com.svg")
 extends Node
 class_name Inventory
 
@@ -11,7 +12,15 @@ signal updated_slot(slot_index : int)
 var slots : Array
 @export var create_slot_if_needed := false
 @export var remove_slot_if_empty := false
+@export var slot_amount := 16
 
+
+func _ready():
+	if create_slot_if_needed:
+		return
+	for i in slot_amount:
+		var slot = { "item": null, "amount":0 }
+		slots.append(slot)
 
 # Slots
 func set_slot(slot_index : int, item : Item, amount : int):
