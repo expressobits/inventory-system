@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bkrmsonfn7a3s"]
+[gd_scene load_steps=17 format=3 uid="uid://vncbq7qyqequ"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_imdk7"]
 [ext_resource type="Resource" uid="uid://bki5aitnsalro" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_l6rt8"]
 [ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/fps/textures/inventory-bg.png" id="3_v70sq"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/database.tres" id="4_fe8f5"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="Theme" uid="uid://bo0xp3x8vk40w" path="res://addons/inventory-system/demos/fps/ui/inventory.tres" id="5_yem3h"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_system_ui.gd" id="6_xslqw"]
@@ -13,13 +14,14 @@
 [ext_resource type="Script" path="res://addons/inventory-system/ui/drag_slot.gd" id="8_8m1ia"]
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
-[ext_resource type="PackedScene" uid="uid://3s6ivqcb3ni4" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://c0a1hmmkmbly" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
 item_wood = ExtResource("2_h5xaf")
 item_metal = ExtResource("3_l6rt8")
+database = ExtResource("4_fe8f5")
 
 [node name="UI" type="CanvasLayer" parent="."]
 scale = Vector2(2, 2)
