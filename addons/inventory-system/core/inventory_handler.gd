@@ -9,7 +9,7 @@ signal opened(inventory : Inventory)
 signal closed(inventory : Inventory)
 signal updated_transaction_slot(item : Item, amount : int)
 
-@export_node_path(Inventory) var inventory_path := NodePath("Player Inventory")
+@export_node_path("Inventory") var inventory_path := NodePath("Player Inventory")
 @onready var inventory := get_node(inventory_path)
 @export_node_path var drop_parent_path := NodePath("../..")
 @onready var drop_parent := get_node(drop_parent_path)

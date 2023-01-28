@@ -5,9 +5,9 @@ var ui_inventories : Array
 var selected_slot : SlotUI
 var drag_slot_path := NodePath("DragSlotUI")
 
-@export_node_path(InventoryUI) var player_inventory_ui_path := NodePath("Player Inventory UI") 
-@export_node_path(InventoryUI) var loot_inventory_ui_path := NodePath("Loot Inventory UI") 
-@export_node_path(Control) var drop_area_path := NodePath("DropArea")
+@export_node_path("InventoryUI") var player_inventory_ui_path := NodePath("Player Inventory UI") 
+@export_node_path("InventoryUI") var loot_inventory_ui_path := NodePath("Loot Inventory UI") 
+@export_node_path("Control") var drop_area_path := NodePath("DropArea")
 @onready var drag_slot : DragSlotUI = get_node(drag_slot_path)
 @export var inventory_ui : PackedScene
 

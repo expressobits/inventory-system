@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://c2uok8lwm1stl"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=6 format=3 uid="uid://c2uok8lwm1stl"]
 
 [ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/database.gd" id="1_mqjrc"]
