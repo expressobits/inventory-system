@@ -23,7 +23,7 @@ func clear_info():
 	super.clear_info()
 	$DropIcon.visible = false
 	
-func _input(delta):
+func _process(delta):
 	if inventory_handler != null and inventory_handler.is_transaction_active():
 		self.global_position = get_global_mouse_position() + offset
 		
