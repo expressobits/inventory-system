@@ -12,7 +12,7 @@ func _ready():
 func has_slot() -> bool:
 	return self.inventory != null and self.slot_index != -1
 	
-func update_data(item : Item, amount := 1):
+func update_data(item : InventoryItem, amount := 1):
 	update_info_data(item, amount)
 	visible = amount > 0
 	self.global_position = get_global_mouse_position() + offset

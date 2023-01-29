@@ -108,7 +108,7 @@ func drop_slot(slot_index : int, inventory : Inventory, amount := 1):
 	swap_inventories(slot_index, inventory, amount)
 
 
-func _updated_transaction_slot(item : Item, amount : int):
+func _updated_transaction_slot(item : InventoryItem, amount : int):
 	drag_slot.update_data(item, amount)
 
 

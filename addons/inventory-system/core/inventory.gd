@@ -56,7 +56,7 @@ func _ready():
 
 
 ## Define slot specific index information
-func set_slot(slot_index : int, item : Item, amount : int):
+func set_slot(slot_index : int, item : InventoryItem, amount : int):
 	if slot_index >= slots.size():
 		return
 	var old_amount = get_amount()
@@ -92,7 +92,7 @@ func is_full() -> bool:
 
 
 ## Returns true if the inventory contains the quantity of the specified item
-func contains(item : Item, amount := 1) -> bool:
+func contains(item : InventoryItem, amount := 1) -> bool:
 	var amount_in_inventory = 0
 	for slot in slots:
 		if slot.item == item:
@@ -103,7 +103,7 @@ func contains(item : Item, amount := 1) -> bool:
 
 
 ## Returns amount of the specified item in inventory
-func get_amount_of(item : Item) -> int:
+func get_amount_of(item : InventoryItem) -> int:
 	var amount_in_inventory = 0;
 	for slot in slots:
 		if slot.item == item:
@@ -121,7 +121,7 @@ func get_amount() -> int:
 
 ## Adds a amount of the item to the inventory and 
 ## returns the amount that was left and not added
-func add(item : Item, amount : int) -> int:
+func add(item : InventoryItem, amount : int) -> int:
 	var amount_in_interact = amount;
 	var old_amount = get_amount()
 	for i in range(slots.size()):
@@ -137,7 +137,7 @@ func add(item : Item, amount : int) -> int:
 
 ## Adds a amount of the item to the specified inventory slot index
 ## and returns the amount left over that was not added
-func add_at(slot_index : int, item : Item, amount := 1) -> int:
+func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	if slot_index < slots.size():
@@ -148,7 +148,7 @@ func add_at(slot_index : int, item : Item, amount := 1) -> int:
 
 ## Removes a amount of the item from inventory and 
 ## returns the amount that was not removed
-func remove(item : Item, amount := 1) -> int:
+func remove(item : InventoryItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	for i in range(slots.size()-1, -1, -1):
@@ -163,7 +163,7 @@ func remove(item : Item, amount := 1) -> int:
 
 ## Removes an item quantity to the specified inventory slot index
 ## and returns the remaining value that was not removed
-func remove_at(slot_index : int, item : Item, amount := 1) -> int:
+func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	if slot_index < slots.size():
@@ -186,7 +186,7 @@ func _call_events(old_amount : int):
 			emit_signal("filled")
 
 
-func _add_to_slot(slot_index : int, item : Item, amount := 1) -> int:
+func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var slot = slots[slot_index]
 	var item_slot = slot.item
 	if amount <= 0 or ( item_slot != item and item_slot != null):
@@ -199,7 +199,7 @@ func _add_to_slot(slot_index : int, item : Item, amount := 1) -> int:
 	return amount - amount_to_add;
 
 
-func _remove_from_slot(slot_index : int, item : Item, amount := 1) -> int:
+func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var slot = slots[slot_index]
 	var item_slot = slot.item
 	if amount <= 0 or (item_slot != item && item_slot != null):

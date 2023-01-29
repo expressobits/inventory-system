@@ -14,7 +14,7 @@ func update_info(slot : Dictionary):
 		item_icon.texture = null
 		amount_label.visible = false
 
-func update_info_data(item : Item, amount := 1):
+func update_info_data(item : InventoryItem, amount := 1):
 	if item != null:
 		item_icon.texture = item.icon
 		tooltip_text = item.name

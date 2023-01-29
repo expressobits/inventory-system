@@ -1,7 +1,7 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bki5aitnsalro"]
+[gd_resource type="Resource" load_steps=3 format=3]
 
 [ext_resource type="Texture2D" uid="uid://pmqvv5mlaxrg" path="res://addons/inventory-system/demos/fps/textures/metal-item.png" id="1_risfp"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/item.gd" id="2_k6uof"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_k6uof"]
 
 [resource]
 script = ExtResource("2_k6uof")

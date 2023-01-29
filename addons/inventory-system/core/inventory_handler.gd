@@ -4,10 +4,10 @@ class_name InventoryHandler
 
 signal dropped(pickable_item : PickableItem)
 signal picked(pickable_item : PickableItem)
-signal added(item : Item, amount : int)
+signal added(item : InventoryItem, amount : int)
 signal opened(inventory : Inventory)
 signal closed(inventory : Inventory)
-signal updated_transaction_slot(item : Item, amount : int)
+signal updated_transaction_slot(item : InventoryItem, amount : int)
 
 @export_node_path("Inventory") var inventory_path := NodePath("Player Inventory")
 @onready var inventory := get_node(inventory_path)
@@ -24,7 +24,7 @@ var transaction_slot := {
 
 
 # Example: Drop 3D item (For extending?)
-func drop(item : Item, amount := 1) -> bool:
+func drop(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
 	var pickable_item = database.get_pickable_item(item_id)
 	for i in amount:
@@ -38,7 +38,7 @@ func drop(item : Item, amount := 1) -> bool:
 
 
 # Add an amount of an item to a inventory, if this addition fails and the drop_excess is true then a drop of the unadded items occurs
-func add_to_inventory(inventory : Inventory, item : Item, amount := 1, drop_excess := false) -> int:
+func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, drop_excess := false) -> int:
 	var value_no_added = inventory.add(item, amount)
 	emit_signal("added", item, amount - value_no_added)
 	if (drop_excess):
@@ -191,7 +191,7 @@ func transaction_to(inventory : Inventory):
 	set_transaction_slot(transaction_slot.item, amount_no_add)
 
 
-func set_transaction_slot(item : Item, amount : int):
+func set_transaction_slot(item : InventoryItem, amount : int):
 	transaction_slot.item = item
 	transaction_slot.amount = amount
 	emit_signal("updated_transaction_slot", item, amount)

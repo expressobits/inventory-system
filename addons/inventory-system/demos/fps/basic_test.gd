@@ -6,8 +6,8 @@ var player_inventory_handler_path := NodePath("Player/InventoryHandler")
 var inventory_system_ui_path := NodePath("UI/Inventory System UI")
 @onready var inventory_system_ui: Control = get_node(inventory_system_ui_path)
 
-@export var item_wood : Item
-@export var item_metal : Item
+@export var item_wood : InventoryItem
+@export var item_metal : InventoryItem
 @export var database : InventoryDatabase
 
 func _ready():

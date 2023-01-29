@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dfo7e4s8uwiwi" path="res://addons/inventory-system/demos/fps/pickable_items/pickable_item.tscn" id="1_gp70d"]
 [ext_resource type="PackedScene" uid="uid://ck5n7wn1s1f7a" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/rockA.glb" id="2_0d1xb"]
-[ext_resource type="Resource" uid="uid://bki5aitnsalro" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="2_3sxoq"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="2_3sxoq"]
 
 [node name="PickableItem" instance=ExtResource("1_gp70d")]
 item = ExtResource("2_3sxoq")

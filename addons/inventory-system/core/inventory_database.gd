@@ -1,6 +1,7 @@
 extends Resource
 class_name InventoryDatabase
 
+## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
 @export var items : Array
 
 
@@ -20,7 +21,7 @@ class_name InventoryDatabase
 #}
 
 
-func get_id_from_item(item : Item) -> int:
+func get_id_from_item(item : InventoryItem) -> int:
 	for item_data in items:
 		if item_data.item == item:
 			return item_data.id
@@ -36,7 +37,7 @@ func get_id_from_pickable_item(pickable_item : PickableItem) -> int:
 	return -1
 
 
-func get_item(id : int) -> Item:
+func get_item(id : int) -> InventoryItem:
 	for item_data in items:
 		if item_data.id == id:
 			return item_data.item

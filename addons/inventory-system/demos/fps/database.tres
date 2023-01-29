@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=6 format=3]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=6 format=3 uid="uid://b2hp3ecf6jmdp"]
 
-[ext_resource type="Resource" uid="uid://d4aouoob6u8w2" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="1_mqjrc"]
 [ext_resource type="PackedScene" uid="uid://gvvw2gshlni3" path="res://addons/inventory-system/demos/fps/pickable_items/wood.tscn" id="2_rae2b"]
-[ext_resource type="Resource" uid="uid://bki5aitnsalro" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_sa1ed"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_sa1ed"]
 [ext_resource type="PackedScene" uid="uid://cfjvbk3avagcb" path="res://addons/inventory-system/demos/fps/pickable_items/rock.tscn" id="4_00dl6"]
 
 [resource]
@@ -17,4 +17,3 @@ items = [{
 "item": ExtResource("3_sa1ed"),
 "pickable_item": ExtResource("4_00dl6")
 }]
-path_test = "res://addons/inventory-system/demos/fps/items/"
