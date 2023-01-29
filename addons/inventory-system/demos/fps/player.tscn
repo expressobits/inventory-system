@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://3s6ivqcb3ni4"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_k1gqr"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
-[ext_resource type="Resource" uid="uid://c2uok8lwm1stl" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_laatm"]
+[ext_resource type="Resource" uid="uid://c2uok8lwm1stl" path="res://addons/inventory-system/demos/fps/database.tres" id="3_laatm"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]

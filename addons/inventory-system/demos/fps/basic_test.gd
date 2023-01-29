@@ -8,6 +8,7 @@ var inventory_system_ui_path := NodePath("UI/Inventory System UI")
 
 @export var item_wood : Item
 @export var item_metal : Item
+@export var database : InventoryDatabase
 
 func _ready():
 	inventory_system_ui.set_player_inventory_handler(player_inventory_handler)

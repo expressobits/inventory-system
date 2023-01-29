@@ -3,8 +3,15 @@ class_name InventoryDatabase
 
 @export var items : Array
 
-# TODO Create loading pickables items and items with folder
 
+# TODO Create loading pickables items and items with folder
+# @export var path_test := "res://addons/inventory-system/demos/fps/items/"
+#func load_items():
+#	for item_list in item_list_test:
+#		var obj = load(str(path_test, item_list.name, ".tres"))
+#		var item = obj as Item
+#		items.append(items)
+		
 #var item_data_example = {
 #	"item" : resource,
 #	"id" : 0,
