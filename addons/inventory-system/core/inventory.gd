@@ -64,6 +64,7 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 	emit_signal("updated_slot", slot_index)
 	_call_events(old_amount)
 
+
 ## Define slot specific index information
 func set_slot_with_other_slot(slot_index : int, other_slot : Dictionary):
 	if slot_index >= slots.size():

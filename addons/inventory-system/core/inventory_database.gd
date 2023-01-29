@@ -1,6 +1,8 @@
 extends Resource
 class_name InventoryDatabase
 
+## Database of items and their id information and [PickableItem]
+
 ## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
 @export var items : Array
 
@@ -21,6 +23,7 @@ class_name InventoryDatabase
 #}
 
 
+## Returns the id of [InventoryItem], return -1 if not found.
 func get_id_from_item(item : InventoryItem) -> int:
 	for item_data in items:
 		if item_data.item == item:
@@ -29,6 +32,7 @@ func get_id_from_item(item : InventoryItem) -> int:
 	return -1
 
 
+## Returns the id of [PickableItem], return -1 if not found
 func get_id_from_pickable_item(pickable_item : PickableItem) -> int:
 	for item_data in items:
 		if item_data.pickable_item == pickable_item:
@@ -37,6 +41,7 @@ func get_id_from_pickable_item(pickable_item : PickableItem) -> int:
 	return -1
 
 
+## Returns the [InventoryItem] of id, return null if not found
 func get_item(id : int) -> InventoryItem:
 	for item_data in items:
 		if item_data.id == id:
@@ -45,6 +50,7 @@ func get_item(id : int) -> InventoryItem:
 	return null
 
 
+## Returns the [PickableItem] of id, return null if not found
 func get_pickable_item(id : int) -> PackedScene:
 	for item_data in items:
 		if item_data.id == id:
