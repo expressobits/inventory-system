@@ -124,9 +124,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_yem3h")
 script = ExtResource("6_xslqw")
-player_inventory_ui_path = null
-loot_inventory_ui_path = null
-drop_area_path = null
 inventory_ui = ExtResource("7_yftkd")
 
 [node name="DragSlotUI" parent="UI/Inventory System UI" instance=ExtResource("8_g661m")]

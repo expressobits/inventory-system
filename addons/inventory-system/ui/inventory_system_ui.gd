@@ -114,5 +114,5 @@ func _updated_transaction_slot(item : InventoryItem, amount : int):
 
 func swap_inventories(slot_index : int, inventory : Inventory, amount := 1):
 	if drag_slot.has_slot():
-		player_inventory_handler.swap_between_containers(drag_slot.inventory, drag_slot.slot_index, inventory, slot_index, amount)
+		player_inventory_handler.swap_between_inventories(drag_slot.inventory, drag_slot.slot_index, inventory, slot_index, amount)
 	drag_slot.clear_info()

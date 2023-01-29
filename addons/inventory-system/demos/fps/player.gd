@@ -82,8 +82,8 @@ func interact():
 func open_inventory(inventory : Inventory):
 	if not inventory_handler.is_open(inventory):
 		inventory_handler.open(inventory)
-	if not inventory_handler.is_open_personal_inventory():
-		inventory_handler.open_personal_inventory()
+	if not inventory_handler.is_open_main_inventory():
+		inventory_handler.open_main_inventory()
 		
 func pickup_item(item : PickableItem):
 	pass

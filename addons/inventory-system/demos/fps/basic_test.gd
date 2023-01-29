@@ -33,14 +33,14 @@ func _process(delta):
 		player_inventory_handler.inventory.remove(item_metal, 2)
 	
 	if Input.is_action_just_released("Toggle Inventory"):
-		if player_inventory_handler.is_open_personal_inventory():
-			player_inventory_handler.close_all_containers()
+		if player_inventory_handler.is_open_main_inventory():
+			player_inventory_handler.close_all_inventories()
 		else:
-			player_inventory_handler.open_personal_inventory()
+			player_inventory_handler.open_main_inventory()
 	
 	if Input.is_action_just_released("Escape"):
-		if player_inventory_handler.is_open_personal_inventory():
-			player_inventory_handler.close_all_containers()
+		if player_inventory_handler.is_open_main_inventory():
+			player_inventory_handler.close_all_inventories()
 
 
 func _on_empty():
@@ -52,7 +52,7 @@ func _on_filled():
 
 
 func _update_opened_inventories(inventory : Inventory):
-	if player_inventory_handler.is_open_personal_inventory():
+	if player_inventory_handler.is_open_main_inventory():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

@@ -17,11 +17,9 @@ signal slot_added(slot_index : int)
 ## This signal is emitted after calling the  [code]remove[/code]  function and happens only when the slot is empty and the  [code]remove_slot_if_empty[/code]  is set to true.
 signal slot_removed(slot_index : int)
 
-
 ## Emitted when inventory is filled.
 ## This signal is emitted after the  [code]add[/code]  ,  [code]add_at[/code]  or  [code]set_slot[/code]  function and it only happens when all slots are filled.
 signal filled
-
 
 ## Emitted when inventory is empty.
 ## This signal is emitted after the  [code]remove[/code]  ,  [code]remove_at[/code]  or  [code]set_slot[/code]  function and it only happens when all slots are empty or there are no slots.
@@ -63,6 +61,17 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 	var slot = slots[slot_index]
 	slot.item = item
 	slot.amount = amount
+	emit_signal("updated_slot", slot_index)
+	_call_events(old_amount)
+
+## Define slot specific index information
+func set_slot_with_other_slot(slot_index : int, other_slot : Dictionary):
+	if slot_index >= slots.size():
+		return
+	var old_amount = get_amount()
+	var slot = slots[slot_index]
+	slot.item = other_slot.item
+	slot.amount = other_slot.amount
 	emit_signal("updated_slot", slot_index)
 	_call_events(old_amount)
 
