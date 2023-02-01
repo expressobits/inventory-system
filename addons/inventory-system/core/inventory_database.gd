@@ -1,3 +1,4 @@
+@icon("res://addons/inventory-system/icons/inventory_database.svg")
 extends Resource
 class_name InventoryDatabase
 

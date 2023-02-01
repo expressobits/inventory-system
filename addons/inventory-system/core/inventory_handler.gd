@@ -1,4 +1,4 @@
-@icon("res://addons/inventory-system/icons/crane-hook-svgrepo-com.svg")
+@icon("res://addons/inventory-system/icons/inventory_handler.svg")
 extends Node
 class_name InventoryHandler
 

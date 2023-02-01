@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm1i7hy655vu5"
-path="res://.godot/imported/box-svgrepo-com.svg-9c5df6454ae2b8385198705e07c60d62.ctex"
+uid="uid://co4udsj1scle"
+path="res://.godot/imported/dropped_item_3d.svg-21b3b7d18b43f6fe16a731caf877efcc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/box-svgrepo-com.svg"
-dest_files=["res://.godot/imported/box-svgrepo-com.svg-9c5df6454ae2b8385198705e07c60d62.ctex"]
+source_file="res://addons/inventory-system/icons/dropped_item_3d.svg"
+dest_files=["res://.godot/imported/dropped_item_3d.svg-21b3b7d18b43f6fe16a731caf877efcc.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://1dpy25b8r7qq"
-path="res://.godot/imported/bag-2-svgrepo-com.svg-6873f49c6c67b883f5ecdf546fa9333a.ctex"
+uid="uid://b34fssggqn7a1"
+path="res://.godot/imported/inventory.svg-670d8379b24348b78debc7934669ac01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/bag-2-svgrepo-com.svg"
-dest_files=["res://.godot/imported/bag-2-svgrepo-com.svg-6873f49c6c67b883f5ecdf546fa9333a.ctex"]
+source_file="res://addons/inventory-system/icons/inventory.svg"
+dest_files=["res://.godot/imported/inventory.svg-670d8379b24348b78debc7934669ac01.ctex"]
 
 [params]
 
