@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://vncbq7qyqequ"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
-[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
+[ext_resource type="Resource" uid="uid://bbjpv6wjwypuo" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_imdk7"]
 [ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_l6rt8"]
 [ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/fps/textures/inventory-bg.png" id="3_v70sq"]
@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="8_g661m"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/fps/textures/drop_icon.png" id="10_il8h0"]
 [ext_resource type="PackedScene" uid="uid://dpipq2p2fvy7l" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
-[ext_resource type="PackedScene" uid="uid://c0a1hmmkmbly" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" uid="uid://ckee41fw4fqyf" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")

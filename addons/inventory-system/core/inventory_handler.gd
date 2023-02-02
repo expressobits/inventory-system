@@ -8,11 +8,11 @@ class_name InventoryHandler
 
 ## Emitted when the handler has dropped an item.
 ## Called for each item dropped from the [code]drop_from_inventory()[/code] function.
-signal dropped(pickable_item : PickableItem)
+signal dropped(dropped_item : DroppedItem)
 
 ## Emitted when the handler has picked an item.
 ## Called for each item picked from the [code]pick_to_inventory()[/code] function.
-signal picked(pickable_item : PickableItem)
+signal picked(dropped_item : DroppedItem)
 
 ## Emitted when item is added to inventories by handler.
 ## Called on each item added by the [code]add_to_inventory()[/code] function to the inventory used by the handler.
@@ -34,10 +34,10 @@ signal updated_transaction_slot(item : InventoryItem, amount : int)
 ## The main [Inventory] is used in most handler functions as a default inventory.
 @export_node_path("Inventory") var inventory_path := NodePath("Inventory")
 
-## Path to where a drop of [PickableItem] should be instantiated by the handler.
+## Path to where a drop of [DroppedItem] should be instantiated by the handler.
 @export_node_path var drop_parent_path := NodePath("../..")
 
-## Database used to identify [InventoryItem] and [PickableItem] ids.
+## Database used to identify [InventoryItem] and [DroppedItem] ids.
 @export var database : InventoryDatabase
 
 ## Main [Inventory] node.
@@ -63,14 +63,14 @@ var transaction_slot := {
 ## For each dropped item a [code]dropped[/code] signal is emitted.
 func drop(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
-	var pickable_item = database.get_pickable_item(item_id)
+	var dropped_item = database.get_dropped_item(item_id)
 	for i in amount:
-		var obj = pickable_item.instantiate()
-		var pick_item = obj as PickableItem
-		emit_signal("dropped", pick_item)
-		drop_parent.add_child(pick_item)
-		pick_item.position = get_parent().position
-		pick_item.rotation = get_parent().rotation
+		var obj = dropped_item.instantiate()
+		var dropped_item_obj = obj as DroppedItem
+		emit_signal("dropped", dropped_item_obj)
+		drop_parent.add_child(dropped_item_obj)
+		dropped_item_obj.position = get_parent().position
+		dropped_item_obj.rotation = get_parent().rotation
 	return true
 
 
@@ -100,16 +100,16 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 
 
 ## Pick a [InventoryItem] to inventory.
-## This function adds the item to the inventory and destroys the [PickableItem] object.
-func pick_to_inventory(pickable_item : PickableItem, inventory := self.inventory):
-	if not pickable_item.is_pickable:
+## This function adds the item to the inventory and destroys the [DroppedItem] object.
+func pick_to_inventory(dropped_item : DroppedItem, inventory := self.inventory):
+	if not dropped_item.is_pickable:
 		return false
-	var item = pickable_item.item
+	var item = dropped_item.item
 	if item == null:
 		printerr("item in pickable_item is null!")
 	if add_to_inventory(inventory, item) == 0:
-		emit_signal("picked", pickable_item)
-		pickable_item.queue_free()
+		emit_signal("picked", dropped_item)
+		dropped_item.queue_free()
 		return true;
 	return false;
 

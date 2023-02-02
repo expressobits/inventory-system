@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0a1hmmkmbly"]
+[gd_scene load_steps=7 format=3 uid="uid://ckee41fw4fqyf"]
 
 [ext_resource type="Material" uid="uid://sedvavuhjcea" path="res://addons/inventory-system/demos/fps/materials/level.tres" id="1_7nkpw"]
 [ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="2_abwbn"]
-[ext_resource type="PackedScene" uid="uid://gvvw2gshlni3" path="res://addons/inventory-system/demos/fps/pickable_items/wood.tscn" id="3_tic68"]
-[ext_resource type="PackedScene" uid="uid://cfjvbk3avagcb" path="res://addons/inventory-system/demos/fps/pickable_items/rock.tscn" id="4_hv5pj"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4wr8p"]
 size = Vector3(10, 1, 10)

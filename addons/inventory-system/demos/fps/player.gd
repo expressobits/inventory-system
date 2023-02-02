@@ -68,7 +68,7 @@ func interact():
 				if Input.is_action_just_pressed("Interact"):
 					open_inventory(inv)
 				return
-		var dropped_item := object as PickableItem
+		var dropped_item := object as DroppedItem
 		if dropped_item != null:
 			if dropped_item.is_pickable:
 				$"../UI/Labels/InteractMessage".visible = true
@@ -85,5 +85,5 @@ func open_inventory(inventory : Inventory):
 	if not inventory_handler.is_open_main_inventory():
 		inventory_handler.open_main_inventory()
 		
-func pickup_item(item : PickableItem):
+func pickup_item(item : DroppedItem):
 	pass
