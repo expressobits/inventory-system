@@ -1,11 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://31k7uh2hudrj"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/box_inventory.gd" id="1_f8i83"]
-[ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/box.glb" id="2_lc5j8"]
+[ext_resource type="PackedScene" uid="uid://w0fu4w2matr7" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/chest.glb" id="2_ln3pm"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="3_kidjv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2vdb"]
-size = Vector3(1.25, 1.25, 1.25)
 
 [node name="Box Inventory" type="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.28112)
@@ -13,11 +12,11 @@ collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_f8i83")
 
+[node name="chest" parent="." instance=ExtResource("2_ln3pm")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.467521, 0)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_x2vdb")
-
-[node name="box" parent="." instance=ExtResource("2_lc5j8")]
-transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, -0.5, 0)
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("3_kidjv")

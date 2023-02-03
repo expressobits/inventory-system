@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bbjpv6wjwypuo"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://be14ch2lo1u5n"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_fcne4"]
 [ext_resource type="Texture2D" uid="uid://cdt6ogkb6730n" path="res://addons/inventory-system/demos/fps/textures/wood-item.png" id="1_ui502"]

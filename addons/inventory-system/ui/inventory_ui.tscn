@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dq1xhnfpa474w"]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_ui.gd" id="1_oc1p6"]
-[ext_resource type="PackedScene" uid="uid://cfhuqf7bn5348" path="res://addons/inventory-system/ui/slot_ui.tscn" id="2_vvx32"]
-[ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/fps/textures/slot.png" id="3_cour7"]
-[ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/fps/textures/inventory-bg.png" id="4_y80kv"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/ui/slot_ui.tscn" id="2_vvx32"]
+[ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/ui/textures/slot.png" id="3_cour7"]
+[ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/ui/textures/inventory-bg.png" id="4_y80kv"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/fps/fonts/m5x7.ttf" id="5_doh24"]
 
 [node name="Inventory UI" type="Control" node_paths=PackedStringArray("inventory", "slots_container")]

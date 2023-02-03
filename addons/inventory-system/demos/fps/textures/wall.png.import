@@ -2,26 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8a7etm3dd71f"
-path="res://.godot/imported/slot.png-748079d12791f07267826e52f04a75fb.ctex"
+uid="uid://c8kiggg4a2lp2"
+path="res://.godot/imported/wall.png-2fb67e902e0da66126c142404d7967a0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/demos/fps/textures/slot.png"
-dest_files=["res://.godot/imported/slot.png-748079d12791f07267826e52f04a75fb.ctex"]
+source_file="res://addons/inventory-system/demos/fps/textures/wall.png"
+dest_files=["res://.godot/imported/wall.png-2fb67e902e0da66126c142404d7967a0.ctex"]
 
 [params]
 
 compress/mode=3
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

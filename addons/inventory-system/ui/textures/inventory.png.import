@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pmqvv5mlaxrg"
-path="res://.godot/imported/metal-item.png-540ac2f991d30148770a2faf6c278a09.ctex"
+uid="uid://bpwo4n5a3d10y"
+path="res://.godot/imported/inventory.png-4124b351d2ea1d0c5ae114511550483e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/demos/fps/textures/metal-item.png"
-dest_files=["res://.godot/imported/metal-item.png-540ac2f991d30148770a2faf6c278a09.ctex"]
+source_file="res://addons/inventory-system/ui/textures/inventory.png"
+dest_files=["res://.godot/imported/inventory.png-4124b351d2ea1d0c5ae114511550483e.ctex"]
 
 [params]
 

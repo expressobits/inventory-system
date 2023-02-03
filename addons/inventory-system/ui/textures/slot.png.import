@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pmqvv5mlaxrg"
-path="res://.godot/imported/metal-item.png-540ac2f991d30148770a2faf6c278a09.ctex"
+uid="uid://c8a7etm3dd71f"
+path="res://.godot/imported/slot.png-99dbabdb769279d716df03fd0b25e714.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/demos/fps/textures/metal-item.png"
-dest_files=["res://.godot/imported/metal-item.png-540ac2f991d30148770a2faf6c278a09.ctex"]
+source_file="res://addons/inventory-system/ui/textures/slot.png"
+dest_files=["res://.godot/imported/slot.png-99dbabdb769279d716df03fd0b25e714.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

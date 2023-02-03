@@ -2,26 +2,26 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://2n608x5cbe8d"
-path="res://.godot/imported/inventory-bg.png-3984b2d7c4cb7b95f0857bfff893c984.ctex"
+uid="uid://discpklvil8rd"
+path="res://.godot/imported/floor.png-880229240f37214e0bcf75aabb64ef29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/demos/fps/textures/inventory-bg.png"
-dest_files=["res://.godot/imported/inventory-bg.png-3984b2d7c4cb7b95f0857bfff893c984.ctex"]
+source_file="res://addons/inventory-system/demos/fps/textures/floor.png"
+dest_files=["res://.godot/imported/floor.png-880229240f37214e0bcf75aabb64ef29.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=3
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

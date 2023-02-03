@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dx2tgu0tfkwwx"]
+
+[ext_resource type="Texture2D" uid="uid://c8kiggg4a2lp2" path="res://addons/inventory-system/demos/fps/textures/wall.png" id="1_ju0w8"]
+
+[resource]
+albedo_texture = ExtResource("1_ju0w8")
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+texture_filter = 0
