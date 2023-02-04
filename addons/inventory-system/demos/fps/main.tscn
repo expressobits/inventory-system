@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bt8sqvn7xs013"]
+[gd_scene load_steps=11 format=3 uid="uid://bt8sqvn7xs013"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://dpipq2p2fvy7l" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://ckee41fw4fqyf" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
@@ -127,6 +128,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Dynamic Inventory"
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("10_1ncja")
 
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]

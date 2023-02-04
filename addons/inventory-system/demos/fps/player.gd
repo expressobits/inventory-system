@@ -37,6 +37,17 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	interact()
+	
+func process(delta):
+	if Input.is_action_just_released("toggle_inventory"):
+		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_all_inventories()
+		else:
+			inventory_handler.open_main_inventory()
+	
+	if Input.is_action_just_released("escape"):
+		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_all_inventories()
 
 # Called when there is an input event
 func _input(event: InputEvent) -> void:
@@ -65,7 +76,7 @@ func interact():
 			if inv != null:
 				$"../UI/Labels/InteractMessage".visible = !inventory_handler.is_open(inv)
 				$"../UI/Labels/InteractMessage".text = "E to Open Inventory"
-				if Input.is_action_just_pressed("Interact"):
+				if Input.is_action_just_pressed("interact"):
 					open_inventory(inv)
 				return
 		var dropped_item := object as DroppedItem
@@ -73,7 +84,7 @@ func interact():
 			if dropped_item.is_pickable:
 				$"../UI/Labels/InteractMessage".visible = true
 				$"../UI/Labels/InteractMessage".text = "E to Pickup"
-				if Input.is_action_just_pressed("Interact"):
+				if Input.is_action_just_pressed("interact"):
 					inventory_handler.pick_to_inventory(dropped_item)
 			return
 	$"../UI/Labels/InteractMessage".visible = false

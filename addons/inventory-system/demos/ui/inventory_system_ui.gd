@@ -93,8 +93,6 @@ func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventor
 		var amount = slot.amount
 		if event.button_index == 2:
 			amount = ceili(slot.amount/2.0)
-		if event.button_index == 3:
-			amount = 1
 		inventory_handler.to_transaction(slot_index, inventory, amount)	
 		
 
