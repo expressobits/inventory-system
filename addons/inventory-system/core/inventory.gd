@@ -44,6 +44,8 @@ var slots : Array
 ## Sets the initial amount of slots in the inventory in the [code]_ready[/code] function
 @export var slot_amount := 16
 
+## The name of the inventory, to be displayed in UI
+@export var inventory_name := "Inventory"
 
 func _ready():
 	if create_slot_if_needed:

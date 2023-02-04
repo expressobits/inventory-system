@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8a7etm3dd71f"
-path="res://.godot/imported/slot.png-99dbabdb769279d716df03fd0b25e714.ctex"
+uid="uid://2n608x5cbe8d"
+path="res://.godot/imported/inventory-bg.png-7efc0307c130f1f9dc0c3d8860912b98.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/ui/textures/slot.png"
-dest_files=["res://.godot/imported/slot.png-99dbabdb769279d716df03fd0b25e714.ctex"]
+source_file="res://addons/inventory-system/demos/ui/textures/inventory-bg.png"
+dest_files=["res://.godot/imported/inventory-bg.png-7efc0307c130f1f9dc0c3d8860912b98.ctex"]
 
 [params]
 
-compress/mode=3
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

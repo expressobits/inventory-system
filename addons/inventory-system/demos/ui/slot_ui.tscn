@@ -1,0 +1,78 @@
+[gd_scene load_steps=7 format=3 uid="uid://caa8s4576c1fy"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/slot_ui.gd" id="1_efrhy"]
+[ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
+[ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/ui/textures/slot.png" id="2_3dbvp"]
+[ext_resource type="Texture2D" uid="uid://cdt6ogkb6730n" path="res://addons/inventory-system/demos/fps/textures/wood-item.png" id="3_an8g4"]
+[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="4_m8gxq"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
+texture = ExtResource("2_3dbvp")
+region_rect = Rect2(0, 0, 24, 24)
+
+[node name="SlotUI" type="Control"]
+texture_filter = 1
+custom_minimum_size = Vector2(26, 26)
+layout_mode = 3
+anchors_preset = 0
+theme = ExtResource("1_hssy3")
+script = ExtResource("1_efrhy")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "UM SLOT"
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
+
+[node name="Item Icon" type="TextureRect" parent="."]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_an8g4")
+
+[node name="Amount" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -18.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 1
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_m8gxq")
+text = "2"
+horizontal_alignment = 2
+vertical_alignment = 2
+
+[connection signal="hidden" from="." to="." method="_on_hidden"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
