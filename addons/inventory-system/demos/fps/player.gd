@@ -38,7 +38,7 @@ func _physics_process(delta):
 	
 	interact()
 	
-func process(delta):
+func _process(delta):
 	if Input.is_action_just_released("toggle_inventory"):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_all_inventories()
