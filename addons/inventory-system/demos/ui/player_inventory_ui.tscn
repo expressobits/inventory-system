@@ -1,0 +1,93 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhpxpadgvhd03"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_ui.gd" id="1_8tnid"]
+[ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="2_n3cr8"]
+[ext_resource type="Texture2D" uid="uid://bpwo4n5a3d10y" path="res://addons/inventory-system/demos/ui/textures/inventory.png" id="3_qhn2s"]
+[ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/ui/textures/inventory-bg.png" id="4_avs7s"]
+[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_exhly"]
+
+[node name="Player Inventory UI" type="Control" node_paths=PackedStringArray("slots_container")]
+custom_minimum_size = Vector2(220, 127)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -238.0
+offset_top = -159.0
+offset_right = -18.0
+offset_bottom = -32.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_8tnid")
+slot_ui_scene = ExtResource("2_n3cr8")
+slots_container = NodePath("Control/MarginContainer/UI Inventory")
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_qhn2s")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 15.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_avs7s")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="UI Inventory" type="GridContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 1.25
+offset_top = -14.0
+offset_right = 104.25
+offset_bottom = 10.0
+theme_override_colors/font_color = Color(0.247059, 0.270588, 0.282353, 1)
+theme_override_fonts/font = ExtResource("5_exhly")
+text = "Inventory"

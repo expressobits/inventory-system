@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvcax47a8xm2"]
+
+[ext_resource type="PackedScene" uid="uid://cjxdajwr3jol6" path="res://addons/inventory-system/demos/fps/dropped_items/dropped_item.tscn" id="1_gp70d"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="2_3sxoq"]
+[ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_1jmeo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
+size = Vector3(0.4, 0.3, 0.4)
+
+[node name="Rock" instance=ExtResource("1_gp70d")]
+item = ExtResource("2_3sxoq")
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_fdkpx")
+
+[node name="resourceStone" parent="Visual" index="0" instance=ExtResource("3_1jmeo")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.154406, 0)

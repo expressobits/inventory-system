@@ -1,4 +1,4 @@
-@icon("res://addons/inventory-system/icons/box-svgrepo-com.svg")
+@icon("res://addons/inventory-system/icons/inventory_item.svg")
 extends Resource
 class_name InventoryItem
 ## Definition of an inventory item

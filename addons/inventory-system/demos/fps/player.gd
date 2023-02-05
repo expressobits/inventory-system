@@ -37,6 +37,17 @@ func _physics_process(delta):
 	move_and_slide()
 	
 	interact()
+	
+func _process(delta):
+	if Input.is_action_just_released("toggle_inventory"):
+		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_all_inventories()
+		else:
+			inventory_handler.open_main_inventory()
+	
+	if Input.is_action_just_released("escape"):
+		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_all_inventories()
 
 # Called when there is an input event
 func _input(event: InputEvent) -> void:
@@ -65,15 +76,15 @@ func interact():
 			if inv != null:
 				$"../UI/Labels/InteractMessage".visible = !inventory_handler.is_open(inv)
 				$"../UI/Labels/InteractMessage".text = "E to Open Inventory"
-				if Input.is_action_just_pressed("Interact"):
+				if Input.is_action_just_pressed("interact"):
 					open_inventory(inv)
 				return
-		var dropped_item := object as PickableItem
+		var dropped_item := object as DroppedItem
 		if dropped_item != null:
 			if dropped_item.is_pickable:
 				$"../UI/Labels/InteractMessage".visible = true
 				$"../UI/Labels/InteractMessage".text = "E to Pickup"
-				if Input.is_action_just_pressed("Interact"):
+				if Input.is_action_just_pressed("interact"):
 					inventory_handler.pick_to_inventory(dropped_item)
 			return
 	$"../UI/Labels/InteractMessage".visible = false
@@ -82,8 +93,8 @@ func interact():
 func open_inventory(inventory : Inventory):
 	if not inventory_handler.is_open(inventory):
 		inventory_handler.open(inventory)
-	if not inventory_handler.is_open_personal_inventory():
-		inventory_handler.open_personal_inventory()
+	if not inventory_handler.is_open_main_inventory():
+		inventory_handler.open_main_inventory()
 		
-func pickup_item(item : PickableItem):
+func pickup_item(item : DroppedItem):
 	pass
