@@ -18,12 +18,14 @@ const ACTIONS = [
 ]
 
 func _enter_tree():
-	print("dsadas")
 	# Register input events
+	var save := false
 	for action_props in ACTIONS:
 		var setting_name = "input/" + action_props["name"]
 
 		if not ProjectSettings.has_setting(setting_name):
+			print("Set config:"+setting_name)
+			save = true
 			var events = []
 
 			var action_props_events = action_props["events"]
@@ -39,6 +41,6 @@ func _enter_tree():
 				"deadzone": float(action_props["deadzone"] if "deadzone" in action_props else 0.5),
 				"events": events
 			})
-
-	var result = ProjectSettings.save()
-	assert(result == OK, "Failed to save project settings")
+	if save:
+		var result = ProjectSettings.save()
+		assert(result == OK, "Failed to save project settings")
