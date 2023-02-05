@@ -3,6 +3,7 @@
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
+![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
 ## Features
 
