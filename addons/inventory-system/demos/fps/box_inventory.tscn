@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://31k7uh2hudrj"]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/box_inventory.gd" id="1_f8i83"]
-[ext_resource type="PackedScene" uid="uid://w0fu4w2matr7" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/chest.glb" id="2_ln3pm"]
+[ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="3_kidjv"]
+[ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
+[ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]
+[ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2vdb"]
 
@@ -12,9 +15,6 @@ collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_f8i83")
 
-[node name="chest" parent="." instance=ExtResource("2_ln3pm")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.467521, 0)
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_x2vdb")
 
@@ -22,3 +22,19 @@ shape = SubResource("BoxShape3D_x2vdb")
 script = ExtResource("3_kidjv")
 create_slot_if_needed = true
 remove_slot_if_empty = true
+
+[node name="box" parent="." instance=ExtResource("3_4i45c")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.57105, 0)
+
+[node name="boxOpen" parent="." instance=ExtResource("4_jaqj8")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.57105, 0)
+visible = false
+
+[node name="Open" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_sufq2")
+
+[node name="Close" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_x0aos")
+
+[connection signal="closed" from="Inventory" to="." method="_on_inventory_closed"]
+[connection signal="opened" from="Inventory" to="." method="_on_inventory_opened"]

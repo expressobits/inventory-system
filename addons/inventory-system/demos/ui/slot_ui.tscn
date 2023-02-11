@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://caa8s4576c1fy"]
+[gd_scene load_steps=8 format=3 uid="uid://caa8s4576c1fy"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/slot_ui.gd" id="1_efrhy"]
 [ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
 [ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/ui/textures/slot.png" id="2_3dbvp"]
 [ext_resource type="Texture2D" uid="uid://cdt6ogkb6730n" path="res://addons/inventory-system/demos/fps/textures/wood-item.png" id="3_an8g4"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="4_m8gxq"]
+[ext_resource type="AudioStream" uid="uid://rsv2tqf2asa1" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/beltHandle1.ogg" id="6_qrqnt"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
 texture = ExtResource("2_3dbvp")
@@ -72,6 +73,10 @@ theme_override_fonts/font = ExtResource("4_m8gxq")
 text = "2"
 horizontal_alignment = 2
 vertical_alignment = 2
+
+[node name="MouseEnter" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_qrqnt")
+volume_db = -12.0
 
 [connection signal="hidden" from="." to="." method="_on_hidden"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

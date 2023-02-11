@@ -29,11 +29,22 @@ signal emptied
 ## This signal is issued after functions that change the inventory content:  [code]add[/code] ,  [code]add_at[/code] ,  [code]remove[/code] ,  [code]remove-at[/code]  and  [code]set_slot[/code] .
 signal updated_slot(slot_index : int)
 
+## Emitted when inventory is opened.
+## Called inside the [b]open()[/b] function when the inventory is closed.
+signal opened
+
+## Emitted when inventory is closed.
+## Called inside the [b]close()[/b] function when the inventory is closed.
+signal closed
+
 
 ## Array of [Dictionary] that stores items and their quantities
 ## The dictionary uses [b]"item"[/b] to store item information
 ## and [b]"amount"[/b] for your quantity
 var slots : Array
+
+## It stores information if this inventory is open or not.
+var is_open := false
 
 ## Creates a slot when use  [code]add[/code]  for adding item to inventory when it is full
 @export var create_slot_if_needed := false
@@ -186,6 +197,25 @@ func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 			emit_signal("slot_removed", slot_index)
 			_call_events(old_amount)
 	return amount_in_interact
+
+## Opens the inventory and returns true if done successfully.
+## Emits the [b]opened[/b] signal if the was previously closed.
+func open() -> bool:
+	if !is_open:
+		is_open = true
+		emit_signal("opened")
+		return true
+	return false
+
+
+## Closes the inventory and returns true if done successfully.
+## Emits the [b]closed[/b] signal if was previously open.
+func close() -> bool:
+	if is_open:
+		is_open = false
+		emit_signal("closed")
+		return true
+	return false
 
 
 func _call_events(old_amount : int):

@@ -6,10 +6,10 @@
 [ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/database.tres" id="4_fe8f5"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
-[ext_resource type="PackedScene" uid="uid://31k7uh2hudrj" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://dpipq2p2fvy7l" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
-[ext_resource type="PackedScene" uid="uid://ckee41fw4fqyf" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node3D"]
 script = ExtResource("1_1xgci")
@@ -118,13 +118,13 @@ horizontal_alignment = 1
 [node name="Box Inventory" parent="." instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
-[node name="Inventory" parent="Box Inventory" index="2"]
+[node name="Inventory" parent="Box Inventory" index="1"]
 inventory_name = "Static Inventory"
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
-[node name="Inventory" parent="Box Inventory2" index="2"]
+[node name="Inventory" parent="Box Inventory2" index="1"]
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Dynamic Inventory"

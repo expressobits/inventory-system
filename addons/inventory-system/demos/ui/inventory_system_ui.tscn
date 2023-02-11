@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bmptjwipdws3"]
+[gd_scene load_steps=8 format=3 uid="uid://bmptjwipdws3"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/transaction_slot.gd" id="3_ugeom"]
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
+[ext_resource type="AudioStream" uid="uid://bsmtyqo7jll74" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/metalPot2.ogg" id="6_0yj2s"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/ui/textures/drop_icon.png" id="6_b06x6"]
+[ext_resource type="AudioStream" uid="uid://cqibymsyga6wf" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/metalPot1.ogg" id="7_ek4ja"]
 
 [node name="Inventory System UI" type="Control"]
 texture_filter = 1
@@ -60,6 +62,12 @@ offset_left = 16.0
 offset_top = 32.0
 offset_right = 250.0
 offset_bottom = 110.0
+
+[node name="SlotClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_0yj2s")
+
+[node name="SlotDrop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_ek4ja")
 
 [connection signal="mouse_entered" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_entered"]
 [connection signal="mouse_exited" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_exited"]

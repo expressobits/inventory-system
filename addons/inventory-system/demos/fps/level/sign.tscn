@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0jrnlnfsaer2"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="PackedScene" uid="uid://dg5cl8nqk41as" path="res://addons/inventory-system/demos/fps/survival-kit-1.1/Models/GLTF format/signpostSingle.glb" id="1_uhjoa"]
+[ext_resource type="PackedScene" uid="uid://dg5cl8nqk41as" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/signpostSingle.glb" id="1_uhjoa"]
 [ext_resource type="Material" uid="uid://crejuaexbgbp3" path="res://addons/inventory-system/demos/fps/materials/wood.tres" id="2_us55a"]
 
 [node name="Sign" type="Node3D"]
