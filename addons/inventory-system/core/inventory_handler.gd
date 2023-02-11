@@ -153,6 +153,8 @@ func swap_between_inventories(inventory : Inventory, slot_index : int, other_inv
 func open(inventory : Inventory) -> bool:
 	if opened_inventories.has(inventory):
 		return false 
+	if !inventory.open():
+		return false
 	opened_inventories.append(inventory)
 	emit_signal("opened", inventory)
 	return true
@@ -163,6 +165,8 @@ func open(inventory : Inventory) -> bool:
 func close(inventory : Inventory) -> bool:
 	var index = opened_inventories.find(inventory)
 	if index == -1:
+		return false
+	if !inventory.close():
 		return false
 	opened_inventories.remove_at(index)
 	emit_signal("closed", inventory)

@@ -43,6 +43,7 @@ func clear_info():
 
 func _on_mouse_entered():
 	$Panel.self_modulate = highlight_color
+	$MouseEnter.play()
 
 
 func _on_mouse_exited():

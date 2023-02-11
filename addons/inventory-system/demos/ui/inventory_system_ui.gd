@@ -94,6 +94,7 @@ func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventor
 		if event.button_index == 2:
 			amount = ceili(slot.amount/2.0)
 		inventory_handler.to_transaction(slot_index, inventory, amount)	
+		$SlotClick.play()
 		
 
 func _inventory_point_down(event : InputEvent, inventory : Inventory):
@@ -101,6 +102,7 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 		return
 	if inventory_handler.is_transaction_active():
 		inventory_handler.transaction_to(inventory)
+		$SlotDrop.play()
 
 
 func _updated_transaction_slot(item : InventoryItem, amount : int):

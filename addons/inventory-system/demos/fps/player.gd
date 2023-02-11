@@ -98,3 +98,11 @@ func open_inventory(inventory : Inventory):
 		
 func pickup_item(item : DroppedItem):
 	pass
+
+
+func _on_inventory_handler_picked(dropped_item):
+	$Pickup.play()
+
+
+func _on_inventory_handler_dropped(dropped_item):
+	$Drop.play()
