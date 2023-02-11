@@ -65,9 +65,11 @@ offset_bottom = 110.0
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_0yj2s")
+volume_db = -12.0
 
 [node name="SlotDrop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_ek4ja")
+volume_db = -12.0
 
 [connection signal="mouse_entered" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_entered"]
 [connection signal="mouse_exited" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_exited"]
