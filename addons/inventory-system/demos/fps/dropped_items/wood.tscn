@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://2r5gl6mavkqd"]
 
 [ext_resource type="PackedScene" uid="uid://cjxdajwr3jol6" path="res://addons/inventory-system/demos/fps/dropped_items/dropped_item.tscn" id="1_0i1lv"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_k7ojq"]
