@@ -11,7 +11,6 @@ func _ready():
 		
 	if str(multiplayer.get_unique_id()) == name:
 		$Mesh.visible = false
-		
 
 
 func _physics_process(delta):
@@ -27,3 +26,4 @@ func _process(delta):
 func _input(event: InputEvent) -> void:
 	if is_multiplayer_authority():
 		super._input(event)
+

@@ -1,28 +1,20 @@
 [gd_scene load_steps=9 format=3 uid="uid://clpfg82i5m635"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="1_wmecn"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
 [ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_axldf"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_sfhca"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_dxfus"]
+[ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="7_jxmrf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_p1g1q"]
-properties/0/path = NodePath(".:position")
-properties/0/spawn = true
-properties/0/sync = true
-properties/1/path = NodePath(".:rotation")
-properties/1/spawn = true
-properties/1/sync = true
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_wmecn")
-inventory_handler_path = NodePath("InventoryHandler")
+script = ExtResource("1_qhbqk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_ccrms")
@@ -51,8 +43,9 @@ stream = ExtResource("5_sfhca")
 [node name="Drop" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_dxfus")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_p1g1q")
+[node name="PlayerInventoryOpen" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_jxmrf")
 
 [connection signal="dropped" from="InventoryHandler" to="." method="_on_inventory_handler_dropped"]
 [connection signal="picked" from="InventoryHandler" to="." method="_on_inventory_handler_picked"]
+[connection signal="opened" from="InventoryHandler/PlayerInventory" to="." method="_on_player_inventory_opened"]

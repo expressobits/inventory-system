@@ -44,7 +44,7 @@ signal closed
 var slots : Array
 
 ## It stores information if this inventory is open or not.
-var is_open := false
+@export var is_open := false
 
 ## Creates a slot when use  [code]add[/code]  for adding item to inventory when it is full
 @export var create_slot_if_needed := false

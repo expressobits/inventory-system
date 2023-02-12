@@ -1,6 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkwhav2m5inbv"]
+[gd_scene load_steps=8 format=3 uid="uid://dkwhav2m5inbv"]
 
 [ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="1_gogru"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="2_j20bs"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fhfrv"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
 shading_mode = 2
@@ -20,8 +29,13 @@ albedo_color = Color(0, 0.294118, 1, 1)
 size = Vector3(0.8, 0.2, 0.4)
 
 [node name="MPPlayer" instance=ExtResource("1_gogru")]
+script = ExtResource("2_j20bs")
 
-[node name="Mesh" type="MeshInstance3D" parent="." index="5"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="6"]
+root_path = NodePath("../Mesh")
+replication_config = SubResource("SceneReplicationConfig_fhfrv")
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="7"]
 material_override = SubResource("StandardMaterial3D_053ih")
 mesh = SubResource("CapsuleMesh_uhe50")
 

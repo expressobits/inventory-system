@@ -11,7 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var vertical_angle_limit := 90.0
 var rot := Vector3()
 
-@export_node_path("InventoryHandler") var inventory_handler_path = NodePath("/InventoryHandler")
+@export_node_path("InventoryHandler") var inventory_handler_path = NodePath("InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 
 func _physics_process(delta):
@@ -106,3 +106,7 @@ func _on_inventory_handler_picked(dropped_item):
 
 func _on_inventory_handler_dropped(dropped_item):
 	$Drop.play()
+	
+
+func _on_player_inventory_opened():
+	$PlayerInventoryOpen.play()
