@@ -1,21 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://bt8sqvn7xs013"]
+[gd_scene load_steps=11 format=3 uid="uid://bjq4ait5klqp1"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/basic_test.gd" id="1_1xgci"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_h5xaf"]
 [ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_l6rt8"]
-[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/database.tres" id="4_fe8f5"]
+[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="4_4o3ds"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_cm0hh"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
-[ext_resource type="PackedScene" uid="uid://dpipq2p2fvy7l" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
+[ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
-[node name="Demo" type="Node3D"]
-script = ExtResource("1_1xgci")
+[node name="Demo" type="Node"]
+script = ExtResource("1_mxj54")
 item_wood = ExtResource("2_h5xaf")
 item_metal = ExtResource("3_l6rt8")
-database = ExtResource("4_fe8f5")
+database = ExtResource("4_4o3ds")
 
 [node name="UI" type="CanvasLayer" parent="."]
 scale = Vector2(2, 2)
