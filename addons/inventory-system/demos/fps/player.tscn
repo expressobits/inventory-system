@@ -1,6 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://clpfg82i5m635"]
+[gd_scene load_steps=9 format=3 uid="uid://clpfg82i5m635"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_k1gqr"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="1_wmecn"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
 [ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_axldf"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
@@ -9,26 +9,19 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i65lk"]
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(1, 1, 0.258824, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_3nje1"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2nbnw"]
-diffuse_mode = 3
-specular_mode = 1
-albedo_color = Color(0, 0, 0.337255, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_jfcvi"]
-size = Vector3(0.7, 0.2, 0.4)
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_p1g1q"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/sync = true
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 2
 collision_mask = 3
-script = ExtResource("1_k1gqr")
+script = ExtResource("1_wmecn")
 inventory_handler_path = NodePath("InventoryHandler")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -58,14 +51,8 @@ stream = ExtResource("5_sfhca")
 [node name="Drop" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_dxfus")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_i65lk")
-mesh = SubResource("CapsuleMesh_3nje1")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396, -0.281156)
-material_override = SubResource("StandardMaterial3D_2nbnw")
-mesh = SubResource("BoxMesh_jfcvi")
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_p1g1q")
 
 [connection signal="dropped" from="InventoryHandler" to="." method="_on_inventory_handler_dropped"]
 [connection signal="picked" from="InventoryHandler" to="." method="_on_inventory_handler_picked"]

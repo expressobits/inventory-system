@@ -2,18 +2,18 @@
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="2_0mvoc"]
+[ext_resource type="PackedScene" uid="uid://dkwhav2m5inbv" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
 [ext_resource type="Resource" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_518cd"]
 [ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="4_1tm2x"]
 [ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_5p3nr"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
-[ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="7_bgqak"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_y0513"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_efc1k"]
 
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
-player_scene = ExtResource("7_bgqak")
+player_scene = ExtResource("2_01e0j")
 item_wood = ExtResource("2_0mvoc")
 item_metal = ExtResource("3_518cd")
 database = ExtResource("4_1tm2x")

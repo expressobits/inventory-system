@@ -1,4 +1,5 @@
 extends CharacterBody3D
+class_name Player
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -13,20 +14,7 @@ var rot := Vector3()
 @export_node_path("InventoryHandler") var inventory_handler_path = NodePath("/InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 
-func _ready():
-	if multiplayer.get_peers().size() == 0 or str(multiplayer.get_unique_id()) == name:
-		$MeshInstance3D.visible = false
-		$MeshInstance3D/MeshInstance3D.visible = false
-
-	if not is_multiplayer_authority():
-		$Camera3D.clear_current()
-	else:
-		print("local")
-		$Camera3D.make_current()
-
 func _physics_process(delta):
-	if multiplayer.get_peers().size() != 0 and str(multiplayer.get_unique_id()) != name:
-		return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -51,8 +39,6 @@ func _physics_process(delta):
 	interact()
 	
 func _process(delta):
-	if multiplayer.get_peers().size() != 0 and str(multiplayer.get_unique_id()) != name:
-		return
 	if Input.is_action_just_released("toggle_inventory"):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_all_inventories()
@@ -63,7 +49,7 @@ func _process(delta):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_all_inventories()
 
-# Called when there is an input event
+
 func _input(event: InputEvent) -> void:
 	# Mouse look (only if the mouse is captured).
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:

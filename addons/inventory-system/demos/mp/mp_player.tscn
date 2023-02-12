@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkwhav2m5inbv"]
+
+[ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="1_gogru"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0.85098, 0.231373, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uhe50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i378q"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.294118, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0fmeo"]
+size = Vector3(0.8, 0.2, 0.4)
+
+[node name="MPPlayer" instance=ExtResource("1_gogru")]
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="5"]
+material_override = SubResource("StandardMaterial3D_053ih")
+mesh = SubResource("CapsuleMesh_uhe50")
+
+[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
+material_override = SubResource("StandardMaterial3D_i378q")
+mesh = SubResource("BoxMesh_0fmeo")
