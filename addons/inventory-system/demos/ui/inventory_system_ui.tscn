@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/transaction_slot.gd" id="3_ugeom"]
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
-[ext_resource type="AudioStream" uid="uid://bsmtyqo7jll74" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/metalPot2.ogg" id="6_0yj2s"]
 [ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/ui/textures/drop_icon.png" id="6_b06x6"]
-[ext_resource type="AudioStream" uid="uid://cqibymsyga6wf" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/metalPot1.ogg" id="7_ek4ja"]
+[ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
+[ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
 
 [node name="Inventory System UI" type="Control"]
 texture_filter = 1
@@ -64,11 +64,11 @@ offset_right = 250.0
 offset_bottom = 110.0
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_0yj2s")
+stream = ExtResource("6_vp41x")
 volume_db = -12.0
 
 [node name="SlotDrop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_ek4ja")
+stream = ExtResource("7_nysp8")
 volume_db = -12.0
 
 [connection signal="mouse_entered" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_entered"]

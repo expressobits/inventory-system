@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
 [ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/database.tres" id="3_laatm"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
-[ext_resource type="AudioStream" uid="uid://c14f58c5xen2u" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth1.ogg" id="5_omli4"]
+[ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_sfhca"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_dxfus"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
@@ -38,7 +38,7 @@ slot_amount = 32
 inventory_name = "Player Inventory"
 
 [node name="Pickup" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_omli4")
+stream = ExtResource("5_sfhca")
 
 [node name="Drop" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_dxfus")

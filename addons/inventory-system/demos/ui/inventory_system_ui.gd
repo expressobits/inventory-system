@@ -86,6 +86,7 @@ func _close_player_inventory(inventory : Inventory):
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
 	if inventory_handler.is_transaction_active():
 		inventory_handler.transaction_to_at(slot_index, inventory)
+		$SlotDrop.play()
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return

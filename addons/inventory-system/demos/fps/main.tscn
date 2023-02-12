@@ -119,7 +119,7 @@ horizontal_alignment = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory" index="1"]
-inventory_name = "Static Inventory"
+inventory_name = "Dynamic Inventory"
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
@@ -127,7 +127,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 [node name="Inventory" parent="Box Inventory2" index="1"]
 create_slot_if_needed = false
 remove_slot_if_empty = false
-inventory_name = "Dynamic Inventory"
+inventory_name = "Static Inventory"
 
 [node name="Setup Keys" type="Node" parent="."]
 script = ExtResource("10_1ncja")
