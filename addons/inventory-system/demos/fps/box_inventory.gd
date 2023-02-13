@@ -25,12 +25,12 @@ func _on_inventory_opened():
 
 
 func _on_open():
-	$box.visible = true
-	$boxOpen.visible = false
+	$box.visible = false
+	$boxOpen.visible = true
 	$Open.play()
 
 
 func _on_close():
-	$box.visible = false
-	$boxOpen.visible = true
+	$box.visible = true
+	$boxOpen.visible = false
 	$Close.play()

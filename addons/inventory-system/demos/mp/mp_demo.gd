@@ -21,7 +21,6 @@ func create_player(peer_id : int):
 	players.append(player)
 	player.position = Vector3(0,2,0)
 	add_child(player)
-	player.set_multiplayer_authority(peer_id)
 	if peer_id == multiplayer.get_unique_id():
 		setup_inventory_handler(player.get_node("InventoryHandler"))
 
