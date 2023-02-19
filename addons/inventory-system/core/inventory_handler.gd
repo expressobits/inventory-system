@@ -191,12 +191,17 @@ func is_open_any_inventory() -> bool:
 
 ## Returns [code]true[/code] if [Inventory] is open.
 func is_open(inventory : Inventory) -> bool:
-	return opened_inventories.has(inventory)
+	return inventory.is_open
 
 
 ## Open main [Inventory]. Return [code]true[/code] if opened successfully.
 func open_main_inventory() -> bool:
 	return open(inventory)
+
+
+## Close main [Inventory]. Return [code]true[/code] if closed successfully.
+func close_main_inventory() -> bool:
+	return close(inventory)
 
 
 ## Close all open [Inventory]s.

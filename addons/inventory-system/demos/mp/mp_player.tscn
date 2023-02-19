@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkwhav2m5inbv"]
+[gd_scene load_steps=10 format=3 uid="uid://djvkfw01sllxt"]
 
 [ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="2_j20bs"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/network_handler.gd" id="3_2pw0h"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
 shading_mode = 2
@@ -32,9 +33,12 @@ properties/1/sync = true
 [node name="MPPlayer" instance=ExtResource("1_gogru")]
 script = ExtResource("2_j20bs")
 
-[node name="NetworkHandler" type="Node" parent="InventoryHandler" index="1"]
-script = ExtResource("3_2pw0h")
-inventory_handler_path = NodePath("..")
+[node name="InventoryHandler" parent="." index="2"]
+script = ExtResource("3_xjjoy")
+
+[node name="PlayerInventory" parent="InventoryHandler" index="0"]
+script = ExtResource("4_ggduv")
+inventory_name = "Inventory"
 
 [node name="PlayerInventoryOpen" parent="." index="5"]
 max_distance = 5.0

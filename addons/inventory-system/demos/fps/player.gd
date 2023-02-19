@@ -13,6 +13,7 @@ var rot := Vector3()
 
 @export_node_path("InventoryHandler") var inventory_handler_path = NodePath("InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+@onready var raycast : RayCast3D = $Camera3D/RayCast3D
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -40,10 +41,11 @@ func _physics_process(delta):
 	
 func _process(delta):
 	if Input.is_action_just_released("toggle_inventory"):
-		open_main_inventory()
+		inventory_handler.open_main_inventory()
 	
 	if Input.is_action_just_released("escape"):
 		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_main_inventory()
 			inventory_handler.close_all_inventories()
 
 
@@ -64,7 +66,6 @@ func rotate_camera(mouse_axis : Vector2) -> void:
 
 
 func interact():
-	var raycast : RayCast3D = $Camera3D/RayCast3D
 	if raycast.is_colliding():
 		var object = raycast.get_collider()
 		var box := object as BoxInventory
@@ -89,25 +90,9 @@ func interact():
 
 func open_inventory(inventory : Inventory):
 	if not inventory_handler.is_open(inventory):
-		open_other_inventory(inventory)
-	if not inventory_handler.is_open_main_inventory():
-		open_main_inventory()
-
-
-func open_other_inventory(inventory : Inventory):
-	inventory_handler.open(inventory)
-
-
-func open_main_inventory():
-	open_main_inventory_rpc.rpc()
-
-
-@rpc("call_local")
-func open_main_inventory_rpc():
-	if inventory_handler.is_open_main_inventory():
-		inventory_handler.close_all_inventories()
-	else:
-		inventory_handler.open_main_inventory()
+		inventory_handler.open(inventory)
+		if not inventory_handler.is_open_main_inventory():
+			inventory_handler.open_main_inventory()
 
 
 func pickup_item(item : DroppedItem):
