@@ -4,6 +4,7 @@ class_name MPPlayer
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
+	$InventoryHandler.set_multiplayer_authority(1)
 
 
 func _ready():

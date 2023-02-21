@@ -42,6 +42,7 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	inventory_handler.closed.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 
+
 ## Setup player [Inventory]
 func set_player_inventory(player_inventory : Inventory):
 	player_inventory_ui.set_inventory(player_inventory)
@@ -78,7 +79,8 @@ func _on_close_inventory(inventory : Inventory):
 func _close_player_inventory(inventory : Inventory):
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
-	loot_inventory_ui._disconnect_old_inventory()
+	if loot_inventory_ui.inventory != null:
+		loot_inventory_ui._disconnect_old_inventory()
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 #    hotBarUI.gameObject.SetActive(true);

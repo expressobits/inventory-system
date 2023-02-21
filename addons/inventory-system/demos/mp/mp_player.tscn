@@ -38,6 +38,7 @@ script = ExtResource("3_xjjoy")
 
 [node name="PlayerInventory" parent="InventoryHandler" index="0"]
 script = ExtResource("4_ggduv")
+slot_amount = 8
 inventory_name = "Inventory"
 
 [node name="PlayerInventoryOpen" parent="." index="5"]

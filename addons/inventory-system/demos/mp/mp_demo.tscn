@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://botnujr1ynwkf"]
+[gd_scene load_steps=9 format=3 uid="uid://botnujr1ynwkf"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://djvkfw01sllxt" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -8,11 +8,6 @@
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
 [ext_resource type="PackedScene" uid="uid://cmm8njptqaue5" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_y0513"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_efc1k"]
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_2j8sk"]
-properties/0/path = NodePath(".:slots")
-properties/0/spawn = true
-properties/0/sync = true
 
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
@@ -152,9 +147,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 [node name="Inventory" parent="Box Inventory" index="1"]
 script = ExtResource("7_8khhq")
 inventory_name = "Dynamic Inventory"
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Box Inventory/Inventory" index="0"]
-replication_config = SubResource("SceneReplicationConfig_2j8sk")
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
