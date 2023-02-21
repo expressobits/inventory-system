@@ -124,7 +124,8 @@ func pick_to_inventory(dropped_item, inventory := self.inventory):
 ## if in this last task values are not added with successes they will be dropped with [code]drop()[/code]
 func move_between_inventories(from : Inventory, slot_index : int, amount : int, to : Inventory):
 	var slot = from.slots[slot_index];
-	var item = slot.item;
+	var item_id = slot.item_id;
+	var item = database.get_item(item_id)
 	var amount_not_removed = from.remove_at(slot_index, item, amount);
 	var amount_for_swap = amount - amount_not_removed;
 	var amount_not_swaped = to.add(item, amount_for_swap);
@@ -184,10 +185,11 @@ func close(inventory : Inventory) -> bool:
 	emit_signal("closed", inventory)
 	if self.inventory == inventory:
 		if is_transaction_active():
-			var amount_no_add = inventory.add(transaction_slot.item, transaction_slot.amount)
+			var item = inventory.database.get_item(transaction_slot.item_id)
+			var amount_no_add = inventory.add(item, transaction_slot.amount)
 			if amount_no_add > 0:
-				drop(transaction_slot.item, amount_no_add)
-			_set_transaction_slot(transaction_slot.item, 0)
+				drop(item, amount_no_add)
+			_set_transaction_slot(item, 0)
 	return true
 
 
@@ -246,12 +248,12 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 	var item_id = transaction_slot.item_id
 	if item_id <= 0:
 		return
-	var item = database.get_item(item_id)
+	var item = inventory.database.get_item(item_id)
 	if item == null:
 		return
 	if inventory.is_empty_slot(slot_index) or slot.item_id == item_id:
 		var amount_no_add = inventory.add_at(slot_index, item, transaction_slot.amount)
-		_set_transaction_slot(transaction_slot.item, amount_no_add)
+		_set_transaction_slot(item, amount_no_add)
 	else:
 		# Different items in slot and other_slot
 		# Check if transaction_slot amount is equal of origin_slot amount
@@ -271,7 +273,7 @@ func transaction_to(inventory : Inventory):
 	if item == null:
 		return
 	var amount_no_add = inventory.add(item, transaction_slot.amount)
-	_set_transaction_slot(transaction_slot.item, amount_no_add)
+	_set_transaction_slot(item, amount_no_add)
 
 
 ## Return [code]true[/code] if contains information in slot transaction.

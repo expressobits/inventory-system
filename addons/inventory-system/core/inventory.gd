@@ -77,7 +77,7 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 		return
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
-	slot.item = item_id
+	slot.item_id = item_id
 	slot.amount = amount
 	slots[slot_index] = slot
 	emit_signal("updated_slot", slot_index)

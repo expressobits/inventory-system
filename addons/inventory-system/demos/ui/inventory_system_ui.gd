@@ -78,6 +78,7 @@ func _on_close_inventory(inventory : Inventory):
 func _close_player_inventory(inventory : Inventory):
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
+	loot_inventory_ui._disconnect_old_inventory()
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 #    hotBarUI.gameObject.SetActive(true);
