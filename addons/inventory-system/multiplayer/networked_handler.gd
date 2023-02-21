@@ -5,9 +5,11 @@ class_name NetworkedHandler
 func open(inventory : Inventory) -> bool:
 	if not multiplayer.is_server():
 		open_rpc.rpc_id(1, inventory.get_path())
+		emit_signal("opened", inventory)
 	else:
 		open_rpc(inventory.get_path())
 	return true
+	
 
 @rpc
 func open_rpc(object_path : NodePath):
@@ -19,7 +21,22 @@ func open_rpc(object_path : NodePath):
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	super.open(inventory)
+	var id = multiplayer.get_remote_sender_id()
+	if super.open(inventory) and id > 1:
+		_on_open_rpc.rpc_id(multiplayer.get_remote_sender_id(), object_path)
+
+
+@rpc("any_peer")
+func _on_open_rpc(object_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	var object = get_node(object_path)
+	if object == null:
+		return
+	var inventory = object as Inventory
+	if inventory == null:
+		return
+	emit_signal("opened", inventory)
 
 
 func close(inventory : Inventory) -> bool:
@@ -41,6 +58,7 @@ func close_all_inventories():
 @rpc
 func close_all_inventories_rpc():
 	super.close_all_inventories()
+
 
 @rpc
 func close_rpc(object_path : NodePath):

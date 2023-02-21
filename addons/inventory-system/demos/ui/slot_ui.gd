@@ -13,12 +13,15 @@ class_name SlotUI
 ## Update information with [Dictionary] slot. 
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
-func update_info_with_slot(slot : Dictionary):
-	if slot.has("item") and slot.item != null:
-		update_info_with_item(slot.item, slot.amount)
-	else:
-		item_icon.texture = null
-		amount_label.visible = false
+func update_info_with_slot(slot : Dictionary, database : InventoryDatabase):
+
+	if slot.has("item_id") and slot.item_id > 0:
+		var item = database.get_item(slot.item_id)
+		if item != null:
+			update_info_with_item(item, slot.amount)
+			return
+	item_icon.texture = null
+	amount_label.visible = false
 
 
 ## Update information with [InventoryItem] and amount.

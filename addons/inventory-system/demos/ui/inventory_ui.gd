@@ -64,11 +64,11 @@ func _update_slots():
 		slot_obj.gui_input.connect(_on_slot_gui_input.bind(slot_obj))
 		slots_container.add_child(slot_obj)
 		slots.append(slot_obj)
-		slot_obj.update_info_with_slot(slot)
+		slot_obj.update_info_with_slot(slot, inventory.database)
 
 
 func _on_updated_slot(index):
-	slots[index].update_info_with_slot(inventory.slots[index])
+	slots[index].update_info_with_slot(inventory.slots[index], inventory.database)
 
 
 func _on_slot_added(index):

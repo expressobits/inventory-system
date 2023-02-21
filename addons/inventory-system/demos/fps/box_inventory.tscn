@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://cmm8njptqaue5"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/box_inventory.gd" id="1_f8i83"]
 [ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
+[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_h8sic"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="3_kidjv"]
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
 [ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]
@@ -22,6 +23,7 @@ shape = SubResource("BoxShape3D_x2vdb")
 script = ExtResource("3_kidjv")
 create_slot_if_needed = true
 remove_slot_if_empty = true
+database = ExtResource("3_h8sic")
 
 [node name="box" parent="." instance=ExtResource("3_4i45c")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.57105, 0)
