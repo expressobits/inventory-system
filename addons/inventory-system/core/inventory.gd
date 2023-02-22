@@ -70,12 +70,9 @@ func _ready():
 
 ## Define slot specific index information
 func set_slot(slot_index : int, item : InventoryItem, amount : int):
-	print("set_slot")
 	if slot_index >= slots.size():
 		return
-	print("set_slot 0")
 	var item_id = database.get_id_from_item(item)
-	print("set_slot 1")
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
 	slot.item_id = item_id
@@ -167,12 +164,16 @@ func add(item : InventoryItem, amount : int) -> int:
 	for i in range(slots.size()):
 		amount_in_interact = _add_to_slot(i, item, amount_in_interact)
 	if create_slot_if_needed and amount_in_interact > 0:
-		var slot = { "item_id": 0, "amount":0 }
-		slots.append(slot)
-		emit_signal("slot_added", slots.size() - 1)
+		add_slot(slots.size())
 		amount_in_interact = _add_to_slot(slots.size() - 1, item, amount_in_interact)
 		_call_events(old_amount)
 	return amount_in_interact
+
+
+func add_slot(slot_index : int):
+	var slot = { "item_id": 0, "amount":0 }
+	slots.insert(slot_index, slot)
+	emit_signal("slot_added", slot_index)
 
 
 ## Adds a amount of the item to the specified inventory slot index
@@ -186,6 +187,11 @@ func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	return amount_in_interact
 
 
+func remove_slot(slot_index):
+	slots.remove_at(slot_index)
+	emit_signal("slot_removed", slot_index)
+
+
 ## Removes a amount of the item from inventory and 
 ## returns the amount that was not removed
 func remove(item : InventoryItem, amount := 1) -> int:
@@ -195,8 +201,7 @@ func remove(item : InventoryItem, amount := 1) -> int:
 		var slot = slots[i]
 		amount_in_interact = _remove_from_slot(i, item, amount_in_interact)
 		if remove_slot_if_empty and slot.amount == 0:
-			slots.remove_at(i)
-			emit_signal("slot_removed", i)
+			remove_slot(i)
 			_call_events(old_amount)
 	return amount_in_interact
 
@@ -210,8 +215,7 @@ func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 		var slot = slots[slot_index]
 		amount_in_interact = _remove_from_slot(slot_index, item, amount_in_interact)
 		if remove_slot_if_empty and slot.amount == 0:
-			slots.remove_at(slot_index)
-			emit_signal("slot_removed", slot_index)
+			remove_slot(slot_index)
 			_call_events(old_amount)
 	return amount_in_interact
 

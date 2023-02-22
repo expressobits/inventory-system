@@ -72,8 +72,7 @@ func closed_rpc():
 func slot_added_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	var slot = { "item_id": 0, "amount":0 }
-	slots.insert(slot_index, slot)
+	add_slot(slot_index)
 
 
 @rpc
@@ -88,4 +87,4 @@ func updated_slot_rpc(slot_index : int, item_id : int, amount : int):
 func slot_removed_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	slots.remove_at(slot_index)
+	remove_slot(slot_index)
