@@ -70,11 +70,12 @@ func _ready():
 
 ## Define slot specific index information
 func set_slot(slot_index : int, item : InventoryItem, amount : int):
+	print("set_slot")
 	if slot_index >= slots.size():
 		return
+	print("set_slot 0")
 	var item_id = database.get_id_from_item(item)
-	if item_id <= 0:
-		return
+	print("set_slot 1")
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
 	slot.item_id = item_id

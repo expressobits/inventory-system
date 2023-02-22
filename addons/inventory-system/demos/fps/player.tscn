@@ -30,12 +30,11 @@ collision_mask = 16
 
 [node name="InventoryHandler" type="Node" parent="."]
 script = ExtResource("2_0npow")
-inventory_path = NodePath("PlayerInventory")
 database = ExtResource("3_axldf")
 
-[node name="PlayerInventory" type="Node" parent="InventoryHandler"]
+[node name="Inventory" type="Node" parent="InventoryHandler"]
 script = ExtResource("4_cio1o")
-slot_amount = 32
+slot_amount = 8
 inventory_name = "Player Inventory"
 database = ExtResource("3_axldf")
 
@@ -53,5 +52,5 @@ stream = ExtResource("8_ckf1g")
 
 [connection signal="dropped" from="InventoryHandler" to="." method="_on_inventory_handler_dropped"]
 [connection signal="picked" from="InventoryHandler" to="." method="_on_inventory_handler_picked"]
-[connection signal="closed" from="InventoryHandler/PlayerInventory" to="." method="_on_player_inventory_closed"]
-[connection signal="opened" from="InventoryHandler/PlayerInventory" to="." method="_on_player_inventory_opened"]
+[connection signal="closed" from="InventoryHandler/Inventory" to="." method="_on_player_inventory_closed"]
+[connection signal="opened" from="InventoryHandler/Inventory" to="." method="_on_player_inventory_opened"]

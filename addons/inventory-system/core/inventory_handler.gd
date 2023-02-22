@@ -28,7 +28,7 @@ signal closed(inventory : Inventory)
 
 ## Emitted when handler transfers slot is updated.
 ## Called when the function [code]set_transaction_slot()[/code] is executed.
-signal updated_transaction_slot(item : InventoryItem, amount : int)
+signal updated_transaction_slot(item_id : int, amount : int)
 
 ## Main [Inventory] node path.
 ## The main [Inventory] is used in most handler functions as a default inventory.
@@ -52,7 +52,7 @@ var opened_inventories : Array
 # TODO More slot transactions (Queue transactions equal Project Zomboid)
 ## Slot responsible for storing transaction information
 var transaction_slot := {
-	"item": null,
+	"item_id": 0,
 	"amount": 0
 }
 
@@ -189,7 +189,7 @@ func close(inventory : Inventory) -> bool:
 			var amount_no_add = inventory.add(item, transaction_slot.amount)
 			if amount_no_add > 0:
 				drop(item, amount_no_add)
-			_set_transaction_slot(item, 0)
+			_set_transaction_slot(0, 0)
 	return true
 
 
@@ -237,7 +237,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 	if item == null:
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
-	_set_transaction_slot(item, amount - amount_no_removed)
+	_set_transaction_slot(item_id, amount - amount_no_removed)
 
 
 ## Moves transfer slot information to the [code]slot_index[/code] slot of [Inventory].
@@ -253,12 +253,12 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 		return
 	if inventory.is_empty_slot(slot_index) or slot.item_id == item_id:
 		var amount_no_add = inventory.add_at(slot_index, item, transaction_slot.amount)
-		_set_transaction_slot(item, amount_no_add)
+		_set_transaction_slot(item_id, amount_no_add)
 	else:
 		# Different items in slot and other_slot
 		# Check if transaction_slot amount is equal of origin_slot amount
 		var new_amount = transaction_slot.amount
-		_set_transaction_slot(inventory.slots[slot_index].item, inventory.slots[slot_index].amount)
+		_set_transaction_slot(slot.item_id, inventory.slots[slot_index].amount)
 		inventory.set_slot(slot_index, item, new_amount)
 
 
@@ -273,12 +273,12 @@ func transaction_to(inventory : Inventory):
 	if item == null:
 		return
 	var amount_no_add = inventory.add(item, transaction_slot.amount)
-	_set_transaction_slot(item, amount_no_add)
+	_set_transaction_slot(item_id, amount_no_add)
 
 
 ## Return [code]true[/code] if contains information in slot transaction.
 func is_transaction_active() -> bool:
-	return transaction_slot.amount > 0
+	return transaction_slot.item_id > 0
 
 
 ## Drop [InventoryItem] from slot transaction.
@@ -286,11 +286,13 @@ func drop_transaction():
 	if is_transaction_active():
 		var item = database.get_item(transaction_slot.item_id)
 		drop(item, transaction_slot.amount)
-	_set_transaction_slot(null, 0)
+	_set_transaction_slot(0, 0)
 
 
-func _set_transaction_slot(item : InventoryItem, amount : int):
-	var item_id = database.get_id_from_item(item)
-	transaction_slot.item_id = item_id
+func _set_transaction_slot(item_id : int, amount : int):
 	transaction_slot.amount = amount
-	emit_signal("updated_transaction_slot", item, amount)
+	if amount > 0:
+		transaction_slot.item_id = item_id
+	else:
+		transaction_slot.item_id = 0
+	emit_signal("updated_transaction_slot", transaction_slot.item_id, transaction_slot.amount)

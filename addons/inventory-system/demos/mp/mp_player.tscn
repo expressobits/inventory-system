@@ -36,10 +36,8 @@ script = ExtResource("2_j20bs")
 [node name="InventoryHandler" parent="." index="2"]
 script = ExtResource("3_xjjoy")
 
-[node name="PlayerInventory" parent="InventoryHandler" index="0"]
+[node name="Inventory" parent="InventoryHandler" index="0"]
 script = ExtResource("4_ggduv")
-slot_amount = 8
-inventory_name = "Inventory"
 
 [node name="PlayerInventoryOpen" parent="." index="5"]
 max_distance = 5.0

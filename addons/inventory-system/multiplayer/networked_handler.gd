@@ -6,17 +6,13 @@ func _ready():
 		updated_transaction_slot.connect(_on_updated_transaction_slot.bind())
 
 
-func _on_updated_transaction_slot(item : InventoryItem, amount : int):
-	var item_id = database.get_id_from_item(item)
-	if item_id > 0:
-		_on_updated_transaction_slot_rpc.rpc(item_id, amount)
+func _on_updated_transaction_slot(item_id : int, amount : int):
+	_on_updated_transaction_slot_rpc.rpc(item_id, amount)
 
 
 @rpc
 func _on_updated_transaction_slot_rpc(item_id : int, amount : int):
-	var item = database.get_item(item_id)
-	if item != null:
-		_set_transaction_slot(item, amount)
+	_set_transaction_slot(item_id, amount)
 
 
 func drop(item : InventoryItem, amount := 1) -> bool:
@@ -28,6 +24,31 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 	else:
 		drop_rpc(item_id, amount)
 	return true
+
+
+# func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, drop_excess := false) -> int:
+# 	var item_id = database.get_id_from_item(item)
+# 	if item_id <= 0:
+# 		return amount
+# 	if not multiplayer.is_server():
+# 		add_to_inventory_rpc.rpc_id(1, inventory.get_path(), item_id, amount, drop_excess)
+# 	else:
+# 		return super.add_to_inventory(inventory.get_path(), item_id, amount, drop_excess)
+# 	return true
+
+
+func pick_to_inventory(dropped_item, inventory := self.inventory):
+	if not multiplayer.is_server():
+		pick_to_inventory_rpc.rpc_id(1, dropped_item.get_path(), inventory.get_path())
+	else:
+		pick_to_inventory_rpc(dropped_item.get_path(), inventory.get_path())
+
+
+func drop_transaction():
+	if not multiplayer.is_server():
+		drop_transaction_rpc.rpc_id(1)
+	else:
+		drop_transaction_rpc()
 
 
 func open(inventory : Inventory) -> bool:
@@ -85,8 +106,49 @@ func drop_rpc(item_id : int, amount : int):
 	var item = database.get_item(item_id)
 	if item == null:
 		return
-	var id = multiplayer.get_remote_sender_id()
 	super.drop(item, amount)
+
+
+@rpc("any_peer")
+func add_to_inventory_rpc(object_path : NodePath, item_id : int, amount := 1, drop_excess := false):
+	if not multiplayer.is_server():
+		return
+	var item = database.get_item(item_id)
+	if item == null:
+		return
+	var object = get_node(object_path)
+	if object == null:
+		return
+	var inventory = object as Inventory
+	if inventory == null:
+		return
+	super.add_to_inventory(inventory, item, amount, drop_excess)
+
+
+@rpc("any_peer")
+func pick_to_inventory_rpc(pick_object_path : NodePath, object_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	var pick_object = get_node(pick_object_path)
+	if pick_object == null:
+		return
+	var dropped_item = pick_object as DroppedItem
+	if dropped_item == null:
+		return
+	var object = get_node(object_path)
+	if object == null:
+		return
+	var inventory = object as Inventory
+	if inventory == null:
+		return
+	super.pick_to_inventory(dropped_item, inventory)
+
+
+@rpc("any_peer")
+func drop_transaction_rpc():
+	if not multiplayer.is_server():
+		return
+	super.drop_transaction()
 
 
 @rpc("any_peer")
