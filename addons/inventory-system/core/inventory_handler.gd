@@ -274,7 +274,7 @@ func transaction_to(inventory : Inventory):
 
 ## Return [code]true[/code] if contains information in slot transaction.
 func is_transaction_active() -> bool:
-	return transaction_slot.item_id > 0
+	return transaction_slot.item_id > InventoryItem.NONE
 
 
 ## Drop [InventoryItem] from slot transaction.
