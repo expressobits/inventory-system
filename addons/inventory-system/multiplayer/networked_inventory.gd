@@ -12,7 +12,7 @@ class_name NetworkedInventory
 ## MultiplayerSyncronizer
 
 func _ready():
-	_load_slots()
+	super._ready()
 	multiplayer.peer_connected.connect(_on_connected.bind())
 	slot_added.connect(_on_slot_added.bind())
 	updated_slot.connect(_on_updated_slot.bind())
