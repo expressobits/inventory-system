@@ -52,7 +52,7 @@ var opened_inventories : Array
 # TODO More slot transactions (Queue transactions equal Project Zomboid)
 ## Slot responsible for storing transaction information
 var transaction_slot := {
-	"item_id": 0,
+	"item_id": InventoryItem.NONE,
 	"amount": 0
 }
 

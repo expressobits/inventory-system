@@ -12,8 +12,8 @@ class_name NetworkedInventory
 ## MultiplayerSyncronizer
 
 func _ready():
+	_load_slots()
 	multiplayer.peer_connected.connect(_on_connected.bind())
-	super._ready()
 	slot_added.connect(_on_slot_added.bind())
 	updated_slot.connect(_on_updated_slot.bind())
 	slot_removed.connect(_on_slot_removed.bind())
@@ -26,6 +26,7 @@ func _on_connected(id):
 		return
 	if is_open:
 		_opened_rpc.rpc_id(id)
+	_update_slots_rpc.rpc_id(id, slots)
  
 
 func _on_opened():
@@ -59,6 +60,11 @@ func _on_slot_removed(slot_index : int):
 	if not multiplayer.is_server():
 		return
 	_slot_removed_rpc.rpc(slot_index)
+
+
+@rpc
+func _update_slots_rpc(slots):
+	self.slots = slots
 
 
 @rpc

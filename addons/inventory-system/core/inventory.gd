@@ -63,9 +63,7 @@ signal closed
 
 
 func _ready():
-	if not create_slot_if_needed:
-		for i in slot_amount:
-			_add_slot(i, false)
+	_load_slots()
 
 
 ## Define slot specific index information
@@ -227,6 +225,12 @@ func close() -> bool:
 		emit_signal("closed")
 		return true
 	return false
+
+
+func _load_slots():
+	if not create_slot_if_needed:
+		for i in slot_amount:
+			_add_slot(i, false)
 
 
 func _remove_slot(slot_index):
