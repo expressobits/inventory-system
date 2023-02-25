@@ -251,3 +251,9 @@ func open_main_inventory() -> bool:
 ## Open main [Inventory]. Return [code]true[/code] if opened successfully.
 func close_main_inventory() -> bool:
 	return super.close(inventory)
+
+
+func _instantiate_dropped_item(dropped_item : PackedScene):
+	var spawner = get_node("../../DroppedItemSpawner")
+	var obj = spawner.spawn([get_parent().position, get_parent().rotation, dropped_item.resource_path])
+	emit_signal("dropped", obj)

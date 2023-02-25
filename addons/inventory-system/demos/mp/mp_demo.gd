@@ -42,6 +42,22 @@ func host_game():
 	multiplayer.set_multiplayer_peer(peer)
 	create_player(multiplayer.get_unique_id())
 	$"UI/Connect Panel".visible = false
+	await get_tree().create_timer(1).timeout
+	make_scene_objects_to_network()
+
+
+func make_scene_objects_to_network():
+	var items = $Level/Items
+	var spawner = get_node("DroppedItemSpawner")
+	for i in items.get_child_count():
+		var item = items.get_child(i) as DroppedItem
+		var item_id = database.get_id_from_item(item.item)
+		var position = item.position
+		var rotation = item.rotation
+		item.queue_free()
+		var dropped_item = database.get_dropped_item(item_id)
+		var obj = spawner.spawn([position, rotation, dropped_item.resource_path])
+		
 
 
 func connect_to_ip(ip):
@@ -49,6 +65,10 @@ func connect_to_ip(ip):
 	peer.create_client(ip, 4242)
 	multiplayer.set_multiplayer_peer(peer)
 	$"UI/Connect Panel".visible = false
+	var items = $Level/Items
+	for i in items.get_child_count():
+		var item = items.get_child(i) as DroppedItem
+		item.queue_free()
 
 
 func _player_connected(new_peer_id : int):

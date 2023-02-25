@@ -65,11 +65,7 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
 	var dropped_item = database.get_dropped_item(item_id)
 	for i in amount:
-		var obj = dropped_item.instantiate()
-		emit_signal("dropped", obj)
-		drop_parent.add_child(obj)
-		obj.position = get_parent().position
-		obj.rotation = get_parent().rotation
+		_instantiate_dropped_item(dropped_item)
 	return true
 
 
@@ -287,6 +283,14 @@ func drop_transaction():
 		var item = database.get_item(transaction_slot.item_id)
 		drop(item, transaction_slot.amount)
 	_set_transaction_slot(0, 0)
+
+
+func _instantiate_dropped_item(dropped_item : PackedScene):
+	var obj = dropped_item.instantiate()
+	emit_signal("dropped", obj)
+	drop_parent.add_child(obj)
+	obj.position = get_parent().position
+	obj.rotation = get_parent().rotation
 
 
 func _set_transaction_slot(item_id : int, amount : int):
