@@ -57,7 +57,6 @@ func make_scene_objects_to_network():
 		item.queue_free()
 		var dropped_item = database.get_dropped_item(item_id)
 		var obj = spawner.spawn([position, rotation, dropped_item.resource_path])
-		
 
 
 func connect_to_ip(ip):

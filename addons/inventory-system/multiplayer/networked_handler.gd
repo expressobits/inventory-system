@@ -1,19 +1,17 @@
 extends InventoryHandler
 class_name NetworkedHandler
 
+## Network version of the InventoryHandler, the main inventory handler calls are 
+## intercepted by this script to propagate rpc calls to the server and later if 
+## necessary make response rpc calls to the client.
+
 func _ready():
 	if multiplayer.is_server():
 		updated_transaction_slot.connect(_on_updated_transaction_slot.bind())
 
 
-func _on_updated_transaction_slot(item_id : int, amount : int):
-	_on_updated_transaction_slot_rpc.rpc(item_id, amount)
-
-
-@rpc
-func _on_updated_transaction_slot_rpc(item_id : int, amount : int):
-	_set_transaction_slot(item_id, amount)
-
+## === OVERRIDE MAIN COMMANDS ===
+## Override all main commands for the client to send to the server through rpc
 
 func drop(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
@@ -24,17 +22,6 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 	else:
 		drop_rpc(item_id, amount)
 	return true
-
-
-# func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, drop_excess := false) -> int:
-# 	var item_id = database.get_id_from_item(item)
-# 	if item_id <= 0:
-# 		return amount
-# 	if not multiplayer.is_server():
-# 		add_to_inventory_rpc.rpc_id(1, inventory.get_path(), item_id, amount, drop_excess)
-# 	else:
-# 		return super.add_to_inventory(inventory.get_path(), item_id, amount, drop_excess)
-# 	return true
 
 
 func pick_to_inventory(dropped_item, inventory := self.inventory):
@@ -97,7 +84,7 @@ func transaction_to(inventory : Inventory):
 		transaction_to_rpc(inventory.get_path())
 
 
-# Commands to server from client
+## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
 func drop_rpc(item_id : int, amount : int):
@@ -163,8 +150,21 @@ func open_rpc(object_path : NodePath):
 		return
 	var id = multiplayer.get_remote_sender_id()
 	if super.open(inventory) and id > 1:
-		_on_open_rpc.rpc_id(multiplayer.get_remote_sender_id(), object_path)
+		_on_open_rpc.rpc_id(id, object_path)
 
+@rpc("any_peer")
+func close_rpc(object_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	var object = get_node(object_path)
+	if object == null:
+		return
+	var inventory = object as Inventory
+	if inventory == null:
+		return
+	var id = multiplayer.get_remote_sender_id()
+	if super.close(inventory) and id > 1:
+		_on_close_rpc.rpc_id(id, object_path)
 
 @rpc("any_peer")
 func to_transaction_rpc(slot_index : int, object_path : NodePath, amount : int):
@@ -210,20 +210,7 @@ func close_all_inventories_rpc():
 	super.close_all_inventories()
 
 
-@rpc("any_peer")
-func close_rpc(object_path : NodePath):
-	if not multiplayer.is_server():
-		return
-	var object = get_node(object_path)
-	if object == null:
-		return
-	var inventory = object as Inventory
-	if inventory == null:
-		return
-	super.close(inventory)
-
-
-# Responses from server to client
+## === SERVER RESPONSES TO CLIENT ===
 
 @rpc
 func _on_open_rpc(object_path : NodePath):
@@ -236,9 +223,25 @@ func _on_open_rpc(object_path : NodePath):
 	if inventory == null:
 		return
 	emit_signal("opened", inventory)
+	
+
+@rpc
+func _on_close_rpc(object_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	var object = get_node(object_path)
+	if object == null:
+		return
+	var inventory = object as Inventory
+	if inventory == null:
+		return
+	emit_signal("closed", inventory)
 
 
-## Returns [code]true[/code] if main [Inventory] is open.
+## === LOCAL INVENTORY CALLS ===
+## Calling the main inventory can be local, avoiding a new network rpc call
+
+# Returns [code]true[/code] if main [Inventory] is open.
 func is_open_main_inventory() -> bool:
 	return super.is_open(inventory)
 
@@ -257,3 +260,12 @@ func _instantiate_dropped_item(dropped_item : PackedScene):
 	var spawner = get_node("../../DroppedItemSpawner")
 	var obj = spawner.spawn([get_parent().position, get_parent().rotation, dropped_item.resource_path])
 	emit_signal("dropped", obj)
+
+
+func _on_updated_transaction_slot(item_id : int, amount : int):
+	_on_updated_transaction_slot_rpc.rpc(item_id, amount)
+
+
+@rpc
+func _on_updated_transaction_slot_rpc(item_id : int, amount : int):
+	_set_transaction_slot(item_id, amount)
