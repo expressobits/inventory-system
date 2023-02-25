@@ -15,7 +15,7 @@ func _ready():
 
 func drop(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
-	if item_id <= 0:
+	if item_id < 0:
 		return false
 	if not multiplayer.is_server():
 		drop_rpc.rpc_id(1, item_id, amount)

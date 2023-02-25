@@ -30,7 +30,7 @@ func get_id_from_item(item : InventoryItem) -> int:
 		if item_data.item == item:
 			return item_data.id
 	# printerr("item ",item," is not in the database!")
-	return 0
+	return Inventory.NONE_ITEM_ID
 
 
 ## Returns the id of dropped item as [PackedScene], return 0 if not found
@@ -39,7 +39,7 @@ func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 		if item_data.dropped_item == dropped_item:
 			return item_data.id
 	# printerr("dropped_item ",dropped_item," is not in the database!")
-	return 0
+	return Inventory.NONE_ITEM_ID
 
 
 ## Returns the [InventoryItem] of id, return null if not found
