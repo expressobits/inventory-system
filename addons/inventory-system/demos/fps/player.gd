@@ -41,7 +41,11 @@ func _physics_process(delta):
 	
 func _process(delta):
 	if Input.is_action_just_released("toggle_inventory"):
-		inventory_handler.open_main_inventory()
+		if inventory_handler.is_open_main_inventory():
+			inventory_handler.close_main_inventory()
+			inventory_handler.close_all_inventories()
+		else:
+			inventory_handler.open_main_inventory()
 	
 	if Input.is_action_just_released("escape"):
 		if inventory_handler.is_open_main_inventory():
