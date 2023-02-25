@@ -148,9 +148,8 @@ func open_rpc(object_path : NodePath):
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	var id = multiplayer.get_remote_sender_id()
-	if super.open(inventory) and id > 1:
-		_on_open_rpc.rpc_id(id, object_path)
+	super.open(inventory)
+
 
 @rpc("any_peer")
 func close_rpc(object_path : NodePath):
@@ -162,9 +161,8 @@ func close_rpc(object_path : NodePath):
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	var id = multiplayer.get_remote_sender_id()
-	if super.close(inventory) and id > 1:
-		_on_close_rpc.rpc_id(id, object_path)
+	super.close(inventory)
+
 
 @rpc("any_peer")
 func to_transaction_rpc(slot_index : int, object_path : NodePath, amount : int):
@@ -208,34 +206,6 @@ func transaction_to_rpc(object_path : NodePath):
 @rpc("any_peer")
 func close_all_inventories_rpc():
 	super.close_all_inventories()
-
-
-## === SERVER RESPONSES TO CLIENT ===
-
-@rpc
-func _on_open_rpc(object_path : NodePath):
-	if not multiplayer.is_server():
-		return
-	var object = get_node(object_path)
-	if object == null:
-		return
-	var inventory = object as Inventory
-	if inventory == null:
-		return
-	emit_signal("opened", inventory)
-	
-
-@rpc
-func _on_close_rpc(object_path : NodePath):
-	if not multiplayer.is_server():
-		return
-	var object = get_node(object_path)
-	if object == null:
-		return
-	var inventory = object as Inventory
-	if inventory == null:
-		return
-	emit_signal("closed", inventory)
 
 
 ## === LOCAL INVENTORY CALLS ===
