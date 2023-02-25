@@ -62,9 +62,6 @@ signal closed
 @export var database : InventoryDatabase
 
 
-const NONE_ITEM_ID = -1
-
-
 func _ready():
 	if not create_slot_if_needed:
 		for i in slot_amount:
@@ -117,7 +114,7 @@ func is_empty() -> bool:
 func is_full() -> bool:
 	for slot in slots:
 		var item_id = slot.item_id
-		if item_id <= NONE_ITEM_ID:
+		if item_id <= InventoryItem.NONE:
 			return false
 		var item = database.get_item(item_id)
 		if slot.amount < item.max_stack:
@@ -128,7 +125,7 @@ func is_full() -> bool:
 ## Returns true if the inventory contains the quantity of the specified item
 func contains(item : InventoryItem, amount := 1) -> bool:
 	var item_id = database.get_id_from_item(item)
-	if item_id <= NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return 0
 	var amount_in_inventory = 0
 	for slot in slots:
@@ -142,7 +139,7 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 ## Returns amount of the specified item in inventory
 func get_amount_of(item : InventoryItem) -> int:
 	var item_id = database.get_id_from_item(item)
-	if item_id <= NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return 0
 	var amount_in_inventory = 0;
 	for slot in slots:
@@ -238,7 +235,7 @@ func _remove_slot(slot_index):
 
 
 func _add_slot(slot_index : int, emit_signal := true):
-	var slot = { "item_id": NONE_ITEM_ID, "amount": 0 }
+	var slot = { "item_id": InventoryItem.NONE, "amount": 0 }
 	slots.insert(slot_index, slot)
 	if emit_signal:
 		emit_signal("slot_added", slot_index)
@@ -256,15 +253,15 @@ func _call_events(old_amount : int):
 
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var item_id = database.get_id_from_item(item)
-	if item_id <= NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		print(item_id)
 		return amount
 	var slot = slots[slot_index]
-	if amount <= 0 or (slot.item_id != item_id and slot.item_id != NONE_ITEM_ID):
+	if amount <= 0 or (slot.item_id != item_id and slot.item_id != InventoryItem.NONE):
 		return amount
 	var amount_to_add = min(amount, item.max_stack - slot.amount)
 	slot.amount = slot.amount + amount_to_add;
-	if amount_to_add > 0 and slot.item_id == NONE_ITEM_ID:
+	if amount_to_add > 0 and slot.item_id == InventoryItem.NONE:
 		slot.item_id = item_id
 	emit_signal("updated_slot", slot_index)
 	return amount - amount_to_add;
@@ -276,11 +273,11 @@ func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> i
 		return amount
 	var slot = slots[slot_index]
 	var item_slot = slot.item_id
-	if amount <= 0 or (item_slot != item_id && item_slot != NONE_ITEM_ID):
+	if amount <= 0 or (item_slot != item_id && item_slot != InventoryItem.NONE):
 		return amount;
 	var amount_to_remove = min(amount, slot.amount);
 	slot.amount = slot.amount - amount_to_remove;
 	if slot.amount <= 0:
-		slot.item_id = NONE_ITEM_ID;
+		slot.item_id = InventoryItem.NONE;
 	emit_signal("updated_slot", slot_index);
 	return amount - amount_to_remove;

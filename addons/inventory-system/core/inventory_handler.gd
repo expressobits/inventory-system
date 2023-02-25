@@ -89,7 +89,7 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 		return
 	var slot = inventory.slots[slot_index]
 	var item_id = slot.item_id
-	if item_id <= Inventory.NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return
 	var item = database.get_item(item_id)
 	if item == null:
@@ -138,7 +138,7 @@ func swap_between_inventories(inventory : Inventory, slot_index : int, other_inv
 	# Same Item in slot and other_slot
 	if other_inventory.is_empty_slot(other_slot_index) or slot.item_id == other_slot.item_id:
 		var item_id = slot.item_id
-		if item_id <= Inventory.NONE_ITEM_ID:
+		if item_id <= InventoryItem.NONE:
 			return
 		var item = database.get_item(item_id)
 		if item == null:
@@ -185,7 +185,7 @@ func close(inventory : Inventory) -> bool:
 			var amount_no_add = inventory.add(item, transaction_slot.amount)
 			if amount_no_add > 0:
 				drop(item, amount_no_add)
-			_set_transaction_slot(Inventory.NONE_ITEM_ID, 0)
+			_set_transaction_slot(InventoryItem.NONE, 0)
 	return true
 
 
@@ -227,7 +227,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 		return
 	var slot = inventory.slots[slot_index]
 	var item_id = slot.item_id
-	if item_id <= Inventory.NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return
 	var item = inventory.database.get_item(item_id)
 	if item == null:
@@ -242,7 +242,7 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 		return
 	var slot = inventory.slots[slot_index]
 	var item_id = transaction_slot.item_id
-	if item_id <= Inventory.NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return
 	var item = inventory.database.get_item(item_id)
 	if item == null:
@@ -263,7 +263,7 @@ func transaction_to(inventory : Inventory):
 	if not is_transaction_active():
 		return
 	var item_id = transaction_slot.item_id
-	if item_id <= Inventory.NONE_ITEM_ID:
+	if item_id <= InventoryItem.NONE:
 		return
 	var item = database.get_item(item_id)
 	if item == null:
@@ -282,7 +282,7 @@ func drop_transaction():
 	if is_transaction_active():
 		var item = database.get_item(transaction_slot.item_id)
 		drop(item, transaction_slot.amount)
-	_set_transaction_slot(Inventory.NONE_ITEM_ID, 0)
+	_set_transaction_slot(InventoryItem.NONE, 0)
 
 
 func _instantiate_dropped_item(dropped_item : PackedScene):
@@ -298,5 +298,5 @@ func _set_transaction_slot(item_id : int, amount : int):
 	if amount > 0:
 		transaction_slot.item_id = item_id
 	else:
-		transaction_slot.item_id = Inventory.NONE_ITEM_ID
+		transaction_slot.item_id = InventoryItem.NONE
 	emit_signal("updated_transaction_slot", transaction_slot.item_id, transaction_slot.amount)

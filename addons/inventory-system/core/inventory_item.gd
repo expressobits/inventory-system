@@ -23,3 +23,5 @@ class_name InventoryItem
 
 ## Item icon in texture2D, displayed by [SlotUI]
 @export var icon : Texture2D
+
+const NONE = -1
