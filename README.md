@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.4.0-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.5.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -23,13 +23,13 @@
 
 ✔️ Static and dynamic inventory options.
 
+✔️ Multiplayer compatible (Including example).
+
 🔨 Craft System.
 
 🔨 Hotbar.
 
 🔨 Item Editor.
-
-🔨 Multiplayer compatible (Including example).
 
 
 ## Install
