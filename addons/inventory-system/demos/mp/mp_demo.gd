@@ -9,10 +9,8 @@ var peer : ENetMultiplayerPeer
 
 func _ready():
 	multiplayer.peer_connected.connect(_player_connected.bind())
-#	multiplayer.peer_disconnected.connect(_player_disconnected.bind())
-#	multiplayer.connected_to_server.connect(_connected_ok.bind())
-#	multiplayer.connection_failed.connect(_connected_fail.bind())
-#	multiplayer.server_disconnected.connect(_server_disconnected.bind())
+	multiplayer.peer_disconnected.connect(_player_disconnected.bind())
+
 
 func create_player(peer_id : int):
 	connected_peer_ids.append(peer_id)
@@ -75,6 +73,15 @@ func _player_connected(new_peer_id : int):
 		add_newly_connected_player_character.rpc(new_peer_id)
 		add_previously_connected_player_characters.rpc_id(new_peer_id, connected_peer_ids)
 		create_player(new_peer_id)
+
+
+func _player_disconnected(peer_id : int):
+	var pos = connected_peer_ids.find(peer_id)
+	if pos > 0 and pos < connected_peer_ids.size():
+		connected_peer_ids.remove_at(pos)
+		var player = players[pos]
+		players.remove_at(pos)
+		player.queue_free()
 
 
 func _on_host_button_button_down():
