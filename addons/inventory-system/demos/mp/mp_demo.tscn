@@ -1,0 +1,174 @@
+[gd_scene load_steps=11 format=3 uid="uid://botnujr1ynwkf"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
+[ext_resource type="PackedScene" uid="uid://djvkfw01sllxt" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
+[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_aep54"]
+[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_5p3nr"]
+[ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
+[ext_resource type="PackedScene" uid="uid://cmm8njptqaue5" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_y0513"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_efc1k"]
+
+[node name="MPDemo" type="Node"]
+script = ExtResource("1_fcmcx")
+player_scene = ExtResource("2_01e0j")
+database = ExtResource("3_aep54")
+
+[node name="UI" type="CanvasLayer" parent="."]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="Labels" type="Control" parent="UI"]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Labels"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 16.0
+offset_right = 188.0
+offset_bottom = 132.0
+
+[node name="Label" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "Test Keys"
+
+[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "I - Open Inventory"
+
+[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "F1 - Add wood item"
+
+[node name="Label4" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "F2 - Remove 2 wood item"
+
+[node name="Label5" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "F3 - Add metal item"
+
+[node name="Label6" type="Label" parent="UI/Labels/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "F3 - Remove 2 metal item"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/Labels"]
+layout_mode = 0
+offset_left = 330.0
+offset_top = 16.0
+offset_right = 558.0
+offset_bottom = 132.0
+
+[node name="Label" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "Mouse Actions in Slot"
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "Left Mouse - Get all items from slot"
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "Right Mouse - Get half items from slot"
+horizontal_alignment = 2
+
+[node name="InteractMessage" type="Label" parent="UI/Labels"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -352.0
+offset_top = -165.0
+offset_right = -224.0
+offset_bottom = -149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_5p3nr")
+text = "E - Open Loot"
+horizontal_alignment = 1
+
+[node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
+
+[node name="Connect Panel" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -570.0
+offset_bottom = -317.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.572549, 0.360784, 0, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Connect Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+layout_mode = 2
+text = "HOST"
+
+[node name="ConnectButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+layout_mode = 2
+text = "CONNECT TO LOCALHOST"
+
+[node name="Level" parent="." instance=ExtResource("8_kfwho")]
+
+[node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory" index="1"]
+script = ExtResource("7_8khhq")
+inventory_name = "Dynamic Inventory"
+
+[node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory2" index="1"]
+script = ExtResource("7_8khhq")
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Static Inventory"
+
+[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = ExtResource("8_m78qf")
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("10_efc1k")
+
+[connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
+
+[editable path="Box Inventory"]
+[editable path="Box Inventory2"]

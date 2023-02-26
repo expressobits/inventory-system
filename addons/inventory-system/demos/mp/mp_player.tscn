@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://djvkfw01sllxt"]
+
+[ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="1_gogru"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="2_j20bs"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0.85098, 0.231373, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uhe50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i378q"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.294118, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0fmeo"]
+size = Vector3(0.8, 0.2, 0.4)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fhfrv"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+
+[node name="MPPlayer" instance=ExtResource("1_gogru")]
+script = ExtResource("2_j20bs")
+
+[node name="InventoryHandler" parent="." index="2"]
+script = ExtResource("3_xjjoy")
+
+[node name="Inventory" parent="InventoryHandler" index="0"]
+script = ExtResource("4_ggduv")
+
+[node name="PlayerInventoryOpen" parent="." index="5"]
+max_distance = 5.0
+
+[node name="PlayerInventoryClose" parent="." index="6"]
+max_distance = 5.0
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="7"]
+material_override = SubResource("StandardMaterial3D_053ih")
+mesh = SubResource("CapsuleMesh_uhe50")
+
+[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
+material_override = SubResource("StandardMaterial3D_i378q")
+mesh = SubResource("BoxMesh_0fmeo")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="8"]
+root_path = NodePath("../Mesh")
+replication_config = SubResource("SceneReplicationConfig_fhfrv")

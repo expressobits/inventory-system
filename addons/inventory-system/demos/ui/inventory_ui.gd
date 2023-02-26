@@ -34,16 +34,17 @@ func _ready():
 func set_inventory(inventory : Inventory):
 	if inventory != self.inventory:
 		if self.inventory != null:
-			_disconnect_old_inventory(self.inventory)
+			_disconnect_old_inventory()
 		self.inventory = inventory
 		_connect_new_inventory(inventory)
 		$Control/Label.text = inventory.inventory_name
 
 
-func _disconnect_old_inventory(inventory : Inventory):
+func _disconnect_old_inventory():
 	self.inventory.updated_slot.disconnect(_on_updated_slot.bind())
 	self.inventory.slot_added.disconnect(_on_slot_added.bind())
 	self.inventory.slot_removed.disconnect(_on_slot_removed.bind())
+	self.inventory = null
 
 
 func _connect_new_inventory(inventory : Inventory):
@@ -64,11 +65,11 @@ func _update_slots():
 		slot_obj.gui_input.connect(_on_slot_gui_input.bind(slot_obj))
 		slots_container.add_child(slot_obj)
 		slots.append(slot_obj)
-		slot_obj.update_info_with_slot(slot)
+		slot_obj.update_info_with_slot(slot, inventory.database)
 
 
 func _on_updated_slot(index):
-	slots[index].update_info_with_slot(inventory.slots[index])
+	slots[index].update_info_with_slot(inventory.slots[index], inventory.database)
 
 
 func _on_slot_added(index):

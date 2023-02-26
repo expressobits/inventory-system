@@ -42,6 +42,7 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	inventory_handler.closed.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 
+
 ## Setup player [Inventory]
 func set_player_inventory(player_inventory : Inventory):
 	player_inventory_ui.set_inventory(player_inventory)
@@ -78,6 +79,8 @@ func _on_close_inventory(inventory : Inventory):
 func _close_player_inventory(inventory : Inventory):
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
+	if loot_inventory_ui.inventory != null:
+		loot_inventory_ui._disconnect_old_inventory()
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 #    hotBarUI.gameObject.SetActive(true);
@@ -86,6 +89,7 @@ func _close_player_inventory(inventory : Inventory):
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
 	if inventory_handler.is_transaction_active():
 		inventory_handler.transaction_to_at(slot_index, inventory)
+		$SlotDrop.play()
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return
@@ -105,5 +109,6 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 		$SlotDrop.play()
 
 
-func _updated_transaction_slot(item : InventoryItem, amount : int):
+func _updated_transaction_slot(item_id : int, amount : int):
+	var item = inventory_handler.database.get_item(item_id)
 	transaction_slot_ui.update_info_with_item(item, amount)
