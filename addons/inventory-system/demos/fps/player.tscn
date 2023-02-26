@@ -34,7 +34,7 @@ database = ExtResource("3_axldf")
 
 [node name="Inventory" type="Node" parent="InventoryHandler"]
 script = ExtResource("4_cio1o")
-slot_amount = 8
+slot_amount = 32
 inventory_name = "Player Inventory"
 database = ExtResource("3_axldf")
 
