@@ -287,10 +287,10 @@ func drop_transaction():
 
 func _instantiate_dropped_item(dropped_item : PackedScene):
 	var obj = dropped_item.instantiate()
-	emit_signal("dropped", obj)
 	drop_parent.add_child(obj)
 	obj.position = get_parent().position
 	obj.rotation = get_parent().rotation
+	emit_signal("dropped", obj)
 
 
 func _set_transaction_slot(item_id : int, amount : int):
