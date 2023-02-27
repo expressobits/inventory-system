@@ -1,25 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://caa8s4576c1fy"]
+[gd_scene load_steps=6 format=3 uid="uid://caa8s4576c1fy"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/slot_ui.gd" id="1_efrhy"]
 [ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
-[ext_resource type="Texture2D" uid="uid://c8a7etm3dd71f" path="res://addons/inventory-system/demos/ui/textures/slot.png" id="2_3dbvp"]
-[ext_resource type="Texture2D" uid="uid://cdt6ogkb6730n" path="res://addons/inventory-system/demos/fps/textures/wood-item.png" id="3_an8g4"]
-[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="4_m8gxq"]
+[ext_resource type="Texture2D" uid="uid://27s26vu2drcs" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_beige.png" id="3_ulm20"]
+[ext_resource type="Texture2D" uid="uid://05wwtft8jcwp" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_21.png" id="4_cdf1t"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
-texture = ExtResource("2_3dbvp")
-region_rect = Rect2(0, 0, 24, 24)
+texture = ExtResource("3_ulm20")
+region_rect = Rect2(0, 0, 45, 49)
 
 [node name="SlotUI" type="Control"]
 texture_filter = 1
-custom_minimum_size = Vector2(26, 26)
+custom_minimum_size = Vector2(52, 52)
 layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_hssy3")
 script = ExtResource("1_efrhy")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(24, 24)
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,20 +37,20 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 
 [node name="Item Icon" type="TextureRect" parent="."]
 texture_filter = 1
-custom_minimum_size = Vector2(16, 16)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_an8g4")
+texture = ExtResource("4_cdf1t")
 
 [node name="Amount" type="Label" parent="."]
 layout_mode = 1
@@ -68,7 +67,6 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 1
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("4_m8gxq")
 text = "2"
 horizontal_alignment = 2
 vertical_alignment = 2
