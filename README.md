@@ -59,6 +59,10 @@ To suggest or discuss some project structure, feel free here [discussions page](
 
 Give a ⭐️ if this project helped you!
 
+## Assets
+
+All assets (GUI, Models and textures) from https://kenney.nl/assets
+
 
 ## 📝 License
 
