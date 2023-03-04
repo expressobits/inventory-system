@@ -19,6 +19,7 @@ func _ready():
 func setup_inventory_handler(inventory_handler : InventoryHandler):
 	player_inventory_handler = inventory_handler
 	inventory_system_ui.set_player_inventory_handler(inventory_handler)
+	inventory_system_ui.set_hotbar(inventory_handler.get_node("Hotbar"))
 	inventory_handler.opened.connect(_update_opened_inventories.bind())
 	inventory_handler.closed.connect(_update_opened_inventories.bind())
 	_update_opened_inventories(inventory_handler.inventory)

@@ -1,9 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://caa8s4576c1fy"]
+[gd_scene load_steps=8 format=3 uid="uid://caa8s4576c1fy"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/slot_ui.gd" id="1_efrhy"]
 [ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
+[ext_resource type="Texture2D" uid="uid://chkax7oefnn0c" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_grey.png" id="3_bmi74"]
 [ext_resource type="Texture2D" uid="uid://27s26vu2drcs" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_beige.png" id="3_ulm20"]
 [ext_resource type="Texture2D" uid="uid://05wwtft8jcwp" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_21.png" id="4_cdf1t"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ii3o2"]
+texture = ExtResource("3_bmi74")
+region_rect = Rect2(0, 0, 45, 49)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
 texture = ExtResource("3_ulm20")
@@ -16,6 +21,15 @@ layout_mode = 3
 anchors_preset = 0
 theme = ExtResource("1_hssy3")
 script = ExtResource("1_efrhy")
+
+[node name="Selected" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 54.0
+offset_bottom = 54.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ii3o2")
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(48, 48)

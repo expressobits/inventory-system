@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bmptjwipdws3"]
+[gd_scene load_steps=10 format=3 uid="uid://bmptjwipdws3"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
 [ext_resource type="Texture2D" uid="uid://cj2dnhj4hf4p3" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/iconCross_brown.png" id="4_5nfxk"]
 [ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
+[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
 
 [node name="Inventory System UI" type="Control"]
@@ -28,10 +29,10 @@ offset_bottom = 16.0
 mouse_filter = 1
 script = ExtResource("3_ugeom")
 
-[node name="Panel" parent="TransactionSlotUI" index="0"]
+[node name="Panel" parent="TransactionSlotUI" index="1"]
 self_modulate = Color(1, 1, 0.541176, 1)
 
-[node name="Item Icon" parent="TransactionSlotUI" index="1"]
+[node name="Item Icon" parent="TransactionSlotUI" index="2"]
 texture = ExtResource("4_0oqwp")
 
 [node name="DropIcon" type="TextureRect" parent="TransactionSlotUI"]
@@ -64,6 +65,42 @@ offset_left = -429.0
 offset_top = 11.0
 offset_right = 39.0
 offset_bottom = 192.0
+
+[node name="HotbarUI" type="Control" parent="." node_paths=PackedStringArray("slots_container")]
+texture_filter = 1
+custom_minimum_size = Vector2(234, 78)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -213.0
+offset_top = -78.0
+offset_right = 213.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("7_e17fd")
+slot_ui_scene = ExtResource("4_5h6ud")
+slots_container = NodePath("Control/UI Inventory")
+
+[node name="Control" type="Control" parent="HotbarUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="UI Inventory" type="GridContainer" parent="HotbarUI/Control"]
+layout_mode = 2
+offset_left = 4.0
+offset_top = 20.0
+offset_right = 4.0
+offset_bottom = 20.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 8
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_vp41x")

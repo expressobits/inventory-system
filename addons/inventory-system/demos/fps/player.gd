@@ -12,7 +12,9 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var rot := Vector3()
 
 @export_node_path("InventoryHandler") var inventory_handler_path = NodePath("InventoryHandler")
+@export_node_path("Hotbar") var hotbar_path = NodePath("InventoryHandler/Hotbar")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+@onready var hotbar : Hotbar = get_node(hotbar_path)
 @onready var raycast : RayCast3D = $Camera3D/RayCast3D
 
 func _physics_process(delta):
@@ -51,12 +53,25 @@ func _process(delta):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_main_inventory()
 			inventory_handler.close_all_inventories()
+	
+	
 
 
 func _input(event: InputEvent) -> void:
 	# Mouse look (only if the mouse is captured).
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				hotbar.next_item()
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				hotbar.previous_item()
+	if event is InputEventKey:
+		var input_key_event = event as InputEventKey
+		if event.is_pressed() and not event.is_echo():
+			if input_key_event.keycode > KEY_0 and input_key_event.keycode < KEY_9:
+				hotbar.set_selection_index(input_key_event.keycode - KEY_1)
 
 
 func rotate_camera(mouse_axis : Vector2) -> void:
@@ -117,3 +132,7 @@ func _on_player_inventory_opened():
 
 func _on_player_inventory_closed():
 	$PlayerInventoryClose.play()
+
+
+func _on_hotbar_on_change_selection(selection_index):
+	$HotbarChange.play()

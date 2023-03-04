@@ -16,6 +16,9 @@ var inventory_handler: InventoryHandler
 ## Loot [InventoryUI], Typically an inventory that has been opened
 @onready var loot_inventory_ui : InventoryUI = get_node(NodePath("LootInventoryUI"))
 
+## Hotbar [HotbarUI]
+@onready var hotbar_ui : HotbarUI = get_node(NodePath("HotbarUI"))
+
 ## Control that identifies area where a transaction slot can call the handler to drop items
 @onready var drop_area: Control = get_node(NodePath("DropArea"))
 
@@ -25,7 +28,7 @@ func _ready():
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
 	drop_area.visible = false
-#	hotBarUI.gameObject.SetActive(false);
+	hotbar_ui.visible = true
 	player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 	player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 #	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
@@ -43,6 +46,10 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 
 
+func set_hotbar(hotbar : Hotbar):
+	hotbar_ui.set_hotbar(hotbar)
+
+
 ## Setup player [Inventory]
 func set_player_inventory(player_inventory : Inventory):
 	player_inventory_ui.set_inventory(player_inventory)
@@ -56,7 +63,7 @@ func _drop_area_input(event : InputEvent):
 
 func _open_player_inventory():
 	player_inventory_ui.visible = true;
-#	hotbarContainer.gameObject.SetActive(true);
+	hotbar_ui.visible = false
 	drop_area.visible = true
 #	ClearSelected();
 #	hotBarUI.gameObject.SetActive(false);
@@ -83,7 +90,7 @@ func _close_player_inventory(inventory : Inventory):
 		loot_inventory_ui._disconnect_old_inventory()
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
-#    hotBarUI.gameObject.SetActive(true);
+	hotbar_ui.visible = true
 
 
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
