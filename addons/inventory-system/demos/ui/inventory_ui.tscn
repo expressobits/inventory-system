@@ -1,14 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dshee6i3qdl50"]
+[gd_scene load_steps=5 format=3 uid="uid://dshee6i3qdl50"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_ui.gd" id="1_2rmiv"]
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="2_3len7"]
-[ext_resource type="Texture2D" uid="uid://bpwo4n5a3d10y" path="res://addons/inventory-system/demos/ui/textures/inventory.png" id="3_1o8m0"]
-[ext_resource type="Texture2D" uid="uid://2n608x5cbe8d" path="res://addons/inventory-system/demos/ui/textures/inventory-bg.png" id="4_j6mae"]
-[ext_resource type="FontFile" uid="uid://bailm1kvljukg" path="res://addons/inventory-system/demos/ui/fonts/m5x7.ttf" id="5_fbid0"]
+[ext_resource type="Texture2D" uid="uid://o67rdxq6qg4h" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/panelInset_beige.png" id="3_d5iod"]
+[ext_resource type="Texture2D" uid="uid://cxmsgncxxwobe" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/panelInset_beigeLight.png" id="4_yh1g7"]
 
 [node name="InventoryUI" type="Control" node_paths=PackedStringArray("inventory", "slots_container")]
 texture_filter = 1
-custom_minimum_size = Vector2(234, 130)
+custom_minimum_size = Vector2(468, 260)
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -33,7 +32,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_1o8m0")
+texture = ExtResource("3_d5iod")
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
@@ -45,7 +44,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 4.0
-offset_top = 14.0
+offset_top = 24.0
 offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
@@ -57,7 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_j6mae")
+texture = ExtResource("4_yh1g7")
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
@@ -87,10 +86,9 @@ columns = 8
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = 1.25
-offset_top = -14.0
-offset_right = 104.25
-offset_bottom = 10.0
+offset_left = 4.0
+offset_top = -24.0
+offset_right = 116.0
+offset_bottom = 2.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("5_fbid0")
 text = "Inventory"

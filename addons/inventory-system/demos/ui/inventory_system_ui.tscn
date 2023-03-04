@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bmptjwipdws3"]
+[gd_scene load_steps=9 format=3 uid="uid://bmptjwipdws3"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/transaction_slot.gd" id="3_ugeom"]
+[ext_resource type="Texture2D" uid="uid://c0jaj36qvgqvs" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_10.png" id="4_0oqwp"]
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
-[ext_resource type="Texture2D" uid="uid://e261xl0hfmy6" path="res://addons/inventory-system/demos/ui/textures/drop_icon.png" id="6_b06x6"]
+[ext_resource type="Texture2D" uid="uid://cj2dnhj4hf4p3" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/iconCross_brown.png" id="4_5nfxk"]
 [ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
 [ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
 
@@ -14,8 +15,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = -576.0
-offset_bottom = -328.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ci0ph")
@@ -32,13 +31,16 @@ script = ExtResource("3_ugeom")
 [node name="Panel" parent="TransactionSlotUI" index="0"]
 self_modulate = Color(1, 1, 0.541176, 1)
 
+[node name="Item Icon" parent="TransactionSlotUI" index="1"]
+texture = ExtResource("4_0oqwp")
+
 [node name="DropIcon" type="TextureRect" parent="TransactionSlotUI"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 28.0
-offset_bottom = 28.0
-texture = ExtResource("6_b06x6")
+offset_left = 48.0
+offset_top = 48.0
+offset_right = 66.0
+offset_bottom = 66.0
+texture = ExtResource("4_5nfxk")
 
 [node name="DropArea" type="Control" parent="."]
 layout_mode = 1
@@ -50,18 +52,18 @@ grow_vertical = 2
 
 [node name="PlayerInventoryUI" parent="." instance=ExtResource("3_sohfg")]
 layout_mode = 1
-offset_left = -230.0
-offset_top = 32.0
-offset_right = 0.0
-offset_bottom = 162.0
+offset_left = 52.0
+offset_top = 11.0
+offset_right = 520.0
+offset_bottom = 271.0
 
 [node name="LootInventoryUI" parent="." instance=ExtResource("3_sohfg")]
 custom_minimum_size = Vector2(234, 78)
 layout_mode = 1
-offset_left = 16.0
-offset_top = 32.0
-offset_right = 250.0
-offset_bottom = 110.0
+offset_left = -429.0
+offset_top = 11.0
+offset_right = 39.0
+offset_bottom = 192.0
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_vp41x")

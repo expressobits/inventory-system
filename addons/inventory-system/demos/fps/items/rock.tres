@@ -1,10 +1,10 @@
-[gd_resource type="Resource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bej0h8o7kjiqs"]
 
-[ext_resource type="Texture2D" uid="uid://pmqvv5mlaxrg" path="res://addons/inventory-system/demos/fps/textures/metal-item.png" id="1_risfp"]
+[ext_resource type="Texture2D" uid="uid://b1clq2dvyh0o2" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_09.png" id="1_q3xtl"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_k6uof"]
 
 [resource]
 script = ExtResource("2_k6uof")
 max_stack = 8
 name = "Rock"
-icon = ExtResource("1_risfp")
+icon = ExtResource("1_q3xtl")
