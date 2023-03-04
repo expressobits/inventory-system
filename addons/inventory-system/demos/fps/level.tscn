@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=17 format=3 uid="uid://b78s1iramu2wu"]
 
 [ext_resource type="PackedScene" uid="uid://bs66pxpnpbpbs" path="res://addons/inventory-system/demos/fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://bgqw131wcpbno" path="res://addons/inventory-system/demos/fps/wall.tscn" id="2_wrb2n"]

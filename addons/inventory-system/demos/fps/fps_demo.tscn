@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cmm8njptqaue5" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
@@ -101,8 +101,6 @@ text = "E - Open Loot"
 horizontal_alignment = 1
 
 [node name="Inventory System UI" parent="UI" instance=ExtResource("6_gphqh")]
-offset_right = 0.0
-offset_bottom = 0.0
 
 [node name="Player" parent="." instance=ExtResource("14_kqlku")]
 
