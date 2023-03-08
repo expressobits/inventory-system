@@ -1,9 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://djvkfw01sllxt"]
+[gd_scene load_steps=13 format=3 uid="uid://djvkfw01sllxt"]
 
 [ext_resource type="PackedScene" uid="uid://clpfg82i5m635" path="res://addons/inventory-system/demos/fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_player.gd" id="2_j20bs"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/hand_item.gd" id="3_xilgw"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="5_g5cqn"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
+size = Vector3(0.125, 0.125, 0.125)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
 shading_mode = 2
@@ -33,16 +38,25 @@ properties/1/sync = true
 [node name="MPPlayer" instance=ExtResource("1_gogru")]
 script = ExtResource("2_j20bs")
 
+[node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
+script = ExtResource("3_xilgw")
+hotbar_path = NodePath("../../InventoryHandler/Hotbar")
+
+[node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
+mesh = SubResource("BoxMesh_d1alo")
+
 [node name="InventoryHandler" parent="." index="2"]
 script = ExtResource("3_xjjoy")
 
 [node name="Inventory" parent="InventoryHandler" index="0"]
 script = ExtResource("4_ggduv")
 
-[node name="PlayerInventoryOpen" parent="." index="5"]
-max_distance = 5.0
+[node name="Hotbar" parent="InventoryHandler" index="1"]
+script = ExtResource("5_g5cqn")
 
-[node name="PlayerInventoryClose" parent="." index="6"]
+[node name="PlayerInventoryOpen" parent="." index="6"]
 max_distance = 5.0
 
 [node name="Mesh" type="MeshInstance3D" parent="." index="7"]
@@ -57,3 +71,6 @@ mesh = SubResource("BoxMesh_0fmeo")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="8"]
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_fhfrv")
+
+[node name="PlayerInventoryClose" parent="." index="9"]
+max_distance = 5.0

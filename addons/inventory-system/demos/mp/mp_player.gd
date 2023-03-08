@@ -13,7 +13,8 @@ func _ready():
 		$Camera3D.make_current()
 	else:
 		$Camera3D.clear_current()
-		
+	$Camera3D/HandItem.visible = is_multiplayer_authority()
+	$Camera3D/ThirdPersonHandItem.visible = not is_multiplayer_authority()
 	if is_multiplayer_authority():
 		$Mesh.visible = false
 
