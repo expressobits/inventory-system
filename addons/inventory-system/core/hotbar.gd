@@ -1,3 +1,4 @@
+@icon("res://addons/inventory-system/icons/hotbar.svg")
 extends Node
 class_name Hotbar
 
