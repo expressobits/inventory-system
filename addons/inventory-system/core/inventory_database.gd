@@ -58,3 +58,14 @@ func get_dropped_item(id : int) -> PackedScene:
 			return item_data.dropped_item
 	# printerr("id ",id," is not in the database!")
 	return null
+	
+
+## Returns the [DroppedItem] of id, return null if not found
+func get_hand_item(id : int) -> PackedScene:
+	for item_data in items:
+		if item_data.id == id:
+			if not item_data.has("hand_item"):
+				return null
+			return item_data.hand_item
+	# printerr("id ",id," is not in the database!")
+	return null

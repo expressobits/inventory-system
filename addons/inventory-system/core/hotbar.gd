@@ -10,6 +10,9 @@ signal on_change_selection(selection_index)
 
 var selection_index := 0
 
+func _ready():
+	inventory.updated_slot.connect(_on_updated_slot.bind())
+
 
 func change_selection(index : int):
 	if index < 0 or index >= slots_in_hot_bar:
@@ -46,14 +49,15 @@ func has_valid_item_id() -> bool:
 func has_item_on_selection() -> bool:
 	if not has_valid_item_id():
 		return false
-	var item = inventory.database.get_item(inventory.slots[selection_index])
-	if item == null:
-		return false
 	return true
 
 
-func get_selected_item() -> InventoryItem:
+func get_selected_item() -> int:
 	if not has_valid_item_id():
-		return null
-	var item = inventory.database.get_item(inventory.slots[selection_index])
-	return item
+		return InventoryItem.NONE
+	return inventory.slots[selection_index].item_id
+
+
+func _on_updated_slot(slot_index):
+	if slot_index == selection_index:
+		set_selection_index(selection_index)

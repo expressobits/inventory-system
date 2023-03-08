@@ -1,19 +1,23 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=6 format=3 uid="uid://b2hp3ecf6jmdp"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=8 format=3 uid="uid://b2hp3ecf6jmdp"]
 
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/fps/items/wood.tres" id="1_lhq5f"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="1_mqjrc"]
 [ext_resource type="PackedScene" uid="uid://2r5gl6mavkqd" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="2_h3k85"]
+[ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="3_lp58u"]
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/fps/items/rock.tres" id="3_sa1ed"]
 [ext_resource type="PackedScene" uid="uid://den34ftt3xcmo" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_xrutl"]
+[ext_resource type="PackedScene" uid="uid://tmbnja6deh81" path="res://addons/inventory-system/demos/fps/hand_items/rock.tscn" id="6_1vs2h"]
 
 [resource]
 script = ExtResource("1_mqjrc")
 items = [{
 "dropped_item": ExtResource("2_h3k85"),
+"hand_item": ExtResource("3_lp58u"),
 "id": 1,
 "item": ExtResource("1_lhq5f")
 }, {
 "dropped_item": ExtResource("4_xrutl"),
+"hand_item": ExtResource("6_1vs2h"),
 "id": 2,
 "item": ExtResource("3_sa1ed")
 }]
