@@ -26,10 +26,10 @@
 ✔️ Multiplayer compatible (Including example).
 
   - [[WIKI] How to test multiplayer demo](https://github.com/expressobits/inventory-system/wiki/How-to-test-multiplayer-demo)
+ 
+✔️ Hotbar.
 
 🔨 Craft System.
-
-🔨 Hotbar.
 
 🔨 Item Editor.
 
