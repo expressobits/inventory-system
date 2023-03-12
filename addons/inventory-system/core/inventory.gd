@@ -126,7 +126,7 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 	for slot in slots:
 		if slot.item_id == item_id:
 			amount_in_inventory += slot.amount
-			if amount_in_inventory > amount:
+			if amount_in_inventory >= amount:
 				return true
 	return false
 
