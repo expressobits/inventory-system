@@ -1,17 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://b78s1iramu2wu"]
+[gd_scene load_steps=14 format=3 uid="uid://b78s1iramu2wu"]
 
 [ext_resource type="PackedScene" uid="uid://bs66pxpnpbpbs" path="res://addons/inventory-system/demos/fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://bgqw131wcpbno" path="res://addons/inventory-system/demos/fps/wall.tscn" id="2_wrb2n"]
-[ext_resource type="PackedScene" uid="uid://2r5gl6mavkqd" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
-[ext_resource type="PackedScene" uid="uid://den34ftt3xcmo" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
 [ext_resource type="PackedScene" uid="uid://c58y8utvxmgl" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/tree.glb" id="6_a1n8f"]
 [ext_resource type="PackedScene" uid="uid://ctr82bvxsayua" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/treeFall.glb" id="7_17gjd"]
 [ext_resource type="PackedScene" uid="uid://ck5n7wn1s1f7a" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/rockA.glb" id="8_0s041"]
 [ext_resource type="PackedScene" uid="uid://bgvaa5kek58rt" path="res://addons/inventory-system/demos/fps/level/sign.tscn" id="10_5mqut"]
 [ext_resource type="PackedScene" uid="uid://bpefq51seky2l" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/rockFlat.glb" id="11_61v31"]
-[ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="12_x6fa3"]
-[ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="13_55ahg"]
-[ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="14_l18y0"]
 [ext_resource type="PackedScene" uid="uid://js44r8aslho6" path="res://addons/inventory-system/demos/fps/level/directional_light_3d.tscn" id="15_c7p16"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5c8y0"]
@@ -161,15 +158,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55362, 0, -3.8075)
 [node name="Label3D" parent="Sign2" index="0"]
 text = "Static
 Inventory"
-
-[node name="workbench" parent="." instance=ExtResource("12_x6fa3")]
-transform = Transform3D(3.69624, 0, 1.52899, 0, 4, 0, -1.52899, 0, 3.69624, -3.70525, -2.38419e-07, -3.99706)
-
-[node name="workbenchGrind" parent="." instance=ExtResource("13_55ahg")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319963)
-
-[node name="workbenchAnvil" parent="." instance=ExtResource("14_l18y0")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
 
 [editable path="Sign"]
 [editable path="Sign/signpostSingle"]

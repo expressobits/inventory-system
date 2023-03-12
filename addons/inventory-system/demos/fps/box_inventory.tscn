@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cmm8njptqaue5"]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/box_inventory.gd" id="1_f8i83"]
 [ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
-[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_h8sic"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/database.tres" id="3_h8sic"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="3_kidjv"]
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
 [ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]

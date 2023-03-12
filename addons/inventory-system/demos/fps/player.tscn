@@ -1,9 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://cb37etkb7tflj"]
+[gd_scene load_steps=14 format=3 uid="uid://drlbvaoe1uko4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="2_fyps8"]
-[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_axldf"]
+[ext_resource type="Resource" uid="uid://d3kf0u8lpj27p" path="res://addons/inventory-system/demos/base/database.tres" id="4_11r5y"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hotbar.gd" id="5_dm6kt"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_sfhca"]
@@ -45,13 +45,13 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="InventoryHandler" type="Node" parent="."]
 script = ExtResource("2_0npow")
-database = ExtResource("3_axldf")
+database = ExtResource("4_11r5y")
 
 [node name="Inventory" type="Node" parent="InventoryHandler"]
 script = ExtResource("4_cio1o")
 slot_amount = 32
 inventory_name = "Player Inventory"
-database = ExtResource("3_axldf")
+database = ExtResource("4_11r5y")
 
 [node name="Hotbar" type="Node" parent="InventoryHandler" node_paths=PackedStringArray("inventory")]
 script = ExtResource("5_dm6kt")

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CraftStation" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft-station-type.gd" id="1_p37qn"]
+[ext_resource type="Texture2D" uid="uid://c1nqlymo2kcig" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Structure/medievalStructure_07.png" id="1_piess"]
+
+[resource]
+script = ExtResource("1_p37qn")
+icon = ExtResource("1_piess")
