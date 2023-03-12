@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://drlbvaoe1uko4"]
+[gd_scene load_steps=16 format=3 uid="uid://drlbvaoe1uko4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" path="res://addons/inventory-system/core/hotbar.gd" id="5_dm6kt"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_sfhca"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_dxfus"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/crafter.gd" id="7_30xoc"]
 [ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="7_jxmrf"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft-station.gd" id="8_3m0xp"]
 [ext_resource type="AudioStream" uid="uid://cyu1f4p35abbj" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookClose.ogg" id="8_ckf1g"]
 [ext_resource type="AudioStream" uid="uid://df1ibxkrver3m" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/metalClick.ogg" id="8_oba2k"]
 
@@ -56,7 +58,18 @@ database = ExtResource("4_11r5y")
 [node name="Hotbar" type="Node" parent="InventoryHandler" node_paths=PackedStringArray("inventory")]
 script = ExtResource("5_dm6kt")
 inventory = NodePath("../Inventory")
-slots_in_hot_bar = null
+database = ExtResource("4_11r5y")
+
+[node name="Crafter" type="Node" parent="." node_paths=PackedStringArray("internal_station")]
+script = ExtResource("7_30xoc")
+internal_station = NodePath("CraftStation")
+database = ExtResource("4_11r5y")
+
+[node name="CraftStation" type="Node" parent="Crafter" node_paths=PackedStringArray("input_inventory", "output_inventory")]
+script = ExtResource("8_3m0xp")
+input_inventory = NodePath("../../InventoryHandler/Inventory")
+output_inventory = NodePath("../../InventoryHandler/Inventory")
+database = ExtResource("4_11r5y")
 
 [node name="Pickup" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_sfhca")

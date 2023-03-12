@@ -10,10 +10,12 @@ var inventory_system_ui_path := NodePath("UI/Inventory System UI")
 @export var database : InventoryDatabase
 
 var player_inventory_handler : InventoryHandler
+var player_crafter : Crafter
 
 
 func _ready():
 	setup_inventory_handler(get_node(NodePath("Player/InventoryHandler")))
+	setup_crafter(get_node(NodePath("Player/Crafter")))
 
 
 func setup_inventory_handler(inventory_handler : InventoryHandler):
@@ -23,6 +25,11 @@ func setup_inventory_handler(inventory_handler : InventoryHandler):
 	inventory_handler.opened.connect(_update_opened_inventories.bind())
 	inventory_handler.closed.connect(_update_opened_inventories.bind())
 	_update_opened_inventories(inventory_handler.inventory)
+	
+
+func setup_crafter(crafter : Crafter):
+	player_crafter = crafter
+	inventory_system_ui.set_crafter(player_crafter)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -35,7 +42,7 @@ func _process(delta):
 	if Input.is_action_just_released("add_item_b"):
 		player_inventory_handler.add_to_inventory(player_inventory_handler.inventory, item_metal, 1)
 	if Input.is_action_just_released("remove_item_b"):
-		player_inventory_handler.inventory.remove(item_metal, 2)
+		player_crafter.internal_station.craft(0)
 
 
 func _update_opened_inventories(inventory : Inventory):

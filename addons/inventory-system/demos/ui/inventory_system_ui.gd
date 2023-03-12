@@ -22,6 +22,8 @@ var inventory_handler: InventoryHandler
 ## Control that identifies area where a transaction slot can call the handler to drop items
 @onready var drop_area: Control = get_node(NodePath("DropArea"))
 
+@onready var craftings_ui : CraftingsUI = get_node(NodePath("CraftingsUI"))
+
 
 func _ready():
 	player_inventory_ui.visible = false
@@ -44,6 +46,10 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	inventory_handler.opened.connect(_on_open_inventory)
 	inventory_handler.closed.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
+	
+
+func set_crafter(crafter : Crafter):
+	craftings_ui.set_crafter(crafter)
 
 
 func set_hotbar(hotbar : Hotbar):

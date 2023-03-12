@@ -13,8 +13,10 @@ var rot := Vector3()
 
 @export_node_path("InventoryHandler") var inventory_handler_path = NodePath("InventoryHandler")
 @export_node_path("Hotbar") var hotbar_path = NodePath("InventoryHandler/Hotbar")
+@export_node_path("Crafter") var crafter_path = NodePath("Crafter")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 @onready var hotbar : Hotbar = get_node(hotbar_path)
+@onready var crafter : Crafter = get_node(crafter_path)
 @onready var raycast : RayCast3D = $Camera3D/RayCast3D
 
 
