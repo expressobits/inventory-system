@@ -1,5 +1,5 @@
 @icon("res://addons/inventory-system/icons/hotbar.svg")
-extends Node
+extends NodeInventorySystemBase
 class_name Hotbar
 
 signal on_change_selection(selection_index)

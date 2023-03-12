@@ -1,5 +1,5 @@
 @icon("res://addons/inventory-system/icons/inventory.svg")
-extends Node
+extends NodeInventorySystemBase
 class_name Inventory
 
 ## This script stores an array of slots via [Dictionary].
@@ -57,9 +57,6 @@ signal closed
 
 ## The name of the inventory, to be displayed in UI
 @export var inventory_name := "Inventory"
-
-## Database used to identify [InventoryItem] and [DroppedItem] ids.
-@export var database : InventoryDatabase
 
 
 func _ready():
