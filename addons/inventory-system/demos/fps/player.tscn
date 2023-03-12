@@ -56,6 +56,7 @@ database = ExtResource("4_11r5y")
 [node name="Hotbar" type="Node" parent="InventoryHandler" node_paths=PackedStringArray("inventory")]
 script = ExtResource("5_dm6kt")
 inventory = NodePath("../Inventory")
+slots_in_hot_bar = null
 
 [node name="Pickup" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_sfhca")

@@ -1,4 +1,4 @@
-extends Node
+extends NodeInventorySystemBase
 class_name Crafter
 
 signal on_crafted(recipe_index : Recipe)
@@ -17,7 +17,6 @@ class Crafting:
 	func process(delta : float):
 		time -= delta
 
-@export var database : InventoryDatabase
 @export var available_recipes : Array[Recipe]
 @export var input_inventory : Inventory
 @export var output_inventory : Inventory
