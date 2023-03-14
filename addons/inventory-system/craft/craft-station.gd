@@ -83,8 +83,7 @@ func contains_required_items(recipe : Recipe) -> bool:
 func craft(recipe_index : int):
 	var recipe := database.recipes[recipe_index]
 	if not can_craft(recipe):
-		return 
-	print("ok")
+		return
 	if not _use_items(recipe):
 		return
 	var crafting = Crafting.new()
