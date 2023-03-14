@@ -4,7 +4,6 @@
 [ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
 [ext_resource type="Texture2D" uid="uid://chkax7oefnn0c" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_grey.png" id="3_bmi74"]
 [ext_resource type="Texture2D" uid="uid://27s26vu2drcs" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_beige.png" id="3_ulm20"]
-[ext_resource type="Texture2D" uid="uid://05wwtft8jcwp" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_21.png" id="4_cdf1t"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ii3o2"]
 texture = ExtResource("3_bmi74")
@@ -13,6 +12,9 @@ region_rect = Rect2(0, 0, 45, 49)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
 texture = ExtResource("3_ulm20")
 region_rect = Rect2(0, 0, 45, 49)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_84ds3"]
+load_path = "res://.godot/imported/icons8-axe-30.png-178ca760050957568fb44d69b2808869.ctex"
 
 [node name="SlotUI" type="Control"]
 texture_filter = 1
@@ -51,20 +53,20 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 
 [node name="Item Icon" type="TextureRect" parent="."]
 texture_filter = 1
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(30, 30)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -32.0
-offset_right = 32.0
-offset_bottom = 32.0
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_cdf1t")
+texture = SubResource("CompressedTexture2D_84ds3")
 
 [node name="Amount" type="Label" parent="."]
 layout_mode = 1
@@ -73,10 +75,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -8.0
-offset_top = -18.0
-offset_right = -2.0
-offset_bottom = -2.0
+offset_left = -16.0
+offset_top = -32.0
+offset_right = -6.0
+offset_bottom = -6.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 1

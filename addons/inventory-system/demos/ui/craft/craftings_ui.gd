@@ -4,7 +4,7 @@ class_name CraftingsUI
 @export var crafting_ui_scene : PackedScene
 @export var crafter : Crafter
 
-var craftings : Array[Control]
+var craftings : Array[CraftingUI]
 
 
 func set_crafter(crafter : Crafter):
@@ -24,6 +24,7 @@ func _on_add_crafting_at(crafting_index : int):
 	var crafting_obj = crafting_ui_scene.instantiate()
 	add_child(crafting_obj)
 	craftings.insert(crafting_index, crafting_obj)
+	crafting_obj.set_crafting(crafter.internal_station, crafting_index)
 
 
 func _on_remove_crafting_at(crafting_index : int):
