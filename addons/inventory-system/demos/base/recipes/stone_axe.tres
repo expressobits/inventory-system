@@ -25,6 +25,6 @@ amount = 1
 [resource]
 script = ExtResource("1_73tml")
 products = Array[ExtResource("2_6bw6u")]([SubResource("Resource_58war")])
-time_to_craft = 4.0
+time_to_craft = 8.0
 station = ExtResource("5_4kkgi")
 required_items = Array[ExtResource("2_6bw6u")]([SubResource("Resource_xeqwn"), SubResource("Resource_o2gu3")])

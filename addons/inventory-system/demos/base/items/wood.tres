@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://be14ch2lo1u5n"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_fcne4"]
-[ext_resource type="Texture2D" uid="uid://cdia2hq7amite" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_06.png" id="1_lwqnw"]
+[ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system/demos/assets/icons/branch.png" id="1_q41wd"]
 
 [resource]
 script = ExtResource("1_fcne4")
 max_stack = 2
 name = "Wood"
-icon = ExtResource("1_lwqnw")
+icon = ExtResource("1_q41wd")
