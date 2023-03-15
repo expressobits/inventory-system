@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=10 format=3 uid="uid://d3kf0u8lpj27p"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=10 format=3]
 
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="1_a08hj"]
 [ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="2_n1gpo"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_akrwg"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_4yj5r"]
 [ext_resource type="PackedScene" uid="uid://tmbnja6deh81" path="res://addons/inventory-system/demos/fps/hand_items/rock.tscn" id="5_m0h06"]
-[ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/rock.tres" id="6_lh8gi"]
+[ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
 [ext_resource type="Resource" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="7_4afv6"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="7_b6gc3"]
 [ext_resource type="Resource" uid="uid://dkmt2m425t026" path="res://addons/inventory-system/demos/base/recipes/stone_axe.tres" id="7_ld8xv"]

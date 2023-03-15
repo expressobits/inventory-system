@@ -1,30 +1,31 @@
-[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://dkmt2m425t026"]
+[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3]
 
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="1_7xed0"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="1_73tml"]
 [ext_resource type="Resource" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="1_x4sq4"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_6bw6u"]
-[ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/rock.tres" id="3_8s3db"]
+[ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="3_8s3db"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="5_4kkgi"]
 
-[sub_resource type="Resource" id="Resource_58war"]
-script = ExtResource("2_6bw6u")
-item = ExtResource("1_x4sq4")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_xeqwn"]
+[sub_resource type="Resource" id="Resource_h5imn"]
 script = ExtResource("2_6bw6u")
 item = ExtResource("1_7xed0")
 amount = 2
 
-[sub_resource type="Resource" id="Resource_o2gu3"]
+[sub_resource type="Resource" id="Resource_xb13j"]
 script = ExtResource("2_6bw6u")
 item = ExtResource("3_8s3db")
 amount = 1
 
+[sub_resource type="Resource" id="Resource_qavdy"]
+script = ExtResource("2_6bw6u")
+item = ExtResource("1_x4sq4")
+amount = 1
+
 [resource]
 script = ExtResource("1_73tml")
-products = Array[ExtResource("2_6bw6u")]([SubResource("Resource_58war")])
+product = SubResource("Resource_qavdy")
+subproduct = Array[ExtResource("2_6bw6u")]([])
 time_to_craft = 8.0
 station = ExtResource("5_4kkgi")
-required_items = Array[ExtResource("2_6bw6u")]([SubResource("Resource_xeqwn"), SubResource("Resource_o2gu3")])
+ingredients = Array[ExtResource("2_6bw6u")]([SubResource("Resource_h5imn"), SubResource("Resource_xb13j")])

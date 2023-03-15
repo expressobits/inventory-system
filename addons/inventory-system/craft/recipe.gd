@@ -2,7 +2,8 @@
 extends Resource
 class_name Recipe
 
-@export var products : Array[Slot]
+@export var product : Slot
+@export var subproducts : Array[Slot]
 @export var time_to_craft := 4.0
 @export var station : CraftStationType
-@export var required_items : Array[Slot]
+@export var ingredients : Array[Slot]

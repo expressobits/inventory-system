@@ -10,8 +10,8 @@ var craftings : Array[CraftingUI]
 func set_crafter(crafter : Crafter):
 	clear()
 	self.crafter = crafter
-	crafter.internal_station.on_add_crafting_at.connect(_on_add_crafting_at.bind())
-	crafter.internal_station.on_remove_crafting_at.connect(_on_remove_crafting_at.bind())
+	crafter.main_station.on_add_crafting_at.connect(_on_add_crafting_at.bind())
+	crafter.main_station.on_remove_crafting_at.connect(_on_remove_crafting_at.bind())
 
 
 func clear():
@@ -23,8 +23,9 @@ func clear():
 func _on_add_crafting_at(crafting_index : int):
 	var crafting_obj = crafting_ui_scene.instantiate()
 	add_child(crafting_obj)
+	move_child(crafting_obj, 0)
 	craftings.insert(crafting_index, crafting_obj)
-	crafting_obj.set_crafting(crafter.internal_station, crafting_index)
+	crafting_obj.set_crafting(crafter.main_station, crafting_index)
 
 
 func _on_remove_crafting_at(crafting_index : int):

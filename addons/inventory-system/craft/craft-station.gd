@@ -8,6 +8,14 @@ signal on_add_crafting_at(crafting_index : int)
 signal on_remove_crafting_at(crafting_index : int)
 signal on_updated_crafting(crafting_index : int)
 
+## Emitted when craft station is opened.
+## Called inside the [b]open()[/b] function when the craft station is closed.
+signal opened
+
+## Emitted when craft station is closed.
+## Called inside the [b]close()[/b] function when the craft station is closed.
+signal closed
+
 class Crafting:
 	var recipe_index : int
 	var time : float
@@ -25,6 +33,7 @@ class Crafting:
 @export var type : CraftStationType
 
 var craftings : Array[Crafting]
+var is_open : bool
 
 
 func is_crafting() -> bool:
@@ -52,8 +61,9 @@ func finish_crafting(crafting_index : int):
 	var crafting = craftings[crafting_index]
 	var recipe = database.recipes[crafting.recipe_index]
 	# TODO add function for slot in inventory
-	for product in recipe.products:
-		output_inventory.add(product.item, product.amount)
+	output_inventory.add(recipe.product.item, recipe.product.amount)
+	for subproduct in recipe.subproducts:
+		output_inventory.add(subproduct.item, subproduct.amount)
 	emit_signal("on_crafted", crafting.recipe_index)
 	remove_crafting(crafting_index)
 	
@@ -70,11 +80,11 @@ func remove_crafting(crafting_index : int):
 func can_craft(recipe : Recipe) -> bool:
 	if limit_number_crafts >= 0 and limit_number_crafts <= craftings.size():
 		return false
-	return contains_required_items(recipe)
+	return contains_ingredients(recipe)
 
 
-func contains_required_items(recipe : Recipe) -> bool:
-	for slot in recipe.required_items:
+func contains_ingredients(recipe : Recipe) -> bool:
+	for slot in recipe.ingredients:
 		if not input_inventory.contains(slot.item, slot.amount):
 			return false
 	return true
@@ -101,13 +111,33 @@ func cancel_craft(crafting_index : int):
 	if crafting.is_finished():
 		return
 	var recipe = database.recipes[crafting.recipe_index]
-	for slot in recipe.required_items:
-		input_inventory.add(slot.item, slot.amount)
+	for ingredient in recipe.ingredients:
+		input_inventory.add(ingredient.item, ingredient.amount)
 	remove_crafting(crafting_index)
+	
+	
+## Opens the craft station and returns true if done successfully.
+## Emits the [b]opened[/b] signal if the was previously closed.
+func open() -> bool:
+	if !is_open:
+		is_open = true
+		emit_signal("opened")
+		return true
+	return false
+	
+
+## Closes the craft station and returns true if done successfully.
+## Emits the [b]closed[/b] signal if was previously open.
+func close() -> bool:
+	if is_open:
+		is_open = false
+		emit_signal("closed")
+		return true
+	return false
 	
 
 func _use_items(recipe : Recipe) -> bool:
-	for slot in recipe.required_items:
-		if input_inventory.remove(slot.item, slot.amount) > 0:
+	for ingredient in recipe.ingredients:
+		if input_inventory.remove(ingredient.item, ingredient.amount) > 0:
 			return false
 	return true

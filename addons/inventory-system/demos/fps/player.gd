@@ -56,6 +56,15 @@ func _process(delta):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_main_inventory()
 			inventory_handler.close_all_inventories()
+		if crafter.is_open_any_station():
+			crafter.close_all_craft_stations()
+			
+	if Input.is_action_just_released("toggle_craft"):
+		if crafter.is_open_main_craft_station():
+			crafter.close_main_craft_station()
+			crafter.close_all_craft_stations()
+		else:
+			crafter.open_main_craft_station()
 
 
 func _input(event: InputEvent) -> void:

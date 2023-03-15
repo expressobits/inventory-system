@@ -5,7 +5,10 @@ class_name InventorySystemUI
 ## Contains drag slot information, UI inventories and item drop area
 
 ## Stores [InventoryHandler] information to connect all signals and callbacks
-var inventory_handler: InventoryHandler
+var inventory_handler : InventoryHandler
+
+## Stores [Crafter] information to connect all signals and callbacks
+var crafter : Crafter
 
 ## SlotUI special that stores inventory transaction information
 @onready var transaction_slot_ui : TransactionSlotUI = get_node(NodePath("TransactionSlotUI"))
@@ -24,6 +27,7 @@ var inventory_handler: InventoryHandler
 
 @onready var craftings_ui : CraftingsUI = get_node(NodePath("CraftingsUI"))
 
+@onready var recipes_ui : RecipesUI = get_node(NodePath("RecipesUI"))
 
 func _ready():
 	player_inventory_ui.visible = false
@@ -31,6 +35,7 @@ func _ready():
 	transaction_slot_ui.clear_info()
 	drop_area.visible = false
 	hotbar_ui.visible = true
+	recipes_ui.close()
 	player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 	player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 #	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
@@ -49,7 +54,11 @@ func set_player_inventory_handler(handler : InventoryHandler):
 	
 
 func set_crafter(crafter : Crafter):
+	self.crafter = crafter
 	craftings_ui.set_crafter(crafter)
+	recipes_ui.set_crafter(crafter)
+	crafter.opened.connect(_on_open_craft_station.bind())
+	crafter.closed.connect(_on_close_craft_station.bind())
 
 
 func set_hotbar(hotbar : Hotbar):
@@ -75,6 +84,10 @@ func _open_player_inventory():
 #	hotBarUI.gameObject.SetActive(false);
 
 
+func open_recipes(craft_station : CraftStation):
+	recipes_ui.open(craft_station)
+
+
 # Open Inventory of player	
 func _on_open_inventory(inventory : Inventory):
 	if inventory != inventory_handler.inventory:
@@ -82,6 +95,25 @@ func _on_open_inventory(inventory : Inventory):
 		loot_inventory_ui.visible = true
 	else:
 		_open_player_inventory()
+		
+
+# Open Craft Station	
+func _on_open_craft_station(craft_station : CraftStation):
+	recipes_ui.open_craft_station(craft_station)
+	recipes_ui.visible = true
+	
+	# TODO make recipes ui for other craft stations
+#	if craft_station != crafter.main_station:
+#		recipes_ui.open_craft_station(craft_station)
+#		recipes_ui.visible = true
+#	else:
+#		_open_player_inventory()
+
+
+func _on_close_craft_station(craft_station : CraftStation):
+	recipes_ui.close()
+#	if craft_station == crafter.main_station:
+#		_close_player_inventory(inventory)
 
 
 func _on_close_inventory(inventory : Inventory):
@@ -97,6 +129,7 @@ func _close_player_inventory(inventory : Inventory):
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 	hotbar_ui.visible = true
+	recipes_ui.close()
 
 
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
