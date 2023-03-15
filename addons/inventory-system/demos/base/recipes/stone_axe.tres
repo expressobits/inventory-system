@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3]
+[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://vv4dc26verx4"]
 
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="1_7xed0"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="1_73tml"]
@@ -25,7 +25,7 @@ amount = 1
 [resource]
 script = ExtResource("1_73tml")
 product = SubResource("Resource_qavdy")
-subproduct = Array[ExtResource("2_6bw6u")]([])
+subproducts = Array[ExtResource("2_6bw6u")]([])
 time_to_craft = 8.0
 station = ExtResource("5_4kkgi")
 ingredients = Array[ExtResource("2_6bw6u")]([SubResource("Resource_h5imn"), SubResource("Resource_xb13j")])

@@ -1,16 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://bai5qewvskr1k"]
+[gd_scene load_steps=12 format=3 uid="uid://bai5qewvskr1k"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/fps_demo.gd" id="1_mxj54"]
-[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
+[ext_resource type="Resource" uid="uid://isl7ph8uirls" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="2_ig7ps"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
-[ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="8_lvuir"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
+[ext_resource type="PackedScene" uid="uid://cdgfnlsjw8os2" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
-[ext_resource type="Script" path="res://addons/inventory-system/craft/craft-station.gd" id="11_criwf"]
-[ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="12_7xv8a"]
+[ext_resource type="PackedScene" uid="uid://ya110chxxrd0" path="res://addons/inventory-system/demos/fps/workbench.tscn" id="11_fkc5i"]
 [ext_resource type="PackedScene" uid="uid://drlbvaoe1uko4" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
@@ -132,18 +130,7 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319
 [node name="workbenchAnvil" parent="." instance=ExtResource("10_ds5rh")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
 
-[node name="Workbench" type="StaticBody3D" parent="."]
-transform = Transform3D(0.92406, 0, 0.382248, 0, 1, 0, -0.382248, 0, 0.92406, -3.70525, -2.38419e-07, -3.99706)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Workbench"]
-
-[node name="workbench" parent="Workbench" instance=ExtResource("8_lvuir")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
-
-[node name="CraftStation" type="Node" parent="Workbench"]
-script = ExtResource("11_criwf")
-type = ExtResource("12_7xv8a")
-database = ExtResource("2_gcjwy")
+[node name="Workbench" parent="." instance=ExtResource("11_fkc5i")]
 
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]

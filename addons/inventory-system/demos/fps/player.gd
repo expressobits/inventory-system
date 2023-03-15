@@ -102,12 +102,21 @@ func interact():
 		var object = raycast.get_collider()
 		var box := object as BoxInventory
 		if box != null:
-			var inv = object.get_inventory()
+			var inv = box.get_inventory()
 			if inv != null:
 				$"../UI/Labels/InteractMessage".visible = !inventory_handler.is_open(inv)
 				$"../UI/Labels/InteractMessage".text = "E to Open Inventory"
 				if Input.is_action_just_pressed("interact"):
 					open_inventory(inv)
+				return
+		var workbench := object as Workbench
+		if workbench != null:
+			var station = workbench.get_station()
+			if station != null:
+				$"../UI/Labels/InteractMessage".visible = !crafter.is_open(station)
+				$"../UI/Labels/InteractMessage".text = "E to Open Station"
+				if Input.is_action_just_pressed("interact"):
+					open_station(station)
 				return
 		var dropped_item := object as DroppedItem
 		if dropped_item != null:
@@ -125,6 +134,11 @@ func open_inventory(inventory : Inventory):
 		inventory_handler.open(inventory)
 		if not inventory_handler.is_open_main_inventory():
 			inventory_handler.open_main_inventory()
+
+
+func open_station(craft_station : CraftStation):
+	if not crafter.is_open(craft_station):
+		crafter.open(craft_station)
 
 
 func pickup_item(item : DroppedItem):
