@@ -30,6 +30,9 @@ func set_recipe(crafter : Crafter, recipe : Recipe, recipe_index : int):
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(ingredient)
 		ingredients.append(ingredient_obj)
+	_check_if_has_ingredients()
+	crafter.main_station.input_inventory.item_added.connect(_on_added_item.bind())
+	crafter.main_station.input_inventory.item_removed.connect(_on_added_item.bind())
 
 
 func clear_ingredients():
@@ -40,3 +43,15 @@ func clear_ingredients():
 
 func _on_craft_button_button_down():
 	crafter.main_station.craft(recipe_index)
+
+
+func _on_added_item(item : InventoryItem, amount : int):
+	_check_if_has_ingredients()
+
+
+func _on_removed_item(item : InventoryItem, amount : int):
+	_check_if_has_ingredients()
+
+
+func _check_if_has_ingredients():
+	craft_button.disabled = not crafter.main_station.can_craft(recipe)
