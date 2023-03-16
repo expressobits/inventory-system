@@ -2,16 +2,23 @@ extends VBoxContainer
 class_name CraftingsUI
 
 @export var crafting_ui_scene : PackedScene
-@export var crafter : Crafter
+@export var craft_station : CraftStation
 
 var craftings : Array[CraftingUI]
 
 
-func set_crafter(crafter : Crafter):
+func set_craft_station(craft_station : CraftStation):
 	clear()
-	self.crafter = crafter
-	crafter.main_station.on_add_crafting_at.connect(_on_add_crafting_at.bind())
-	crafter.main_station.on_remove_crafting_at.connect(_on_remove_crafting_at.bind())
+	if self.craft_station != null and self.craft_station != craft_station:
+		craft_station.on_add_crafting_at.disconnect(_on_add_crafting_at.bind())
+		craft_station.on_remove_crafting_at.disconnect(_on_remove_crafting_at.bind())
+	if self.craft_station != craft_station:
+		craft_station.on_add_crafting_at.connect(_on_add_crafting_at.bind())
+		craft_station.on_remove_crafting_at.connect(_on_remove_crafting_at.bind())
+	self.craft_station = craft_station
+	
+	for i in craft_station.craftings.size():
+		_on_add_crafting_at(i)
 
 
 func clear():
@@ -25,7 +32,7 @@ func _on_add_crafting_at(crafting_index : int):
 	add_child(crafting_obj)
 	move_child(crafting_obj, 0)
 	craftings.insert(crafting_index, crafting_obj)
-	crafting_obj.set_crafting(crafter.main_station, crafting_index)
+	crafting_obj.set_crafting(craft_station, crafting_index)
 
 
 func _on_remove_crafting_at(crafting_index : int):

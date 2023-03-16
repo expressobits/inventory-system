@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmptjwipdws3"]
+[gd_scene load_steps=11 format=3 uid="uid://cj4k8ejg3gg16"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
@@ -9,9 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
-[ext_resource type="PackedScene" uid="uid://b4bg6h8yemi7v" path="res://addons/inventory-system/demos/ui/craft/crafting_ui.tscn" id="8_6nct1"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/craft/craftings_ui.gd" id="8_rn32f"]
-[ext_resource type="PackedScene" uid="uid://csy0xeh6pv4tq" path="res://addons/inventory-system/demos/ui/craft/recipes_ui.tscn" id="10_qjsje"]
+[ext_resource type="PackedScene" uid="uid://dlvdjqqjntu7p" path="res://addons/inventory-system/demos/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
 [node name="Inventory System UI" type="Control"]
 texture_filter = 1
@@ -55,19 +53,20 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerInventoryUI" parent="." instance=ExtResource("3_sohfg")]
+custom_minimum_size = Vector2(436, 244)
 layout_mode = 1
 offset_left = 52.0
 offset_top = 11.0
-offset_right = 520.0
-offset_bottom = 271.0
+offset_right = 488.0
+offset_bottom = 255.0
 
 [node name="LootInventoryUI" parent="." instance=ExtResource("3_sohfg")]
-custom_minimum_size = Vector2(234, 78)
+custom_minimum_size = Vector2(436, 140)
 layout_mode = 1
 offset_left = -429.0
 offset_top = 11.0
-offset_right = 39.0
-offset_bottom = 192.0
+offset_right = 7.0
+offset_bottom = 151.0
 
 [node name="HotbarUI" type="Control" parent="." node_paths=PackedStringArray("slots_container")]
 texture_filter = 1
@@ -105,23 +104,14 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
 
-[node name="CraftingsUI" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(64, 64)
+[node name="PlayerCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = -568.0
-offset_right = 86.0
-offset_bottom = -16.0
-grow_vertical = 0
-alignment = 2
-script = ExtResource("8_rn32f")
-crafting_ui_scene = ExtResource("8_6nct1")
+view_input_inventory = false
+view_output_inventory = false
 
-[node name="RecipesUI" parent="." instance=ExtResource("10_qjsje")]
+[node name="OtherCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
 layout_mode = 1
+view_output_inventory = false
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_vp41x")

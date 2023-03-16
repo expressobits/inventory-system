@@ -3,7 +3,7 @@ class_name RecipeUI
 
 var recipe : Recipe
 var recipe_index : int
-var crafter : Crafter
+var craft_station : CraftStation
 @onready var icon : TextureRect = get_node("Control/ItemIcon")
 @onready var item_name : Label = get_node("ItemName")
 @onready var time_to_craft : Label = get_node("TimeToCraft")
@@ -17,8 +17,8 @@ func _ready():
 	craft_button.button_down.connect(_on_craft_button_button_down.bind())
 
 
-func set_recipe(crafter : Crafter, recipe : Recipe, recipe_index : int):
-	self.crafter = crafter
+func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
+	self.craft_station = craft_station
 	self.recipe = recipe
 	self.recipe_index = recipe_index
 	icon.texture = recipe.product.item.icon
@@ -31,8 +31,8 @@ func set_recipe(crafter : Crafter, recipe : Recipe, recipe_index : int):
 		ingredient_obj.setup(ingredient)
 		ingredients.append(ingredient_obj)
 	_check_if_has_ingredients()
-	crafter.main_station.input_inventory.item_added.connect(_on_added_item.bind())
-	crafter.main_station.input_inventory.item_removed.connect(_on_added_item.bind())
+	craft_station.input_inventory.item_added.connect(_on_added_item.bind())
+	craft_station.input_inventory.item_removed.connect(_on_added_item.bind())
 
 
 func clear_ingredients():
@@ -42,7 +42,7 @@ func clear_ingredients():
 
 
 func _on_craft_button_button_down():
-	crafter.main_station.craft(recipe_index)
+	craft_station.craft(recipe_index)
 
 
 func _on_added_item(item : InventoryItem, amount : int):
@@ -54,4 +54,4 @@ func _on_removed_item(item : InventoryItem, amount : int):
 
 
 func _check_if_has_ingredients():
-	craft_button.disabled = not crafter.main_station.can_craft(recipe)
+	craft_button.disabled = not craft_station.can_craft(recipe)

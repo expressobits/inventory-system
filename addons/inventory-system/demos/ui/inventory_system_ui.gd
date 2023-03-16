@@ -25,9 +25,10 @@ var crafter : Crafter
 ## Control that identifies area where a transaction slot can call the handler to drop items
 @onready var drop_area: Control = get_node(NodePath("DropArea"))
 
-@onready var craftings_ui : CraftingsUI = get_node(NodePath("CraftingsUI"))
 
-@onready var recipes_ui : RecipesUI = get_node(NodePath("RecipesUI"))
+@onready var player_craft_station_ui : CraftStationUI = get_node(NodePath("PlayerCraftStationUI"))
+
+@onready var other_craft_station_ui : CraftStationUI = get_node(NodePath("OtherCraftStationUI"))
 
 func _ready():
 	player_inventory_ui.visible = false
@@ -35,12 +36,18 @@ func _ready():
 	transaction_slot_ui.clear_info()
 	drop_area.visible = false
 	hotbar_ui.visible = true
-	recipes_ui.close()
+	player_craft_station_ui.close()
+	other_craft_station_ui.close()
 	player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 	player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
-#	hotbarContainer.OnPointerDownSlotUI += PointerDownSlotUI;
 	loot_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 	loot_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
+	if other_craft_station_ui.input_inventory_ui != null:
+		other_craft_station_ui.input_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
+		other_craft_station_ui.input_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
+	if other_craft_station_ui.output_inventory_ui != null:
+		other_craft_station_ui.output_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
+		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 	drop_area.gui_input.connect(_drop_area_input.bind())
 
 
@@ -55,8 +62,6 @@ func set_player_inventory_handler(handler : InventoryHandler):
 
 func set_crafter(crafter : Crafter):
 	self.crafter = crafter
-	craftings_ui.set_crafter(crafter)
-	recipes_ui.set_crafter(crafter)
 	crafter.opened.connect(_on_open_craft_station.bind())
 	crafter.closed.connect(_on_close_craft_station.bind())
 
@@ -80,12 +85,6 @@ func _open_player_inventory():
 	player_inventory_ui.visible = true;
 	hotbar_ui.visible = false
 	drop_area.visible = true
-#	ClearSelected();
-#	hotBarUI.gameObject.SetActive(false);
-
-
-func open_recipes(craft_station : CraftStation):
-	recipes_ui.open(craft_station)
 
 
 # Open Inventory of player	
@@ -99,29 +98,30 @@ func _on_open_inventory(inventory : Inventory):
 
 # Open Craft Station	
 func _on_open_craft_station(craft_station : CraftStation):
-	recipes_ui.open_craft_station(craft_station)
-	recipes_ui.visible = true
-	
-	# TODO make recipes ui for other craft stations
-#	if craft_station != crafter.main_station:
-#		recipes_ui.open_craft_station(craft_station)
-#		recipes_ui.visible = true
-#	else:
-#		_open_player_inventory()
+	# TODO #42 Different skins for different types of craft stations
+	if craft_station == crafter.main_station:
+		player_craft_station_ui.open(craft_station)
+	else:
+		other_craft_station_ui.open(craft_station)
+	hotbar_ui.visible = false
+	_open_player_inventory()
 
 
 func _on_close_craft_station(craft_station : CraftStation):
-	recipes_ui.close()
-#	if craft_station == crafter.main_station:
-#		_close_player_inventory(inventory)
+	if craft_station == crafter.main_station:
+		player_craft_station_ui.close()
+	else:
+		other_craft_station_ui.close()
+	hotbar_ui.visible = true
+	_close_player_inventory()
 
 
 func _on_close_inventory(inventory : Inventory):
 	if inventory == inventory_handler.inventory:
-		_close_player_inventory(inventory)
+		_close_player_inventory()
 
 
-func _close_player_inventory(inventory : Inventory):
+func _close_player_inventory():
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	if loot_inventory_ui.inventory != null:
@@ -129,7 +129,6 @@ func _close_player_inventory(inventory : Inventory):
 #    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 	hotbar_ui.visible = true
-	recipes_ui.close()
 
 
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):

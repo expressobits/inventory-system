@@ -26,12 +26,14 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 [node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventory", "output_inventory")]
 script = ExtResource("3_i83tc")
 input_inventory = NodePath("../InputInventory")
-output_inventory = NodePath("../OutputInventory")
+output_inventory = NodePath("../InputInventory")
 type = ExtResource("4_g10kw")
 database = ExtResource("5_d4au8")
 
 [node name="InputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+database = ExtResource("5_d4au8")
 
 [node name="OutputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+database = ExtResource("5_d4au8")
