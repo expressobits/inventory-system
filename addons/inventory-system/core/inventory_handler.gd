@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/inventory-system/icons/inventory_handler.svg")
 extends NodeInventorySystemBase
 class_name InventoryHandler

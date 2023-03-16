@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/inventory-system/icons/craft-station.svg")
 extends NodeInventorySystemBase
 class_name CraftStation

@@ -1,3 +1,4 @@
+@tool
 extends Inventory
 class_name NetworkedInventory
 

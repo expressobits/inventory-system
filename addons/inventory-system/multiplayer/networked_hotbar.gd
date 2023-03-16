@@ -1,3 +1,4 @@
+@tool
 extends Hotbar
 class_name NetworkedHotbar
 
