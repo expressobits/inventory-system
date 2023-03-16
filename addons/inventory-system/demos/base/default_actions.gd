@@ -104,3 +104,21 @@ const CHARACTER_CONTROLLER_REMOVE_ITEM_B := {
 		}
 	]
 }
+
+const CHARACTER_CONTROLLER_ADD_ITEM_C := {
+	"name": "add_item_c",
+	"events": [
+		{
+			"physical_keycode": KEY_F5,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_REMOVE_ITEM_C := {
+	"name": "remove_item_c",
+	"events": [
+		{
+			"physical_keycode": KEY_F6,
+		}
+	]
+}

@@ -7,6 +7,7 @@ var inventory_system_ui_path := NodePath("UI/Inventory System UI")
 
 @export var item_wood : InventoryItem
 @export var item_stone : InventoryItem
+@export var item_grass : InventoryItem
 @export var database : InventoryDatabase
 
 var player_inventory_handler : InventoryHandler
@@ -39,12 +40,17 @@ func _process(delta):
 	if Input.is_action_just_released("add_item_a"):
 		player_inventory_handler.add_to_inventory(player_inventory_handler.inventory, item_wood, 1)
 	if Input.is_action_just_released("remove_item_a"):
-		player_inventory_handler.inventory.remove(item_wood, 2)
+		player_inventory_handler.inventory.remove(item_wood, 1)
 		
 	if Input.is_action_just_released("add_item_b"):
 		player_inventory_handler.add_to_inventory(player_inventory_handler.inventory, item_stone, 1)
 	if Input.is_action_just_released("remove_item_b"):
-		player_inventory_handler.inventory.remove(item_stone, 2)
+		player_inventory_handler.inventory.remove(item_stone, 1)
+		
+	if Input.is_action_just_released("add_item_c"):
+		player_inventory_handler.add_to_inventory(player_inventory_handler.inventory, item_grass, 1)
+	if Input.is_action_just_released("remove_item_c"):
+		player_inventory_handler.inventory.remove(item_grass, 1)
 
 
 func _update_opened_inventories(inventory : Inventory):
