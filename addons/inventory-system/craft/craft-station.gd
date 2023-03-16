@@ -102,6 +102,8 @@ func contains_ingredients(recipe : Recipe) -> bool:
 
 func craft(recipe_index : int):
 	var recipe := database.recipes[recipe_index]
+	if recipe.station != type:
+		return false
 	if not can_craft(recipe):
 		return
 	if not _use_items(recipe):
@@ -147,6 +149,8 @@ func close() -> bool:
 
 
 func _use_items(recipe : Recipe) -> bool:
+	if recipe.station != type:
+		return false
 	for ingredient in recipe.ingredients:
 		if input_inventory.remove(ingredient.item, ingredient.amount) > 0:
 			return false
