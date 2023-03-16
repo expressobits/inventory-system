@@ -59,7 +59,7 @@ func _process(delta):
 		if crafter.is_open_any_station():
 			crafter.close_all_craft_stations()
 			
-	if Input.is_action_just_released("toggle_craft"):
+	if Input.is_action_just_released("toggle_craft_panel"):
 		if crafter.is_open_main_craft_station():
 			crafter.close_main_craft_station()
 			crafter.close_all_craft_stations()

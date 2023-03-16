@@ -51,6 +51,15 @@ const CHARACTER_CONTROLLER_INTERACT := {
 	]
 }
 
+const CHARACTER_CONTROLLER_TOGGLE_CRAFT_PANEL := {
+	"name": "toggle_craft_panel",
+	"events": [
+		{
+			"physical_keycode": KEY_C,
+		}
+	]
+}
+
 const CHARACTER_CONTROLLER_TOGGLE_INVENTORY := {
 	"name": "toggle_inventory",
 	"events": [
