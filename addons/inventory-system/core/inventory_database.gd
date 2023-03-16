@@ -7,6 +7,8 @@ class_name InventoryDatabase
 ## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
 @export var items : Array
 
+@export var recipes : Array[Recipe]
+
 
 # TODO Create loading dropped items and items with folder
 # @export var path_test := "res://addons/inventory-system/demos/fps/items/"

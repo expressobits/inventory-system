@@ -1,13 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://botnujr1ynwkf"]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
-[ext_resource type="PackedScene" uid="uid://djvkfw01sllxt" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
-[ext_resource type="Resource" uid="uid://b2hp3ecf6jmdp" path="res://addons/inventory-system/demos/fps/items/database.tres" id="3_aep54"]
+[ext_resource type="PackedScene" uid="uid://2i8022umv4df" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/database.tres" id="3_aep54"]
 [ext_resource type="PackedScene" uid="uid://bmptjwipdws3" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
 [ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
-[ext_resource type="PackedScene" uid="uid://cmm8njptqaue5" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_y0513"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_y0513"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_efc1k"]
 
 [node name="MPDemo" type="Node"]

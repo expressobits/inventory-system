@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333333 4.2333332"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   sodipodi:docname="branch.svg"
+   inkscape:export-filename="stone.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     showgrid="true"
+     showguides="true"
+     inkscape:zoom="32.816738"
+     inkscape:cx="15.403725"
+     inkscape:cy="7.4809385"
+     inkscape:window-width="2560"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     inkscape:lockguides="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid9001" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Camada 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#ffffff;stroke:#ffffff;stroke-width:2;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1793"
+       height="3.1241555"
+       x="6.2711148"
+       y="7.7305741"
+       rx="2"
+       ry="2"
+       width="0" />
+    <rect
+       style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6022"
+       x="1.3544916"
+       y="1.4189913" />
+    <g
+       id="g933"
+       transform="rotate(45,2.3603045,1.9064097)">
+      <rect
+         style="fill:#784421;stroke-width:0.352276;stroke-linecap:round"
+         id="rect912"
+         width="0.79374993"
+         height="3.4395833"
+         x="1.8520833"
+         y="0.52916664"
+         rx="0.39687502" />
+      <rect
+         style="fill:#a05a2c;stroke-width:0.264583;stroke-linecap:round"
+         id="rect916"
+         width="0.52916664"
+         height="1.8520833"
+         x="3.0255182"
+         y="-1.4873077"
+         rx="0.26458335"
+         transform="rotate(45)" />
+      <rect
+         style="fill:#a05a2c;stroke-width:0.352276;stroke-linecap:round"
+         id="rect927"
+         width="0.79374993"
+         height="3.4395833"
+         x="1.984375"
+         y="0.52916664"
+         rx="0.39687502" />
+    </g>
+  </g>
+</svg>

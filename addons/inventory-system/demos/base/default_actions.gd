@@ -51,6 +51,15 @@ const CHARACTER_CONTROLLER_INTERACT := {
 	]
 }
 
+const CHARACTER_CONTROLLER_TOGGLE_CRAFT_PANEL := {
+	"name": "toggle_craft_panel",
+	"events": [
+		{
+			"physical_keycode": KEY_C,
+		}
+	]
+}
+
 const CHARACTER_CONTROLLER_TOGGLE_INVENTORY := {
 	"name": "toggle_inventory",
 	"events": [
@@ -92,6 +101,24 @@ const CHARACTER_CONTROLLER_REMOVE_ITEM_B := {
 	"events": [
 		{
 			"physical_keycode": KEY_F4,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_ADD_ITEM_C := {
+	"name": "add_item_c",
+	"events": [
+		{
+			"physical_keycode": KEY_F5,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_REMOVE_ITEM_C := {
+	"name": "remove_item_c",
+	"events": [
+		{
+			"physical_keycode": KEY_F6,
 		}
 	]
 }
