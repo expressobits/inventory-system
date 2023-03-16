@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bs66pxpnpbpbs" path="res://addons/inventory-system/demos/fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://bgqw131wcpbno" path="res://addons/inventory-system/demos/fps/wall.tscn" id="2_wrb2n"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
+[ext_resource type="PackedScene" uid="uid://c8yur4xl4jyvg" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
 [ext_resource type="PackedScene" uid="uid://c58y8utvxmgl" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/tree.glb" id="6_a1n8f"]
 [ext_resource type="PackedScene" uid="uid://ctr82bvxsayua" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/treeFall.glb" id="7_17gjd"]
 [ext_resource type="PackedScene" uid="uid://ck5n7wn1s1f7a" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/rockA.glb" id="8_0s041"]

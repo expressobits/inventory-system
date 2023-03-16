@@ -1,22 +1,31 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=18 format=3 uid="uid://isl7ph8uirls"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=27 format=3 uid="uid://ds5vbdoklqy3a"]
 
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="1_a08hj"]
 [ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="2_n1gpo"]
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_akrwg"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_4yj5r"]
+[ext_resource type="PackedScene" uid="uid://c8yur4xl4jyvg" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_4yj5r"]
 [ext_resource type="PackedScene" uid="uid://tmbnja6deh81" path="res://addons/inventory-system/demos/fps/hand_items/rock.tscn" id="5_m0h06"]
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
 [ext_resource type="Resource" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="7_4afv6"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="7_b6gc3"]
 [ext_resource type="Resource" uid="uid://vv4dc26verx4" path="res://addons/inventory-system/demos/base/recipes/stone_axe.tres" id="7_ld8xv"]
-[ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_hammer.tres" id="8_dq6ui"]
+[ext_resource type="PackedScene" uid="uid://c1ndqyykef1br" path="res://addons/inventory-system/demos/fps/dropped_items/stone_axe.tscn" id="8_io5k8"]
 [ext_resource type="Resource" uid="uid://b6xju8cni0ma3" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
+[ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
+[ext_resource type="PackedScene" uid="uid://bkmx0xe50vf47" path="res://addons/inventory-system/demos/fps/hand_items/stone_axe.tscn" id="9_l588a"]
 [ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
 [ext_resource type="Resource" uid="uid://ble5yaxpj7ym3" path="res://addons/inventory-system/demos/base/recipes/camp_fire.tres" id="10_eqnrh"]
+[ext_resource type="PackedScene" uid="uid://dwe4mumcah0nc" path="res://addons/inventory-system/demos/fps/hand_items/campfire.tscn" id="10_lcc51"]
+[ext_resource type="PackedScene" uid="uid://bglm5qmb0gyj" path="res://addons/inventory-system/demos/fps/dropped_items/stone_pickaxe.tscn" id="11_ako86"]
+[ext_resource type="PackedScene" uid="uid://byynd0nx8vfn2" path="res://addons/inventory-system/demos/fps/dropped_items/campfire.tscn" id="11_b4uq4"]
 [ext_resource type="Resource" uid="uid://bndrki2q1ktsf" path="res://addons/inventory-system/demos/base/recipes/lashing.tres" id="11_d4lpx"]
 [ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
-[ext_resource type="Resource" uid="uid://4urn6b7asb27" path="res://addons/inventory-system/demos/base/recipes/stone_hammer.tres" id="12_g8rsj"]
+[ext_resource type="PackedScene" uid="uid://2fvkeyyvqubl" path="res://addons/inventory-system/demos/fps/hand_items/stone_pickaxe.tscn" id="12_bavq1"]
 [ext_resource type="PackedScene" uid="uid://bli2jsj0wevyh" path="res://addons/inventory-system/demos/fps/dropped_items/grass.tscn" id="12_l4ej5"]
+[ext_resource type="PackedScene" uid="uid://cmcq0oqhho45l" path="res://addons/inventory-system/demos/fps/dropped_items/lashing.tscn" id="15_ajtfu"]
+[ext_resource type="PackedScene" uid="uid://daan81no83gsp" path="res://addons/inventory-system/demos/fps/hand_items/grass.tscn" id="15_gpmai"]
+[ext_resource type="PackedScene" uid="uid://ldb8v452e28o" path="res://addons/inventory-system/demos/fps/hand_items/lashing.tscn" id="18_gqdfa"]
+[ext_resource type="Resource" uid="uid://dpkrrmimp8u7j" path="res://addons/inventory-system/demos/base/recipes/stone_pickaxe.tres" id="24_013tf"]
 
 [resource]
 script = ExtResource("7_b6gc3")
@@ -31,20 +40,29 @@ items = [{
 "id": 2,
 "item": ExtResource("6_lh8gi")
 }, {
+"dropped_item": ExtResource("8_io5k8"),
+"hand_item": ExtResource("9_l588a"),
 "id": 3,
 "item": ExtResource("7_4afv6")
 }, {
+"dropped_item": ExtResource("11_ako86"),
+"hand_item": ExtResource("12_bavq1"),
 "id": 4,
-"item": ExtResource("8_dq6ui")
+"item": ExtResource("9_b0fqm")
 }, {
+"dropped_item": ExtResource("11_b4uq4"),
+"hand_item": ExtResource("10_lcc51"),
 "id": 5,
 "item": ExtResource("9_ac6d4")
 }, {
+"dropped_item": ExtResource("15_ajtfu"),
+"hand_item": ExtResource("18_gqdfa"),
 "id": 6,
 "item": ExtResource("10_0ktg3")
 }, {
 "dropped_item": ExtResource("12_l4ej5"),
+"hand_item": ExtResource("15_gpmai"),
 "id": 7,
 "item": ExtResource("11_kmxri")
 }]
-recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("7_ld8xv"), ExtResource("10_eqnrh"), ExtResource("11_d4lpx"), ExtResource("12_g8rsj")])
+recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("7_ld8xv"), ExtResource("10_eqnrh"), ExtResource("11_d4lpx"), ExtResource("24_013tf")])

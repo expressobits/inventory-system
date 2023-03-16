@@ -1,13 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bli2jsj0wevyh"]
+[gd_scene load_steps=5 format=3 uid="uid://bli2jsj0wevyh"]
 
 [ext_resource type="PackedScene" uid="uid://cjxdajwr3jol6" path="res://addons/inventory-system/demos/fps/dropped_items/dropped_item.tscn" id="1_0i1lv"]
 [ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="2_7vpop"]
-[ext_resource type="Material" uid="uid://crejuaexbgbp3" path="res://addons/inventory-system/demos/fps/materials/wood.tres" id="3_eivu7"]
-[ext_resource type="PackedScene" uid="uid://dd4p8bydodqwr" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/resourceWood.glb" id="3_y27mx"]
-[ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system/demos/assets/icons/grass.png" id="5_c4w50"]
+[ext_resource type="PackedScene" uid="uid://2lv3lwkrjfn4" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/grass.glb" id="3_wcbcv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]
-size = Vector3(0.409131, 0.262369, 0.14961)
+size = Vector3(0.306273, 0.130522, 0.24074)
 
 [node name="Grass" instance=ExtResource("1_0i1lv")]
 item = ExtResource("2_7vpop")
@@ -16,15 +14,4 @@ item = ExtResource("2_7vpop")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0769588, 0)
 shape = SubResource("BoxShape3D_ffk2p")
 
-[node name="resourceWood" parent="Visual" index="0" instance=ExtResource("3_y27mx")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, -0.05, 0)
-
-[node name="resourceWood2" parent="Visual/resourceWood" index="0"]
-material_override = ExtResource("3_eivu7")
-mesh = null
-
-[node name="Sprite3D" type="Sprite3D" parent="Visual/resourceWood" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.108909, 0)
-texture = ExtResource("5_c4w50")
-
-[editable path="Visual/resourceWood"]
+[node name="grass" parent="Visual" index="0" instance=ExtResource("3_wcbcv")]
