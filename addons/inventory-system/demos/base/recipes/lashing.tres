@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=8 format=3 uid="uid://bndrki2q1ktsf"]
+
+[ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="1_xxk8m"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_vosmi"]
+[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="3_477hv"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_t5gg4"]
+[ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="6_cthdi"]
+
+[sub_resource type="Resource" id="Resource_h5imn"]
+script = ExtResource("2_vosmi")
+item = ExtResource("1_xxk8m")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_qavdy"]
+script = ExtResource("2_vosmi")
+item = ExtResource("3_477hv")
+amount = 1
+
+[resource]
+script = ExtResource("5_t5gg4")
+product = SubResource("Resource_qavdy")
+subproducts = Array[ExtResource("2_vosmi")]([])
+time_to_craft = 4.0
+station = ExtResource("6_cthdi")
+ingredients = Array[ExtResource("2_vosmi")]([SubResource("Resource_h5imn")])

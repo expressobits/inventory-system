@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b78s1iramu2wu"]
+[gd_scene load_steps=15 format=3 uid="uid://b78s1iramu2wu"]
 
 [ext_resource type="PackedScene" uid="uid://bs66pxpnpbpbs" path="res://addons/inventory-system/demos/fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://bgqw131wcpbno" path="res://addons/inventory-system/demos/fps/wall.tscn" id="2_wrb2n"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ck5n7wn1s1f7a" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/rockA.glb" id="8_0s041"]
 [ext_resource type="PackedScene" uid="uid://bgvaa5kek58rt" path="res://addons/inventory-system/demos/fps/level/sign.tscn" id="10_5mqut"]
 [ext_resource type="PackedScene" uid="uid://bpefq51seky2l" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/rockFlat.glb" id="11_61v31"]
+[ext_resource type="PackedScene" uid="uid://bli2jsj0wevyh" path="res://addons/inventory-system/demos/fps/dropped_items/grass.tscn" id="11_pyj8y"]
 [ext_resource type="PackedScene" uid="uid://js44r8aslho6" path="res://addons/inventory-system/demos/fps/level/directional_light_3d.tscn" id="15_c7p16"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5c8y0"]
@@ -142,6 +143,30 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.71857, 0.419369, 3.64491)
 
 [node name="Rock Dropped Item4" parent="Items" instance=ExtResource("4_hv5pj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.19383, 0.419369, 3.11412)
+
+[node name="Grass" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20527, -0.0184987, 3.74455)
+
+[node name="Grass2" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.69251, -0.0184987, 4.16447)
+
+[node name="Grass3" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09822, -0.0184984, 3.99581)
+
+[node name="Grass4" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.179465, -0.0184984, 3.9359)
+
+[node name="Grass5" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.90017, -0.0184987, 4.24534)
+
+[node name="Grass6" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.24844, -0.0184987, 3.63624)
+
+[node name="Grass7" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.991745, -0.0184989, 4.11057)
+
+[node name="Grass8" parent="Items" instance=ExtResource("11_pyj8y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.68531, -0.0184987, 3.47762)
 
 [node name="Sign" parent="." instance=ExtResource("10_5mqut")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13844, 0, -3.8075)

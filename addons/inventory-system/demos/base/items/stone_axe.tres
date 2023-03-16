@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("2_6724s")
 max_stack = 1
-name = "Rock"
+name = "Stone Axe"
 icon = ExtResource("1_5x1h2")

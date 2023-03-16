@@ -7,4 +7,4 @@ class_name IngredientUI
 
 func setup(slot : Slot):
 	self.icon.texture = slot.item.icon
-	self.amount.text = str(slot.amount)
+	self.amount.text = "X "+str(slot.amount)

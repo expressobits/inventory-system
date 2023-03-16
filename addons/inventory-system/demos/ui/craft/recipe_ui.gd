@@ -23,7 +23,7 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 	self.recipe_index = recipe_index
 	icon.texture = recipe.product.item.icon
 	item_name.text = recipe.product.item.name
-	time_to_craft.text = str(recipe.time_to_craft)
+	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
 	clear_ingredients()
 	for ingredient in recipe.ingredients:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()

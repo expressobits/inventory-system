@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_fcne4")
-max_stack = 2
+max_stack = 16
 name = "Wood"
 icon = ExtResource("1_q41wd")
