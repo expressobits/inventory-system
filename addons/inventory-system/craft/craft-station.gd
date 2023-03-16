@@ -34,6 +34,14 @@ class Crafting:
 
 var craftings : Array[Crafting]
 var is_open : bool
+var valid_recipes : Array[int]
+
+
+func _ready():
+	for i in database.recipes.size():
+		var recipe = database.recipes[i]
+		if recipe.station == type:
+			valid_recipes.append(i)
 
 
 func is_crafting() -> bool:
@@ -78,6 +86,8 @@ func remove_crafting(crafting_index : int):
 ## Check if it is possible to create this recipe
 ## It is checked if the crafts limit has been exceeded and then it is checked if the recipe items contain in the inventory
 func can_craft(recipe : Recipe) -> bool:
+	if recipe.station != type:
+		return false
 	if limit_number_crafts >= 0 and limit_number_crafts <= craftings.size():
 		return false
 	return contains_ingredients(recipe)
@@ -134,7 +144,7 @@ func close() -> bool:
 		emit_signal("closed")
 		return true
 	return false
-	
+
 
 func _use_items(recipe : Recipe) -> bool:
 	for ingredient in recipe.ingredients:

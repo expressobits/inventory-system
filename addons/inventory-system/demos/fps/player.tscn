@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="2_fyps8"]
-[ext_resource type="Resource" uid="uid://isl7ph8uirls" path="res://addons/inventory-system/demos/base/database.tres" id="4_11r5y"]
+[ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="4_11r5y"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_cio1o"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hotbar.gd" id="5_dm6kt"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_sfhca"]

@@ -19,12 +19,13 @@ func open(craft_station : CraftStation):
 	clear()
 	craftings_ui.set_craft_station(craft_station)
 	var recipes = craft_station.database.recipes
-	for i in recipes.size():
-		var recipe = recipes[i]
+	for i in craft_station.valid_recipes.size():
+		var recipe_index = craft_station.valid_recipes[i]
+		var recipe = craft_station.database.recipes[recipe_index]
 		var recipe_ui : RecipeUI = recipe_ui_scene.instantiate()
 		recipe_uis.append(recipe_ui)
 		recipes_container.add_child(recipe_ui)
-		recipe_ui.set_recipe(craft_station, recipe, i)
+		recipe_ui.set_recipe(craft_station, recipe, recipe_index)
 	visible = true
 	var valid_input = view_input_inventory and craft_station.input_inventory != null
 	var valid_output = view_output_inventory and craft_station.output_inventory != null
