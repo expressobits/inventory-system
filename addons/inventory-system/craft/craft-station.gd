@@ -54,7 +54,7 @@ func _process(delta):
 		# TODO set start time in crafting only (Problem with load game ?)
 		c.time -= delta
 		if c.time <= 0:
-			finish_crafting(c.recipe_index)
+			finish_crafting(i)
 
 	
 func finish_crafting(crafting_index : int):
