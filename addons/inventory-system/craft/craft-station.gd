@@ -71,8 +71,8 @@ func finish_crafting(crafting_index : int):
 func remove_crafting(crafting_index : int):
 	if crafting_index >= craftings.size():
 		return
-	craftings.remove_at(crafting_index)
 	emit_signal("on_remove_crafting_at", crafting_index)
+	craftings.remove_at(crafting_index)
 	
 
 ## Check if it is possible to create this recipe
