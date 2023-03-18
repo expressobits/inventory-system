@@ -26,6 +26,14 @@ class Crafting:
 		
 	func process(delta : float):
 		time -= delta
+		
+	func to_data() -> Array:
+		return [recipe_index,time]
+		
+	func from_data(data : Array):
+		recipe_index = data[0]
+		time = data[1]
+		
 
 @export var input_inventory : Inventory
 @export var output_inventory : Inventory

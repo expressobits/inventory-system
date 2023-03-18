@@ -2,6 +2,8 @@
 extends CraftStation
 class_name NetworkedCraftStation
 
+var craftings_data_sync : Array
+
 
 func _ready():
 	super._ready()
@@ -32,6 +34,11 @@ func cancel_craft(crafting_index : int):
 	return true
 
 
+func _finish_crafting(crafting_index : int):
+	if multiplayer.is_server():
+		super._finish_crafting(crafting_index)
+
+
 ## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
@@ -53,7 +60,15 @@ func _on_connected(id):
 		return
 	if is_open:
 		_opened_rpc.rpc_id(id)
-#	_update_slots_rpc.rpc_id(id, slots)
+	_update_craftings_rpc.rpc_id(id, craftings_data_sync)
+
+
+@rpc
+func _update_craftings_rpc(craftings_data : Array):
+	for data in craftings_data:
+		var crafting = Crafting.new()
+		crafting.from_data(data)
+		self.craftings.append(crafting)
 
 
 func _on_opened():
@@ -73,12 +88,14 @@ func _on_crafting_added(crafting_index : int):
 		return
 	var crafting = craftings[crafting_index]
 	_crafting_added_rpc.rpc(crafting.recipe_index)
+	craftings_data_sync.append(crafting.to_data())
 
 
 func _on_crafting_removed(crafting_index : int):
 	if not multiplayer.is_server():
 		return
 	_crafting_removed_rpc.rpc(crafting_index)
+	craftings_data_sync.remove_at(crafting_index)
 
 
 @rpc
