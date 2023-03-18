@@ -435,6 +435,102 @@ slots = [{
 }, {
 "amount": 0,
 "item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
 }]
 create_slot_if_needed = false
 remove_slot_if_empty = false
@@ -646,58 +742,6 @@ slots = [{
 }, {
 "amount": 0,
 "item_id": -1
-}]
-
-[node name="OutputInventory" parent="Workbench" index="4"]
-script = ExtResource("7_8khhq")
-slots = [{
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
 }, {
 "amount": 0,
 "item_id": -1
@@ -843,6 +887,9 @@ slots = [{
 "amount": 0,
 "item_id": -1
 }]
+
+[node name="OutputInventory" parent="Workbench" index="4"]
+script = ExtResource("7_8khhq")
 
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]

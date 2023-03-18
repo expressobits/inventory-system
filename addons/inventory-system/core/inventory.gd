@@ -244,12 +244,14 @@ func close() -> bool:
 
 
 func _load_slots():
+	while slots.size() != 0:
+		_remove_slot(0, false)
 	if not create_slot_if_needed:
 		for i in slot_amount:
 			_add_slot(i, false)
 
 
-func _remove_slot(slot_index):
+func _remove_slot(slot_index : int, emit_signal := true):
 	slots.remove_at(slot_index)
 	emit_signal("slot_removed", slot_index)
 
