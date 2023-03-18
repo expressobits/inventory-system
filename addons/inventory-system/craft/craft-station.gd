@@ -5,9 +5,9 @@ class_name CraftStation
 
 signal on_crafted(recipe_index : Recipe)
 signal on_request_craft(recipe_index : Recipe)
-signal on_add_crafting_at(crafting_index : int)
-signal on_remove_crafting_at(crafting_index : int)
-signal on_updated_crafting(crafting_index : int)
+signal crafting_added(crafting_index : int)
+signal crafting_removed(crafting_index : int)
+signal updated_crafting(crafting_index : int)
 
 ## Emitted when craft station is opened.
 ## Called inside the [b]open()[/b] function when the craft station is closed.
@@ -51,38 +51,7 @@ func is_crafting() -> bool:
 
 func crafting_count() -> int:
 	return craftings.size()
-	
-	
-func _process(delta):
-	if not can_processing_craftings:
-		return
-	if not is_crafting():
-		return
-	for i in range(craftings.size() - 1, -1, -1):
-		var c = craftings[i]
-		# TODO set start time in crafting only (Problem with load game ?)
-		c.time -= delta
-		if c.time <= 0:
-			finish_crafting(i)
 
-	
-func finish_crafting(crafting_index : int):
-	var crafting = craftings[crafting_index]
-	var recipe = database.recipes[crafting.recipe_index]
-	# TODO add function for slot in inventory
-	output_inventory.add(recipe.product.item, recipe.product.amount)
-	for subproduct in recipe.subproducts:
-		output_inventory.add(subproduct.item, subproduct.amount)
-	emit_signal("on_crafted", crafting.recipe_index)
-	remove_crafting(crafting_index)
-	
-	
-func remove_crafting(crafting_index : int):
-	if crafting_index >= craftings.size():
-		return
-	emit_signal("on_remove_crafting_at", crafting_index)
-	craftings.remove_at(crafting_index)
-	
 
 ## Check if it is possible to create this recipe
 ## It is checked if the crafts limit has been exceeded and then it is checked if the recipe items contain in the inventory
@@ -109,12 +78,7 @@ func craft(recipe_index : int):
 		return
 	if not _use_items(recipe):
 		return
-	var crafting = Crafting.new()
-	crafting.recipe_index = recipe_index
-	crafting.time = recipe.time_to_craft
-	craftings.append(crafting)
-	emit_signal("on_add_crafting_at", craftings.size() - 1)
-	emit_signal("on_request_craft", recipe_index)
+	_add_crafting(recipe_index, recipe)
 
 
 func cancel_craft(crafting_index : int):
@@ -126,7 +90,7 @@ func cancel_craft(crafting_index : int):
 	var recipe = database.recipes[crafting.recipe_index]
 	for ingredient in recipe.ingredients:
 		input_inventory.add(ingredient.item, ingredient.amount)
-	remove_crafting(crafting_index)
+	_remove_crafting(crafting_index)
 	
 	
 ## Opens the craft station and returns true if done successfully.
@@ -149,6 +113,30 @@ func close() -> bool:
 	return false
 
 
+func _process(delta):
+	if not can_processing_craftings:
+		return
+	if not is_crafting():
+		return
+	for i in range(craftings.size() - 1, -1, -1):
+		var c = craftings[i]
+		# TODO set start time in crafting only (Problem with load game ?)
+		c.time -= delta
+		if c.time <= 0:
+			_finish_crafting(i)
+
+
+func _finish_crafting(crafting_index : int):
+	var crafting = craftings[crafting_index]
+	var recipe = database.recipes[crafting.recipe_index]
+	# TODO add function for slot in inventory
+	output_inventory.add(recipe.product.item, recipe.product.amount)
+	for subproduct in recipe.subproducts:
+		output_inventory.add(subproduct.item, subproduct.amount)
+	emit_signal("on_crafted", crafting.recipe_index)
+	_remove_crafting(crafting_index)
+
+
 func _use_items(recipe : Recipe) -> bool:
 	if recipe.station != type:
 		return false
@@ -156,3 +144,19 @@ func _use_items(recipe : Recipe) -> bool:
 		if input_inventory.remove(ingredient.item, ingredient.amount) > 0:
 			return false
 	return true
+
+
+func _add_crafting(recipe_index : int, recipe : Recipe):
+	var crafting = Crafting.new()
+	crafting.recipe_index = recipe_index
+	crafting.time = recipe.time_to_craft
+	craftings.append(crafting)
+	emit_signal("crafting_added", craftings.size() - 1)
+	emit_signal("on_request_craft", recipe_index)
+	
+
+func _remove_crafting(crafting_index : int):
+	if crafting_index >= craftings.size():
+		return
+	emit_signal("crafting_removed", crafting_index)
+	craftings.remove_at(crafting_index)
