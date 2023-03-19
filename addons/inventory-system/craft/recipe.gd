@@ -1,4 +1,4 @@
-@icon("res://addons/inventory-system/icons/inventory_item.svg")
+@icon("res://addons/inventory-system/icons/recipe.svg")
 extends Resource
 class_name Recipe
 
