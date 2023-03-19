@@ -1,5 +1,6 @@
+@tool
 @icon("res://addons/inventory-system/icons/inventory.svg")
-extends Node
+extends NodeInventorySystemBase
 class_name Inventory
 
 ## This script stores an array of slots via [Dictionary].
@@ -16,6 +17,12 @@ signal slot_added(slot_index : int)
 ## Emitted when a slot was removed.
 ## This signal is emitted after calling the  [code]remove[/code]  function and happens only when the slot is empty and the  [code]remove_slot_if_empty[/code]  is set to true.
 signal slot_removed(slot_index : int)
+
+## Emitted when a item was added.
+signal item_added(item : InventoryItem, amount : int)
+
+## Emitted when a item was removed.
+signal item_removed(item : InventoryItem, amount : int)
 
 ## Emitted when inventory is filled.
 ## This signal is emitted after the  [code]add[/code]  ,  [code]add_at[/code]  or  [code]set_slot[/code]  function and it only happens when all slots are filled.
@@ -58,12 +65,10 @@ signal closed
 ## The name of the inventory, to be displayed in UI
 @export var inventory_name := "Inventory"
 
-## Database used to identify [InventoryItem] and [DroppedItem] ids.
-@export var database : InventoryDatabase
-
 
 func _ready():
-	_load_slots()
+	if not Engine.is_editor_hint():
+		_load_slots()
 
 
 ## Define slot specific index information
@@ -129,7 +134,7 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 	for slot in slots:
 		if slot.item_id == item_id:
 			amount_in_inventory += slot.amount
-			if amount_in_inventory > amount:
+			if amount_in_inventory >= amount:
 				return true
 	return false
 
@@ -165,6 +170,9 @@ func add(item : InventoryItem, amount : int) -> int:
 		_add_slot(slots.size())
 		amount_in_interact = _add_to_slot(slots.size() - 1, item, amount_in_interact)
 		_call_events(old_amount)
+	var added = amount - amount_in_interact
+	if added > 0:
+		emit_signal("item_added", item, added)
 	return amount_in_interact
 
 
@@ -176,6 +184,9 @@ func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	if slot_index < slots.size():
 		amount_in_interact = _add_to_slot(slot_index, item, amount_in_interact)
 		_call_events(old_amount)
+	var added = amount - amount_in_interact
+	if added > 0:
+		emit_signal("item_added", item, added)
 	return amount_in_interact
 
 
@@ -190,6 +201,9 @@ func remove(item : InventoryItem, amount := 1) -> int:
 		if remove_slot_if_empty and slot.amount == 0:
 			_remove_slot(i)
 			_call_events(old_amount)
+	var removed = amount - amount_in_interact
+	if removed > 0:
+		emit_signal("item_removed", item, removed)
 	return amount_in_interact
 
 
@@ -204,6 +218,9 @@ func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 		if remove_slot_if_empty and slot.amount == 0:
 			_remove_slot(slot_index)
 			_call_events(old_amount)
+	var removed = amount - amount_in_interact
+	if removed > 0:
+		emit_signal("item_removed", item, removed)
 	return amount_in_interact
 
 
@@ -228,12 +245,13 @@ func close() -> bool:
 
 
 func _load_slots():
+	slots.clear()
 	if not create_slot_if_needed:
 		for i in slot_amount:
 			_add_slot(i, false)
 
 
-func _remove_slot(slot_index):
+func _remove_slot(slot_index : int, emit_signal := true):
 	slots.remove_at(slot_index)
 	emit_signal("slot_removed", slot_index)
 

@@ -12,8 +12,13 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var rot := Vector3()
 
 @export_node_path("InventoryHandler") var inventory_handler_path = NodePath("InventoryHandler")
+@export_node_path("Hotbar") var hotbar_path = NodePath("InventoryHandler/Hotbar")
+@export_node_path("Crafter") var crafter_path = NodePath("Crafter")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+@onready var hotbar : Hotbar = get_node(hotbar_path)
+@onready var crafter : Crafter = get_node(crafter_path)
 @onready var raycast : RayCast3D = $Camera3D/RayCast3D
+
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -51,12 +56,35 @@ func _process(delta):
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_main_inventory()
 			inventory_handler.close_all_inventories()
+		if crafter.is_open_any_station():
+			crafter.close_all_craft_stations()
+			
+	if Input.is_action_just_released("toggle_craft_panel"):
+		if crafter.is_open_main_craft_station():
+			crafter.close_main_craft_station()
+			crafter.close_all_craft_stations()
+		else:
+			crafter.open_main_craft_station()
 
 
 func _input(event: InputEvent) -> void:
 	# Mouse look (only if the mouse is captured).
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 		rotate_camera(event.relative)
+	if event is InputEventMouseButton:
+		if event.is_pressed():
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				hotbar.next_item()
+				$HotbarChange.play()
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				hotbar.previous_item()
+				$HotbarChange.play()
+	if event is InputEventKey:
+		var input_key_event = event as InputEventKey
+		if event.is_pressed() and not event.is_echo():
+			if input_key_event.keycode > KEY_0 and input_key_event.keycode < KEY_9:
+				hotbar.set_selection_index(input_key_event.keycode - KEY_1)
+				$HotbarChange.play()
 
 
 func rotate_camera(mouse_axis : Vector2) -> void:
@@ -74,12 +102,21 @@ func interact():
 		var object = raycast.get_collider()
 		var box := object as BoxInventory
 		if box != null:
-			var inv = object.get_inventory()
+			var inv = box.get_inventory()
 			if inv != null:
 				$"../UI/Labels/InteractMessage".visible = !inventory_handler.is_open(inv)
 				$"../UI/Labels/InteractMessage".text = "E to Open Inventory"
 				if Input.is_action_just_pressed("interact"):
 					open_inventory(inv)
+				return
+		var workbench := object as Workbench
+		if workbench != null:
+			var station = workbench.get_station()
+			if station != null:
+				$"../UI/Labels/InteractMessage".visible = !crafter.is_open(station)
+				$"../UI/Labels/InteractMessage".text = "E to Open Station"
+				if Input.is_action_just_pressed("interact"):
+					open_station(station)
 				return
 		var dropped_item := object as DroppedItem
 		if dropped_item != null:
@@ -97,6 +134,11 @@ func open_inventory(inventory : Inventory):
 		inventory_handler.open(inventory)
 		if not inventory_handler.is_open_main_inventory():
 			inventory_handler.open_main_inventory()
+
+
+func open_station(craft_station : CraftStation):
+	if not crafter.is_open(craft_station):
+		crafter.open(craft_station)
 
 
 func pickup_item(item : DroppedItem):

@@ -7,6 +7,8 @@ class_name InventoryDatabase
 ## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
 @export var items : Array
 
+@export var recipes : Array[Recipe]
+
 
 # TODO Create loading dropped items and items with folder
 # @export var path_test := "res://addons/inventory-system/demos/fps/items/"
@@ -56,5 +58,16 @@ func get_dropped_item(id : int) -> PackedScene:
 	for item_data in items:
 		if item_data.id == id:
 			return item_data.dropped_item
+	# printerr("id ",id," is not in the database!")
+	return null
+	
+
+## Returns the [DroppedItem] of id, return null if not found
+func get_hand_item(id : int) -> PackedScene:
+	for item_data in items:
+		if item_data.id == id:
+			if not item_data.has("hand_item"):
+				return null
+			return item_data.hand_item
 	# printerr("id ",id," is not in the database!")
 	return null

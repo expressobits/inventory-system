@@ -1,5 +1,6 @@
+@tool
 @icon("res://addons/inventory-system/icons/inventory_handler.svg")
-extends Node
+extends NodeInventorySystemBase
 class_name InventoryHandler
 
 ## Act by changing inventories, opening and closing them, moving items between them, dropping items from them
@@ -36,9 +37,6 @@ signal updated_transaction_slot(item_id : int, amount : int)
 
 ## Path to where a drop of [DroppedItem] should be instantiated by the handler.
 @export_node_path var drop_parent_path := NodePath("../..")
-
-## Database used to identify [InventoryItem] and [DroppedItem] ids.
-@export var database : InventoryDatabase
 
 ## Main [Inventory] node.
 @onready var inventory := get_node(inventory_path)

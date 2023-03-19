@@ -1,3 +1,4 @@
+@tool
 extends InventoryHandler
 class_name NetworkedHandler
 

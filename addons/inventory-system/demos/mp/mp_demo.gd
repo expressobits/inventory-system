@@ -21,6 +21,7 @@ func create_player(peer_id : int):
 	add_child(player)
 	if peer_id == multiplayer.get_unique_id():
 		setup_inventory_handler(player.get_node("InventoryHandler"))
+		setup_crafter(player.get_node("Crafter"))
 
 
 @rpc	

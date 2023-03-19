@@ -3,8 +3,9 @@ class_name SlotUI
 
 ## Represents a [Slot] visually with item [Texture2D] and amount [Label]
 
-@onready var item_icon: TextureRect = get_node(NodePath("Item Icon"))
-@onready var amount_label: Label = get_node(NodePath("Amount"))
+@onready var item_icon : TextureRect = get_node(NodePath("Item Icon"))
+@onready var amount_label : Label = get_node(NodePath("Amount"))
+@onready var selection_background : Panel = get_node(NodePath("Selected"))
 
 ## Color when mouse enter
 @export var highlight_color = Color.ORANGE
@@ -41,6 +42,10 @@ func update_info_with_item(item : InventoryItem, amount := 1):
 func clear_info():
 		item_icon.texture = null
 		amount_label.visible = false
+		
+
+func set_selection(is_selected : bool):
+	selection_background.visible = is_selected
 
 
 func _on_mouse_entered():

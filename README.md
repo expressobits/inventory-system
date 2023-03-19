@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.5.2-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.6.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -29,13 +29,28 @@
  
 ✔️ Hotbar.
 
-🔨 Craft System.
+✔️ Craft System.
+
+## In Progress
 
 🔨 Item Editor.
 
+## Planneds
+
+📅 Item Editor. https://github.com/expressobits/inventory-system/issues/7
+
+📅 Categories. (https://github.com/expressobits/inventory-system/issues/5)
+
+📅 Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
+
+📅 Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
+
+📅 Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
+
+📅  Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
 
 ## Install
-TODO See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
+See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
 
 ## Structure
 ![UML](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/UML.png)
