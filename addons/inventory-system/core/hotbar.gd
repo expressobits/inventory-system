@@ -13,7 +13,8 @@ signal on_change_selection(selection_index)
 var selection_index := 0
 
 func _ready():
-	inventory.updated_slot.connect(_on_updated_slot.bind())
+	if inventory != null:
+		inventory.updated_slot.connect(_on_updated_slot.bind())
 
 
 func change_selection(index : int):
