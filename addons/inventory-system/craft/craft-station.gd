@@ -16,23 +16,6 @@ signal opened
 ## Emitted when craft station is closed.
 ## Called inside the [b]close()[/b] function when the craft station is closed.
 signal closed
-
-class Crafting:
-	var recipe_index : int
-	var time : float
-	
-	func is_finished() -> bool:
-		return time <= 0
-		
-	func process(delta : float):
-		time -= delta
-		
-	func to_data() -> Array:
-		return [recipe_index,time]
-		
-	func from_data(data : Array):
-		recipe_index = data[0]
-		time = data[1]
 		
 
 @export var input_inventory : Inventory
@@ -51,6 +34,19 @@ func _ready():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
 			valid_recipes.append(i)
+
+
+func _process(delta):
+	if not can_processing_craftings:
+		return
+	if not is_crafting():
+		return
+	for i in range(craftings.size() - 1, -1, -1):
+		var c = craftings[i]
+		# TODO set start time in crafting only (Problem with load game ?)
+		c.time -= delta
+		if c.time <= 0:
+			_finish_crafting(i)
 
 
 func is_crafting() -> bool:
@@ -121,19 +117,6 @@ func close() -> bool:
 	return false
 
 
-func _process(delta):
-	if not can_processing_craftings:
-		return
-	if not is_crafting():
-		return
-	for i in range(craftings.size() - 1, -1, -1):
-		var c = craftings[i]
-		# TODO set start time in crafting only (Problem with load game ?)
-		c.time -= delta
-		if c.time <= 0:
-			_finish_crafting(i)
-
-
 func _finish_crafting(crafting_index : int):
 	var crafting = craftings[crafting_index]
 	var recipe = database.recipes[crafting.recipe_index]
@@ -168,3 +151,21 @@ func _remove_crafting(crafting_index : int):
 		return
 	emit_signal("crafting_removed", crafting_index)
 	craftings.remove_at(crafting_index)
+
+
+class Crafting:
+	var recipe_index : int
+	var time : float
+	
+	func is_finished() -> bool:
+		return time <= 0
+		
+	func process(delta : float):
+		time -= delta
+		
+	func to_data() -> Array:
+		return [recipe_index,time]
+		
+	func from_data(data : Array):
+		recipe_index = data[0]
+		time = data[1]

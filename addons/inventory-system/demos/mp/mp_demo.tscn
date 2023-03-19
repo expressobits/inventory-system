@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgkm3qg0g5yf4"]
+[gd_scene load_steps=13 format=3 uid="uid://cgkm3qg0g5yf4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://2i8022umv4df" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
 [ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="3_aep54"]
+[ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system/demos/fps/labels.tscn" id="5_rvlsk"]
 [ext_resource type="PackedScene" uid="uid://cj4k8ejg3gg16" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
 [ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
@@ -19,87 +20,7 @@ database = ExtResource("3_aep54")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="Labels" type="Control" parent="UI"]
-texture_filter = 1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Labels"]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 16.0
-offset_right = 188.0
-offset_bottom = 132.0
-
-[node name="Label" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "Test Keys"
-
-[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "I - Open Inventory"
-
-[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "F1 - Add wood item"
-
-[node name="Label4" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "F2 - Remove 2 wood item"
-
-[node name="Label5" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "F3 - Add metal item"
-
-[node name="Label6" type="Label" parent="UI/Labels/VBoxContainer"]
-layout_mode = 2
-text = "F3 - Remove 2 metal item"
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="UI/Labels"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -306.0
-offset_top = 16.0
-offset_right = -13.0
-offset_bottom = 132.0
-grow_horizontal = 0
-
-[node name="Label" type="Label" parent="UI/Labels/VBoxContainer2"]
-layout_mode = 2
-text = "Mouse Actions in Slot"
-horizontal_alignment = 2
-
-[node name="Label2" type="Label" parent="UI/Labels/VBoxContainer2"]
-layout_mode = 2
-text = "Left Mouse - Get all items from slot"
-horizontal_alignment = 2
-
-[node name="Label3" type="Label" parent="UI/Labels/VBoxContainer2"]
-layout_mode = 2
-text = "Right Mouse - Get half items from slot"
-horizontal_alignment = 2
-
-[node name="InteractMessage" type="Label" parent="UI/Labels"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -13.0
-offset_right = 64.0
-offset_bottom = 13.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "E - Open Loot"
-horizontal_alignment = 1
+[node name="Labels" parent="UI" instance=ExtResource("5_rvlsk")]
 
 [node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
 

@@ -20,17 +20,17 @@ func _ready():
 
 func craft(recipe_index : int):
 	if not multiplayer.is_server():
-		craft_rpc.rpc_id(1, recipe_index)
+		_craft_rpc.rpc_id(1, recipe_index)
 	else:
-		craft_rpc(recipe_index)
+		_craft_rpc(recipe_index)
 	return true
 
 
 func cancel_craft(crafting_index : int):
 	if not multiplayer.is_server():
-		cancel_craft_rpc.rpc_id(1, crafting_index)
+		_cancel_craft_rpc.rpc_id(1, crafting_index)
 	else:
-		cancel_craft_rpc(crafting_index)
+		_cancel_craft_rpc(crafting_index)
 	return true
 
 
@@ -42,14 +42,14 @@ func _finish_crafting(crafting_index : int):
 ## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
-func craft_rpc(recipe_index : int):
+func _craft_rpc(recipe_index : int):
 	if not multiplayer.is_server():
 		return
 	super.craft(recipe_index)
 	
 
 @rpc("any_peer")
-func cancel_craft_rpc(crafting_index : int):
+func _cancel_craft_rpc(crafting_index : int):
 	if not multiplayer.is_server():
 		return
 	super.cancel_craft(crafting_index)
@@ -98,6 +98,8 @@ func _on_crafting_removed(crafting_index : int):
 	craftings_data_sync.remove_at(crafting_index)
 
 
+## === RESPONSES ===
+
 @rpc
 func _crafting_added_rpc(recipe_index : int):
 	if multiplayer.is_server():
@@ -117,13 +119,11 @@ func _crafting_removed_rpc(crafting_index : int):
 func _opened_rpc():
 	if multiplayer.is_server():
 		return
-	is_open = true
-	emit_signal("opened")
+	open()
 
 
 @rpc
 func _closed_rpc():
 	if multiplayer.is_server():
 		return
-	is_open = false
-	emit_signal("closed")
+	close()

@@ -4,25 +4,25 @@ class_name NetworkedCrafter
 
 func open(craft_station : CraftStation) -> bool:
 	if not multiplayer.is_server():
-		open_rpc.rpc_id(1, craft_station.get_path())
+		_open_rpc.rpc_id(1, craft_station.get_path())
 		emit_signal("opened", craft_station)
 	else:
-		open_rpc(craft_station.get_path())
+		_open_rpc(craft_station.get_path())
 	return true
 
 
 func close(craft_station : CraftStation) -> bool:
 	if not multiplayer.is_server():
-		close_rpc.rpc_id(1, craft_station.get_path())
+		_close_rpc.rpc_id(1, craft_station.get_path())
 	else:
-		close_rpc(craft_station.get_path())
+		_close_rpc(craft_station.get_path())
 	return true
 
 
 ## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
-func open_rpc(object_path : NodePath):
+func _open_rpc(object_path : NodePath):
 	if not multiplayer.is_server():
 		return
 	var object = get_node(object_path)
@@ -32,11 +32,11 @@ func open_rpc(object_path : NodePath):
 	if craft_station == null:
 		return
 	if super.open(craft_station):
-		open_response_rpc.rpc(object_path)
+		_open_response_rpc.rpc(object_path)
 
 
 @rpc("any_peer")
-func close_rpc(object_path : NodePath):
+func _close_rpc(object_path : NodePath):
 	if not multiplayer.is_server():
 		return
 	var object = get_node(object_path)
@@ -46,11 +46,11 @@ func close_rpc(object_path : NodePath):
 	if craft_station == null:
 		return
 	if super.close(craft_station):
-		close_response_rpc.rpc(object_path)
+		_close_response_rpc.rpc(object_path)
 	
 	
 @rpc
-func open_response_rpc(object_path : NodePath):
+func _open_response_rpc(object_path : NodePath):
 	if multiplayer.is_server():
 		return
 	var object = get_node(object_path)
@@ -64,7 +64,7 @@ func open_response_rpc(object_path : NodePath):
 
 
 @rpc
-func close_response_rpc(object_path : NodePath):
+func _close_response_rpc(object_path : NodePath):
 	if multiplayer.is_server():
 		return
 	var object = get_node(object_path)
