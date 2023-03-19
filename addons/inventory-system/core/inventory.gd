@@ -67,7 +67,8 @@ signal closed
 
 
 func _ready():
-	_load_slots()
+	if not Engine.is_editor_hint():
+		_load_slots()
 
 
 ## Define slot specific index information
@@ -244,8 +245,7 @@ func close() -> bool:
 
 
 func _load_slots():
-	while slots.size() != 0:
-		_remove_slot(0, false)
+	slots.clear()
 	if not create_slot_if_needed:
 		for i in slot_amount:
 			_add_slot(i, false)
