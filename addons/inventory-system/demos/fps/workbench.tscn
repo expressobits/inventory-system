@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/craft-station.gd" id="3_i83tc"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="4_g10kw"]
-[ext_resource type="Resource" uid="uid://isl7ph8uirls" path="res://addons/inventory-system/demos/base/database.tres" id="5_d4au8"]
+[ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="5_d4au8"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="6_js2dm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
@@ -32,8 +32,106 @@ database = ExtResource("5_d4au8")
 
 [node name="InputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+slots = [{
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}]
 database = ExtResource("5_d4au8")
 
 [node name="OutputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+slots = [{
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}, {
+"amount": 0,
+"item_id": -1
+}]
 database = ExtResource("5_d4au8")
