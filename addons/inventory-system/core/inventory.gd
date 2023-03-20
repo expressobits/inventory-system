@@ -276,7 +276,6 @@ func _call_events(old_amount : int):
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var item_id = database.get_id_from_item(item)
 	if item_id <= InventoryItem.NONE:
-		print(item_id)
 		return amount
 	var slot = slots[slot_index]
 	if amount <= 0 or (slot.item_id != item_id and slot.item_id != InventoryItem.NONE):
