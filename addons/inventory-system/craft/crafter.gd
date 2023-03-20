@@ -73,6 +73,5 @@ func close_main_craft_station() -> bool:
 ## Close all open [CraftStation]s.
 func close_all_craft_stations():
 	for i in range(opened_stations.size() - 1, -1, -1):
-		print("close")
 		var station = opened_stations[0]
 		close(station)
