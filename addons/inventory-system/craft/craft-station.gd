@@ -3,6 +3,11 @@
 extends NodeInventorySystemBase
 class_name CraftStation
 
+## This script create Craftings and stores an array.
+##
+## Crafting contains time to finish and recipe index from database.
+
+
 ## Emitted when the [Recipe] is crafted
 ## Called after the [Recipe]'s crafting time is up
 signal on_crafted(recipe_index : Recipe)
