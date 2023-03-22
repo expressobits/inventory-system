@@ -47,7 +47,7 @@ offset_right = 12.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "UM SLOT"
+tooltip_text = "A Slot"
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 
