@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://i53wbxy6jutt"]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/craft/recipe_ui.gd" id="1_7ru1f"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/recipe_ui.gd" id="1_7ru1f"]
 [ext_resource type="Texture2D" uid="uid://o67rdxq6qg4h" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/panelInset_beige.png" id="1_j3xlc"]
 [ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://addons/inventory-system/demos/assets/icons/stone-axe.png" id="2_vy34n"]
 [ext_resource type="PackedScene" uid="uid://bthnbps2srn3x" path="res://addons/inventory-system/demos/ui/craft/ingredient_ui.tscn" id="4_4p25f"]

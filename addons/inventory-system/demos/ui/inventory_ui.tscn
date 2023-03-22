@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dshee6i3qdl50"]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_ui.gd" id="1_2rmiv"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_ui.gd" id="1_2rmiv"]
 [ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="2_3len7"]
 [ext_resource type="Texture2D" uid="uid://o67rdxq6qg4h" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/panelInset_beige.png" id="3_d5iod"]
 [ext_resource type="Texture2D" uid="uid://cxmsgncxxwobe" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/panelInset_beigeLight.png" id="4_yh1g7"]
