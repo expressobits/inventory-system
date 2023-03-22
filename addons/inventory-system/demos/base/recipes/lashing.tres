@@ -18,6 +18,6 @@ amount = 1
 [resource]
 script = ExtResource("5_t5gg4")
 product = SubResource("Resource_qavdy")
-subproducts = Array[ExtResource("2_vosmi")]([])
+byproducts = Array[ExtResource("2_vosmi")]([])
 time_to_craft = 2.0
 ingredients = Array[ExtResource("2_vosmi")]([SubResource("Resource_h5imn")])

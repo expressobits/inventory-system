@@ -25,7 +25,7 @@ amount = 1
 [resource]
 script = ExtResource("5_d354j")
 product = SubResource("Resource_qavdy")
-subproducts = Array[ExtResource("2_m8dpj")]([])
+byproducts = Array[ExtResource("2_m8dpj")]([])
 time_to_craft = 8.0
 station = ExtResource("6_flv52")
 ingredients = Array[ExtResource("2_m8dpj")]([SubResource("Resource_h5imn"), SubResource("Resource_xb13j")])
