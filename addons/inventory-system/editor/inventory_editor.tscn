@@ -1,9 +1,58 @@
-[gd_scene format=3 uid="uid://cac4yet46x6gr"]
+[gd_scene load_steps=3 format=3 uid="uid://cac4yet46x6gr"]
 
-[node name="InventoryEditor" type="Control"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
+[ext_resource type="PackedScene" uid="uid://ltglnf2gai8l" path="res://addons/inventory-system/editor/items_editor.tscn" id="2_ax3rj"]
+
+[node name="InventoryEditor" type="Control" node_paths=PackedStringArray("items_editor")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_hn7br")
+items_editor = NodePath("VBoxContainer/TabContainer/Items")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "Database: "
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "dsadasdsa"
+popup/item_0/id = 0
+popup/item_1/text = "dadsadsa"
+popup/item_1/id = 1
+
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Items" parent="VBoxContainer/TabContainer" instance=ExtResource("2_ax3rj")]
+layout_mode = 2
+
+[node name="Recipes" type="Panel" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2

@@ -11,6 +11,8 @@ func _enter_tree():
 	_inventory_editor = inventory_editor_scene.instantiate()
 	_inventory_editor.name = "Inventory System"
 	get_editor_interface().get_editor_main_screen().add_child(_inventory_editor)
+	_make_visible(false)
+	_inventory_editor.load_defaults()
 #	_inventory_editor.set_editor(self)
 #	_inventory_editor_plugin = preload("res://addons/inventory-system/editor/inventory-system-inspector.gd").new()
 #	add_inspector_plugin()
