@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://eqe14gkavvqq"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="1_ia5dx"]
+
+[node name="Items" type="Panel"]
+script = ExtResource("1_ia5dx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "dasdsa"

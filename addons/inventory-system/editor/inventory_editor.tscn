@@ -1,9 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cac4yet46x6gr"]
+[gd_scene load_steps=8 format=3 uid="uid://dl1xrvik1odnx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
-[ext_resource type="PackedScene" uid="uid://ltglnf2gai8l" path="res://addons/inventory-system/editor/items_editor.tscn" id="2_ax3rj"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="2_d6dt7"]
+[ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
+[ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
+[ext_resource type="PackedScene" uid="uid://d1ltonvcnuowg" path="res://addons/inventory-system/editor/items/item_in_list.tscn" id="6_vmah6"]
+[ext_resource type="PackedScene" uid="uid://culd2hhy6nu6d" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="7_r1up4"]
 
-[node name="InventoryEditor" type="Control" node_paths=PackedStringArray("items_editor")]
+[node name="InventoryEditor" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,7 +18,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_hn7br")
-items_editor = NodePath("VBoxContainer/TabContainer/Items")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -23,17 +27,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="Head" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Head"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/Head/HBoxContainer"]
 layout_mode = 2
 text = "Database: "
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/Head/HBoxContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 item_count = 2
@@ -42,17 +47,103 @@ popup/item_0/id = 0
 popup/item_1/text = "dadsadsa"
 popup/item_1/id = 1
 
-[node name="MenuBar" type="MenuBar" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="MenuBar" type="MenuBar" parent="VBoxContainer/Head/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+[node name="Content" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_right = 4
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/Content"]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("2_3cl1k")
+items_icon = ExtResource("3_6kl7v")
+recipes_icon = ExtResource("4_20x4i")
+
+[node name="Items" type="Control" parent="VBoxContainer/Content/TabContainer"]
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("2_d6dt7")
+item_in_list_scene = ExtResource("6_vmah6")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/Content/TabContainer/Items"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = -128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextEdit" type="TextEdit" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Items"
+draw_control_chars = true
+
+[node name="Items" type="Panel" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Items" parent="VBoxContainer/TabContainer" instance=ExtResource("2_ax3rj")]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Control2" type="Control" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Add new Item"
+
+[node name="ItemEditor" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
 layout_mode = 2
 
-[node name="Recipes" type="Panel" parent="VBoxContainer/TabContainer"]
+[node name="Recipes" type="Panel" parent="VBoxContainer/Content/TabContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 1

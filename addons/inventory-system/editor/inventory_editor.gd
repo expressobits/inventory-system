@@ -5,7 +5,7 @@ extends Control
 
 var _default_database = preload("res://addons/inventory-system/demos/base/database.tres")
 
-@export var items_editor : ItemsEditor
+@onready var items_editor : ItemsEditor = get_node("VBoxContainer/Content/TabContainer/Items")
 
 func _ready():
 	pass
@@ -15,7 +15,7 @@ func _process(delta):
 
 
 func load_defaults():
-	items_editor.load_database(_default_database)
+	items_editor.load_items_from_database(_default_database)
 
 
 func load_database(database : InventoryDatabase):
