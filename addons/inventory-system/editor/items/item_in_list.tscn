@@ -84,4 +84,5 @@ theme_override_constants/margin_bottom = 0
 layout_mode = 2
 mouse_filter = 2
 
+[connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="gui_input" from="Content" to="." method="_on_content_gui_input"]

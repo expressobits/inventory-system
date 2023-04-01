@@ -19,7 +19,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_hn7br")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -27,18 +27,51 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Head" type="Control" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+flat = true
+icon_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Head"]
+[node name="OpenButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+flat = true
+icon_alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer/Head/HBoxContainer"]
+[node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+flat = true
+icon_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Open a InventoryDatabase resource to see contents here"
+vertical_alignment = 2
+structured_text_bidi_override = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
+visible = false
 layout_mode = 2
 text = "Database: "
 
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/Head/HBoxContainer"]
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+visible = false
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 item_count = 2
@@ -47,29 +80,31 @@ popup/item_0/id = 0
 popup/item_1/text = "dadsadsa"
 popup/item_1/id = 1
 
-[node name="MenuBar" type="MenuBar" parent="VBoxContainer/Head/HBoxContainer"]
+[node name="MenuBar" type="MenuBar" parent="MarginContainer/VBoxContainer/Toolbar"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Content" type="MarginContainer" parent="VBoxContainer"]
+[node name="Content" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_right = 4
 
-[node name="TabContainer" type="TabContainer" parent="VBoxContainer/Content"]
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("2_3cl1k")
 items_icon = ExtResource("3_6kl7v")
 recipes_icon = ExtResource("4_20x4i")
 
-[node name="Items" type="Control" parent="VBoxContainer/Content/TabContainer"]
+[node name="Items" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
 layout_mode = 2
 mouse_filter = 1
 script = ExtResource("2_d6dt7")
 item_in_list_scene = ExtResource("6_vmah6")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer/Content/TabContainer/Items"]
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,18 +113,18 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = -128
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(256, 0)
 layout_mode = 2
 alignment = 1
 
-[node name="Control" type="Control" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextEdit" type="TextEdit" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control"]
+[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -101,11 +136,11 @@ size_flags_horizontal = 3
 placeholder_text = "Search Items"
 draw_control_chars = true
 
-[node name="Items" type="Panel" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
+[node name="Items" type="Panel" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -117,16 +152,16 @@ theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Items/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Control2" type="Control" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
+[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="HBoxContainer" type="VBoxContainer" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2"]
+[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,16 +169,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 size_flags_vertical = 3
 text = "Add new Item"
 
-[node name="ItemEditor" parent="VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
+[node name="ItemEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
 layout_mode = 2
 
-[node name="Recipes" type="Panel" parent="VBoxContainer/Content/TabContainer"]
+[node name="Recipes" type="Panel" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
 visible = false
 layout_mode = 2
 mouse_filter = 1
+
+[node name="NewDialog" type="FileDialog" parent="."]
+dialog_hide_on_ok = true
+access = 2
+filters = PackedStringArray("*.tres ; InventoryDatabase")
+
+[node name="SaveDialog" type="FileDialog" parent="."]
+size = Vector2i(312, 157)
+dialog_hide_on_ok = true
+filters = PackedStringArray("*.inv ; Inventory")
+
+[node name="OpenDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(312, 157)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+filters = PackedStringArray("*.tres ; InventoryDatabase")
+
+[connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_pressed"]
+[connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
+[connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]

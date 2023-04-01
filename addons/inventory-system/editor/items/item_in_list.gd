@@ -2,16 +2,20 @@
 extends Control
 class_name ItemInList
 
-
 signal selected(id : int)
-
 
 @onready var item_name_label : Label = $Content/HBoxContainer/Label
 @onready var item_id_label : Label = $Content/HBoxContainer/Panel/IDLabel
 @onready var item_icon_texture : TextureRect = $Content/HBoxContainer/TextureRect
 @onready var panel : Panel = $Content
 var item_database : InventoryDatabaseItem
-@export var style_box : StyleBoxFlat = preload("res://addons/inventory-system/editor/items/item_in_list_selected.tres")
+var style_box : StyleBoxFlat
+
+
+func _ready():
+	style_box = StyleBoxFlat.new()
+	style_box.set_corner_radius_all(4)
+	_on_theme_changed()
 
 
 func set_item(item_database : InventoryDatabaseItem) -> void:
@@ -35,3 +39,9 @@ func _on_content_gui_input(event):
 
 func unselect():
 	panel.remove_theme_stylebox_override("panel")
+
+
+func _on_theme_changed():
+	if not is_instance_valid(style_box):
+		return
+	style_box.bg_color = get_theme_color("highlight_color","Editor")
