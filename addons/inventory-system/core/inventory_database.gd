@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/inventory-system/icons/inventory_database.svg")
 extends Resource
 class_name InventoryDatabase
@@ -68,3 +69,17 @@ func get_hand_item(id : int) -> PackedScene:
 			return item_data.hand_item
 	# printerr("id ",id," is not in the database!")
 	return null
+
+
+func has_item_id(id : int) -> bool:
+	for item in items:
+		if item.id == id:
+			return true
+	return false
+
+
+func get_valid_id() -> int:
+	for i in 92233720368547758:
+		if not has_item_id(i):
+			return i
+	return -1

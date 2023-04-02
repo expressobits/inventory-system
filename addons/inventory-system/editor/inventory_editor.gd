@@ -3,6 +3,12 @@ extends Control
 
 #var _option_database = $VBoxContainer/MarginContainer/HBoxContainer/OptionButton
 
+const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
+const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
+
+const OPEN_OPEN = 100
+const OPEN_CLEAR = 101
+
 # The Inventory System plugin
 var editor_plugin: EditorPlugin
 
@@ -17,7 +23,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 
 # Toolbar
 @onready var new_button: Button = %NewButton
-@onready var open_button: Button = %OpenButton
+@onready var open_button: MenuButton = %OpenButton
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
 
@@ -55,8 +61,8 @@ func open_file(path: String) -> void:
 	
 	title_label.text = path
 	
-#	DialogueSettings.add_recent_file(path)
-#	build_open_menu()
+	InventorySettings.add_recent_file(path)
+	build_open_menu()
 	
 #	files_list.files = open_buffers.keys()
 #	files_list.select_file(path)
@@ -86,6 +92,43 @@ func apply_theme() -> void:
 #	settings_dialog.min_size = Vector2(600, 600) * scale
 
 
+# Refresh the open menu with the latest files
+func build_open_menu() -> void:
+	var menu = open_button.get_popup()
+	menu.clear()
+	menu.add_icon_item(get_theme_icon("Load", "EditorIcons"), "Open...", OPEN_OPEN)
+	menu.add_separator()
+	
+	var recent_files = InventorySettings.get_recent_files()
+	if recent_files.size() == 0:
+		menu.add_item("Open recent files")
+		menu.set_item_disabled(2, true)
+	else:
+		for path in recent_files:
+			menu.add_icon_item(get_theme_icon("File", "EditorIcons"), path)
+			
+	menu.add_separator()
+	menu.add_item("Clear recent files", OPEN_CLEAR)
+	if menu.id_pressed.is_connected(_on_open_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
+	menu.id_pressed.connect(_on_open_menu_id_pressed)
+
+
+### Signals
+
+func _on_open_menu_id_pressed(id: int) -> void:
+	match id:
+		OPEN_OPEN:
+			open_dialog.popup_centered()
+		OPEN_CLEAR:
+			InventorySettings.clear_recent_files()
+			build_open_menu()
+		_:
+			var menu = open_button.get_popup()
+			var item = menu.get_item_text(menu.get_item_index(id))
+			open_file(item)
+
+
 func _on_theme_changed():
 	apply_theme()
 
@@ -104,3 +147,7 @@ func _on_open_button_pressed():
 
 func _on_open_dialog_file_selected(path):
 	open_file(path)
+
+
+func _on_open_button_about_to_popup():
+	build_open_menu()

@@ -6,6 +6,8 @@
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 512.0
+offset_bottom = 258.0
 script = ExtResource("1_smo60")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -23,6 +25,24 @@ theme_override_constants/margin_bottom = 4
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="ItemID" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/ItemID"]
+layout_mode = 2
+text = "Item ID"
+
+[node name="IDSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/ItemID"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+rounded = true
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -30,43 +50,26 @@ layout_mode = 2
 layout_mode = 2
 text = "Item Name"
 
-[node name="TextEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="ItemNameTextEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Place Item Name Here"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Edit"
-
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MaxStack" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MaxStack"]
 layout_mode = 2
 text = "Item Max Stack"
 
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="MaxStackSpinBox" type="SpinBox" parent="MarginContainer/VBoxContainer/MaxStack"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Place Item Name Here"
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Edit"
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 62.0
-offset_top = 71.0
-offset_right = 102.0
-offset_bottom = 94.0
-text = "ssadsada"
-
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="gutter_added" from="MarginContainer/VBoxContainer/HBoxContainer2/TextEdit" to="." method="_on_text_edit_gutter_added"]
-[connection signal="lines_edited_from" from="MarginContainer/VBoxContainer/HBoxContainer2/TextEdit" to="." method="_on_text_edit_lines_edited_from"]
-[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer2/TextEdit" to="." method="_on_text_edit_text_changed"]
-[connection signal="text_set" from="MarginContainer/VBoxContainer/HBoxContainer2/TextEdit" to="." method="_on_text_edit_text_set"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/ItemID/IDSpinBox" to="." method="_on_id_spin_box_value_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/HBoxContainer/ItemNameTextEdit" to="." method="_on_text_edit_text_changed"]
+[connection signal="value_changed" from="MarginContainer/VBoxContainer/MaxStack/MaxStackSpinBox" to="." method="_on_max_stack_spin_box_value_changed"]

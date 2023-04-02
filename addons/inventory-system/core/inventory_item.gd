@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/inventory-system/icons/inventory_item.svg")
 extends Resource
 class_name InventoryItem

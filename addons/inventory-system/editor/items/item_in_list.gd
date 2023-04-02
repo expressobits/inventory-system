@@ -21,10 +21,26 @@ func _ready():
 func set_item(item_database : InventoryDatabaseItem) -> void:
 	self.item_database = item_database
 	var item = item_database.item
-	item_name_label.text = item.name
 	item_id_label.text = str(item_database.id)
-	item_icon_texture.texture = item.icon
+	if is_instance_valid(item):
+		item_name_label.text = item.name
+		item_icon_texture.texture = item.icon
+		item_icon_texture.visible = true 
+	else:
+		item_name_label.text = "No item resource!"
+		item_icon_texture.visible = false 
 
+
+func update_item() -> void:
+	var item = item_database.item
+	item_id_label.text = str(item_database.id)
+	if is_instance_valid(item):
+		item_name_label.text = item.name
+		item_icon_texture.texture = item.icon
+		item_icon_texture.visible = true 
+	else:
+		item_name_label.text = "No item resource!"
+		item_icon_texture.visible = false 
 
 func _on_content_gui_input(event):
 	if event is InputEventMouseButton:

@@ -41,11 +41,10 @@ layout_mode = 2
 flat = true
 icon_alignment = 1
 
-[node name="OpenButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-flat = true
 icon_alignment = 1
 
 [node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
@@ -169,7 +168,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
+[node name="NewItemButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
 custom_minimum_size = Vector2(64, 32)
 layout_mode = 2
 size_flags_vertical = 3
@@ -177,6 +176,21 @@ text = "Add new Item"
 
 [node name="ItemEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
 layout_mode = 2
+
+[node name="NewItemDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
+size = Vector2i(312, 157)
+dialog_hide_on_ok = true
+access = 2
+filters = PackedStringArray("*.tres ; InventoryItem")
+
+[node name="OpenItemDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
+title = "Open a File"
+size = Vector2i(312, 157)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres ; InventoryItem")
 
 [node name="Recipes" type="Panel" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
 visible = false
@@ -203,6 +217,9 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_pressed"]
+[connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer/NewItemButton" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_new_item_button_pressed"]
+[connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/NewItemDialog" to="." method="_on_new_dialog_file_selected"]
+[connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/OpenItemDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
