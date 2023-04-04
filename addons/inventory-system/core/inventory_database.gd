@@ -53,6 +53,14 @@ func get_item(id : int) -> InventoryItem:
 	return null
 
 
+func get_item_database(id : int) -> InventoryDatabaseItem:
+	for item_data in items:
+		if item_data.id == id:
+			return item_data
+	# printerr("id ",id," is not in the database!")
+	return null
+
+
 ## Returns the [DroppedItem] of id, return null if not found
 func get_dropped_item(id : int) -> PackedScene:
 	for item_data in items:

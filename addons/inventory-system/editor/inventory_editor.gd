@@ -29,11 +29,12 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 
 
 func _ready():
+	items_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 
 
-func _process(delta):
-	pass
+func set_editor_plugin(editor_plugin : EditorPlugin):
+	self.editor_plugin = editor_plugin
 
 
 func load_database(database : InventoryDatabase):

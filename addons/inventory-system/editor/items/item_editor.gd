@@ -5,6 +5,7 @@ class_name ItemEditor
 signal changed(id : int)
 
 var item_database : InventoryDatabaseItem
+var editor_plugin : EditorPlugin
 
 @onready var item_id_spin_box : SpinBox = %IDSpinBox
 @onready var item_name_text_edit : LineEdit = %ItemNameTextEdit
@@ -24,15 +25,29 @@ func _ready():
 	$MarginContainer.visible = false
 
 
+func set_editor_plugin(editor_plugin : EditorPlugin):
+	self.editor_plugin = editor_plugin
+	apply_theme()
+
+
 func load_item(item_database : InventoryDatabaseItem):
 	self.item_database = item_database
 	item_id_spin_box.value = item_database.id
 	if is_instance_valid(item_database.item):
 		item_name_text_edit.text = item_database.item.name
 		item_max_stack_spin_box.value = item_database.item.max_stack
-		item_icon_text_edit.text = item_database.item.icon.resource_path
-		hand_item_text_edit.text = item_database.hand_item.resource_path
-		dropped_item_text_edit.text = item_database.dropped_item.resource_path
+		if is_instance_valid(item_database.item.icon):
+			item_icon_text_edit.text = item_database.item.icon.resource_path
+		else:
+			item_icon_text_edit.text = ""
+		if is_instance_valid(item_database.hand_item):
+			hand_item_text_edit.text = item_database.hand_item.resource_path
+		else:
+			hand_item_text_edit.text = ""
+		if is_instance_valid(item_database.dropped_item):
+			dropped_item_text_edit.text = item_database.dropped_item.resource_path
+		else:
+			dropped_item_text_edit.text = ""
 		$MarginContainer.visible = true
 	else:
 		item_name_text_edit.text = "No resource item!"
@@ -41,7 +56,7 @@ func load_item(item_database : InventoryDatabaseItem):
 
 # Apply theme colors and icons to the UI
 func apply_theme() -> void:
-	if not is_instance_valid(item_icon_edit_button):
+	if not is_instance_valid(editor_plugin) or not is_instance_valid(item_icon_edit_button):
 		return
 	item_icon_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	item_icon_edit_button.tooltip_text = "Open Icon Texture2D"
@@ -51,6 +66,12 @@ func apply_theme() -> void:
 	
 	dropped_item_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	dropped_item_edit_button.tooltip_text = "Open PackedScene"
+	
+	#Dialogs
+	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
+	icon_file_dialog.min_size = Vector2(600, 500) * scale
+	hand_item_file_dialog.min_size = Vector2(600, 500) * scale
+	dropped_item_file_dialog.min_size = Vector2(600, 500) * scale
 
 
 func _on_id_spin_box_value_changed(value):
