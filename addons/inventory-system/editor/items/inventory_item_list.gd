@@ -33,11 +33,14 @@ var filter: String:
 func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
+	print(database.resource_name)
 	for item_database in database.items:
 		item_ids.append(item_database.id)
 		item_ids.sort()
 		update_item_map()
 		apply_filter()
+	update_item_map()
+	apply_filter()
 
 
 func clear_items():

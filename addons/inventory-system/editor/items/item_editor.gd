@@ -35,6 +35,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 func load_item(item_database : InventoryDatabaseItem):
 	self.item_database = item_database
+	if not is_instance_valid(item_database):
+		$MarginContainer.visible = false
+		return
 	item_id_spin_box.value = item_database.id
 	if is_instance_valid(item_database.item):
 		item_resource_text_edit.text = item_database.item.resource_path

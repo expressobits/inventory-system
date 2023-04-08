@@ -29,6 +29,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 func load_items_from_database(database : InventoryDatabase) -> void:
 	self.database = database
+	item_editor.load_item(null)
 	load_items()
 
 
