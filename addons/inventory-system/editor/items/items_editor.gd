@@ -9,6 +9,7 @@ var editor_plugin : EditorPlugin
 @onready var open_item_dialog : FileDialog = $OpenItemDialog
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
+@onready var item_remove_confirmation_dialog = %ItemRemoveConfirmationDialog
 
 var current_id_item : int = -1
 
@@ -39,10 +40,8 @@ func remove_item(item_id : int):
 	if item_database == null:
 		return
 	var index = database.items.find(item_database)
-	var dir = DirAccess.open(item_database.item.resource_path)
-	dir.remove(".")
 	database.items.remove_at(index)
-	pass
+	load_items()
 
 
 func select(id : int):
@@ -78,8 +77,9 @@ func _on_theme_changed():
 	_apply_theme()
 
 
-func _on_inventory_item_list_item_selected(item_id):
-	item_editor.load_item(item_id)
+func _on_inventory_item_list_item_selected(item, index):
+	current_id_item = item.id
+	item_editor.load_item(item)
 
 
 func _on_inventory_item_list_item_popup_menu_requested(at_position):
@@ -96,7 +96,11 @@ func _on_items_popup_menu_about_to_popup() -> void:
 func _on_items_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		ITEM_REMOVE:
-			remove_item(current_id_item)
+			item_remove_confirmation_dialog.popup_centered()
+			var item_database = database.get_item_database(current_id_item)
+			if item_database == null or item_database.item == null:
+				return
+			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\"?"
 
 
 func _on_inventory_item_list_new_item_pressed():
@@ -104,3 +108,13 @@ func _on_inventory_item_list_new_item_pressed():
 		return
 	
 	new_item_dialog.popup_centered()
+
+
+func _on_item_editor_changed(id):
+	var index = inventory_item_list.get_index_of_item_id(id)
+	if index > -1:
+		inventory_item_list.update_item(index)
+
+
+func _on_item_remove_confirmation_dialog_confirmed():
+	remove_item(current_id_item)

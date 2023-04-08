@@ -8,6 +8,9 @@ var item_database : InventoryDatabaseItem
 var editor_plugin : EditorPlugin
 
 @onready var item_id_spin_box : SpinBox = %IDSpinBox
+@onready var dropped_item_text_edit : LineEdit = %DroppedItemLineEdit
+@onready var dropped_item_edit_button : Button = %DroppedItemEditButton
+@onready var dropped_item_file_dialog : FileDialog = $DroppedItemFileDialog
 @onready var item_name_text_edit : LineEdit = %ItemNameTextEdit
 @onready var item_max_stack_spin_box : SpinBox = %MaxStackSpinBox
 @onready var item_icon_text_edit : LineEdit = %IconLineEdit
@@ -16,9 +19,9 @@ var editor_plugin : EditorPlugin
 @onready var hand_item_text_edit : LineEdit = %HandItemLineEdit
 @onready var hand_item_edit_button : Button = %HandItemEditButton
 @onready var hand_item_file_dialog : FileDialog = $HandItemFileDialog
-@onready var dropped_item_text_edit : LineEdit = %DroppedItemLineEdit
-@onready var dropped_item_edit_button : Button = %DroppedItemEditButton
-@onready var dropped_item_file_dialog : FileDialog = $DroppedItemFileDialog
+@onready var item_resource_text_edit : LineEdit = %ItemResourceLineEdit
+@onready var item_resource_edit_button : Button = %ItemResourceEditButton
+@onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
 
 func _ready():
 	apply_theme()
@@ -34,6 +37,7 @@ func load_item(item_database : InventoryDatabaseItem):
 	self.item_database = item_database
 	item_id_spin_box.value = item_database.id
 	if is_instance_valid(item_database.item):
+		item_resource_text_edit.text = item_database.item.resource_path
 		item_name_text_edit.text = item_database.item.name
 		item_max_stack_spin_box.value = item_database.item.max_stack
 		if is_instance_valid(item_database.item.icon):
@@ -50,6 +54,7 @@ func load_item(item_database : InventoryDatabaseItem):
 			dropped_item_text_edit.text = ""
 		$MarginContainer.visible = true
 	else:
+		item_resource_text_edit.text = "No resource path item!"
 		item_name_text_edit.text = "No resource item!"
 		$MarginContainer.visible = false
 
@@ -67,11 +72,15 @@ func apply_theme() -> void:
 	dropped_item_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	dropped_item_edit_button.tooltip_text = "Open PackedScene"
 	
+	item_resource_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
+	item_resource_edit_button.tooltip_text = "Open Resource Inventory Item"
+	
 	#Dialogs
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	icon_file_dialog.min_size = Vector2(600, 500) * scale
 	hand_item_file_dialog.min_size = Vector2(600, 500) * scale
 	dropped_item_file_dialog.min_size = Vector2(600, 500) * scale
+	item_resource_file_dialog.min_size = Vector2(600, 500) * scale
 
 
 func _on_id_spin_box_value_changed(value):
@@ -138,3 +147,18 @@ func _on_hand_item_edit_button_pressed():
 
 func _on_dropped_item_edit_button_pressed():
 	dropped_item_file_dialog.popup_centered()
+
+
+func _on_item_resource_edit_button_pressed():
+	item_resource_file_dialog.popup_centered()
+
+
+func _on_item_resource_file_dialog_file_selected(path):
+	var file = load(path)
+	if file is InventoryItem:
+		var inventory_item : InventoryItem = file
+		item_database.item = inventory_item
+		load_item(item_database)
+		emit_signal("changed", item_database.id)
+	else:
+		print("Error on open scene!")

@@ -117,6 +117,10 @@ layout_mode = 2
 [node name="ItemsPopupMenu" type="PopupMenu" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList"]
 size = Vector2i(100, 24)
 
+[node name="ItemRemoveConfirmationDialog" type="ConfirmationDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList"]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
 [node name="ItemEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
 layout_mode = 2
 
@@ -167,6 +171,8 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="new_item_pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_new_item_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_about_to_popup"]
 [connection signal="id_pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_id_pressed"]
+[connection signal="confirmed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemRemoveConfirmationDialog" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_remove_confirmation_dialog_confirmed"]
+[connection signal="changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/ItemEditor" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_editor_changed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/NewItemResourceDialog" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_new_item_resource_dialog_file_selected"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/OpenItemDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
