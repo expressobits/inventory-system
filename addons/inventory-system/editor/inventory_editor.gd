@@ -26,11 +26,14 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 @onready var open_button: MenuButton = %OpenButton
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
+@onready var new_item_button = %NewItemButton
+@onready var new_recipe_button = %NewRecipeButton
 
 
 func _ready():
 	items_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
+	load_database(null)
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -41,8 +44,12 @@ func load_database(database : InventoryDatabase):
 	if database != null:
 		items_editor.load_items_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
+		new_item_button.disabled = false
+		new_recipe_button.disabled = false
 	else:
 		$MarginContainer/VBoxContainer/Content.visible = false
+		new_item_button.disabled = true
+		new_recipe_button.disabled = true
 	
 
 func new_file(path: String, content: String = "") -> void:
@@ -152,3 +159,7 @@ func _on_open_dialog_file_selected(path):
 
 func _on_open_button_about_to_popup():
 	build_open_menu()
+
+
+func _on_new_item_button_pressed():
+	items_editor.new_item_pressed()

@@ -107,7 +107,7 @@ func _on_items_popup_menu_id_pressed(id: int) -> void:
 			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\"?"
 
 
-func _on_inventory_item_list_new_item_pressed():
+func new_item_pressed():
 	if not is_instance_valid(database):
 		return
 	

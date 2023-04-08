@@ -47,25 +47,5 @@ layout_mode = 2
 size_flags_vertical = 3
 fixed_icon_size = Vector2i(16, 16)
 
-[node name="Control2" type="Control" parent="."]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="HBoxContainer" type="VBoxContainer" parent="Control2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="NewItemButton" type="Button" parent="Control2/HBoxContainer"]
-custom_minimum_size = Vector2(64, 32)
-layout_mode = 2
-size_flags_vertical = 3
-text = "Add new Item"
-
 [connection signal="text_changed" from="Control/SearchLineEdit" to="." method="_on_search_line_edit_text_changed"]
 [connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]
-[connection signal="pressed" from="Control2/HBoxContainer/NewItemButton" to="." method="_on_new_item_button_pressed"]

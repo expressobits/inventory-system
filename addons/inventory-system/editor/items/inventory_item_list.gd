@@ -4,7 +4,6 @@ extends VBoxContainer
 
 signal item_selected(item_id : int, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
-signal new_item_pressed
 
 @onready var list : ItemList = %ItemList
 @onready var search_line_edit = $Control/SearchLineEdit
@@ -110,11 +109,6 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	
 	if mouse_button_index == 2:
 		emit_signal("item_popup_menu_requested", at_position)
-
-
-
-func _on_new_item_button_pressed():
-	emit_signal("new_item_pressed")
 
 
 func _on_search_line_edit_text_changed(new_text):
