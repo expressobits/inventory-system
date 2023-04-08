@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl1xrvik1odnx"]
+[gd_scene load_steps=8 format=3 uid="uid://dl1xrvik1odnx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="2_d6dt7"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
 [ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
+[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="6_clhqx"]
 [ext_resource type="PackedScene" uid="uid://culd2hhy6nu6d" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="7_r1up4"]
 
 [node name="InventoryEditor" type="Control"]
@@ -110,53 +111,11 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = -128
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer"]
-clip_contents = true
-custom_minimum_size = Vector2(256, 0)
+[node name="InventoryItemList" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("6_clhqx")]
 layout_mode = 2
-alignment = 1
 
-[node name="Control" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="TextEdit" type="TextEdit" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-placeholder_text = "Search Items"
-draw_control_chars = true
-
-[node name="ItemList" type="ItemList" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 3
-fixed_icon_size = Vector2i(16, 16)
-
-[node name="Control2" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="HBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="NewItemButton" type="Button" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer"]
-custom_minimum_size = Vector2(64, 32)
-layout_mode = 2
-size_flags_vertical = 3
-text = "Add new Item"
+[node name="ItemsPopupMenu" type="PopupMenu" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList"]
+size = Vector2i(100, 24)
 
 [node name="ItemEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
 layout_mode = 2
@@ -203,9 +162,11 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="theme_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_theme_changed"]
-[connection signal="item_activated" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/ItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_list_item_activated"]
-[connection signal="item_clicked" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/ItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_list_item_clicked"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/VBoxContainer/Control2/HBoxContainer/NewItemButton" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_new_item_button_pressed"]
+[connection signal="item_popup_menu_requested" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_item_popup_menu_requested"]
+[connection signal="item_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_item_selected"]
+[connection signal="new_item_pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_new_item_pressed"]
+[connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_about_to_popup"]
+[connection signal="id_pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_id_pressed"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/NewItemResourceDialog" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_new_item_resource_dialog_file_selected"]
 [connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/OpenItemDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]

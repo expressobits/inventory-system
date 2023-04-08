@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0ykb6vojc7ga"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/inventory_item_list.gd" id="1_6fmx0"]
+
+[node name="InventoryItemList" type="VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(256, 0)
+alignment = 1
+script = ExtResource("1_6fmx0")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="TextEdit" type="TextEdit" parent="Control"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Items"
+draw_control_chars = true
+
+[node name="ItemList" type="ItemList" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+fixed_icon_size = Vector2i(16, 16)
+
+[node name="Control2" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Control2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewItemButton" type="Button" parent="Control2/HBoxContainer"]
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+size_flags_vertical = 3
+text = "Add new Item"
+
+[connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="pressed" from="Control2/HBoxContainer/NewItemButton" to="." method="_on_new_item_button_pressed"]
