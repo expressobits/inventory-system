@@ -7,6 +7,7 @@ signal item_popup_menu_requested(at_position: Vector2)
 signal new_item_pressed
 
 @onready var list : ItemList = %ItemList
+@onready var search_line_edit = $Control/SearchLineEdit
 
 var item_map : Dictionary = {}
 var database : InventoryDatabase
@@ -88,7 +89,7 @@ func apply_filter() -> void:
 		var item_database = item_map[item_database_id]
 		if item_database == null:
 			continue
-		if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.resource_name.to_lower():
+		if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.name.to_lower():
 			var item = item_database.item
 			item_list_handler.append(item_database)
 	update_item_list(item_list_handler)
@@ -111,3 +112,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 
 func _on_new_item_button_pressed():
 	emit_signal("new_item_pressed")
+
+
+func _on_search_line_edit_text_changed(new_text):
+	filter = new_text

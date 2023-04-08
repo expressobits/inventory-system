@@ -10,6 +10,7 @@ var editor_plugin : EditorPlugin
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
 @onready var item_remove_confirmation_dialog = %ItemRemoveConfirmationDialog
+@onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 
 var current_id_item : int = -1
 
@@ -55,6 +56,8 @@ func _apply_theme():
 		return
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	new_item_dialog.min_size = Vector2(600, 500) * scale
+	
+	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
 func _on_new_item_resource_dialog_file_selected(path):

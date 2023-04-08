@@ -13,7 +13,7 @@ custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="TextEdit" type="TextEdit" parent="Control"]
+[node name="SearchLineEdit" type="LineEdit" parent="Control"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 1
 anchors_preset = 15
@@ -24,6 +24,22 @@ grow_vertical = 2
 size_flags_horizontal = 3
 placeholder_text = "Search Items"
 draw_control_chars = true
+
+[node name="SearchIcon" type="TextureRect" parent="Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+expand_mode = 1
 
 [node name="ItemList" type="ItemList" parent="."]
 unique_name_in_owner = true
@@ -50,5 +66,6 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Add new Item"
 
+[connection signal="text_changed" from="Control/SearchLineEdit" to="." method="_on_search_line_edit_text_changed"]
 [connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]
 [connection signal="pressed" from="Control2/HBoxContainer/NewItemButton" to="." method="_on_new_item_button_pressed"]
