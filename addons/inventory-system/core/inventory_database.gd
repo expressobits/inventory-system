@@ -10,6 +10,7 @@ class_name InventoryDatabase
 
 @export var recipes : Array[Recipe]
 
+@export var stations_type : Array[CraftStationType]
 
 # TODO Create loading dropped items and items with folder
 # @export var path_test := "res://addons/inventory-system/demos/fps/items/"

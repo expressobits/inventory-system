@@ -5,11 +5,18 @@ extends InventoryItemListEditor
 var recipe_item_map : Dictionary = {}
 
 func load_items(database : InventoryDatabase) -> void:
+	recipe_item_map.clear()
 	for recipe in database.recipes:
-		if not recipe_item_map.has(recipe.product):
-			recipe_item_map[recipe.product.item] = [ recipe ]
-		else:
+		if is_instance_valid(recipe.product) and is_instance_valid(recipe.product.item):
+			if not recipe_item_map.has(recipe.product.item):
+				var array : Array[Recipe] = []
+				recipe_item_map[recipe.product.item] = array
 			recipe_item_map[recipe.product.item].append(recipe)
+		else:
+			if not recipe_item_map.has(-1):
+				recipe_item_map[-1] = [ recipe ]
+			else:
+				recipe_item_map[-1].append(recipe)
 	super.load_items(database)
 
 

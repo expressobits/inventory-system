@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=35 format=3 uid="uid://ds5vbdoklqy3a"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=36 format=3 uid="uid://ds5vbdoklqy3a"]
 
 [ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="1_a08hj"]
 [ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="2_n1gpo"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://daan81no83gsp" path="res://addons/inventory-system/demos/fps/hand_items/grass.tscn" id="15_gpmai"]
 [ext_resource type="PackedScene" uid="uid://ldb8v452e28o" path="res://addons/inventory-system/demos/fps/hand_items/lashing.tscn" id="18_gqdfa"]
 [ext_resource type="Resource" uid="uid://dpkrrmimp8u7j" path="res://addons/inventory-system/demos/base/recipes/stone_pickaxe.tres" id="24_013tf"]
+[ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
 
 [sub_resource type="Resource" id="Resource_u244c"]
 script = ExtResource("4_m1u1l")
@@ -81,3 +82,4 @@ hand_item = ExtResource("10_lcc51")
 script = ExtResource("7_b6gc3")
 items = Array[ExtResource("4_m1u1l")]([SubResource("Resource_u244c"), SubResource("Resource_v6j42"), SubResource("Resource_rnjmd"), SubResource("Resource_pspc7"), SubResource("Resource_1q5tg"), SubResource("Resource_42347"), SubResource("Resource_vc12d")])
 recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("7_ld8xv"), ExtResource("10_eqnrh"), ExtResource("11_d4lpx"), ExtResource("24_013tf")])
+stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr")])

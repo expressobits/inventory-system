@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtn2cme1ga6ay"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/ingrendient_editor.gd" id="1_or8u7"]
+
+[node name="IngrendientEditor" type="HBoxContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_or8u7")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "ID"
+
+[node name="IDSpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+max_value = 1e+08
+rounded = true
+
+[node name="IngredientOptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_icon = true
+
+[node name="Label2" type="Label" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "Amount"
+
+[node name="VSeparator" type="VSeparator" parent="."]
+layout_mode = 2
+
+[node name="AmountSpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+min_value = 1.0
+max_value = 1e+08
+value = 1.0
+rounded = true
+
+[node name="DeleteButton" type="Button" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+flat = true
+
+[node name="IngredientRemoveConfirmationDialog" type="ConfirmationDialog" parent="."]
+size = Vector2i(400, 100)
+dialog_text = "Remove Ingredient?"
+
+[connection signal="pressed" from="DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="confirmed" from="IngredientRemoveConfirmationDialog" to="." method="_on_ingredient_remove_confirmation_dialog_confirmed"]

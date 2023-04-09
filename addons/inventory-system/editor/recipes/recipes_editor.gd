@@ -43,4 +43,8 @@ func _apply_theme():
 
 func _on_inventory_item_list_item_selected(item_database, index):
 	var recipes = inventory_item_list.recipe_item_map[item_database.item]
-	recipe_item_editor.load_recipes(recipes)
+	recipe_item_editor.load_recipes(recipes, database)
+
+
+func _on_recipe_item_editor_changed_product_in_recipe():
+	load_items()
