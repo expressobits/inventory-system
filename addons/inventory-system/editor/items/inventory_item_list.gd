@@ -1,8 +1,9 @@
 @tool
 extends VBoxContainer
+class_name InventoryItemListEditor
 
 
-signal item_selected(item_id : int, index : int)
+signal item_selected(item_database : InventoryDatabaseItem, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
 
 @onready var list : ItemList = %ItemList
@@ -32,7 +33,6 @@ var filter: String:
 func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
-	print(database.resource_name)
 	for item_database in database.items:
 		item_ids.append(item_database.id)
 		item_ids.sort()
@@ -44,9 +44,6 @@ func load_items(database : InventoryDatabase) -> void:
 
 func clear_items():
 	item_ids.clear()
-#	for item_in_list in _item_list:
-#		item_in_list.queue_free()
-#	_item_list.clear()
 
 
 func update_item_map() -> void:
@@ -104,6 +101,8 @@ func _on_item_list_item_activated(index):
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index != 1 and mouse_button_index != 2:
+		return
+	if not list.is_item_selectable(index):
 		return
 	emit_signal("item_selected", item_list_handler[index], index)
 	

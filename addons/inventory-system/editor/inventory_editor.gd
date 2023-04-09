@@ -15,6 +15,7 @@ var editor_plugin: EditorPlugin
 var _default_database = preload("res://addons/inventory-system/demos/base/database.tres")
 
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
+@onready var recipes_editor : RecipesEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Recipes")
 
 # Dialogs
 @onready var new_dialog: FileDialog = $NewDialog
@@ -32,6 +33,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 
 func _ready():
 	items_editor.set_editor_plugin(editor_plugin)
+	recipes_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
 
@@ -43,6 +45,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 func load_database(database : InventoryDatabase):
 	if database != null:
 		items_editor.load_items_from_database(database)
+		recipes_editor.load_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false

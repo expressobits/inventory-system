@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl1xrvik1odnx"]
+[gd_scene load_steps=7 format=3 uid="uid://dl1xrvik1odnx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="2_d6dt7"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
 [ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
-[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="6_clhqx"]
-[ext_resource type="PackedScene" uid="uid://culd2hhy6nu6d" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="7_r1up4"]
+[ext_resource type="PackedScene" uid="uid://bqptlysubaw3f" path="res://addons/inventory-system/editor/items/items.tscn" id="5_fwymy"]
+[ext_resource type="PackedScene" uid="uid://m1b01wmpmbkj" path="res://addons/inventory-system/editor/recipes/recipes.tscn" id="6_qmu8k"]
 
 [node name="InventoryEditor" type="Control"]
 layout_mode = 3
@@ -123,52 +122,11 @@ script = ExtResource("2_3cl1k")
 items_icon = ExtResource("3_6kl7v")
 recipes_icon = ExtResource("4_20x4i")
 
-[node name="Items" type="Control" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
-layout_mode = 2
-mouse_filter = 1
-script = ExtResource("2_d6dt7")
-
-[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-split_offset = -128
-
-[node name="InventoryItemList" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("6_clhqx")]
+[node name="Items" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("5_fwymy")]
 layout_mode = 2
 
-[node name="ItemsPopupMenu" type="PopupMenu" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList"]
-size = Vector2i(100, 24)
-
-[node name="ItemRemoveConfirmationDialog" type="ConfirmationDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="ItemEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer" instance=ExtResource("7_r1up4")]
+[node name="Recipes" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
 layout_mode = 2
-
-[node name="OpenItemDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
-title = "Open a File"
-size = Vector2i(312, 157)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
-
-[node name="NewItemResourceDialog" type="FileDialog" parent="MarginContainer/VBoxContainer/Content/TabContainer/Items"]
-size = Vector2i(452, 162)
-dialog_hide_on_ok = true
-access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
-
-[node name="Recipes" type="Panel" parent="MarginContainer/VBoxContainer/Content/TabContainer"]
-visible = false
-layout_mode = 2
-mouse_filter = 1
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
@@ -193,14 +151,5 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewItemButton" to="." method="_on_new_item_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_button_pressed"]
-[connection signal="theme_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_theme_changed"]
-[connection signal="item_popup_menu_requested" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_item_popup_menu_requested"]
-[connection signal="item_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_inventory_item_list_item_selected"]
-[connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_about_to_popup"]
-[connection signal="id_pressed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemsPopupMenu" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_items_popup_menu_id_pressed"]
-[connection signal="confirmed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/InventoryItemList/ItemRemoveConfirmationDialog" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_remove_confirmation_dialog_confirmed"]
-[connection signal="changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/HSplitContainer/ItemEditor" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_item_editor_changed"]
-[connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/OpenItemDialog" to="." method="_on_new_dialog_file_selected"]
-[connection signal="file_selected" from="MarginContainer/VBoxContainer/Content/TabContainer/Items/NewItemResourceDialog" to="MarginContainer/VBoxContainer/Content/TabContainer/Items" method="_on_new_item_resource_dialog_file_selected"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
