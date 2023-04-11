@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Recipe" load_steps=7 format=3 uid="uid://bndrki2q1ktsf"]
 
-[ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="1_xxk8m"]
+[ext_resource type="InventoryItem" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="1_xxk8m"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_vosmi"]
-[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="3_477hv"]
+[ext_resource type="InventoryItem" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="3_477hv"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_t5gg4"]
 
 [sub_resource type="Resource" id="Resource_h5imn"]
