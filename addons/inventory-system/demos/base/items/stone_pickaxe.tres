@@ -1,10 +1,8 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bsnhvg3alqqyf"]
+[gd_resource type="InventoryItem" load_steps=2 format=3 uid="uid://bsnhvg3alqqyf"]
 
 [ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system/demos/assets/icons/stone_pickaxe.png" id="1_hlhk0"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_obepx"]
 
 [resource]
-script = ExtResource("2_obepx")
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("1_hlhk0")
