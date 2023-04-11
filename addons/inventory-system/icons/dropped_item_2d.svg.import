@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/dropped_item_2d.svg-f7b7cfa2211cce3ec61d4b6d3
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false
