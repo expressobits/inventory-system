@@ -20,3 +20,6 @@ android.debug.x86_64 = "res://addons/inventory-system/bin/inventory-system.andro
 android.release.x86_64 = "res://addons/inventory-system/bin/inventory-system.android.template_release.x86_64.so"
 android.debug.arm64 = "res://addons/inventory-system/bin/inventory-system.android.template_debug.arm64.so"
 android.release.arm64 = "res://addons/inventory-system/bin/inventory-system.android.template_release.arm64.so"
+
+[icons]
+InventoryItem = "res://addons/inventory-system/icons/inventory_item.svg"
