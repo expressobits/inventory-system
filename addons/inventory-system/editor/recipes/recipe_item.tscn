@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7hvf7aoo4y5f"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item.gd" id="1_haq2q"]
+
+[node name="RecipeItem" type="Control"]
+custom_minimum_size = Vector2(320, 128)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_haq2q")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Ingredients" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Ingredients"]
+layout_mode = 2
+text = "Ingredients"
+
+[node name="Byproducts" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="Panel/MarginContainer/VBoxContainer/Byproducts"]
+layout_mode = 2
+text = "Byproducts"
+
+[node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "10 Seconds"
+uppercase = true
+
+[node name="CraftstationIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+
+[connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]

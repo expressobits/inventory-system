@@ -20,10 +20,10 @@ func _ready():
 	amount_spin_box.value_changed.connect(_on_amount_spin_box_value_changed.bind())
 	ingredient_option_button.item_selected.connect(_on_ingredient_option_button_item_selected.bind())
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
-	delete_button.tooltip_text = "Delete Ingredient"
+	delete_button.tooltip_text = "Delete"
 
 
-func setup(slot : Slot, database : InventoryDatabase):
+func setup(slot : Slot, database : InventoryDatabase, tooltip_text : String):
 	self.slot = slot
 	self.database = database
 	var item_id = database.get_id_from_item(slot.item)
@@ -36,6 +36,8 @@ func setup(slot : Slot, database : InventoryDatabase):
 		ids_list.append(item_database.id)
 		if item_database.item == slot.item:
 			ingredient_option_button.select(i)
+	delete_button.tooltip_text = tooltip_text
+	ingredient_remove_confirmation_dialog.dialog_text = tooltip_text+"?"
 
 
 func _on_id_spin_box_value_changed(value):
@@ -48,7 +50,7 @@ func _on_id_spin_box_value_changed(value):
 
 
 func _on_amount_spin_box_value_changed(value):
-	slot.amount = value
+	slot.amount = int(value)
 
 
 func _on_ingredient_option_button_item_selected(index):
