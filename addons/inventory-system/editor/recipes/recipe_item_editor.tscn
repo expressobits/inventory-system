@@ -28,7 +28,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="RecipeEditor" parent="HSplitContainer" instance=ExtResource("2_a000k")]
+[node name="RecipeEditorContainer" type="MarginContainer" parent="HSplitContainer"]
 layout_mode = 2
 
-[connection signal="changed_product" from="HSplitContainer/RecipeEditor" to="." method="_on_recipe_editor_changed_product"]
+[node name="RecipeEditor" parent="HSplitContainer/RecipeEditorContainer" instance=ExtResource("2_a000k")]
+visible = false
+layout_mode = 2
+
+[connection signal="changed_product" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed_product"]

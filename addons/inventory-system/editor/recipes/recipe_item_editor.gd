@@ -3,7 +3,7 @@ extends Control
 
 @export var recipe_item_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/recipe_item.tscn")
 @onready var v_box_container = $HSplitContainer/ScrollContainer/VBoxContainer
-@onready var recipe_editor = $HSplitContainer/RecipeEditor
+@onready var recipe_editor = $HSplitContainer/RecipeEditorContainer/RecipeEditor
 
 
 var database : InventoryDatabase
@@ -17,6 +17,7 @@ func load_recipes(recipes : Array, database : InventoryDatabase):
 	self.database = database
 	self.recipes = recipes
 	clear_list()
+	recipe_editor.visible = false
 	for index in recipes.size():
 		var recipe = recipes[index]
 		var recipe_node = recipe_item_scene.instantiate()
@@ -26,9 +27,9 @@ func load_recipes(recipes : Array, database : InventoryDatabase):
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
 	
-	
 func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	recipe_editor.load_recipe(recipe, database)
+	recipe_editor.visible = true
 
 
 func select(index : int):

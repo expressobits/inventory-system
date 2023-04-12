@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7hvf7aoo4y5f"]
+[gd_scene load_steps=2 format=3 uid="uid://d3gfa8onhg0u"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item.gd" id="1_haq2q"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item_list_editor.gd" id="1_s7e4i"]
 
-[node name="RecipeItem" type="Control"]
+[node name="RecipeItemListEditor" type="Control"]
 custom_minimum_size = Vector2(320, 128)
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_haq2q")
+script = ExtResource("1_s7e4i")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1

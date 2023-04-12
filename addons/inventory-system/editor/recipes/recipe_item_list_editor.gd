@@ -1,6 +1,6 @@
 @tool
 extends Control
-class_name RecipeItem
+class_name RecipeItemListEditor
 
 signal selected
 
