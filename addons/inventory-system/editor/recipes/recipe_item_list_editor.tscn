@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item_list_editor.gd" id="1_s7e4i"]
 
 [node name="RecipeItemListEditor" type="Control"]
-custom_minimum_size = Vector2(320, 128)
+custom_minimum_size = Vector2(384, 128)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_s7e4i")
@@ -37,6 +37,7 @@ size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/Ingredients"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Ingredients"
 
 [node name="Byproducts" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
@@ -45,6 +46,7 @@ size_flags_vertical = 3
 
 [node name="Label2" type="Label" parent="Panel/MarginContainer/VBoxContainer/Byproducts"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Byproducts"
 
 [node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
