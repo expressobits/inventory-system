@@ -128,6 +128,7 @@ layout_mode = 2
 max_value = 1e+08
 
 [node name="CraftStationType" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/CraftStationType"]
@@ -138,7 +139,6 @@ text = "Craft Station Type"
 [node name="CraftStationTypeOptionButton" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer/CraftStationType"]
 layout_mode = 2
 size_flags_horizontal = 3
-flat = true
 expand_icon = true
 
 [node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer"]

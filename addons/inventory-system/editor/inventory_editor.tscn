@@ -150,6 +150,6 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewItemButton" to="." method="_on_new_item_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_recipe_button_pressed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]

@@ -26,6 +26,8 @@ func load_recipes(recipes : Array, database : InventoryDatabase):
 		recipes_ui.append(recipe_item)
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
+	if recipes.size() > 0:
+		recipes_ui[0].select()
 
 
 func load_recipe(recipe : Recipe, database : InventoryDatabase):

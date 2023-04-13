@@ -166,3 +166,7 @@ func _on_open_button_about_to_popup():
 
 func _on_new_item_button_pressed():
 	items_editor.new_item_pressed()
+	
+	
+func _on_new_recipe_button_pressed():
+	recipes_editor.new_recipe_pressed()

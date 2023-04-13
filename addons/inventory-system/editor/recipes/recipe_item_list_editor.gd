@@ -8,7 +8,7 @@ signal selected
 @onready var craftstation_icon : TextureRect = $Panel/MarginContainer/VBoxContainer/MoreInfos/CraftstationIcon
 @onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients
 @onready var byproducts_list = $Panel/MarginContainer/VBoxContainer/Byproducts
-@onready var panel :Panel = $Panel
+@onready var panel : Panel = $Panel
 
 var recipe : Recipe
 var database : InventoryDatabase

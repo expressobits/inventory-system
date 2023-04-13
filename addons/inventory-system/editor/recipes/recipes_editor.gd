@@ -25,11 +25,18 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 func load_from_database(database : InventoryDatabase) -> void:
 	self.database = database
 #	recipe_editor.load_item(null)
-	load_items()
+	load_recipes()
 
 
-func load_items() -> void:
+func load_recipes() -> void:
 	inventory_item_list.load_items(database)
+
+
+func new_recipe_pressed():
+	if not is_instance_valid(database):
+		return
+	
+	new_recipe_resource_dialog.popup_centered()
 
 
 func _apply_theme():
@@ -47,4 +54,16 @@ func _on_inventory_item_list_item_selected(item_database, index):
 
 
 func _on_recipe_item_editor_changed_product_in_recipe():
-	load_items()
+	load_recipes()
+
+
+func _on_new_recipe_resource_dialog_file_selected(path):
+	var item : Recipe = Recipe.new()
+	var err = ResourceSaver.save(item, path)
+	if err == OK:
+		var res : Recipe = load(path)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		database.recipes.append(res)
+		load_recipes()
+	else:
+		print(err)
