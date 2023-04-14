@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=36 format=3 uid="uid://ds5vbdoklqy3a"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=49 format=3 uid="uid://ds5vbdoklqy3a"]
 
 [ext_resource type="PackedScene" uid="uid://he6xjchl2a43" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="1_a08hj"]
 [ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="2_n1gpo"]
@@ -9,24 +9,22 @@
 [ext_resource type="InventoryItem" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
 [ext_resource type="InventoryItem" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="7_4afv6"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="7_b6gc3"]
-[ext_resource type="Resource" uid="uid://vv4dc26verx4" path="res://addons/inventory-system/demos/base/recipes/stone_axe.tres" id="7_ld8xv"]
 [ext_resource type="PackedScene" uid="uid://c1ndqyykef1br" path="res://addons/inventory-system/demos/fps/dropped_items/stone_axe.tscn" id="8_io5k8"]
 [ext_resource type="InventoryItem" uid="uid://b6xju8cni0ma3" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
 [ext_resource type="InventoryItem" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
 [ext_resource type="PackedScene" uid="uid://bkmx0xe50vf47" path="res://addons/inventory-system/demos/fps/hand_items/stone_axe.tscn" id="9_l588a"]
 [ext_resource type="InventoryItem" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
-[ext_resource type="Resource" uid="uid://ble5yaxpj7ym3" path="res://addons/inventory-system/demos/base/recipes/camp_fire.tres" id="10_eqnrh"]
 [ext_resource type="PackedScene" uid="uid://dwe4mumcah0nc" path="res://addons/inventory-system/demos/fps/hand_items/campfire.tscn" id="10_lcc51"]
 [ext_resource type="PackedScene" uid="uid://bglm5qmb0gyj" path="res://addons/inventory-system/demos/fps/dropped_items/stone_pickaxe.tscn" id="11_ako86"]
 [ext_resource type="PackedScene" uid="uid://byynd0nx8vfn2" path="res://addons/inventory-system/demos/fps/dropped_items/campfire.tscn" id="11_b4uq4"]
-[ext_resource type="Resource" uid="uid://bndrki2q1ktsf" path="res://addons/inventory-system/demos/base/recipes/lashing.tres" id="11_d4lpx"]
 [ext_resource type="InventoryItem" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
 [ext_resource type="PackedScene" uid="uid://2fvkeyyvqubl" path="res://addons/inventory-system/demos/fps/hand_items/stone_pickaxe.tscn" id="12_bavq1"]
 [ext_resource type="PackedScene" uid="uid://bli2jsj0wevyh" path="res://addons/inventory-system/demos/fps/dropped_items/grass.tscn" id="12_l4ej5"]
 [ext_resource type="PackedScene" uid="uid://cmcq0oqhho45l" path="res://addons/inventory-system/demos/fps/dropped_items/lashing.tscn" id="15_ajtfu"]
 [ext_resource type="PackedScene" uid="uid://daan81no83gsp" path="res://addons/inventory-system/demos/fps/hand_items/grass.tscn" id="15_gpmai"]
 [ext_resource type="PackedScene" uid="uid://ldb8v452e28o" path="res://addons/inventory-system/demos/fps/hand_items/lashing.tscn" id="18_gqdfa"]
-[ext_resource type="Resource" uid="uid://dpkrrmimp8u7j" path="res://addons/inventory-system/demos/base/recipes/stone_pickaxe.tres" id="24_013tf"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="23_5qqam"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="26_ye4gh"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
 
 [sub_resource type="Resource" id="Resource_u244c"]
@@ -78,8 +76,104 @@ item = ExtResource("9_ac6d4")
 dropped_item = ExtResource("11_b4uq4")
 hand_item = ExtResource("10_lcc51")
 
+[sub_resource type="Resource" id="Resource_veixl"]
+script = ExtResource("23_5qqam")
+id = 0
+item = ExtResource("3_605sl")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_c1w71"]
+script = ExtResource("23_5qqam")
+id = 1
+item = ExtResource("6_lh8gi")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_tsuyp"]
+script = ExtResource("23_5qqam")
+id = 3
+item = ExtResource("7_4afv6")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_q2rcm"]
+script = ExtResource("26_ye4gh")
+product = SubResource("Resource_tsuyp")
+byproducts = Array[ExtResource("23_5qqam")]([])
+time_to_craft = 8.0
+station = ExtResource("28_mywvr")
+ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_veixl"), SubResource("Resource_c1w71")])
+
+[sub_resource type="Resource" id="Resource_cl4p4"]
+script = ExtResource("23_5qqam")
+id = 0
+item = ExtResource("3_605sl")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_tiivj"]
+script = ExtResource("23_5qqam")
+id = 1
+item = ExtResource("6_lh8gi")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_7427o"]
+script = ExtResource("23_5qqam")
+id = 4
+item = ExtResource("9_b0fqm")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_1hk8q"]
+script = ExtResource("26_ye4gh")
+product = SubResource("Resource_7427o")
+byproducts = Array[ExtResource("23_5qqam")]([])
+time_to_craft = 4.0
+station = ExtResource("28_mywvr")
+ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_cl4p4"), SubResource("Resource_tiivj")])
+
+[sub_resource type="Resource" id="Resource_pqywp"]
+script = ExtResource("23_5qqam")
+id = 2
+item = ExtResource("11_kmxri")
+amount = 2
+
+[sub_resource type="Resource" id="Resource_hi5nm"]
+script = ExtResource("23_5qqam")
+id = 5
+item = ExtResource("10_0ktg3")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_nxq1h"]
+script = ExtResource("26_ye4gh")
+product = SubResource("Resource_hi5nm")
+byproducts = Array[ExtResource("23_5qqam")]([])
+time_to_craft = 2.0
+ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_pqywp")])
+
+[sub_resource type="Resource" id="Resource_gnn4r"]
+script = ExtResource("23_5qqam")
+id = 1
+item = ExtResource("6_lh8gi")
+amount = 8
+
+[sub_resource type="Resource" id="Resource_bhk0q"]
+script = ExtResource("23_5qqam")
+id = 5
+item = ExtResource("10_0ktg3")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_k0lge"]
+script = ExtResource("23_5qqam")
+id = 6
+item = ExtResource("9_ac6d4")
+amount = 1
+
+[sub_resource type="Resource" id="Resource_3s2vx"]
+script = ExtResource("26_ye4gh")
+product = SubResource("Resource_k0lge")
+byproducts = Array[ExtResource("23_5qqam")]([])
+time_to_craft = 30.0
+ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_gnn4r"), SubResource("Resource_bhk0q")])
+
 [resource]
 script = ExtResource("7_b6gc3")
 items = Array[ExtResource("4_m1u1l")]([SubResource("Resource_u244c"), SubResource("Resource_v6j42"), SubResource("Resource_rnjmd"), SubResource("Resource_pspc7"), SubResource("Resource_1q5tg"), SubResource("Resource_42347"), SubResource("Resource_vc12d")])
-recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("7_ld8xv"), ExtResource("10_eqnrh"), ExtResource("11_d4lpx"), ExtResource("24_013tf")])
+recipes = Array[ExtResource("26_ye4gh")]([SubResource("Resource_q2rcm"), SubResource("Resource_1hk8q"), SubResource("Resource_nxq1h"), SubResource("Resource_3s2vx")])
 stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr")])
