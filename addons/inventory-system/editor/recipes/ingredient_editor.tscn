@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dtn2cme1ga6ay"]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/ingrendient_editor.gd" id="1_or8u7"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/ingredient_editor.gd" id="1_or8u7"]
 [ext_resource type="PackedScene" path="res://addons/inventory-system/editor/slot_selector.tscn" id="2_jaxd8"]
 
 [sub_resource type="Image" id="Image_piwl5"]
@@ -15,7 +15,7 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_hkk6p"]
 image = SubResource("Image_piwl5")
 
-[node name="IngrendientEditor" type="HBoxContainer"]
+[node name="IngredientEditor" type="HBoxContainer"]
 size_flags_horizontal = 3
 script = ExtResource("1_or8u7")
 
