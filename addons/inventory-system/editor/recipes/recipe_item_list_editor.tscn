@@ -31,13 +31,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
+
+[node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "10 Seconds"
+uppercase = true
+
+[node name="CraftstationIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+
+[node name="Control" type="Control" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeleteButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+flat = true
+icon_alignment = 1
 
 [node name="Ingredients" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -57,20 +83,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Byproducts"
 
-[node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "10 Seconds"
-uppercase = true
-
-[node name="CraftstationIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_vertical = 4
-expand_mode = 1
+[node name="RemoveConfirmationDialog" type="ConfirmationDialog" parent="."]
+size = Vector2i(400, 100)
+dialog_text = "Remove?"
 
 [connection signal="gui_input" from="Panel" to="." method="_on_panel_gui_input"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton" to="." method="_on_delete_button_pressed"]
+[connection signal="confirmed" from="RemoveConfirmationDialog" to="." method="_on_remove_confirmation_dialog_confirmed"]

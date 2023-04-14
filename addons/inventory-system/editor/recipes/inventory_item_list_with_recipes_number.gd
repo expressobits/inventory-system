@@ -8,17 +8,23 @@ func load_items(database : InventoryDatabase) -> void:
 	recipe_item_map.clear()
 	for recipe in database.recipes:
 		if is_instance_valid(recipe.product) and is_instance_valid(recipe.product.item):
-			if not recipe_item_map.has(recipe.product.item):
+			var id = database.get_id_from_item(recipe.product.item)
+			if not recipe_item_map.has(id):
 				var array : Array[Recipe] = []
-				recipe_item_map[recipe.product.item] = array
-			recipe_item_map[recipe.product.item].append(recipe)
+				recipe_item_map[id] = array
+			recipe_item_map[id].append(recipe)
 		else:
 			if not recipe_item_map.has(-1):
-				recipe_item_map[-1] = [ recipe ]
+				recipe_item_map[InventoryItem.NONE] = [ recipe ]
 			else:
-				recipe_item_map[-1].append(recipe)
+				recipe_item_map[InventoryItem.NONE].append(recipe)
 	super.load_items(database)
 
+
+func select(item_id : int):
+	var idx = get_index_of_item_id(item_id)
+	list.select(idx)
+	
 
 func update_item(index : int):
 	var item_database = item_list_handler[index]
@@ -30,8 +36,8 @@ func update_item(index : int):
 			name_to_show = "No name"
 		else:
 			name_to_show = item_database.item.name
-		if recipe_item_map.has(item_database.item):
-			recipe_count = recipe_item_map[item_database.item].size()
+		if recipe_item_map.has(item_database.id):
+			recipe_count = recipe_item_map[item_database.id].size()
 		icon = item_database.item.icon
 	list.set_item_text(index, name_to_show +" ("+str(recipe_count)+")")
 	list.set_item_disabled(index, recipe_count <= 0)

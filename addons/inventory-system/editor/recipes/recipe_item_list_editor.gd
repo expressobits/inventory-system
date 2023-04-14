@@ -3,12 +3,15 @@ extends Control
 class_name RecipeItemListEditor
 
 signal selected
+signal remove(recipe : Recipe)
 
 @onready var time_label : Label = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeLabel
 @onready var craftstation_icon : TextureRect = $Panel/MarginContainer/VBoxContainer/MoreInfos/CraftstationIcon
 @onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients
 @onready var byproducts_list = $Panel/MarginContainer/VBoxContainer/Byproducts
 @onready var panel : Panel = $Panel
+@onready var delete_button = $Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton
+@onready var remove_confirmation_dialog = $RemoveConfirmationDialog
 
 var recipe : Recipe
 var database : InventoryDatabase
@@ -21,6 +24,8 @@ var style_box : StyleBoxFlat
 func _ready():
 	style_box = StyleBoxFlat.new()
 	panel.add_theme_stylebox_override("panel", style_box)
+	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
+	delete_button.tooltip_text = "Delete"
 	style_box.set_corner_radius_all(4)
 	unselect()
 	if recipe.station != null:
@@ -60,3 +65,11 @@ func _on_panel_gui_input(event):
 		var mouse_event = event as InputEventMouseButton
 		if mouse_event.button_index == 1:
 			select()
+
+
+func _on_delete_button_pressed():
+	remove_confirmation_dialog.popup_centered()
+
+
+func _on_remove_confirmation_dialog_confirmed():
+	emit_signal("remove", recipe)

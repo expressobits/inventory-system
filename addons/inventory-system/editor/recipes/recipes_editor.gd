@@ -10,6 +10,7 @@ var editor_plugin : EditorPlugin
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 @onready var inventory_item_list = $HSplitContainer/InventoryItemList
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
+var last_item_selected_id : int
 
 
 func _ready():
@@ -49,12 +50,18 @@ func _apply_theme():
 
 
 func _on_inventory_item_list_item_selected(item_database, index):
-	var recipes = inventory_item_list.recipe_item_map[item_database.item]
-	recipe_item_editor.load_recipes(recipes, database)
+	last_item_selected_id = item_database.id
+	var recipes = inventory_item_list.recipe_item_map[item_database.id]
+	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
 func _on_recipe_item_editor_changed_product_in_recipe():
 	load_recipes()
+	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
+		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
+		recipe_item_editor.set_recipes_and_load(recipes, database)
+	else:
+		recipe_item_editor.clear_list()
 
 
 func _on_new_recipe_resource_dialog_file_selected(path):
@@ -62,8 +69,16 @@ func _on_new_recipe_resource_dialog_file_selected(path):
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		var res : Recipe = load(path)
+		res.product = Slot.new()
+		res.product.item = database.items[last_item_selected_id].item
+		res.product.amount = 1
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		database.recipes.append(res)
 		load_recipes()
+		inventory_item_list.select(last_item_selected_id)
+		var id = database.get_id_from_item(res.product.item)
+		var recipes = inventory_item_list.recipe_item_map[id]
+		recipe_item_editor.set_recipes_and_load(recipes, database)
+		recipe_item_editor.select_last()
 	else:
 		print(err)

@@ -92,3 +92,4 @@ func get_valid_id() -> int:
 		if not has_item_id(i):
 			return i
 	return -1
+	

@@ -13,9 +13,13 @@ var recipes : Array[Recipe]
 signal changed_product_in_recipe
 
 
-func load_recipes(recipes : Array, database : InventoryDatabase):
+func set_recipes_and_load(recipes : Array, database : InventoryDatabase):
 	self.database = database
 	self.recipes = recipes
+	load_recipes()
+
+
+func load_recipes():
 	clear_list()
 	recipe_editor.visible = false
 	for index in recipes.size():
@@ -26,8 +30,13 @@ func load_recipes(recipes : Array, database : InventoryDatabase):
 		recipes_ui.append(recipe_item)
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
+		recipe_item.remove.connect(_on_recipe_item_removed.bind())
 	if recipes.size() > 0:
 		recipes_ui[0].select()
+
+
+func select_last():
+	recipes_ui[recipes_ui.size()-1].select()
 
 
 func load_recipe(recipe : Recipe, database : InventoryDatabase):
@@ -43,6 +52,7 @@ func clear_list():
 	for editor in recipes_ui:
 		editor.queue_free()
 	recipes_ui.clear()
+	recipe_editor.visible = false
 
 
 func _on_recipe_editor_changed_product():
@@ -55,3 +65,10 @@ func _on_recipe_item_selected(index):
 			select(index)
 		else:
 			recipes_ui[i].unselect()
+
+
+func _on_recipe_item_removed(recipe : Recipe):
+	var index = database.recipes.find(recipe)
+	if index >= 0 and index < database.recipes.size():
+		database.recipes.remove_at(index)
+	emit_signal("changed_product_in_recipe")
