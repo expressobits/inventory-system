@@ -36,8 +36,8 @@ func load_recipes() -> void:
 func new_recipe_pressed():
 	if not is_instance_valid(database):
 		return
-	
-	new_recipe_resource_dialog.popup_centered()
+	_add_new_recipe_to_database(Recipe.new())
+#	new_recipe_resource_dialog.popup_centered()
 
 
 func _apply_theme():
@@ -65,20 +65,28 @@ func _on_recipe_item_editor_changed_product_in_recipe():
 
 
 func _on_new_recipe_resource_dialog_file_selected(path):
-	var item : Recipe = Recipe.new()
-	var err = ResourceSaver.save(item, path)
-	if err == OK:
-		var res : Recipe = load(path)
-		res.product = Slot.new()
-		res.product.item = database.items[last_item_selected_id].item
-		res.product.amount = 1
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		database.recipes.append(res)
-		load_recipes()
-		inventory_item_list.select(last_item_selected_id)
-		var id = database.get_id_from_item(res.product.item)
-		var recipes = inventory_item_list.recipe_item_map[id]
-		recipe_item_editor.set_recipes_and_load(recipes, database)
-		recipe_item_editor.select_last()
+	var is_saved_resource := false
+	var recipe : Recipe = Recipe.new()
+	if is_saved_resource:
+		var err = ResourceSaver.save(recipe, path)
+		if err == OK:
+			recipe = load(path)
+			_add_new_recipe_to_database(recipe)
+		else:
+			print(err)
 	else:
-		print(err)
+		_add_new_recipe_to_database(recipe)
+
+
+func _add_new_recipe_to_database(recipe : Recipe):
+	recipe.product = Slot.new()
+	recipe.product.item = database.items[last_item_selected_id].item
+	recipe.product.amount = 1
+	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+	database.recipes.append(recipe)
+	load_recipes()
+	inventory_item_list.select(last_item_selected_id)
+	var id = database.get_id_from_item(recipe.product.item)
+	var recipes = inventory_item_list.recipe_item_map[id]
+	recipe_item_editor.set_recipes_and_load(recipes, database)
+	recipe_item_editor.select_last()

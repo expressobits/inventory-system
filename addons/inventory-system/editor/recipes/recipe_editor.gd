@@ -9,7 +9,7 @@ signal changed_product
 @onready var time_to_craft_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/TimeToCraft/TimeToCraftSpinBox
 @onready var craft_station_type_option_button = $MarginContainer/MarginContainer/VBoxContainer/CraftStationType/CraftStationTypeOptionButton
 
-@export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingrendient_editor.tscn")
+@export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var ingredients_v_box_container = %IngredientsVBoxContainer
 @onready var byproducts_v_box_container = %ByproductsVBoxContainer
 
