@@ -5,10 +5,7 @@ class_name RecipeEditor
 
 signal changed_product
 
-
-@onready var product_id_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/Product/ProductIDSpinBox
-@onready var product_amount_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/Product/ProductAmountSpinBox
-@onready var option_button : OptionButton = $MarginContainer/MarginContainer/VBoxContainer/Product/OptionButton
+@onready var product_selector : SlotSelector = $MarginContainer/MarginContainer/VBoxContainer/Product/ProductSlotSelector
 @onready var time_to_craft_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/TimeToCraft/TimeToCraftSpinBox
 @onready var craft_station_type_option_button = $MarginContainer/MarginContainer/VBoxContainer/CraftStationType/CraftStationTypeOptionButton
 
@@ -27,9 +24,7 @@ var byproducts : Array[IngredientEditor]
 var connected : bool
 
 func connect_signals():
-	product_id_spin_box.value_changed.connect(_on_product_id_spin_box_value_changed.bind())
-	product_amount_spin_box.value_changed.connect(_on_product_amount_spin_box_value_changed.bind())
-	option_button.item_selected.connect(_on_product_item_option_button_selected.bind())
+	product_selector.slot_changed.connect(_on_product_slot_spin_box_slot_changed.bind())
 	time_to_craft_spin_box.value_changed.connect(_on_time_to_craft_spin_box_value_changed.bind())
 	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected.bind())
 	connected = true
@@ -38,23 +33,17 @@ func connect_signals():
 func disconnect_signals():
 	if not connected:
 		return
-	product_id_spin_box.value_changed.disconnect(_on_product_id_spin_box_value_changed.bind())
-	product_amount_spin_box.value_changed.disconnect(_on_product_amount_spin_box_value_changed.bind())
-	option_button.item_selected.disconnect(_on_product_item_option_button_selected.bind())
+	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed.bind())
 	time_to_craft_spin_box.value_changed.disconnect(_on_time_to_craft_spin_box_value_changed.bind())
 	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected.bind())
 	connected = false
 
 
 func setup_product():
-	option_button.clear()
-	ids_list.clear()
-	for i in database.items.size():
-		var item_database = database.items[i]
-		option_button.add_icon_item(item_database.item.icon ,item_database.item.name)
-		ids_list.append(item_database.id)
-		if item_database.item == recipe.product.item:
-			option_button.select(i)
+	var id = database.get_id_from_item(recipe.product.item)
+	var slot = recipe.product
+	slot.id = id
+	product_selector.setup(slot, database)
 
 
 func setup_station():
@@ -107,8 +96,9 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	self.recipe = recipe
 	self.database = database
 	var item_id = database.get_id_from_item(recipe.product.item)
-	product_id_spin_box.value = item_id
-	product_amount_spin_box.value = recipe.product.amount
+	var slot = recipe.product
+	slot.id = item_id
+	product_selector.setup(slot, database)
 	time_to_craft_spin_box.value = recipe.time_to_craft
 	setup_product()	
 	setup_station()
@@ -117,25 +107,11 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	connect_signals()
 
 
-func _on_product_id_spin_box_value_changed(value):
-	var id : int = product_id_spin_box.value
-	var item = database.get_item(id)
-	recipe.product.item = item
-	var index = ids_list.find(id)
-	if index != -1:
-		if option_button.selected != index:
-			option_button.select(index)
+func _on_product_slot_spin_box_slot_changed(slot : Slot):
+	var item = database.get_item(slot.id)
+	slot.item = item
+	recipe.product = slot
 	emit_signal("changed_product")
-
-
-func _on_product_amount_spin_box_value_changed(value):
-	recipe.product.amount = value
-	
-
-func _on_product_item_option_button_selected(index : int):
-	var id : int = ids_list[index]
-	if product_id_spin_box.value != id:
-		product_id_spin_box.value = id
 
 
 func _on_time_to_craft_spin_box_value_changed(value):

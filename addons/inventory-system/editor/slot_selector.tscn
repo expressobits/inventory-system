@@ -1,0 +1,37 @@
+[gd_scene load_steps=2 format=3 uid="uid://df2665tqtgdgt"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/slot_selector.gd" id="1_js21a"]
+
+[node name="SlotSelector" type="HBoxContainer"]
+size_flags_horizontal = 3
+script = ExtResource("1_js21a")
+
+[node name="LabelID" type="Label" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "ID
+"
+
+[node name="ProductIDSpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+max_value = 1e+08
+rounded = true
+
+[node name="OptionButton" type="OptionButton" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_icon = true
+
+[node name="LabelAmount" type="Label" parent="."]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "Amount"
+
+[node name="ProductAmountSpinBox" type="SpinBox" parent="."]
+layout_mode = 2
+min_value = 1.0
+max_value = 1e+08
+value = 1.0
+rounded = true
+
+[connection signal="value_changed" from="ProductIDSpinBox" to="ProductIDSpinBox" method="_on_value_changed"]
