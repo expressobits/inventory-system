@@ -59,6 +59,7 @@ func _apply_theme():
 	if not is_instance_valid(editor_plugin) or not is_instance_valid(new_item_dialog):
 		return
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
+	open_item_dialog.min_size = Vector2(600, 500) * scale
 	new_item_dialog.min_size = Vector2(600, 500) * scale
 	
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
@@ -133,6 +134,13 @@ func new_item_pressed():
 	new_item_dialog.popup_centered()
 
 
+func new_item_from_resource_pressed():
+	if not is_instance_valid(database):
+		return
+	
+	open_item_dialog.popup_centered()
+
+
 func _on_item_editor_changed(id):
 	var index = inventory_item_list.get_index_of_item_id(id)
 	if index > -1:
@@ -151,4 +159,16 @@ func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 	var code = dir.remove_absolute(item_database.item.resource_path)
 	if code == OK:
 		remove_item(current_id_item)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+
+
+func _on_open_item_dialog_file_selected(path):
+	var res = load(path)
+	if res is InventoryItem:
+		var item : InventoryItem = res as InventoryItem
+		var new_database_item : InventoryDatabaseItem = InventoryDatabaseItem.new()
+		new_database_item.id = database.get_valid_id()
+		new_database_item.item = res
+		database.items.append(new_database_item)
+		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

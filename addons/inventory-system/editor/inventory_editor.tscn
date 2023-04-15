@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://w6mkeioqln3k"]
+[gd_scene load_steps=13 format=3 uid="uid://w6mkeioqln3k"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
 [ext_resource type="Texture2D" uid="uid://7ueixntymdwg" path="res://addons/inventory-system/icons/new_inventory_item.svg" id="2_lu5r1"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
 [ext_resource type="Texture2D" uid="uid://dhpnx4f2e7pwf" path="res://addons/inventory-system/icons/new_recipe.svg" id="3_clewf"]
+[ext_resource type="Texture2D" uid="uid://cgxox1fm5t60d" path="res://addons/inventory-system/icons/original_icons/new_inventory_item_from_resource.svg" id="3_o6fwe"]
 [ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
 [ext_resource type="Texture2D" uid="uid://ilsakiynp5o7" path="res://addons/inventory-system/icons/new_craft_station_type.svg" id="4_jbtk0"]
 [ext_resource type="PackedScene" uid="uid://bqptlysubaw3f" path="res://addons/inventory-system/editor/items/items.tscn" id="5_fwymy"]
@@ -61,6 +62,16 @@ layout_mode = 2
 tooltip_text = "New Inventory Item"
 disabled = true
 icon = ExtResource("2_lu5r1")
+flat = true
+icon_alignment = 1
+
+[node name="NewItemFromResourceButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+tooltip_text = "New Inventory Item From Resource"
+disabled = true
+icon = ExtResource("3_o6fwe")
 flat = true
 icon_alignment = 1
 
@@ -175,6 +186,7 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewItemButton" to="." method="_on_new_item_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewItemFromResourceButton" to="." method="_on_new_item_from_resource_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_recipe_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewCraftStationTypeButton" to="." method="_on_new_craft_station_type_button_pressed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]

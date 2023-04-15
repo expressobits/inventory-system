@@ -30,6 +30,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button = %NewItemButton
+@onready var new_item_from_resource_button = %NewItemFromResourceButton
 @onready var new_recipe_button = %NewRecipeButton
 @onready var new_craft_station_type_button = %NewCraftStationTypeButton
 
@@ -54,12 +55,14 @@ func load_database(database : InventoryDatabase):
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false
+		new_item_from_resource_button.disabled = false
 		new_craft_station_type_button.disabled = false
 	else:
 		$MarginContainer/VBoxContainer/Content.visible = false
 		new_item_button.disabled = true
 		new_recipe_button.disabled = true
 		new_craft_station_type_button.disabled = true
+		new_item_from_resource_button.disabled = true
 
 
 func new_file(path: String, content: String = "") -> void:
@@ -185,3 +188,7 @@ func _on_new_recipe_button_pressed():
 
 func _on_new_craft_station_type_button_pressed():
 	craft_stations_editor.new_station_pressed() 
+
+
+func _on_new_item_from_resource_button_pressed():
+	items_editor.new_item_from_resource_pressed()

@@ -108,8 +108,6 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 
 
 func _on_product_slot_spin_box_slot_changed(slot : Slot):
-	var item = database.get_item(slot.id)
-	slot.item = item
 	recipe.product = slot
 	emit_signal("changed_product")
 	emit_signal("changed")
