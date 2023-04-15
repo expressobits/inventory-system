@@ -34,7 +34,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button : MenuButton = %NewItemButton
 @onready var new_recipe_button = %NewRecipeButton
-@onready var new_craft_station_type_button = %NewCraftStationTypeButton
+@onready var new_craft_station_type_button : MenuButton = %NewCraftStationTypeButton
 
 
 func _ready():
@@ -43,6 +43,8 @@ func _ready():
 	craft_stations_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
+	build_new_item_menu()
+	build_new_craft_station_menu()
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -148,6 +150,15 @@ func build_new_item_menu() -> void:
 		menu.id_pressed.disconnect(_on_new_item_menu_id_pressed)
 	menu.id_pressed.connect(_on_new_item_menu_id_pressed)
 
+
+func build_new_craft_station_menu() -> void:
+	var menu = new_craft_station_type_button.get_popup()
+	menu.clear()
+	menu.add_item("New Craft Station Type With New Resource", NEW_ITEM_NEW_RESOURCE)
+	menu.add_item("New Craft Station Type With Existing Resource", NEW_ITEM_FROM_RESOURCE)
+	if menu.id_pressed.is_connected(_on_new_craft_station_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_new_craft_station_menu_id_pressed)
+	menu.id_pressed.connect(_on_new_craft_station_menu_id_pressed)
 ### Signals
 
 func _on_open_menu_id_pressed(id: int) -> void:
@@ -169,6 +180,14 @@ func _on_new_item_menu_id_pressed(id: int) -> void:
 			items_editor.new_item_pressed()
 		NEW_ITEM_FROM_RESOURCE:
 			items_editor.new_item_from_resource_pressed()
+
+
+func _on_new_craft_station_menu_id_pressed(id: int) -> void:
+	match id:
+		NEW_ITEM_NEW_RESOURCE:
+			craft_stations_editor.new_station_pressed()
+		NEW_ITEM_FROM_RESOURCE:
+			craft_stations_editor.new_station_pressed_from_resource()
 
 
 func _on_theme_changed():
@@ -197,11 +216,3 @@ func _on_open_button_about_to_popup():
 	
 func _on_new_recipe_button_pressed():
 	recipes_editor.new_recipe_pressed()
-
-
-func _on_new_craft_station_type_button_pressed():
-	craft_stations_editor.new_station_pressed() 
-
-
-func _on_new_item_button_about_to_popup():
-	build_new_item_menu()

@@ -31,6 +31,7 @@ func _apply_theme():
 		return
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	new_craft_station_type_dialog.min_size = Vector2(600, 500) * scale
+	open_craft_station_type_dialog.min_size = Vector2(600, 500) * scale
 	
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 	
@@ -64,6 +65,12 @@ func new_station_pressed():
 	new_craft_station_type_dialog.popup_centered()
 
 
+func new_station_pressed_from_resource():
+	if not is_instance_valid(database):
+		return
+	
+	open_craft_station_type_dialog.popup_centered()
+
 func _on_craft_station_types_item_list_station_selected(station):
 	current_station = station
 	select(station)
@@ -81,7 +88,6 @@ func _on_new_craft_station_type_resource_dialog_file_selected(path):
 	if err == OK:
 		var res : CraftStationType = load(path)
 		res.name = "New Craft Station Type"
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		database.stations_type.append(res)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
@@ -125,4 +131,14 @@ func _on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed():
 	var code = dir.remove_absolute(current_station.resource_path)
 	if code == OK:
 		remove_station(current_station)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+
+
+func _on_open_craft_station_type_dialog_file_selected(path):
+	var res = load(path)
+	if res is CraftStationType:
+		var station : CraftStationType = res as CraftStationType
+		station.name = "New Craft Station Type"
+		database.stations_type.append(station)
+		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

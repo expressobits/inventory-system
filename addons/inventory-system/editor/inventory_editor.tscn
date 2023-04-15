@@ -79,14 +79,13 @@ icon_alignment = 1
 [node name="VSeparator3" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewCraftStationTypeButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewCraftStationTypeButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Craft Station Type"
 disabled = true
 icon = ExtResource("4_jbtk0")
-flat = true
 icon_alignment = 1
 
 [node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
@@ -175,6 +174,5 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/NewItemButton" to="." method="_on_new_item_button_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_recipe_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewCraftStationTypeButton" to="." method="_on_new_craft_station_type_button_pressed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]
