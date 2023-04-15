@@ -67,7 +67,11 @@ func new_file(path: String, content: String = "") -> void:
 
 
 func open_file(path: String) -> void:
-	var database : InventoryDatabase = load(path)
+	var res : Resource = load(path)
+	if not res is InventoryDatabase:
+		push_warning("Resource " + path + " is not an InventoryDatabase!")
+		return
+	var database : InventoryDatabase = res as InventoryDatabase
 	load_database(database)
 	
 	title_label.text = path
