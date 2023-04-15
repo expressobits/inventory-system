@@ -78,19 +78,16 @@ hand_item = ExtResource("10_lcc51")
 
 [sub_resource type="Resource" id="Resource_veixl"]
 script = ExtResource("23_5qqam")
-id = 0
 item = ExtResource("3_605sl")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_c1w71"]
 script = ExtResource("23_5qqam")
-id = 1
 item = ExtResource("6_lh8gi")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_tsuyp"]
 script = ExtResource("23_5qqam")
-id = 3
 item = ExtResource("7_4afv6")
 amount = 1
 
@@ -104,19 +101,16 @@ ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_veixl"), Sub
 
 [sub_resource type="Resource" id="Resource_cl4p4"]
 script = ExtResource("23_5qqam")
-id = 0
 item = ExtResource("3_605sl")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_tiivj"]
 script = ExtResource("23_5qqam")
-id = 1
 item = ExtResource("6_lh8gi")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_7427o"]
 script = ExtResource("23_5qqam")
-id = 4
 item = ExtResource("9_b0fqm")
 amount = 1
 
@@ -130,13 +124,11 @@ ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_cl4p4"), Sub
 
 [sub_resource type="Resource" id="Resource_pqywp"]
 script = ExtResource("23_5qqam")
-id = 2
 item = ExtResource("11_kmxri")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_hi5nm"]
 script = ExtResource("23_5qqam")
-id = 5
 item = ExtResource("10_0ktg3")
 amount = 1
 
@@ -149,19 +141,16 @@ ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_pqywp")])
 
 [sub_resource type="Resource" id="Resource_gnn4r"]
 script = ExtResource("23_5qqam")
-id = 1
 item = ExtResource("6_lh8gi")
 amount = 8
 
 [sub_resource type="Resource" id="Resource_bhk0q"]
 script = ExtResource("23_5qqam")
-id = 5
 item = ExtResource("10_0ktg3")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_k0lge"]
 script = ExtResource("23_5qqam")
-id = 6
 item = ExtResource("9_ac6d4")
 amount = 1
 
