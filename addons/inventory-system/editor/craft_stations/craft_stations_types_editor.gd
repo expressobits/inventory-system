@@ -11,9 +11,12 @@ var editor_plugin : EditorPlugin
 @onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList
 @onready var craft_station_types_popup_menu : PopupMenu = $HSplitContainer/CraftStationTypesItemList/CraftStationTypesPopupMenu
 @onready var craft_station_type_remove_confirmation_dialog = %CraftStationTypeRemoveConfirmationDialog
+@onready var craft_station_type_remove_and_delete_confirmation_dialog = %CraftStationTypeRemoveAndDeleteConfirmationDialog
 @onready var search_icon = $HSplitContainer/CraftStationTypesItemList/Control/SearchIcon
 
-const ITEM_REMOVE = 100
+const ITEM_COPY_RESOURCE_PATH = 100
+const ITEM_REMOVE = 105
+const ITEM_REMOVE_AND_DELETE = 106
 
 var current_station : CraftStationType
 
@@ -81,28 +84,45 @@ func _on_new_craft_station_type_resource_dialog_file_selected(path):
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		database.stations_type.append(res)
 		load_craft_station_types()
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	else:
 		print(err)
 
 
 func _on_craft_station_types_popup_menu_id_pressed(id):
 	match id:
+		ITEM_COPY_RESOURCE_PATH:
+			DisplayServer.clipboard_set(current_station.resource_path)
 		ITEM_REMOVE:
 			craft_station_type_remove_confirmation_dialog.popup_centered()
-			craft_station_type_remove_confirmation_dialog.dialog_text = "Remove Item \""+current_station.name+"\"?"
+			craft_station_type_remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\"?"
+		ITEM_REMOVE_AND_DELETE:
+			craft_station_type_remove_and_delete_confirmation_dialog.popup_centered()
+			craft_station_type_remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\" And Delete Resource \""+current_station.resource_path+"\"?"
 
 
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
-	var add = at_position + Vector2(0, craft_station_types_popup_menu.size.y) + craft_station_types_list.global_position
-	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + add
-	craft_station_types_popup_menu.popup()
-
-
-func _on_craft_station_types_popup_menu_about_to_popup():
 	craft_station_types_popup_menu.clear()
 	var icon = get_theme_icon("Remove", "EditorIcons")
+	var copy = get_theme_icon("CopyNodePath", "EditorIcons")
+	craft_station_types_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
+	craft_station_types_popup_menu.add_separator()
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
+	craft_station_types_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
+
+
+	var a = craft_station_types_list.get_global_mouse_position()
+	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + a
+	craft_station_types_popup_menu.popup()
 
 
 func _on_craft_station_type_remove_confirmation_dialog_confirmed():
 	remove_station(current_station)
+
+
+func _on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed():
+	var dir = DirAccess.open(".")
+	var code = dir.remove_absolute(current_station.resource_path)
+	if code == OK:
+		remove_station(current_station)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

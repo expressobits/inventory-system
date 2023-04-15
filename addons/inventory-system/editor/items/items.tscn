@@ -29,6 +29,10 @@ size = Vector2i(100, 24)
 unique_name_in_owner = true
 size = Vector2i(400, 100)
 
+[node name="ItemRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/InventoryItemList"]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
 [node name="ItemEditor" parent="HSplitContainer" instance=ExtResource("3_36ca2")]
 layout_mode = 2
 
@@ -50,8 +54,8 @@ filters = PackedStringArray("*.tres ; InventoryItem")
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="item_popup_menu_requested" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_popup_menu_requested"]
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
-[connection signal="about_to_popup" from="HSplitContainer/InventoryItemList/ItemsPopupMenu" to="." method="_on_items_popup_menu_about_to_popup"]
 [connection signal="id_pressed" from="HSplitContainer/InventoryItemList/ItemsPopupMenu" to="." method="_on_items_popup_menu_id_pressed"]
 [connection signal="confirmed" from="HSplitContainer/InventoryItemList/ItemRemoveConfirmationDialog" to="." method="_on_item_remove_confirmation_dialog_confirmed"]
+[connection signal="confirmed" from="HSplitContainer/InventoryItemList/ItemRemoveAndDeleteConfirmationDialog" to="." method="_on_item_remove_and_delete_confirmation_dialog_confirmed"]
 [connection signal="changed" from="HSplitContainer/ItemEditor" to="." method="_on_item_editor_changed"]
 [connection signal="file_selected" from="NewItemResourceDialog" to="." method="_on_new_item_resource_dialog_file_selected"]

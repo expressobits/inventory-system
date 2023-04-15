@@ -47,3 +47,4 @@ fixed_icon_size = Vector2i(16, 16)
 
 [connection signal="text_changed" from="Control/SearchLineEdit" to="." method="_on_search_line_edit_text_changed"]
 [connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]
+[connection signal="item_selected" from="ItemList" to="." method="_on_item_list_item_selected"]

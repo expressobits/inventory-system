@@ -65,6 +65,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	
 	if mouse_button_index == 2:
 		emit_signal("item_popup_menu_requested", at_position)
+		list.select(index)
 
 
 func _on_search_line_edit_text_changed(new_text):

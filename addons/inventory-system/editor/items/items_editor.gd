@@ -10,11 +10,14 @@ var editor_plugin : EditorPlugin
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
 @onready var item_remove_confirmation_dialog = %ItemRemoveConfirmationDialog
+@onready var item_remove_and_delete_confirmation_dialog = %ItemRemoveAndDeleteConfirmationDialog
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 
 var current_id_item : int = -1
 
-const ITEM_REMOVE = 100
+const ITEM_COPY_RESOURCE_PATH = 100
+const ITEM_REMOVE = 105
+const ITEM_REMOVE_AND_DELETE = 106
 
 
 func _ready():
@@ -73,6 +76,7 @@ func _on_new_item_resource_dialog_file_selected(path):
 		new_database_item.item = res
 		database.items.append(new_database_item)
 		load_items()
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	else:
 		print(err)
 
@@ -87,25 +91,39 @@ func _on_inventory_item_list_item_selected(item, index):
 
 
 func _on_inventory_item_list_item_popup_menu_requested(at_position):
-	var add = at_position + Vector2(0, items_popup_menu.size.y) + inventory_item_list.global_position
-	items_popup_menu.position = Vector2(get_viewport().position) + add
-	items_popup_menu.popup()
-
-
-func _on_items_popup_menu_about_to_popup() -> void:
 	items_popup_menu.clear()
 	var icon = get_theme_icon("Remove", "EditorIcons")
+	var copy = get_theme_icon("CopyNodePath", "EditorIcons")
+	items_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
+	items_popup_menu.add_separator()
 	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
+	items_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
+	
+	var a = inventory_item_list.get_global_mouse_position()
+	items_popup_menu.position = Vector2(get_viewport().position) + a
+	items_popup_menu.popup()
 
 
 func _on_items_popup_menu_id_pressed(id: int) -> void:
 	match id:
+		ITEM_COPY_RESOURCE_PATH:
+			var item_database = database.get_item_database(current_id_item)
+			if item_database == null or item_database.item == null:
+				return
+			DisplayServer.clipboard_set(item_database.item.resource_path)
 		ITEM_REMOVE:
 			item_remove_confirmation_dialog.popup_centered()
 			var item_database = database.get_item_database(current_id_item)
 			if item_database == null or item_database.item == null:
 				return
 			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\"?"
+		ITEM_REMOVE_AND_DELETE:
+			item_remove_and_delete_confirmation_dialog.popup_centered()
+			var item_database = database.get_item_database(current_id_item)
+			if item_database == null or item_database.item == null:
+				return
+			item_remove_and_delete_confirmation_dialog.popup_centered()
+			item_remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\" And Delete Resource \""+item_database.item.resource_path+"\"?"
 
 
 func new_item_pressed():
@@ -123,3 +141,14 @@ func _on_item_editor_changed(id):
 
 func _on_item_remove_confirmation_dialog_confirmed():
 	remove_item(current_id_item)
+
+
+func _on_item_remove_and_delete_confirmation_dialog_confirmed():
+	var dir = DirAccess.open(".")
+	var item_database = database.get_item_database(current_id_item)
+	if item_database == null or item_database.item == null:
+		return
+	var code = dir.remove_absolute(item_database.item.resource_path)
+	if code == OK:
+		remove_item(current_id_item)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
