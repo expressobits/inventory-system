@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://76umvuslxorx"
-path="res://.godot/imported/inventory_item.svg-dde4bfe06934fdf378d9d5854b4b4991.ctex"
+uid="uid://7ueixntymdwg"
+path="res://.godot/imported/new_inventory_item.svg-d9f6cd5feaf9420c5827f0b26222d610.ctex"
 metadata={
 "editor_dark_theme": true,
 "editor_scale": 1.0,
@@ -13,8 +13,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/inventory_item.svg"
-dest_files=["res://.godot/imported/inventory_item.svg-dde4bfe06934fdf378d9d5854b4b4991.ctex"]
+source_file="res://addons/inventory-system/icons/new_inventory_item.svg"
+dest_files=["res://.godot/imported/new_inventory_item.svg-d9f6cd5feaf9420c5827f0b26222d610.ctex"]
 
 [params]
 

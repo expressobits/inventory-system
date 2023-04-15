@@ -4,3 +4,5 @@
 /**        export-ignore
 /addons    !export-ignore
 /addons/** !export-ignore
+/addons/inventory-system/icons/original_icons export-ignore
+/addons/inventory-system/icons/original_icons/** export-ignore

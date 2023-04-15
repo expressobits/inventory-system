@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl1xrvik1odnx"]
+[gd_scene load_steps=8 format=3 uid="uid://w6mkeioqln3k"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
+[ext_resource type="Texture2D" uid="uid://7ueixntymdwg" path="res://addons/inventory-system/icons/new_inventory_item.svg" id="2_lu5r1"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
 [ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
 [ext_resource type="PackedScene" uid="uid://bqptlysubaw3f" path="res://addons/inventory-system/editor/items/items.tscn" id="5_fwymy"]
@@ -42,7 +43,7 @@ icon_alignment = 1
 
 [node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 icon_alignment = 1
 
@@ -53,8 +54,9 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+tooltip_text = "New Inventory Item"
 disabled = true
-text = "New Item"
+icon = ExtResource("2_lu5r1")
 flat = true
 icon_alignment = 1
 
@@ -80,7 +82,7 @@ icon_alignment = 1
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 0)
+custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open a InventoryDatabase resource to see contents here"
