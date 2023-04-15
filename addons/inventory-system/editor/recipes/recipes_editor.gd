@@ -30,6 +30,7 @@ func load_from_database(database : InventoryDatabase) -> void:
 
 
 func load_recipes() -> void:
+	recipe_item_editor.clear_list()
 	inventory_item_list.load_items(database)
 
 
@@ -79,6 +80,9 @@ func _on_new_recipe_resource_dialog_file_selected(path):
 
 
 func _add_new_recipe_to_database(recipe : Recipe):
+	if database.items.is_empty():
+		push_warning("There are no items to create a recipe, create an item first.")
+		return
 	recipe.product = Slot.new()
 	recipe.product.item = database.items[last_item_selected_id].item
 	recipe.product.amount = 1

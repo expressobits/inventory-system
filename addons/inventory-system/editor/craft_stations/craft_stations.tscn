@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6b05yqdrg6ta"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="1_vyms8"]
+
+[node name="Craft Stations" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_vyms8")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemList" type="ItemList" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2

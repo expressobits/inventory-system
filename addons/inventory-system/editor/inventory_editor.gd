@@ -29,6 +29,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button = %NewItemButton
 @onready var new_recipe_button = %NewRecipeButton
+@onready var new_craft_station_type_button = %NewCraftStationTypeButton
 
 
 func _ready():
@@ -49,11 +50,13 @@ func load_database(database : InventoryDatabase):
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false
+		new_craft_station_type_button.disabled = false
 	else:
 		$MarginContainer/VBoxContainer/Content.visible = false
 		new_item_button.disabled = true
 		new_recipe_button.disabled = true
-	
+		new_craft_station_type_button.disabled = true
+
 
 func new_file(path: String, content: String = "") -> void:
 #	if open_buffers.has(path):
@@ -174,3 +177,7 @@ func _on_new_item_button_pressed():
 	
 func _on_new_recipe_button_pressed():
 	recipes_editor.new_recipe_pressed()
+
+
+func _on_new_craft_station_type_button_pressed():
+	pass # Replace with function body.
