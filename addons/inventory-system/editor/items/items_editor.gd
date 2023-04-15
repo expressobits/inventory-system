@@ -27,7 +27,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	_apply_theme()
 
 
-func load_items_from_database(database : InventoryDatabase) -> void:
+func load_from_database(database : InventoryDatabase) -> void:
 	self.database = database
 	item_editor.load_item(null)
 	load_items()

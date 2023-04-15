@@ -151,6 +151,7 @@ layout_mode = 2
 
 [node name="Craft Stations" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
 layout_mode = 2
+mouse_filter = 1
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true

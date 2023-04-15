@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6b05yqdrg6ta"]
+[gd_scene load_steps=4 format=3 uid="uid://b6b05yqdrg6ta"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="1_vyms8"]
+[ext_resource type="PackedScene" uid="uid://dn6l1p7td2wlb" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_item_list.tscn" id="2_ic310"]
+[ext_resource type="PackedScene" uid="uid://cdv6y2uu0ywq0" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.tscn" id="3_mn6ee"]
 
 [node name="Craft Stations" type="Control"]
 visible = false
@@ -16,8 +18,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemList" type="ItemList" parent="HSplitContainer"]
+[node name="CraftStationTypesItemList" parent="HSplitContainer" instance=ExtResource("2_ic310")]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="HSplitContainer"]
+[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="HSplitContainer/CraftStationTypesItemList"]
+size = Vector2i(100, 24)
+
+[node name="CraftStationTypeRemoveConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/CraftStationTypesItemList"]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
+[node name="CraftStationTypeEditor" parent="HSplitContainer" instance=ExtResource("3_mn6ee")]
 layout_mode = 2
+
+[node name="OpenCraftStationTypeDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(312, 157)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres ; InventoryItem")
+
+[node name="NewCraftStationTypeResourceDialog" type="FileDialog" parent="."]
+size = Vector2i(452, 162)
+dialog_hide_on_ok = true
+access = 2
+filters = PackedStringArray("*.tres ; InventoryItem")
+
+[connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
+[connection signal="changed" from="HSplitContainer/CraftStationTypeEditor" to="." method="_on_craft_station_type_editor_changed"]
