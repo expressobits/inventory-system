@@ -9,6 +9,9 @@ const InventorySettings = preload("res://addons/inventory-system/editor/inventor
 const OPEN_OPEN = 100
 const OPEN_CLEAR = 101
 
+const NEW_ITEM_NEW_RESOURCE = 100
+const NEW_ITEM_FROM_RESOURCE = 101
+
 # The Inventory System plugin
 var editor_plugin: EditorPlugin
 
@@ -29,8 +32,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 @onready var open_button: MenuButton = %OpenButton
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
-@onready var new_item_button = %NewItemButton
-@onready var new_item_from_resource_button = %NewItemFromResourceButton
+@onready var new_item_button : MenuButton = %NewItemButton
 @onready var new_recipe_button = %NewRecipeButton
 @onready var new_craft_station_type_button = %NewCraftStationTypeButton
 
@@ -55,14 +57,12 @@ func load_database(database : InventoryDatabase):
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false
-		new_item_from_resource_button.disabled = false
 		new_craft_station_type_button.disabled = false
 	else:
 		$MarginContainer/VBoxContainer/Content.visible = false
 		new_item_button.disabled = true
 		new_recipe_button.disabled = true
 		new_craft_station_type_button.disabled = true
-		new_item_from_resource_button.disabled = true
 
 
 func new_file(path: String, content: String = "") -> void:
@@ -139,6 +139,15 @@ func build_open_menu() -> void:
 	menu.id_pressed.connect(_on_open_menu_id_pressed)
 
 
+func build_new_item_menu() -> void:
+	var menu = new_item_button.get_popup()
+	menu.clear()
+	menu.add_item("New Item With New Resource", NEW_ITEM_NEW_RESOURCE)
+	menu.add_item("New Item With Existing Resource", NEW_ITEM_FROM_RESOURCE)
+	if menu.id_pressed.is_connected(_on_new_item_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_new_item_menu_id_pressed)
+	menu.id_pressed.connect(_on_new_item_menu_id_pressed)
+
 ### Signals
 
 func _on_open_menu_id_pressed(id: int) -> void:
@@ -152,6 +161,14 @@ func _on_open_menu_id_pressed(id: int) -> void:
 			var menu = open_button.get_popup()
 			var item = menu.get_item_text(menu.get_item_index(id))
 			open_file(item)
+
+
+func _on_new_item_menu_id_pressed(id: int) -> void:
+	match id:
+		NEW_ITEM_NEW_RESOURCE:
+			items_editor.new_item_pressed()
+		NEW_ITEM_FROM_RESOURCE:
+			items_editor.new_item_from_resource_pressed()
 
 
 func _on_theme_changed():
@@ -177,10 +194,6 @@ func _on_open_dialog_file_selected(path):
 func _on_open_button_about_to_popup():
 	build_open_menu()
 
-
-func _on_new_item_button_pressed():
-	items_editor.new_item_pressed()
-	
 	
 func _on_new_recipe_button_pressed():
 	recipes_editor.new_recipe_pressed()
@@ -190,5 +203,5 @@ func _on_new_craft_station_type_button_pressed():
 	craft_stations_editor.new_station_pressed() 
 
 
-func _on_new_item_from_resource_button_pressed():
-	items_editor.new_item_from_resource_pressed()
+func _on_new_item_button_about_to_popup():
+	build_new_item_menu()
