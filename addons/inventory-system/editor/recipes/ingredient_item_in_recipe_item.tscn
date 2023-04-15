@@ -4,7 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system/demos/assets/icons/branch.png" id="2_3qlcx"]
 
 [node name="IngredientItemInRecipeItem" type="HBoxContainer"]
-custom_minimum_size = Vector2(56, 0)
+custom_minimum_size = Vector2(48, 0)
+theme_override_constants/separation = 0
 script = ExtResource("1_ggxbe")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -16,4 +17,6 @@ expand_mode = 1
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "x 1"

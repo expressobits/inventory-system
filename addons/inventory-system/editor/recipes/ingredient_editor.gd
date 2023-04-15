@@ -2,6 +2,7 @@
 extends HBoxContainer
 class_name IngredientEditor
 
+signal changed_slot
 signal request_remove
 
 @onready var slot_selector = $SlotSelector
@@ -22,16 +23,13 @@ func _ready():
 func setup(slot : Slot, database : InventoryDatabase, tooltip_text : String):
 	self.slot = slot
 	self.database = database
-	var item_id = database.get_id_from_item(slot.item)
-	slot.id = item_id
 	slot_selector.setup(slot, database)
 	delete_button.tooltip_text = tooltip_text
 	ingredient_remove_confirmation_dialog.dialog_text = tooltip_text+"?"
 
 
 func _on_slot_selector_slot_changed(slot : Slot):
-	var item = database.get_item(slot.id)
-	slot.item = item
+	emit_signal("changed_slot")
 
 
 func _on_delete_button_pressed():

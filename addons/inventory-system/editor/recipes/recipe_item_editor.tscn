@@ -36,4 +36,5 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[connection signal="changed" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed"]
 [connection signal="changed_product" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed_product"]

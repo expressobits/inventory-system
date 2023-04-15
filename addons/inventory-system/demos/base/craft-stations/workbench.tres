@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="CraftStationType" load_steps=3 format=3 uid="uid://dwrj6geetlyfd"]
 
+[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system/demos/assets/icons/campfire.png" id="1_8rdyr"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/craft-station-type.gd" id="1_p37qn"]
-[ext_resource type="Texture2D" uid="uid://c1nqlymo2kcig" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Structure/medievalStructure_07.png" id="1_piess"]
 
 [resource]
 script = ExtResource("1_p37qn")
-icon = ExtResource("1_piess")
+icon = ExtResource("1_8rdyr")

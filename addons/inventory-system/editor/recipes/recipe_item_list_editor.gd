@@ -7,43 +7,51 @@ signal remove(recipe : Recipe)
 
 @onready var time_label : Label = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeLabel
 @onready var craftstation_icon : TextureRect = $Panel/MarginContainer/VBoxContainer/MoreInfos/CraftstationIcon
-@onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients
-@onready var byproducts_list = $Panel/MarginContainer/VBoxContainer/Byproducts
+@onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients/IngredientsList
+@onready var byproducts_list = $Panel/MarginContainer/VBoxContainer/Byproducts/ByproductsList
 @onready var panel : Panel = $Panel
 @onready var delete_button = $Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton
 @onready var remove_confirmation_dialog = $RemoveConfirmationDialog
+@onready var time_icon = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeIcon
+
 
 var recipe : Recipe
 var database : InventoryDatabase
 @export var ingredient_item_scene = preload("res://addons/inventory-system/editor/recipes/ingredient_item_in_recipe_item.tscn")
-var ingredients : Array
-var byproducts : Array
 var style_box : StyleBoxFlat
 
 
 func _ready():
 	style_box = StyleBoxFlat.new()
 	panel.add_theme_stylebox_override("panel", style_box)
+	time_icon.texture = get_theme_icon("Timer", "EditorIcons")
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
 	delete_button.tooltip_text = "Delete"
 	style_box.set_corner_radius_all(4)
 	unselect()
+	update_recipe()
+		
+
+func update_recipe():
 	if recipe.station != null:
 		craftstation_icon.texture = recipe.station.icon
 	else:
 		craftstation_icon.texture = null
 	time_label.text = str(recipe.time_to_craft)+" secs"
 	
+	for i in ingredients_list.get_children():
+		i.queue_free()
 	for i in recipe.ingredients:
 		var i_editor = ingredient_item_scene.instantiate()
 		i_editor.setup(i)
 		ingredients_list.add_child(i_editor)
 		
+	for i in byproducts_list.get_children():
+		i.queue_free()	
 	for i in recipe.byproducts:
 		var i_editor = ingredient_item_scene.instantiate()
 		i_editor.setup(i)
 		byproducts_list.add_child(i_editor)
-		
 
 
 func load_recipe(recipe : Recipe, database : InventoryDatabase):

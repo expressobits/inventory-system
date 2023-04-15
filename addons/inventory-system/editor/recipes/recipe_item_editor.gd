@@ -72,3 +72,8 @@ func _on_recipe_item_removed(recipe : Recipe):
 	if index >= 0 and index < database.recipes.size():
 		database.recipes.remove_at(index)
 	emit_signal("changed_product_in_recipe")
+
+
+func _on_recipe_editor_changed():
+	for recipe_ui in recipes_ui:
+		recipe_ui.update_recipe()
