@@ -11,35 +11,18 @@ signal item_popup_menu_requested(at_position: Vector2)
 var database : InventoryDatabase
 var stations_list_handler : Array[CraftStationType]
 
-var stations : Array = [CraftStationType]:
-	set(next_files):
-		stations = next_files
-		apply_filter()
-	get:
-		return stations
-
 
 var filter: String:
 	set(next_filter):
 		filter = next_filter
-		apply_filter()
+		apply_filter(database.stations_type)
 	get:
 		return filter
 
 
 func load_craft_station_types(database : InventoryDatabase) -> void:
-	clear_items()
 	self.database = database
-	stations = database.stations_type
-#	for station_type in database.stations_type:
-#		stations.append(item_database.id)
-#		stations.sort()
-#		update_item_map()
-#		apply_filter()
-
-
-func clear_items():
-	stations.clear()
+	apply_filter(database.stations_type)
 
 
 func update_item_list(items : Array[CraftStationType]):
@@ -53,11 +36,11 @@ func update_item(index : int):
 	var station = stations_list_handler[index]
 	var name_to_show : String = station.name
 	var icon : Texture2D = station.icon
-	list.set_item_text(index, name_to_show)
+	list.set_item_text(index, name_to_show+" ("+station.resource_path+")")
 	list.set_item_icon(index, icon)
 
 
-func apply_filter() -> void:
+func apply_filter(stations : Array[CraftStationType]) -> void:
 	stations_list_handler.clear()
 	for station in stations:
 		if filter == "" or filter.to_lower() in station.name.to_lower():
@@ -82,3 +65,7 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	
 	if mouse_button_index == 2:
 		emit_signal("item_popup_menu_requested", at_position)
+
+
+func _on_search_line_edit_text_changed(new_text):
+	filter = new_text

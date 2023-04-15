@@ -20,7 +20,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-placeholder_text = "Search Items"
+placeholder_text = "Search Craft Station Types"
 draw_control_chars = true
 
 [node name="SearchIcon" type="TextureRect" parent="Control"]
@@ -45,4 +45,5 @@ layout_mode = 2
 size_flags_vertical = 3
 fixed_icon_size = Vector2i(16, 16)
 
+[connection signal="text_changed" from="Control/SearchLineEdit" to="." method="_on_search_line_edit_text_changed"]
 [connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]

@@ -94,7 +94,8 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 
 func _on_items_popup_menu_about_to_popup() -> void:
 	items_popup_menu.clear()
-	items_popup_menu.add_item("Remove", ITEM_REMOVE)
+	var icon = get_theme_icon("Remove", "EditorIcons")
+	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 
 
 func _on_items_popup_menu_id_pressed(id: int) -> void:

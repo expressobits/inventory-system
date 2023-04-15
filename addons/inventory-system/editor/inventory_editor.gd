@@ -16,7 +16,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
 @onready var recipes_editor : RecipesEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Recipes")
-@onready var craft_stations : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
+@onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
 
 
 # Dialogs
@@ -37,7 +37,7 @@ var _default_database = preload("res://addons/inventory-system/demos/base/databa
 func _ready():
 	items_editor.set_editor_plugin(editor_plugin)
 	recipes_editor.set_editor_plugin(editor_plugin)
-	craft_stations.set_editor_plugin(editor_plugin)
+	craft_stations_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
 
@@ -50,7 +50,7 @@ func load_database(database : InventoryDatabase):
 	if database != null:
 		items_editor.load_from_database(database)
 		recipes_editor.load_from_database(database)
-		craft_stations.load_from_database(database)
+		craft_stations_editor.load_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false
@@ -184,4 +184,4 @@ func _on_new_recipe_button_pressed():
 
 
 func _on_new_craft_station_type_button_pressed():
-	pass # Replace with function body.
+	craft_stations_editor.new_station_pressed() 

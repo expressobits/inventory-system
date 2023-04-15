@@ -44,7 +44,12 @@ filters = PackedStringArray("*.tres ; InventoryItem")
 size = Vector2i(452, 162)
 dialog_hide_on_ok = true
 access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
+filters = PackedStringArray("*.tres ; CraftStationType")
 
+[connection signal="item_popup_menu_requested" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_item_popup_menu_requested"]
 [connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
+[connection signal="about_to_popup" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_about_to_popup"]
+[connection signal="id_pressed" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_id_pressed"]
+[connection signal="confirmed" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypeRemoveConfirmationDialog" to="." method="_on_craft_station_type_remove_confirmation_dialog_confirmed"]
 [connection signal="changed" from="HSplitContainer/CraftStationTypeEditor" to="." method="_on_craft_station_type_editor_changed"]
+[connection signal="file_selected" from="NewCraftStationTypeResourceDialog" to="." method="_on_new_craft_station_type_resource_dialog_file_selected"]

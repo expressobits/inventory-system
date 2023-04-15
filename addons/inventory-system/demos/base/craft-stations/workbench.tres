@@ -6,3 +6,4 @@
 [resource]
 script = ExtResource("1_p37qn")
 icon = ExtResource("1_8rdyr")
+name = "Workbench"
