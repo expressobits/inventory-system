@@ -13,25 +13,20 @@ func load_items(database : InventoryDatabase) -> void:
 				var array : Array[Recipe] = []
 				recipe_item_map[id] = array
 			recipe_item_map[id].append(recipe)
-		else:
-			if not recipe_item_map.has(-1):
-				recipe_item_map[InventoryItem.NONE] = [ recipe ]
-			else:
-				recipe_item_map[InventoryItem.NONE].append(recipe)
 	super.load_items(database)
 
 
 func select(item_id : int):
 	var idx = get_index_of_item_id(item_id)
 	list.select(idx)
-	
+
 
 func update_item(index : int):
 	var item_database = item_list_handler[index]
-	var name_to_show : String = str(item_database.id)
+	var name_to_show : String 
 	var icon : Texture2D = null
 	var recipe_count = 0
-	if item_database.item != null:
+	if item_database != null and item_database.item != null:
 		if item_database.item.name.is_empty():
 			name_to_show = "No name"
 		else:

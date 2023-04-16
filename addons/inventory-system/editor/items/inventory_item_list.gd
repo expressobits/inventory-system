@@ -34,10 +34,12 @@ func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
 	for item_database in database.items:
-		item_ids.append(item_database.id)
-		item_ids.sort()
-		update_item_map()
-		apply_filter()
+		add_item_id(item_database.id)
+
+
+func add_item_id(id : int):
+	item_ids.append(id)
+	item_ids.sort()
 	update_item_map()
 	apply_filter()
 

@@ -3,7 +3,7 @@ extends Control
 class_name RecipeEditor
 
 
-signal changed_product
+signal changed_product(recipe : Recipe)
 signal changed
 
 @onready var product_selector : SlotSelector = $MarginContainer/MarginContainer/VBoxContainer/Product/ProductSlotSelector
@@ -109,7 +109,7 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 
 func _on_product_slot_spin_box_slot_changed(slot : Slot):
 	recipe.product = slot
-	emit_signal("changed_product")
+	emit_signal("changed_product", recipe)
 	emit_signal("changed")
 
 

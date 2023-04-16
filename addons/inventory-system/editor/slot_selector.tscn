@@ -33,5 +33,3 @@ min_value = 1.0
 max_value = 1e+08
 value = 1.0
 rounded = true
-
-[connection signal="value_changed" from="ProductIDSpinBox" to="ProductIDSpinBox" method="_on_value_changed"]

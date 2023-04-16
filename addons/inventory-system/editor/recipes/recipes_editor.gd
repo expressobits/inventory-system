@@ -56,11 +56,14 @@ func _on_inventory_item_list_item_selected(item_database, index):
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
-func _on_recipe_item_editor_changed_product_in_recipe():
+func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
 	load_recipes()
+	last_item_selected_id = database.get_id_from_item(recipe.product.item)
 	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
 		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
 		recipe_item_editor.set_recipes_and_load(recipes, database)
+		inventory_item_list.select(last_item_selected_id)
+		recipe_item_editor.select_with_recipe(recipe)
 	else:
 		recipe_item_editor.clear_list()
 
@@ -94,3 +97,20 @@ func _add_new_recipe_to_database(recipe : Recipe):
 	var recipes = inventory_item_list.recipe_item_map[id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 	recipe_item_editor.select_last()
+
+
+func _on_button_pressed():
+	var recipes : Array[Recipe]
+	for recipe in database.recipes:
+		if recipe.product.item == null:
+			recipes.append(recipe)
+	recipe_item_editor.set_recipes_and_load(recipes, database)
+
+
+func _on_recipe_item_editor_recipe_removed():
+	load_recipes()
+	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
+		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
+		recipe_item_editor.set_recipes_and_load(recipes, database)
+	else:
+		recipe_item_editor.clear_list()
