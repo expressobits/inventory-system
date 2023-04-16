@@ -1,11 +1,13 @@
 @tool
 extends InventoryItemListEditor
 
+signal no_products_item_selected
 
 var recipe_item_map : Dictionary = {}
 
 func load_items(database : InventoryDatabase) -> void:
 	recipe_item_map.clear()
+	var no_products_count = 0
 	for recipe in database.recipes:
 		if is_instance_valid(recipe.product) and is_instance_valid(recipe.product.item):
 			var id = database.get_id_from_item(recipe.product.item)
@@ -13,7 +15,11 @@ func load_items(database : InventoryDatabase) -> void:
 				var array : Array[Recipe] = []
 				recipe_item_map[id] = array
 			recipe_item_map[id].append(recipe)
+		else:
+			no_products_count += 1
+	$NoProductsButton.text = "Recipes Without Product ("+str(no_products_count)+")"
 	super.load_items(database)
+	
 
 
 func select(item_id : int):
@@ -40,3 +46,8 @@ func update_item(index : int):
 	list.set_item_metadata(index, recipe_count)
 	list.set_item_tooltip(index, str(recipe_count) + " recipes")
 	list.set_item_icon(index, icon)
+
+
+
+func _on_no_products_button_pressed():
+	emit_signal("no_products_item_selected")

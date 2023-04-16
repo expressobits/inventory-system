@@ -99,14 +99,6 @@ func _add_new_recipe_to_database(recipe : Recipe):
 	recipe_item_editor.select_last()
 
 
-func _on_button_pressed():
-	var recipes : Array[Recipe]
-	for recipe in database.recipes:
-		if recipe.product.item == null:
-			recipes.append(recipe)
-	recipe_item_editor.set_recipes_and_load(recipes, database)
-
-
 func _on_recipe_item_editor_recipe_removed():
 	load_recipes()
 	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
@@ -114,3 +106,11 @@ func _on_recipe_item_editor_recipe_removed():
 		recipe_item_editor.set_recipes_and_load(recipes, database)
 	else:
 		recipe_item_editor.clear_list()
+
+
+func _on_inventory_item_list_no_products_item_selected():
+	var recipes : Array[Recipe]
+	for recipe in database.recipes:
+		if recipe.product.item == null:
+			recipes.append(recipe)
+	recipe_item_editor.set_recipes_and_load(recipes, database)

@@ -25,7 +25,7 @@ split_offset = -128
 layout_mode = 2
 script = ExtResource("3_ualcr")
 
-[node name="Button" type="Button" parent="HSplitContainer/InventoryItemList"]
+[node name="NoProductsButton" type="Button" parent="HSplitContainer/InventoryItemList"]
 layout_mode = 2
 text = "Recipes Without Product"
 
@@ -40,7 +40,8 @@ access = 2
 filters = PackedStringArray("*.tres ; InventoryItem")
 
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
-[connection signal="pressed" from="HSplitContainer/InventoryItemList/Button" to="." method="_on_button_pressed"]
+[connection signal="no_products_item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_no_products_item_selected"]
+[connection signal="pressed" from="HSplitContainer/InventoryItemList/NoProductsButton" to="HSplitContainer/InventoryItemList" method="_on_no_products_button_pressed"]
 [connection signal="changed_product_in_recipe" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_changed_product_in_recipe"]
 [connection signal="recipe_removed" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_recipe_removed"]
 [connection signal="file_selected" from="NewRecipeResourceDialog" to="." method="_on_new_recipe_resource_dialog_file_selected"]
