@@ -30,7 +30,8 @@ layout_mode = 2
 text = "Recipes Without Product"
 
 [node name="RecipeItemEditor" parent="HSplitContainer" instance=ExtResource("4_8tort")]
-custom_minimum_size = Vector2(1184, 0)
+clip_contents = true
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 
 [node name="NewRecipeResourceDialog" type="FileDialog" parent="."]

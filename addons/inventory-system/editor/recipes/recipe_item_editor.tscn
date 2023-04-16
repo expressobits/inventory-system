@@ -38,7 +38,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="RecipeEditorContainer" type="MarginContainer" parent="HSplitContainer"]
-custom_minimum_size = Vector2(768, 0)
+clip_contents = true
 layout_mode = 2
 
 [node name="RecipeEditor" parent="HSplitContainer/RecipeEditorContainer" instance=ExtResource("2_a000k")]

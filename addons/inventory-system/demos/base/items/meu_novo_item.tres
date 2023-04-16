@@ -1,6 +1,0 @@
-[gd_resource type="InventoryItem" format=3 uid="uid://cafjmgqgwh3vm"]
-
-[resource]
-id = 7
-name = "New Item"
-properties = {}

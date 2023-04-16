@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="InventoryDatabase" load_steps=27 format=3 uid="uid://ds5vbdoklqy3a"]
 
-[ext_resource type="InventoryItem" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_605sl"]
-[ext_resource type="InventoryItem" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
-[ext_resource type="InventoryItem" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="7_4afv6"]
+[ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_605sl"]
+[ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
+[ext_resource type="Resource" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="7_4afv6"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="7_b6gc3"]
-[ext_resource type="InventoryItem" uid="uid://b6xju8cni0ma3" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
-[ext_resource type="InventoryItem" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
-[ext_resource type="InventoryItem" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
-[ext_resource type="InventoryItem" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
+[ext_resource type="Resource" uid="uid://b6xju8cni0ma3" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
+[ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
+[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
+[ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="23_5qqam"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="26_ye4gh"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
@@ -99,6 +99,6 @@ ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_gnn4r"), Sub
 
 [resource]
 script = ExtResource("7_b6gc3")
-items = Array[InventoryItem]([ExtResource("3_605sl"), ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("10_0ktg3"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("9_ac6d4")])
+items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("3_605sl"), ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("10_0ktg3"), ExtResource("9_ac6d4")])
 recipes = Array[ExtResource("26_ye4gh")]([SubResource("Resource_q2rcm"), SubResource("Resource_1hk8q"), SubResource("Resource_nxq1h"), SubResource("Resource_3s2vx")])
 stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr")])
