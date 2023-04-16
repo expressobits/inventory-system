@@ -58,7 +58,7 @@ func _on_inventory_item_list_item_selected(item, index):
 
 func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
 	load_recipes()
-	last_item_selected_id = database.get_id_from_item(recipe.product.item)
+	last_item_selected_id = recipe.product.item.id
 	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
 		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
 		recipe_item_editor.set_recipes_and_load(recipes, database)
@@ -93,8 +93,7 @@ func _add_new_recipe_to_database(recipe : Recipe):
 	database.recipes.append(recipe)
 	load_recipes()
 	inventory_item_list.select(last_item_selected_id)
-	var id = database.get_id_from_item(recipe.product.item)
-	var recipes = inventory_item_list.recipe_item_map[id]
+	var recipes = inventory_item_list.recipe_item_map[recipe.product.item.id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 	recipe_item_editor.select_last()
 

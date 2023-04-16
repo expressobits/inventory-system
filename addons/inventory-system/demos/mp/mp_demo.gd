@@ -50,7 +50,7 @@ func make_scene_objects_to_network():
 	var spawner = get_node("DroppedItemSpawner")
 	for i in items.get_child_count():
 		var item = items.get_child(i) as DroppedItem
-		var item_id = database.get_id_from_item(item.item)
+		var item_id = item.item.id
 		var position = item.position
 		var rotation = item.rotation
 		item.queue_free()

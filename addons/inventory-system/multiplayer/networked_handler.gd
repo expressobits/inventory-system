@@ -15,8 +15,8 @@ func _ready():
 ## Override all main commands for the client to send to the server through rpc
 
 func drop(item : InventoryItem, amount := 1) -> bool:
-	var item_id = database.get_id_from_item(item)
-	if item_id < 0:
+	var item_id = item.id
+	if item_id < InventoryItem.NONE:
 		return false
 	if not multiplayer.is_server():
 		drop_rpc.rpc_id(1, item_id, amount)

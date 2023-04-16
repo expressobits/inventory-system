@@ -1,8 +1,12 @@
-[gd_resource type="InventoryItem" load_steps=2 format=3 uid="uid://be14ch2lo1u5n"]
+[gd_resource type="InventoryItem" load_steps=3 format=3 uid="uid://be14ch2lo1u5n"]
 
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system/demos/assets/icons/branch.png" id="1_bt06w"]
+[ext_resource type="PackedScene" uid="uid://veyqeuk4xwke" path="res://addons/inventory-system/demos/fps/hand_items/wood.tscn" id="2_b7lsx"]
 
 [resource]
 max_stack = 16
 name = "Wood"
 icon = ExtResource("1_bt06w")
+properties = {
+"hand_item": ExtResource("2_b7lsx")
+}

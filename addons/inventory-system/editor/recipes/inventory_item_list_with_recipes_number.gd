@@ -10,7 +10,7 @@ func load_items(database : InventoryDatabase) -> void:
 	var no_products_count = 0
 	for recipe in database.recipes:
 		if is_instance_valid(recipe.product) and is_instance_valid(recipe.product.item):
-			var id = database.get_id_from_item(recipe.product.item)
+			var id = recipe.product.item.id
 			if not recipe_item_map.has(id):
 				var array : Array[Recipe] = []
 				recipe_item_map[id] = array

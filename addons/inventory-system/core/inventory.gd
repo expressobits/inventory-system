@@ -75,10 +75,9 @@ func _ready():
 func set_slot(slot_index : int, item : InventoryItem, amount : int):
 	if slot_index >= slots.size():
 		return
-	var item_id = database.get_id_from_item(item)
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
-	slot.item_id = item_id
+	slot.item_id = item.id
 	slot.amount = amount
 	slots[slot_index] = slot
 	emit_signal("updated_slot", slot_index)
@@ -127,7 +126,7 @@ func is_full() -> bool:
 
 ## Returns true if the inventory contains the quantity of the specified item
 func contains(item : InventoryItem, amount := 1) -> bool:
-	var item_id = database.get_id_from_item(item)
+	var item_id = item.id
 	if item_id <= InventoryItem.NONE:
 		return 0
 	var amount_in_inventory = 0
@@ -141,7 +140,7 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 
 ## Returns amount of the specified item in inventory
 func get_amount_of(item : InventoryItem) -> int:
-	var item_id = database.get_id_from_item(item)
+	var item_id = item.id
 	if item_id <= InventoryItem.NONE:
 		return 0
 	var amount_in_inventory = 0;
@@ -274,7 +273,7 @@ func _call_events(old_amount : int):
 
 
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	var item_id = database.get_id_from_item(item)
+	var item_id = item.id
 	if item_id <= InventoryItem.NONE:
 		return amount
 	var slot = slots[slot_index]
@@ -289,8 +288,8 @@ func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 
 
 func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	var item_id = database.get_id_from_item(item)
-	if item_id < 0:
+	var item_id = item.id
+	if item_id <= InventoryItem.NONE:
 		return amount
 	var slot = slots[slot_index]
 	var item_slot = slot.item_id
