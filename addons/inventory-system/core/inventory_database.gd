@@ -12,10 +12,6 @@ class_name InventoryDatabase
 
 @export var stations_type : Array[CraftStationType]
 
-@export var dropped_items : Array[PackedScene]
-
-@export var hand_items : Array[PackedScene]
-
 # TODO Create loading dropped items and items with folder
 # @export var path_test := "res://addons/inventory-system/demos/fps/items/"
 #func load_items():
@@ -48,46 +44,6 @@ func get_item(id : int) -> InventoryItem:
 			return i
 	# printerr("id ",id," is not in the database!")
 	return null
-
-
-## Returns the [DroppedItem] of id, return null if not found
-func get_dropped_item(id : int) -> PackedScene:
-	for i in items.size():
-		var item = items[i]
-		if item.id == id:
-			var dropped = dropped_items[i]
-			return dropped
-#			if item.properties.has("dropped_item"):
-#				return item.properties["dropped_item"]
-	# printerr("id ",id," is not in the database!")
-	return null
-
-
-func set_dropped_item(id : int, scene : PackedScene):
-	for i in items.size():
-		var item = items[i]
-		if item.id == id:
-			dropped_items[i] = scene
-
-
-## Returns the [DroppedItem] of id, return null if not found
-func get_hand_item(id : int) -> PackedScene:
-	for i in items.size():
-		var item = items[i]
-		if item.id == id:
-			var hand_item = hand_items[i]
-			return hand_item
-#			if item.properties.has("hand_item"):
-#				return item.properties["hand_item"]
-	# printerr("id ",id," is not in the database!")
-	return null
-
-
-func set_hand_item(id : int, scene : PackedScene):
-	for i in items.size():
-		var item = items[i]
-		if item.id == id:
-			hand_items[i] = scene
 
 
 func has_item_id(id : int) -> bool:

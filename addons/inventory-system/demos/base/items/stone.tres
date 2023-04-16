@@ -7,3 +7,7 @@ id = 1
 max_stack = 8
 name = "Stone"
 icon = ExtResource("1_ctyjn")
+properties = {
+"dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/rock.tscn",
+"hand_item": "res://addons/inventory-system/demos/fps/hand_items/rock.tscn"
+}

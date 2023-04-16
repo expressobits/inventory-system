@@ -71,12 +71,10 @@ func _on_new_item_resource_dialog_file_selected(path):
 	var item : InventoryItem = InventoryItem.new()
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
-		var res : InventoryItem = load(path)
-		res.name = "New Item"
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		res.id = database.get_valid_id()
-		res.item = res
-		database.items.append(res)
+		item = load(path)
+		item.name = "New Item"
+		item.id = database.get_valid_id()
+		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	else:

@@ -60,10 +60,14 @@ var transaction_slot := {
 ## and placed as a child of [code]drop_parent[/code].
 ## For each dropped item a [code]dropped[/code] signal is emitted.
 func drop(item : InventoryItem, amount := 1) -> bool:
-	var dropped_item = database.get_dropped_item(item.id)
-	for i in amount:
-		_instantiate_dropped_item(dropped_item)
-	return true
+	if item.properties.has("dropped_item"):
+		var path = item.properties["dropped_item"]
+		var dropped_item = load(path)
+		for i in amount:
+			_instantiate_dropped_item(dropped_item)
+		return true
+	else:
+		return false
 
 
 ## Add an amount of an [InventoryItem] to a inventory.

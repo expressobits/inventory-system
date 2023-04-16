@@ -99,13 +99,13 @@ func apply_theme() -> void:
 	if not is_instance_valid(editor_plugin) or not is_instance_valid(new_button):
 		return
 	new_button.icon = get_theme_icon("New", "EditorIcons")
-	new_button.tooltip_text = "Start a new database"
+	new_button.tooltip_text = "Start a New Database"
 	
 	open_button.icon = get_theme_icon("Load", "EditorIcons")
-	open_button.tooltip_text = "Open a database"
+	open_button.tooltip_text = "Open a Database"
 	
 	save_all_button.icon = get_theme_icon("Save", "EditorIcons")
-	save_all_button.tooltip_text = "Save database"
+	save_all_button.tooltip_text = "Save Database"
 	
 	# Dialog sizes
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
