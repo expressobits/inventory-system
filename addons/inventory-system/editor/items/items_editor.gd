@@ -89,7 +89,7 @@ func _on_theme_changed():
 
 
 func _on_inventory_item_list_item_selected(item, index):
-	current_id_item = item.id
+	current_id_item = item.item.id
 	item_editor.load_item(item)
 
 

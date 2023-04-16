@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system/demos/assets/icons/campfire.png" id="1_vhjvv"]
 
 [resource]
+id = 6
 max_stack = 1
 name = "Campfire"
 icon = ExtResource("1_vhjvv")

@@ -29,49 +29,42 @@
 
 [sub_resource type="Resource" id="Resource_u244c"]
 script = ExtResource("4_m1u1l")
-id = 0
 item = ExtResource("3_605sl")
 dropped_item = ExtResource("1_a08hj")
 hand_item = ExtResource("2_n1gpo")
 
 [sub_resource type="Resource" id="Resource_v6j42"]
 script = ExtResource("4_m1u1l")
-id = 1
 item = ExtResource("6_lh8gi")
 dropped_item = ExtResource("4_4yj5r")
 hand_item = ExtResource("5_m0h06")
 
 [sub_resource type="Resource" id="Resource_rnjmd"]
 script = ExtResource("4_m1u1l")
-id = 2
 item = ExtResource("11_kmxri")
 dropped_item = ExtResource("12_l4ej5")
 hand_item = ExtResource("15_gpmai")
 
 [sub_resource type="Resource" id="Resource_pspc7"]
 script = ExtResource("4_m1u1l")
-id = 3
 item = ExtResource("7_4afv6")
 dropped_item = ExtResource("8_io5k8")
 hand_item = ExtResource("9_l588a")
 
 [sub_resource type="Resource" id="Resource_1q5tg"]
 script = ExtResource("4_m1u1l")
-id = 4
 item = ExtResource("9_b0fqm")
 dropped_item = ExtResource("11_ako86")
 hand_item = ExtResource("12_bavq1")
 
 [sub_resource type="Resource" id="Resource_42347"]
 script = ExtResource("4_m1u1l")
-id = 5
 item = ExtResource("10_0ktg3")
 dropped_item = ExtResource("15_ajtfu")
 hand_item = ExtResource("18_gqdfa")
 
 [sub_resource type="Resource" id="Resource_vc12d"]
 script = ExtResource("4_m1u1l")
-id = 6
 item = ExtResource("9_ac6d4")
 dropped_item = ExtResource("11_b4uq4")
 hand_item = ExtResource("10_lcc51")

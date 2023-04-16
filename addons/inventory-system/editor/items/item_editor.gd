@@ -38,7 +38,7 @@ func load_item(item_database : InventoryDatabaseItem):
 	if not is_instance_valid(item_database):
 		$MarginContainer.visible = false
 		return
-	item_id_spin_box.value = item_database.id
+	item_id_spin_box.value = item_database.item.id
 	if is_instance_valid(item_database.item):
 		item_resource_text_edit.text = item_database.item.resource_path
 		item_name_text_edit.text = item_database.item.name
@@ -87,13 +87,13 @@ func apply_theme() -> void:
 
 
 func _on_id_spin_box_value_changed(value):
-	item_database.id = int(item_id_spin_box.value)
-	emit_signal("changed", item_database.id)
+	item_database.item.id = int(item_id_spin_box.value)
+	emit_signal("changed", item_database.item.id)
 
 
 func _on_max_stack_spin_box_value_changed(value):
 	item_database.item.max_stack = int(item_max_stack_spin_box.value)
-	emit_signal("changed", item_database.id)
+	emit_signal("changed", item_database.item.id)
 
 
 func _on_text_edit_text_changed(new_text):

@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system/demos/assets/icons/stone_pickaxe.png" id="1_hlhk0"]
 
 [resource]
+id = 4
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("1_hlhk0")

@@ -34,7 +34,7 @@ func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
 	for item_database in database.items:
-		add_item_id(item_database.id)
+		add_item_id(item_database.item.id)
 
 
 func add_item_id(id : int):
@@ -64,7 +64,7 @@ func update_item_list(items : Array[InventoryDatabaseItem]):
 
 func update_item(index : int):
 	var item_database = item_list_handler[index]
-	var name_to_show : String = str(item_database.id)
+	var name_to_show : String = str(item_database.item.id)
 	var icon : Texture2D = null
 	if item_database.item != null:
 		if item_database.item.name.is_empty():
@@ -79,7 +79,7 @@ func update_item(index : int):
 func get_index_of_item_id(id : int) -> int:
 	for index in item_list_handler.size():
 		var item = item_list_handler[index]
-		if item.id == id:
+		if item.item.id == id:
 			return index
 	return -1;
 

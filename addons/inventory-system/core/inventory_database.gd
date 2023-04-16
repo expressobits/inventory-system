@@ -31,7 +31,7 @@ class_name InventoryDatabase
 func get_id_from_item(item : InventoryItem) -> int:
 	for item_data in items:
 		if item_data.item == item:
-			return item_data.id
+			return item.id
 	# printerr("item ",item," is not in the database!")
 	return InventoryItem.NONE
 
@@ -40,7 +40,7 @@ func get_id_from_item(item : InventoryItem) -> int:
 func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 	for item_data in items:
 		if item_data.dropped_item == dropped_item:
-			return item_data.id
+			return item_data.item.id
 	# printerr("dropped_item ",dropped_item," is not in the database!")
 	return InventoryItem.NONE
 
@@ -48,7 +48,7 @@ func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 ## Returns the [InventoryItem] of id, return null if not found
 func get_item(id : int) -> InventoryItem:
 	for item_data in items:
-		if item_data.id == id:
+		if item_data.item.id == id:
 			return item_data.item
 	# printerr("id ",id," is not in the database!")
 	return null
@@ -56,7 +56,7 @@ func get_item(id : int) -> InventoryItem:
 
 func get_item_database(id : int) -> InventoryDatabaseItem:
 	for item_data in items:
-		if item_data.id == id:
+		if item_data.item.id == id:
 			return item_data
 	# printerr("id ",id," is not in the database!")
 	return null
@@ -65,7 +65,7 @@ func get_item_database(id : int) -> InventoryDatabaseItem:
 ## Returns the [DroppedItem] of id, return null if not found
 func get_dropped_item(id : int) -> PackedScene:
 	for item_data in items:
-		if item_data.id == id:
+		if item_data.item.id == id:
 			return item_data.dropped_item
 	# printerr("id ",id," is not in the database!")
 	return null
@@ -74,7 +74,7 @@ func get_dropped_item(id : int) -> PackedScene:
 ## Returns the [DroppedItem] of id, return null if not found
 func get_hand_item(id : int) -> PackedScene:
 	for item_data in items:
-		if item_data.id == id:
+		if item_data.item.id == id:
 			return item_data.hand_item
 	# printerr("id ",id," is not in the database!")
 	return null

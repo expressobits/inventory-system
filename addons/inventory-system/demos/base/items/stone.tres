@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://nawk2ttd0thl" path="res://addons/inventory-system/demos/assets/icons/stone.png" id="1_ctyjn"]
 
 [resource]
+id = 1
 max_stack = 8
 name = "Stone"
 icon = ExtResource("1_ctyjn")

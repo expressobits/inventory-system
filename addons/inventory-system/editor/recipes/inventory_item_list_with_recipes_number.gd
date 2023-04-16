@@ -37,8 +37,8 @@ func update_item(index : int):
 			name_to_show = "No name"
 		else:
 			name_to_show = item_database.item.name
-		if recipe_item_map.has(item_database.id):
-			recipe_count = recipe_item_map[item_database.id].size()
+		if recipe_item_map.has(item_database.item.id):
+			recipe_count = recipe_item_map[item_database.item.id].size()
 		icon = item_database.item.icon
 	list.set_item_text(index, name_to_show +" ("+str(recipe_count)+")")
 	list.set_item_disabled(index, recipe_count <= 0)
