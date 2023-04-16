@@ -101,7 +101,8 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 func pick_to_inventory(dropped_item, inventory := self.inventory):
 	if not dropped_item.is_pickable:
 		return false
-	var item = dropped_item.item
+	var item_id = dropped_item.item_id
+	var item = database.get_item(item_id)
 	if item == null:
 		printerr("item in dropped_item is null!")
 	if add_to_inventory(inventory, item) == 0:
