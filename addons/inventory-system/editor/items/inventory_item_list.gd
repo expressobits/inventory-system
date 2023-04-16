@@ -11,7 +11,7 @@ signal item_popup_menu_requested(at_position: Vector2)
 
 var item_map : Dictionary = {}
 var database : InventoryDatabase
-var item_list_handler : Array[InventoryDatabaseItem]
+var item_list_handler : Array[int]
 
 var item_ids: PackedInt32Array = []:
 	set(next_files):
@@ -55,7 +55,7 @@ func update_item_map() -> void:
 		item_map[id] = item
 
 
-func update_item_list(items : Array[InventoryDatabaseItem]):
+func update_item_list(items : Array[int]):
 	list.clear()
 	for i in items.size():
 		list.add_item("")
@@ -63,10 +63,12 @@ func update_item_list(items : Array[InventoryDatabaseItem]):
 
 
 func update_item(index : int):
-	var item_database = item_list_handler[index]
-	var name_to_show : String = str(item_database.id)
+	var item_id = item_list_handler[index]
+	var name_to_show : String = str(item_id)
+	
+	var item_database = database.get_item_database(item_id)
 	var icon : Texture2D = null
-	if item_database.item != null:
+	if item_database != null and item_database.item != null:
 		if item_database.item.name.is_empty():
 			name_to_show = "No name"
 		else:
@@ -78,7 +80,8 @@ func update_item(index : int):
 
 func get_index_of_item_id(id : int) -> int:
 	for index in item_list_handler.size():
-		var item = item_list_handler[index]
+		var item_id = item_list_handler[index]
+		var item = database.get_item_database(item_id)
 		if item.id == id:
 			return index
 	return -1;
@@ -89,10 +92,11 @@ func apply_filter() -> void:
 	for item_database_id in item_map.keys():
 		var item_database = item_map[item_database_id]
 		if item_database == null:
-			continue
-		if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.name.to_lower():
-			var item = item_database.item
-			item_list_handler.append(item_database)
+			item_list_handler.append(item_database_id)
+		else:
+			if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.name.to_lower():
+				var item = item_database.item
+				item_list_handler.append(item_database_id)
 	update_item_list(item_list_handler)
 
 

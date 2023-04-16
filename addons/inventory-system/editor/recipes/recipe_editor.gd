@@ -95,9 +95,8 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	disconnect_signals()
 	self.recipe = recipe
 	self.database = database
-	var item_id = database.get_id_from_item(recipe.product.item)
+	var item_id = recipe.product.id
 	var slot = recipe.product
-	slot.item = recipe.product.item
 	product_selector.setup(slot, database)
 	time_to_craft_spin_box.value = recipe.time_to_craft
 	setup_product()	

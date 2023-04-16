@@ -28,7 +28,7 @@ func _ready():
 func setup(slot : Slot, database : InventoryDatabase):
 	self.slot = slot
 	self.database = database
-	var id = database.get_id_from_item(slot.item)
+	var id = slot.id
 	product_id_spin_box.value = id
 	product_amount_spin_box.value = slot.amount
 	ids_list.clear()
@@ -38,17 +38,18 @@ func setup(slot : Slot, database : InventoryDatabase):
 		var item_database = database.items[i]
 		option_button.add_icon_item(item_database.item.icon ,item_database.item.name)
 		ids_list.append(item_database.item)
-		if item_database.item == slot.item:
+		if item_database.id == slot.id:
 			option_button.select(i)
 
 
 func _on_product_id_spin_box_value_changed(value):
-	var item = database.get_item(int(value))
+	var id = int(value)
+	var item = database.get_item(id)
 	if item == null:
 		item = ids_list[option_button.selected]
 		product_amount_spin_box.value = database.get_id_from_item(item)
-	slot.item = item
-	var index = ids_list.find(slot.item)
+	slot.id = id
+	var index = ids_list.find(item)
 	if index != -1:
 		if option_button.selected != index:
 			_on_option_button_item_selected(index)

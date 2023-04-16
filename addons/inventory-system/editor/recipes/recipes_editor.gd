@@ -50,15 +50,15 @@ func _apply_theme():
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
-func _on_inventory_item_list_item_selected(item_database, index):
-	last_item_selected_id = item_database.id
-	var recipes = inventory_item_list.recipe_item_map[item_database.id]
+func _on_inventory_item_list_item_selected(item_id, index):
+	last_item_selected_id = item_id
+	var recipes = inventory_item_list.recipe_item_map[item_id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
 func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
 	load_recipes()
-	last_item_selected_id = database.get_id_from_item(recipe.product.item)
+	last_item_selected_id = recipe.product.id
 	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
 		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
 		recipe_item_editor.set_recipes_and_load(recipes, database)
@@ -106,14 +106,6 @@ func _on_recipe_item_editor_recipe_removed():
 		recipe_item_editor.set_recipes_and_load(recipes, database)
 	else:
 		recipe_item_editor.clear_list()
-
-
-func _on_inventory_item_list_no_products_item_selected():
-	var recipes : Array[Recipe]
-	for recipe in database.recipes:
-		if recipe.product.item == null:
-			recipes.append(recipe)
-	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
 func _on_items_items_changed():

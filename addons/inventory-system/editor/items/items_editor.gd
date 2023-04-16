@@ -88,9 +88,11 @@ func _on_theme_changed():
 	_apply_theme()
 
 
-func _on_inventory_item_list_item_selected(item, index):
-	current_id_item = item.id
-	item_editor.load_item(item)
+func _on_inventory_item_list_item_selected(item_id, index):
+	var item = database.get_item_database(item_id)
+	current_id_item = item_id
+	if item != null:
+		item_editor.load_item(item)
 
 
 func _on_inventory_item_list_item_popup_menu_requested(at_position):
