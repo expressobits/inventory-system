@@ -3,21 +3,16 @@ extends EditorPlugin
 
 const icon_plugin = preload("res://addons/inventory-system/icons/inventory_main_screen.svg")
 const inventory_editor_scene = preload("res://addons/inventory-system/editor/inventory_editor.tscn")
-const InventoryImportPlugin = preload("res://addons/inventory-system/editor/import_plugin.gd")
 const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
 const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
 
 var _inventory_editor : Control
-var import_plugin : InventoryImportPlugin
 
 var database_file_cache: Dictionary = {}
 
 func _enter_tree():
 	if Engine.is_editor_hint():
 		InventorySettings.prepare()
-		import_plugin = InventoryImportPlugin.new()
-		import_plugin.editor_plugin = self
-		add_import_plugin(import_plugin)
 		
 		_inventory_editor = inventory_editor_scene.instantiate()
 		_inventory_editor.name = "Inventory System"
@@ -31,9 +26,6 @@ func _enter_tree():
 
 
 func _exit_tree():
-	remove_import_plugin(import_plugin)
-	import_plugin = null
-	
 	if _inventory_editor:
 		_inventory_editor.queue_free()
 	# Clean-up of the plugin goes here.

@@ -6,11 +6,13 @@ class_name InventoryDatabase
 ## Database of items and their id information and dropped item as [PackedScene]
 
 ## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
-@export var items : Array[InventoryDatabaseItem]
+@export var items : Array[InventoryItem]
 
 @export var recipes : Array[Recipe]
 
 @export var stations_type : Array[CraftStationType]
+
+@export var items_scenes : Dictionary
 
 # TODO Create loading dropped items and items with folder
 # @export var path_test := "res://addons/inventory-system/demos/fps/items/"
@@ -29,11 +31,7 @@ class_name InventoryDatabase
 
 ## Returns the id of [InventoryItem], return 0 if not found.
 func get_id_from_item(item : InventoryItem) -> int:
-	for item_data in items:
-		if item_data.item == item:
-			return item.id
-	# printerr("item ",item," is not in the database!")
-	return InventoryItem.NONE
+	return item.id
 
 
 ## Returns the id of dropped item as [PackedScene], return 0 if not found
@@ -47,17 +45,9 @@ func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 
 ## Returns the [InventoryItem] of id, return null if not found
 func get_item(id : int) -> InventoryItem:
-	for item_data in items:
-		if item_data.item.id == id:
-			return item_data.item
-	# printerr("id ",id," is not in the database!")
-	return null
-
-
-func get_item_database(id : int) -> InventoryDatabaseItem:
-	for item_data in items:
-		if item_data.item.id == id:
-			return item_data
+	for i in items:
+		if i.id == id:
+			return i
 	# printerr("id ",id," is not in the database!")
 	return null
 

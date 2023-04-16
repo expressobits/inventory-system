@@ -50,9 +50,9 @@ func _apply_theme():
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
-func _on_inventory_item_list_item_selected(item_database, index):
-	last_item_selected_id = item_database.item.id
-	var recipes = inventory_item_list.recipe_item_map[item_database.item.id]
+func _on_inventory_item_list_item_selected(item, index):
+	last_item_selected_id = item.id
+	var recipes = inventory_item_list.recipe_item_map[item.id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 

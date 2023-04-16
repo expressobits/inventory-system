@@ -3,7 +3,7 @@ extends VBoxContainer
 class_name InventoryItemListEditor
 
 
-signal item_selected(item_database : InventoryDatabaseItem, index : int)
+signal item_selected(item : InventoryItem, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
 
 @onready var list : ItemList = %ItemList
@@ -11,7 +11,7 @@ signal item_popup_menu_requested(at_position: Vector2)
 
 var item_map : Dictionary = {}
 var database : InventoryDatabase
-var item_list_handler : Array[InventoryDatabaseItem]
+var item_list_handler : Array[InventoryItem]
 
 var item_ids: PackedInt32Array = []:
 	set(next_files):
@@ -33,8 +33,8 @@ var filter: String:
 func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
-	for item_database in database.items:
-		add_item_id(item_database.item.id)
+	for item in database.items:
+		add_item_id(item.id)
 
 
 func add_item_id(id : int):
@@ -51,11 +51,11 @@ func clear_items():
 func update_item_map() -> void:
 	item_map = {}
 	for id in item_ids:
-		var item : InventoryDatabaseItem = database.get_item_database(id)
+		var item : InventoryItem = database.get_item(id)
 		item_map[id] = item
 
 
-func update_item_list(items : Array[InventoryDatabaseItem]):
+func update_item_list(items : Array[InventoryItem]):
 	list.clear()
 	for i in items.size():
 		list.add_item("")
@@ -63,15 +63,15 @@ func update_item_list(items : Array[InventoryDatabaseItem]):
 
 
 func update_item(index : int):
-	var item_database = item_list_handler[index]
-	var name_to_show : String = str(item_database.item.id)
+	var item = item_list_handler[index]
+	var name_to_show : String = str(item.id)
 	var icon : Texture2D = null
-	if item_database.item != null:
-		if item_database.item.name.is_empty():
+	if item != null:
+		if item.name.is_empty():
 			name_to_show = "No name"
 		else:
-			name_to_show = item_database.item.name
-		icon = item_database.item.icon
+			name_to_show = item.name
+		icon = item.icon
 	list.set_item_text(index, name_to_show)
 	list.set_item_icon(index, icon)
 
@@ -79,7 +79,7 @@ func update_item(index : int):
 func get_index_of_item_id(id : int) -> int:
 	for index in item_list_handler.size():
 		var item = item_list_handler[index]
-		if item.item.id == id:
+		if item.id == id:
 			return index
 	return -1;
 
@@ -91,7 +91,6 @@ func apply_filter() -> void:
 		if item_database == null:
 			continue
 		if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.name.to_lower():
-			var item = item_database.item
 			item_list_handler.append(item_database)
 	update_item_list(item_list_handler)
 

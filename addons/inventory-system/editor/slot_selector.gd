@@ -35,10 +35,10 @@ func setup(slot : Slot, database : InventoryDatabase):
 	option_button.clear()
 
 	for i in database.items.size():
-		var item_database = database.items[i]
-		option_button.add_icon_item(item_database.item.icon ,item_database.item.name)
-		ids_list.append(item_database.item)
-		if item_database.item == slot.item:
+		var item = database.items[i]
+		option_button.add_icon_item(item.icon ,item.name)
+		ids_list.append(item)
+		if item == slot.item:
 			option_button.select(i)
 
 

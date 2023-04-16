@@ -16,6 +16,7 @@ text = "ID
 layout_mode = 2
 max_value = 1e+08
 rounded = true
+editable = false
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2

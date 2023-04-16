@@ -28,18 +28,18 @@ func select(item_id : int):
 
 
 func update_item(index : int):
-	var item_database = item_list_handler[index]
+	var item = item_list_handler[index]
 	var name_to_show : String 
 	var icon : Texture2D = null
 	var recipe_count = 0
-	if item_database != null and item_database.item != null:
-		if item_database.item.name.is_empty():
+	if item != null:
+		if item.name.is_empty():
 			name_to_show = "No name"
 		else:
-			name_to_show = item_database.item.name
-		if recipe_item_map.has(item_database.item.id):
-			recipe_count = recipe_item_map[item_database.item.id].size()
-		icon = item_database.item.icon
+			name_to_show = item.name
+		if recipe_item_map.has(item.id):
+			recipe_count = recipe_item_map[item.id].size()
+		icon = item.icon
 	list.set_item_text(index, name_to_show +" ("+str(recipe_count)+")")
 	list.set_item_disabled(index, recipe_count <= 0)
 	list.set_item_selectable(index, recipe_count > 0)

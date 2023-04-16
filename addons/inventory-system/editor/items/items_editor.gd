@@ -43,10 +43,10 @@ func load_items() -> void:
 
 
 func remove_item(item_id : int):
-	var item_database = database.get_item_database(item_id)
-	if item_database == null:
+	var item = database.get_item(item_id)
+	if item == null:
 		return
-	var index = database.items.find(item_database)
+	var index = database.items.find(item)
 	database.items.remove_at(index)
 	load_items()
 
@@ -74,10 +74,9 @@ func _on_new_item_resource_dialog_file_selected(path):
 		var res : InventoryItem = load(path)
 		res.name = "New Item"
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		var new_database_item : InventoryDatabaseItem = InventoryDatabaseItem.new()
-		new_database_item.id = database.get_valid_id()
-		new_database_item.item = res
-		database.items.append(new_database_item)
+		res.id = database.get_valid_id()
+		res.item = res
+		database.items.append(res)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	else:
@@ -89,7 +88,7 @@ func _on_theme_changed():
 
 
 func _on_inventory_item_list_item_selected(item, index):
-	current_id_item = item.item.id
+	current_id_item = item.id
 	item_editor.load_item(item)
 
 
@@ -110,23 +109,23 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 func _on_items_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		ITEM_COPY_RESOURCE_PATH:
-			var item_database = database.get_item_database(current_id_item)
-			if item_database == null or item_database.item == null:
+			var item = database.get_item(current_id_item)
+			if item == null:
 				return
-			DisplayServer.clipboard_set(item_database.item.resource_path)
+			DisplayServer.clipboard_set(item.resource_path)
 		ITEM_REMOVE:
 			item_remove_confirmation_dialog.popup_centered()
-			var item_database = database.get_item_database(current_id_item)
-			if item_database == null or item_database.item == null:
+			var item = database.get_item(current_id_item)
+			if item == null:
 				return
-			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\"?"
+			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\"?"
 		ITEM_REMOVE_AND_DELETE:
 			item_remove_and_delete_confirmation_dialog.popup_centered()
-			var item_database = database.get_item_database(current_id_item)
-			if item_database == null or item_database.item == null:
+			var item = database.get_item(current_id_item)
+			if item == null:
 				return
 			item_remove_and_delete_confirmation_dialog.popup_centered()
-			item_remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item_database.item.name+"\" And Delete Resource \""+item_database.item.resource_path+"\"?"
+			item_remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\" And Delete Resource \""+item.resource_path+"\"?"
 
 
 func new_item_pressed():
@@ -155,10 +154,10 @@ func _on_item_remove_confirmation_dialog_confirmed():
 
 func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 	var dir = DirAccess.open(".")
-	var item_database = database.get_item_database(current_id_item)
-	if item_database == null or item_database.item == null:
+	var item = database.get_item(current_id_item)
+	if item == null:
 		return
-	var code = dir.remove_absolute(item_database.item.resource_path)
+	var code = dir.remove_absolute(item.resource_path)
 	if code == OK:
 		remove_item(current_id_item)
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
@@ -166,13 +165,11 @@ func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 
 
 func _on_open_item_dialog_file_selected(path):
+	# TODO Check if resource exist
 	var res = load(path)
 	if res is InventoryItem:
 		var item : InventoryItem = res as InventoryItem
-		var new_database_item : InventoryDatabaseItem = InventoryDatabaseItem.new()
-		new_database_item.id = database.get_valid_id()
-		new_database_item.item = res
-		database.items.append(new_database_item)
+		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("items_changed")
