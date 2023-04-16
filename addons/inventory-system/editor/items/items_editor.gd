@@ -34,7 +34,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 func load_from_database(database : InventoryDatabase) -> void:
 	self.database = database
-	item_editor.load_item(null)
+	item_editor.load_item(null, database)
 	load_items()
 
 
@@ -54,7 +54,7 @@ func remove_item(item_id : int):
 func select(id : int):
 	for item_in_list in database.items:
 		if item_in_list.id == id:
-			item_editor.load_item(database.items[id])
+			item_editor.load_item(database.items[id], database)
 
 
 func _apply_theme():
@@ -89,7 +89,7 @@ func _on_theme_changed():
 
 func _on_inventory_item_list_item_selected(item, index):
 	current_id_item = item.id
-	item_editor.load_item(item)
+	item_editor.load_item(item, database)
 
 
 func _on_inventory_item_list_item_popup_menu_requested(at_position):

@@ -5,6 +5,7 @@ class_name ItemEditor
 signal changed(id : int)
 
 var item : InventoryItem
+var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
 @onready var item_id_spin_box : SpinBox = %IDSpinBox
@@ -33,8 +34,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	apply_theme()
 
 
-func load_item(item : InventoryItem):
+func load_item(item : InventoryItem, database : InventoryDatabase):
 	self.item = item
+	self.database = database
 	if not is_instance_valid(item):
 		$MarginContainer.visible = false
 		return
@@ -47,14 +49,14 @@ func load_item(item : InventoryItem):
 			item_icon_text_edit.text = item.icon.resource_path
 		else:
 			item_icon_text_edit.text = ""
-#		if is_instance_valid(item.hand_item):
-#			hand_item_text_edit.text = item.hand_item.resource_path
-#		else:
-#			hand_item_text_edit.text = ""
-#		if is_instance_valid(item.dropped_item):
-#			dropped_item_text_edit.text = item.dropped_item.resource_path
-#		else:
-#			dropped_item_text_edit.text = ""
+		if is_instance_valid(database.get_hand_item(item.id)):
+			hand_item_text_edit.text = database.get_hand_item(item.id).resource_path
+		else:
+			hand_item_text_edit.text = ""
+		if is_instance_valid(database.get_dropped_item(item.id)):
+			dropped_item_text_edit.text = database.get_dropped_item(item.id).resource_path
+		else:
+			dropped_item_text_edit.text = ""
 		$MarginContainer.visible = true
 	else:
 		item_resource_text_edit.text = "No resource path item!"
@@ -126,8 +128,8 @@ func _on_hand_item_file_dialog_file_selected(path):
 	var file = load(path)
 	if file is PackedScene:
 		var scene : PackedScene = file
-		item.hand_item = scene
-		hand_item_text_edit.text = item.hand_item.resource_path
+		database.set_hand_item(item.id, scene)
+		hand_item_text_edit.text = path
 		emit_signal("changed", item.id)
 	else:
 		print("Error on open scene!")
@@ -137,8 +139,8 @@ func _on_dropped_item_file_dialog_file_selected(path):
 	var file = load(path)
 	if file is PackedScene:
 		var scene : PackedScene = file
-		item.dropped_item = scene
-		hand_item_text_edit.text = item.dropped_item.resource_path
+		database.set_dropped_item(item.id, scene)
+		hand_item_text_edit.text = path
 		emit_signal("changed", item.id)
 	else:
 		print("Error on open scene!")
@@ -160,7 +162,7 @@ func _on_item_resource_file_dialog_file_selected(path):
 	var file = load(path)
 	if file is InventoryItem:
 		var inventory_item : InventoryItem = file
-		load_item(item)
+		load_item(item, database)
 		emit_signal("changed", item.id)
 	else:
 		print("Error on open scene!")

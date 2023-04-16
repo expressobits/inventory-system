@@ -61,7 +61,14 @@ func get_dropped_item(id : int) -> PackedScene:
 #				return item.properties["dropped_item"]
 	# printerr("id ",id," is not in the database!")
 	return null
-	
+
+
+func set_dropped_item(id : int, scene : PackedScene):
+	for i in items.size():
+		var item = items[i]
+		if item.id == id:
+			dropped_items[i] = scene
+
 
 ## Returns the [DroppedItem] of id, return null if not found
 func get_hand_item(id : int) -> PackedScene:
@@ -74,6 +81,13 @@ func get_hand_item(id : int) -> PackedScene:
 #				return item.properties["hand_item"]
 	# printerr("id ",id," is not in the database!")
 	return null
+
+
+func set_hand_item(id : int, scene : PackedScene):
+	for i in items.size():
+		var item = items[i]
+		if item.id == id:
+			hand_items[i] = scene
 
 
 func has_item_id(id : int) -> bool:
