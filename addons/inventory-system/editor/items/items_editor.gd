@@ -2,6 +2,8 @@
 extends Control
 class_name ItemsEditor
 
+signal items_changed
+
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
@@ -160,6 +162,7 @@ func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 	if code == OK:
 		remove_item(current_id_item)
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		emit_signal("items_changed")
 
 
 func _on_open_item_dialog_file_selected(path):
@@ -172,3 +175,4 @@ func _on_open_item_dialog_file_selected(path):
 		database.items.append(new_database_item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		emit_signal("items_changed")

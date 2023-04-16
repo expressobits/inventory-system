@@ -62,6 +62,11 @@ tooltip_text = "New Inventory Item"
 disabled = true
 icon = ExtResource("2_lu5r1")
 icon_alignment = 1
+item_count = 2
+popup/item_0/text = "New Item With New Resource"
+popup/item_0/id = 100
+popup/item_1/text = "New Item With Existing Resource"
+popup/item_1/id = 101
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
@@ -87,6 +92,11 @@ tooltip_text = "New Craft Station Type"
 disabled = true
 icon = ExtResource("4_jbtk0")
 icon_alignment = 1
+item_count = 2
+popup/item_0/text = "New Craft Station Type With New Resource"
+popup/item_0/id = 100
+popup/item_1/text = "New Craft Station Type With Existing Resource"
+popup/item_1/id = 101
 
 [node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
@@ -174,5 +184,6 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/NewItemButton" to="." method="_on_new_item_button_about_to_popup"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewRecipeButton" to="." method="_on_new_recipe_button_pressed"]
+[connection signal="items_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_items_items_changed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]

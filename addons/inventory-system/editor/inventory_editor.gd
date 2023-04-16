@@ -15,8 +15,6 @@ const NEW_ITEM_FROM_RESOURCE = 101
 # The Inventory System plugin
 var editor_plugin: EditorPlugin
 
-var _default_database = preload("res://addons/inventory-system/demos/base/database.tres")
-
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
 @onready var recipes_editor : RecipesEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Recipes")
 @onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"

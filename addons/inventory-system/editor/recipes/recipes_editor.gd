@@ -114,3 +114,7 @@ func _on_inventory_item_list_no_products_item_selected():
 		if recipe.product.item == null:
 			recipes.append(recipe)
 	recipe_item_editor.set_recipes_and_load(recipes, database)
+
+
+func _on_items_items_changed():
+	load_recipes()
