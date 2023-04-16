@@ -2,7 +2,7 @@
 extends Control
 
 @export var recipe_item_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/recipe_item_list_editor.tscn")
-@onready var v_box_container = $HSplitContainer/ScrollContainer/VBoxContainer
+@onready var v_box_container = $HSplitContainer/Panel/ScrollContainer/VBoxContainer
 @onready var recipe_editor = $HSplitContainer/RecipeEditorContainer/RecipeEditor
 
 
