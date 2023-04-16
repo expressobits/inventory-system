@@ -2,5 +2,5 @@
 extends Node3D
 class_name DroppedItem3D
 
-@export var item_id : int
+@export var item : InventoryItem
 @export var is_pickable := true
