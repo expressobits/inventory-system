@@ -11,7 +11,7 @@ var recipes_ui : Array[RecipeItemListEditor]
 var recipes : Array[Recipe]
 
 
-signal changed_product_in_recipe(new_product : int, recipe : Recipe)
+signal changed_product_in_recipe(new_product : InventoryItem, recipe : Recipe)
 signal recipe_removed
 
 
@@ -65,7 +65,7 @@ func clear_list():
 
 
 func _on_recipe_editor_changed_product(recipe):
-	emit_signal("changed_product_in_recipe", recipe.product.id, recipe)
+	emit_signal("changed_product_in_recipe", recipe.product.item, recipe)
 
 
 func _on_recipe_item_selected(index):
