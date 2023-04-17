@@ -29,8 +29,9 @@ func _ready():
 	delete_button.tooltip_text = "Delete"
 	style_box.set_corner_radius_all(4)
 	unselect()
-	update_recipe()
-		
+	if recipe != null:
+		update_recipe()
+
 
 func update_recipe():
 	if recipe.station != null:
