@@ -107,6 +107,10 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	connect_signals()
 
 
+func reload():
+	load_recipe(recipe, database)
+
+
 func _on_product_slot_spin_box_slot_changed(slot : Slot):
 	recipe.product = slot
 	emit_signal("changed_product", recipe)

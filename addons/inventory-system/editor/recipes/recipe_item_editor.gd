@@ -46,6 +46,11 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	recipe_editor.visible = true
 
 
+func reload():
+	load_recipes()
+	recipe_editor.visible = false
+
+
 func select_with_recipe(recipe : Recipe):
 	for i in recipes.size():
 		if recipes[i] == recipe:

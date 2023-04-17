@@ -86,12 +86,12 @@ func get_index_of_item_id(id : int) -> int:
 
 func apply_filter() -> void:
 	item_list_handler.clear()
-	for item_database_id in item_map.keys():
-		var item_database = item_map[item_database_id]
-		if item_database == null:
+	for item_id in item_map.keys():
+		var item = item_map[item_id]
+		if item == null:
 			continue
-		if filter == "" or item_database.item == null or filter.to_lower() in item_database.item.name.to_lower():
-			item_list_handler.append(item_database)
+		if filter == "" or item == null or filter.to_lower() in item.name.to_lower():
+			item_list_handler.append(item)
 	update_item_list(item_list_handler)
 
 

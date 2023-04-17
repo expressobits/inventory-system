@@ -87,7 +87,7 @@ func _add_new_recipe_to_database(recipe : Recipe):
 		push_warning("There are no items to create a recipe, create an item first.")
 		return
 	recipe.product = Slot.new()
-	recipe.product.item = database.items[last_item_selected_id].item
+	recipe.product.item = database.items[last_item_selected_id]
 	recipe.product.amount = 1
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	database.recipes.append(recipe)
@@ -117,3 +117,14 @@ func _on_inventory_item_list_no_products_item_selected():
 
 func _on_items_items_changed():
 	load_recipes()
+	recipe_item_editor.reload()
+
+
+func _on_craft_stations_station_added():
+	load_recipes()
+	recipe_item_editor.reload()
+
+
+func _on_craft_stations_station_removed():
+	load_recipes()
+	recipe_item_editor.reload()

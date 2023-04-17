@@ -2,6 +2,9 @@
 extends Control
 class_name CraftStationTypesEditor
 
+signal station_added
+signal station_removed
+
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
@@ -56,6 +59,7 @@ func remove_station(station : CraftStationType):
 		return
 	database.stations_type.remove_at(index)
 	load_craft_station_types()
+	emit_signal("station_removed")
 
 
 func new_station_pressed():
@@ -142,3 +146,4 @@ func _on_open_craft_station_type_dialog_file_selected(path):
 		database.stations_type.append(station)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		emit_signal("station_added")

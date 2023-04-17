@@ -77,6 +77,7 @@ func _on_new_item_resource_dialog_file_selected(path):
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		emit_signal("items_changed")
 	else:
 		print(err)
 
@@ -144,6 +145,7 @@ func _on_item_editor_changed(id):
 	var index = inventory_item_list.get_index_of_item_id(id)
 	if index > -1:
 		inventory_item_list.update_item(index)
+		emit_signal("items_changed")
 
 
 func _on_item_remove_confirmation_dialog_confirmed():
