@@ -13,14 +13,14 @@ var item_map : Dictionary = {}
 var database : InventoryDatabase
 var item_list_handler : Array[InventoryItem]
 
-var item_ids: PackedInt32Array = []:
+var items: Array[InventoryItem] = []:
 	set(next_files):
-		item_ids = next_files
-		item_ids.sort()
+		items = next_files
+		items.sort()
 		update_item_map()
 		apply_filter()
 	get:
-		return item_ids
+		return items
 		
 var filter: String:
 	set(next_filter):
@@ -34,25 +34,23 @@ func load_items(database : InventoryDatabase) -> void:
 	clear_items()
 	self.database = database
 	for item in database.items:
-		add_item_id(item.id)
+		add_item(item)
 
 
-func add_item_id(id : int):
-	item_ids.append(id)
-	item_ids.sort()
+func add_item(item : InventoryItem):
+	items.append(item)
 	update_item_map()
 	apply_filter()
 
 
 func clear_items():
-	item_ids.clear()
+	items.clear()
 
 
 func update_item_map() -> void:
 	item_map = {}
-	for id in item_ids:
-		var item : InventoryItem = database.get_item(id)
-		item_map[id] = item
+	for item in items:
+		item_map[item.id] = item
 
 
 func update_item_list(items : Array[InventoryItem]):

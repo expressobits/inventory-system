@@ -169,6 +169,8 @@ func _on_open_item_dialog_file_selected(path):
 	var res = load(path)
 	if res is InventoryItem:
 		var item : InventoryItem = res as InventoryItem
+		if database.items.has(item):
+			push_warning("The item "+item.name+"("+ item.resource_path +") already exists in the database!")
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

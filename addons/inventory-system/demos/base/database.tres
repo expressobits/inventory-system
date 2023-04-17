@@ -105,6 +105,6 @@ ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_gnn4r"), Sub
 
 [resource]
 script = ExtResource("7_b6gc3")
-items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("3_605sl"), ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("10_0ktg3"), ExtResource("9_ac6d4")])
+items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("10_0ktg3"), ExtResource("9_ac6d4")])
 recipes = Array[ExtResource("26_ye4gh")]([SubResource("Resource_q2rcm"), SubResource("Resource_1hk8q"), SubResource("Resource_nxq1h"), SubResource("Resource_3s2vx")])
 stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr"), ExtResource("12_dp3x7")])
