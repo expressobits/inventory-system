@@ -54,6 +54,12 @@ func has_item_id(id : int) -> bool:
 
 
 func get_valid_id() -> int:
+	for i in items:
+		return i.id
+	return -1
+
+
+func get_new_valid_id() -> int:
 	for i in 92233720368547758:
 		if not has_item_id(i):
 			return i

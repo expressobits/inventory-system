@@ -87,14 +87,17 @@ func _add_new_recipe_to_database(recipe : Recipe):
 		push_warning("There are no items to create a recipe, create an item first.")
 		return
 	recipe.product = Slot.new()
-	recipe.product.item = database.get_item(last_item_selected_id)
+	var id = last_item_selected_id
+	if not database.has_item_id(id):
+		id = database.get_valid_id()
+	recipe.product.item = database.get_item(id)
 	recipe.product.amount = 1
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	database.recipes.append(recipe)
 	load_recipes()
 	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
-	inventory_item_list.select(last_item_selected_id)
-	var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
+	inventory_item_list.select(id)
+	var recipes = inventory_item_list.recipe_item_map[id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 

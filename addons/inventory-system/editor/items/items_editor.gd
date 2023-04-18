@@ -73,7 +73,7 @@ func _on_new_item_resource_dialog_file_selected(path):
 	if err == OK:
 		item = load(path)
 		item.name = "New Item"
-		item.id = database.get_valid_id()
+		item.id = database.get_new_valid_id()
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
