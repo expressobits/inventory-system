@@ -92,11 +92,10 @@ func _add_new_recipe_to_database(recipe : Recipe):
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	database.recipes.append(recipe)
 	load_recipes()
-	inventory_item_list.select(last_item_selected_id)
 	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
-	var recipes = inventory_item_list.recipe_item_map[index]
+	inventory_item_list.select(last_item_selected_id)
+	var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
-	recipe_item_editor.select_last()
 
 
 func _on_recipe_item_editor_recipe_removed():
