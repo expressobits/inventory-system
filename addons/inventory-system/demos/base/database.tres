@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=33 format=3 uid="uid://ds5vbdoklqy3a"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=17 format=3 uid="uid://ds5vbdoklqy3a"]
 
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_605sl"]
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
@@ -7,122 +7,18 @@
 [ext_resource type="Resource" uid="uid://dou3wmkiv61wc" path="res://addons/inventory-system/demos/base/items/workbench.tres" id="8_ofbhm"]
 [ext_resource type="Resource" uid="uid://b6xju8cni0ma3" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
 [ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
+[ext_resource type="Resource" uid="uid://bvw1mqtfmyqwb" path="res://addons/inventory-system/demos/base/recipes/stone_axe.tres" id="9_ijyjw"]
 [ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
+[ext_resource type="Resource" uid="uid://g0nf5hvvri6j" path="res://addons/inventory-system/demos/base/recipes/stone_pickaxe.tres" id="10_kgixi"]
 [ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
+[ext_resource type="Resource" uid="uid://cp52oh0t8aqm3" path="res://addons/inventory-system/demos/base/recipes/lashing.tres" id="11_vrhlt"]
 [ext_resource type="Resource" uid="uid://b2u42eqmp8q" path="res://addons/inventory-system/demos/base/craft-stations/campfire.tres" id="12_dp3x7"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="23_5qqam"]
-[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="26_ye4gh"]
+[ext_resource type="Resource" uid="uid://difhslnbb51xu" path="res://addons/inventory-system/demos/base/recipes/campfire.tres" id="12_pfveg"]
+[ext_resource type="Resource" uid="uid://c20ptvc5fesa" path="res://addons/inventory-system/demos/base/recipes/workbench.tres" id="13_jsmdl"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
-
-[sub_resource type="Resource" id="Resource_c1w71"]
-script = ExtResource("23_5qqam")
-item = ExtResource("6_lh8gi")
-amount = 2
-
-[sub_resource type="Resource" id="Resource_kal3n"]
-script = ExtResource("23_5qqam")
-item = ExtResource("3_605sl")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_x4an1"]
-script = ExtResource("23_5qqam")
-item = ExtResource("10_0ktg3")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_tsuyp"]
-script = ExtResource("23_5qqam")
-item = ExtResource("7_4afv6")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_q2rcm"]
-script = ExtResource("26_ye4gh")
-product = SubResource("Resource_tsuyp")
-byproducts = Array[ExtResource("23_5qqam")]([])
-time_to_craft = 8.0
-station = ExtResource("28_mywvr")
-ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_c1w71"), SubResource("Resource_kal3n"), SubResource("Resource_x4an1")])
-
-[sub_resource type="Resource" id="Resource_cl4p4"]
-script = ExtResource("23_5qqam")
-item = ExtResource("3_605sl")
-amount = 2
-
-[sub_resource type="Resource" id="Resource_tiivj"]
-script = ExtResource("23_5qqam")
-item = ExtResource("6_lh8gi")
-amount = 2
-
-[sub_resource type="Resource" id="Resource_7427o"]
-script = ExtResource("23_5qqam")
-item = ExtResource("9_b0fqm")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_1hk8q"]
-script = ExtResource("26_ye4gh")
-product = SubResource("Resource_7427o")
-byproducts = Array[ExtResource("23_5qqam")]([])
-time_to_craft = 4.0
-station = ExtResource("28_mywvr")
-ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_cl4p4"), SubResource("Resource_tiivj")])
-
-[sub_resource type="Resource" id="Resource_pqywp"]
-script = ExtResource("23_5qqam")
-item = ExtResource("11_kmxri")
-amount = 2
-
-[sub_resource type="Resource" id="Resource_hi5nm"]
-script = ExtResource("23_5qqam")
-item = ExtResource("10_0ktg3")
-amount = 6
-
-[sub_resource type="Resource" id="Resource_nxq1h"]
-script = ExtResource("26_ye4gh")
-product = SubResource("Resource_hi5nm")
-byproducts = Array[ExtResource("23_5qqam")]([])
-time_to_craft = 2.0
-ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_pqywp")])
-
-[sub_resource type="Resource" id="Resource_gnn4r"]
-script = ExtResource("23_5qqam")
-item = ExtResource("6_lh8gi")
-amount = 8
-
-[sub_resource type="Resource" id="Resource_bhk0q"]
-script = ExtResource("23_5qqam")
-item = ExtResource("10_0ktg3")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_k0lge"]
-script = ExtResource("23_5qqam")
-item = ExtResource("9_ac6d4")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_3s2vx"]
-script = ExtResource("26_ye4gh")
-product = SubResource("Resource_k0lge")
-byproducts = Array[ExtResource("23_5qqam")]([])
-time_to_craft = 30.0
-ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_gnn4r"), SubResource("Resource_bhk0q")])
-
-[sub_resource type="Resource" id="Resource_jcljw"]
-script = ExtResource("23_5qqam")
-item = ExtResource("3_605sl")
-amount = 4
-
-[sub_resource type="Resource" id="Resource_d27im"]
-script = ExtResource("23_5qqam")
-item = ExtResource("8_ofbhm")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_bgefe"]
-script = ExtResource("26_ye4gh")
-product = SubResource("Resource_d27im")
-byproducts = Array[ExtResource("23_5qqam")]([])
-time_to_craft = 4.0
-ingredients = Array[ExtResource("23_5qqam")]([SubResource("Resource_jcljw")])
 
 [resource]
 script = ExtResource("7_b6gc3")
 items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("10_0ktg3"), ExtResource("9_ac6d4"), ExtResource("3_605sl"), ExtResource("8_ofbhm")])
-recipes = Array[ExtResource("26_ye4gh")]([SubResource("Resource_q2rcm"), SubResource("Resource_1hk8q"), SubResource("Resource_nxq1h"), SubResource("Resource_3s2vx"), SubResource("Resource_bgefe")])
+recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("9_ijyjw"), ExtResource("10_kgixi"), ExtResource("11_vrhlt"), ExtResource("12_pfveg"), ExtResource("13_jsmdl")])
 stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr"), ExtResource("12_dp3x7")])
