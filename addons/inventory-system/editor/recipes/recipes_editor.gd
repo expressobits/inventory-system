@@ -7,6 +7,7 @@ var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
 @onready var new_recipe_resource_dialog = $NewRecipeResourceDialog
+@onready var open_recipe_dialog = $OpenRecipeDialog
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 @onready var inventory_item_list = $HSplitContainer/InventoryItemList
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
@@ -37,8 +38,13 @@ func load_recipes() -> void:
 func new_recipe_pressed():
 	if not is_instance_valid(database):
 		return
-	_add_new_recipe_to_database(Recipe.new())
-#	new_recipe_resource_dialog.popup_centered()
+	new_recipe_resource_dialog.popup_centered()
+
+
+func new_recipe_from_resource_pressed():
+	if not is_instance_valid(database):
+		return
+	open_recipe_dialog.popup_centered()
 
 
 func _apply_theme():
@@ -68,36 +74,27 @@ func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
 		recipe_item_editor.clear_list()
 
 
-func _on_new_recipe_resource_dialog_file_selected(path):
-	var is_saved_resource := false
-	var recipe : Recipe = Recipe.new()
-	if is_saved_resource:
-		var err = ResourceSaver.save(recipe, path)
-		if err == OK:
-			recipe = load(path)
-			_add_new_recipe_to_database(recipe)
-		else:
-			print(err)
-	else:
-		_add_new_recipe_to_database(recipe)
-
-
 func _add_new_recipe_to_database(recipe : Recipe):
 	if database.items.is_empty():
 		push_warning("There are no items to create a recipe, create an item first.")
 		return
+	
 	recipe.product = Slot.new()
 	var id = last_item_selected_id
 	if not database.has_item_id(id):
 		id = database.get_valid_id()
 	recipe.product.item = database.get_item(id)
 	recipe.product.amount = 1
-	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+	
+	_add_to_database(recipe)
+	
+
+func _add_to_database(recipe : Recipe):
 	database.recipes.append(recipe)
 	load_recipes()
 	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
-	inventory_item_list.select(id)
-	var recipes = inventory_item_list.recipe_item_map[id]
+	inventory_item_list.select(recipe.product.item.id)
+	var recipes = inventory_item_list.recipe_item_map[recipe.product.item.id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
@@ -131,3 +128,25 @@ func _on_craft_stations_station_added():
 func _on_craft_stations_station_removed():
 	load_recipes()
 	recipe_item_editor.reload()
+
+
+func _on_new_recipe_resource_dialog_file_selected(path):
+	var is_saved_resource := false
+	var recipe : Recipe = Recipe.new()
+	var err = ResourceSaver.save(recipe, path)
+	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+	if err == OK:
+		recipe = load(path)
+		_add_new_recipe_to_database(recipe)
+	else:
+		print(err)
+
+
+func _on_open_recipe_dialog_file_selected(path):
+	# TODO Check if resource exist
+	var res = load(path)
+	if res is Recipe:
+		var recipe : Recipe = res as Recipe
+		if database.recipes.has(recipe):
+			push_warning("The recipe "+ recipe.resource_path +" already exists in the database!")
+		_add_to_database(recipe)

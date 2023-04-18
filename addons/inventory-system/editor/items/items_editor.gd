@@ -67,21 +67,6 @@ func _apply_theme():
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
-func _on_new_item_resource_dialog_file_selected(path):
-	var item : InventoryItem = InventoryItem.new()
-	var err = ResourceSaver.save(item, path)
-	if err == OK:
-		item = load(path)
-		item.name = "New Item"
-		item.id = database.get_new_valid_id()
-		database.items.append(item)
-		load_items()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("items_changed")
-	else:
-		print(err)
-
-
 func _on_theme_changed():
 	_apply_theme()
 
@@ -162,6 +147,21 @@ func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 		remove_item(current_id_item)
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("items_changed")
+
+
+func _on_new_item_resource_dialog_file_selected(path):
+	var item : InventoryItem = InventoryItem.new()
+	var err = ResourceSaver.save(item, path)
+	if err == OK:
+		item = load(path)
+		item.name = "New Item"
+		item.id = database.get_new_valid_id()
+		database.items.append(item)
+		load_items()
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+		emit_signal("items_changed")
+	else:
+		print(err)
 
 
 func _on_open_item_dialog_file_selected(path):

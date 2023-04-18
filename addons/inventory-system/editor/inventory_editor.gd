@@ -31,7 +31,7 @@ var editor_plugin: EditorPlugin
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button : MenuButton = %NewItemButton
-@onready var new_recipe_button = %NewRecipeButton
+@onready var new_recipe_button : MenuButton= %NewRecipeButton
 @onready var new_craft_station_type_button : MenuButton = %NewCraftStationTypeButton
 
 
@@ -42,6 +42,7 @@ func _ready():
 	apply_theme()
 	load_database(null)
 	build_new_item_menu()
+	build_new_recipe_menu()
 	build_new_craft_station_menu()
 
 
@@ -149,6 +150,16 @@ func build_new_item_menu() -> void:
 	menu.id_pressed.connect(_on_new_item_menu_id_pressed)
 
 
+func build_new_recipe_menu() -> void:
+	var menu = new_recipe_button.get_popup()
+	menu.clear()
+	menu.add_item("New Recipe With New Resource", NEW_ITEM_NEW_RESOURCE)
+	menu.add_item("New Recipe With Existing Resource", NEW_ITEM_FROM_RESOURCE)
+	if menu.id_pressed.is_connected(_on_new_recipe_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_new_recipe_menu_id_pressed)
+	menu.id_pressed.connect(_on_new_recipe_menu_id_pressed)
+
+
 func build_new_craft_station_menu() -> void:
 	var menu = new_craft_station_type_button.get_popup()
 	menu.clear()
@@ -178,6 +189,14 @@ func _on_new_item_menu_id_pressed(id: int) -> void:
 			items_editor.new_item_pressed()
 		NEW_ITEM_FROM_RESOURCE:
 			items_editor.new_item_from_resource_pressed()
+
+
+func _on_new_recipe_menu_id_pressed(id: int) -> void:
+	match id:
+		NEW_ITEM_NEW_RESOURCE:
+			recipes_editor.new_recipe_pressed()
+		NEW_ITEM_FROM_RESOURCE:
+			recipes_editor.new_recipe_from_resource_pressed()
 
 
 func _on_new_craft_station_menu_id_pressed(id: int) -> void:

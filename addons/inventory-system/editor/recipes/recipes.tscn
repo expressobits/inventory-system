@@ -38,7 +38,16 @@ layout_mode = 2
 size = Vector2i(452, 162)
 dialog_hide_on_ok = true
 access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
+filters = PackedStringArray("*.tres ; Recipe")
+
+[node name="OpenRecipeDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(312, 157)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.tres ; Recipe")
 
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
 [connection signal="no_products_item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_no_products_item_selected"]
@@ -46,3 +55,4 @@ filters = PackedStringArray("*.tres ; InventoryItem")
 [connection signal="changed_product_in_recipe" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_changed_product_in_recipe"]
 [connection signal="recipe_removed" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_recipe_removed"]
 [connection signal="file_selected" from="NewRecipeResourceDialog" to="." method="_on_new_recipe_resource_dialog_file_selected"]
+[connection signal="file_selected" from="OpenRecipeDialog" to="." method="_on_open_recipe_dialog_file_selected"]
