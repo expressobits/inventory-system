@@ -11,8 +11,11 @@ var editor_plugin : EditorPlugin
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 @onready var inventory_item_list = $HSplitContainer/InventoryItemList
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
-var last_item_selected_id := -1
+@onready var recipe_remove_confirmation_dialog = %RecipeRemoveConfirmationDialog
+@onready var recipe_remove_and_delete_confirmation_dialog = %RecipeRemoveAndDeleteConfirmationDialog
 
+var last_item_selected_id := -1
+var current_recipe : Recipe
 
 func _ready():
 	_apply_theme()
@@ -45,6 +48,14 @@ func new_recipe_from_resource_pressed():
 	if not is_instance_valid(database):
 		return
 	open_recipe_dialog.popup_centered()
+
+
+func remove_recipe(recipe : Recipe):
+	if recipe == null:
+		return
+	var index = database.recipes.find(recipe)
+	database.recipes.remove_at(index)
+	load_recipes()
 
 
 func _apply_theme():
@@ -150,3 +161,29 @@ func _on_open_recipe_dialog_file_selected(path):
 		if database.recipes.has(recipe):
 			push_warning("The recipe "+ recipe.resource_path +" already exists in the database!")
 		_add_to_database(recipe)
+
+
+func _on_recipe_item_editor_request_remove(recipe, request_code):
+	match request_code:
+		RecipeItemListEditor.REMOVE:
+			recipe_remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
+			recipe_remove_confirmation_dialog.popup_centered()
+			current_recipe = recipe
+		RecipeItemListEditor.REMOVE_AND_DELETE_RESOURCE:
+			recipe_remove_and_delete_confirmation_dialog.dialog_text = "Confirm Remove Recipe And Delete Resource of Recipe?"
+			recipe_remove_and_delete_confirmation_dialog.popup_centered()
+			current_recipe = recipe
+
+
+func _on_recipe_remove_confirmation_dialog_confirmed():
+	remove_recipe(current_recipe)
+
+
+func _on_recipe_remove_and_delete_confirmation_dialog_confirmed():
+	var dir = DirAccess.open(".")
+	if current_recipe == null:
+		return
+	var code = dir.remove_absolute(current_recipe.resource_path)
+	if code == OK:
+		remove_recipe(current_recipe)
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

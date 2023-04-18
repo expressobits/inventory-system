@@ -49,10 +49,20 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres ; Recipe")
 
+[node name="RecipeRemoveConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
+[node name="RecipeRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
 [connection signal="no_products_item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_no_products_item_selected"]
 [connection signal="pressed" from="HSplitContainer/InventoryItemList/NoProductsButton" to="HSplitContainer/InventoryItemList" method="_on_no_products_button_pressed"]
 [connection signal="changed_product_in_recipe" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_changed_product_in_recipe"]
-[connection signal="recipe_removed" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_recipe_removed"]
+[connection signal="request_remove" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_request_remove"]
 [connection signal="file_selected" from="NewRecipeResourceDialog" to="." method="_on_new_recipe_resource_dialog_file_selected"]
 [connection signal="file_selected" from="OpenRecipeDialog" to="." method="_on_open_recipe_dialog_file_selected"]
+[connection signal="confirmed" from="RecipeRemoveConfirmationDialog" to="." method="_on_recipe_remove_confirmation_dialog_confirmed"]
+[connection signal="confirmed" from="RecipeRemoveAndDeleteConfirmationDialog" to="." method="_on_recipe_remove_and_delete_confirmation_dialog_confirmed"]

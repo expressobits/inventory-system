@@ -12,7 +12,7 @@ var recipes : Array[Recipe]
 
 
 signal changed_product_in_recipe(new_product : InventoryItem, recipe : Recipe)
-signal recipe_removed
+signal request_remove(recipe : Recipe, request_code : int)
 
 
 func set_recipes_and_load(recipes : Array, database : InventoryDatabase):
@@ -32,7 +32,7 @@ func load_recipes():
 		recipes_ui.append(recipe_item)
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
-		recipe_item.remove.connect(_on_recipe_item_removed.bind())
+		recipe_item.request_remove.connect(_on_recipe_item_request_remove_menu.bind())
 	if recipes.size() > 0:
 		recipes_ui[0].select()
 
@@ -81,11 +81,8 @@ func _on_recipe_item_selected(index):
 			recipes_ui[i].unselect()
 
 
-func _on_recipe_item_removed(recipe : Recipe):
-	var index = database.recipes.find(recipe)
-	if index >= 0 and index < database.recipes.size():
-		database.recipes.remove_at(index)
-	emit_signal("recipe_removed")
+func _on_recipe_item_request_remove_menu(recipe : Recipe, request_code : int):
+	emit_signal("request_remove", recipe, request_code)
 
 
 func _on_recipe_editor_changed():

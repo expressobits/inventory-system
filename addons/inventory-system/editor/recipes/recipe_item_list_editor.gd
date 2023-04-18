@@ -3,17 +3,20 @@ extends Control
 class_name RecipeItemListEditor
 
 signal selected
-signal remove(recipe : Recipe)
+signal request_remove(recipe : Recipe, request_code : int)
+
 
 @onready var time_label : Label = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeLabel
 @onready var craftstation_icon : TextureRect = $Panel/MarginContainer/VBoxContainer/MoreInfos/CraftstationIcon
 @onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients/IngredientsList
 @onready var byproducts_list = $Panel/MarginContainer/VBoxContainer/Byproducts/ByproductsList
 @onready var panel : Panel = $Panel
-@onready var delete_button = $Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton
-@onready var remove_confirmation_dialog = $RemoveConfirmationDialog
+@onready var delete_button : MenuButton = $Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton
 @onready var time_icon = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeIcon
 
+
+const REMOVE = 100
+const REMOVE_AND_DELETE_RESOURCE = 101
 
 var recipe : Recipe
 var database : InventoryDatabase
@@ -31,6 +34,18 @@ func _ready():
 	unselect()
 	if recipe != null:
 		update_recipe()
+	build_remove_menu()
+
+
+# Refresh the open menu with the latest files
+func build_remove_menu() -> void:
+	var menu = delete_button.get_popup()
+	menu.clear()
+	menu.add_icon_item(get_theme_icon("Remove", "EditorIcons"), "Remove", REMOVE)
+	menu.add_icon_item(get_theme_icon("Remove", "EditorIcons"), "Remove And Delete Resource", REMOVE_AND_DELETE_RESOURCE)
+	if menu.id_pressed.is_connected(_on_open_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
+	menu.id_pressed.connect(_on_open_menu_id_pressed)
 
 
 func update_recipe():
@@ -76,9 +91,5 @@ func _on_panel_gui_input(event):
 			select()
 
 
-func _on_delete_button_pressed():
-	remove_confirmation_dialog.popup_centered()
-
-
-func _on_remove_confirmation_dialog_confirmed():
-	emit_signal("remove", recipe)
+func _on_open_menu_id_pressed(id):
+	emit_signal("request_remove", recipe, id)
