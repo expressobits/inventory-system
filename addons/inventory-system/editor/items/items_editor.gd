@@ -1,11 +1,9 @@
 @tool
-extends Control
+extends BaseInventoryEditor
 class_name ItemsEditor
 
 signal items_changed
 
-var database : InventoryDatabase
-var editor_plugin : EditorPlugin
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
 @onready var new_item_dialog : FileDialog = $NewItemResourceDialog
 @onready var open_item_dialog : FileDialog = $OpenItemDialog
@@ -32,8 +30,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	_apply_theme()
 
 
-func load_from_database(database : InventoryDatabase) -> void:
-	self.database = database
+func on_load_database() -> void:
 	item_editor.load_item(null, database)
 	load_items()
 

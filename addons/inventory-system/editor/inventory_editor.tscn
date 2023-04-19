@@ -186,7 +186,6 @@ filters = PackedStringArray("*.tres ; InventoryDatabase")
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
-[connection signal="items_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_items_items_changed"]
 [connection signal="station_added" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_craft_stations_station_added"]
 [connection signal="station_removed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_craft_stations_station_removed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]

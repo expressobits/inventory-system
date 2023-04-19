@@ -1,10 +1,6 @@
 @tool
-extends Control
+extends BaseInventoryEditor
 class_name RecipesEditor
-
-
-var database : InventoryDatabase
-var editor_plugin : EditorPlugin
 
 @onready var new_recipe_resource_dialog = $NewRecipeResourceDialog
 @onready var open_recipe_dialog = $OpenRecipeDialog
@@ -27,8 +23,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	_apply_theme()
 
 
-func load_from_database(database : InventoryDatabase) -> void:
-	self.database = database
+func on_load_database() -> void:
 #	recipe_editor.load_item(null)
 	load_recipes()
 

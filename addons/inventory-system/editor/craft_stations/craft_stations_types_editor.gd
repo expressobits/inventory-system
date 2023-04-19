@@ -1,12 +1,9 @@
 @tool
-extends Control
+extends BaseInventoryEditor
 class_name CraftStationTypesEditor
 
 signal station_added
 signal station_removed
-
-var database : InventoryDatabase
-var editor_plugin : EditorPlugin
 
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
 @onready var new_craft_station_type_dialog : FileDialog = $NewCraftStationTypeResourceDialog
@@ -39,8 +36,7 @@ func _apply_theme():
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 	
 
-func load_from_database(database : InventoryDatabase) -> void:
-	self.database = database
+func on_load_database() -> void:
 	craft_station_type_editor.load_station(null)
 	load_craft_station_types()
 
