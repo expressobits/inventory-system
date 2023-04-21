@@ -1,5 +1,5 @@
 @tool
-extends BaseInventoryEditor
+extends InventoryTabEditor
 class_name RecipesEditor
 
 @onready var new_recipe_resource_dialog = $NewRecipeResourceDialog

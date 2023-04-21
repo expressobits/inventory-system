@@ -1,5 +1,5 @@
 @tool
-extends BaseInventoryEditor
+extends InventoryTabEditor
 class_name ItemsEditor
 
 signal items_changed

@@ -1,6 +1,6 @@
 @tool
 extends Control
-class_name BaseInventoryEditor
+class_name InventoryTabEditor
 
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin

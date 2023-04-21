@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqptlysubaw3f"]
+[gd_scene load_steps=4 format=3 uid="uid://dw0bmfxwjxxdc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="1_l60ye"]
 [ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="2_wg0v2"]

@@ -1,41 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6b05yqdrg6ta"]
+[gd_scene load_steps=5 format=3 uid="uid://clj2qii0ta8lx"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="1_vyms8"]
-[ext_resource type="PackedScene" uid="uid://dn6l1p7td2wlb" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_item_list.tscn" id="2_ic310"]
-[ext_resource type="PackedScene" uid="uid://cdv6y2uu0ywq0" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.tscn" id="3_mn6ee"]
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_g1usf"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="2_0s4ew"]
+[ext_resource type="PackedScene" uid="uid://dn6l1p7td2wlb" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_item_list.tscn" id="3_j8duy"]
+[ext_resource type="PackedScene" uid="uid://cdv6y2uu0ywq0" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.tscn" id="4_1l8uv"]
 
-[node name="Craft Stations" type="Control"]
-visible = false
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_vyms8")
+[node name="InventoryTabEditor" instance=ExtResource("1_g1usf")]
+script = ExtResource("2_0s4ew")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CraftStationTypesItemList" parent="HSplitContainer" instance=ExtResource("2_ic310")]
+[node name="CraftStationTypesItemList" parent="HSplitContainer" index="0" instance=ExtResource("3_j8duy")]
 layout_mode = 2
 
-[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="HSplitContainer/CraftStationTypesItemList"]
-size = Vector2i(28, 8)
-
-[node name="CraftStationTypeRemoveConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/CraftStationTypesItemList"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="CraftStationTypeRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/CraftStationTypesItemList"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="CraftStationTypeEditor" parent="HSplitContainer" instance=ExtResource("3_mn6ee")]
+[node name="CraftStationTypeEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_1l8uv")]
 layout_mode = 2
 
-[node name="OpenCraftStationTypeDialog" type="FileDialog" parent="."]
+[node name="OpenCraftStationTypeDialog" type="FileDialog" parent="." index="1"]
 title = "Open a File"
 size = Vector2i(312, 157)
 ok_button_text = "Open"
@@ -44,17 +23,27 @@ file_mode = 0
 access = 2
 filters = PackedStringArray("*.tres ; InventoryItem")
 
-[node name="NewCraftStationTypeResourceDialog" type="FileDialog" parent="."]
+[node name="NewCraftStationTypeResourceDialog" type="FileDialog" parent="." index="2"]
 size = Vector2i(452, 162)
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.tres ; CraftStationType")
 
+[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="." index="3"]
+size = Vector2i(28, 8)
+
+[node name="CraftStationTypeRemoveConfirmationDialog" type="ConfirmationDialog" parent="." index="4"]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
+[node name="CraftStationTypeRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="." index="5"]
+unique_name_in_owner = true
+size = Vector2i(400, 100)
+
 [connection signal="item_popup_menu_requested" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_item_popup_menu_requested"]
 [connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
-[connection signal="id_pressed" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_id_pressed"]
-[connection signal="confirmed" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypeRemoveConfirmationDialog" to="." method="_on_craft_station_type_remove_confirmation_dialog_confirmed"]
-[connection signal="confirmed" from="HSplitContainer/CraftStationTypesItemList/CraftStationTypeRemoveAndDeleteConfirmationDialog" to="." method="_on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed"]
-[connection signal="changed" from="HSplitContainer/CraftStationTypeEditor" to="." method="_on_craft_station_type_editor_changed"]
 [connection signal="file_selected" from="OpenCraftStationTypeDialog" to="." method="_on_open_craft_station_type_dialog_file_selected"]
 [connection signal="file_selected" from="NewCraftStationTypeResourceDialog" to="." method="_on_new_craft_station_type_resource_dialog_file_selected"]
+[connection signal="id_pressed" from="CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_id_pressed"]
+[connection signal="confirmed" from="CraftStationTypeRemoveConfirmationDialog" to="." method="_on_craft_station_type_remove_confirmation_dialog_confirmed"]
+[connection signal="confirmed" from="CraftStationTypeRemoveAndDeleteConfirmationDialog" to="." method="_on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed"]

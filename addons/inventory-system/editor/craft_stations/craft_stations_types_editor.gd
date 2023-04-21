@@ -1,5 +1,5 @@
 @tool
-extends BaseInventoryEditor
+extends InventoryTabEditor
 class_name CraftStationTypesEditor
 
 signal station_added
@@ -9,7 +9,7 @@ signal station_removed
 @onready var new_craft_station_type_dialog : FileDialog = $NewCraftStationTypeResourceDialog
 @onready var open_craft_station_type_dialog : FileDialog = $OpenCraftStationTypeDialog
 @onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList
-@onready var craft_station_types_popup_menu : PopupMenu = $HSplitContainer/CraftStationTypesItemList/CraftStationTypesPopupMenu
+@onready var craft_station_types_popup_menu : PopupMenu = $CraftStationTypesPopupMenu
 @onready var craft_station_type_remove_confirmation_dialog = %CraftStationTypeRemoveConfirmationDialog
 @onready var craft_station_type_remove_and_delete_confirmation_dialog = %CraftStationTypeRemoveAndDeleteConfirmationDialog
 @onready var search_icon = $HSplitContainer/CraftStationTypesItemList/Control/SearchIcon
