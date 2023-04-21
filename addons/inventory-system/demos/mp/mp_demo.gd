@@ -49,7 +49,7 @@ func make_scene_objects_to_network():
 	var items = $Level/Items
 	var spawner = get_node("DroppedItemSpawner")
 	for i in items.get_child_count():
-		var item = items.get_child(i) as DroppedItem
+		var item = items.get_child(i) as DroppedItem3D
 		var item_id = item.item.id
 		var position = item.position
 		var rotation = item.rotation
@@ -65,7 +65,7 @@ func connect_to_ip(ip):
 	$"UI/Connect Panel".visible = false
 	var items = $Level/Items
 	for i in items.get_child_count():
-		var item = items.get_child(i) as DroppedItem
+		var item = items.get_child(i) as DroppedItem3D
 		item.queue_free()
 
 
