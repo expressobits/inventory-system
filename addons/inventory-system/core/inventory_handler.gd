@@ -103,6 +103,8 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 ## Pick a [InventoryItem] to inventory.
 ## This function adds the item to the inventory and destroys the [DroppedItem] object.
 func pick_to_inventory(dropped_item, inventory := self.inventory):
+	if not dropped_item as DroppedItem3D and not dropped_item as DroppedItem2D:
+		return false
 	if not dropped_item.is_pickable:
 		return false
 	var item = dropped_item.item

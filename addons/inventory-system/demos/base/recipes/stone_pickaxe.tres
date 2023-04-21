@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://g0nf5hvvri6j"]
+[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://2whrrffun37n"]
 
 [ext_resource type="Resource" uid="uid://be14ch2lo1u5n" path="res://addons/inventory-system/demos/base/items/wood.tres" id="1_ablc0"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_lau0n"]

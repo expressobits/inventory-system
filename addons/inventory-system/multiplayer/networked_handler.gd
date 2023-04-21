@@ -120,16 +120,13 @@ func pick_to_inventory_rpc(pick_object_path : NodePath, object_path : NodePath):
 	var pick_object = get_node(pick_object_path)
 	if pick_object == null:
 		return
-	var dropped_item = pick_object as DroppedItem
-	if dropped_item == null:
-		return
 	var object = get_node(object_path)
 	if object == null:
 		return
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	super.pick_to_inventory(dropped_item, inventory)
+	super.pick_to_inventory(pick_object, inventory)
 
 
 @rpc("any_peer")
