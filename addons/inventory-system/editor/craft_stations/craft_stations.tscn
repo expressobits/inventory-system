@@ -14,36 +14,15 @@ layout_mode = 2
 [node name="CraftStationTypeEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_1l8uv")]
 layout_mode = 2
 
-[node name="OpenCraftStationTypeDialog" type="FileDialog" parent="." index="1"]
-title = "Open a File"
-size = Vector2i(312, 157)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
-
-[node name="NewCraftStationTypeResourceDialog" type="FileDialog" parent="." index="2"]
-size = Vector2i(452, 162)
-dialog_hide_on_ok = true
-access = 2
-filters = PackedStringArray("*.tres ; CraftStationType")
-
-[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="." index="3"]
+[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="." index="1"]
 size = Vector2i(28, 8)
 
-[node name="CraftStationTypeRemoveConfirmationDialog" type="ConfirmationDialog" parent="." index="4"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
+[node name="NewResourceDialog" parent="." index="2"]
+filters = PackedStringArray("*.tres ; CraftStationType")
 
-[node name="CraftStationTypeRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="." index="5"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
+[node name="OpenResourceDialog" parent="." index="3"]
+filters = PackedStringArray("*.tres ; CraftStationType")
 
 [connection signal="item_popup_menu_requested" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_item_popup_menu_requested"]
 [connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
-[connection signal="file_selected" from="OpenCraftStationTypeDialog" to="." method="_on_open_craft_station_type_dialog_file_selected"]
-[connection signal="file_selected" from="NewCraftStationTypeResourceDialog" to="." method="_on_new_craft_station_type_resource_dialog_file_selected"]
 [connection signal="id_pressed" from="CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_id_pressed"]
-[connection signal="confirmed" from="CraftStationTypeRemoveConfirmationDialog" to="." method="_on_craft_station_type_remove_confirmation_dialog_confirmed"]
-[connection signal="confirmed" from="CraftStationTypeRemoveAndDeleteConfirmationDialog" to="." method="_on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed"]

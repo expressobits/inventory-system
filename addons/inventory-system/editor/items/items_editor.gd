@@ -5,12 +5,8 @@ class_name ItemsEditor
 signal items_changed
 
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
-@onready var new_item_dialog : FileDialog = $NewItemResourceDialog
-@onready var open_item_dialog : FileDialog = $OpenItemDialog
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
-@onready var item_remove_confirmation_dialog = %ItemRemoveConfirmationDialog
-@onready var item_remove_and_delete_confirmation_dialog = %ItemRemoveAndDeleteConfirmationDialog
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 
 var current_id_item : int = -1
@@ -55,13 +51,9 @@ func select(id : int):
 
 
 func _apply_theme():
-	if not is_instance_valid(editor_plugin) or not is_instance_valid(new_item_dialog):
-		return
-	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
-	open_item_dialog.min_size = Vector2(600, 500) * scale
-	new_item_dialog.min_size = Vector2(600, 500) * scale
-	
-	search_icon.texture = get_theme_icon("Search", "EditorIcons")
+	super._apply_theme()
+	if is_instance_valid(search_icon):
+		search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
 func _on_theme_changed():
@@ -95,32 +87,17 @@ func _on_items_popup_menu_id_pressed(id: int) -> void:
 				return
 			DisplayServer.clipboard_set(item.resource_path)
 		ITEM_REMOVE:
-			item_remove_confirmation_dialog.popup_centered()
 			var item = database.get_item(current_id_item)
 			if item == null:
 				return
-			item_remove_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\"?"
+			remove_confirmation_dialog.popup_centered()
+			remove_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\"?"
 		ITEM_REMOVE_AND_DELETE:
-			item_remove_and_delete_confirmation_dialog.popup_centered()
 			var item = database.get_item(current_id_item)
 			if item == null:
 				return
-			item_remove_and_delete_confirmation_dialog.popup_centered()
-			item_remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\" And Delete Resource \""+item.resource_path+"\"?"
-
-
-func new_item_pressed():
-	if not is_instance_valid(database):
-		return
-	
-	new_item_dialog.popup_centered()
-
-
-func new_item_from_resource_pressed():
-	if not is_instance_valid(database):
-		return
-	
-	open_item_dialog.popup_centered()
+			remove_and_delete_confirmation_dialog.popup_centered()
+			remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\" And Delete Resource \""+item.resource_path+"\"?"
 
 
 func _on_item_editor_changed(id):
@@ -130,11 +107,11 @@ func _on_item_editor_changed(id):
 		emit_signal("items_changed")
 
 
-func _on_item_remove_confirmation_dialog_confirmed():
+func _on_remove_confirmation_dialog_confirmed():
 	remove_item(current_id_item)
 
 
-func _on_item_remove_and_delete_confirmation_dialog_confirmed():
+func _on_remove_and_delete_confirmation_dialog_confirmed():
 	var dir = DirAccess.open(".")
 	var item = database.get_item(current_id_item)
 	if item == null:
@@ -146,7 +123,7 @@ func _on_item_remove_and_delete_confirmation_dialog_confirmed():
 		emit_signal("items_changed")
 
 
-func _on_new_item_resource_dialog_file_selected(path):
+func _on_new_resource_dialog_file_selected(path):
 	var item : InventoryItem = InventoryItem.new()
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
@@ -161,7 +138,7 @@ func _on_new_item_resource_dialog_file_selected(path):
 		print(err)
 
 
-func _on_open_item_dialog_file_selected(path):
+func _on_open_resource_dialog_file_selected(path):
 	# TODO Check if resource exist
 	var res = load(path)
 	if res is InventoryItem:

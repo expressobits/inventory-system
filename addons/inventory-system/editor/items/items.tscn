@@ -1,62 +1,26 @@
-[gd_scene load_steps=4 format=3 uid="uid://dw0bmfxwjxxdc"]
+[gd_scene load_steps=5 format=3 uid="uid://kuckh8lq8mwr"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="1_l60ye"]
-[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="2_wg0v2"]
-[ext_resource type="PackedScene" uid="uid://culd2hhy6nu6d" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="3_36ca2"]
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_nu8gk"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="2_8swun"]
+[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="3_dqmno"]
+[ext_resource type="PackedScene" uid="uid://culd2hhy6nu6d" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="4_ppg00"]
 
-[node name="Items" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-mouse_filter = 1
-script = ExtResource("1_l60ye")
+[node name="InventoryTabEditor" instance=ExtResource("1_nu8gk")]
+script = ExtResource("2_8swun")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-split_offset = -128
-
-[node name="InventoryItemList" parent="HSplitContainer" instance=ExtResource("2_wg0v2")]
+[node name="InventoryItemList" parent="HSplitContainer" index="0" instance=ExtResource("3_dqmno")]
 layout_mode = 2
 
-[node name="ItemsPopupMenu" type="PopupMenu" parent="HSplitContainer/InventoryItemList"]
+[node name="ItemsPopupMenu" type="PopupMenu" parent="HSplitContainer/InventoryItemList" index="2"]
 size = Vector2i(100, 24)
 
-[node name="ItemRemoveConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/InventoryItemList"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="ItemRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="HSplitContainer/InventoryItemList"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="ItemEditor" parent="HSplitContainer" instance=ExtResource("3_36ca2")]
+[node name="ItemEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_ppg00")]
 layout_mode = 2
 
-[node name="OpenItemDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(312, 157)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
+[node name="NewResourceDialog" parent="." index="1"]
+unique_name_in_owner = true
 
-[node name="NewItemResourceDialog" type="FileDialog" parent="."]
-size = Vector2i(452, 162)
-dialog_hide_on_ok = true
-access = 2
-filters = PackedStringArray("*.tres ; InventoryItem")
-
-[connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="item_popup_menu_requested" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_popup_menu_requested"]
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
 [connection signal="id_pressed" from="HSplitContainer/InventoryItemList/ItemsPopupMenu" to="." method="_on_items_popup_menu_id_pressed"]
-[connection signal="confirmed" from="HSplitContainer/InventoryItemList/ItemRemoveConfirmationDialog" to="." method="_on_item_remove_confirmation_dialog_confirmed"]
-[connection signal="confirmed" from="HSplitContainer/InventoryItemList/ItemRemoveAndDeleteConfirmationDialog" to="." method="_on_item_remove_and_delete_confirmation_dialog_confirmed"]
 [connection signal="changed" from="HSplitContainer/ItemEditor" to="." method="_on_item_editor_changed"]
-[connection signal="file_selected" from="OpenItemDialog" to="." method="_on_open_item_dialog_file_selected"]
-[connection signal="file_selected" from="NewItemResourceDialog" to="." method="_on_new_item_resource_dialog_file_selected"]

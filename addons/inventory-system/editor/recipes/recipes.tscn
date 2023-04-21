@@ -20,28 +20,11 @@ text = "Recipes Without Product"
 [node name="RecipeItemEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_8tort")]
 layout_mode = 2
 
-[node name="NewRecipeResourceDialog" type="FileDialog" parent="." index="1"]
-size = Vector2i(452, 162)
-dialog_hide_on_ok = true
-access = 2
+[node name="NewResourceDialog" parent="." index="1"]
 filters = PackedStringArray("*.tres ; Recipe")
 
-[node name="OpenRecipeDialog" type="FileDialog" parent="." index="2"]
-title = "Open a File"
-size = Vector2i(312, 157)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
+[node name="OpenResourceDialog" parent="." index="2"]
 filters = PackedStringArray("*.tres ; Recipe")
-
-[node name="RecipeRemoveConfirmationDialog" type="ConfirmationDialog" parent="." index="3"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="RecipeRemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="." index="4"]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
 
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
 [connection signal="no_products_item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_no_products_item_selected"]

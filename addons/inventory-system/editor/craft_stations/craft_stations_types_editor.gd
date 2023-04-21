@@ -6,12 +6,8 @@ signal station_added
 signal station_removed
 
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
-@onready var new_craft_station_type_dialog : FileDialog = $NewCraftStationTypeResourceDialog
-@onready var open_craft_station_type_dialog : FileDialog = $OpenCraftStationTypeDialog
 @onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList
 @onready var craft_station_types_popup_menu : PopupMenu = $CraftStationTypesPopupMenu
-@onready var craft_station_type_remove_confirmation_dialog = %CraftStationTypeRemoveConfirmationDialog
-@onready var craft_station_type_remove_and_delete_confirmation_dialog = %CraftStationTypeRemoveAndDeleteConfirmationDialog
 @onready var search_icon = $HSplitContainer/CraftStationTypesItemList/Control/SearchIcon
 
 const ITEM_COPY_RESOURCE_PATH = 100
@@ -27,12 +23,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 
 func _apply_theme():
-	if not is_instance_valid(editor_plugin) or not is_instance_valid(new_craft_station_type_dialog):
+	super._apply_theme()
+	if not is_instance_valid(search_icon):
 		return
-	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
-	new_craft_station_type_dialog.min_size = Vector2(600, 500) * scale
-	open_craft_station_type_dialog.min_size = Vector2(600, 500) * scale
-	
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 	
 
@@ -58,19 +51,6 @@ func remove_station(station : CraftStationType):
 	emit_signal("station_removed")
 
 
-func new_station_pressed():
-	if not is_instance_valid(database):
-		return
-	
-	new_craft_station_type_dialog.popup_centered()
-
-
-func new_station_pressed_from_resource():
-	if not is_instance_valid(database):
-		return
-	
-	open_craft_station_type_dialog.popup_centered()
-
 func _on_craft_station_types_item_list_station_selected(station):
 	current_station = station
 	select(station)
@@ -82,7 +62,7 @@ func _on_craft_station_type_editor_changed(station):
 		craft_station_types_list.update_item(index)
 
 
-func _on_new_craft_station_type_resource_dialog_file_selected(path):
+func _on_new_resource_dialog_file_selected(path):
 	var item : CraftStationType = CraftStationType.new()
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
@@ -100,11 +80,11 @@ func _on_craft_station_types_popup_menu_id_pressed(id):
 		ITEM_COPY_RESOURCE_PATH:
 			DisplayServer.clipboard_set(current_station.resource_path)
 		ITEM_REMOVE:
-			craft_station_type_remove_confirmation_dialog.popup_centered()
-			craft_station_type_remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\"?"
+			remove_confirmation_dialog.popup_centered()
+			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\"?"
 		ITEM_REMOVE_AND_DELETE:
-			craft_station_type_remove_and_delete_confirmation_dialog.popup_centered()
-			craft_station_type_remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\" And Delete Resource \""+current_station.resource_path+"\"?"
+			remove_and_delete_confirmation_dialog.popup_centered()
+			remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\" And Delete Resource \""+current_station.resource_path+"\"?"
 
 
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
@@ -122,11 +102,11 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	craft_station_types_popup_menu.popup()
 
 
-func _on_craft_station_type_remove_confirmation_dialog_confirmed():
+func _on_remove_confirmation_dialog_confirmed():
 	remove_station(current_station)
 
 
-func _on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed():
+func _on_remove_and_delete_confirmation_dialog_confirmed():
 	var dir = DirAccess.open(".")
 	var code = dir.remove_absolute(current_station.resource_path)
 	if code == OK:
@@ -134,7 +114,7 @@ func _on_craft_station_type_remove_and_delete_confirmation_dialog_confirmed():
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 
 
-func _on_open_craft_station_type_dialog_file_selected(path):
+func _on_open_resource_dialog_file_selected(path):
 	var res = load(path)
 	if res is CraftStationType:
 		var station : CraftStationType = res as CraftStationType

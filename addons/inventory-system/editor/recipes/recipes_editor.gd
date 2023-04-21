@@ -2,13 +2,9 @@
 extends InventoryTabEditor
 class_name RecipesEditor
 
-@onready var new_recipe_resource_dialog = $NewRecipeResourceDialog
-@onready var open_recipe_dialog = $OpenRecipeDialog
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 @onready var inventory_item_list = $HSplitContainer/InventoryItemList
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
-@onready var recipe_remove_confirmation_dialog = %RecipeRemoveConfirmationDialog
-@onready var recipe_remove_and_delete_confirmation_dialog = %RecipeRemoveAndDeleteConfirmationDialog
 
 var last_item_selected_id := -1
 var current_recipe : Recipe
@@ -33,17 +29,6 @@ func load_recipes() -> void:
 	inventory_item_list.load_items(database)
 
 
-func new_recipe_pressed():
-	if not is_instance_valid(database):
-		return
-	new_recipe_resource_dialog.popup_centered()
-
-
-func new_recipe_from_resource_pressed():
-	if not is_instance_valid(database):
-		return
-	open_recipe_dialog.popup_centered()
-
 
 func remove_recipe(recipe : Recipe):
 	if recipe == null:
@@ -54,10 +39,9 @@ func remove_recipe(recipe : Recipe):
 
 
 func _apply_theme():
-	if not is_instance_valid(editor_plugin) or not is_instance_valid(new_recipe_resource_dialog):
+	super._apply_theme()
+	if not is_instance_valid(search_icon):
 		return
-	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
-	new_recipe_resource_dialog.min_size = Vector2(600, 500) * scale
 	
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
@@ -136,7 +120,7 @@ func _on_craft_stations_station_removed():
 	recipe_item_editor.reload()
 
 
-func _on_new_recipe_resource_dialog_file_selected(path):
+func _on_new_resource_dialog_file_selected(path):
 	var is_saved_resource := false
 	var recipe : Recipe = Recipe.new()
 	var err = ResourceSaver.save(recipe, path)
@@ -148,7 +132,7 @@ func _on_new_recipe_resource_dialog_file_selected(path):
 		print(err)
 
 
-func _on_open_recipe_dialog_file_selected(path):
+func _on_open_resource_dialog_file_selected(path):
 	# TODO Check if resource exist
 	var res = load(path)
 	if res is Recipe:
@@ -161,20 +145,20 @@ func _on_open_recipe_dialog_file_selected(path):
 func _on_recipe_item_editor_request_remove(recipe, request_code):
 	match request_code:
 		RecipeItemListEditor.REMOVE:
-			recipe_remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
-			recipe_remove_confirmation_dialog.popup_centered()
+			remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
+			remove_confirmation_dialog.popup_centered()
 			current_recipe = recipe
 		RecipeItemListEditor.REMOVE_AND_DELETE_RESOURCE:
-			recipe_remove_and_delete_confirmation_dialog.dialog_text = "Confirm Remove Recipe And Delete Resource of Recipe?"
-			recipe_remove_and_delete_confirmation_dialog.popup_centered()
+			remove_and_delete_confirmation_dialog.dialog_text = "Confirm Remove Recipe And Delete Resource of Recipe?"
+			remove_and_delete_confirmation_dialog.popup_centered()
 			current_recipe = recipe
 
 
-func _on_recipe_remove_confirmation_dialog_confirmed():
+func _on_remove_confirmation_dialog_confirmed():
 	remove_recipe(current_recipe)
 
 
-func _on_recipe_remove_and_delete_confirmation_dialog_confirmed():
+func _on_remove_and_delete_confirmation_dialog_confirmed():
 	var dir = DirAccess.open(".")
 	if current_recipe == null:
 		return

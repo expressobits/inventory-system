@@ -186,25 +186,25 @@ func _on_open_menu_id_pressed(id: int) -> void:
 func _on_new_item_menu_id_pressed(id: int) -> void:
 	match id:
 		NEW_ITEM_NEW_RESOURCE:
-			items_editor.new_item_pressed()
+			items_editor.new_data_pressed()
 		NEW_ITEM_FROM_RESOURCE:
-			items_editor.new_item_from_resource_pressed()
+			items_editor.new_data_from_resource_pressed()
 
 
 func _on_new_recipe_menu_id_pressed(id: int) -> void:
 	match id:
 		NEW_ITEM_NEW_RESOURCE:
-			recipes_editor.new_recipe_pressed()
+			recipes_editor.new_data_pressed()
 		NEW_ITEM_FROM_RESOURCE:
-			recipes_editor.new_recipe_from_resource_pressed()
+			recipes_editor.new_data_from_resource_pressed()
 
 
 func _on_new_craft_station_menu_id_pressed(id: int) -> void:
 	match id:
 		NEW_ITEM_NEW_RESOURCE:
-			craft_stations_editor.new_station_pressed()
+			craft_stations_editor.new_data_pressed()
 		NEW_ITEM_FROM_RESOURCE:
-			craft_stations_editor.new_station_pressed_from_resource()
+			craft_stations_editor.new_data_pressed_from_resource()
 
 
 func _on_theme_changed():
