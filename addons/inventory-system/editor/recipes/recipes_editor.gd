@@ -7,7 +7,6 @@ class_name RecipesEditor
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
 
 var last_item_selected_id := -1
-var current_recipe : Recipe
 
 func _ready():
 	_apply_theme()
@@ -147,22 +146,8 @@ func _on_recipe_item_editor_request_remove(recipe, request_code):
 		RecipeItemListEditor.REMOVE:
 			remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
 			remove_confirmation_dialog.popup_centered()
-			current_recipe = recipe
+			current_data = recipe
 		RecipeItemListEditor.REMOVE_AND_DELETE_RESOURCE:
 			remove_and_delete_confirmation_dialog.dialog_text = "Confirm Remove Recipe And Delete Resource of Recipe?"
 			remove_and_delete_confirmation_dialog.popup_centered()
-			current_recipe = recipe
-
-
-func _on_remove_confirmation_dialog_confirmed():
-	remove_recipe(current_recipe)
-
-
-func _on_remove_and_delete_confirmation_dialog_confirmed():
-	var dir = DirAccess.open(".")
-	if current_recipe == null:
-		return
-	var code = dir.remove_absolute(current_recipe.resource_path)
-	if code == OK:
-		remove_recipe(current_recipe)
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+			current_data = recipe

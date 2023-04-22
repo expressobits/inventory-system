@@ -4,6 +4,7 @@ class_name InventoryTabEditor
 
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
+var current_data
 
 @onready var new_resource_dialog : FileDialog = $NewResourceDialog
 @onready var open_resource_dialog = $OpenResourceDialog
@@ -42,6 +43,10 @@ func new_data_from_resource_pressed():
 	open_resource_dialog.popup_centered()
 
 
+func remove_current_data():
+	pass
+
+
 func _on_new_resource_dialog_file_selected(path):
 	pass # Replace with function body.
 
@@ -51,8 +56,12 @@ func _on_open_resource_dialog_file_selected(path):
 
 
 func _on_remove_confirmation_dialog_confirmed():
-	pass # Replace with function body.
+	remove_current_data()
 
 
 func _on_remove_and_delete_confirmation_dialog_confirmed():
-	pass # Replace with function body.
+	var dir = DirAccess.open(".")
+	var code = dir.remove_absolute(current_data.resource_path)
+	if code == OK:
+		remove_current_data()
+		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

@@ -14,7 +14,6 @@ const ITEM_COPY_RESOURCE_PATH = 100
 const ITEM_REMOVE = 105
 const ITEM_REMOVE_AND_DELETE = 106
 
-var current_station : CraftStationType
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
 	self.editor_plugin = editor_plugin
@@ -42,6 +41,10 @@ func load_craft_station_types():
 	craft_station_types_list.load_craft_station_types(database)
 
 
+func remove_current_data():
+	remove_station(current_data)
+
+
 func remove_station(station : CraftStationType):
 	var index = database.stations_type.find(station)
 	if index == -1:
@@ -52,7 +55,7 @@ func remove_station(station : CraftStationType):
 
 
 func _on_craft_station_types_item_list_station_selected(station):
-	current_station = station
+	current_data = station
 	select(station)
 
 
@@ -78,13 +81,13 @@ func _on_new_resource_dialog_file_selected(path):
 func _on_craft_station_types_popup_menu_id_pressed(id):
 	match id:
 		ITEM_COPY_RESOURCE_PATH:
-			DisplayServer.clipboard_set(current_station.resource_path)
+			DisplayServer.clipboard_set(current_data.resource_path)
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
-			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\"?"
+			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\"?"
 		ITEM_REMOVE_AND_DELETE:
 			remove_and_delete_confirmation_dialog.popup_centered()
-			remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_station.name+"\" And Delete Resource \""+current_station.resource_path+"\"?"
+			remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\" And Delete Resource \""+current_data.resource_path+"\"?"
 
 
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
@@ -100,18 +103,6 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	var a = craft_station_types_list.get_global_mouse_position()
 	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + a
 	craft_station_types_popup_menu.popup()
-
-
-func _on_remove_confirmation_dialog_confirmed():
-	remove_station(current_station)
-
-
-func _on_remove_and_delete_confirmation_dialog_confirmed():
-	var dir = DirAccess.open(".")
-	var code = dir.remove_absolute(current_station.resource_path)
-	if code == OK:
-		remove_station(current_station)
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 
 
 func _on_open_resource_dialog_file_selected(path):
