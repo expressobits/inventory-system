@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=16 format=3 uid="uid://ds5vbdoklqy3a"]
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=17 format=3 uid="uid://ds5vbdoklqy3a"]
 
 [ext_resource type="Resource" uid="uid://bmqh34dg2173p" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_605sl"]
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="6_lh8gi"]
@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://dgiqs0s8plx5w" path="res://addons/inventory-system/demos/base/items/campfire.tres" id="9_ac6d4"]
 [ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="9_b0fqm"]
 [ext_resource type="Resource" uid="uid://ccjltu7rxnp7g" path="res://addons/inventory-system/demos/base/recipes/stone_axe.tres" id="9_ijyjw"]
+[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="10_0ktg3"]
 [ext_resource type="Resource" uid="uid://b6l73v4cxbbbl" path="res://addons/inventory-system/demos/base/recipes/stone_pickaxe.tres" id="10_kgixi"]
 [ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="11_kmxri"]
 [ext_resource type="Resource" uid="uid://ddbps2l71x0qn" path="res://addons/inventory-system/demos/base/recipes/lashing.tres" id="11_vrhlt"]
@@ -18,6 +19,6 @@
 
 [resource]
 script = ExtResource("7_b6gc3")
-items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("8_ofbhm"), ExtResource("3_605sl"), ExtResource("9_ac6d4")])
+items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("6_lh8gi"), ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("8_ofbhm"), ExtResource("3_605sl"), ExtResource("9_ac6d4"), ExtResource("10_0ktg3")])
 recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("9_ijyjw"), ExtResource("10_kgixi"), ExtResource("11_vrhlt"), ExtResource("12_pfveg"), ExtResource("13_jsmdl")])
 stations_type = Array[Resource("res://addons/inventory-system/craft/craft-station-type.gd")]([ExtResource("28_mywvr"), ExtResource("12_dp3x7")])
