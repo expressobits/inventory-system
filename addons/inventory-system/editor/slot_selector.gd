@@ -45,6 +45,9 @@ func setup(slot : Slot, database : InventoryDatabase):
 func _on_product_id_spin_box_value_changed(value):
 	var item = database.get_item(int(value))
 	if item == null:
+		if option_button.selected == -1:
+			push_warning("An item no longer exists in the list, a first item has been replaced.")
+			option_button.selected = 0
 		item = ids_list[option_button.selected]
 		product_amount_spin_box.value = item.id
 	slot.item = item

@@ -2,14 +2,10 @@
 extends InventoryTabEditor
 class_name ItemsEditor
 
-signal items_changed
-
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
-
-var current_id_item : int = -1
 
 const ITEM_COPY_RESOURCE_PATH = 100
 const ITEM_REMOVE = 105
@@ -35,8 +31,11 @@ func load_items() -> void:
 	inventory_item_list.load_items(database)
 
 
-func remove_item(item_id : int):
-	var item = database.get_item(item_id)
+func remove_current_data():
+	remove_item(current_data)
+
+
+func remove_item(item : InventoryItem):
 	if item == null:
 		return
 	var index = database.items.find(item)
@@ -61,7 +60,7 @@ func _on_theme_changed():
 
 
 func _on_inventory_item_list_item_selected(item, index):
-	current_id_item = item.id
+	current_data = item
 	item_editor.load_item(item, database)
 
 
@@ -82,45 +81,26 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 func _on_items_popup_menu_id_pressed(id: int) -> void:
 	match id:
 		ITEM_COPY_RESOURCE_PATH:
-			var item = database.get_item(current_id_item)
-			if item == null:
+			if current_data == null:
 				return
-			DisplayServer.clipboard_set(item.resource_path)
+			DisplayServer.clipboard_set(current_data.resource_path)
 		ITEM_REMOVE:
-			var item = database.get_item(current_id_item)
-			if item == null:
+			if current_data == null:
 				return
 			remove_confirmation_dialog.popup_centered()
-			remove_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\"?"
+			remove_confirmation_dialog.dialog_text = "Remove Item \""+current_data.name+"\"?"
 		ITEM_REMOVE_AND_DELETE:
-			var item = database.get_item(current_id_item)
-			if item == null:
+			if current_data == null:
 				return
 			remove_and_delete_confirmation_dialog.popup_centered()
-			remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+item.name+"\" And Delete Resource \""+item.resource_path+"\"?"
+			remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+current_data.name+"\" And Delete Resource \""+current_data.resource_path+"\"?"
 
 
 func _on_item_editor_changed(id):
 	var index = inventory_item_list.get_index_of_item_id(id)
 	if index > -1:
 		inventory_item_list.update_item(index)
-		emit_signal("items_changed")
-
-
-func _on_remove_confirmation_dialog_confirmed():
-	remove_item(current_id_item)
-
-
-func _on_remove_and_delete_confirmation_dialog_confirmed():
-	var dir = DirAccess.open(".")
-	var item = database.get_item(current_id_item)
-	if item == null:
-		return
-	var code = dir.remove_absolute(item.resource_path)
-	if code == OK:
-		remove_item(current_id_item)
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("items_changed")
+		emit_signal("data_changed")
 
 
 func _on_new_resource_dialog_file_selected(path):
@@ -133,7 +113,7 @@ func _on_new_resource_dialog_file_selected(path):
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("items_changed")
+		emit_signal("data_changed")
 	else:
 		print(err)
 
@@ -148,4 +128,4 @@ func _on_open_resource_dialog_file_selected(path):
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("items_changed")
+		emit_signal("data_changed")

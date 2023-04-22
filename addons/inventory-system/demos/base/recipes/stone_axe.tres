@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_0u4c8"]
 [ext_resource type="Resource" uid="uid://bmqh34dg2173p" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_ci6j6"]
 [ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="4_vgohd"]
-[ext_resource type="Resource" uid="uid://kbn73j61g1o5" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="5_upbtx"]
+[ext_resource type="Resource" uid="uid://u5gfpogsfbl3" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="5_upbtx"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="6_6f5fq"]
 [ext_resource type="Resource" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="7_q2tca"]
 

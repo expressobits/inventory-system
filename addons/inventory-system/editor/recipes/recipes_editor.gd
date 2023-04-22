@@ -28,6 +28,9 @@ func load_recipes() -> void:
 	inventory_item_list.load_items(database)
 
 
+func remove_current_data():
+	remove_recipe(current_data)
+
 
 func remove_recipe(recipe : Recipe):
 	if recipe == null:
@@ -85,6 +88,7 @@ func _add_to_database(recipe : Recipe):
 	inventory_item_list.select(recipe.product.item.id)
 	var recipes = inventory_item_list.recipe_item_map[recipe.product.item.id]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
+	emit_signal("data_changed")
 
 
 func _on_recipe_item_editor_recipe_removed():
@@ -102,21 +106,6 @@ func _on_inventory_item_list_no_products_item_selected():
 		if recipe.product.item == null:
 			recipes.append(recipe)
 	recipe_item_editor.set_recipes_and_load(recipes, database)
-
-
-func _on_items_items_changed():
-	load_recipes()
-	recipe_item_editor.reload()
-
-
-func _on_craft_stations_station_added():
-	load_recipes()
-	recipe_item_editor.reload()
-
-
-func _on_craft_stations_station_removed():
-	load_recipes()
-	recipe_item_editor.reload()
 
 
 func _on_new_resource_dialog_file_selected(path):
@@ -151,3 +140,8 @@ func _on_recipe_item_editor_request_remove(recipe, request_code):
 			remove_and_delete_confirmation_dialog.dialog_text = "Confirm Remove Recipe And Delete Resource of Recipe?"
 			remove_and_delete_confirmation_dialog.popup_centered()
 			current_data = recipe
+
+
+func _on_data_changed():
+	load_recipes()
+	recipe_item_editor.reload()

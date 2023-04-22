@@ -2,9 +2,6 @@
 extends InventoryTabEditor
 class_name CraftStationTypesEditor
 
-signal station_added
-signal station_removed
-
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
 @onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList
 @onready var craft_station_types_popup_menu : PopupMenu = $CraftStationTypesPopupMenu
@@ -51,7 +48,7 @@ func remove_station(station : CraftStationType):
 		return
 	database.stations_type.remove_at(index)
 	load_craft_station_types()
-	emit_signal("station_removed")
+	emit_signal("data_changed")
 
 
 func _on_craft_station_types_item_list_station_selected(station):
@@ -113,4 +110,4 @@ func _on_open_resource_dialog_file_selected(path):
 		database.stations_type.append(station)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("station_added")
+		emit_signal("data_changed")

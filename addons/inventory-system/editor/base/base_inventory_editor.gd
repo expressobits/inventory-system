@@ -2,6 +2,8 @@
 extends Control
 class_name InventoryTabEditor
 
+signal data_changed
+
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 var current_data

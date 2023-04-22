@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="1_70odv"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_vut2c"]
-[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="3_hpkjd"]
+[ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="3_ma5d4"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="4_2ch3e"]
 
 [sub_resource type="Resource" id="Resource_pqywp"]
@@ -12,8 +12,8 @@ amount = 2
 
 [sub_resource type="Resource" id="Resource_8282l"]
 script = ExtResource("2_vut2c")
-item = ExtResource("3_hpkjd")
-amount = 6
+item = ExtResource("3_ma5d4")
+amount = 4
 
 [resource]
 script = ExtResource("4_2ch3e")
