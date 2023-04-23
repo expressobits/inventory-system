@@ -128,6 +128,7 @@ func _on_open_resource_dialog_file_selected(path):
 		var recipe : Recipe = res as Recipe
 		if database.recipes.has(recipe):
 			push_warning("The recipe "+ recipe.resource_path +" already exists in the database!")
+			return
 		_add_to_database(recipe)
 
 

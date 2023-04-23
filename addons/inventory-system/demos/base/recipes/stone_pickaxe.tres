@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="3_onsct"]
 [ext_resource type="Resource" uid="uid://bsnhvg3alqqyf" path="res://addons/inventory-system/demos/base/items/stone_pickaxe.tres" id="4_j0aq5"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_fghhy"]
-[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="6_ey1uy"]
+[ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="6_ey1uy"]
 
 [sub_resource type="Resource" id="Resource_cl4p4"]
 script = ExtResource("2_lau0n")

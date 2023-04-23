@@ -73,6 +73,7 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 	items_popup_menu.add_separator()
 	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	items_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
+	items_popup_menu.set_item_disabled(3, true)
 	
 	var a = inventory_item_list.get_global_mouse_position()
 	items_popup_menu.position = Vector2(get_viewport().position) + a
@@ -125,7 +126,8 @@ func _on_open_resource_dialog_file_selected(path):
 	if res is InventoryItem:
 		var item : InventoryItem = res as InventoryItem
 		if database.items.has(item):
-			push_warning("The item "+item.name+"("+ item.resource_path +") already exists in the database!")
+			push_warning("The item \""+item.name+"\"("+ item.resource_path +") already exists in the database!")
+			return
 		database.items.append(item)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

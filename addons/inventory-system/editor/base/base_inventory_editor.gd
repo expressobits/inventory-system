@@ -6,7 +6,7 @@ signal data_changed
 
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
-var current_data
+var current_data : Resource
 
 @onready var new_resource_dialog : FileDialog = $NewResourceDialog
 @onready var open_resource_dialog = $OpenResourceDialog
@@ -67,3 +67,4 @@ func _on_remove_and_delete_confirmation_dialog_confirmed():
 	if code == OK:
 		remove_current_data()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+	current_data = null

@@ -43,6 +43,7 @@ func build_remove_menu() -> void:
 	menu.clear()
 	menu.add_icon_item(get_theme_icon("Remove", "EditorIcons"), "Remove", REMOVE)
 	menu.add_icon_item(get_theme_icon("Remove", "EditorIcons"), "Remove And Delete Resource", REMOVE_AND_DELETE_RESOURCE)
+	menu.set_item_disabled(1, true)
 	if menu.id_pressed.is_connected(_on_open_menu_id_pressed):
 		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
 	menu.id_pressed.connect(_on_open_menu_id_pressed)

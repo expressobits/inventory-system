@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://b2u42eqmp8q" path="res://addons/inventory-system/demos/base/craft-stations/campfire.tres" id="12_dp3x7"]
 [ext_resource type="Resource" uid="uid://c5c3sbc37l12g" path="res://addons/inventory-system/demos/base/recipes/campfire.tres" id="12_pfveg"]
 [ext_resource type="Resource" uid="uid://bp8i0oexh1csa" path="res://addons/inventory-system/demos/base/recipes/workbench.tres" id="13_jsmdl"]
-[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
+[ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="28_mywvr"]
 
 [resource]
 script = ExtResource("7_b6gc3")

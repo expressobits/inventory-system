@@ -95,6 +95,7 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	craft_station_types_popup_menu.add_separator()
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
+	craft_station_types_popup_menu.set_item_disabled(3, true)
 
 
 	var a = craft_station_types_list.get_global_mouse_position()
@@ -106,8 +107,11 @@ func _on_open_resource_dialog_file_selected(path):
 	var res = load(path)
 	if res is CraftStationType:
 		var station : CraftStationType = res as CraftStationType
-		station.name = "New Craft Station Type"
+		if database.stations_type.has(station):
+			push_warning("The craft station type \""+ station.name +"\" already exists in the list of craft stations types in the database!")
+			return
 		database.stations_type.append(station)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("data_changed")
+			
