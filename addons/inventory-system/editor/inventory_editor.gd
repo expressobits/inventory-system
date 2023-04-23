@@ -204,7 +204,7 @@ func _on_new_craft_station_menu_id_pressed(id: int) -> void:
 		NEW_ITEM_NEW_RESOURCE:
 			craft_stations_editor.new_data_pressed()
 		NEW_ITEM_FROM_RESOURCE:
-			craft_stations_editor.new_data_pressed_from_resource()
+			craft_stations_editor.new_data_from_resource_pressed()
 
 
 func _on_theme_changed():
