@@ -6,7 +6,7 @@ class_name RecipesEditor
 @onready var inventory_item_list = $HSplitContainer/InventoryItemList
 @onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
 
-var last_item_selected_id := -1
+var current_item : InventoryItem
 
 func _ready():
 	_apply_theme()
@@ -49,18 +49,18 @@ func _apply_theme():
 
 
 func _on_inventory_item_list_item_selected(item, index):
-	last_item_selected_id = item.id
-	var recipes = inventory_item_list.recipe_item_map[item.id]
+	current_item = item
+	var recipes = inventory_item_list.recipe_item_map[item]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 
 
 func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
 	load_recipes()
-	last_item_selected_id = recipe.product.item.id
-	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
-		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
+	current_item = recipe.product.item
+	if inventory_item_list.recipe_item_map.has(current_item):
+		var recipes = inventory_item_list.recipe_item_map[current_item]
 		recipe_item_editor.set_recipes_and_load(recipes, database)
-		inventory_item_list.select(last_item_selected_id)
+		inventory_item_list.select(current_item.id)
 		recipe_item_editor.select_with_recipe(recipe)
 	else:
 		recipe_item_editor.clear_list()
@@ -72,10 +72,11 @@ func _add_new_recipe_to_database(recipe : Recipe):
 		return
 	
 	recipe.product = Slot.new()
-	var id = last_item_selected_id
-	if not database.has_item_id(id):
-		id = database.get_valid_id()
-	recipe.product.item = database.get_item(id)
+	var item = current_item
+	if not database.has_item(item):
+		var id = database.get_valid_id()
+		item = database.get_item(id)
+	recipe.product.item = item
 	recipe.product.amount = 1
 	
 	_add_to_database(recipe)
@@ -86,15 +87,15 @@ func _add_to_database(recipe : Recipe):
 	load_recipes()
 	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
 	inventory_item_list.select(recipe.product.item.id)
-	var recipes = inventory_item_list.recipe_item_map[recipe.product.item.id]
+	var recipes = inventory_item_list.recipe_item_map[recipe.product.item]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
 	emit_signal("data_changed")
 
 
 func _on_recipe_item_editor_recipe_removed():
 	load_recipes()
-	if inventory_item_list.recipe_item_map.has(last_item_selected_id):
-		var recipes = inventory_item_list.recipe_item_map[last_item_selected_id]
+	if inventory_item_list.recipe_item_map.has(current_item):
+		var recipes = inventory_item_list.recipe_item_map[current_item]
 		recipe_item_editor.set_recipes_and_load(recipes, database)
 	else:
 		recipe_item_editor.clear_list()

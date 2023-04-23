@@ -10,15 +10,17 @@ func load_items(database : InventoryDatabase) -> void:
 	var no_products_count = 0
 	for recipe in database.recipes:
 		if is_instance_valid(recipe.product) and is_instance_valid(recipe.product.item):
-			var id = recipe.product.item.id
-			if not recipe_item_map.has(id):
+			if not recipe_item_map.has(recipe.product.item):
 				var array : Array[Recipe] = []
-				recipe_item_map[id] = array
-			recipe_item_map[id].append(recipe)
+				recipe_item_map[recipe.product.item] = array
+			recipe_item_map[recipe.product.item].append(recipe)
 		else:
 			no_products_count += 1
 	$NoProductsButton.text = "Recipes Without Product ("+str(no_products_count)+")"
-	super.load_items(database)
+	clear_items()
+	self.database = database
+	for item in recipe_item_map.keys():
+		add_item(item)
 	
 
 
@@ -37,8 +39,8 @@ func update_item(index : int):
 			name_to_show = "No name"
 		else:
 			name_to_show = item.name
-		if recipe_item_map.has(item.id):
-			recipe_count = recipe_item_map[item.id].size()
+		if recipe_item_map.has(item):
+			recipe_count = recipe_item_map[item].size()
 		icon = item.icon
 	list.set_item_text(index, name_to_show +" ("+str(recipe_count)+")")
 	list.set_item_disabled(index, recipe_count <= 0)

@@ -41,6 +41,7 @@ func remove_item(item : InventoryItem):
 	var index = database.items.find(item)
 	database.items.remove_at(index)
 	load_items()
+	emit_signal("data_changed")
 
 
 func select(id : int):
