@@ -155,5 +155,5 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 
 
 func _updated_transaction_slot(item_id : int, amount : int):
-	var item = inventory_handler.database.get_item(item_id)
+	var item = inventory_handler.get_item_from_id(item_id)
 	transaction_slot_ui.update_info_with_item(item, amount)

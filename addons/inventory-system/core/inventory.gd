@@ -67,6 +67,7 @@ signal closed
 
 
 func _ready():
+	super._ready()
 	if not Engine.is_editor_hint():
 		_load_slots()
 
@@ -118,7 +119,7 @@ func is_full() -> bool:
 		var item_id = slot.item_id
 		if item_id <= InventoryItem.NONE:
 			return false
-		var item = database.get_item(item_id)
+		var item = get_item_from_id(item_id)
 		if slot.amount < item.max_stack:
 			return false
 	return true

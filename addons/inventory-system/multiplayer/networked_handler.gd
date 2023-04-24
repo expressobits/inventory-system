@@ -7,6 +7,7 @@ class_name NetworkedHandler
 ## necessary make response rpc calls to the client.
 
 func _ready():
+	super._ready()
 	if multiplayer.is_server():
 		updated_transaction_slot.connect(_on_updated_transaction_slot.bind())
 
@@ -91,7 +92,7 @@ func transaction_to(inventory : Inventory):
 func drop_rpc(item_id : int, amount : int):
 	if not multiplayer.is_server():
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	super.drop(item, amount)
@@ -101,7 +102,7 @@ func drop_rpc(item_id : int, amount : int):
 func add_to_inventory_rpc(object_path : NodePath, item_id : int, amount := 1, drop_excess := false):
 	if not multiplayer.is_server():
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	var object = get_node(object_path)

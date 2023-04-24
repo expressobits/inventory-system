@@ -5,6 +5,13 @@ class_name NodeInventorySystemBase
 
 @export var database : InventoryDatabase
 
+var items_cache : Dictionary
+
+
+func _ready():
+	for item in database.items:
+		items_cache[item.id] = item
+
 
 func _get_configuration_warnings() -> PackedStringArray:
 	var string_array : PackedStringArray
@@ -12,3 +19,12 @@ func _get_configuration_warnings() -> PackedStringArray:
 		string_array.append("Database is null!")
 	return string_array
 	
+
+func get_item_from_id(id : int) -> InventoryItem:
+	if items_cache.has(id):
+		return items_cache[id]
+	return null
+
+
+func get_id_from_item(item : InventoryItem) -> int:
+	return item.id

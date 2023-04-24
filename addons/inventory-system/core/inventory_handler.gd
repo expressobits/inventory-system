@@ -92,7 +92,7 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 	var item_id = slot.item_id
 	if item_id <= InventoryItem.NONE:
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	var not_removed = inventory.remove_at(slot_index, item, amount)
@@ -103,7 +103,7 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 ## Pick a [InventoryItem] to inventory.
 ## This function adds the item to the inventory and destroys the [DroppedItem] object.
 func pick_to_inventory(dropped_item, inventory := self.inventory):
-	if not dropped_item as DroppedItem3D and not dropped_item as DroppedItem2D:
+	if not dropped_item is DroppedItem3D and not dropped_item is DroppedItem2D:
 		return false
 	if not dropped_item.is_pickable:
 		return false
@@ -124,7 +124,7 @@ func pick_to_inventory(dropped_item, inventory := self.inventory):
 func move_between_inventories(from : Inventory, slot_index : int, amount : int, to : Inventory):
 	var slot = from.slots[slot_index];
 	var item_id = slot.item_id;
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	var amount_not_removed = from.remove_at(slot_index, item, amount);
 	var amount_for_swap = amount - amount_not_removed;
 	var amount_not_swaped = to.add(item, amount_for_swap);
@@ -143,7 +143,7 @@ func swap_between_inventories(inventory : Inventory, slot_index : int, other_inv
 		var item_id = slot.item_id
 		if item_id <= InventoryItem.NONE:
 			return
-		var item = database.get_item(item_id)
+		var item = get_item_from_id(item_id)
 		if item == null:
 			return
 		var for_trade = 0
@@ -184,7 +184,7 @@ func close(inventory : Inventory) -> bool:
 	emit_signal("closed", inventory)
 	if self.inventory == inventory:
 		if is_transaction_active():
-			var item = inventory.database.get_item(transaction_slot.item_id)
+			var item = get_item_from_id(transaction_slot.item_id)
 			var amount_no_add = inventory.add(item, transaction_slot.amount)
 			if amount_no_add > 0:
 				drop(item, amount_no_add)
@@ -232,7 +232,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 	var item_id = slot.item_id
 	if item_id <= InventoryItem.NONE:
 		return
-	var item = inventory.database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
@@ -247,7 +247,7 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 	var item_id = transaction_slot.item_id
 	if item_id <= InventoryItem.NONE:
 		return
-	var item = inventory.database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	if inventory.is_empty_slot(slot_index) or slot.item_id == item_id:
@@ -268,7 +268,7 @@ func transaction_to(inventory : Inventory):
 	var item_id = transaction_slot.item_id
 	if item_id <= InventoryItem.NONE:
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	var amount_no_add = inventory.add(item, transaction_slot.amount)
@@ -283,7 +283,7 @@ func is_transaction_active() -> bool:
 ## Drop [InventoryItem] from slot transaction.
 func drop_transaction():
 	if is_transaction_active():
-		var item = database.get_item(transaction_slot.item_id)
+		var item = get_item_from_id(transaction_slot.item_id)
 		drop(item, transaction_slot.amount)
 	_set_transaction_slot(InventoryItem.NONE, 0)
 
