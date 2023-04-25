@@ -21,9 +21,10 @@ func _get_configuration_warnings() -> PackedStringArray:
 	
 
 func get_item_from_id(id : int) -> InventoryItem:
-	if items_cache.has(id):
-		return items_cache[id]
-	return null
+	return database.get_item(id)
+#	if items_cache.has(id):
+#		return items_cache[id]
+#	return null
 
 
 func get_id_from_item(item : InventoryItem) -> int:

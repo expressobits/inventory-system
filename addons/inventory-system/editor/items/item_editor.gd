@@ -90,6 +90,7 @@ func apply_theme() -> void:
 
 func _on_id_spin_box_value_changed(value):
 	item.id = int(item_id_spin_box.value)
+	database.update_items_cache()
 	emit_signal("changed", item.id)
 
 

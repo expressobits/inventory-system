@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_w8awx")
-id = 2
+id = 12
 max_stack = 16
 name = "Grass"
 icon = ExtResource("1_v4col")
