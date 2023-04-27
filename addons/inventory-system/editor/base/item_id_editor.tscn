@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcs0kajdte05g"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="1_10tkh"]
+
+[node name="ItemIDEditor" type="HBoxContainer"]
+script = ExtResource("1_10tkh")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "ID"
+
+[node name="IDSpinBox" type="SpinBox" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 9.22337e+18
+rounded = true
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+
+[connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
+[connection signal="value_changed" from="IDSpinBox" to="." method="_on_id_spin_box_value_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

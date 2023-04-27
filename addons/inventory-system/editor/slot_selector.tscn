@@ -1,22 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://28kwhb0vuwhx"]
+[gd_scene load_steps=3 format=3 uid="uid://28kwhb0vuwhx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/slot_selector.gd" id="1_js21a"]
+[ext_resource type="PackedScene" uid="uid://bcs0kajdte05g" path="res://addons/inventory-system/editor/base/item_id_editor.tscn" id="2_sqn6h"]
 
 [node name="SlotSelector" type="HBoxContainer"]
 size_flags_horizontal = 3
 script = ExtResource("1_js21a")
 
-[node name="LabelID" type="Label" parent="."]
-custom_minimum_size = Vector2(32, 0)
+[node name="ItemIDEditor" parent="." instance=ExtResource("2_sqn6h")]
 layout_mode = 2
-text = "ID
-"
-
-[node name="ProductIDSpinBox" type="SpinBox" parent="."]
-layout_mode = 2
-max_value = 1e+08
-rounded = true
-editable = false
+ids_must_exist_in_database = true
 
 [node name="OptionButton" type="OptionButton" parent="."]
 layout_mode = 2

@@ -4,7 +4,7 @@ class_name SlotSelector
 
 signal slot_changed(slot : Slot)
 
-@onready var product_id_spin_box = $ProductIDSpinBox
+@onready var item_id_editor : ItemIDEditor = $ItemIDEditor
 @onready var option_button = $OptionButton
 @onready var product_amount_spin_box = $ProductAmountSpinBox
 
@@ -20,7 +20,7 @@ var ids_list : Array[InventoryItem]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():		
-	product_id_spin_box.value_changed.connect(_on_product_id_spin_box_value_changed.bind())
+	item_id_editor.changed.connect(_on_product_id_spin_box_value_changed.bind())
 	option_button.item_selected.connect(_on_option_button_item_selected.bind())
 	product_amount_spin_box.value_changed.connect(_on_product_amount_spin_box_value_changed.bind())
 
@@ -29,7 +29,7 @@ func setup(slot : Slot, database : InventoryDatabase):
 	self.slot = slot
 	self.database = database
 	var id = slot.item.id
-	product_id_spin_box.value = id
+	item_id_editor.setup(database, id)
 	product_amount_spin_box.value = slot.amount
 	ids_list.clear()
 	option_button.clear()
@@ -43,7 +43,7 @@ func setup(slot : Slot, database : InventoryDatabase):
 
 
 func _on_product_id_spin_box_value_changed(value):
-	var item = database.get_item(int(value))
+	var item = database.get_item(value)
 	if item == null:
 		if option_button.selected == -1:
 			push_warning("An item no longer exists in the list, a first item has been replaced.")
@@ -65,6 +65,6 @@ func _on_product_amount_spin_box_value_changed(value):
 
 func _on_option_button_item_selected(index):
 	var item : InventoryItem = ids_list[index]
-	if product_id_spin_box.value != item.id:
-		product_id_spin_box.value = item.id
+	if item_id_editor.id != item.id:
+		item_id_editor.setup(database, item.id)
 	emit_signal("slot_changed", slot)	

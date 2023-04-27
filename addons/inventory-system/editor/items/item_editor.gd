@@ -8,7 +8,7 @@ var item : InventoryItem
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
-@onready var item_id_spin_box : SpinBox = %IDSpinBox
+@onready var item_id_editor : ItemIDEditor = $MarginContainer/VBoxContainer/ItemIDEditor
 @onready var dropped_item_text_edit : LineEdit = %DroppedItemLineEdit
 @onready var dropped_item_edit_button : Button = %DroppedItemEditButton
 @onready var dropped_item_file_dialog : FileDialog = $DroppedItemFileDialog
@@ -40,7 +40,7 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 	if not is_instance_valid(item):
 		$MarginContainer.visible = false
 		return
-	item_id_spin_box.value = item.id
+	item_id_editor.setup(database, item.id)
 	if is_instance_valid(item):
 		item_resource_text_edit.text = item.resource_path
 		item_name_text_edit.text = item.name
@@ -86,12 +86,6 @@ func apply_theme() -> void:
 	hand_item_file_dialog.min_size = Vector2(600, 500) * scale
 	dropped_item_file_dialog.min_size = Vector2(600, 500) * scale
 	item_resource_file_dialog.min_size = Vector2(600, 500) * scale
-
-
-func _on_id_spin_box_value_changed(value):
-	item.id = int(item_id_spin_box.value)
-	database.update_items_cache()
-	emit_signal("changed", item.id)
 
 
 func _on_max_stack_spin_box_value_changed(value):
@@ -167,3 +161,9 @@ func _on_item_resource_file_dialog_file_selected(path):
 		emit_signal("changed", item.id)
 	else:
 		print("Error on open scene!")
+
+
+func _on_item_id_editor_changed(id : int):
+	item.id = id
+	database.update_items_cache()
+	emit_signal("changed", item.id)
