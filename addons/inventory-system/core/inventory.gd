@@ -45,10 +45,10 @@ signal opened
 signal closed
 
 
-## Array of [Dictionary] that stores items and their quantities
-## The dictionary uses [b]"item_id"[/b] to store item id information
+## Array of [Slot] that stores items and their quantities
+## The slot uses [b]"item"[/b] to store item id information
 ## and [b]"amount"[/b] for your quantity
-@export var slots : Array
+@export var slots : Array[Slot]
 
 ## It stores information if this inventory is open or not.
 @export var is_open := false
@@ -78,7 +78,7 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 		return
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
-	slot.item_id = item.id
+	slot.item = item
 	slot.amount = amount
 	slots[slot_index] = slot
 	emit_signal("updated_slot", slot_index)
@@ -91,7 +91,7 @@ func set_slot_with_other_slot(slot_index : int, other_slot : Dictionary):
 		return
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
-	slot.item_id = other_slot.item_id
+	slot.item = other_slot.item
 	slot.amount = other_slot.amount
 	slots[slot_index] = slot
 	emit_signal("updated_slot", slot_index)
@@ -103,7 +103,7 @@ func is_empty_slot(slot_index : int) -> bool:
 	if slots.size() <= slot_index:
 		return true
 	var slot = slots[slot_index]
-	if slot.has("amount") and slot.amount > 0:
+	if slot != null and slot.amount > 0:
 		return false;
 	return true;
 
@@ -116,23 +116,20 @@ func is_empty() -> bool:
 ## Returns true if inventory is full
 func is_full() -> bool:
 	for slot in slots:
-		var item_id = slot.item_id
-		if item_id <= InventoryItem.NONE:
+		if slot.item == null:
 			return false
-		var item = get_item_from_id(item_id)
-		if slot.amount < item.max_stack:
+		if slot.amount < slot.item.max_stack:
 			return false
 	return true
 
 
 ## Returns true if the inventory contains the quantity of the specified item
 func contains(item : InventoryItem, amount := 1) -> bool:
-	var item_id = item.id
-	if item_id <= InventoryItem.NONE:
+	if item == null:
 		return 0
 	var amount_in_inventory = 0
 	for slot in slots:
-		if slot.item_id == item_id:
+		if slot.item == item:
 			amount_in_inventory += slot.amount
 			if amount_in_inventory >= amount:
 				return true
@@ -141,12 +138,11 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 
 ## Returns amount of the specified item in inventory
 func get_amount_of(item : InventoryItem) -> int:
-	var item_id = item.id
-	if item_id <= InventoryItem.NONE:
+	if item == null:
 		return 0
 	var amount_in_inventory = 0;
 	for slot in slots:
-		if slot.item_id == item_id:
+		if slot.item == item:
 			amount_in_inventory += slot.amount
 	return amount_in_inventory
 
@@ -257,7 +253,9 @@ func _remove_slot(slot_index : int, emit_signal := true):
 
 
 func _add_slot(slot_index : int, emit_signal := true):
-	var slot = { "item_id": InventoryItem.NONE, "amount": 0 }
+	var slot = Slot.new()
+	slot.item = null
+	slot.amount = 0
 	slots.insert(slot_index, slot)
 	if emit_signal:
 		emit_signal("slot_added", slot_index)
@@ -274,31 +272,29 @@ func _call_events(old_amount : int):
 
 
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	var item_id = item.id
-	if item_id <= InventoryItem.NONE:
+	if item == null:
 		return amount
 	var slot = slots[slot_index]
-	if amount <= 0 or (slot.item_id != item_id and slot.item_id != InventoryItem.NONE):
+	if amount <= 0 or (slot.item != item and slot.item != null):
 		return amount
 	var amount_to_add = min(amount, item.max_stack - slot.amount)
 	slot.amount = slot.amount + amount_to_add;
-	if amount_to_add > 0 and slot.item_id == InventoryItem.NONE:
-		slot.item_id = item_id
+	if amount_to_add > 0 and slot.item == null:
+		slot.item = item
 	emit_signal("updated_slot", slot_index)
 	return amount - amount_to_add;
 
 
 func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	var item_id = item.id
-	if item_id <= InventoryItem.NONE:
+	if item == null:
 		return amount
 	var slot = slots[slot_index]
-	var item_slot = slot.item_id
-	if amount <= 0 or (item_slot != item_id && item_slot != InventoryItem.NONE):
+	var item_slot = slot.item
+	if amount <= 0 or (item_slot != item && item_slot != null):
 		return amount;
 	var amount_to_remove = min(amount, slot.amount);
 	slot.amount = slot.amount - amount_to_remove;
 	if slot.amount <= 0:
-		slot.item_id = InventoryItem.NONE;
+		slot.item = null;
 	emit_signal("updated_slot", slot_index);
 	return amount - amount_to_remove;

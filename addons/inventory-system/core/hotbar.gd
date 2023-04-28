@@ -44,10 +44,9 @@ func has_valid_item_id() -> bool:
 	if selection_index >= inventory.slots.size():
 		return false
 	var slot = inventory.slots[selection_index]
-	if not slot.has("item_id"):
+	if slot == null:
 		return false
-	var item_id = slot.item_id
-	return item_id != InventoryItem.NONE
+	return slot.item != null
 
 
 func has_item_on_selection() -> bool:
@@ -56,10 +55,10 @@ func has_item_on_selection() -> bool:
 	return true
 
 
-func get_selected_item() -> int:
+func get_selected_item() -> InventoryItem:
 	if not has_valid_item_id():
-		return InventoryItem.NONE
-	return inventory.slots[selection_index].item_id
+		return null
+	return inventory.slots[selection_index].item
 
 
 func _on_updated_slot(slot_index : int):
