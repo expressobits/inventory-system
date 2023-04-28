@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://jm6g1u6w8kp3"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item_editor.gd" id="1_5elde"]
+[ext_resource type="PackedScene" uid="uid://c5qc6bmfbgi4h" path="res://addons/inventory-system/editor/recipes/recipe_editor.tscn" id="2_a000k"]
+
+[node name="RecipeItemEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+size_flags_horizontal = 3
+script = ExtResource("1_5elde")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HSplitContainer"]
+custom_minimum_size = Vector2(336, 0)
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/Panel"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="RecipeEditorContainer" type="MarginContainer" parent="HSplitContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="RecipeEditor" parent="HSplitContainer/RecipeEditorContainer" instance=ExtResource("2_a000k")]
+visible = false
+layout_mode = 2
+
+[connection signal="changed" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed"]
+[connection signal="changed_product" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed_product"]

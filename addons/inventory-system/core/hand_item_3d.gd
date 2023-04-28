@@ -21,7 +21,11 @@ func _on_change_selection(new_index : int):
 	if not hotbar.has_valid_item_id():
 		return
 	var item_id = hotbar.get_selected_item()
-	var hand_item_scene = hotbar.inventory.database.get_hand_item(item_id)
+	var item = hotbar.get_item_from_id(item_id)
+	var hand_item_scene = null
+	if item.properties.has("hand_item"):
+		var path = item.properties["hand_item"]
+		hand_item_scene = load(path)
 	last_item = item_id
 	if hand_item_scene == null:
 		default_hand_item_object.visible = true

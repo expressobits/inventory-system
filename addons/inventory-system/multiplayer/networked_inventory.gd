@@ -52,7 +52,7 @@ func _on_updated_slot(slot_index : int):
 	if not multiplayer.is_server():
 		return
 	var item_id = slots[slot_index].item_id
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	var amount = slots[slot_index].amount
 	_updated_slot_rpc.rpc(slot_index, item_id, amount)
 
@@ -95,7 +95,7 @@ func _slot_added_rpc(slot_index : int):
 func _updated_slot_rpc(slot_index : int, item_id : int, amount : int):
 	if multiplayer.is_server():
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	set_slot(slot_index, item, amount)
 
 

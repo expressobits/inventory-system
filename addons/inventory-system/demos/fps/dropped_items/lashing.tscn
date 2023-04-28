@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cmcq0oqhho45l"]
 
-[ext_resource type="PackedScene" uid="uid://cjxdajwr3jol6" path="res://addons/inventory-system/demos/fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
-[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="2_o1jb2"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
+[ext_resource type="InventoryItem" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="2_o1jb2"]
 [ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_3lr6e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]

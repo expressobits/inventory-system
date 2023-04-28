@@ -7,6 +7,7 @@ class_name NetworkedHandler
 ## necessary make response rpc calls to the client.
 
 func _ready():
+	super._ready()
 	if multiplayer.is_server():
 		updated_transaction_slot.connect(_on_updated_transaction_slot.bind())
 
@@ -15,8 +16,8 @@ func _ready():
 ## Override all main commands for the client to send to the server through rpc
 
 func drop(item : InventoryItem, amount := 1) -> bool:
-	var item_id = database.get_id_from_item(item)
-	if item_id < 0:
+	var item_id = item.id
+	if item_id < InventoryItem.NONE:
 		return false
 	if not multiplayer.is_server():
 		drop_rpc.rpc_id(1, item_id, amount)
@@ -91,7 +92,7 @@ func transaction_to(inventory : Inventory):
 func drop_rpc(item_id : int, amount : int):
 	if not multiplayer.is_server():
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	super.drop(item, amount)
@@ -101,7 +102,7 @@ func drop_rpc(item_id : int, amount : int):
 func add_to_inventory_rpc(object_path : NodePath, item_id : int, amount := 1, drop_excess := false):
 	if not multiplayer.is_server():
 		return
-	var item = database.get_item(item_id)
+	var item = get_item_from_id(item_id)
 	if item == null:
 		return
 	var object = get_node(object_path)
@@ -120,16 +121,13 @@ func pick_to_inventory_rpc(pick_object_path : NodePath, object_path : NodePath):
 	var pick_object = get_node(pick_object_path)
 	if pick_object == null:
 		return
-	var dropped_item = pick_object as DroppedItem
-	if dropped_item == null:
-		return
 	var object = get_node(object_path)
 	if object == null:
 		return
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	super.pick_to_inventory(dropped_item, inventory)
+	super.pick_to_inventory(pick_object, inventory)
 
 
 @rpc("any_peer")

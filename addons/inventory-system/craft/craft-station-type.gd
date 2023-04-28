@@ -7,3 +7,5 @@ class_name CraftStationType
 
 # TODO create auto craft (Campfire)
 @export var icon : Texture2D
+
+@export var name : String

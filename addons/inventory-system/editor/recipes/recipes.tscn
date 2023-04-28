@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://c20tt03af3qw6"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_8r7ns"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipes_editor.gd" id="1_hp38j"]
+[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="2_47tem"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/inventory_item_list_with_recipes_number.gd" id="3_ualcr"]
+[ext_resource type="PackedScene" uid="uid://jm6g1u6w8kp3" path="res://addons/inventory-system/editor/recipes/recipe_item_editor.tscn" id="4_8tort"]
+
+[node name="InventoryTabEditor" instance=ExtResource("1_8r7ns")]
+script = ExtResource("1_hp38j")
+
+[node name="InventoryItemList" parent="HSplitContainer" index="0" instance=ExtResource("2_47tem")]
+layout_mode = 2
+script = ExtResource("3_ualcr")
+
+[node name="NoProductsButton" type="Button" parent="HSplitContainer/InventoryItemList" index="2"]
+layout_mode = 2
+text = "Recipes Without Product"
+
+[node name="RecipeItemEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_8tort")]
+layout_mode = 2
+
+[node name="NewResourceDialog" parent="." index="1"]
+filters = PackedStringArray("*.tres ; Recipe")
+
+[node name="OpenResourceDialog" parent="." index="2"]
+filters = PackedStringArray("*.tres ; Recipe")
+
+[connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
+[connection signal="no_products_item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_no_products_item_selected"]
+[connection signal="pressed" from="HSplitContainer/InventoryItemList/NoProductsButton" to="HSplitContainer/InventoryItemList" method="_on_no_products_button_pressed"]
+[connection signal="changed_product_in_recipe" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_changed_product_in_recipe"]
+[connection signal="request_remove" from="HSplitContainer/RecipeItemEditor" to="." method="_on_recipe_item_editor_request_remove"]

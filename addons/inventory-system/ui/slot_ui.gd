@@ -16,6 +16,7 @@ class_name SlotUI
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_slot(slot : Dictionary, database : InventoryDatabase):
 	if slot.has("item_id") and slot.item_id >= InventoryItem.NONE:
+		# TODO Slow call, use cache from node inv base
 		var item = database.get_item(slot.item_id)
 		if item != null:
 			update_info_with_item(item, slot.amount)
