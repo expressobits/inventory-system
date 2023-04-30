@@ -12,6 +12,20 @@ class_name NetworkedInventory
 ## Also keep in mind that signals need to be handled if switching to a use of
 ## MultiplayerSyncronizer
 
+var slots_sync : Array:
+	set(value):
+		slots_sync = value
+		if not multiplayer.is_server():
+			for i in range(slots_sync.size(), slots.size()):
+				slots.remove_at(i)
+			for i in slots_sync.size():
+				if i >= slots.size():
+					slots.append(Slot.new())
+				slots[i].amount = slots_sync[i].amount
+				var item = database.get_item(slots_sync[i].item_id)
+				slots[i].item = item
+
+
 func _ready():
 	super._ready()
 	multiplayer.peer_connected.connect(_on_connected.bind())
@@ -20,14 +34,23 @@ func _ready():
 	slot_removed.connect(_on_slot_removed.bind())
 	opened.connect(_on_opened.bind())
 	closed.connect(_on_closed.bind())
+	if multiplayer.is_server():
+		slots_sync.clear()
+		for i in slots.size():
+			var slot = slots[i]
+			slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
 
 
 func _on_connected(id):
 	if not multiplayer.is_server():
 		return
+	slots_sync.clear()
+	for i in slots.size():
+		var slot = slots[i]
+		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
 	if is_open:
 		_opened_rpc.rpc_id(id)
-#	_update_slots_rpc.rpc_id(id, slots)
+	_update_slots_rpc.rpc_id(id, slots_sync)
  
 
 func _on_opened():
@@ -45,6 +68,7 @@ func _on_closed():
 func _on_slot_added(slot_index : int):
 	if not multiplayer.is_server():
 		return
+	slots_sync.append({"item_id" = InventoryItem.NONE , "amount" = 0})
 	_slot_added_rpc.rpc(slot_index)
 
 
@@ -58,18 +82,21 @@ func _on_updated_slot(slot_index : int):
 	else:
 		item_id = item.id
 	var amount = slots[slot_index].amount
+	slots_sync[slot_index]["item_id"] = item_id
+	slots_sync[slot_index]["amount"] = amount
 	_updated_slot_rpc.rpc(slot_index, item_id, amount)
 
 
 func _on_slot_removed(slot_index : int):
 	if not multiplayer.is_server():
 		return
+	slots_sync.remove_at(slot_index)
 	_slot_removed_rpc.rpc(slot_index)
 
 
 @rpc
-func _update_slots_rpc(slots : Array[Slot]):
-	self.slots = slots
+func _update_slots_rpc(slots_sync : Array):
+	self.slots_sync = slots_sync
 
 
 @rpc
