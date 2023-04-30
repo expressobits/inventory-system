@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://2i8022umv4df" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
 [ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="3_aep54"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system/demos/fps/labels.tscn" id="5_rvlsk"]
-[ext_resource type="PackedScene" uid="uid://bm27x5e8sixfk" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
+[ext_resource type="PackedScene" uid="uid://bwtecc1qeotvj" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
 [ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="8_kfwho"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
@@ -68,55 +68,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
 script = ExtResource("7_8khhq")
-slots = [{
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}, {
-"amount": 0,
-"item_id": -1
-}]
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"

@@ -27,7 +27,7 @@ func _on_connected(id):
 		return
 	if is_open:
 		_opened_rpc.rpc_id(id)
-	_update_slots_rpc.rpc_id(id, slots)
+#	_update_slots_rpc.rpc_id(id, slots)
  
 
 func _on_opened():
@@ -51,8 +51,12 @@ func _on_slot_added(slot_index : int):
 func _on_updated_slot(slot_index : int):
 	if not multiplayer.is_server():
 		return
-	var item_id = slots[slot_index].item_id
-	var item = get_item_from_id(item_id)
+	var item = slots[slot_index].item
+	var item_id : int
+	if item == null:
+		item_id = InventoryItem.NONE
+	else:
+		item_id = item.id
 	var amount = slots[slot_index].amount
 	_updated_slot_rpc.rpc(slot_index, item_id, amount)
 
@@ -64,7 +68,7 @@ func _on_slot_removed(slot_index : int):
 
 
 @rpc
-func _update_slots_rpc(slots):
+func _update_slots_rpc(slots : Array[Slot]):
 	self.slots = slots
 
 
