@@ -9,6 +9,7 @@ id = 2
 max_stack = 16
 name = "Grass"
 icon = ExtResource("1_v4col")
+weight = 0.0
 properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/grass.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/grass.tscn"

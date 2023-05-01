@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg3lftx10xw37"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/custom_properties.gd" id="1_d01x1"]
+[ext_resource type="PackedScene" uid="uid://bggb1gnxppq0x" path="res://addons/inventory-system/editor/items/base_property.tscn" id="2_rp4o4"]
+
+[node name="CustomProperties" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_d01x1")
+property_scene = ExtResource("2_rp4o4")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Custom Properties"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NewKeyLineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Place Property Key Name Here..."
+
+[node name="NewTypeOptionButton" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Add New Property"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="text_changed" from="HBoxContainer/NewKeyLineEdit" to="." method="_on_new_key_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]

@@ -9,6 +9,7 @@ id = 5
 max_stack = 16
 name = "Lashing"
 icon = ExtResource("1_w5ivy")
+weight = 0.0
 properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/lashing.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/lashing.tscn"

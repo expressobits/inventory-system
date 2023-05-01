@@ -23,6 +23,9 @@ var editor_plugin : EditorPlugin
 @onready var item_resource_text_edit : LineEdit = %ItemResourceLineEdit
 @onready var item_resource_edit_button : Button = %ItemResourceEditButton
 @onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
+@onready var custom_properties : CustomPropertiesItemEditor = $MarginContainer/VBoxContainer/CustomProperties
+@onready var weight_spin_box = $MarginContainer/VBoxContainer/Weight/WeightSpinBox
+
 
 func _ready():
 	apply_theme()
@@ -45,6 +48,7 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 		item_resource_text_edit.text = item.resource_path
 		item_name_text_edit.text = item.name
 		item_max_stack_spin_box.value = item.max_stack
+		weight_spin_box.value = item.weight
 		if is_instance_valid(item.icon):
 			item_icon_text_edit.text = item.icon.resource_path
 		else:
@@ -62,6 +66,8 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 		item_resource_text_edit.text = "No resource path item!"
 		item_name_text_edit.text = "No resource item!"
 		$MarginContainer.visible = false
+		
+	custom_properties.load_item(database, item)
 
 
 # Apply theme colors and icons to the UI
@@ -166,4 +172,9 @@ func _on_item_resource_file_dialog_file_selected(path):
 func _on_item_id_editor_changed(id : int):
 	item.id = id
 	database.update_items_cache()
+	emit_signal("changed", item.id)
+
+
+func _on_weight_spin_box_value_changed(value):
+	item.weight = weight_spin_box.value
 	emit_signal("changed", item.id)

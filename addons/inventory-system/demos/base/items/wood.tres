@@ -9,6 +9,7 @@ id = 0
 max_stack = 16
 name = "Wood"
 icon = ExtResource("1_q41wd")
+weight = 0.0
 properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/wood.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/wood.tscn"
