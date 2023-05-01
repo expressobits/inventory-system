@@ -7,7 +7,7 @@ class_name HandItem3D
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @onready var hotbar : Hotbar = get_node(hotbar_path) 
 
-var last_item := InventoryItem.NONE
+var last_item : InventoryItem = null
 var objects_per_id : Dictionary
 
 
@@ -20,23 +20,26 @@ func _on_change_selection(new_index : int):
 	_clear_last_selection()
 	if not hotbar.has_valid_item_id():
 		return
-	var item_id = hotbar.get_selected_item()
-	var hand_item_scene = hotbar.inventory.database.get_hand_item(item_id)
-	last_item = item_id
+	var item = hotbar.get_selected_item()
+	var hand_item_scene = null
+	if item.properties.has("hand_item"):
+		var path = item.properties["hand_item"]
+		hand_item_scene = load(path)
+	last_item = item
 	if hand_item_scene == null:
 		default_hand_item_object.visible = true
 		return
-	if objects_per_id.has(item_id):
-		objects_per_id[item_id].visible = true
+	if objects_per_id.has(item):
+		objects_per_id[item].visible = true
 	else:
 		var hand_item_obj = hand_item_scene.instantiate()
 		add_child(hand_item_obj)
-		objects_per_id[item_id] = hand_item_obj
+		objects_per_id[item] = hand_item_obj
 
 
 func _clear_last_selection():
 	default_hand_item_object.visible = false
-	if last_item <= InventoryItem.NONE:
+	if last_item == null:
 		return
 	if objects_per_id.has(last_item):
 		objects_per_id[last_item].visible = false	

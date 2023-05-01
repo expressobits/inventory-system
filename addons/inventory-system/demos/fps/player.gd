@@ -118,7 +118,7 @@ func interact():
 				if Input.is_action_just_pressed("interact"):
 					open_station(station)
 				return
-		var dropped_item := object as DroppedItem
+		var dropped_item := object as DroppedItem3D
 		if dropped_item != null:
 			if dropped_item.is_pickable:
 				$"../UI/Labels/InteractMessage".visible = true
@@ -141,7 +141,7 @@ func open_station(craft_station : CraftStation):
 		crafter.open(craft_station)
 
 
-func pickup_item(item : DroppedItem):
+func pickup_item(item : DroppedItem3D):
 	pass
 
 

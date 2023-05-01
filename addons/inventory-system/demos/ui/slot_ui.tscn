@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://caa8s4576c1fy"]
+[gd_scene load_steps=7 format=3 uid="uid://d0exira3cfsbw"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/slot_ui.gd" id="1_efrhy"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/slot_ui.gd" id="1_efrhy"]
 [ext_resource type="Theme" uid="uid://b7vs6rvub08n3" path="res://addons/inventory-system/demos/ui/themes/theme.tres" id="1_hssy3"]
 [ext_resource type="Texture2D" uid="uid://chkax7oefnn0c" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_grey.png" id="3_bmi74"]
 [ext_resource type="Texture2D" uid="uid://27s26vu2drcs" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/buttonSquare_beige.png" id="3_ulm20"]
@@ -12,9 +12,6 @@ region_rect = Rect2(0, 0, 45, 49)
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b3mp4"]
 texture = ExtResource("3_ulm20")
 region_rect = Rect2(0, 0, 45, 49)
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_84ds3"]
-load_path = "res://.godot/imported/icons8-axe-30.png-178ca760050957568fb44d69b2808869.ctex"
 
 [node name="SlotUI" type="Control"]
 texture_filter = 1
@@ -47,7 +44,7 @@ offset_right = 12.0
 offset_bottom = 12.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "UM SLOT"
+tooltip_text = "A Slot"
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 
@@ -66,7 +63,6 @@ offset_right = 15.0
 offset_bottom = 15.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("CompressedTexture2D_84ds3")
 
 [node name="Amount" type="Label" parent="."]
 layout_mode = 1

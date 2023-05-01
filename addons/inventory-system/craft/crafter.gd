@@ -4,6 +4,11 @@ extends NodeInventorySystemBase
 class_name Crafter
 
 
+## Class of an agent that opens and closes craft-stations
+##
+## It also stores an internal craft-station, normally used for crafts that don't require a station that stays at its level.
+
+
 ## Emitted when craft station is opened by the crafter.
 ## Called when the [code]open()[/code] function is called and the craft station has not yet been opened
 signal opened(craft_station : CraftStation)
@@ -13,6 +18,7 @@ signal opened(craft_station : CraftStation)
 signal closed(craft_station : CraftStation)
 
 
+## Internal craft-station used for crafts that don't need stations that are in level.
 @export var main_station : CraftStation 
 
 

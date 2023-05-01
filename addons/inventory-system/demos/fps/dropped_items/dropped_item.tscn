@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjxdajwr3jol6"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/inventory-system/core/dropped_item.gd" id="1_qx0iq"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/dropped_item_3d.gd" id="1_qx0iq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6n6kg"]
 size = Vector3(0.4, 0.4, 0.4)

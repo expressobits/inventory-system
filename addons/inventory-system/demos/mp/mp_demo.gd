@@ -49,13 +49,13 @@ func make_scene_objects_to_network():
 	var items = $Level/Items
 	var spawner = get_node("DroppedItemSpawner")
 	for i in items.get_child_count():
-		var item = items.get_child(i) as DroppedItem
-		var item_id = database.get_id_from_item(item.item)
-		var position = item.position
-		var rotation = item.rotation
-		item.queue_free()
-		var dropped_item = database.get_dropped_item(item_id)
-		var obj = spawner.spawn([position, rotation, dropped_item.resource_path])
+		var item_dropped = items.get_child(i) as DroppedItem3D
+		var item : InventoryItem = item_dropped.item 
+		var position = item_dropped.position
+		var rotation = item_dropped.rotation
+		item_dropped.queue_free()
+		var dropped_item_path = item.properties["dropped_item"]
+		var obj = spawner.spawn([position, rotation, dropped_item_path])
 
 
 func connect_to_ip(ip):
@@ -65,7 +65,7 @@ func connect_to_ip(ip):
 	$"UI/Connect Panel".visible = false
 	var items = $Level/Items
 	for i in items.get_child_count():
-		var item = items.get_child(i) as DroppedItem
+		var item = items.get_child(i) as DroppedItem3D
 		item.queue_free()
 
 

@@ -1,10 +1,16 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://be14ch2lo1u5n"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bmqh34dg2173p"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_fcne4"]
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system/demos/assets/icons/branch.png" id="1_q41wd"]
 
 [resource]
 script = ExtResource("1_fcne4")
+id = 0
 max_stack = 16
 name = "Wood"
 icon = ExtResource("1_q41wd")
+weight = 0.0
+properties = {
+"dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/wood.tscn",
+"hand_item": "res://addons/inventory-system/demos/fps/hand_items/wood.tscn"
+}

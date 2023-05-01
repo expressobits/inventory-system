@@ -15,6 +15,8 @@ class_name InventoryItem
 ## 	@export var satisfies_hunger = 12
 ## [/codeblock]
 
+@export var id := 0
+
 ## Maximum amount of this item within an [Inventory] slot
 @export var max_stack := 0
 
@@ -24,4 +26,11 @@ class_name InventoryItem
 ## Item icon in texture2D, displayed by [SlotUI]
 @export var icon : Texture2D
 
+## Item weight in float
+@export var weight : float
+
+## Item custom properties
+@export var properties : Dictionary
+
+## Id represents none item (Used in networked scripts)
 const NONE = -1

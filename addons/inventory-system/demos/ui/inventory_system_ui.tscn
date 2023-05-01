@@ -1,15 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://cj4k8ejg3gg16"]
+[gd_scene load_steps=11 format=3 uid="uid://bwtecc1qeotvj"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
-[ext_resource type="PackedScene" uid="uid://dshee6i3qdl50" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/transaction_slot.gd" id="3_ugeom"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_system_ui.gd" id="2_ci0ph"]
+[ext_resource type="PackedScene" uid="uid://dsfknmib2psmv" path="res://addons/inventory-system/demos/ui/inventory_ui.tscn" id="3_sohfg"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/transaction_slot.gd" id="3_ugeom"]
 [ext_resource type="Texture2D" uid="uid://c0jaj36qvgqvs" path="res://addons/inventory-system/demos/assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_10.png" id="4_0oqwp"]
-[ext_resource type="PackedScene" uid="uid://caa8s4576c1fy" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/ui/slot_ui.tscn" id="4_5h6ud"]
 [ext_resource type="Texture2D" uid="uid://cj2dnhj4hf4p3" path="res://addons/inventory-system/demos/assets/uipack-rpg/PNG/iconCross_brown.png" id="4_5nfxk"]
 [ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
-[ext_resource type="Script" path="res://addons/inventory-system/demos/ui/hotbar_ui.gd" id="7_e17fd"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://addons/inventory-system/demos/assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
-[ext_resource type="PackedScene" uid="uid://dlvdjqqjntu7p" path="res://addons/inventory-system/demos/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
+[ext_resource type="PackedScene" uid="uid://dghwaiou1givw" path="res://addons/inventory-system/demos/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
 [node name="Inventory System UI" type="Control"]
 texture_filter = 1
