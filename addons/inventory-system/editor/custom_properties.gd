@@ -8,9 +8,9 @@ var properties_obj : Array
 
 @export var property_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var v_box_container = $ScrollContainer/VBoxContainer
-@onready var add_button = $HBoxContainer/AddButton
-@onready var line_edit = $HBoxContainer/NewKeyLineEdit
-@onready var new_type_option_button = $HBoxContainer/NewTypeOptionButton
+@onready var add_button = $Panel/HBoxContainer/AddButton
+@onready var line_edit = $Panel/HBoxContainer/NewKeyLineEdit
+@onready var new_type_option_button = $Panel/HBoxContainer/NewTypeOptionButton
 
 
 func _ready():
@@ -28,7 +28,7 @@ func loading_properties():
 	properties_obj.clear()
 	var item_properties : Dictionary = item.properties
 	for key in item_properties.keys():
-		if key as String:
+		if key is String:
 			var property_obj = property_scene.instantiate()
 			var property : BasePropertyItemEditor = property_obj as BasePropertyItemEditor
 			property.setup(item, key, item.properties[key])

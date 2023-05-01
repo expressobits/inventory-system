@@ -14,18 +14,36 @@ layout_mode = 2
 text = "Custom Properties"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="Panel" type="Control" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="NewKeyLineEdit" type="LineEdit" parent="HBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "New Property:"
+horizontal_alignment = 1
+
+[node name="NewKeyLineEdit" type="LineEdit" parent="Panel/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-placeholder_text = "Place Property Key Name Here..."
+placeholder_text = "Place New Property Key Name Here..."
 
-[node name="NewTypeOptionButton" type="OptionButton" parent="HBoxContainer"]
+[node name="NewTypeOptionButton" type="OptionButton" parent="Panel/HBoxContainer"]
 layout_mode = 2
 
-[node name="AddButton" type="Button" parent="HBoxContainer"]
+[node name="AddButton" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
 text = "Add New Property"
 
@@ -38,5 +56,5 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[connection signal="text_changed" from="HBoxContainer/NewKeyLineEdit" to="." method="_on_new_key_line_edit_text_changed"]
-[connection signal="pressed" from="HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
+[connection signal="text_changed" from="Panel/HBoxContainer/NewKeyLineEdit" to="." method="_on_new_key_line_edit_text_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]
