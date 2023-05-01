@@ -1,42 +1,31 @@
-[gd_resource type="Resource" script_class="Recipe" load_steps=13 format=3 uid="uid://ccjltu7rxnp7g"]
+[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://ccjltu7rxnp7g"]
 
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="1_gfhu5"]
-[ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="1_n2ff5"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_0u4c8"]
 [ext_resource type="Resource" uid="uid://bmqh34dg2173p" path="res://addons/inventory-system/demos/base/items/wood.tres" id="3_ci6j6"]
-[ext_resource type="Resource" uid="uid://bg4jxrrsteww2" path="res://addons/inventory-system/demos/base/items/lashing.tres" id="4_vgohd"]
+[ext_resource type="Resource" uid="uid://u5gfpogsfbl3" path="res://addons/inventory-system/demos/base/items/stone_axe.tres" id="4_ybd5r"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="6_6f5fq"]
 [ext_resource type="Resource" uid="uid://dwrj6geetlyfd" path="res://addons/inventory-system/demos/base/craft-stations/workbench.tres" id="7_q2tca"]
 
-[sub_resource type="Resource" id="Resource_tjks1"]
-script = ExtResource("2_0u4c8")
-item = ExtResource("1_n2ff5")
-amount = 1
-
 [sub_resource type="Resource" id="Resource_c1w71"]
 script = ExtResource("2_0u4c8")
-item = ExtResource("1_gfhu5")
+item = ExtResource("3_ci6j6")
 amount = 2
 
 [sub_resource type="Resource" id="Resource_kal3n"]
 script = ExtResource("2_0u4c8")
-item = ExtResource("3_ci6j6")
-amount = 1
-
-[sub_resource type="Resource" id="Resource_x4an1"]
-script = ExtResource("2_0u4c8")
-item = ExtResource("4_vgohd")
+item = ExtResource("1_gfhu5")
 amount = 1
 
 [sub_resource type="Resource" id="Resource_tsuyp"]
 script = ExtResource("2_0u4c8")
-item = ExtResource("1_n2ff5")
+item = ExtResource("4_ybd5r")
 amount = 1
 
 [resource]
 script = ExtResource("6_6f5fq")
 product = SubResource("Resource_tsuyp")
-byproducts = Array[ExtResource("2_0u4c8")]([SubResource("Resource_tjks1")])
+byproducts = Array[ExtResource("2_0u4c8")]([])
 time_to_craft = 8.0
 station = ExtResource("7_q2tca")
-ingredients = Array[ExtResource("2_0u4c8")]([SubResource("Resource_c1w71"), SubResource("Resource_kal3n"), SubResource("Resource_x4an1")])
+ingredients = Array[ExtResource("2_0u4c8")]([SubResource("Resource_c1w71"), SubResource("Resource_kal3n")])

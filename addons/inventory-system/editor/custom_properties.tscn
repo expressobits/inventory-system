@@ -45,6 +45,7 @@ layout_mode = 2
 
 [node name="AddButton" type="Button" parent="Panel/HBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Add New Property"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]

@@ -112,7 +112,8 @@ func reload():
 
 
 func _on_product_slot_spin_box_slot_changed(slot : Slot):
-	recipe.product = slot
+	recipe.product.item = slot.item
+	recipe.product.amount = slot.amount
 	emit_signal("changed_product", recipe)
 	emit_signal("changed")
 

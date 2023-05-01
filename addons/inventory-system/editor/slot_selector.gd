@@ -49,7 +49,7 @@ func _on_product_id_spin_box_value_changed(value):
 			push_warning("An item no longer exists in the list, a first item has been replaced.")
 			option_button.selected = 0
 		item = ids_list[option_button.selected]
-		product_amount_spin_box.value = item.id
+		product_amount_spin_box.value = item.amount
 	slot.item = item
 	var index = ids_list.find(slot.item)
 	if index != -1:
@@ -65,6 +65,7 @@ func _on_product_amount_spin_box_value_changed(value):
 
 func _on_option_button_item_selected(index):
 	var item : InventoryItem = ids_list[index]
+	slot.item = item
 	if item_id_editor.id != item.id:
 		item_id_editor.setup(database, item.id)
 	emit_signal("slot_changed", slot)	
