@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b4cpc8qxh0irr"]
+[gd_scene load_steps=21 format=3 uid="uid://b4cpc8qxh0irr"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="10_mvvba"]
 [ext_resource type="PackedScene" uid="uid://ya110chxxrd0" path="res://addons/inventory-system/demos/fps/workbench.tscn" id="11_fkc5i"]
+[ext_resource type="Resource" uid="uid://xbjnhv307te4" path="res://addons/inventory-system/demos/base/categories/tool.tres" id="12_tehqe"]
 [ext_resource type="PackedScene" uid="uid://drlbvaoe1uko4" path="res://addons/inventory-system/demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://b78s1iramu2wu" path="res://addons/inventory-system/demos/fps/level.tscn" id="16_46jkf"]
 
@@ -24,7 +25,7 @@ accepted_categories = Array[Resource("res://addons/inventory-system/core/item_ca
 [sub_resource type="Resource" id="Resource_b62qw"]
 script = ExtResource("10_mvvba")
 amount = 0
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
 
 [sub_resource type="Resource" id="Resource_6ohm7"]
 script = ExtResource("10_mvvba")

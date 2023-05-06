@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://bsnhvg3alqqyf"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://bsnhvg3alqqyf"]
 
 [ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system/demos/assets/icons/stone_pickaxe.png" id="1_hlhk0"]
+[ext_resource type="Resource" uid="uid://xbjnhv307te4" path="res://addons/inventory-system/demos/base/categories/tool.tres" id="1_jl1dl"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_obepx"]
 
 [resource]
@@ -14,4 +15,4 @@ properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/stone_pickaxe.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/stone_pickaxe.tscn"
 }
-categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_jl1dl")])

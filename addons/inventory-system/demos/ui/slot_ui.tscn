@@ -50,7 +50,7 @@ mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxTexture_b3mp4")
 
 [node name="Category Icon" type="TextureRect" parent="."]
-modulate = Color(0.25098, 0.25098, 0.25098, 0.501961)
+modulate = Color(0.25098, 0.25098, 0.25098, 0.266667)
 texture_filter = 1
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 1
@@ -66,6 +66,7 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_y4g0o")
+expand_mode = 1
 
 [node name="Item Icon" type="TextureRect" parent="."]
 texture_filter = 1

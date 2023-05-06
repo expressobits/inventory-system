@@ -17,6 +17,15 @@ class_name SlotUI
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_slot(slot : Slot):
+	category_icon.visible = slot.amount == 0
+	
+	if slot.accepted_categories.size() > 0:
+		category_icon.texture = slot.accepted_categories[0].icon
+		panel.modulate = slot.accepted_categories[0].color
+	else:
+		category_icon.texture = null
+		panel.modulate = Color.WHITE
+		
 	if slot != null and slot.item != null:
 		# TODO Slow call, use cache from node inv base
 		if slot.item != null:
@@ -24,12 +33,7 @@ func update_info_with_slot(slot : Slot):
 			return
 	item_icon.texture = null
 	amount_label.visible = false
-	if slot.accepted_categories.size() > 0:
-		category_icon.texture = slot.accepted_categories[0].icon
-#		panel.modulate = slot.accepted_categories[0].color
-	else:
-		category_icon.texture = null
-#		panel.modulate = Color.WHITE
+	
 
 
 ## Update information with [InventoryItem] and amount.

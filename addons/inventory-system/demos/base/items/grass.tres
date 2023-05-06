@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://d4dbqgguhb8cj"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://d4dbqgguhb8cj"]
 
+[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnable.tres" id="1_gjdk4"]
 [ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system/demos/assets/icons/grass.png" id="1_v4col"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_w8awx"]
 
@@ -14,4 +15,4 @@ properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/grass.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/grass.tscn"
 }
-categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_gjdk4")])
