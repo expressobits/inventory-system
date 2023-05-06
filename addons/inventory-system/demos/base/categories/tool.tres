@@ -6,5 +6,5 @@
 [resource]
 script = ExtResource("2_w17xb")
 name = "Burnable"
-color = Color(0.517647, 0.701961, 0.392157, 1)
+color = Color(0.694118, 0.87451, 0.576471, 1)
 icon = ExtResource("1_5w14s")
