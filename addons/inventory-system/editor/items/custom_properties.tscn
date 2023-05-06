@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cg3lftx10xw37"]
+[gd_scene load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/custom_properties.gd" id="1_d01x1"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/custom_properties.gd" id="1_d01x1"]
 [ext_resource type="PackedScene" uid="uid://bggb1gnxppq0x" path="res://addons/inventory-system/editor/items/base_property.tscn" id="2_rp4o4"]
 
 [node name="CustomProperties" type="VBoxContainer"]
