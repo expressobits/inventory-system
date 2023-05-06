@@ -35,6 +35,8 @@ func load_items(database : InventoryDatabase) -> void:
 	self.database = database
 	for item in database.items:
 		add_item(item)
+	update_item_map()
+	apply_filter()
 
 
 func add_item(item : InventoryItem):
