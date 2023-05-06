@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://culd2hhy6nu6d"]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/items/item_editor.gd" id="1_smo60"]
 [ext_resource type="PackedScene" uid="uid://bcs0kajdte05g" path="res://addons/inventory-system/editor/base/item_id_editor.tscn" id="2_s4m1x"]
-[ext_resource type="PackedScene" uid="uid://cg3lftx10xw37" path="res://addons/inventory-system/editor/custom_properties.tscn" id="3_obam6"]
+[ext_resource type="PackedScene" path="res://addons/inventory-system/editor/items/custom_properties.tscn" id="3_obam6"]
 
 [sub_resource type="Image" id="Image_sgf5n"]
 data = {
