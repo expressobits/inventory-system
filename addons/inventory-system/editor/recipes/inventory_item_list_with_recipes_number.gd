@@ -21,6 +21,8 @@ func load_items(database : InventoryDatabase) -> void:
 	self.database = database
 	for item in recipe_item_map.keys():
 		add_item(item)
+	update_item_map()
+	apply_filter()
 	
 
 
