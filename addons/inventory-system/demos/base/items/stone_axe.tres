@@ -14,3 +14,4 @@ properties = {
 "dropped_item": "res://addons/inventory-system/demos/fps/dropped_items/stone_axe.tscn",
 "hand_item": "res://addons/inventory-system/demos/fps/hand_items/stone_axe.tscn"
 }
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

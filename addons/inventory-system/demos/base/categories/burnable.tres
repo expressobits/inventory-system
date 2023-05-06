@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemCategory" load_steps=3 format=3 uid="uid://clxebv8xigpno"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/core/item_category.gd" id="1_crx7r"]
+[ext_resource type="Texture2D" uid="uid://b6wlmgdiwsupp" path="res://addons/inventory-system/demos/assets/icons/branch.svg" id="1_tdteh"]
+
+[resource]
+script = ExtResource("1_crx7r")
+name = "Burnable"
+color = Color(0.568627, 0.152941, 0.054902, 1)
+icon = ExtResource("1_tdteh")

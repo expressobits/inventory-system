@@ -66,9 +66,12 @@ signal closed
 @export var inventory_name := "Inventory"
 
 
+@export var recreate_slots_on_ready := true
+
+
 func _ready():
 	super._ready()
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and recreate_slots_on_ready:
 		_load_slots()
 
 
@@ -275,7 +278,7 @@ func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	if item == null:
 		return amount
 	var slot = slots[slot_index]
-	if amount <= 0 or (slot.item != item and slot.item != null):
+	if amount <= 0 or (slot.item != item and slot.item != null) or not slot.is_accept_category(item):
 		return amount
 	var amount_to_add = min(amount, item.max_stack - slot.amount)
 	slot.amount = slot.amount + amount_to_add;

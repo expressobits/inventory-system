@@ -18,6 +18,8 @@ class_name InventoryDatabase
 
 @export var stations_type : Array[CraftStationType]
 
+@export var item_categories : Array[ItemCategory]
+
 var items_cache : Dictionary
 
 # TODO Create loading dropped items and items with folder

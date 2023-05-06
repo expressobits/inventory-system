@@ -11,21 +11,25 @@
 script = ExtResource("2_pkutw")
 item = ExtResource("1_reaok")
 amount = 1
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
 
 [sub_resource type="Resource" id="Resource_gnn4r"]
 script = ExtResource("2_pkutw")
 item = ExtResource("1_0asns")
 amount = 8
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
 
 [sub_resource type="Resource" id="Resource_bhk0q"]
 script = ExtResource("2_pkutw")
 item = ExtResource("3_m7c3o")
 amount = 1
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
 
 [sub_resource type="Resource" id="Resource_k0lge"]
 script = ExtResource("2_pkutw")
 item = ExtResource("4_f24th")
 amount = 1
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
 
 [resource]
 script = ExtResource("5_ux5px")

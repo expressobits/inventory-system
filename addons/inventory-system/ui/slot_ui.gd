@@ -6,6 +6,8 @@ class_name SlotUI
 @onready var item_icon : TextureRect = get_node(NodePath("Item Icon"))
 @onready var amount_label : Label = get_node(NodePath("Amount"))
 @onready var selection_background : Panel = get_node(NodePath("Selected"))
+@onready var category_icon : TextureRect = $"Category Icon"
+@onready var panel = $Panel
 
 ## Color when mouse enter
 @export var highlight_color = Color.ORANGE
@@ -22,6 +24,12 @@ func update_info_with_slot(slot : Slot):
 			return
 	item_icon.texture = null
 	amount_label.visible = false
+	if slot.accepted_categories.size() > 0:
+		category_icon.texture = slot.accepted_categories[0].icon
+#		panel.modulate = slot.accepted_categories[0].color
+	else:
+		category_icon.texture = null
+#		panel.modulate = Color.WHITE
 
 
 ## Update information with [InventoryItem] and amount.
@@ -32,7 +40,7 @@ func update_info_with_item(item : InventoryItem, amount := 1):
 		item_icon.texture = item.icon
 		tooltip_text = item.name
 	else:
-		item_icon.texture = null
+		category_icon.texture = null
 		tooltip_text = ""
 	amount_label.text = str(amount)
 	amount_label.visible = amount > 1
@@ -40,7 +48,7 @@ func update_info_with_item(item : InventoryItem, amount := 1):
 
 ## Clear info slot information
 func clear_info():
-		item_icon.texture = null
+		category_icon.texture = null
 		amount_label.visible = false
 		
 
