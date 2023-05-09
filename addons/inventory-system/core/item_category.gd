@@ -1,3 +1,4 @@
+@icon("res://addons/inventory-system/icons/item_category.svg")
 extends Resource
 class_name ItemCategory
 

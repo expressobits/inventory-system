@@ -7,10 +7,6 @@ class_name ItemsEditor
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
 @onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 
-const ITEM_COPY_RESOURCE_PATH = 100
-const ITEM_REMOVE = 105
-const ITEM_REMOVE_AND_DELETE = 106
-
 
 func _ready():
 	_apply_theme()

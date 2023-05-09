@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="ItemCategory" load_steps=3 format=3 uid="uid://clxebv8xigpno"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/core/item_category.gd" id="1_crx7r"]
-[ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system/demos/assets/icons/fire-svgrepo-com.svg" id="1_qe4dy"]
+[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system/demos/assets/icons/campfire.png" id="1_s7xou"]
 
 [resource]
 script = ExtResource("1_crx7r")
-name = "Burnable"
+name = "Burnables"
 color = Color(0.996078, 0.737255, 0.678431, 1)
-icon = ExtResource("1_qe4dy")
+icon = ExtResource("1_s7xou")
