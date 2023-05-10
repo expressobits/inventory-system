@@ -33,11 +33,13 @@
 
 ✔️ Item Editor.
 
+✔️ Categories. (https://github.com/expressobits/inventory-system/issues/5)
+
+✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
+
 ## In Progress
 
-🔨 Categories. (https://github.com/expressobits/inventory-system/issues/5)
-
-🔨 Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
+🔨 Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
 
 ## Planneds
 
