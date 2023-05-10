@@ -7,10 +7,6 @@ class_name CraftStationTypesEditor
 @onready var craft_station_types_popup_menu : PopupMenu = $CraftStationTypesPopupMenu
 @onready var search_icon = $HSplitContainer/CraftStationTypesItemList/Control/SearchIcon
 
-const ITEM_COPY_RESOURCE_PATH = 100
-const ITEM_REMOVE = 105
-const ITEM_REMOVE_AND_DELETE = 106
-
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
 	self.editor_plugin = editor_plugin

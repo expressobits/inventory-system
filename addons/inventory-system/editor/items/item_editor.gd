@@ -9,22 +9,17 @@ var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
 @onready var item_id_editor : ItemIDEditor = $MarginContainer/VBoxContainer/ItemIDEditor
-@onready var dropped_item_text_edit : LineEdit = %DroppedItemLineEdit
-@onready var dropped_item_edit_button : Button = %DroppedItemEditButton
-@onready var dropped_item_file_dialog : FileDialog = $DroppedItemFileDialog
 @onready var item_name_text_edit : LineEdit = %ItemNameTextEdit
 @onready var item_max_stack_spin_box : SpinBox = %MaxStackSpinBox
 @onready var item_icon_text_edit : LineEdit = %IconLineEdit
 @onready var item_icon_edit_button : Button = %IconEditButton
 @onready var icon_file_dialog : FileDialog = $IconFileDialog
-@onready var hand_item_text_edit : LineEdit = %HandItemLineEdit
-@onready var hand_item_edit_button : Button = %HandItemEditButton
-@onready var hand_item_file_dialog : FileDialog = $HandItemFileDialog
 @onready var item_resource_text_edit : LineEdit = %ItemResourceLineEdit
 @onready var item_resource_edit_button : Button = %ItemResourceEditButton
 @onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
 @onready var custom_properties : CustomPropertiesItemEditor = $MarginContainer/VBoxContainer/CustomProperties
 @onready var weight_spin_box = $MarginContainer/VBoxContainer/Weight/WeightSpinBox
+@onready var categories_in_item : CategoriesInItem = $MarginContainer/VBoxContainer/CategoriesInItem
 
 
 func _ready():
@@ -53,14 +48,6 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 			item_icon_text_edit.text = item.icon.resource_path
 		else:
 			item_icon_text_edit.text = ""
-		if item.properties.has("hand_item"):
-			hand_item_text_edit.text = item.properties["hand_item"]
-		else:
-			hand_item_text_edit.text = ""
-		if item.properties.has("dropped_item"):
-			dropped_item_text_edit.text = item.properties["dropped_item"]
-		else:
-			dropped_item_text_edit.text = ""
 		$MarginContainer.visible = true
 	else:
 		item_resource_text_edit.text = "No resource path item!"
@@ -68,6 +55,7 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 		$MarginContainer.visible = false
 		
 	custom_properties.load_item(database, item)
+	categories_in_item.load_item(database, item)
 
 
 # Apply theme colors and icons to the UI
@@ -77,20 +65,12 @@ func apply_theme() -> void:
 	item_icon_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	item_icon_edit_button.tooltip_text = "Open Icon Texture2D"
 	
-	hand_item_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
-	hand_item_edit_button.tooltip_text = "Open PackedScene"
-	
-	dropped_item_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
-	dropped_item_edit_button.tooltip_text = "Open PackedScene"
-	
 	item_resource_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	item_resource_edit_button.tooltip_text = "Open Resource Inventory Item"
 	
 	#Dialogs
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	icon_file_dialog.min_size = Vector2(600, 500) * scale
-	hand_item_file_dialog.min_size = Vector2(600, 500) * scale
-	dropped_item_file_dialog.min_size = Vector2(600, 500) * scale
 	item_resource_file_dialog.min_size = Vector2(600, 500) * scale
 
 
@@ -123,36 +103,6 @@ func _on_icon_file_dialog_file_selected(path):
 
 func _on_icon_edit_button_pressed():
 	icon_file_dialog.popup_centered()
-
-
-func _on_hand_item_file_dialog_file_selected(path):
-	var file = load(path)
-	if file is PackedScene:
-		var scene : PackedScene = file
-		item.properties["hand_item"] = path
-		hand_item_text_edit.text = path
-		emit_signal("changed", item.id)
-	else:
-		print("Error on open scene!")
-
-
-func _on_dropped_item_file_dialog_file_selected(path):
-	var file = load(path)
-	if file is PackedScene:
-		var scene : PackedScene = file
-		item.properties["dropped_item"] = path
-		dropped_item_text_edit.text = path
-		emit_signal("changed", item.id)
-	else:
-		print("Error on open scene!")
-
-
-func _on_hand_item_edit_button_pressed():
-	hand_item_file_dialog.popup_centered()
-
-
-func _on_dropped_item_edit_button_pressed():
-	dropped_item_file_dialog.popup_centered()
 
 
 func _on_item_resource_edit_button_pressed():

@@ -241,8 +241,9 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 		# Different items in slot and other_slot
 		# Check if transaction_slot amount is equal of origin_slot amount
 		var new_amount = transaction_slot.amount
-		_set_transaction_slot(slot.item, inventory.slots[slot_index].amount)
-		inventory.set_slot(slot_index, item, new_amount)
+		if inventory.slots[slot_index].is_accept_category(item):
+			_set_transaction_slot(slot.item, inventory.slots[slot_index].amount)
+			inventory.set_slot(slot_index, item, new_amount)
 
 
 ## Moves transfer slot information to [Inventory].

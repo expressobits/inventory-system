@@ -18,6 +18,7 @@ var editor_plugin: EditorPlugin
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
 @onready var recipes_editor : RecipesEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Recipes")
 @onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
+@onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Categories"
 
 
 # Dialogs
@@ -33,17 +34,20 @@ var editor_plugin: EditorPlugin
 @onready var new_item_button : MenuButton = %NewItemButton
 @onready var new_recipe_button : MenuButton= %NewRecipeButton
 @onready var new_craft_station_type_button : MenuButton = %NewCraftStationTypeButton
+@onready var new_item_categories_button : MenuButton = %NewItemCategoryButton
 
 
 func _ready():
 	items_editor.set_editor_plugin(editor_plugin)
 	recipes_editor.set_editor_plugin(editor_plugin)
 	craft_stations_editor.set_editor_plugin(editor_plugin)
+	categories_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
 	build_new_item_menu()
 	build_new_recipe_menu()
 	build_new_craft_station_menu()
+	build_new_item_category_menu()
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -55,15 +59,18 @@ func load_database(database : InventoryDatabase):
 		items_editor.load_from_database(database)
 		recipes_editor.load_from_database(database)
 		craft_stations_editor.load_from_database(database)
+		categories_editor.load_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false
 		new_craft_station_type_button.disabled = false
+		new_item_categories_button.disabled = false
 	else:
 		$MarginContainer/VBoxContainer/Content.visible = false
 		new_item_button.disabled = true
 		new_recipe_button.disabled = true
 		new_craft_station_type_button.disabled = true
+		new_item_categories_button.disabled = true
 
 
 func new_file(path: String, content: String = "") -> void:
@@ -168,6 +175,16 @@ func build_new_craft_station_menu() -> void:
 	if menu.id_pressed.is_connected(_on_new_craft_station_menu_id_pressed):
 		menu.id_pressed.disconnect(_on_new_craft_station_menu_id_pressed)
 	menu.id_pressed.connect(_on_new_craft_station_menu_id_pressed)
+
+
+func build_new_item_category_menu() -> void:
+	var menu = new_item_categories_button.get_popup()
+	menu.clear()
+	menu.add_item("New Item Category With New Resource", NEW_ITEM_NEW_RESOURCE)
+	menu.add_item("New Item Category With Existing Resource", NEW_ITEM_FROM_RESOURCE)
+	if menu.id_pressed.is_connected(_on_new_item_category_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_new_item_category_menu_id_pressed)
+	menu.id_pressed.connect(_on_new_item_category_menu_id_pressed)
 ### Signals
 
 func _on_open_menu_id_pressed(id: int) -> void:
@@ -205,6 +222,14 @@ func _on_new_craft_station_menu_id_pressed(id: int) -> void:
 			craft_stations_editor.new_data_pressed()
 		NEW_ITEM_FROM_RESOURCE:
 			craft_stations_editor.new_data_from_resource_pressed()
+
+
+func _on_new_item_category_menu_id_pressed(id: int) -> void:
+	match id:
+		NEW_ITEM_NEW_RESOURCE:
+			categories_editor.new_data_pressed()
+		NEW_ITEM_FROM_RESOURCE:
+			categories_editor.new_data_from_resource_pressed()
 
 
 func _on_theme_changed():

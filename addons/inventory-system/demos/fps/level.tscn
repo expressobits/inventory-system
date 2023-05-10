@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bs66pxpnpbpbs" path="res://addons/inventory-system/demos/fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://bgqw131wcpbno" path="res://addons/inventory-system/demos/fps/wall.tscn" id="2_wrb2n"]
-[ext_resource type="PackedScene" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
+[ext_resource type="PackedScene" uid="uid://he6xjchl2a43" path="res://addons/inventory-system/demos/fps/dropped_items/wood.tscn" id="3_tic68"]
 [ext_resource type="PackedScene" uid="uid://c8yur4xl4jyvg" path="res://addons/inventory-system/demos/fps/dropped_items/rock.tscn" id="4_hv5pj"]
 [ext_resource type="PackedScene" uid="uid://c58y8utvxmgl" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/tree.glb" id="6_a1n8f"]
 [ext_resource type="PackedScene" uid="uid://ctr82bvxsayua" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/treeFall.glb" id="7_17gjd"]
@@ -184,7 +184,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55362, 0, -3.8075)
 text = "Static
 Inventory"
 
+[node name="Sign3" parent="." instance=ExtResource("10_5mqut")]
+transform = Transform3D(0.246982, 0, -0.96902, 0, 1, 0, 0.96902, 0, 0.246982, 3.8889, 0, -1.6067)
+
+[node name="Label3D" parent="Sign3" index="0"]
+transform = Transform3D(0.995329, -0.0965407, 0, 0.0965407, 0.995329, 0, 0, 0, 1, 0, 1.17597, 0.0772328)
+text = "Only Tools
+Inventory"
+
 [editable path="Sign"]
 [editable path="Sign/signpostSingle"]
 [editable path="Sign2"]
 [editable path="Sign2/signpostSingle"]
+[editable path="Sign3"]
+[editable path="Sign3/signpostSingle"]

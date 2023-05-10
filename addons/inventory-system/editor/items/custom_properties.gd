@@ -22,6 +22,7 @@ func load_item(database : InventoryDatabase, item : InventoryItem):
 	self.item = item
 	loading_properties()
 
+
 func loading_properties():
 	for p in properties_obj:
 		p.queue_free()

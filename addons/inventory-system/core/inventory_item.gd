@@ -32,5 +32,8 @@ class_name InventoryItem
 ## Item custom properties
 @export var properties : Dictionary
 
+## Item Categories (Use Bit Flags)
+@export var categories : Array[ItemCategory]
+
 ## Id represents none item (Used in networked scripts)
 const NONE = -1
