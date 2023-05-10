@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b6lyilvp42hbw"]
+[gd_scene load_steps=24 format=3 uid="uid://b6lyilvp42hbw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="Resource" uid="uid://3y503wpj14ir" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://cdgfnlsjw8os2" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
-[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnables.tres" id="10_a20cd"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="10_mvvba"]
 [ext_resource type="PackedScene" uid="uid://ya110chxxrd0" path="res://addons/inventory-system/demos/fps/workbench.tscn" id="11_fkc5i"]
@@ -20,7 +19,7 @@
 [sub_resource type="Resource" id="Resource_aaejx"]
 script = ExtResource("10_mvvba")
 amount = 0
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_a20cd")])
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
 
 [sub_resource type="Resource" id="Resource_b62qw"]
 script = ExtResource("10_mvvba")
@@ -30,12 +29,32 @@ accepted_categories = Array[Resource("res://addons/inventory-system/core/item_ca
 [sub_resource type="Resource" id="Resource_6ohm7"]
 script = ExtResource("10_mvvba")
 amount = 0
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
 
 [sub_resource type="Resource" id="Resource_28wp1"]
 script = ExtResource("10_mvvba")
 amount = 0
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
+
+[sub_resource type="Resource" id="Resource_lnra6"]
+script = ExtResource("10_mvvba")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
+
+[sub_resource type="Resource" id="Resource_1ugai"]
+script = ExtResource("10_mvvba")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
+
+[sub_resource type="Resource" id="Resource_ppsln"]
+script = ExtResource("10_mvvba")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
+
+[sub_resource type="Resource" id="Resource_5yrxj"]
+script = ExtResource("10_mvvba")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("12_tehqe")])
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
@@ -148,7 +167,6 @@ horizontal_alignment = 1
 
 [node name="Box Inventory" parent="." instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
-visible = false
 
 [node name="Inventory" parent="Box Inventory" index="1"]
 inventory_name = "Dynamic Inventory"
@@ -157,7 +175,15 @@ inventory_name = "Dynamic Inventory"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
-slots = Array[ExtResource("10_mvvba")]([SubResource("Resource_aaejx"), SubResource("Resource_b62qw"), SubResource("Resource_6ohm7"), SubResource("Resource_28wp1")])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Static Inventory"
+
+[node name="Box Inventory3" parent="." instance=ExtResource("9_ia5mg")]
+transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
+
+[node name="Inventory" parent="Box Inventory3" index="1"]
+slots = Array[ExtResource("10_mvvba")]([SubResource("Resource_aaejx"), SubResource("Resource_b62qw"), SubResource("Resource_6ohm7"), SubResource("Resource_28wp1"), SubResource("Resource_lnra6"), SubResource("Resource_1ugai"), SubResource("Resource_ppsln"), SubResource("Resource_5yrxj")])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
@@ -176,3 +202,4 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.608
 
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]
+[editable path="Box Inventory3"]
