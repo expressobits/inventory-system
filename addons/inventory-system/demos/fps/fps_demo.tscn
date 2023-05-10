@@ -1,15 +1,15 @@
-[gd_scene load_steps=21 format=3 uid="uid://b4cpc8qxh0irr"]
+[gd_scene load_steps=21 format=3 uid="uid://b6lyilvp42hbw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/fps/fps_demo.gd" id="1_mxj54"]
-[ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
-[ext_resource type="Resource" uid="uid://bmqh34dg2173p" path="res://addons/inventory-system/demos/base/items/wood.tres" id="2_ig7ps"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/database.tres" id="2_gcjwy"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/items/wood.tres" id="2_ig7ps"]
 [ext_resource type="Resource" uid="uid://bej0h8o7kjiqs" path="res://addons/inventory-system/demos/base/items/stone.tres" id="3_drnqg"]
-[ext_resource type="Resource" uid="uid://d4dbqgguhb8cj" path="res://addons/inventory-system/demos/base/items/grass.tres" id="4_u8ypt"]
+[ext_resource type="Resource" path="res://addons/inventory-system/demos/base/items/grass.tres" id="4_u8ypt"]
 [ext_resource type="PackedScene" uid="uid://bwtecc1qeotvj" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="PackedScene" uid="uid://cdgfnlsjw8os2" path="res://addons/inventory-system/demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_1ncja"]
-[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnable.tres" id="10_245ed"]
+[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnables.tres" id="10_a20cd"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system/demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="10_mvvba"]
 [ext_resource type="PackedScene" uid="uid://ya110chxxrd0" path="res://addons/inventory-system/demos/fps/workbench.tscn" id="11_fkc5i"]
@@ -20,7 +20,7 @@
 [sub_resource type="Resource" id="Resource_aaejx"]
 script = ExtResource("10_mvvba")
 amount = 0
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_245ed")])
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_a20cd")])
 
 [sub_resource type="Resource" id="Resource_b62qw"]
 script = ExtResource("10_mvvba")

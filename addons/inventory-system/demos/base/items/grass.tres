@@ -1,6 +1,6 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://d4dbqgguhb8cj"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://cw3o7swncb07w"]
 
-[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnable.tres" id="1_gjdk4"]
+[ext_resource type="Resource" uid="uid://clxebv8xigpno" path="res://addons/inventory-system/demos/base/categories/burnables.tres" id="1_gjdk4"]
 [ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system/demos/assets/icons/grass.png" id="1_v4col"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_w8awx"]
 
