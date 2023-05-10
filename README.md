@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.7.2-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.7.5-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -34,6 +34,8 @@
 ✔️ Item Editor.
 
 ✔️ Categories. (https://github.com/expressobits/inventory-system/issues/5)
+
+  - [[WIKI] Item Categories](https://github.com/expressobits/inventory-system/wiki/Item-Categories)
 
 ✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
 
