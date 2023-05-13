@@ -71,7 +71,7 @@ func _on_icon_edit_button_pressed():
 func _on_icon_file_dialog_file_selected(path):
 	var file = load(path)
 	if file == null:
-		print("Ok")
+		return
 	if file is Texture2D:
 		var tex : Texture2D = file
 		station.icon = tex

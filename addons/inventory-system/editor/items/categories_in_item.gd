@@ -22,10 +22,8 @@ func loading_categories():
 		p.queue_free()
 	objs.clear()
 	for category in database.item_categories:
-		print("ok ",item.name)
 		var option_obj = CheckBox.new()
 		option_obj.text = category.name
-		print(item.categories.find(category))
 		option_obj.button_pressed = item.categories.find(category) != -1
 		option_obj.icon = category.icon
 		option_obj.expand_icon = true

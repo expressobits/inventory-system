@@ -91,7 +91,7 @@ func _on_theme_changed():
 func _on_icon_file_dialog_file_selected(path):
 	var file = load(path)
 	if file == null:
-		print("Ok")
+		return
 	if file is Texture2D:
 		var tex : Texture2D = file
 		item.icon = tex
