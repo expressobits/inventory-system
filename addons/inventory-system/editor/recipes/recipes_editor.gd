@@ -73,7 +73,9 @@ func _add_new_recipe_to_database(recipe : Recipe):
 	
 	recipe.product = Slot.new()
 	var item = current_item
-	if not database.has_item(item):
+	if item == null:
+		item = database.items[0]
+	if not database.has_item_id(item.id):
 		var id = database.get_valid_id()
 		item = database.get_item(id)
 	recipe.product.item = item

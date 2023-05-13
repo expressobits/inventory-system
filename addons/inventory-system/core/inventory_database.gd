@@ -60,10 +60,7 @@ func get_item(id : int) -> InventoryItem:
 
 
 func has_item_id(id : int) -> bool:
-	for item in items:
-		if item.id == id:
-			return true
-	return false
+	return items_cache.has(id)
 
 
 func get_valid_id() -> int:
