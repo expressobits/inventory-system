@@ -186,7 +186,7 @@ transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.05268
 slots = Array[ExtResource("10_mvvba")]([SubResource("Resource_aaejx"), SubResource("Resource_b62qw"), SubResource("Resource_6ohm7"), SubResource("Resource_28wp1"), SubResource("Resource_lnra6"), SubResource("Resource_1ugai"), SubResource("Resource_ppsln"), SubResource("Resource_5yrxj")])
 create_slot_if_needed = false
 remove_slot_if_empty = false
-inventory_name = "Static Inventory"
+inventory_name = "Tools Inventory"
 recreate_slots_on_ready = false
 
 [node name="Setup Keys" type="Node" parent="."]

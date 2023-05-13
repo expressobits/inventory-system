@@ -7,3 +7,5 @@ class_name ItemCategory
 @export var color := Color(1,1,1)
 
 @export var icon : Texture2D
+
+var code := 0

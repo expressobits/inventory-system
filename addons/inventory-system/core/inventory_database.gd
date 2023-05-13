@@ -3,39 +3,30 @@
 extends Resource
 class_name InventoryDatabase
 
-## Database of items and their id information and dropped item as [PackedScene]
+## Database of items and their id information
 
-## TODO DOC Scene containing the dropable item version, this information is used by [InventoryHandler] to drop items
 @export var items : Array[InventoryItem] = []:
 	set(new_items):
 		items = new_items
 		update_items_cache()
 	get:
 		return items
-		
 
 @export var recipes : Array[Recipe]
 
 @export var stations_type : Array[CraftStationType]
 
-@export var item_categories : Array[ItemCategory]
+@export var item_categories : Array[ItemCategory] = []:
+	set(new_item_categories):
+		item_categories = new_item_categories
+		update_items_categories_cache()
+	get:
+		return item_categories
 
 var items_cache : Dictionary
 
-# TODO Create loading dropped items and items with folder
-# @export var path_test := "res://addons/inventory-system/demos/fps/items/"
-#func load_items():
-#	for item_list in item_list_test:
-#		var obj = load(str(path_test, item_list.name, ".tres"))
-#		var item = obj as Item
-#		items.append(items)
-		
-#var item_data_example = {
-#	"item" : resource,
-#	"id" : 0,
-#	"dropped_item", packedScene,
-#	"hand_item", packedScene,
-#}
+var categories_code_cache : Dictionary
+
 
 func update_items_cache():
 	items_cache.clear()
@@ -43,12 +34,21 @@ func update_items_cache():
 		if item != null:
 			items_cache[item.id] = item
 
+
+func update_items_categories_cache():
+	categories_code_cache.clear()
+	for i in item_categories.size():
+		var category = item_categories[i]
+		if category != null:
+			category.code = pow(2, i)
+			categories_code_cache[pow(2, i)] = category
+
+
 ## Returns the id of dropped item as [PackedScene], return 0 if not found
 func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 	for item_data in items:
 		if item_data.dropped_item == dropped_item:
 			return item_data.item.id
-	# printerr("dropped_item ",dropped_item," is not in the database!")
 	return InventoryItem.NONE
 
 
@@ -56,10 +56,6 @@ func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 func get_item(id : int) -> InventoryItem:
 	if items_cache.has(id):
 		return items_cache[id]
-#	for i in items:
-#		if i.id == id:
-#			return i
-	# printerr("id ",id," is not in the database!")
 	return null
 
 
@@ -81,4 +77,7 @@ func get_new_valid_id() -> int:
 		if not has_item_id(i):
 			return i
 	return -1
-	
+
+
+func get_category(code : int) -> ItemCategory:
+	return categories_code_cache[code]

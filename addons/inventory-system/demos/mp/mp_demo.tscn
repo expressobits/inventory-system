@@ -1,8 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://cgkm3qg0g5yf4"]
+[gd_scene load_steps=23 format=3 uid="uid://cgkm3qg0g5yf4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://2i8022umv4df" path="res://addons/inventory-system/demos/mp/mp_player.tscn" id="2_01e0j"]
-[ext_resource type="Resource" uid="uid://ds5vbdoklqy3a" path="res://addons/inventory-system/demos/base/database.tres" id="3_aep54"]
+[ext_resource type="Resource" uid="uid://3y503wpj14ir" path="res://addons/inventory-system/demos/base/database.tres" id="3_aep54"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system/demos/fps/labels.tscn" id="5_rvlsk"]
 [ext_resource type="PackedScene" uid="uid://bwtecc1qeotvj" path="res://addons/inventory-system/demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
@@ -12,6 +12,48 @@
 [ext_resource type="Script" path="res://addons/inventory-system/demos/base/setup_keys.gd" id="10_efc1k"]
 [ext_resource type="PackedScene" uid="uid://ya110chxxrd0" path="res://addons/inventory-system/demos/fps/workbench.tscn" id="10_jjthn"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="11_sal7r"]
+[ext_resource type="Resource" uid="uid://xbjnhv307te4" path="res://addons/inventory-system/demos/base/categories/tool.tres" id="13_rbh8l"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="14_cedla"]
+
+[sub_resource type="Resource" id="Resource_aaejx"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_b62qw"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_6ohm7"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_28wp1"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_lnra6"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_1ugai"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_ppsln"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
+
+[sub_resource type="Resource" id="Resource_5yrxj"]
+script = ExtResource("14_cedla")
+amount = 0
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_rbh8l")])
 
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
@@ -90,9 +132,21 @@ script = ExtResource("7_8khhq")
 [node name="OutputInventory" parent="Workbench" index="4"]
 script = ExtResource("7_8khhq")
 
+[node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
+
+[node name="Inventory" parent="Box Inventory3" index="1"]
+script = ExtResource("7_8khhq")
+slots = Array[ExtResource("14_cedla")]([SubResource("Resource_aaejx"), SubResource("Resource_b62qw"), SubResource("Resource_6ohm7"), SubResource("Resource_28wp1"), SubResource("Resource_lnra6"), SubResource("Resource_1ugai"), SubResource("Resource_ppsln"), SubResource("Resource_5yrxj")])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Tools Inventory"
+recreate_slots_on_ready = false
+
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
 
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]
 [editable path="Workbench"]
+[editable path="Box Inventory3"]

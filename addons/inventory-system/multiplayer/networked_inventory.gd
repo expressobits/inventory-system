@@ -26,6 +26,22 @@ var slots_sync : Array:
 				slots[i].item = item
 
 
+var slots_sync_categories : PackedInt32Array:
+	set(value):
+		slots_sync_categories = value
+		if not multiplayer.is_server():
+			for i in range(value.size(), slots.size()):
+				slots.remove_at(i)
+			for i in value.size():
+				if i >= slots.size():
+					slots.append(Slot.new())
+				slots[i].accepted_categories_code = value[i]
+				# TODO Optimize code with bytes operations
+				# One category compatible now
+				slots[i].accepted_categories.clear()
+				slots[i].accepted_categories.append(database.get_category(value[i]))
+
+
 func _ready():
 	super._ready()
 	multiplayer.peer_connected.connect(_on_connected.bind())
@@ -39,6 +55,7 @@ func _ready():
 		for i in slots.size():
 			var slot = slots[i]
 			slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
+			slots_sync_categories.append(slot.accepted_categories_code)
 
 
 func _on_connected(id):
@@ -47,7 +64,8 @@ func _on_connected(id):
 	slots_sync.clear()
 	for i in slots.size():
 		var slot = slots[i]
-		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
+		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount , "categories" = slot.accepted_categories_code})
+		slots_sync_categories.append(slot.accepted_categories_code)
 	if is_open:
 		_opened_rpc.rpc_id(id)
 	_update_slots_rpc.rpc_id(id, slots_sync)
@@ -69,6 +87,7 @@ func _on_slot_added(slot_index : int):
 	if not multiplayer.is_server():
 		return
 	slots_sync.append({"item_id" = InventoryItem.NONE , "amount" = 0})
+	slots_sync_categories.append(0)
 	_slot_added_rpc.rpc(slot_index)
 
 
@@ -84,6 +103,7 @@ func _on_updated_slot(slot_index : int):
 	var amount = slots[slot_index].amount
 	slots_sync[slot_index]["item_id"] = item_id
 	slots_sync[slot_index]["amount"] = amount
+	slots_sync_categories[slot_index] = slots[slot_index].accepted_categories_code
 	_updated_slot_rpc.rpc(slot_index, item_id, amount)
 
 
