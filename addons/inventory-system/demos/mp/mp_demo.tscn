@@ -103,6 +103,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory" index="1"]
 script = ExtResource("7_8khhq")
+sync_item_added_signal = null
+sync_item_removed_signal = null
 inventory_name = "Dynamic Inventory"
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
@@ -110,6 +112,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
 script = ExtResource("7_8khhq")
+sync_item_added_signal = null
+sync_item_removed_signal = null
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
@@ -128,15 +132,21 @@ script = ExtResource("11_sal7r")
 
 [node name="InputInventory" parent="Workbench" index="3"]
 script = ExtResource("7_8khhq")
+sync_item_added_signal = null
+sync_item_removed_signal = null
 
 [node name="OutputInventory" parent="Workbench" index="4"]
 script = ExtResource("7_8khhq")
+sync_item_added_signal = null
+sync_item_removed_signal = null
 
 [node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
 script = ExtResource("7_8khhq")
+sync_item_added_signal = null
+sync_item_removed_signal = null
 slots = Array[ExtResource("14_cedla")]([SubResource("Resource_aaejx"), SubResource("Resource_b62qw"), SubResource("Resource_6ohm7"), SubResource("Resource_28wp1"), SubResource("Resource_lnra6"), SubResource("Resource_1ugai"), SubResource("Resource_ppsln"), SubResource("Resource_5yrxj")])
 create_slot_if_needed = false
 remove_slot_if_empty = false

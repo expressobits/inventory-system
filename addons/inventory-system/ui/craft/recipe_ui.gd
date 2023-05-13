@@ -36,8 +36,7 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 		ingredient_obj.setup(ingredient)
 		_ingredients.append(ingredient_obj)
 	_check_if_has_ingredients()
-	craft_station.input_inventory.item_added.connect(_on_added_item.bind())
-	craft_station.input_inventory.item_removed.connect(_on_added_item.bind())
+	craft_station.input_inventory.updated_slot.connect(_on_updated_slot.bind())
 
 
 func _clear_ingredients():
@@ -50,7 +49,7 @@ func _on_craft_button_button_down():
 	_craft_station.craft(_recipe_index)
 
 
-func _on_added_item(item : InventoryItem, amount : int):
+func _on_updated_slot(slot_index : int):
 	_check_if_has_ingredients()
 
 

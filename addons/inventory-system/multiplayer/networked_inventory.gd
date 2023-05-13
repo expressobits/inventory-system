@@ -2,6 +2,9 @@
 extends Inventory
 class_name NetworkedInventory
 
+@export var sync_item_added_signal := true
+@export var sync_item_removed_signal := true
+
 ## Networked version of inventory where server sends rpcs to client for 
 ## slot update, add and remove signals
 ## 
@@ -48,6 +51,10 @@ func _ready():
 	slot_added.connect(_on_slot_added.bind())
 	updated_slot.connect(_on_updated_slot.bind())
 	slot_removed.connect(_on_slot_removed.bind())
+	if sync_item_added_signal:
+		item_added.connect(_on_item_added.bind())
+	if sync_item_removed_signal:
+		item_removed.connect(_on_item_removed.bind())
 	opened.connect(_on_opened.bind())
 	closed.connect(_on_closed.bind())
 	if multiplayer.is_server():
@@ -114,6 +121,18 @@ func _on_slot_removed(slot_index : int):
 	_slot_removed_rpc.rpc(slot_index)
 
 
+func _on_item_added(item : InventoryItem, amount : int):
+	if not multiplayer.is_server():
+		return
+	_item_added_rpc.rpc(item.id, amount)
+
+
+func _on_item_removed(item : InventoryItem, amount : int):
+	if not multiplayer.is_server():
+		return
+	_item_removed_rpc.rpc(item.id, amount)
+
+
 @rpc
 func _update_slots_rpc(slots_sync : Array):
 	self.slots_sync = slots_sync
@@ -155,3 +174,23 @@ func _slot_removed_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
 	_remove_slot(slot_index)
+
+
+@rpc
+func _item_added_rpc(item_id : int, amount : int):
+	if multiplayer.is_server():
+		return
+	var item = database.get_item(item_id)
+	if item == null:
+		return
+	emit_signal("item_added", item, amount)
+
+
+@rpc
+func _item_removed_rpc(item_id : int, amount : int):
+	if multiplayer.is_server():
+		return
+	var item = database.get_item(item_id)
+	if item == null:
+		return
+	emit_signal("item_removed", item, amount)
