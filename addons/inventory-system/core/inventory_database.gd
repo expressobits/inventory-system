@@ -40,7 +40,8 @@ func update_items_categories_cache():
 	for i in item_categories.size():
 		var category = item_categories[i]
 		if category != null:
-			category.code = int(pow(2, i))
+			if not Engine.is_editor_hint():
+				category.code = int(pow(2, i))
 			categories_code_cache[int(pow(2, i))] = category
 
 
