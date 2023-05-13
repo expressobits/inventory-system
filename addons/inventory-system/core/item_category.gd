@@ -1,3 +1,4 @@
+@tool
 @icon("res://addons/inventory-system/icons/item_category.svg")
 extends Resource
 class_name ItemCategory
@@ -8,4 +9,4 @@ class_name ItemCategory
 
 @export var icon : Texture2D
 
-var code := 0
+var code : int = 0

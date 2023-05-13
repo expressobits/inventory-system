@@ -8,3 +8,4 @@ script = ExtResource("2_qdflg")
 name = "Burnables"
 color = Color(0.996078, 0.737255, 0.678431, 1)
 icon = ExtResource("1_ld0ab")
+code = 1

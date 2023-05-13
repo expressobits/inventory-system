@@ -40,8 +40,8 @@ func update_items_categories_cache():
 	for i in item_categories.size():
 		var category = item_categories[i]
 		if category != null:
-			category.code = pow(2, i)
-			categories_code_cache[pow(2, i)] = category
+			category.code = int(pow(2, i))
+			categories_code_cache[int(pow(2, i))] = category
 
 
 ## Returns the id of dropped item as [PackedScene], return 0 if not found
