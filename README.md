@@ -5,6 +5,11 @@
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
+See demos in:
+Github: https://github.com/expressobits/inventory-system-demos
+Godot Asset Lib: https://godotengine.org/asset-library/asset/1650
+
+
 ## Features
 
 ✔️ Inventory with Slots.
