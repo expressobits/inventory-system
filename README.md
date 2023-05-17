@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.7.51-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.7.6-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -7,7 +7,7 @@
 
 See demos in:
 Github: https://github.com/expressobits/inventory-system-demos
-Godot Asset Lib: https://godotengine.org/asset-library/asset/1650
+Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 
 ## Features
