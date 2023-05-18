@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.7.6-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-0.7.62-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
@@ -44,17 +44,15 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 ✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
 
+✔️ Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
+
 ## In Progress
 
-🔨 Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
+🔨 Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
 
 ## Planneds
 
-📅 Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
-
 📅 Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
-
-📅  Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
 
 ## Install
 See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)

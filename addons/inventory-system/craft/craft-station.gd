@@ -79,6 +79,8 @@ func _ready():
 	for i in database.recipes.size():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
+			if(recipe.station):
+				print(recipe.station.name, valid_recipes)
 			valid_recipes.append(i)
 
 
