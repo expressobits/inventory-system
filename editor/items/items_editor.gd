@@ -36,6 +36,7 @@ func remove_item(item : InventoryItem):
 		return
 	var index = database.items.find(item)
 	database.items.remove_at(index)
+	ResourceSaver.save(database, database.resource_path)
 	load_items()
 	emit_signal("data_changed")
 
@@ -109,6 +110,7 @@ func _on_new_resource_dialog_file_selected(path):
 		item.name = "New Item"
 		item.id = database.get_new_valid_id()
 		database.items.append(item)
+		ResourceSaver.save(database, database.resource_path)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("data_changed")
@@ -125,6 +127,7 @@ func _on_open_resource_dialog_file_selected(path):
 			push_warning("The item \""+item.name+"\"("+ item.resource_path +") already exists in the database!")
 			return
 		database.items.append(item)
+		ResourceSaver.save(database, database.resource_path)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("data_changed")
