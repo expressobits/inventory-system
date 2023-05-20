@@ -181,6 +181,7 @@ func _finish_crafting(crafting_index : int):
 		output_inventory.add(subproduct.item, subproduct.amount)
 	emit_signal("on_crafted", crafting.recipe_index)
 	_remove_crafting(crafting_index)
+	_check_for_auto_crafts()
 
 
 func _use_items(recipe : Recipe) -> bool:
