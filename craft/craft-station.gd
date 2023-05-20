@@ -52,6 +52,9 @@ signal closed
 ## The type of this craftstation, this type defines which recipes can be created in that station
 @export var type : CraftStationType
 
+## Only remove ingredients from the inventory when the craft is finished
+@export var only_remove_ingredients_after_craft := false
+
 ## Start crafting automatically if you have an item available.
 @export var auto_craft : bool:
 	set(new_value):
@@ -80,6 +83,7 @@ func _ready():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
 			valid_recipes.append(i)
+	input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
 
 func _process(delta):
@@ -133,8 +137,9 @@ func craft(recipe_index : int):
 	emit_signal("on_request_craft", recipe_index)
 	if not can_craft(recipe):
 		return
-	if not _use_items(recipe):
-		return
+	if not only_remove_ingredients_after_craft:
+		if not _use_items(recipe):
+			return
 	_add_crafting(recipe_index, recipe)
 
 
@@ -144,11 +149,10 @@ func cancel_craft(crafting_index : int):
 	if crafting_index < 0 or crafting_index >= craftings.size():
 		return
 	var crafting = craftings[crafting_index]
-	if crafting.is_finished():
-		return
 	var recipe = database.recipes[crafting.recipe_index]
-	for ingredient in recipe.ingredients:
-		input_inventory.add(ingredient.item, ingredient.amount)
+	if not only_remove_ingredients_after_craft:
+		for ingredient in recipe.ingredients:
+			input_inventory.add(ingredient.item, ingredient.amount)
 	_remove_crafting(crafting_index)
 	
 	
@@ -175,6 +179,11 @@ func close() -> bool:
 func _finish_crafting(crafting_index : int):
 	var crafting = craftings[crafting_index]
 	var recipe = database.recipes[crafting.recipe_index]
+	if only_remove_ingredients_after_craft:
+		if not contains_ingredients(recipe):
+			cancel_craft(crafting_index)
+			return
+		_use_items(recipe)
 	# TODO add function for slot in inventory
 	output_inventory.add(recipe.product.item, recipe.product.amount)
 	for subproduct in recipe.byproducts:
@@ -210,6 +219,17 @@ func _remove_crafting(crafting_index : int):
 
 func _on_input_inventory_changed(item : InventoryItem, amount : int):
 	_check_for_auto_crafts()
+
+
+func _on_input_inventory_item_removed(item : InventoryItem, amount : int):
+	if only_remove_ingredients_after_craft:
+		for i in craftings.size():
+			var craft = craftings[i]
+			if craft.is_finished():
+				continue
+			var recipe = database.recipes[craft.recipe_index]
+			if not contains_ingredients(recipe):
+				cancel_craft(i)
 
 
 func _check_for_auto_crafts():
