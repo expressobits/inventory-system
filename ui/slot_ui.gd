@@ -19,7 +19,7 @@ class_name SlotUI
 func update_info_with_slot(slot : Slot):
 	category_icon.visible = slot.amount == 0
 	
-	if slot.accepted_categories.size() > 0:
+	if is_categorized_slot_and_have_category(slot):
 		category_icon.texture = slot.accepted_categories[0].icon
 		panel.modulate = slot.accepted_categories[0].color
 	else:
@@ -33,7 +33,14 @@ func update_info_with_slot(slot : Slot):
 			return
 	item_icon.texture = null
 	amount_label.visible = false
-	
+
+
+func is_categorized_slot_and_have_category(slot : Slot):
+	if slot is CategorizedSlot:
+		var c_slot = slot as CategorizedSlot
+		if c_slot.accepted_categories.size() > 0:
+			return true
+	return false
 
 
 ## Update information with [InventoryItem] and amount.
