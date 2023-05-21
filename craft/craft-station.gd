@@ -62,6 +62,7 @@ signal closed
 		auto_craft = new_value
 		_check_for_auto_crafts()
 
+@export var items_used_in_craft : Inventory
 
 ## Current active craftings in this station
 var craftings : Array[Crafting]
@@ -137,6 +138,9 @@ func craft(recipe_index : int):
 	if not only_remove_ingredients_after_craft:
 		if not _use_items(recipe):
 			return
+	else:
+		for ingredient in recipe.ingredients:
+			items_used_in_craft.add(ingredient.item, ingredient.amount)
 	_add_crafting(recipe_index, recipe)
 
 
@@ -179,6 +183,8 @@ func _finish_crafting(crafting_index : int):
 	
 	_remove_crafting(crafting_index)
 	if only_remove_ingredients_after_craft:
+		for ingredient in recipe.ingredients:
+			items_used_in_craft[ingredient.item] = items_used_in_craft[ingredient.item] - ingredient.amount
 		if not contains_ingredients(recipe):
 			cancel_craft(crafting_index)
 			return
