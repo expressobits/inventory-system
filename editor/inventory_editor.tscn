@@ -10,10 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://6b7n3apcb8hy" path="res://addons/inventory-system/icons/new_item_category.svg" id="5_4w1hd"]
 [ext_resource type="PackedScene" uid="uid://kuckh8lq8mwr" path="res://addons/inventory-system/editor/items/items.tscn" id="5_fwymy"]
 [ext_resource type="PackedScene" uid="uid://c20tt03af3qw6" path="res://addons/inventory-system/editor/recipes/recipes.tscn" id="6_qmu8k"]
-[ext_resource type="Texture2D" uid="uid://3qxo8va657qh" path="res://addons/inventory-system/icons/craft-station-type.svg" id="8_4vmnl"]
+[ext_resource type="Texture2D" uid="uid://3qxo8va657qh" path="res://addons/inventory-system/icons/craft_station_type.svg" id="8_4vmnl"]
 [ext_resource type="Texture2D" uid="uid://bgx18ev7eamk5" path="res://addons/inventory-system/icons/item_category.svg" id="10_86ysm"]
 [ext_resource type="PackedScene" uid="uid://clj2qii0ta8lx" path="res://addons/inventory-system/editor/craft_stations/craft_stations.tscn" id="11_rrabm"]
 [ext_resource type="PackedScene" uid="uid://cfevgv38d1bll" path="res://addons/inventory-system/editor/categories/categories_editor.tscn" id="12_kvj1p"]
+
 
 [node name="InventoryEditor" type="Control"]
 layout_mode = 3

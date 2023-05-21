@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://df1a7ilav53jw"
-path="res://.godot/imported/craft-station.svg-5da1720b7f77239c8d917a5a45fc401f.ctex"
+uid="uid://40562fwikw0a"
+path="res://.godot/imported/craft_station_type.svg-3be59ac6f3804bbce3a31d871b285041.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/original_icons/craft-station.svg"
-dest_files=["res://.godot/imported/craft-station.svg-5da1720b7f77239c8d917a5a45fc401f.ctex"]
+source_file="res://addons/inventory-system/icons/original_icons/craft_station_type.svg"
+dest_files=["res://.godot/imported/craft_station_type.svg-3be59ac6f3804bbce3a31d871b285041.ctex"]
 
 [params]
 
