@@ -242,6 +242,13 @@ func _check_for_auto_crafts():
 		craft(i)
 
 
+func _get_configuration_warnings() -> PackedStringArray:
+	var string_array = super._get_configuration_warnings()
+	if only_remove_ingredients_after_craft and limit_number_crafts != 1:
+		string_array.append("'only_remove_ingredients_after_craft' requires limit_number_crafts to be 1!")
+	return string_array
+
+
 ## Class that contain crafting information being processed.
 class Crafting:
 	
