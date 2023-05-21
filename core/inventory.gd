@@ -135,6 +135,33 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 			if amount_in_inventory >= amount:
 				return true
 	return false
+	
+
+## Returns true if the inventory contains the quantity of the specified category
+func contains_category(category : ItemCategory, amount := 1) -> bool:
+	if category == null:
+		return false
+	var amount_in_inventory = 0
+	for slot in slots:
+		if slot.item == null:
+			continue
+		if slot.item.contains_category(category):
+			amount_in_inventory += slot.amount
+			if amount_in_inventory >= amount:
+				return true
+	return false
+
+
+## Returns the index of the slot that contains the item of the category, returns -1 if there is no item of that category
+func get_slot_index_with_an_item_of_category(category : ItemCategory) -> int:
+	if category == null:
+		return -1
+	var amount_in_inventory = 0
+	for i in slots.size():
+		var slot = slots[i]
+		if slot.item.contains_category(category):
+			return i
+	return -1
 
 
 ## Returns amount of the specified item in inventory

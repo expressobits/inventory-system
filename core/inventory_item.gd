@@ -37,3 +37,10 @@ class_name InventoryItem
 
 ## Id represents none item (Used in networked scripts)
 const NONE = -1
+
+
+func contains_category(category : ItemCategory) -> bool:
+	for c in categories:
+		if c == category:
+			return true
+	return false
