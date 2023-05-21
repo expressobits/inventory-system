@@ -58,11 +58,6 @@ signal closed
 ## Start crafting automatically if you have an item available.
 @export var auto_craft : bool:
 	set(new_value):
-		if auto_craft != new_value and input_inventory != null:
-			if new_value:
-				input_inventory.item_added.connect(_on_input_inventory_changed.bind())
-			else:
-				input_inventory.item_added.disconnect(_on_input_inventory_changed.bind())
 		auto_craft = new_value
 		_check_for_auto_crafts()
 
@@ -83,6 +78,7 @@ func _ready():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
 			valid_recipes.append(i)
+	input_inventory.item_added.connect(_on_input_inventory_item_added.bind())
 	input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
 
@@ -217,8 +213,9 @@ func _remove_crafting(crafting_index : int):
 	craftings.remove_at(crafting_index)
 
 
-func _on_input_inventory_changed(item : InventoryItem, amount : int):
-	_check_for_auto_crafts()
+func _on_input_inventory_item_added(item : InventoryItem, amount : int):
+	if auto_craft:
+		_check_for_auto_crafts()
 
 
 func _on_input_inventory_item_removed(item : InventoryItem, amount : int):
