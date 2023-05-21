@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/inventory-system/icons/craft-station.svg")
+@icon("res://addons/inventory-system/icons/craft_station.svg")
 extends NodeInventorySystemBase
 class_name CraftStation
 
@@ -52,16 +52,20 @@ signal closed
 ## The type of this craftstation, this type defines which recipes can be created in that station
 @export var type : CraftStationType
 
+## Only remove ingredients from the inventory when the craft is finished
+## Note: This only works when the limit_number_crafts is 1
+@export var only_remove_ingredients_after_craft := false
+
 ## Start crafting automatically if you have an item available.
 @export var auto_craft : bool:
 	set(new_value):
-		if auto_craft != new_value and input_inventory != null:
-			if new_value:
-				input_inventory.item_added.connect(_on_input_inventory_changed.bind())
-			else:
-				input_inventory.item_added.disconnect(_on_input_inventory_changed.bind())
 		auto_craft = new_value
 		_check_for_auto_crafts()
+
+## Craft processing mode:
+## - Sequential: only one craft is processed
+## - Parallel: all crafts process together
+@export var processing_mode : ProcessingMode = ProcessingMode.PARALLEL
 
 
 ## Current active craftings in this station
@@ -75,26 +79,31 @@ var is_open : bool
 var valid_recipes : Array[int]
 
 
+enum ProcessingMode { PARALLEL, SEQUENTIAL }
+
+
 func _ready():
 	for i in database.recipes.size():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
-			if(recipe.station):
-				print(recipe.station.name, valid_recipes)
 			valid_recipes.append(i)
+	if input_inventory != null:
+		input_inventory.item_added.connect(_on_input_inventory_item_added.bind())
+		input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
 
-func _process(delta):
+func _process(delta : float):
 	if not can_processing_craftings:
 		return
 	if not is_crafting():
 		return
+	_process_crafts(delta)
+	
 	for i in range(craftings.size() - 1, -1, -1):
 		var c = craftings[i]
-		# TODO set start time in crafting only (Problem with load game ?)
-		c.time -= delta
-		if c.time <= 0:
+		if c.is_finished():
 			_finish_crafting(i)
+			return
 
 
 ## Returns true if there are craftings being created by this station.
@@ -135,8 +144,9 @@ func craft(recipe_index : int):
 	emit_signal("on_request_craft", recipe_index)
 	if not can_craft(recipe):
 		return
-	if not _use_items(recipe):
-		return
+	if not only_remove_ingredients_after_craft:
+		if not _use_items(recipe):
+			return
 	_add_crafting(recipe_index, recipe)
 
 
@@ -146,11 +156,10 @@ func cancel_craft(crafting_index : int):
 	if crafting_index < 0 or crafting_index >= craftings.size():
 		return
 	var crafting = craftings[crafting_index]
-	if crafting.is_finished():
-		return
 	var recipe = database.recipes[crafting.recipe_index]
-	for ingredient in recipe.ingredients:
-		input_inventory.add(ingredient.item, ingredient.amount)
+	if not only_remove_ingredients_after_craft:
+		for ingredient in recipe.ingredients:
+			input_inventory.add(ingredient.item, ingredient.amount)
 	_remove_crafting(crafting_index)
 	
 	
@@ -174,15 +183,32 @@ func close() -> bool:
 	return false
 
 
+func _process_crafts(delta : float):
+	for i in craftings.size():
+		if processing_mode == ProcessingMode.SEQUENTIAL and i > 0:
+			return
+		var c = craftings[i]
+		# TODO set start time in crafting only (Problem with load game ?)
+		if not c.is_finished():
+			c.time -= delta
+
+
 func _finish_crafting(crafting_index : int):
 	var crafting = craftings[crafting_index]
 	var recipe = database.recipes[crafting.recipe_index]
+	
+	_remove_crafting(crafting_index)
+	if only_remove_ingredients_after_craft:
+		if not contains_ingredients(recipe):
+			cancel_craft(crafting_index)
+			return
+		_use_items(recipe)
 	# TODO add function for slot in inventory
 	output_inventory.add(recipe.product.item, recipe.product.amount)
 	for subproduct in recipe.byproducts:
 		output_inventory.add(subproduct.item, subproduct.amount)
 	emit_signal("on_crafted", crafting.recipe_index)
-	_remove_crafting(crafting_index)
+	_check_for_auto_crafts()
 
 
 func _use_items(recipe : Recipe) -> bool:
@@ -209,8 +235,21 @@ func _remove_crafting(crafting_index : int):
 	craftings.remove_at(crafting_index)
 
 
-func _on_input_inventory_changed(item : InventoryItem, amount : int):
-	_check_for_auto_crafts()
+func _on_input_inventory_item_added(item : InventoryItem, amount : int):
+	if auto_craft:
+		_check_for_auto_crafts()
+
+
+func _on_input_inventory_item_removed(item : InventoryItem, amount : int):
+	if only_remove_ingredients_after_craft:
+		var i = 0
+		while i < craftings.size():
+			var craft = craftings[i]
+			var recipe = database.recipes[craft.recipe_index]
+			if not contains_ingredients(recipe):
+				cancel_craft(i)
+				continue
+			i = i + 1
 
 
 func _check_for_auto_crafts():
@@ -221,6 +260,13 @@ func _check_for_auto_crafts():
 		if not can_craft(recipe):
 			continue
 		craft(i)
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	var string_array = super._get_configuration_warnings()
+	if only_remove_ingredients_after_craft and limit_number_crafts != 1:
+		string_array.append("'only_remove_ingredients_after_craft' requires limit_number_crafts to be 1!")
+	return string_array
 
 
 ## Class that contain crafting information being processed.

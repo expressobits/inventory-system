@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://indtsabwk6hr"
-path="res://.godot/imported/craft-station.svg-10e691eeb6cb3137a621356ab7aa5e91.ctex"
+path="res://.godot/imported/craft_station.svg-902aa7526328b4a865479b148b6eef05.ctex"
 metadata={
 "editor_dark_theme": true,
 "editor_scale": 1.0,
@@ -13,8 +13,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/craft-station.svg"
-dest_files=["res://.godot/imported/craft-station.svg-10e691eeb6cb3137a621356ab7aa5e91.ctex"]
+source_file="res://addons/inventory-system/icons/craft_station.svg"
+dest_files=["res://.godot/imported/craft_station.svg-902aa7526328b4a865479b148b6eef05.ctex"]
 
 [params]
 

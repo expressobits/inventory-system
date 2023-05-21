@@ -119,9 +119,7 @@ func is_empty() -> bool:
 ## Returns true if inventory is full
 func is_full() -> bool:
 	for slot in slots:
-		if slot.item == null:
-			return false
-		if slot.amount < slot.item.max_stack:
+		if not slot.is_full():
 			return false
 	return true
 
@@ -137,6 +135,33 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 			if amount_in_inventory >= amount:
 				return true
 	return false
+	
+
+## Returns true if the inventory contains the quantity of the specified category
+func contains_category(category : ItemCategory, amount := 1) -> bool:
+	if category == null:
+		return false
+	var amount_in_inventory = 0
+	for slot in slots:
+		if slot.item == null:
+			continue
+		if slot.item.contains_category(category):
+			amount_in_inventory += slot.amount
+			if amount_in_inventory >= amount:
+				return true
+	return false
+
+
+## Returns the index of the slot that contains the item of the category, returns -1 if there is no item of that category
+func get_slot_index_with_an_item_of_category(category : ItemCategory) -> int:
+	if category == null:
+		return -1
+	var amount_in_inventory = 0
+	for i in slots.size():
+		var slot = slots[i]
+		if slot.item.contains_category(category):
+			return i
+	return -1
 
 
 ## Returns amount of the specified item in inventory
@@ -275,29 +300,18 @@ func _call_events(old_amount : int):
 
 
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	if item == null:
-		return amount
 	var slot = slots[slot_index]
-	if amount <= 0 or (slot.item != item and slot.item != null) or not slot.is_accept_category(item):
+	var remaining_amount = slot.add(item, amount)
+	if remaining_amount == amount:
 		return amount
-	var amount_to_add = min(amount, item.max_stack - slot.amount)
-	slot.amount = slot.amount + amount_to_add;
-	if amount_to_add > 0 and slot.item == null:
-		slot.item = item
 	emit_signal("updated_slot", slot_index)
-	return amount - amount_to_add;
+	return remaining_amount;
 
 
 func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
-	if item == null:
-		return amount
 	var slot = slots[slot_index]
-	var item_slot = slot.item
-	if amount <= 0 or (item_slot != item && item_slot != null):
-		return amount;
-	var amount_to_remove = min(amount, slot.amount);
-	slot.amount = slot.amount - amount_to_remove;
-	if slot.amount <= 0:
-		slot.item = null;
+	var remaining_amount = slot.remove(item, amount)
+	if remaining_amount == amount:
+		return amount
 	emit_signal("updated_slot", slot_index);
-	return amount - amount_to_remove;
+	return remaining_amount;

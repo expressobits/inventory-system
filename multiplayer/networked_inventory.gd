@@ -14,6 +14,8 @@ class_name NetworkedInventory
 ## slot[i] = new Dictionary is not replicated across the network.
 ## Also keep in mind that signals need to be handled if switching to a use of
 ## MultiplayerSyncronizer
+##
+## Note: Slot categories are not synced
 
 var slots_sync : Array:
 	set(value):
@@ -27,22 +29,6 @@ var slots_sync : Array:
 				slots[i].amount = slots_sync[i].amount
 				var item = database.get_item(slots_sync[i].item_id)
 				slots[i].item = item
-
-
-var slots_sync_categories : PackedInt32Array:
-	set(value):
-		slots_sync_categories = value
-		if not multiplayer.is_server():
-			for i in range(value.size(), slots.size()):
-				slots.remove_at(i)
-			for i in value.size():
-				if i >= slots.size():
-					slots.append(Slot.new())
-				slots[i].accepted_categories_code = value[i]
-				# TODO Optimize code with bytes operations
-				# One category compatible now
-				slots[i].accepted_categories.clear()
-				slots[i].accepted_categories.append(database.get_category(value[i]))
 
 
 func _ready():
@@ -62,7 +48,6 @@ func _ready():
 		for i in slots.size():
 			var slot = slots[i]
 			slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
-			slots_sync_categories.append(slot.accepted_categories_code)
 
 
 func _on_connected(id):
@@ -71,8 +56,7 @@ func _on_connected(id):
 	slots_sync.clear()
 	for i in slots.size():
 		var slot = slots[i]
-		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount , "categories" = slot.accepted_categories_code})
-		slots_sync_categories.append(slot.accepted_categories_code)
+		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
 	if is_open:
 		_opened_rpc.rpc_id(id)
 	_update_slots_rpc.rpc_id(id, slots_sync)
@@ -93,8 +77,9 @@ func _on_closed():
 func _on_slot_added(slot_index : int):
 	if not multiplayer.is_server():
 		return
-	slots_sync.append({"item_id" = InventoryItem.NONE , "amount" = 0})
-	slots_sync_categories.append(0)
+	var slot = slots[slot_index]
+	var slot_dict = {"item_id" = InventoryItem.NONE , "amount" = 0}
+	slots_sync.append(slot_dict)
 	_slot_added_rpc.rpc(slot_index)
 
 
@@ -110,7 +95,6 @@ func _on_updated_slot(slot_index : int):
 	var amount = slots[slot_index].amount
 	slots_sync[slot_index]["item_id"] = item_id
 	slots_sync[slot_index]["amount"] = amount
-	slots_sync_categories[slot_index] = slots[slot_index].accepted_categories_code
 	_updated_slot_rpc.rpc(slot_index, item_id, amount)
 
 
