@@ -1,3 +1,4 @@
+@tool
 extends Slot
 class_name CategorizedSlot
 

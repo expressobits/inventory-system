@@ -92,9 +92,14 @@ func _process(delta):
 	for i in range(craftings.size() - 1, -1, -1):
 		var c = craftings[i]
 		# TODO set start time in crafting only (Problem with load game ?)
-		c.time -= delta
-		if c.time <= 0:
+		if not c.is_finished():
+			c.time -= delta
+	
+	for i in range(craftings.size() - 1, -1, -1):
+		var c = craftings[i]
+		if c.is_finished():
 			_finish_crafting(i)
+			return
 
 
 ## Returns true if there are craftings being created by this station.
