@@ -79,8 +79,9 @@ func _ready():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
 			valid_recipes.append(i)
-	input_inventory.item_added.connect(_on_input_inventory_item_added.bind())
-	input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
+	if input_inventory != null:
+		input_inventory.item_added.connect(_on_input_inventory_item_added.bind())
+		input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
 
 func _process(delta):
