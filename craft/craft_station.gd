@@ -62,6 +62,11 @@ signal closed
 		auto_craft = new_value
 		_check_for_auto_crafts()
 
+## Craft processing mode:
+## - Sequential: only one craft is processed
+## - Parallel: all crafts process together
+@export var processing_mode : ProcessingMode = ProcessingMode.PARALLEL
+
 
 ## Current active craftings in this station
 var craftings : Array[Crafting]
@@ -74,6 +79,9 @@ var is_open : bool
 var valid_recipes : Array[int]
 
 
+enum ProcessingMode { PARALLEL, SEQUENTIAL }
+
+
 func _ready():
 	for i in database.recipes.size():
 		var recipe = database.recipes[i]
@@ -84,16 +92,12 @@ func _ready():
 		input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
 
-func _process(delta):
+func _process(delta : float):
 	if not can_processing_craftings:
 		return
 	if not is_crafting():
 		return
-	for i in range(craftings.size() - 1, -1, -1):
-		var c = craftings[i]
-		# TODO set start time in crafting only (Problem with load game ?)
-		if not c.is_finished():
-			c.time -= delta
+	_process_crafts(delta)
 	
 	for i in range(craftings.size() - 1, -1, -1):
 		var c = craftings[i]
@@ -177,6 +181,16 @@ func close() -> bool:
 		emit_signal("closed")
 		return true
 	return false
+
+
+func _process_crafts(delta : float):
+	for i in craftings.size():
+		if processing_mode == ProcessingMode.SEQUENTIAL and i > 0:
+			return
+		var c = craftings[i]
+		# TODO set start time in crafting only (Problem with load game ?)
+		if not c.is_finished():
+			c.time -= delta
 
 
 func _finish_crafting(crafting_index : int):
