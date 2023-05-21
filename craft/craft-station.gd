@@ -53,6 +53,7 @@ signal closed
 @export var type : CraftStationType
 
 ## Only remove ingredients from the inventory when the craft is finished
+## Note: This only works when the limit_number_crafts is 1
 @export var only_remove_ingredients_after_craft := false
 
 ## Start crafting automatically if you have an item available.
@@ -175,6 +176,8 @@ func close() -> bool:
 func _finish_crafting(crafting_index : int):
 	var crafting = craftings[crafting_index]
 	var recipe = database.recipes[crafting.recipe_index]
+	
+	_remove_crafting(crafting_index)
 	if only_remove_ingredients_after_craft:
 		if not contains_ingredients(recipe):
 			cancel_craft(crafting_index)
@@ -185,7 +188,6 @@ func _finish_crafting(crafting_index : int):
 	for subproduct in recipe.byproducts:
 		output_inventory.add(subproduct.item, subproduct.amount)
 	emit_signal("on_crafted", crafting.recipe_index)
-	_remove_crafting(crafting_index)
 	_check_for_auto_crafts()
 
 
@@ -220,13 +222,14 @@ func _on_input_inventory_item_added(item : InventoryItem, amount : int):
 
 func _on_input_inventory_item_removed(item : InventoryItem, amount : int):
 	if only_remove_ingredients_after_craft:
-		for i in craftings.size():
+		var i = 0
+		while i < craftings.size():
 			var craft = craftings[i]
-			if craft.is_finished():
-				continue
 			var recipe = database.recipes[craft.recipe_index]
 			if not contains_ingredients(recipe):
 				cancel_craft(i)
+				continue
+			i = i + 1
 
 
 func _check_for_auto_crafts():
