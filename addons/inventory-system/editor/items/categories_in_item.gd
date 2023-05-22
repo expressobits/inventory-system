@@ -40,7 +40,6 @@ func loading_categories():
 func _on_toggled_category_option(toggled : bool, category : ItemCategory):
 	if toggled:
 		item.categories.append(category)
-		print(item.name," added category ",category.name)
 	else:
 		var index = item.categories.find(category)
 		if index > -1:

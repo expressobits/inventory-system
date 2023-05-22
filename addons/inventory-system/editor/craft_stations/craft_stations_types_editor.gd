@@ -43,6 +43,7 @@ func remove_station(station : CraftStationType):
 	if index == -1:
 		return
 	database.stations_type.remove_at(index)
+	ResourceSaver.save(database, database.resource_path)
 	load_craft_station_types()
 	emit_signal("data_changed")
 
@@ -65,6 +66,7 @@ func _on_new_resource_dialog_file_selected(path):
 		var res : CraftStationType = load(path)
 		res.name = "New Craft Station Type"
 		database.stations_type.append(res)
+		ResourceSaver.save(database, database.resource_path)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	else:
@@ -107,6 +109,7 @@ func _on_open_resource_dialog_file_selected(path):
 			push_warning("The craft station type \""+ station.name +"\" already exists in the list of craft stations types in the database!")
 			return
 		database.stations_type.append(station)
+		ResourceSaver.save(database, database.resource_path)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		emit_signal("data_changed")

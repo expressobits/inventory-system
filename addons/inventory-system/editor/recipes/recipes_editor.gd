@@ -37,6 +37,7 @@ func remove_recipe(recipe : Recipe):
 		return
 	var index = database.recipes.find(recipe)
 	database.recipes.remove_at(index)
+	ResourceSaver.save(database, database.resource_path)
 	load_recipes()
 
 
@@ -86,6 +87,7 @@ func _add_new_recipe_to_database(recipe : Recipe):
 
 func _add_to_database(recipe : Recipe):
 	database.recipes.append(recipe)
+	ResourceSaver.save(database, database.resource_path)
 	load_recipes()
 	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
 	inventory_item_list.select(recipe.product.item.id)
