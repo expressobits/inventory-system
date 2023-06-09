@@ -69,22 +69,24 @@ func _update_slots():
 
 	## Set focus neighbors
 	for slot_idx in slots.size():
-		var neighbor_idxs = {left = slot_idx-1,top = slot_idx-slots_container.columns,right = slot_idx+1,bottom = slot_idx+slots_container.columns}
 		var slot = slots[slot_idx]
-		for neighbor in neighbor_idxs.keys():
-			var nb_idx = neighbor_idxs[neighbor]
-			if nb_idx >= 0 and nb_idx < slots.size():
-				match neighbor:
-					"left":
-						if slot_idx % slots_container.columns != 0:
-							slot.focus_neighbor_left = slots[nb_idx].get_path()
-					"top":
-						slot.focus_neighbor_top = slots[nb_idx].get_path()
-					"right":
-						if nb_idx % slots_container.columns != 0:
-							slot.focus_neighbor_right = slots[nb_idx].get_path()
-					"bottom":
-						slot.focus_neighbor_bottom = slots[nb_idx].get_path()
+		for neighbor in ["left", "top", "right", "bottom"]:
+			var neighbor_idx: int
+			match neighbor:
+				"left":
+					neighbor_idx = slot_idx - 1
+					if slot_idx % slots_container.columns == 0:
+						neighbor_idx = -1
+				"top":
+					neighbor_idx = slot_idx - slots_container.columns
+				"right":
+					neighbor_idx = slot_idx + 1
+					if (slot_idx + 1) % slots_container.columns == 0:
+						neighbor_idx = -1
+				"bottom":
+					neighbor_idx = slot_idx + slots_container.columns
+			if neighbor_idx >= 0 and neighbor_idx < slots.size():
+				slot.set("focus_neighbor_"+neighbor, slots[neighbor_idx].get_path())
 
 
 func _on_updated_slot(index):
