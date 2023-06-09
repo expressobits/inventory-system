@@ -140,7 +140,7 @@ func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventor
 			return
 		var slot = inventory.slots[slot_index]
 		var amount = slot.amount
-		if event.button_index == 2:
+		if event is InputEventMouseButton and event.button_index == 2:
 			amount = ceili(slot.amount/2.0)
 		inventory_handler.to_transaction(slot_index, inventory, amount)	
 		$SlotClick.play()

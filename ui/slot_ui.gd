@@ -68,12 +68,20 @@ func set_selection(is_selected : bool):
 
 
 func _on_mouse_entered():
-	$Panel.self_modulate = highlight_color
+	grab_focus()
 
 
 func _on_mouse_exited():
-	$Panel.self_modulate = Color.WHITE
+	release_focus()
 
 
 func _on_hidden():
+	release_focus()
+
+
+func _on_focus_entered() -> void:
+	$Panel.self_modulate = highlight_color
+
+
+func _on_focus_exited() -> void:
 	$Panel.self_modulate = Color.WHITE
