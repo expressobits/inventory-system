@@ -82,9 +82,11 @@ func _drop_area_input(event : InputEvent):
 
 
 func _open_player_inventory():
-	player_inventory_ui.visible = true;
+	player_inventory_ui.visible = true
 	hotbar_ui.visible = false
 	drop_area.visible = true
+	if not player_inventory_ui.slots.is_empty():
+		player_inventory_ui.slots[0].grab_focus()
 
 
 # Open Inventory of player	
