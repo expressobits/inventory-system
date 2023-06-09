@@ -9,10 +9,7 @@ func _ready():
 func update_info_with_item(item : InventoryItem, amount := 1):
 	super.update_info_with_item(item, amount)
 	visible = amount > 0
-	if get_viewport().gui_get_focus_owner():
-		self.global_position = get_viewport().gui_get_focus_owner().global_position
-	else:
-		self.global_position = get_global_mouse_position() - size/2
+	self.global_position = get_global_mouse_position() - size/2
 	
 	$DropIcon.visible = false
 	
