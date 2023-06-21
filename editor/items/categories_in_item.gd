@@ -37,10 +37,19 @@ func loading_categories():
 #		option_button.add_icon_item()
 
 
+func make_array_unique(input_array) -> Array:
+	var unique_array := []
+	for value in input_array:
+		unique_array.append(value)
+	return unique_array
+
+
 func _on_toggled_category_option(toggled : bool, category : ItemCategory):
+	var new_categories = make_array_unique(item.categories)
 	if toggled:
-		item.categories.append(category)
+		new_categories.append(category)
 	else:
-		var index = item.categories.find(category)
+		var index = new_categories.find(category)
 		if index > -1:
-			item.categories.remove_at(index)
+			new_categories.remove_at(index)
+	item.categories = new_categories

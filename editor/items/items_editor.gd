@@ -104,8 +104,6 @@ func _on_item_editor_changed(id):
 
 func _on_new_resource_dialog_file_selected(path):
 	var item : InventoryItem = InventoryItem.new()
-	item.properties = {}
-	item.categories = []
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		item = load(path)
