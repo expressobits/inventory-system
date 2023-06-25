@@ -64,7 +64,7 @@ func _on_new_resource_dialog_file_selected(path):
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		var res : CraftStationType = load(path)
-		res.name = "New Craft Station Type"
+		res.name = get_name_of_resource_path(path)
 		database.stations_type.append(res)
 		ResourceSaver.save(database, database.resource_path)
 		load_craft_station_types()

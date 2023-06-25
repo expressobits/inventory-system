@@ -49,7 +49,7 @@ func _on_new_resource_dialog_file_selected(path):
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		var res : ItemCategory = load(path)
-		res.name = "New Item Category"
+		res.name = get_name_of_resource_path(path)
 		database.add_new_category(res)
 		ResourceSaver.save(database, database.resource_path)
 		load_item_categories()

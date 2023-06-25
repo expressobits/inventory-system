@@ -108,7 +108,7 @@ func _on_new_resource_dialog_file_selected(path):
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		item = load(path)
-		item.name = "New Item"
+		item.name = get_name_of_resource_path(path)
 		item.id = database.get_new_valid_id()
 		database.add_new_item(item)
 		ResourceSaver.save(database, database.resource_path)

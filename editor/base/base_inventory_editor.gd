@@ -18,6 +18,14 @@ const ITEM_REMOVE_AND_DELETE = 106
 @onready var remove_and_delete_confirmation_dialog = %RemoveAndDeleteConfirmationDialog
 
 
+static func get_name_of_resource(resource: Resource):
+	return get_name_of_resource_path(resource.resource_path)
+
+
+static func get_name_of_resource_path(path : String):
+	return path.get_file().trim_suffix('.tres')
+
+
 func load_from_database(database : InventoryDatabase) -> void:
 	self.database = database
 	on_load_database()
