@@ -38,10 +38,7 @@ func remove_current_data():
 
 
 func remove_category(category : ItemCategory):
-	var index = database.item_categories.find(category)
-	if index == -1:
-		return
-	database.item_categories.remove_at(index)
+	database.remove_category(category)
 	ResourceSaver.save(database, database.resource_path)
 	load_item_categories()
 	emit_signal("data_changed")
@@ -53,7 +50,7 @@ func _on_new_resource_dialog_file_selected(path):
 	if err == OK:
 		var res : ItemCategory = load(path)
 		res.name = "New Item Category"
-		database.item_categories.append(res)
+		database.add_new_category(res)
 		ResourceSaver.save(database, database.resource_path)
 		load_item_categories()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
@@ -95,7 +92,7 @@ func _on_open_resource_dialog_file_selected(path):
 		if database.item_categories.has(category):
 			push_warning("The item category type \""+ category.name +"\" already exists in the list of item categories in the database!")
 			return
-		database.item_categories.append(category)
+		database.add_new_category(category)
 		ResourceSaver.save(database, database.resource_path)
 		load_item_categories()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()

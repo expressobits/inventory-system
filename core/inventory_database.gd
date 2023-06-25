@@ -45,6 +45,30 @@ func update_items_categories_cache():
 			categories_code_cache[int(pow(2, i))] = category
 
 
+func add_new_item(item : InventoryItem):
+	items.append(item)
+	update_items_cache()	
+
+
+func remove_item(item : InventoryItem):
+	var index = items.find(item)
+	if index > -1:
+		items.remove_at(index)
+		update_items_cache()
+
+
+func add_new_category(category : ItemCategory):
+	item_categories.append(category)
+	update_items_categories_cache()	
+
+
+func remove_category(category : ItemCategory):
+	var index = item_categories.find(category)
+	if index > -1:
+		item_categories.remove_at(index)
+		update_items_categories_cache()
+
+
 ## Returns the id of dropped item as [PackedScene], return 0 if not found
 func get_id_from_dropped_item(dropped_item : PackedScene) -> int:
 	for item_data in items:
