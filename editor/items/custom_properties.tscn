@@ -49,6 +49,7 @@ disabled = true
 text = "Add New Property"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 size_flags_vertical = 3
 
