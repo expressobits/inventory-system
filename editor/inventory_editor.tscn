@@ -181,7 +181,6 @@ layout_mode = 2
 mouse_filter = 1
 
 [node name="Recipes" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
-visible = false
 layout_mode = 2
 mouse_filter = 1
 
