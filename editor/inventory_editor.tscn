@@ -15,7 +15,6 @@
 [ext_resource type="PackedScene" uid="uid://clj2qii0ta8lx" path="res://addons/inventory-system/editor/craft_stations/craft_stations.tscn" id="11_rrabm"]
 [ext_resource type="PackedScene" uid="uid://cfevgv38d1bll" path="res://addons/inventory-system/editor/categories/categories_editor.tscn" id="12_kvj1p"]
 
-
 [node name="InventoryEditor" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -121,7 +120,7 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
-tooltip_text = "New Craft Station Type"
+tooltip_text = "New Item Category"
 disabled = true
 icon = ExtResource("5_4w1hd")
 icon_alignment = 1
@@ -133,12 +132,11 @@ popup/item_1/id = 101
 
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(28, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Open a InventoryDatabase resource to see contents here"
-horizontal_alignment = 2
 vertical_alignment = 2
+text_overrun_behavior = 1
 structured_text_bidi_override = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]

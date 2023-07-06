@@ -42,7 +42,7 @@ clip_contents = true
 layout_mode = 2
 
 [node name="RecipeEditor" parent="HSplitContainer/RecipeEditorContainer" instance=ExtResource("2_a000k")]
-visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 
 [connection signal="changed" from="HSplitContainer/RecipeEditorContainer/RecipeEditor" to="." method="_on_recipe_editor_changed"]

@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://addons/inventory-system/editor/base/base_inventory_editor.gd" id="1_a003s"]
 
 [node name="InventoryTabEditor" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_a003s")
@@ -18,7 +17,7 @@ grow_vertical = 2
 split_offset = -128
 
 [node name="NewResourceDialog" type="FileDialog" parent="."]
-size = Vector2i(452, 162)
+size = Vector2i(1024, 162)
 dialog_hide_on_ok = true
 access = 2
 filters = PackedStringArray("*.tres ; InventoryItem")

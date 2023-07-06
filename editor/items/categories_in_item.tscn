@@ -7,7 +7,7 @@ custom_minimum_size = Vector2(0, 64)
 script = ExtResource("1_eq3id")
 
 [node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(256, 0)
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 text = "Categories"
 

@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://jm6g1u6w8kp3" path="res://addons/inventory-system/editor/recipes/recipe_item_editor.tscn" id="4_8tort"]
 
 [node name="InventoryTabEditor" instance=ExtResource("1_8r7ns")]
+visible = true
 script = ExtResource("1_hp38j")
 
 [node name="InventoryItemList" parent="HSplitContainer" index="0" instance=ExtResource("2_47tem")]
