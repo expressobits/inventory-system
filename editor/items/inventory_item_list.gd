@@ -96,7 +96,8 @@ func apply_filter() -> void:
 		elif search_by_categories_button.button_pressed: # search by category name
 			for item_category in item.categories:
 				if filter == "" or item == null or filter.to_lower() in item_category.name.to_lower():
-					item_list_handler.append(item)
+					if item not in item_list_handler:
+						item_list_handler.append(item)
 					
 	update_item_list(item_list_handler)
 
