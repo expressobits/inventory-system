@@ -15,7 +15,7 @@ layout_mode = 2
 
 [node name="SearchByCategoriesButton" type="CheckButton" parent="ItemListTools"]
 layout_mode = 2
-text = "Search by categories"
+text = "Search by Categories"
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(0, 32)

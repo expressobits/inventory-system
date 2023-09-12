@@ -83,7 +83,6 @@ func get_index_of_item_id(id : int) -> int:
 			return index
 	return -1;
 
-# maybe only edit this function to search by category
 func apply_filter() -> void:
 	item_list_handler.clear()
 	for item_id in item_map.keys():
@@ -94,7 +93,7 @@ func apply_filter() -> void:
 		if not search_by_categories_button.button_pressed: # search by item names
 			if filter == "" or item == null or filter.to_lower() in item.name.to_lower():
 				item_list_handler.append(item)
-		elif search_by_categories_button.button_pressed:
+		elif search_by_categories_button.button_pressed: # search by category name
 			for item_category in item.categories:
 				if filter == "" or item == null or filter.to_lower() in item_category.name.to_lower():
 					item_list_handler.append(item)
