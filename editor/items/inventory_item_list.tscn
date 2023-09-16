@@ -6,7 +6,7 @@
 clip_contents = true
 custom_minimum_size = Vector2(256, 0)
 offset_right = 256.0
-offset_bottom = 40.0
+offset_bottom = 36.0
 alignment = 1
 script = ExtResource("1_6fmx0")
 
