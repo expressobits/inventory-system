@@ -5,8 +5,17 @@
 [node name="InventoryItemList" type="VBoxContainer"]
 clip_contents = true
 custom_minimum_size = Vector2(256, 0)
+offset_right = 256.0
+offset_bottom = 40.0
 alignment = 1
 script = ExtResource("1_6fmx0")
+
+[node name="ItemListTools" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="SearchByCategoriesButton" type="CheckButton" parent="ItemListTools"]
+layout_mode = 2
+text = "Search by Categories"
 
 [node name="Control" type="Control" parent="."]
 custom_minimum_size = Vector2(0, 32)
@@ -47,5 +56,7 @@ layout_mode = 2
 size_flags_vertical = 3
 fixed_icon_size = Vector2i(16, 16)
 
+[connection signal="button_up" from="ItemListTools/SearchByCategoriesButton" to="." method="_on_search_by_categories_button_button_up"]
+[connection signal="toggled" from="ItemListTools/SearchByCategoriesButton" to="." method="_on_search_by_categories_button_toggled"]
 [connection signal="text_changed" from="Control/SearchLineEdit" to="." method="_on_search_line_edit_text_changed"]
 [connection signal="item_clicked" from="ItemList" to="." method="_on_item_list_item_clicked"]
