@@ -7,7 +7,6 @@ signal item_popup_menu_requested(at_position: Vector2)
 
 @onready var list : ItemList = %ItemList
 @onready var search_line_edit = $Control/SearchLineEdit
-@onready var search_by_categories_button = $ItemListTools/SearchByCategoriesButton
 
 var item_map : Dictionary = {}
 var database : InventoryDatabase
@@ -89,15 +88,14 @@ func apply_filter() -> void:
 		var item = item_map[item_id]
 		if item == null:
 			continue
-			
-		if not search_by_categories_button.button_pressed: # search by item names
-			if filter == "" or item == null or filter.to_lower() in item.name.to_lower():
-				item_list_handler.append(item)
-		elif search_by_categories_button.button_pressed: # search by category name
+		
+		if filter == "" or item == null or filter.to_lower() in item.name.to_lower(): # search by item name
+			item_list_handler.append(item)
+		
+		if item not in item_list_handler: # search by category name
 			for item_category in item.categories:
-				if filter == "" or item == null or filter.to_lower() in item_category.name.to_lower():
-					if item not in item_list_handler:
-						item_list_handler.append(item)
+				if item not in item_list_handler and filter.to_lower() in item_category.name.to_lower():
+					item_list_handler.append(item)
 					
 	update_item_list(item_list_handler)
 
@@ -120,6 +118,3 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 
 func _on_search_line_edit_text_changed(new_text):
 	filter = new_text
-
-func _on_search_by_categories_button_toggled(button_pressed):
-	filter = search_line_edit.text
