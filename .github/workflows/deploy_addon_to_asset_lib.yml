@@ -2,8 +2,7 @@ name: Deploy addon to asset lib
 
 on: 
   push:
-    tags:
-      - "0.*"
+    branches: [ addon ]
 
   workflow_dispatch:
 
