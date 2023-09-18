@@ -1,16 +1,13 @@
-name: Deploy addon to asset lib
-
+name: "Push to asset lib"
 on: 
-  push:
-    branches: [ addon ]
-
-  workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
-
-    permissions: write-all
+    name: Publish new version to asset lib
 
     steps:
     
