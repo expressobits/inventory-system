@@ -1,10 +1,8 @@
-name: Deploy addon to asset lib
-
+name: "Push to asset lib addon"
 on: 
-  push:
-    branches: [ addon ]
-
-  workflow_dispatch:
+  release:
+    types:
+      - published
 
 jobs:
   build:
