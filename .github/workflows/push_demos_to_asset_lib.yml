@@ -1,0 +1,31 @@
+name: "Push Demos To Asset Lib"
+on: 
+  push:
+    branches: [ demos ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish new version of demo to asset lib
+
+    steps:
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Godot Asset Lib
+      # You may pin to the exact commit or the version.
+      # uses: deep-entertainment/godot-asset-lib-action@81addbb4db62199a69e4aa5535741a8928d6abb6
+      uses: deep-entertainment/godot-asset-lib-action@v0.4.0
+      with:
+        action: addEdit
+        # Godot asset lib username
+        username: expressobits
+        # Godot asset lib password
+        password: ${{ secrets.GODOT_ASSET_LIB_PASSWORD }}
+        # ID of the asset in the asset store
+        assetId: 1895
+        # Path to asset template file
+        assetTemplate: .github/workflows/.asset-template-demos.json.hb
+        # Godot asset lib base url
+        baseUrl: https://godotengine.org/asset-library/api
