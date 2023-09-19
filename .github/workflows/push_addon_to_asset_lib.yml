@@ -9,6 +9,9 @@ on:
         default: '1.0.0'
   push:
     branches: [ addon ]
+
+env:
+  PLUGIN_VERSION: 0.0.1
     
 
 jobs:
@@ -37,6 +40,7 @@ jobs:
         VERSION=$(grep version addons/inventory-system/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
         echo "plugin_version=${VERSION}"
         echo "plugin_version=${VERSION}" >> $GITHUB_OUTPUT
+        echo "PLUGIN_VERSION=${VERSION}" >> $GITHUB_ENV
 
     - name: Godot Asset Lib
       # You may pin to the exact commit or the version.
@@ -57,4 +61,4 @@ jobs:
     - name: Debug Godot Asset Lib
       run: |
         echo "plugin_version=${{ steps.set_plugin_version.outputs.plugin_version }}"
-        echo ${{ env }}
+        echo $PLUGIN_VERSION
