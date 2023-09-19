@@ -1,10 +1,31 @@
-name: "Push to asset lib"
-on: 
+name: "Push Addon To Asset Lib"
+on:
+  workflow_dispatch:
+    inputs:
+      plugin_version:
+        description: 'Plugin version number:'
+        required: true
+        type: string
+        default: '1.0.0'
   push:
     branches: [ addon ]
+    
 
 jobs:
+  env-setup:
+    name: "Setup env variables"
+    runs-on: ubuntu-latest
+    outputs:
+      plugin_version: ${{ steps.set_godot_version.outputs.plugin_version }}
+
+    steps:
+      - name: set_plugin_version
+        id: set_plugin_version
+        run: |
+            version = grep version addons/inventory-system/plugin.cfg | cut -d "=" -f 2 | tr -d '"'
+            echo "plugin_version=${version}" >> $GITHUB_OUTPUT
   publish:
+    needs: [env-setup]
     runs-on: ubuntu-latest
     name: Publish new version to asset lib
 
@@ -26,6 +47,6 @@ jobs:
         # ID of the asset in the asset store
         assetId: 1650
         # Path to asset template file
-        assetTemplate: .asset-template.json.hb
+        assetTemplate: .github/workflows/.asset-template.json.hb
         # Godot asset lib base url
         baseUrl: https://godotengine.org/asset-library/api
