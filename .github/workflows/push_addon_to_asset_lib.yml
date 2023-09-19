@@ -55,5 +55,6 @@ jobs:
         # Godot asset lib base url
         baseUrl: https://godotengine.org/asset-library/api
     - name: Debug Godot Asset Lib
-      run:
+      run: |
         echo "plugin_version=${{ steps.set_plugin_version.outputs.plugin_version }}"
+        echo ${{ env }}
