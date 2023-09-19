@@ -13,18 +13,8 @@ on:
 env:
   PLUGIN_VERSION: 0.0.1
     
-
 jobs:
-#   env-setup:
-#     name: "Setup env variables"
-#     runs-on: ubuntu-latest
-#     outputs:
-#       plugin_version: ${{ steps.set_godot_version.outputs.plugin_version }}
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v3
   
-    
   publish:
     # needs: [env-setup]
     runs-on: ubuntu-latest
@@ -38,8 +28,6 @@ jobs:
       id: set_plugin_version
       run: |
         VERSION=$(grep version addons/inventory-system/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
-        echo "plugin_version=${VERSION}"
-        echo "plugin_version=${VERSION}" >> $GITHUB_OUTPUT
         echo "PLUGIN_VERSION=${VERSION}" >> $GITHUB_ENV
 
     - name: Godot Asset Lib
@@ -58,7 +46,6 @@ jobs:
         assetTemplate: .github/workflows/.asset-template-addons.json.hb
         # Godot asset lib base url
         baseUrl: https://godotengine.org/asset-library/api
+
     - name: Debug Godot Asset Lib
-      run: |
-        echo "plugin_version=${{ steps.set_plugin_version.outputs.plugin_version }}"
-        echo $PLUGIN_VERSION
+      run: echo $PLUGIN_VERSION

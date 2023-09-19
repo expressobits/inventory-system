@@ -3,7 +3,7 @@
   "description": "This project contains demos of the inventory-system addon: https://godotengine.org/asset-library/asset/1650",
   "category_id": "10",
   "godot_version": "4.1",
-  "version_string": "{{ needs.env-setup.outputs.plugin_version }}",
+  "version_string": "{{ env.PLUGIN_VERSION }}",
   "cost": "MIT",
   "download_provider": "GitHub",
   "download_commit": "{{ env.GITHUB_SHA }}",
