@@ -41,7 +41,7 @@ jobs:
         # Godot asset lib password
         password: ${{ secrets.GODOT_ASSET_LIB_PASSWORD }}
         # ID of the asset in the asset store
-        assetId: 1650
+        assetId: 1895
         # Path to asset template file
         assetTemplate: .github/workflows/.asset-template-demos.json.hb
         # Godot asset lib base url
