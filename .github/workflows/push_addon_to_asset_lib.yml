@@ -25,6 +25,7 @@ jobs:
       id: set_plugin_version
       run: |
           VERSION=$(grep version addons/inventory-system/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
+          echo "plugin_version=${VERSION}"
           echo "plugin_version=${VERSION}" >> $GITHUB_OUTPUT
   publish:
     needs: [env-setup]
