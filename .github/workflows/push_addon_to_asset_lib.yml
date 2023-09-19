@@ -47,6 +47,6 @@ jobs:
         # ID of the asset in the asset store
         assetId: 1650
         # Path to asset template file
-        assetTemplate: .github/workflows/.asset-template.json.hb
+        assetTemplate: .github/workflows/.asset-template-addons.json.hb
         # Godot asset lib base url
         baseUrl: https://godotengine.org/asset-library/api
