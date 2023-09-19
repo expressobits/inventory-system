@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" uid="uid://22igirx0rl2x" path="res://assets/kenney_medievalrtspack/PNG/Retina/Tile/medievalTile_58.png" id="1_6b3x4"]
+
+[resource]
+albedo_color = Color(0.713726, 0.639216, 0.505882, 0.603922)
+albedo_texture = ExtResource("1_6b3x4")
+uv1_scale = Vector3(2, 2, 2)
+uv1_triplanar = true
+texture_filter = 0

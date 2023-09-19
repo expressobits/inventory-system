@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=12 format=3 uid="uid://bv6p72jphx0xc"]
+
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="1_ablc0"]
+[ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://base/items/grass.tres" id="1_ye5el"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_lau0n"]
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="3_onsct"]
+[ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="4_j0aq5"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_fghhy"]
+[ext_resource type="Resource" path="res://base/craft_stations/workbench.tres" id="7_vaok2"]
+
+[sub_resource type="Resource" id="Resource_tjks1"]
+script = ExtResource("2_lau0n")
+item = ExtResource("1_ye5el")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_cl4p4"]
+script = ExtResource("2_lau0n")
+item = ExtResource("1_ablc0")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_tiivj"]
+script = ExtResource("2_lau0n")
+item = ExtResource("3_onsct")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_7427o"]
+script = ExtResource("2_lau0n")
+item = ExtResource("4_j0aq5")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("5_fghhy")
+product = SubResource("Resource_7427o")
+byproducts = Array[ExtResource("2_lau0n")]([SubResource("Resource_tjks1")])
+time_to_craft = 4.0
+station = ExtResource("7_vaok2")
+ingredients = Array[ExtResource("2_lau0n")]([SubResource("Resource_cl4p4"), SubResource("Resource_tiivj")])

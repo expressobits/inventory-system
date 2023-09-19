@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=8 format=3 uid="uid://biti0xs8dwla1"]
+
+[ext_resource type="Resource" uid="uid://c0pjgqkwob2ep" path="res://base/items/raw_meat.tres" id="1_7qd24"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="1_t0huv"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_j8xh5"]
+[ext_resource type="Resource" uid="uid://dhjsgp1skln2i" path="res://base/items/cooked_meat.tres" id="3_2x1j1"]
+[ext_resource type="Resource" path="res://base/craft_stations/campfire.tres" id="5_e7bry"]
+
+[sub_resource type="Resource" id="Resource_glbqw"]
+script = ExtResource("2_j8xh5")
+item = ExtResource("1_7qd24")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_svnvc"]
+script = ExtResource("2_j8xh5")
+item = ExtResource("3_2x1j1")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("1_t0huv")
+product = SubResource("Resource_svnvc")
+byproducts = Array[ExtResource("2_j8xh5")]([])
+time_to_craft = 8.0
+station = ExtResource("5_e7bry")
+ingredients = Array[ExtResource("2_j8xh5")]([SubResource("Resource_glbqw")])

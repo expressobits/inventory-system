@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://fps/dropped_items/dropped_item.tscn" id="1_0jyuw"]
+[ext_resource type="InventoryItem" path="res://base/items/stone_pickaxe.tres" id="2_1l6x4"]
+[ext_resource type="PackedScene" uid="uid://d4g1cglqsrhg6" path="res://assets/survival-kit-1.1/Models/GLTF format/toolPickaxe.glb" id="4_f7yg5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
+size = Vector3(0.518113, 0.732304, 0.119545)
+
+[node name="StonePìckaxe" instance=ExtResource("1_0jyuw")]
+item = ExtResource("2_1l6x4")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00422105, 0.365588, 0)
+shape = SubResource("BoxShape3D_fdkpx")
+
+[node name="toolPickaxe" parent="Visual" index="0" instance=ExtResource("4_f7yg5")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

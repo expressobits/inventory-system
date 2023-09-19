@@ -1,0 +1,5 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://fa7npgc4ju1t"]
+
+[resource]
+albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+uv1_world_triplanar = true

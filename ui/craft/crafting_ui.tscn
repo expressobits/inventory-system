@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://ui/craft/crafting_ui.gd" id="1_vqyhb"]
+[ext_resource type="Texture2D" uid="uid://dy6oh8nylwc5x" path="res://assets/ui/crafting-ui.png" id="2_lvfe1"]
+[ext_resource type="Texture2D" uid="uid://r7cuprfst46w" path="res://assets/ui/crafting-ui-48.png" id="3_ihb0w"]
+[ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://assets/icons/stone-axe.png" id="4_gl3sf"]
+
+[node name="CraftingUI" type="Control"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_vqyhb")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+step = 0.1
+value = 45.0
+fill_mode = 5
+nine_patch_stretch = true
+stretch_margin_left = 8
+stretch_margin_top = 8
+stretch_margin_right = 8
+stretch_margin_bottom = 8
+texture_under = ExtResource("2_lvfe1")
+texture_progress = ExtResource("2_lvfe1")
+tint_over = Color(1, 0.65098, 0.0431373, 1)
+tint_progress = Color(1, 0.592157, 0.00784314, 1)
+radial_initial_angle = 360.0
+
+[node name="Base" type="TextureRect" parent="TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_ihb0w")
+
+[node name="Icon" type="TextureRect" parent="TextureProgressBar"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_gl3sf")
