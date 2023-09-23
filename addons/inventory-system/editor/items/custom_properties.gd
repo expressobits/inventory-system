@@ -15,7 +15,7 @@ var properties_obj : Array
 
 func _ready():
 	add_button.disabled = line_edit.text.is_empty()
-
+	build_type_options();
 
 func load_item(database : InventoryDatabase, item : InventoryItem):
 	self.database = database
@@ -42,7 +42,6 @@ func loading_properties():
 			properties_obj.append(property_obj)
 			v_box_container.add_child(property_obj)
 	item.properties = new_item_properties
-	build_type_options();
 
 
 func build_type_options():
