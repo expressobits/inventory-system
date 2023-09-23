@@ -8,7 +8,7 @@ var item : InventoryItem
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
-@onready var item_id_editor : ItemIDEditor = $MarginContainer/VBoxContainer/ItemIDEditor
+@onready var item_id_editor : ItemIDEditor = $ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor
 @onready var item_name_text_edit : LineEdit = %ItemNameTextEdit
 @onready var item_max_stack_spin_box : SpinBox = %MaxStackSpinBox
 @onready var item_icon_text_edit : LineEdit = %IconLineEdit
@@ -17,14 +17,14 @@ var editor_plugin : EditorPlugin
 @onready var item_resource_text_edit : LineEdit = %ItemResourceLineEdit
 @onready var item_resource_edit_button : Button = %ItemResourceEditButton
 @onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
-@onready var custom_properties : CustomPropertiesItemEditor = $MarginContainer/VBoxContainer/CustomProperties
-@onready var weight_spin_box = $MarginContainer/VBoxContainer/Weight/WeightSpinBox
-@onready var categories_in_item : CategoriesInItem = $MarginContainer/VBoxContainer/CategoriesInItem
+@onready var custom_properties : CustomPropertiesItemEditor = $ScrollContainer/MarginContainer/VBoxContainer/CustomProperties
+@onready var weight_spin_box = $ScrollContainer/MarginContainer/VBoxContainer/Weight/WeightSpinBox
+@onready var categories_in_item : CategoriesInItem = $ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem
 
 
 func _ready():
 	apply_theme()
-	$MarginContainer.visible = false
+	$ScrollContainer.visible = false
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -36,7 +36,7 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 	self.item = item
 	self.database = database
 	if not is_instance_valid(item):
-		$MarginContainer.visible = false
+		$ScrollContainer.visible = false
 		return
 	item_id_editor.setup(database, item.id)
 	if is_instance_valid(item):
@@ -48,11 +48,11 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 			item_icon_text_edit.text = item.icon.resource_path
 		else:
 			item_icon_text_edit.text = ""
-		$MarginContainer.visible = true
+		$ScrollContainer.visible = true
 	else:
 		item_resource_text_edit.text = "No resource path item!"
 		item_name_text_edit.text = "No resource item!"
-		$MarginContainer.visible = false
+		$ScrollContainer.visible = false
 		
 	custom_properties.load_item(database, item)
 	categories_in_item.load_item(database, item)
