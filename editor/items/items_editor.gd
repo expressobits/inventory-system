@@ -125,6 +125,8 @@ func _on_open_resource_dialog_file_selected(path):
 		if database.items.has(item):
 			push_warning("The item \""+item.name+"\"("+ item.resource_path +") already exists in the database!")
 			return
+		if database.has_item_id(item.id):
+			item.id = database.get_new_valid_id()
 		database.add_new_item(item)
 		ResourceSaver.save(database, database.resource_path)
 		load_items()
