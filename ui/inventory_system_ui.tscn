@@ -1,14 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://da2b73383isem"]
+[gd_scene load_steps=7 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://ui/inventory_ui.tscn" id="3_sohfg"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/transaction_slot.gd" id="3_ugeom"]
-[ext_resource type="Texture2D" uid="uid://c0jaj36qvgqvs" path="res://assets/kenney_medievalrtspack/PNG/Default size/Environment/medievalEnvironment_10.png" id="4_0oqwp"]
 [ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://ui/slot_ui.tscn" id="4_5h6ud"]
-[ext_resource type="Texture2D" uid="uid://cj2dnhj4hf4p3" path="res://assets/uipack-rpg/PNG/iconCross_brown.png" id="4_5nfxk"]
-[ext_resource type="AudioStream" uid="uid://b7o8wgktle6ai" path="res://assets/kenney_rpgaudio/Audio/bookPlace1.ogg" id="6_vp41x"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/hotbar_ui.gd" id="7_e17fd"]
-[ext_resource type="AudioStream" uid="uid://du3qc4da18j0r" path="res://assets/kenney_rpgaudio/Audio/cloth3.ogg" id="7_nysp8"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
 [node name="Inventory System UI" type="Control"]
@@ -33,16 +29,12 @@ script = ExtResource("3_ugeom")
 [node name="Panel" parent="TransactionSlotUI" index="1"]
 self_modulate = Color(1, 1, 0.541176, 1)
 
-[node name="Item Icon" parent="TransactionSlotUI" index="3"]
-texture = ExtResource("4_0oqwp")
-
 [node name="DropIcon" type="TextureRect" parent="TransactionSlotUI"]
 layout_mode = 0
 offset_left = 48.0
 offset_top = 48.0
 offset_right = 66.0
 offset_bottom = 66.0
-texture = ExtResource("4_5nfxk")
 
 [node name="DropArea" type="Control" parent="."]
 layout_mode = 1
@@ -113,11 +105,9 @@ layout_mode = 1
 view_output_inventory = false
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_vp41x")
 volume_db = -12.0
 
 [node name="SlotDrop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_nysp8")
 volume_db = -12.0
 
 [connection signal="mouse_entered" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_entered"]

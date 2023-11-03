@@ -36,7 +36,7 @@ tooltip_text = "A Slot"
 mouse_filter = 1
 
 [node name="Category Icon" type="TextureRect" parent="."]
-modulate = Color(0.25098, 0.25098, 0.25098, 0.266667)
+modulate = Color(0.501961, 0.501961, 0.501961, 0.501961)
 texture_filter = 1
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 1
