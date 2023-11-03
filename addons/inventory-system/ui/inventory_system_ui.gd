@@ -31,6 +31,8 @@ var crafter : Crafter
 @onready var other_craft_station_ui : CraftStationUI = get_node(NodePath("OtherCraftStationUI"))
 
 func _ready():
+	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
+	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
@@ -49,6 +51,15 @@ func _ready():
 		other_craft_station_ui.output_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 	drop_area.gui_input.connect(_drop_area_input.bind())
+
+
+func _on_inventory_handler_changed():
+	set_player_inventory_handler(InventorySystem.inventory_handler)
+	set_hotbar(InventorySystem.inventory_handler.get_node("Hotbar"))
+	
+
+func _on_crafter_changed():
+	set_crafter(InventorySystem.crafter)
 
 
 ## Setup inventory handler and connect all signals
