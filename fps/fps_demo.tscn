@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="3_drnqg"]
 [ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://base/items/grass.tres" id="4_u8ypt"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://fps/labels.tscn" id="6_5epcx"]
-[ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://ui/inventory_system_ui.tscn" id="6_gphqh"]
+[ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="AudioStream" uid="uid://c14f58c5xen2u" path="res://assets/kenney_rpgaudio/Audio/cloth1.ogg" id="8_ijv3s"]
 [ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="9_gf0rn"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://fps/box_inventory.tscn" id="9_ia5mg"]
