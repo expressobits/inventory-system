@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://bapqyqy7nvi8s"]
 
-[ext_resource type="Script" path="res://ui/craft/ingredient_ui.gd" id="1_4e4fk"]
-[ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://assets/icons/stone-axe.png" id="2_igh7i"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/ingredient_ui.gd" id="1_4e4fk"]
 
 [node name="IngredientUI" type="Control"]
 custom_minimum_size = Vector2(64, 32)
@@ -19,7 +18,6 @@ offset_right = 32.0
 offset_bottom = 16.0
 grow_vertical = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_igh7i")
 
 [node name="Amount" type="Label" parent="."]
 layout_mode = 1

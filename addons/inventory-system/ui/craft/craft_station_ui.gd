@@ -22,7 +22,7 @@ class_name CraftStationUI
 ## Show output inventory when open [CraftStationUI].
 @export var view_output_inventory := true
 
-@onready var _recipes_container : VBoxContainer = get_node("RecipesUI/Control/MarginContainer/ScrollContainer/UI Inventory")
+@onready var _recipes_container : VBoxContainer = %RecipesContent
 @onready var _craftings_ui : CraftingsUI = get_node(NodePath("CraftingsUI"))
 
 

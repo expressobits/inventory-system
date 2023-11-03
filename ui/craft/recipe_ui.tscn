@@ -1,29 +1,12 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://duq60fhdry5hv"]
 
-[ext_resource type="Script" path="res://ui/craft/recipe_ui.gd" id="1_7ru1f"]
-[ext_resource type="Texture2D" uid="uid://o67rdxq6qg4h" path="res://assets/uipack-rpg/PNG/panelInset_beige.png" id="1_j3xlc"]
-[ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://assets/icons/stone-axe.png" id="2_vy34n"]
-[ext_resource type="PackedScene" path="res://ui/craft/ingredient_ui.tscn" id="4_4p25f"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/recipe_ui.gd" id="1_7ru1f"]
+[ext_resource type="PackedScene" uid="uid://bapqyqy7nvi8s" path="res://ui/craft/ingredient_ui.tscn" id="4_4p25f"]
 
-[node name="RecipeUI" type="Control"]
+[node name="RecipeUI" type="Panel"]
 custom_minimum_size = Vector2(0, 64)
-layout_mode = 3
-anchors_preset = 0
 script = ExtResource("1_7ru1f")
 ingredient_scene = ExtResource("4_4p25f")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_j3xlc")
-patch_margin_left = 4
-patch_margin_top = 4
-patch_margin_right = 4
-patch_margin_bottom = 4
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 2
@@ -45,7 +28,6 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_vy34n")
 
 [node name="ItemName" type="Label" parent="."]
 layout_mode = 0

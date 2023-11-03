@@ -25,7 +25,7 @@ var slots : Array[SlotUI]
 
 func _ready():
 	gui_input.connect(_on_inventory_gui_input.bind())
-	$Control.gui_input.connect(_on_inventory_gui_input.bind())
+#	gui_input.connect(_on_inventory_gui_input.bind())
 	if inventory != null:
 		_connect_new_inventory(inventory)
 
@@ -37,7 +37,7 @@ func set_inventory(inventory : Inventory):
 			_disconnect_old_inventory()
 		self.inventory = inventory
 		_connect_new_inventory(inventory)
-		$Control/Label.text = inventory.inventory_name
+		%TitleLabel.text = inventory.inventory_name
 
 
 func _disconnect_old_inventory():

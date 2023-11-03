@@ -9,8 +9,8 @@ var station : CraftStation
 ## Crafting information (Time and recipe)
 var crafting : CraftStation.Crafting 
 
-@onready var _icon : TextureRect = get_node("TextureProgressBar/Icon")
-@onready var _progress_bar : TextureProgressBar = get_node("TextureProgressBar")
+@onready var _icon : TextureRect = %Icon
+@onready var _progress_bar : ProgressBar = %ProgressBar
 
 
 ## Set crafting based on [CraftStation] crafting index
