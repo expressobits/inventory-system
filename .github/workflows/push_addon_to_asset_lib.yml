@@ -8,7 +8,8 @@ on:
         type: string
         default: '1.0.0'
   push:
-    branches: [ addon ]
+    tags:
+      - addon-*
 
 env:
   PLUGIN_VERSION: 0.0.1
