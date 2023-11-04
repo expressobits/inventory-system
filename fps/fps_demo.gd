@@ -10,16 +10,6 @@ class_name FPSDemo
 func _ready():
 	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
 	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
-	setup_inventory_handler(get_node(NodePath("Player/InventoryHandler")))
-	setup_crafter(get_node(NodePath("Player/Crafter")))
-
-
-func setup_inventory_handler(inventory_handler : InventoryHandler):
-	InventorySystem.setup_inventory_handler(inventory_handler)
-	
-
-func setup_crafter(crafter : Crafter):
-	InventorySystem.setup_crafter(crafter)
 
 
 func _process(_delta):

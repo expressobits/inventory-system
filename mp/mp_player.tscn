@@ -1,6 +1,6 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=15 format=3 uid="uid://djh0ig8jxkla5"]
 
-[ext_resource type="PackedScene" path="res://fps/player.tscn" id="1_gogru"]
+[ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="3_fspyq"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
@@ -33,9 +33,11 @@ size = Vector3(0.8, 0.2, 0.4)
 properties/0/path = NodePath("..:position")
 properties/0/spawn = true
 properties/0/sync = true
+properties/0/watch = false
 properties/1/path = NodePath("..:rotation")
 properties/1/spawn = true
 properties/1/sync = true
+properties/1/watch = false
 
 [node name="MPPlayer" instance=ExtResource("1_gogru")]
 script = ExtResource("2_j20bs")
@@ -43,28 +45,29 @@ script = ExtResource("2_j20bs")
 [node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
 script = ExtResource("3_fspyq")
-hotbar_path = NodePath("../../InventoryHandler/Hotbar")
 
 [node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="InventoryHandler" parent="." index="2"]
+[node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
 script = ExtResource("3_xjjoy")
 
-[node name="Inventory" parent="InventoryHandler" index="0"]
+[node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
 script = ExtResource("4_ggduv")
+sync_item_added_signal = true
+sync_item_removed_signal = true
 
-[node name="Hotbar" parent="InventoryHandler" index="1"]
+[node name="Hotbar" parent="CharacterInventorySystem/InventoryHandler" index="1"]
 script = ExtResource("5_g5cqn")
 
-[node name="Crafter" parent="." index="3"]
+[node name="Crafter" parent="CharacterInventorySystem" index="1"]
 script = ExtResource("7_8fje4")
 
-[node name="CraftStation" parent="Crafter" index="0"]
+[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
 script = ExtResource("7_c3s0f")
 
-[node name="Mesh" type="MeshInstance3D" parent="." index="7"]
+[node name="Mesh" type="MeshInstance3D" parent="." index="3"]
 material_override = SubResource("StandardMaterial3D_053ih")
 mesh = SubResource("CapsuleMesh_uhe50")
 
@@ -73,12 +76,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
 material_override = SubResource("StandardMaterial3D_i378q")
 mesh = SubResource("BoxMesh_0fmeo")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="8"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4"]
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_fhfrv")
-
-[node name="PlayerInventoryOpen" parent="." index="9"]
-max_distance = 5.0
-
-[node name="PlayerInventoryClose" parent="." index="10"]
-max_distance = 5.0

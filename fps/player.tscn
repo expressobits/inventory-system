@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bnr02xnvoiun5"]
+[gd_scene load_steps=17 format=3 uid="uid://bnr02xnvoiun5"]
 
 [ext_resource type="Script" path="res://fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_0npow"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="8_3m0xp"]
 [ext_resource type="AudioStream" uid="uid://cyu1f4p35abbj" path="res://assets/kenney_rpgaudio/Audio/bookClose.ogg" id="8_ckf1g"]
 [ext_resource type="AudioStream" uid="uid://df1ibxkrver3m" path="res://assets/kenney_rpgaudio/Audio/metalClick.ogg" id="8_oba2k"]
+[ext_resource type="Script" path="res://fps/character_inventory_system.gd" id="8_qtktt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
@@ -38,54 +39,57 @@ collision_mask = 16
 [node name="HandItem" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.382065)
 script = ExtResource("2_fyps8")
-hotbar_path = NodePath("../../InventoryHandler/Hotbar")
 
 [node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/HandItem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="InventoryHandler" type="Node" parent="."]
+[node name="CharacterInventorySystem" type="Node" parent="."]
+script = ExtResource("8_qtktt")
+
+[node name="InventoryHandler" type="Node" parent="CharacterInventorySystem"]
 script = ExtResource("2_0npow")
+drop_parent_path = NodePath("../../..")
 database = ExtResource("4_11r5y")
 
-[node name="Inventory" type="Node" parent="InventoryHandler"]
+[node name="Inventory" type="Node" parent="CharacterInventorySystem/InventoryHandler"]
 script = ExtResource("4_cio1o")
 slot_amount = 32
 inventory_name = "Player Inventory"
 database = ExtResource("4_11r5y")
 
-[node name="Hotbar" type="Node" parent="InventoryHandler" node_paths=PackedStringArray("inventory")]
+[node name="Hotbar" type="Node" parent="CharacterInventorySystem/InventoryHandler" node_paths=PackedStringArray("inventory")]
 script = ExtResource("5_dm6kt")
 inventory = NodePath("../Inventory")
 database = ExtResource("4_11r5y")
 
-[node name="Crafter" type="Node" parent="." node_paths=PackedStringArray("main_station")]
+[node name="Crafter" type="Node" parent="CharacterInventorySystem" node_paths=PackedStringArray("main_station")]
 script = ExtResource("7_30xoc")
 main_station = NodePath("CraftStation")
 database = ExtResource("4_11r5y")
 
-[node name="CraftStation" type="Node" parent="Crafter" node_paths=PackedStringArray("input_inventory", "output_inventory")]
+[node name="CraftStation" type="Node" parent="CharacterInventorySystem/Crafter" node_paths=PackedStringArray("input_inventory", "output_inventory")]
 script = ExtResource("8_3m0xp")
 input_inventory = NodePath("../../InventoryHandler/Inventory")
 output_inventory = NodePath("../../InventoryHandler/Inventory")
 database = ExtResource("4_11r5y")
 
-[node name="Pickup" type="AudioStreamPlayer3D" parent="."]
+[node name="Pickup" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("5_sfhca")
 
-[node name="Drop" type="AudioStreamPlayer3D" parent="."]
+[node name="Drop" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("6_dxfus")
 
-[node name="HotbarChange" type="AudioStreamPlayer3D" parent="."]
+[node name="HotbarChange" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("8_oba2k")
 
-[node name="PlayerInventoryOpen" type="AudioStreamPlayer3D" parent="."]
+[node name="PlayerInventoryOpen" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("7_jxmrf")
 
-[node name="PlayerInventoryClose" type="AudioStreamPlayer3D" parent="."]
+[node name="PlayerInventoryClose" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 stream = ExtResource("8_ckf1g")
-
-[connection signal="dropped" from="InventoryHandler" to="." method="_on_inventory_handler_dropped"]
-[connection signal="picked" from="InventoryHandler" to="." method="_on_inventory_handler_picked"]
-[connection signal="closed" from="InventoryHandler/Inventory" to="." method="_on_player_inventory_closed"]
-[connection signal="opened" from="InventoryHandler/Inventory" to="." method="_on_player_inventory_opened"]

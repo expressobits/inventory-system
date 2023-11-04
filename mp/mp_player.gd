@@ -4,10 +4,11 @@ class_name MPPlayer
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
-	$InventoryHandler.set_multiplayer_authority(1)
-	$InventoryHandler/Inventory.set_multiplayer_authority(1)
-	$Crafter.set_multiplayer_authority(1)
-	$Crafter/CraftStation.set_multiplayer_authority(1)
+	$CharacterInventorySystem/InventoryHandler.set_multiplayer_authority(1)
+	$CharacterInventorySystem/InventoryHandler/Inventory.set_multiplayer_authority(1)
+	$CharacterInventorySystem/Crafter.set_multiplayer_authority(1)
+	$CharacterInventorySystem/Crafter/CraftStation.set_multiplayer_authority(1)
+	$CharacterInventorySystem.can_input = is_multiplayer_authority()
 
 
 func _ready():
@@ -24,11 +25,6 @@ func _ready():
 func _physics_process(delta):
 	if is_multiplayer_authority():
 		super._physics_process(delta)
-
-
-func _process(delta):
-	if is_multiplayer_authority():
-		super._process(delta)
 
 
 func _input(event: InputEvent) -> void:
