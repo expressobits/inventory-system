@@ -71,7 +71,7 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 ## If this addition fails and the [code]drop_excess[/code] is true then a drop of the unadded items occurs
 func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, drop_excess := false) -> int:
 	var value_no_added = inventory.add(item, amount)
-	emit_signal("added", item, amount - value_no_added)
+	added.emit(item, amount - value_no_added)
 	if (drop_excess):
 		drop(item, value_no_added)
 		return 0
@@ -105,7 +105,7 @@ func pick_to_inventory(dropped_item, inventory := self.inventory):
 	if item == null:
 		printerr("item in dropped_item is null!")
 	if add_to_inventory(inventory, item) == 0:
-		emit_signal("picked", dropped_item)
+		picked.emit(dropped_item)
 		dropped_item.queue_free()
 		return true;
 	return false;
@@ -158,7 +158,7 @@ func open(inventory : Inventory) -> bool:
 	if !inventory.open():
 		return false
 	opened_inventories.append(inventory)
-	emit_signal("opened", inventory)
+	opened.emit(inventory)
 	return true
 
 
@@ -171,7 +171,7 @@ func close(inventory : Inventory) -> bool:
 	if !inventory.close():
 		return false
 	opened_inventories.remove_at(index)
-	emit_signal("closed", inventory)
+	closed.emit(inventory)
 	if self.inventory == inventory:
 		if is_transaction_active():
 			var item = transaction_slot.item
@@ -277,7 +277,7 @@ func _instantiate_dropped_item(dropped_item : PackedScene):
 	drop_parent.add_child(obj)
 	obj.position = get_parent().position
 	obj.rotation = get_parent().rotation
-	emit_signal("dropped", obj)
+	dropped.emit(obj)
 
 
 func _set_transaction_slot(item : InventoryItem, amount : int):
@@ -286,4 +286,4 @@ func _set_transaction_slot(item : InventoryItem, amount : int):
 		transaction_slot.item = item
 	else:
 		transaction_slot.item = null
-	emit_signal("updated_transaction_slot", transaction_slot.item, transaction_slot.amount)
+	updated_transaction_slot.emit(transaction_slot.item, transaction_slot.amount)

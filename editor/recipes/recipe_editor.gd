@@ -114,32 +114,32 @@ func reload():
 func _on_product_slot_spin_box_slot_changed(slot : Slot):
 	recipe.product.item = slot.item
 	recipe.product.amount = slot.amount
-	emit_signal("changed_product", recipe)
-	emit_signal("changed")
+	changed_product.emit(recipe)
+	changed.emit()
 
 
 func _on_time_to_craft_spin_box_value_changed(value):
 	if recipe.time_to_craft != value:
 		recipe.time_to_craft = value
-		emit_signal("changed")
+		changed.emit()
 
 
 func _on_craft_station_type_option_button_item_selected(index : int):
 	if recipe.station != stations_list[index]:
 		recipe.station = stations_list[index]
-		emit_signal("changed")
+		changed.emit()
 
 
 func _request_remove_ingredient(index):
 	recipe.ingredients.remove_at(index)
 	setup_ingredients(recipe, database)
-	emit_signal("changed")
+	changed.emit()
 
 
 func _request_remove_byproduct(index):
 	recipe.byproducts.remove_at(index)
 	setup_byproducts(recipe, database)
-	emit_signal("changed")
+	changed.emit()
 
 
 func _on_new_ingredient_button_pressed():
@@ -148,7 +148,7 @@ func _on_new_ingredient_button_pressed():
 	slot.item = database.get_item(0)
 	recipe.ingredients.append(slot)
 	setup_ingredients(recipe, database)
-	emit_signal("changed")
+	changed.emit()
 
 
 func _on_new_byproduct_button_pressed():
@@ -157,8 +157,8 @@ func _on_new_byproduct_button_pressed():
 	slot.item = database.get_item(0)
 	recipe.byproducts.append(slot)
 	setup_byproducts(recipe, database)
-	emit_signal("changed")
+	changed.emit()
 
 
 func _on_changed_slot_in_ingredient():
-	emit_signal("changed")
+	changed.emit()

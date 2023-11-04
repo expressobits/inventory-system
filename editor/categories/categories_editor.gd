@@ -41,7 +41,7 @@ func remove_category(category : ItemCategory):
 	database.remove_category(category)
 	ResourceSaver.save(database, database.resource_path)
 	load_item_categories()
-	emit_signal("data_changed")
+	data_changed.emit()
 
 
 func _on_new_resource_dialog_file_selected(path):
@@ -96,7 +96,7 @@ func _on_open_resource_dialog_file_selected(path):
 		ResourceSaver.save(database, database.resource_path)
 		load_item_categories()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("data_changed")
+		data_changed.emit()
 
 
 func _on_item_categories_item_list_category_selected(category):
@@ -108,4 +108,4 @@ func _on_item_category_editor_changed(category):
 	var index = item_categories_item_list.get_index_of_category(category)
 	if index > -1:
 		item_categories_item_list.update_item(index)
-		emit_signal("data_changed")
+		data_changed.emit()

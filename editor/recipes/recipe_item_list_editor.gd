@@ -82,7 +82,7 @@ func unselect():
 
 func select():
 	style_box.bg_color = get_theme_color("box_selection_fill_color","Editor")
-	emit_signal("selected")
+	selected.emit()
 
 
 func _on_panel_gui_input(event):
@@ -93,4 +93,4 @@ func _on_panel_gui_input(event):
 
 
 func _on_open_menu_id_pressed(id):
-	emit_signal("request_remove", recipe, id)
+	request_remove.emit(recipe, id)

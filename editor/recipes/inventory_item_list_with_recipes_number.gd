@@ -54,4 +54,4 @@ func update_item(index : int):
 
 
 func _on_no_products_button_pressed():
-	emit_signal("no_products_item_selected")
+	no_products_item_selected.emit()

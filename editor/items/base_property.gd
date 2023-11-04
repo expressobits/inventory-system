@@ -63,7 +63,7 @@ func _on_delete_button_pressed():
 
 func _on_remove_confirmation_dialog_confirmed():
 	item.properties.erase(key)
-	emit_signal("removed")
+	removed.emit()
 
 
 func _on_value_line_edit_text_changed(new_text):

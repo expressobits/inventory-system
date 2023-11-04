@@ -64,7 +64,7 @@ func _on_theme_changed():
 
 func _on_name_text_edit_text_changed(new_text):
 	category.name = new_text
-	emit_signal("changed", category)
+	changed.emit(category)
 
 
 func _on_icon_edit_button_pressed():
@@ -79,11 +79,11 @@ func _on_icon_file_dialog_file_selected(path):
 		var tex : Texture2D = file
 		category.icon = tex
 		icon_text_edit.text = category.icon.resource_path
-		emit_signal("changed", category)
+		changed.emit(category)
 	else:
 		print("Error on open texture!")
 
 
 func _on_color_picker_color_changed(color):
 	category.color = color
-	emit_signal("changed", category)
+	changed.emit(category)
