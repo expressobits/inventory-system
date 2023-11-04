@@ -76,12 +76,12 @@ func apply_theme() -> void:
 
 func _on_max_stack_spin_box_value_changed(value):
 	item.max_stack = int(item_max_stack_spin_box.value)
-	emit_signal("changed", item.id)
+	changed.emit(item.id)
 
 
 func _on_text_edit_text_changed(new_text):
 	item.name = item_name_text_edit.text
-	emit_signal("changed", item.id)
+	changed.emit(item.id)
 
 
 func _on_theme_changed():
@@ -96,7 +96,7 @@ func _on_icon_file_dialog_file_selected(path):
 		var tex : Texture2D = file
 		item.icon = tex
 		item_icon_text_edit.text = item.icon.resource_path
-		emit_signal("changed", item.id)
+		changed.emit(item.id)
 	else:
 		print("Error on open texture!")
 
@@ -114,7 +114,7 @@ func _on_item_resource_file_dialog_file_selected(path):
 	if file is InventoryItem:
 		var inventory_item : InventoryItem = file
 		load_item(item, database)
-		emit_signal("changed", item.id)
+		changed.emit(item.id)
 	else:
 		print("Error on open scene!")
 
@@ -122,9 +122,9 @@ func _on_item_resource_file_dialog_file_selected(path):
 func _on_item_id_editor_changed(id : int):
 	item.id = id
 	database.update_items_cache()
-	emit_signal("changed", item.id)
+	changed.emit(item.id)
 
 
 func _on_weight_spin_box_value_changed(value):
 	item.weight = weight_spin_box.value
-	emit_signal("changed", item.id)
+	changed.emit(item.id)

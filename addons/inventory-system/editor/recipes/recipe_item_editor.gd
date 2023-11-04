@@ -70,7 +70,7 @@ func clear_list():
 
 
 func _on_recipe_editor_changed_product(recipe):
-	emit_signal("changed_product_in_recipe", recipe.product.item, recipe)
+	changed_product_in_recipe.emit(recipe.product.item, recipe)
 
 
 func _on_recipe_item_selected(index):
@@ -82,7 +82,7 @@ func _on_recipe_item_selected(index):
 
 
 func _on_recipe_item_request_remove_menu(recipe : Recipe, request_code : int):
-	emit_signal("request_remove", recipe, request_code)
+	request_remove.emit(recipe, request_code)
 
 
 func _on_recipe_editor_changed():

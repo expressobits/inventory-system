@@ -37,7 +37,7 @@ func remove_item(item : InventoryItem):
 	database.remove_item(item)
 	ResourceSaver.save(database, database.resource_path)
 	load_items()
-	emit_signal("data_changed")
+	data_changed.emit()
 
 
 func select(id : int):
@@ -98,7 +98,7 @@ func _on_item_editor_changed(id):
 	var index = inventory_item_list.get_index_of_item_id(id)
 	if index > -1:
 		inventory_item_list.update_item(index)
-		emit_signal("data_changed")
+		data_changed.emit()
 
 
 func _on_new_resource_dialog_file_selected(path):
@@ -112,7 +112,7 @@ func _on_new_resource_dialog_file_selected(path):
 		ResourceSaver.save(database, database.resource_path)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("data_changed")
+		data_changed.emit()
 	else:
 		print(err)
 
@@ -131,4 +131,4 @@ func _on_open_resource_dialog_file_selected(path):
 		ResourceSaver.save(database, database.resource_path)
 		load_items()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("data_changed")
+		data_changed.emit()

@@ -45,7 +45,7 @@ func remove_station(station : CraftStationType):
 	database.stations_type.remove_at(index)
 	ResourceSaver.save(database, database.resource_path)
 	load_craft_station_types()
-	emit_signal("data_changed")
+	data_changed.emit()
 
 
 func _on_craft_station_types_item_list_station_selected(station):
@@ -112,5 +112,5 @@ func _on_open_resource_dialog_file_selected(path):
 		ResourceSaver.save(database, database.resource_path)
 		load_craft_station_types()
 		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		emit_signal("data_changed")
+		data_changed.emit()
 			

@@ -84,7 +84,7 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 	slot.item = item
 	slot.amount = amount
 	slots[slot_index] = slot
-	emit_signal("updated_slot", slot_index)
+	updated_slot.emit(slot_index)
 	_call_events(old_amount)
 
 
@@ -97,7 +97,7 @@ func set_slot_with_other_slot(slot_index : int, other_slot : Dictionary):
 	slot.item = other_slot.item
 	slot.amount = other_slot.amount
 	slots[slot_index] = slot
-	emit_signal("updated_slot", slot_index)
+	updated_slot.emit(slot_index)
 	_call_events(old_amount)
 
 
@@ -196,7 +196,7 @@ func add(item : InventoryItem, amount : int) -> int:
 		_call_events(old_amount)
 	var added = amount - amount_in_interact
 	if added > 0:
-		emit_signal("item_added", item, added)
+		item_added.emit(item, added)
 	return amount_in_interact
 
 
@@ -210,7 +210,7 @@ func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 		_call_events(old_amount)
 	var added = amount - amount_in_interact
 	if added > 0:
-		emit_signal("item_added", item, added)
+		item_added.emit(item, added)
 	return amount_in_interact
 
 
@@ -227,7 +227,7 @@ func remove(item : InventoryItem, amount := 1) -> int:
 			_call_events(old_amount)
 	var removed = amount - amount_in_interact
 	if removed > 0:
-		emit_signal("item_removed", item, removed)
+		item_removed.emit(item, removed)
 	return amount_in_interact
 
 
@@ -244,7 +244,7 @@ func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 			_call_events(old_amount)
 	var removed = amount - amount_in_interact
 	if removed > 0:
-		emit_signal("item_removed", item, removed)
+		item_removed.emit(item, removed)
 	return amount_in_interact
 
 
@@ -253,7 +253,7 @@ func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 func open() -> bool:
 	if !is_open:
 		is_open = true
-		emit_signal("opened")
+		opened.emit()
 		return true
 	return false
 
@@ -263,7 +263,7 @@ func open() -> bool:
 func close() -> bool:
 	if is_open:
 		is_open = false
-		emit_signal("closed")
+		closed.emit()
 		return true
 	return false
 
@@ -277,7 +277,7 @@ func _load_slots():
 
 func _remove_slot(slot_index : int, emit_signal := true):
 	slots.remove_at(slot_index)
-	emit_signal("slot_removed", slot_index)
+	slot_removed.emit(slot_index)
 
 
 func _add_slot(slot_index : int, emit_signal := true):
@@ -286,17 +286,17 @@ func _add_slot(slot_index : int, emit_signal := true):
 	slot.amount = 0
 	slots.insert(slot_index, slot)
 	if emit_signal:
-		emit_signal("slot_added", slot_index)
+		slot_added.emit(slot_index)
 
 
 func _call_events(old_amount : int):
 	var actual_amount = get_amount()
 	if old_amount != actual_amount:
-		emit_signal("inventory_changed")
+		inventory_changed.emit()
 		if is_empty():
-			emit_signal("emptied")
+			emptied.emit()
 		if is_full():
-			emit_signal("filled")
+			filled.emit()
 
 
 func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
@@ -304,7 +304,7 @@ func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	var remaining_amount = slot.add(item, amount)
 	if remaining_amount == amount:
 		return amount
-	emit_signal("updated_slot", slot_index)
+	updated_slot.emit(slot_index)
 	return remaining_amount;
 
 
@@ -313,5 +313,5 @@ func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> i
 	var remaining_amount = slot.remove(item, amount)
 	if remaining_amount == amount:
 		return amount
-	emit_signal("updated_slot", slot_index);
+	updated_slot.emit(slot_index);
 	return remaining_amount;
