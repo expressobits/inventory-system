@@ -8,7 +8,6 @@ func _enter_tree():
 	$CharacterInventorySystem/InventoryHandler/Inventory.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter/CraftStation.set_multiplayer_authority(1)
-	$CharacterInventorySystem.can_input = is_multiplayer_authority()
 
 
 func _ready():

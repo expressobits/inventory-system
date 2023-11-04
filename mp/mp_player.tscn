@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=16 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="3_fspyq"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
+[ext_resource type="Script" path="res://mp/mp_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="5_g5cqn"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
@@ -49,6 +50,9 @@ script = ExtResource("3_fspyq")
 [node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
+
+[node name="CharacterInventorySystem" parent="." index="2"]
+script = ExtResource("4_73by0")
 
 [node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
 script = ExtResource("3_xjjoy")

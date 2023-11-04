@@ -37,7 +37,7 @@ func set_selection_index(new_index : int):
 	if new_index < 0:
 		new_index += slots_in_hot_bar
 	selection_index = new_index
-	emit_signal("on_change_selection", selection_index)
+	on_change_selection.emit(selection_index)
 
 
 func has_valid_item_id() -> bool:

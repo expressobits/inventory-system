@@ -17,6 +17,27 @@ func _ready():
 	hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
 	InventorySystem.setup_inventory_handler(inventory_handler)
 	InventorySystem.setup_crafter(crafter)
+	
+	# Setup for enabled/disabled mouse 🖱️😀
+	inventory_handler.opened.connect(_update_opened_inventories.bind())
+	inventory_handler.closed.connect(_update_opened_inventories.bind())
+	crafter.opened.connect(_update_opened_stations.bind())
+	crafter.closed.connect(_update_opened_stations.bind())
+	_update_opened_inventories(inventory_handler.inventory)
+
+
+func _update_opened_inventories(_inventory : Inventory):
+	if InventorySystem.inventory_handler.is_open_main_inventory():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func _update_opened_stations(_craft_station : CraftStation):
+	if InventorySystem.crafter.is_open_any_station():
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _process(_delta):

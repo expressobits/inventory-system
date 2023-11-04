@@ -23,7 +23,7 @@ var is_burning := false:
 		if is_burning != new_value:
 			is_burning = new_value
 			check()
-			emit_signal("changed_burning_state",is_burning)
+			changed_burning_state.emit(is_burning)
 			_update_is_burning()
 			
 

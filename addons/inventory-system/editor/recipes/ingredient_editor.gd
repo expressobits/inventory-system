@@ -29,7 +29,7 @@ func setup(slot : Slot, database : InventoryDatabase, tooltip_text : String):
 
 
 func _on_slot_selector_slot_changed(slot : Slot):
-	emit_signal("changed_slot")
+	changed_slot.emit()
 
 
 func _on_delete_button_pressed():
@@ -37,4 +37,4 @@ func _on_delete_button_pressed():
 
 
 func _on_ingredient_remove_confirmation_dialog_confirmed():
-	emit_signal("request_remove")
+	request_remove.emit()

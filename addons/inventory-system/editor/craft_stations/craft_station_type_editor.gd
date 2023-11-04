@@ -61,7 +61,7 @@ func _on_theme_changed():
 
 func _on_name_text_edit_text_changed(new_text):
 	station.name = new_text
-	emit_signal("changed", station)
+	changed.emit(station)
 
 
 func _on_icon_edit_button_pressed():
@@ -76,7 +76,7 @@ func _on_icon_file_dialog_file_selected(path):
 		var tex : Texture2D = file
 		station.icon = tex
 		icon_text_edit.text = station.icon.resource_path
-		emit_signal("changed", station)
+		changed.emit(station)
 	else:
 		print("Error on open texture!")
 
@@ -87,6 +87,6 @@ func _on_icon_file_dialog_file_selected(path):
 #		var craft_station_type : CraftStationType = file
 #		database.stations[station_index] = craft_station_type
 #		load_station(craft_station_type)
-#		emit_signal("changed", item_database.id)
+#		changed.emit(item_database.id)
 #	else:
 #		print("Error on open scene!")

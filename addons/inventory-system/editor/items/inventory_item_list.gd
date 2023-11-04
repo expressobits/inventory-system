@@ -110,10 +110,10 @@ func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 		return
 	if not list.is_item_selectable(index):
 		return
-	emit_signal("item_selected", item_list_handler[index], index)
+	item_selected.emit(item_list_handler[index], index)
 	
 	if mouse_button_index == 2:
-		emit_signal("item_popup_menu_requested", at_position)
+		item_popup_menu_requested.emit(at_position)
 		list.select(index)
 
 func _on_search_line_edit_text_changed(new_text):

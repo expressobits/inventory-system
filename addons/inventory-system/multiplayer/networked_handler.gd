@@ -43,7 +43,7 @@ func drop_transaction():
 func open(inventory : Inventory) -> bool:
 	if not multiplayer.is_server():
 		open_rpc.rpc_id(1, inventory.get_path())
-		emit_signal("opened", inventory)
+		opened.emit(inventory)
 	else:
 		open_rpc(inventory.get_path())
 	return true
@@ -226,9 +226,9 @@ func close_main_inventory() -> bool:
 
 
 func _instantiate_dropped_item(dropped_item : PackedScene):
-	var spawner = get_node("../../DroppedItemSpawner")
-	var obj = spawner.spawn([get_parent().position, get_parent().rotation, dropped_item.resource_path])
-	emit_signal("dropped", obj)
+	var spawner = get_node("../../../DroppedItemSpawner")
+	var obj = spawner.spawn([get_parent().get_parent().position, get_parent().get_parent().rotation, dropped_item.resource_path])
+	dropped.emit(obj)
 
 
 func _on_updated_transaction_slot(item : InventoryItem, amount : int):

@@ -60,7 +60,7 @@ func _on_product_id_spin_box_value_changed(value):
 
 func _on_product_amount_spin_box_value_changed(value):
 	slot.amount = int(value)
-	emit_signal("slot_changed", slot)
+	slot_changed.emit(slot)
 
 
 func _on_option_button_item_selected(index):
@@ -68,4 +68,4 @@ func _on_option_button_item_selected(index):
 	slot.item = item
 	if item_id_editor.id != item.id:
 		item_id_editor.setup(database, item.id)
-	emit_signal("slot_changed", slot)	
+	slot_changed.emit(slot)	

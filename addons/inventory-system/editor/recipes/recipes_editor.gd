@@ -93,7 +93,7 @@ func _add_to_database(recipe : Recipe):
 	inventory_item_list.select(recipe.product.item.id)
 	var recipes = inventory_item_list.recipe_item_map[recipe.product.item]
 	recipe_item_editor.set_recipes_and_load(recipes, database)
-	emit_signal("data_changed")
+	data_changed.emit()
 
 
 func _on_recipe_item_editor_recipe_removed():

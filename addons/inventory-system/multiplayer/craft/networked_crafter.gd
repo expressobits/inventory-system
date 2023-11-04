@@ -5,7 +5,7 @@ class_name NetworkedCrafter
 func open(craft_station : CraftStation) -> bool:
 	if not multiplayer.is_server():
 		_open_rpc.rpc_id(1, craft_station.get_path())
-		emit_signal("opened", craft_station)
+		opened.emit(craft_station)
 	else:
 		_open_rpc(craft_station.get_path())
 	return true
@@ -60,7 +60,7 @@ func _open_response_rpc(object_path : NodePath):
 	if craft_station == null:
 		return
 	opened_stations.append(craft_station)
-	emit_signal("opened", craft_station)
+	opened.emit(craft_station)
 
 
 @rpc
@@ -77,4 +77,4 @@ func _close_response_rpc(object_path : NodePath):
 	if index == -1:
 		return false
 	opened_stations.remove_at(index)
-	emit_signal("closed", craft_station)
+	closed.emit(craft_station)

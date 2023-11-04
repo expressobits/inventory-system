@@ -141,7 +141,7 @@ func contains_ingredients(recipe : Recipe) -> bool:
 ## [Inventory] and it is possible to add a new craft at the station.
 func craft(recipe_index : int):
 	var recipe := database.recipes[recipe_index]
-	emit_signal("on_request_craft", recipe_index)
+	on_request_craft.emit(recipe_index)
 	if not can_craft(recipe):
 		return
 	if not only_remove_ingredients_after_craft:
@@ -168,7 +168,7 @@ func cancel_craft(crafting_index : int):
 func open() -> bool:
 	if !is_open:
 		is_open = true
-		emit_signal("opened")
+		opened.emit()
 		return true
 	return false
 	
@@ -178,7 +178,7 @@ func open() -> bool:
 func close() -> bool:
 	if is_open:
 		is_open = false
-		emit_signal("closed")
+		closed.emit()
 		return true
 	return false
 
@@ -207,7 +207,7 @@ func _finish_crafting(crafting_index : int):
 	output_inventory.add(recipe.product.item, recipe.product.amount)
 	for subproduct in recipe.byproducts:
 		output_inventory.add(subproduct.item, subproduct.amount)
-	emit_signal("on_crafted", crafting.recipe_index)
+		on_crafted.emit(crafting.recipe_index)
 	_check_for_auto_crafts()
 
 
@@ -225,13 +225,13 @@ func _add_crafting(recipe_index : int, recipe : Recipe):
 	crafting.recipe_index = recipe_index
 	crafting.time = recipe.time_to_craft
 	craftings.append(crafting)
-	emit_signal("crafting_added", craftings.size() - 1)
+	crafting_added.emit(craftings.size() - 1)
 	
 
 func _remove_crafting(crafting_index : int):
 	if crafting_index >= craftings.size():
 		return
-	emit_signal("crafting_removed", crafting_index)
+	crafting_removed.emit(crafting_index)
 	craftings.remove_at(crafting_index)
 
 

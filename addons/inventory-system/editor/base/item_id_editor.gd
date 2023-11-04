@@ -44,7 +44,7 @@ func _on_button_pressed():
 		button.icon = get_theme_icon("Edit", "EditorIcons")
 		if self.id != new_id:
 			self.id = new_id
-			emit_signal("changed", id)
+			changed.emit(id)
 			
 
 func _check_valid_id():

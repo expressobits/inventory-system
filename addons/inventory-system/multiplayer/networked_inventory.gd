@@ -127,7 +127,7 @@ func _opened_rpc():
 	if multiplayer.is_server():
 		return
 	is_open = true
-	emit_signal("opened")
+	opened.emit()
 
 
 @rpc
@@ -135,7 +135,7 @@ func _closed_rpc():
 	if multiplayer.is_server():
 		return
 	is_open = false
-	emit_signal("closed")
+	closed.emit()
 
 
 @rpc
@@ -167,7 +167,7 @@ func _item_added_rpc(item_id : int, amount : int):
 	var item = database.get_item(item_id)
 	if item == null:
 		return
-	emit_signal("item_added", item, amount)
+	item_added.emit(item, amount)
 
 
 @rpc
@@ -177,4 +177,4 @@ func _item_removed_rpc(item_id : int, amount : int):
 	var item = database.get_item(item_id)
 	if item == null:
 		return
-	emit_signal("item_removed", item, amount)
+	item_removed.emit(item, amount)

@@ -8,8 +8,6 @@ var players : Array
 var peer : ENetMultiplayerPeer
 
 func _ready():
-	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
-	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
 	multiplayer.peer_connected.connect(_player_connected.bind())
 	multiplayer.peer_disconnected.connect(_player_disconnected.bind())
 

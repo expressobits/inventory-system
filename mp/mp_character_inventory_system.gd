@@ -9,6 +9,13 @@ func _ready():
 	if is_multiplayer_authority():
 		InventorySystem.setup_inventory_handler(inventory_handler)
 		InventorySystem.setup_crafter(crafter)
+		
+		# Setup for enabled/disabled mouse 🖱️😀
+		inventory_handler.opened.connect(_update_opened_inventories.bind())
+		inventory_handler.closed.connect(_update_opened_inventories.bind())
+		crafter.opened.connect(_update_opened_stations.bind())
+		crafter.closed.connect(_update_opened_stations.bind())
+		_update_opened_inventories(inventory_handler.inventory)
 
 
 func _process(delta):
