@@ -4,6 +4,11 @@ class_name InventorySystemUI
 ## This script manages inventory system UI information
 ## Contains drag slot information, UI inventories and item drop area
 
+@export var is_console_mode : bool = false:
+	set(value):
+		InventorySystem.is_console_mode = value
+		is_console_mode = value
+
 ## Stores [InventoryHandler] information to connect all signals and callbacks
 var inventory_handler : InventoryHandler
 
@@ -29,6 +34,7 @@ var crafter : Crafter
 @onready var player_craft_station_ui : CraftStationUI = get_node(NodePath("PlayerCraftStationUI"))
 
 @onready var other_craft_station_ui : CraftStationUI = get_node(NodePath("OtherCraftStationUI"))
+
 
 func _ready():
 	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
@@ -96,7 +102,7 @@ func _open_player_inventory():
 	player_inventory_ui.visible = true
 	hotbar_ui.visible = false
 	drop_area.visible = true
-	if not player_inventory_ui.slots.is_empty():
+	if is_console_mode and not player_inventory_ui.slots.is_empty():
 		player_inventory_ui.slots[0].grab_focus()
 
 

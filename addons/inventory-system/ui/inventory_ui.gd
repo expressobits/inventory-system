@@ -66,6 +66,9 @@ func _update_slots():
 		slots_container.add_child(slot_obj)
 		slots.append(slot_obj)
 		slot_obj.update_info_with_slot(slot)
+		
+	if not InventorySystem.is_console_mode:
+		return
 
 	## Set focus neighbors
 	for slot_idx in slots.size():
@@ -106,7 +109,7 @@ func _on_slot_removed(index):
 
 
 func _on_slot_gui_input(event : InputEvent, slot_obj):
-	if event is InputEventMouseButton or event.is_action("ui_accept"):
+	if event is InputEventMouseButton or (InventorySystem.is_console_mode and event.is_action("ui_accept")):
 		if event.pressed:	
 			var index = slots.find(slot_obj)
 			if index < 0:
