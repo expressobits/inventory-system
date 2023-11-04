@@ -3,6 +3,8 @@ extends Node
 var inventory_handler : InventoryHandler
 var crafter : Crafter
 
+@export var is_console_mode := false
+
 
 signal inventory_handler_changed
 signal crafter_changed
