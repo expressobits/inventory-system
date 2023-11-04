@@ -2,7 +2,7 @@ extends Node3D
 class_name HandItem3D
 
 @export_node_path("Node3D") var default_hand_item_object_path = NodePath("DefaultHandItem")
-@export_node_path("Hotbar") var hotbar_path = NodePath("../InventoryHandler/Hotbar")
+@export_node_path("Hotbar") var hotbar_path = NodePath("../../CharacterInventorySystem/InventoryHandler/Hotbar")
 
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @onready var hotbar : Hotbar = get_node(hotbar_path) 
