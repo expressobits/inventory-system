@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="3_fspyq"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
-[ext_resource type="Script" path="res://mp/mp_character_inventory_system.gd" id="4_73by0"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/mp_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="5_g5cqn"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
@@ -83,3 +83,5 @@ mesh = SubResource("BoxMesh_0fmeo")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4"]
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_fhfrv")
+
+[editable path="CharacterInventorySystem"]
