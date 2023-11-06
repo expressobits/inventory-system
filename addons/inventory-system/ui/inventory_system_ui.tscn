@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://da2b73383isem"]
+[gd_scene load_steps=8 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system/ui/inventory_ui.tscn" id="3_sohfg"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/transaction_slot.gd" id="3_ugeom"]
 [ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system/ui/slot_ui.tscn" id="4_5h6ud"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/hotbar_ui.gd" id="7_e17fd"]
+[ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
 [node name="Inventory System UI" type="Control"]
@@ -103,6 +104,19 @@ view_output_inventory = false
 [node name="OtherCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
 layout_mode = 1
 view_output_inventory = false
+
+[node name="InteractorUI" parent="." instance=ExtResource("7_vn7uk")]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 volume_db = -12.0

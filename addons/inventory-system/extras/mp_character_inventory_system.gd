@@ -8,7 +8,9 @@ func _ready():
 	inventory_handler.inventory.closed.connect(_on_player_inventory_closed.bind())
 	if is_multiplayer_authority():
 		InventorySystem.setup_inventory_handler(inventory_handler)
+		InventorySystem.setup_hotbar(hotbar)
 		InventorySystem.setup_crafter(crafter)
+		InventorySystem.setup_interactor(interactor)
 		
 		# Setup for enabled/disabled mouse 🖱️😀
 		inventory_handler.opened.connect(_update_opened_inventories.bind())
@@ -19,6 +21,17 @@ func _ready():
 
 
 func _input(event : InputEvent):
+	if Engine.is_editor_hint():
+		return
 	if is_multiplayer_authority():
 		hot_bar_inputs(event)
 		inventory_inputs()
+
+
+func _physics_process(_delta : float):
+	if Engine.is_editor_hint():
+		return
+	if not can_interact:
+		return
+	if is_multiplayer_authority():
+		interactor.try_interact()

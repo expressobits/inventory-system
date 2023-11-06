@@ -15,6 +15,8 @@ var inventory_handler : InventoryHandler
 ## Stores [Crafter] information to connect all signals and callbacks
 var crafter : Crafter
 
+var interactor : InventoryInteractor
+
 ## SlotUI special that stores inventory transaction information
 @onready var transaction_slot_ui : TransactionSlotUI = get_node(NodePath("TransactionSlotUI"))
 
@@ -35,10 +37,14 @@ var crafter : Crafter
 
 @onready var other_craft_station_ui : CraftStationUI = get_node(NodePath("OtherCraftStationUI"))
 
+@onready var interactor_ui : InteractorUI = get_node(NodePath("InteractorUI"))
+
 
 func _ready():
 	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
 	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
+	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
+	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
@@ -61,11 +67,18 @@ func _ready():
 
 func _on_inventory_handler_changed():
 	set_player_inventory_handler(InventorySystem.inventory_handler)
-	set_hotbar(InventorySystem.inventory_handler.get_node("Hotbar"))
-	
+
+
+func _on_hotbar_changed():
+	set_hotbar(InventorySystem.hotbar)
+
 
 func _on_crafter_changed():
 	set_crafter(InventorySystem.crafter)
+
+
+func _on_interactor_changed():
+	set_interactor(InventorySystem.interactor)
 
 
 ## Setup inventory handler and connect all signals
@@ -85,6 +98,11 @@ func set_crafter(crafter : Crafter):
 
 func set_hotbar(hotbar : Hotbar):
 	hotbar_ui.set_hotbar(hotbar)
+
+
+func set_interactor(interactor : InventoryInteractor):
+	self.interactor = interactor
+	interactor_ui.setup(interactor)
 
 
 ## Setup player [Inventory]
