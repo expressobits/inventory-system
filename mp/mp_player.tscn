@@ -1,12 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=15 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="3_fspyq"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/mp_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="5_g5cqn"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
 
@@ -45,7 +44,7 @@ script = ExtResource("2_j20bs")
 
 [node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D" index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
-script = ExtResource("3_fspyq")
+script = ExtResource("3_3qi1x")
 
 [node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
@@ -62,10 +61,7 @@ script = ExtResource("4_ggduv")
 sync_item_added_signal = true
 sync_item_removed_signal = true
 
-[node name="Hotbar" parent="CharacterInventorySystem/InventoryHandler" index="1"]
-script = ExtResource("5_g5cqn")
-
-[node name="Crafter" parent="CharacterInventorySystem" index="1"]
+[node name="Crafter" parent="CharacterInventorySystem" index="2"]
 script = ExtResource("7_8fje4")
 
 [node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]

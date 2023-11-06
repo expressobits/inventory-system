@@ -3,12 +3,14 @@ class_name VisualSlot3D
 
 @export_node_path("Node3D") var default_hand_item_object_path = NodePath("DefaultItem3D")
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
+@export var distance_for_stack : float = 0.05
 
 var property_name_of_visual : String
 var last_item : InventoryItem = null
 var inventory : Inventory
-var objects_per_id : Dictionary
+#var objects_per_id : Dictionary
 var slot_index : int
+var objects : Array
 
 
 func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
@@ -17,7 +19,7 @@ func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
 	self.inventory.updated_slot.connect(_on_updated_slot.bind())
 	self.slot_index = new_slot_index
 	_on_updated_slot(slot_index)
-	objects_per_id = {}
+#	objects_per_id = {}
 
 
 func _on_updated_slot(changed_slot_index : int):
@@ -25,6 +27,7 @@ func _on_updated_slot(changed_slot_index : int):
 		return
 	_clear_last_visual()
 	var item = inventory.slots[slot_index].item
+	var amount = inventory.slots[slot_index].amount
 	if item == null:
 		return
 	var item_scene = null
@@ -32,20 +35,27 @@ func _on_updated_slot(changed_slot_index : int):
 		var path = item.properties[property_name_of_visual]
 		item_scene = load(path)
 	last_item = item
+	
 	if item_scene == null:
-		default_hand_item_object.visible = true
+#		default_hand_item_object.visible = true
 		return
-	if objects_per_id.has(item):
-		objects_per_id[item].visible = true
-	else:
+#	if objects_per_id.has(item):
+#		objects_per_id[item].visible = true
+#	else:
+	for i in amount:
 		var item_obj = item_scene.instantiate()
 		add_child(item_obj)
-		objects_per_id[item] = item_obj
+		item_obj.position.y = i * distance_for_stack
+		objects.append(item_obj)
+#		objects_per_id[item] = item_obj
 
 
 func _clear_last_visual():
-	default_hand_item_object.visible = false
-	if last_item == null:
-		return
-	if objects_per_id.has(last_item):
-		objects_per_id[last_item].visible = false	
+#	default_hand_item_object.visible = false
+#	if last_item == null:
+#		return
+	for i in objects:
+		i.queue_free()
+	objects.clear()
+#	if objects_per_id.has(last_item):
+#		objects_per_id[last_item].visible = false	

@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://tmbnja6deh81"]
+[gd_scene load_steps=6 format=3 uid="uid://tmbnja6deh81"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_h5aob"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_00g38"]
 albedo_color = Color(0.462745, 0.498039, 0.505882, 1)
@@ -43,3 +45,4 @@ shadow_mesh = SubResource("ArrayMesh_8bh6e")
 [node name="Rock" type="MeshInstance3D"]
 material_override = SubResource("StandardMaterial3D_00g38")
 mesh = SubResource("ArrayMesh_pj4tf")
+script = ExtResource("1_h5aob")

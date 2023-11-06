@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnr02xnvoiun5"]
+[gd_scene load_steps=7 format=3 uid="uid://bnr02xnvoiun5"]
 
 [ext_resource type="Script" path="res://fps/player.gd" id="1_qhbqk"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/hand_item_3d.gd" id="2_fyps8"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="2_toyi4"]
 [ext_resource type="PackedScene" uid="uid://cw4rwxc3dyovc" path="res://addons/inventory-system/extras/character_inventory_system.tscn" id="3_hbu24"]
+[ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="4_ljenf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
@@ -27,12 +28,19 @@ collision_mask = 16
 
 [node name="HandItem" type="Node3D" parent="Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.382065)
-script = ExtResource("2_fyps8")
+script = ExtResource("2_toyi4")
 
 [node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/HandItem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="CharacterInventorySystem" parent="." instance=ExtResource("3_hbu24")]
+[node name="CharacterInventorySystem" parent="." node_paths=PackedStringArray("raycast", "camera_3d") instance=ExtResource("3_hbu24")]
+raycast = NodePath("../Camera3D/RayCast3D")
+camera_3d = NodePath("../Camera3D")
+database = ExtResource("4_ljenf")
+
+[node name="InventoryInteractor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera_3d")]
+raycast = NodePath("../../Camera3D/RayCast3D")
+camera_3d = NodePath("../../Camera3D")
 
 [editable path="CharacterInventorySystem"]

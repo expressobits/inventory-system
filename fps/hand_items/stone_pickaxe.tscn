@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://2fvkeyyvqubl"]
+[gd_scene load_steps=6 format=3 uid="uid://2fvkeyyvqubl"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_avorm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6cie"]
 resource_name = "wood"
@@ -65,3 +67,4 @@ shadow_mesh = SubResource("ArrayMesh_rnfke")
 [node name="StoneAxe" type="MeshInstance3D"]
 transform = Transform3D(-0.541241, 0, 1.39895, 0, 1.5, 0, -1.39895, 0, -0.541241, 0, -0.165568, 0)
 mesh = SubResource("ArrayMesh_3vd8m")
+script = ExtResource("1_avorm")

@@ -1,4 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfgi4adaocgtx"]
+[gd_scene load_steps=12 format=3 uid="uid://cfgi4adaocgtx"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/placeable_hand_item_3d.gd" id="1_blvip"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jokrv"]
 resource_name = "woodDark"
@@ -157,6 +159,7 @@ shadow_mesh = SubResource("ArrayMesh_log8l")
 [node name="Workbench" type="MeshInstance3D"]
 mesh = SubResource("ArrayMesh_bxuln")
 skeleton = NodePath("")
+script = ExtResource("1_blvip")
 
 [node name="hammer" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.866026, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866026, 0.0603986, 0.2153, -0.031166)

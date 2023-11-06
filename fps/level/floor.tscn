@@ -8,7 +8,7 @@ size = Vector3(10, 1, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_opmv2"]
 size = Vector3(10, 1, 10)
 
-[node name="Floor" type="StaticBody3D"]
+[node name="Floor" type="StaticBody3D" groups=["placeable_area"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

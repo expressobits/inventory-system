@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3 uid="uid://hxu6yowt7m5"]
 
 [ext_resource type="Material" uid="uid://fa7npgc4ju1t" path="res://fps/materials/rock.tres" id="1_eiw8c"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/placeable_hand_item_3d.gd" id="2_plhpq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nxxir"]
 resource_name = "rock"
@@ -77,6 +78,7 @@ shadow_mesh = SubResource("ArrayMesh_k4isu")
 [node name="Campfire" type="MeshInstance3D"]
 material_override = ExtResource("1_eiw8c")
 mesh = SubResource("ArrayMesh_v7l88")
+script = ExtResource("2_plhpq")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_84gdc")

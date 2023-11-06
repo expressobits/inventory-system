@@ -61,3 +61,18 @@ func check() -> bool:
 func _process(delta):
 	if fuel > 0.0:
 		fuel -= delta * decrease_fuel_multiplier
+
+
+func get_interaction_position(_interaction_point : Vector3) -> Vector3:
+	return position
+
+
+func get_interact_preview_message(_interactor : InventoryInteractor) -> String:
+	if $CraftStation.is_open:
+		return ""
+	return "[E] to Open Station"
+
+
+func interact(interactor : InventoryInteractor):
+	if Input.is_action_just_pressed("interact"):
+		interactor.get_parent().open_inventory($CraftStation.input_inventory)

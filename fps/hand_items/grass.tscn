@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://daan81no83gsp"]
+[gd_scene load_steps=5 format=3 uid="uid://daan81no83gsp"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_xnq37"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goag8"]
 resource_name = "foliage"
@@ -40,3 +42,4 @@ shadow_mesh = SubResource("ArrayMesh_pfalu")
 
 [node name="Grass" type="MeshInstance3D"]
 mesh = SubResource("ArrayMesh_nf1k0")
+script = ExtResource("1_xnq37")

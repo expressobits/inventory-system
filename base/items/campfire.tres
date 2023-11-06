@@ -12,6 +12,7 @@ icon = ExtResource("1_vhjvv")
 weight = 0.0
 properties = {
 "dropped_item": "res://fps/dropped_items/campfire.tscn",
-"hand_item": "res://fps/hand_items/campfire.tscn"
+"hand_item": "res://fps/hand_items/campfire.tscn",
+"placeable": "res://fps/campfire.tscn"
 }
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

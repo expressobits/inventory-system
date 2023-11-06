@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://baivgaud6r3g8"]
+[gd_scene load_steps=6 format=3 uid="uid://baivgaud6r3g8"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_qbo1f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kcwrl"]
 resource_name = "white"
@@ -66,3 +68,4 @@ shadow_mesh = SubResource("ArrayMesh_gi1wy")
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 mesh = SubResource("ArrayMesh_nxwdo")
 skeleton = NodePath("")
+script = ExtResource("1_qbo1f")
