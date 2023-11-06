@@ -127,7 +127,7 @@ func is_full() -> bool:
 ## Returns true if the inventory contains the quantity of the specified item
 func contains(item : InventoryItem, amount := 1) -> bool:
 	if item == null:
-		return 0
+		return false
 	var amount_in_inventory = 0
 	for slot in slots:
 		if slot.item == item:
@@ -135,7 +135,18 @@ func contains(item : InventoryItem, amount := 1) -> bool:
 			if amount_in_inventory >= amount:
 				return true
 	return false
-	
+
+
+func contains_at(slot_index : int, item : InventoryItem, amount := 1) -> bool:
+	if item == null:
+		return false
+	if slot_index < slots.size():
+		var slot = slots[slot_index]
+		if slot.item == item:
+			if slot.amount >= amount:
+				return true
+	return false
+
 
 ## Returns true if the inventory contains the quantity of the specified category
 func contains_category(category : ItemCategory, amount := 1) -> bool:

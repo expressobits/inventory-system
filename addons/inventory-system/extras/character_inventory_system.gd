@@ -1,13 +1,19 @@
+@tool
+@icon("res://addons/inventory-system/icons/character_inventory_system.svg")
 class_name CharacterInventorySystem
-extends Node
+extends NodeInventorySystemBase
+
 
 @export_group("🗃️ Inventory Nodes")
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
-@export_node_path("Hotbar") var hotbar_path := NodePath("InventoryHandler/Hotbar")
+@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export_node_path("Crafter") var crafter_path := NodePath("Crafter")
 @onready var crafter : Crafter = get_node(crafter_path)
+@export_node_path("InventoryInteractor") var interactor_path := NodePath("InventoryInteractor")
+@onready var interactor : InventoryInteractor = get_node(interactor_path)
+
 
 @export_group("🔊 Audios")
 @export_node_path("AudioStreamPlayer3D") var picked_audio_path := NodePath("PickupAudio")
@@ -21,21 +27,34 @@ extends Node
 @export_node_path("AudioStreamPlayer3D") var player_inventory_close_audio_path := NodePath("PlayerInventoryCloseAudio")
 @onready var player_inventory_close_audio : AudioStreamPlayer3D = get_node(player_inventory_close_audio_path)
 
-@export_group("⚙️ Settings")
-## Change mouse state based on inventory status
-@export var change_mouse_state : bool = true
-
 
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
+@export var change_mouse_state : bool = true
 @export var toggle_inventory_input : String = "toggle_inventory"
 @export var exit_inventory_and_craft_panel_input : String = "escape"
 @export var toggle_craft_panel_input : String = "toggle_craft_panel"
 
 
+@export_group("🫴 Interact")
+@export var can_interact : bool = true
+@export var raycast : RayCast3D:
+	set(value):
+		raycast = value
+		get_node(interactor_path).raycast = value
+@export var camera_3d : Camera3D:
+	set(value):
+		camera_3d = value
+		get_node(interactor_path).camera_3d = value
+
+
 func _ready():
+	if Engine.is_editor_hint():
+		return
 	InventorySystem.setup_inventory_handler(inventory_handler)
+	InventorySystem.setup_hotbar(hotbar)
 	InventorySystem.setup_crafter(crafter)
+	InventorySystem.setup_interactor(interactor)
 	
 	# Setup for audios 🔊
 	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
@@ -54,8 +73,18 @@ func _ready():
 
 
 func _input(event : InputEvent) -> void:
+	if Engine.is_editor_hint():
+		return
 	hot_bar_inputs(event)
 	inventory_inputs()
+
+
+func _physics_process(_delta : float):
+	if Engine.is_editor_hint():
+		return
+	if not can_interact:
+		return
+	interactor.try_interact()
 
 
 func _update_opened_inventories(_inventory : Inventory):
