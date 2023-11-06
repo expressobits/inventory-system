@@ -36,13 +36,19 @@ signal updated_transaction_slot(item : InventoryItem, amount : int)
 @export_node_path("Inventory") var inventory_path := NodePath("Inventory")
 
 ## Path to where a drop of [DroppedItem] should be instantiated by the handler.
-@export_node_path var drop_parent_path := NodePath("../..")
+@export_node_path var drop_parent_path := NodePath("../../..")
+
+## The path to where a drop of [DroppedItem] must be used at the 
+## position and rotation to be instantiated, normally at the player's position. 
+## Note: Is so important because the inventory node does not have position and rotation information.
+@export_node_path var drop_parent_position_path := NodePath("../..")
 
 ## Main [Inventory] node.
-@onready var inventory := get_node(inventory_path)
+@onready var inventory : Inventory = get_node(inventory_path)
 
 ## Drop parent node for [code]drop()[/code].
 @onready var drop_parent := get_node(drop_parent_path)
+@onready var drop_parent_position := get_node(drop_parent_position_path)
 
 ## All inventories currently open by this handler
 var opened_inventories : Array
@@ -115,14 +121,26 @@ func pick_to_inventory(dropped_item, inventory := self.inventory):
 ## First remove from the "from" [Inventory], then the successfully removed value is added to the "to" [Inventory],
 ## if any value is not successfully added, this value is added again to the "from" [Inventory] at the same index,
 ## if in this last task values are not added with successes they will be dropped with [code]drop()[/code]
-func move_between_inventories(from : Inventory, slot_index : int, amount : int, to : Inventory):
+func move_between_inventories(from : Inventory, slot_index : int, amount : int, to : Inventory) -> int:
 	var slot = from.slots[slot_index];
 	var item = slot.item;
 	var amount_not_removed = from.remove_at(slot_index, item, amount);
 	var amount_for_swap = amount - amount_not_removed;
 	var amount_not_swaped = to.add(item, amount_for_swap);
 	var amount_not_undo = from.add_at(slot_index, item, amount_not_swaped);
-	drop(item, amount_not_undo);
+#	drop(item, amount_not_undo);
+	return amount_not_swaped
+
+
+func move_between_inventories_at(from : Inventory, slot_index : int, amount : int, to : Inventory, to_slot_index : int) -> int:
+	var slot = from.slots[slot_index];
+	var item = slot.item;
+	var amount_not_removed = from.remove_at(slot_index, item, amount);
+	var amount_for_swap = amount - amount_not_removed;
+	var amount_not_swaped = to.add_at(to_slot_index, item, amount_for_swap);
+	var amount_not_undo = from.add_at(slot_index, item, amount_not_swaped);
+#	drop(item, amount_not_undo);
+	return amount_not_swaped
 
 
 ## Swap slot information for inventories.
@@ -275,8 +293,8 @@ func drop_transaction():
 func _instantiate_dropped_item(dropped_item : PackedScene):
 	var obj = dropped_item.instantiate()
 	drop_parent.add_child(obj)
-	obj.position = get_parent().position
-	obj.rotation = get_parent().rotation
+	obj.position = drop_parent_position.position
+	obj.rotation = drop_parent_position.rotation
 	dropped.emit(obj)
 
 
