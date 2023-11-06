@@ -9,6 +9,7 @@ layout_mode = 3
 anchors_preset = 0
 focus_mode = 2
 script = ExtResource("2_b6rwq")
+highlight_color = Color(0, 0, 0, 1)
 
 [node name="Selected" type="Panel" parent="."]
 visible = false
