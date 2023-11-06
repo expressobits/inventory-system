@@ -71,7 +71,7 @@ signal closed
 
 func _ready():
 	super._ready()
-	if not Engine.is_editor_hint() and recreate_slots_on_ready:
+	if not Engine.is_editor_hint():
 		_load_slots()
 
 
@@ -280,10 +280,14 @@ func close() -> bool:
 
 
 func _load_slots():
-	slots.clear()
-	if not create_slot_if_needed:
-		for i in slot_amount:
-			_add_slot(i, false)
+	if recreate_slots_on_ready:
+		if not create_slot_if_needed:
+			for i in slot_amount:
+				_add_slot(i, false)
+	
+	var slots = self.slots.duplicate(true)
+	for i in self.slots.size():
+		self.slots[i] = slots[i].duplicate()
 
 
 func _remove_slot(slot_index : int, emit_signal := true):
