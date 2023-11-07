@@ -1,14 +1,16 @@
 @tool
-extends InventoryTabEditor
 class_name RecipesEditor
+extends InventoryTabEditor
 
-@onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
-@onready var inventory_item_list = $HSplitContainer/InventoryItemList
-@onready var recipe_item_editor = $HSplitContainer/RecipeItemEditor
-
-var current_item : InventoryItem
+@onready var search_icon = $HSplitContainer/RecipesListEditor/VBoxContainer/Control/SearchIcon
+@onready var recipe_editor : RecipeEditor = %RecipeEditor
+@onready var recipes_list : RecipesListEditor = %RecipesListEditor
 
 func _ready():
+	super._ready()
+	recipe_editor.changed.connect(_on_recipe_editor_changed.bind())
+	recipes_list.selected.connect(_on_recipes_list_selected.bind())
+	recipes_list.request_remove.connect(_on_recipe_item_editor_request_remove.bind())
 	_apply_theme()
 
 
@@ -24,8 +26,10 @@ func on_load_database() -> void:
 
 
 func load_recipes() -> void:
-	recipe_item_editor.clear_list()
-	inventory_item_list.load_items(database)
+#	recipe_item_editor.clear_list()
+#	inventory_item_list.load_items(database)
+	recipe_editor.visible = false
+	recipes_list.load_recipes(database)
 
 
 func remove_current_data():
@@ -41,47 +45,34 @@ func remove_recipe(recipe : Recipe):
 	load_recipes()
 
 
+func load_recipe(recipe : Recipe, database : InventoryDatabase):
+	recipe_editor.load_recipe(recipe, database)
+	recipe_editor.visible = true
+
+
 func _apply_theme():
 	super._apply_theme()
 	if not is_instance_valid(search_icon):
 		return
-	
+
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
-func _on_inventory_item_list_item_selected(item, index):
-	current_item = item
-	var recipes = inventory_item_list.recipe_item_map[item]
-	recipe_item_editor.set_recipes_and_load(recipes, database)
-
-
-func _on_recipe_item_editor_changed_product_in_recipe(new_product, recipe):
+func _on_recipe_item_editor_changed_products_in_recipe(recipe):
 	load_recipes()
-	current_item = recipe.product.item
-	if inventory_item_list.recipe_item_map.has(current_item):
-		var recipes = inventory_item_list.recipe_item_map[current_item]
-		recipe_item_editor.set_recipes_and_load(recipes, database)
-		inventory_item_list.select(current_item.id)
-		recipe_item_editor.select_with_recipe(recipe)
-	else:
-		recipe_item_editor.clear_list()
+#	if inventory_item_list.recipe_item_map.has(current_item):
+#		var recipes = inventory_item_list.recipe_item_map[current_item]
+#		recipe_item_editor.set_recipes_and_load(recipes, database)
+#		inventory_item_list.select(current_item.id)
+#		recipe_item_editor.select_with_recipe(recipe)
+#	else:
+#		recipe_item_editor.clear_list()
 
 
 func _add_new_recipe_to_database(recipe : Recipe):
 	if database.items.is_empty():
 		push_warning("There are no items to create a recipe, create an item first.")
 		return
-	
-	recipe.product = Slot.new()
-	var item = current_item
-	if item == null:
-		item = database.items[0]
-	if not database.has_item_id(item.id):
-		var id = database.get_valid_id()
-		item = database.get_item(id)
-	recipe.product.item = item
-	recipe.product.amount = 1
-	
 	_add_to_database(recipe)
 	
 
@@ -89,28 +80,20 @@ func _add_to_database(recipe : Recipe):
 	database.recipes.append(recipe)
 	ResourceSaver.save(database, database.resource_path)
 	load_recipes()
-	var index = inventory_item_list.get_index_of_item_id(recipe.product.item.id)
-	inventory_item_list.select(recipe.product.item.id)
-	var recipes = inventory_item_list.recipe_item_map[recipe.product.item]
-	recipe_item_editor.set_recipes_and_load(recipes, database)
+#	var index = inventory_item_list.get_index_of_item_id(recipe.products[0].item.id)
+#	inventory_item_list.select(recipe.products[0].item.id)
+#	var recipes = inventory_item_list.recipe_item_map[recipe.products[0].item]
+	recipes_list.load_recipes(database)
 	data_changed.emit()
 
 
 func _on_recipe_item_editor_recipe_removed():
 	load_recipes()
-	if inventory_item_list.recipe_item_map.has(current_item):
-		var recipes = inventory_item_list.recipe_item_map[current_item]
-		recipe_item_editor.set_recipes_and_load(recipes, database)
-	else:
-		recipe_item_editor.clear_list()
-
-
-func _on_inventory_item_list_no_products_item_selected():
-	var recipes : Array[Recipe]
-	for recipe in database.recipes:
-		if recipe.product.item == null:
-			recipes.append(recipe)
-	recipe_item_editor.set_recipes_and_load(recipes, database)
+#	if inventory_item_list.recipe_item_map.has(current_item):
+#		var recipes = inventory_item_list.recipe_item_map[current_item]
+#		recipe_item_editor.set_recipes_and_load(recipes, database)
+#	else:
+#		recipe_item_editor.clear_list()
 
 
 func _on_new_resource_dialog_file_selected(path):
@@ -150,4 +133,12 @@ func _on_recipe_item_editor_request_remove(recipe, request_code):
 
 func _on_data_changed():
 	load_recipes()
-	recipe_item_editor.reload()
+	recipes_list.load_recipes(database)
+
+
+func _on_recipe_editor_changed():
+	recipes_list.update_recipes_ui()
+
+
+func _on_recipes_list_selected(recipe : Recipe):
+	load_recipe(recipe, database)

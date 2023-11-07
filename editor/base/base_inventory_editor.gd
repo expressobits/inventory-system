@@ -1,6 +1,6 @@
 @tool
-extends Control
 class_name InventoryTabEditor
+extends Control
 
 signal data_changed
 
@@ -24,6 +24,13 @@ static func get_name_of_resource(resource: Resource):
 
 static func get_name_of_resource_path(path : String):
 	return path.get_file().trim_suffix('.tres')
+
+
+func _ready():
+	new_resource_dialog.file_selected.connect(_on_new_resource_dialog_file_selected.bind())
+	open_resource_dialog.file_selected.connect(_on_open_resource_dialog_file_selected.bind())
+	remove_confirmation_dialog.confirmed.connect(_on_remove_confirmation_dialog_confirmed.bind())
+	remove_and_delete_confirmation_dialog.confirmed.connect(_on_remove_and_delete_confirmation_dialog_confirmed.bind())
 
 
 func load_from_database(database : InventoryDatabase) -> void:
