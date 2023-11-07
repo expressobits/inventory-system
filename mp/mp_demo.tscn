@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=28 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://djh0ig8jxkla5" path="res://mp/mp_player.tscn" id="2_01e0j"]
@@ -11,11 +11,14 @@
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://fps/box_inventory.tscn" id="9_y0513"]
 [ext_resource type="Script" path="res://base/setup_keys.gd" id="10_efc1k"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://fps/workbench.tscn" id="10_jjthn"]
+[ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="11_ftexy"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="11_sal7r"]
+[ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="12_8i3r8"]
 [ext_resource type="Resource" path="res://base/categories/tool.tres" id="13_2tia7"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="14_vlveu"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://fps/campfire.tscn" id="15_tm3xm"]
 [ext_resource type="Script" path="res://mp/networked_campfire.gd" id="16_8v2e4"]
+[ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://fps/props/shelf.tscn" id="17_psfnf"]
 
 [sub_resource type="Resource" id="Resource_35cwp"]
 script = ExtResource("14_vlveu")
@@ -135,6 +138,12 @@ script = ExtResource("8_m78qf")
 [node name="Setup Keys" type="Node" parent="."]
 script = ExtResource("10_efc1k")
 
+[node name="workbenchGrind" parent="." instance=ExtResource("11_ftexy")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319963)
+
+[node name="workbenchAnvil" parent="." instance=ExtResource("12_8i3r8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
+
 [node name="Workbench" parent="." instance=ExtResource("10_jjthn")]
 
 [node name="CraftStation" parent="Workbench" index="2"]
@@ -169,9 +178,16 @@ script = ExtResource("16_8v2e4")
 
 [node name="CraftStation" parent="Campfire" index="2"]
 script = ExtResource("11_sal7r")
-processing_mode = 0
 
 [node name="InputInventory" parent="Campfire" index="3"]
+script = ExtResource("7_8khhq")
+sync_item_added_signal = true
+sync_item_removed_signal = true
+
+[node name="Shelf" parent="." instance=ExtResource("17_psfnf")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)
+
+[node name="Inventory" parent="Shelf" index="1"]
 script = ExtResource("7_8khhq")
 sync_item_added_signal = true
 sync_item_removed_signal = true
@@ -184,3 +200,4 @@ sync_item_removed_signal = true
 [editable path="Workbench"]
 [editable path="Box Inventory3"]
 [editable path="Campfire"]
+[editable path="Shelf"]

@@ -28,9 +28,7 @@ func interact(interactor : InventoryInteractor):
 	if Input.is_action_just_pressed("item_pickup"):
 		var shelf_item = get_actual_item()
 		if shelf_item != null:
-			var amount = interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventory, interactor.hotbar.selection_index)
-			if amount > 0:
-				interactor.inventory_handler.move_between_inventories(inventory, slot_index, 1, interactor.inventory_handler.inventory)
+			interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventory, interactor.hotbar.selection_index)
 		return
 	if Input.is_action_just_pressed("item_place"):
 		if item != null:
