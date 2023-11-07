@@ -176,19 +176,22 @@ craft_station_types_icon = ExtResource("8_4vmnl")
 categories_icon = ExtResource("10_86ysm")
 
 [node name="Items" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("5_fwymy")]
-visible = true
 layout_mode = 2
 mouse_filter = 1
 
 [node name="Recipes" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 mouse_filter = 1
 
 [node name="Craft Stations" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
+visible = false
 layout_mode = 2
 mouse_filter = 1
 
 [node name="Categories" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("12_kvj1p")]
+visible = false
 layout_mode = 2
 mouse_filter = 1
 

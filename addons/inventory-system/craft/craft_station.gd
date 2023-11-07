@@ -39,7 +39,7 @@ signal closed
 ## [Inventory] used to obtain crafting recipe ingredients
 @export var input_inventory : Inventory
 
-## [Inventory] used to store the product and by-products of crafts
+## [Inventory] used to store the products of crafts
 @export var output_inventory : Inventory
 
 ## Maximum number of crafts you can have in this station
@@ -204,10 +204,9 @@ func _finish_crafting(crafting_index : int):
 			return
 		_use_items(recipe)
 	# TODO add function for slot in inventory
-	output_inventory.add(recipe.product.item, recipe.product.amount)
-	for subproduct in recipe.byproducts:
-		output_inventory.add(subproduct.item, subproduct.amount)
-		on_crafted.emit(crafting.recipe_index)
+	for product in recipe.products:
+		output_inventory.add(product.item, product.amount)
+	on_crafted.emit(crafting.recipe_index)
 	_check_for_auto_crafts()
 
 
