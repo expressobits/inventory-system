@@ -32,6 +32,20 @@ func pick_to_inventory(dropped_item, inventory := self.inventory):
 	else:
 		pick_to_inventory_rpc(dropped_item.get_path(), inventory.get_path())
 
+# TODO Make Networked Function
+#func move_between_inventories(from : Inventory, slot_index : int, amount : int, to : Inventory) -> int:
+#	if not multiplayer.is_server():
+#		move_between_inventories_rpc.rpc_id(1, from.get_path(), slot_index, amount, to.get_path())
+#	else:
+#		move_between_inventories_rpc(from.get_path(), slot_index, amount, to.get_path())
+
+
+func move_between_inventories_at(from : Inventory, slot_index : int, amount : int, to : Inventory, to_slot_index : int):
+	if not multiplayer.is_server():
+		move_between_inventories_at_rpc.rpc_id(1, from.get_path(), slot_index, amount, to.get_path(), to_slot_index)
+	else:
+		move_between_inventories_at_rpc(from.get_path(), slot_index, amount, to.get_path(), to_slot_index)
+
 
 func drop_transaction():
 	if not multiplayer.is_server():
@@ -86,6 +100,7 @@ func transaction_to(inventory : Inventory):
 		transaction_to_rpc(inventory.get_path())
 
 
+
 ## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
@@ -128,6 +143,25 @@ func pick_to_inventory_rpc(pick_object_path : NodePath, object_path : NodePath):
 	if inventory == null:
 		return
 	super.pick_to_inventory(pick_object, inventory)
+
+
+@rpc("any_peer")
+func move_between_inventories_at_rpc(from_path : NodePath, slot_index : int, amount : int, to_path : NodePath, to_slot_index : int):
+	if not multiplayer.is_server():
+		return
+	var from_obj = get_node(from_path)
+	if from_obj == null:
+		return
+	var from = from_obj as Inventory
+	if from == null:
+		return
+	var to_obj = get_node(to_path)
+	if to_obj == null:
+		return
+	var to = to_obj as Inventory
+	if to == null:
+		return
+	super.move_between_inventories_at(from, slot_index, amount, to, to_slot_index)
 
 
 @rpc("any_peer")
