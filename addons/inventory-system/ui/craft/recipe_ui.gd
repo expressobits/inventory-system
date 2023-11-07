@@ -26,8 +26,8 @@ func _ready():
 func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
 	self._craft_station = craft_station
 	self._recipe_index = recipe_index
-	icon.texture = recipe.product.item.icon
-	item_name.text = recipe.product.item.name
+	icon.texture = recipe.products[0].item.icon
+	item_name.text = recipe.products[0].item.name
 	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
 	_clear_ingredients()
 	for ingredient in recipe.ingredients:

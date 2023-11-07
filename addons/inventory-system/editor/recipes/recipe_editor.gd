@@ -3,16 +3,15 @@ extends Control
 class_name RecipeEditor
 
 
-signal changed_product(recipe : Recipe)
+signal changed_products(recipe : Recipe)
 signal changed
 
-@onready var product_selector : SlotSelector = $MarginContainer/MarginContainer/VBoxContainer/Product/ProductSlotSelector
 @onready var time_to_craft_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/TimeToCraft/TimeToCraftSpinBox
 @onready var craft_station_type_option_button = $MarginContainer/MarginContainer/VBoxContainer/CraftStationType/CraftStationTypeOptionButton
 
 @export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var ingredients_v_box_container = %IngredientsVBoxContainer
-@onready var byproducts_v_box_container = %ByproductsVBoxContainer
+@onready var products_v_box_container = %ProductsVBoxContainer
 
 
 var recipe : Recipe
@@ -20,12 +19,11 @@ var database : InventoryDatabase
 var ids_list : Array[int]
 var stations_list : Array[CraftStationType]
 var ingredients : Array[IngredientEditor]
-var byproducts : Array[IngredientEditor]
+var products : Array[IngredientEditor]
 
 var connected : bool
 
 func connect_signals():
-	product_selector.slot_changed.connect(_on_product_slot_spin_box_slot_changed.bind())
 	time_to_craft_spin_box.value_changed.connect(_on_time_to_craft_spin_box_value_changed.bind())
 	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected.bind())
 	connected = true
@@ -34,14 +32,11 @@ func connect_signals():
 func disconnect_signals():
 	if not connected:
 		return
-	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed.bind())
+	#TODO Change list
+#	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed.bind())
 	time_to_craft_spin_box.value_changed.disconnect(_on_time_to_craft_spin_box_value_changed.bind())
 	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected.bind())
 	connected = false
-
-
-func setup_product():
-	product_selector.setup(recipe.product, database)
 
 
 func setup_station():
@@ -76,46 +71,34 @@ func setup_ingredients(recipe : Recipe, database : InventoryDatabase):
 		ingredients.append(ingredient_editor)
 
 
-func setup_byproducts(recipe : Recipe, database : InventoryDatabase):
-	for byproduct_editor in byproducts:
-		byproduct_editor.queue_free()
-	byproducts.clear()
-	for index in recipe.byproducts.size():
-		var byproduct = recipe.byproducts[index]
+func setup_products(recipe : Recipe, database : InventoryDatabase):
+	for product_editor in products:
+		product_editor.queue_free()
+	products.clear()
+	for index in recipe.products.size():
+		var product = recipe.products[index]
 		var ingredient_node = ingredient_scene.instantiate()
-		byproducts_v_box_container.add_child(ingredient_node)
+		products_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
-		ingredient_editor.setup(byproduct, database, "Remove Byproduct")
+		ingredient_editor.setup(product, database, "Remove Product")
 		ingredient_editor.changed_slot.connect(_on_changed_slot_in_ingredient.bind())
-		ingredient_editor.request_remove.connect(_request_remove_byproduct.bind(index))
-		byproducts.append(ingredient_editor)
+		ingredient_editor.request_remove.connect(_request_remove_product.bind(index))
+		products.append(ingredient_editor)
 
 
 func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	disconnect_signals()
 	self.recipe = recipe
 	self.database = database
-	var item_id = recipe.product.item.id
-	var slot = recipe.product
-	slot.item = recipe.product.item
-	product_selector.setup(slot, database)
 	time_to_craft_spin_box.value = recipe.time_to_craft
-	setup_product()	
 	setup_station()
 	setup_ingredients(recipe, database)
-	setup_byproducts(recipe, database)
+	setup_products(recipe, database)
 	connect_signals()
 
 
 func reload():
 	load_recipe(recipe, database)
-
-
-func _on_product_slot_spin_box_slot_changed(slot : Slot):
-	recipe.product.item = slot.item
-	recipe.product.amount = slot.amount
-	changed_product.emit(recipe)
-	changed.emit()
 
 
 func _on_time_to_craft_spin_box_value_changed(value):
@@ -136,9 +119,9 @@ func _request_remove_ingredient(index):
 	changed.emit()
 
 
-func _request_remove_byproduct(index):
-	recipe.byproducts.remove_at(index)
-	setup_byproducts(recipe, database)
+func _request_remove_product(index):
+	recipe.products.remove_at(index)
+	setup_products(recipe, database)
 	changed.emit()
 
 
@@ -151,13 +134,14 @@ func _on_new_ingredient_button_pressed():
 	changed.emit()
 
 
-func _on_new_byproduct_button_pressed():
+func _on_new_product_button_pressed():
 	var slot = Slot.new()
 	slot.amount = 1
 	slot.item = database.get_item(0)
-	recipe.byproducts.append(slot)
-	setup_byproducts(recipe, database)
+	recipe.products.append(slot)
+	setup_products(recipe, database)
 	changed.emit()
+	changed_products.emit(recipe)
 
 
 func _on_changed_slot_in_ingredient():

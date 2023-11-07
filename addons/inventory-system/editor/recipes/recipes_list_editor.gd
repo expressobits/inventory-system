@@ -1,29 +1,38 @@
 @tool
+class_name RecipesListEditor
 extends Control
 
 @export var recipe_item_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/recipe_item_list_editor.tscn")
-@onready var v_box_container = $HSplitContainer/Panel/ScrollContainer/VBoxContainer
-@onready var recipe_editor = $HSplitContainer/RecipeEditorContainer/RecipeEditor
-
+@onready var v_box_container = $VBoxContainer/ScrollContainer/VBoxContainer
+@onready var search_line_edit = $VBoxContainer/Control/SearchLineEdit
 
 var database : InventoryDatabase
 var recipes_ui : Array[RecipeItemListEditor] 
 var recipes : Array[Recipe]
 
+var filter: String:
+	set(next_filter):
+		filter = next_filter
+		apply_filter()
+	get:
+		return filter
 
-signal changed_product_in_recipe(new_product : InventoryItem, recipe : Recipe)
+signal changed_products_in_recipe(recipe : Recipe)
 signal request_remove(recipe : Recipe, request_code : int)
+signal selected(recipe : Recipe)
 
 
-func set_recipes_and_load(recipes : Array, database : InventoryDatabase):
+func _ready():
+	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed.bind())
+
+
+func load_recipes(database : InventoryDatabase):
 	self.database = database
-	self.recipes = recipes
-	load_recipes()
+	apply_filter()
 
 
-func load_recipes():
+func update_recipes():
 	clear_list()
-	recipe_editor.visible = false
 	for index in recipes.size():
 		var recipe = recipes[index]
 		var recipe_node = recipe_item_scene.instantiate()
@@ -41,14 +50,8 @@ func select_last():
 	recipes_ui[recipes_ui.size()-1].select()
 
 
-func load_recipe(recipe : Recipe, database : InventoryDatabase):
-	recipe_editor.load_recipe(recipe, database)
-	recipe_editor.visible = true
-
-
 func reload():
-	load_recipes()
-	recipe_editor.visible = false
+	load_recipes(database)
 
 
 func select_with_recipe(recipe : Recipe):
@@ -59,18 +62,37 @@ func select_with_recipe(recipe : Recipe):
 
 
 func select(index : int):
-	load_recipe(recipes[index], database)
+	selected.emit(recipes[index])
+
+
+func update_recipes_ui():
+	for recipe_ui in recipes_ui:
+		recipe_ui.update_recipe()
 
 
 func clear_list():
 	for editor in recipes_ui:
 		editor.queue_free()
 	recipes_ui.clear()
-	recipe_editor.visible = false
 
 
-func _on_recipe_editor_changed_product(recipe):
-	changed_product_in_recipe.emit(recipe.product.item, recipe)
+func apply_filter() -> void:
+	recipes.clear()
+	for recipe in database.recipes:
+		if is_contains_product_name(recipe, filter):
+			recipes.append(recipe)
+	update_recipes()
+
+
+func is_contains_product_name(recipe : Recipe, filter_name : String) -> bool:
+	if filter_name == "":
+		return true
+	for product in recipe.products:
+		if product.item == null:
+			return true
+		if filter_name.to_lower() in product.item.name.to_lower():
+			return true
+	return false
 
 
 func _on_recipe_item_selected(index):
@@ -85,6 +107,5 @@ func _on_recipe_item_request_remove_menu(recipe : Recipe, request_code : int):
 	request_remove.emit(recipe, request_code)
 
 
-func _on_recipe_editor_changed():
-	for recipe_ui in recipes_ui:
-		recipe_ui.update_recipe()
+func _on_search_line_edit_text_changed(new_text : String):
+	filter = new_text

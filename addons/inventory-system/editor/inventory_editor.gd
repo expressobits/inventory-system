@@ -16,7 +16,7 @@ const NEW_ITEM_FROM_RESOURCE = 101
 var editor_plugin: EditorPlugin
 
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
-@onready var recipes_editor : RecipesEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Recipes")
+@onready var recipes_editor : RecipesEditor = %Recipes
 @onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
 @onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Categories"
 

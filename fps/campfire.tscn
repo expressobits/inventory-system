@@ -87,7 +87,6 @@ limit_number_crafts = 1
 type = ExtResource("4_bov00")
 only_remove_ingredients_after_craft = true
 auto_craft = true
-processing_mode = null
 database = ExtResource("5_72vu1")
 
 [node name="InputInventory" type="Node" parent="."]

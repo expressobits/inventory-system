@@ -3,10 +3,7 @@ extends Resource
 class_name Recipe
 
 ## Main end result of crafting done with this recipe.
-@export var product : Slot
-
-## Products that are generated in addition to the main product when finished crafting this recipe
-@export var byproducts : Array[Slot]
+@export var products : Array[Slot]
 
 ## Time to complete this craft
 @export var time_to_craft := 4.0
