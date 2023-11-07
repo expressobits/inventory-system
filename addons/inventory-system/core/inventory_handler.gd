@@ -132,7 +132,7 @@ func move_between_inventories(from : Inventory, slot_index : int, amount : int, 
 	return amount_not_swaped
 
 
-func move_between_inventories_at(from : Inventory, slot_index : int, amount : int, to : Inventory, to_slot_index : int) -> int:
+func move_between_inventories_at(from : Inventory, slot_index : int, amount : int, to : Inventory, to_slot_index : int):
 	var slot = from.slots[slot_index];
 	var item = slot.item;
 	var amount_not_removed = from.remove_at(slot_index, item, amount);
@@ -140,7 +140,6 @@ func move_between_inventories_at(from : Inventory, slot_index : int, amount : in
 	var amount_not_swaped = to.add_at(to_slot_index, item, amount_for_swap);
 	var amount_not_undo = from.add_at(slot_index, item, amount_not_swaped);
 #	drop(item, amount_not_undo);
-	return amount_not_swaped
 
 
 ## Swap slot information for inventories.
