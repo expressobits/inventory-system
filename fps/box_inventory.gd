@@ -2,7 +2,7 @@ extends Node3D
 class_name BoxInventory
 
 @onready var inventory : Inventory = $Inventory
-
+@export var actions : Array[InteractAction]
 
 func get_inventory() -> Inventory:
 	return $Inventory
@@ -32,12 +32,11 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_interact_preview_message(_interactor : InventoryInteractor) -> String:
+func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 	if inventory.is_open:
-		return ""
-	return "[E] to Open Inventory"
+		return []
+	return actions
 
 
-func interact(interactor : InventoryInteractor):
-	if Input.is_action_just_pressed("interact"):
-		interactor.get_parent().open_inventory(inventory)
+func interact(interactor : InventoryInteractor, _action_index : int = 0):
+	interactor.get_parent().open_inventory(inventory)

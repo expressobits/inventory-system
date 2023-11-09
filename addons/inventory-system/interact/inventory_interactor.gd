@@ -2,7 +2,8 @@
 class_name InventoryInteractor
 extends NodeInventorySystemBase
 
-signal preview_interacted(object : Node, hand_object : Node, position_screen : Vector2)
+signal preview_interacted(actions : Array[InteractAction], position_screen : Vector2)
+signal clear_preview
 signal interacted(object : Node)
 
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("../InventoryHandler")
@@ -23,21 +24,34 @@ func try_interact():
 	var pos : Vector2 = Vector2.ZERO
 	if object != null and object.has_method("get_interaction_position") and camera_3d != null:
 		pos = camera_3d.unproject_position(object.get_interaction_position(raycast.get_collision_point()))
-	preview_interacted.emit(object, actual_hand_object, pos)
 	
 	if not raycast.is_colliding():
+		clear_preview.emit()
 		return
-	interact_object(object)
-	interact_hand_item(actual_hand_object)
-
-
-func interact_object(object : Node):
+	
 	var node = object as Node
-	if node == null or not node.has_method("interact"):
+	if node == null or not node.has_method("get_actions"):
+		clear_preview.emit()
 		return
+	
+	var actions = get_actions(node)
+	preview_interacted.emit(actions, pos)
+	
+	interact_object(object, actions)
+#	interact_hand_item(actual_hand_object)
+
+
+func get_actions(node : Node) -> Array[InteractAction]:
 	var item = hotbar.get_selected_item()
-	object.interact(self)
-	return
+	var actions = node.get_actions(self)
+	return actions
+
+
+func interact_object(object : Node, actions : Array[InteractAction]):
+	for action in actions:
+		if Input.is_action_just_pressed(action.input):
+			object.interact(self, action.code)
+			return
 
 
 func interact_hand_item(hand_object):

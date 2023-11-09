@@ -6,7 +6,6 @@ signal changed_burning_state(is_burning : bool)
 @onready var input_inventory : Inventory = $InputInventory
 @export var burnable_category : ItemCategory
 @onready var gpu_particles_3d = $Node/GPUParticles3D
-@onready var craft_station : CraftStation = $CraftStation
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
 
 @export var decrease_fuel_multiplier = 1
@@ -67,12 +66,11 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_interact_preview_message(_interactor : InventoryInteractor) -> String:
-	if $CraftStation.is_open:
-		return ""
-	return "[E] to Open Station"
+func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
+	if craft_station.input_inventory.is_open:
+		return []
+	return actions
 
 
-func interact(interactor : InventoryInteractor):
-	if Input.is_action_just_pressed("interact"):
-		interactor.get_parent().open_inventory($CraftStation.input_inventory)
+func interact(interactor : InventoryInteractor, _action_index : int = 0):
+	interactor.get_parent().open_inventory(craft_station.input_inventory)

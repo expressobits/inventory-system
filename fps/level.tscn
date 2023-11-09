@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d5cxcn02uswu" path="res://fps/level/floor.tscn" id="1_onlp0"]
 [ext_resource type="PackedScene" uid="uid://c88tbne1ovnu" path="res://fps/wall.tscn" id="2_wrb2n"]
-[ext_resource type="PackedScene" path="res://fps/dropped_items/wood.tscn" id="3_tic68"]
+[ext_resource type="PackedScene" uid="uid://bmal6s1al7rbe" path="res://fps/dropped_items/wood.tscn" id="3_tic68"]
 [ext_resource type="PackedScene" uid="uid://pjbph7067g6e" path="res://fps/dropped_items/rock.tscn" id="4_hv5pj"]
 [ext_resource type="PackedScene" uid="uid://c58y8utvxmgl" path="res://assets/survival-kit-1.1/Models/GLTF format/tree.glb" id="6_a1n8f"]
 [ext_resource type="PackedScene" uid="uid://ctr82bvxsayua" path="res://assets/survival-kit-1.1/Models/GLTF format/treeFall.glb" id="7_17gjd"]

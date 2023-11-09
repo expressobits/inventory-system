@@ -5,6 +5,7 @@ class_name Shelf
 
 
 var slot_index : int = -1
+var actions_shelf : Array[InteractAction]
 
 func get_interaction_position(interaction_point : Vector3) -> Vector3:
 	var near_distance : float = 2500
@@ -20,17 +21,18 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 	return near_position
 
 
-func interact(interactor : InventoryInteractor):
+func interact(interactor : InventoryInteractor, action_index : int = 0):
 	if inventory.is_open:
 		return
 	var item = interactor.hotbar.get_selected_item()
-	super.interact(interactor)
-	if Input.is_action_just_pressed("item_pickup"):
+	if action_index == 0:
+		super.interact(interactor, action_index)
+	if action_index == 1:
 		var shelf_item = get_actual_item()
 		if shelf_item != null:
 			interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventory, interactor.hotbar.selection_index)
 		return
-	if Input.is_action_just_pressed("item_place"):
+	if action_index == 2:
 		if item != null:
 			interactor.inventory_handler.move_between_inventories_at(interactor.inventory_handler.inventory, interactor.hotbar.selection_index, 1, inventory, slot_index)
 		return
@@ -42,14 +44,23 @@ func get_actual_item():
 	return null
 
 
-func get_interact_preview_message(interactor : InventoryInteractor) -> String:
-	var message = super.get_interact_preview_message(interactor)
+func get_actions(interactor : InventoryInteractor) -> Array[InteractAction]:
+	actions_shelf.clear()
 	if inventory.is_open:
-		return message
+		return actions_shelf
+	actions_shelf.append_array(actions)
 	var shelf_item = get_actual_item()
 	if shelf_item != null:
-		message += "\n [Mouse Left] Get " + shelf_item.name
+		var action = InteractAction.new()
+		action.description = "Get " + shelf_item.name
+		action.input = "item_pickup"
+		action.code = 1
+		actions_shelf.append(action)
 	var item = interactor.hotbar.get_selected_item()
 	if item != null and (shelf_item == null or shelf_item == item):
-		message += "\n [Mouse Right] Place " + item.name +" on Shelf"
-	return message
+		var action = InteractAction.new()
+		action.description = "Place " + item.name
+		action.input = "item_place"
+		action.code = 2
+		actions_shelf.append(action)
+	return actions_shelf
