@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cfgi4adaocgtx"]
+[gd_scene load_steps=14 format=3 uid="uid://cfgi4adaocgtx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/extras/placeable_hand_item_3d.gd" id="1_blvip"]
+[ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="2_d8o45"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jokrv"]
 resource_name = "woodDark"
@@ -63,6 +64,12 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ug7wj")
+
+[sub_resource type="Resource" id="Resource_38rcg"]
+script = ExtResource("2_d8o45")
+input = "item_place"
+description = "Place"
+code = 0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h6m4w"]
 resource_name = "metal"
@@ -160,6 +167,7 @@ shadow_mesh = SubResource("ArrayMesh_log8l")
 mesh = SubResource("ArrayMesh_bxuln")
 skeleton = NodePath("")
 script = ExtResource("1_blvip")
+place_action = SubResource("Resource_38rcg")
 
 [node name="hammer" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.866026, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866026, 0.0603986, 0.2153, -0.031166)

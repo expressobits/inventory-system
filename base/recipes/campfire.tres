@@ -9,7 +9,7 @@
 [sub_resource type="Resource" id="Resource_gnn4r"]
 script = ExtResource("2_pkutw")
 item = ExtResource("1_0asns")
-amount = 8
+amount = 2
 max_stack = -1
 
 [sub_resource type="Resource" id="Resource_bhk0q"]
@@ -27,5 +27,5 @@ max_stack = -1
 [resource]
 script = ExtResource("5_ux5px")
 products = Array[ExtResource("2_pkutw")]([SubResource("Resource_4afau")])
-time_to_craft = 30.0
+time_to_craft = 3.0
 ingredients = Array[ExtResource("2_pkutw")]([SubResource("Resource_gnn4r"), SubResource("Resource_bhk0q")])

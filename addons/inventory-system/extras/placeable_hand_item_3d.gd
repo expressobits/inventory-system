@@ -9,6 +9,8 @@ extends HandItem3D
 @export var input_for_place_item : String = "place_hand_item"
 @export var preview_3d : PackedScene
 
+@export var place_action : InteractAction
+
 var preview : Node3D
 
 func _ready():
@@ -18,13 +20,6 @@ func _ready():
 	preview.position.x = 2
 
 
-func get_interact_preview_message(interactor : InventoryInteractor) -> String:
-	if  can_preview(interactor):
-		return ""
-	else:
-		return "[Mouse Right] to place"
-
-
 func _process(delta):
 	if interactor != null:
 		if can_preview(interactor):
@@ -32,6 +27,12 @@ func _process(delta):
 			preview.visible = true
 		else:
 			preview.visible = true
+
+
+func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
+	if can_preview(_interactor):
+		return [place_action]
+	return []
 
 
 func can_preview(interactor : InventoryInteractor) -> bool:
@@ -51,7 +52,7 @@ func can_preview(interactor : InventoryInteractor) -> bool:
 	return true
 
 
-func interact(interactor : InventoryInteractor):
+func interact(interactor : InventoryInteractor, _action_code : int = 0):
 	var object = interactor.last_interact_object
 	var node : Node3D = object as Node3D
 	if node != null:
