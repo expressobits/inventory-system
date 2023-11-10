@@ -41,6 +41,10 @@ var interactor : InventoryInteractor
 
 
 func _ready():
+	_on_inventory_handler_changed()
+	_on_crafter_changed()
+	_on_interactor_changed()
+	_on_hotbar_changed()
 	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
 	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
 	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
