@@ -41,8 +41,10 @@ database = ExtResource("5_d4au8")
 
 [node name="InputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 database = ExtResource("5_d4au8")
 
 [node name="OutputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 database = ExtResource("5_d4au8")

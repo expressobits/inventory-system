@@ -30,7 +30,7 @@ func set_hotbar(hotbar : Hotbar):
 func _on_changed_selection(selection_index):
 	if hotbar == null:
 		return
-	for i in hotbar.slots_in_hot_bar:
+	for i in min(hotbar.slots_in_hot_bar, hotbar.inventory.slots.size()):
 		var slot = slots[i]
 		slot.set_selection(i == hotbar.selection_index)
 
@@ -47,7 +47,7 @@ func _update_slots():
 		
 	slots.clear()
 		
-	for i in hotbar.slots_in_hot_bar:
+	for i in min(hotbar.slots_in_hot_bar, hotbar.inventory.slots.size()):
 		var slot = hotbar.inventory.slots[i]
 		var slot_obj = slot_ui_scene.instantiate()
 		slots_container.add_child(slot_obj)

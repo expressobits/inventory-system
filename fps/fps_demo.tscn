@@ -88,6 +88,7 @@ database = ExtResource("2_gcjwy")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory" index="1"]
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([])
 inventory_name = "Dynamic Inventory"
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_ia5mg")]
