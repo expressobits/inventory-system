@@ -63,6 +63,7 @@ func interact(interactor : InventoryInteractor, _action_code : int = 0):
 					_place_item(interactor, item, interactor.raycast.get_collision_point())
 
 
+# TODO Add code to interactor child node (InteractorResponse)
 func _place_item(interactor : InventoryInteractor, item : InventoryItem, position_to_place : Vector3):
 	# TODO Add 3D Preview
 	if !item.properties.has(property_from_item_for_object_scene):
