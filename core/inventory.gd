@@ -48,7 +48,7 @@ signal closed
 ## Array of [Slot] that stores items and their quantities
 ## The slot uses [b]"item"[/b] to store item id information
 ## and [b]"amount"[/b] for your quantity
-@export var slots : Array[Slot]
+@export var slots : Array[Slot] = []
 
 ## It stores information if this inventory is open or not.
 @export var is_open := false
@@ -280,10 +280,14 @@ func close() -> bool:
 
 
 func _load_slots():
-	if recreate_slots_on_ready:
-		if not create_slot_if_needed:
-			for i in slot_amount:
-				_add_slot(i, false)
+	for i in self.slots.size():
+		if self.slots[i] == null:
+			self.slots[i] = Slot.new()
+	
+#	if recreate_slots_on_ready:
+#		if not create_slot_if_needed:
+#			for i in slot_amount:
+#				_add_slot(i, false)
 	
 	var slots = self.slots.duplicate(true)
 	for i in self.slots.size():
