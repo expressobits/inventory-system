@@ -10,7 +10,8 @@ class_name RecipeUI
 @onready var item_name : Label = get_node("ItemName")
 @onready var time_to_craft : Label = get_node("TimeToCraft")
 @onready var craft_button : Button = get_node("CraftButton")
-@onready var ingredients_container : HBoxContainer = get_node("RequiredItemsList")
+@onready var ingredients_container : HBoxContainer = get_node("IngredientsItemsList")
+@onready var required_items_list = %RequiredItemsList
 
 
 var _recipe_index : int
@@ -31,6 +32,11 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
 	_clear_ingredients()
 	for ingredient in recipe.ingredients:
+		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
+		ingredients_container.add_child(ingredient_obj)
+		ingredient_obj.setup(ingredient)
+		_ingredients.append(ingredient_obj)
+	for ingredient in recipe.required_items:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(ingredient)
