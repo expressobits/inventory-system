@@ -99,6 +99,9 @@ func _on_recipe_item_editor_recipe_removed():
 func _on_new_resource_dialog_file_selected(path):
 	var is_saved_resource := false
 	var recipe : Recipe = Recipe.new()
+	recipe.ingredients = []
+	recipe.products = []
+	recipe.required_items = []
 	var err = ResourceSaver.save(recipe, path)
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	if err == OK:

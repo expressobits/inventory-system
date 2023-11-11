@@ -133,6 +133,9 @@ func contains_ingredients(recipe : Recipe) -> bool:
 	for slot in recipe.ingredients:
 		if not input_inventory.contains(slot.item, slot.amount):
 			return false
+	for slot in recipe.required_items:
+		if not input_inventory.contains(slot.item, slot.amount):
+			return false
 	return true
 
 
