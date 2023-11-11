@@ -18,6 +18,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ci0ph")
 
+[node name="InteractorUI" parent="." instance=ExtResource("7_vn7uk")]
+layout_mode = 1
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
+
 [node name="TransactionSlotUI" parent="." instance=ExtResource("4_5h6ud")]
 modulate = Color(1, 1, 1, 0.752941)
 z_index = 1
@@ -104,19 +117,6 @@ view_output_inventory = false
 [node name="OtherCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
 layout_mode = 1
 view_output_inventory = false
-
-[node name="InteractorUI" parent="." instance=ExtResource("7_vn7uk")]
-layout_mode = 1
-anchors_preset = 15
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-mouse_filter = 2
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 volume_db = -12.0
