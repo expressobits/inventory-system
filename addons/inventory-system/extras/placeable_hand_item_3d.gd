@@ -57,4 +57,4 @@ func interact(interactor : InventoryInteractor, _action_code : int = 0):
 			var item = interactor.hotbar.get_selected_item()
 			if item != null:
 				## TODO Thinking best catch interactor responses
-				interactor.get_node("ObjectPlacer").place_item(item, interactor.raycast.get_collision_point())
+				interactor.get_node("ObjectPlacer").place_item(item, interactor.raycast.get_collision_point(), rotation)
