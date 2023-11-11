@@ -13,3 +13,6 @@ class_name Recipe
 
 ## Ingredient List For crafting this recipe, the ingredients contain a [Slot] data structure, which stores an [InventoryItem] type and its quantity.
 @export var ingredients : Array[Slot]
+
+## Same ingredient, but these items will not be used in crafting
+@export var required_items : Array[Slot]
