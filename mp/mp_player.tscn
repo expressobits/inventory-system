@@ -1,13 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=16 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/mp_character_inventory_system.gd" id="4_73by0"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_object_placer.gd" id="9_nis2j"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
@@ -66,6 +67,10 @@ script = ExtResource("7_8fje4")
 
 [node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
 script = ExtResource("7_c3s0f")
+
+[node name="ObjectPlacer" parent="CharacterInventorySystem/InventoryInteractor" index="0"]
+script = ExtResource("9_nis2j")
+dropped_spawner_path = NodePath("../../../../DroppedItemSpawner")
 
 [node name="Mesh" type="MeshInstance3D" parent="." index="3"]
 material_override = SubResource("StandardMaterial3D_053ih")
