@@ -47,7 +47,7 @@ offset_bottom = 52.0
 theme_override_font_sizes/font_size = 16
 text = "4 Seconds"
 
-[node name="RequiredItemsLabel" type="Label" parent="."]
+[node name="IngredientsItemsLabel" type="Label" parent="."]
 layout_mode = 0
 offset_left = 64.0
 offset_top = 32.0
@@ -55,7 +55,26 @@ offset_right = 182.0
 offset_bottom = 58.0
 text = "Ingredients"
 
+[node name="IngredientsItemsList" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 162.0
+offset_top = 27.0
+offset_right = 336.0
+offset_bottom = 59.0
+
+[node name="RequiredItemsLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 32.0
+offset_right = 182.0
+offset_bottom = 58.0
+text = "Required Items"
+
 [node name="RequiredItemsList" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
 offset_left = 162.0
 offset_top = 27.0

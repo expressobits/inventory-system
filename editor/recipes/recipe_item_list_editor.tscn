@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipe_item_list_editor.gd" id="1_s7e4i"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l54m8"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vg8fb"]
 bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="Image" id="Image_ohhrn"]
+[sub_resource type="Image" id="Image_syytb"]
 data = {
 "data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
 "format": "RGBA8",
@@ -18,8 +18,8 @@ data = {
 "width": 16
 }
 
-[sub_resource type="ImageTexture" id="ImageTexture_qymjt"]
-image = SubResource("Image_ohhrn")
+[sub_resource type="ImageTexture" id="ImageTexture_exx00"]
+image = SubResource("Image_syytb")
 
 [node name="RecipeItemListEditor" type="Control"]
 custom_minimum_size = Vector2(320, 108)
@@ -34,7 +34,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_l54m8")
+theme_override_styles/panel = SubResource("StyleBoxFlat_vg8fb")
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
@@ -66,6 +66,34 @@ text = "Products"
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/Products"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="CraftstationIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/Products/MoreInfos"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+
+[node name="DeleteButton" type="MenuButton" parent="Panel/MarginContainer/VBoxContainer/Products/MoreInfos"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+tooltip_text = "Delete"
+icon = SubResource("ImageTexture_exx00")
+icon_alignment = 1
+item_count = 2
+popup/item_0/text = "Remove"
+popup/item_0/icon = SubResource("ImageTexture_exx00")
+popup/item_0/id = 100
+popup/item_1/text = "Remove And Delete Resource"
+popup/item_1/icon = SubResource("ImageTexture_exx00")
+popup/item_1/id = 101
+popup/item_1/disabled = true
+
 [node name="Ingredients" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -78,48 +106,43 @@ text = "Ingredients"
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MoreInfos" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="RequiredItems" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/RequiredItems"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+text = "Extra Req. Items"
+
+[node name="RequiredItemList" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/RequiredItems"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MoreInfos2" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer/RequiredItems"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="TimeIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-size_flags_vertical = 4
-texture = SubResource("ImageTexture_qymjt")
-expand_mode = 1
-stretch_mode = 3
-
-[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
-custom_minimum_size = Vector2(128, 0)
+[node name="TimeLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer/RequiredItems/MoreInfos2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 text = "10 Seconds"
+horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
 
-[node name="CraftstationIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
+[node name="TimeIcon" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer/RequiredItems/MoreInfos2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 4
+texture = SubResource("ImageTexture_exx00")
 expand_mode = 1
-
-[node name="DeleteButton" type="MenuButton" parent="Panel/MarginContainer/VBoxContainer/MoreInfos"]
-custom_minimum_size = Vector2(24, 24)
-layout_mode = 2
-tooltip_text = "Delete"
-icon = SubResource("ImageTexture_qymjt")
-icon_alignment = 1
-item_count = 2
-popup/item_0/text = "Remove"
-popup/item_0/icon = SubResource("ImageTexture_qymjt")
-popup/item_0/id = 100
-popup/item_1/text = "Remove And Delete Resource"
-popup/item_1/icon = SubResource("ImageTexture_qymjt")
-popup/item_1/id = 101
-popup/item_1/disabled = true
+stretch_mode = 3
 
 [node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
