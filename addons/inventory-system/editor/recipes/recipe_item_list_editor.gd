@@ -6,13 +6,14 @@ signal selected
 signal request_remove(recipe : Recipe, request_code : int)
 
 
-@onready var time_label : Label = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeLabel
-@onready var craftstation_icon : TextureRect = $Panel/MarginContainer/VBoxContainer/MoreInfos/CraftstationIcon
+@onready var time_label : Label = %TimeLabel
+@onready var craftstation_icon : TextureRect = %CraftstationIcon
 @onready var ingredients_list = $Panel/MarginContainer/VBoxContainer/Ingredients/IngredientsList
 @onready var products_list = $Panel/MarginContainer/VBoxContainer/Products/ProductsList
 @onready var panel : Panel = $Panel
-@onready var delete_button : MenuButton = $Panel/MarginContainer/VBoxContainer/MoreInfos/DeleteButton
-@onready var time_icon = $Panel/MarginContainer/VBoxContainer/MoreInfos/TimeIcon
+@onready var delete_button : MenuButton = %DeleteButton
+@onready var time_icon = %TimeIcon
+@onready var required_item_list = %RequiredItemList
 
 
 const REMOVE = 100
@@ -69,6 +70,13 @@ func update_recipe():
 		var i_editor = ingredient_item_scene.instantiate()
 		i_editor.setup(i)
 		products_list.add_child(i_editor)
+		
+	for i in required_item_list.get_children():
+		i.queue_free()
+	for i in recipe.required_items:
+		var i_editor = ingredient_item_scene.instantiate()
+		i_editor.setup(i)
+		required_item_list.add_child(i_editor)
 
 
 func load_recipe(recipe : Recipe, database : InventoryDatabase):
