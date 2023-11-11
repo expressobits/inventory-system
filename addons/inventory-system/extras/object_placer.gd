@@ -1,5 +1,8 @@
 class_name ObjectPlacer
-extends Node
+extends NodeInventorySystemBase
+
+signal dropped
+signal placed
 
 @export var property_from_item_for_object_scene : String = "placeable"
 @export var drop_node_path : NodePath = "../../../.."
@@ -9,7 +12,7 @@ extends Node
 
 
 # TODO Add code to interactor child node (InteractorResponse)
-func place_item(item : InventoryItem, position_to_place : Vector3):
+func place_item(item : InventoryItem, position : Vector3, rotation : Vector3):
 	# TODO Add 3D Preview
 	if !item.properties.has(property_from_item_for_object_scene):
 		return
@@ -17,7 +20,13 @@ func place_item(item : InventoryItem, position_to_place : Vector3):
 	var res = load(path)
 	if res is PackedScene:
 		var scene = res as PackedScene
-		var obj = scene.instantiate()
-		obj.position = position_to_place 
-		drop_node_parent.add_child(obj)
 		inventory_handler.inventory.remove(item)
+		_instantiate_object(scene, position, rotation)
+
+
+func _instantiate_object(dropped_item : PackedScene, position : Vector3, rotation : Vector3):
+	var obj = dropped_item.instantiate()
+	drop_node_parent.add_child(obj)
+	obj.position = position
+	obj.rotation = rotation
+	dropped.emit(obj)
