@@ -1,4 +1,5 @@
 @tool
+@icon("res://addons/inventory-system/icons/interactor.svg")
 class_name InventoryInteractor
 extends NodeInventorySystemBase
 
