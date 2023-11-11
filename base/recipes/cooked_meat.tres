@@ -24,3 +24,4 @@ products = Array[ExtResource("2_j8xh5")]([SubResource("Resource_0h1ry")])
 time_to_craft = 8.0
 station = ExtResource("5_e7bry")
 ingredients = Array[ExtResource("2_j8xh5")]([SubResource("Resource_glbqw")])
+required_items = Array[ExtResource("2_j8xh5")]([])

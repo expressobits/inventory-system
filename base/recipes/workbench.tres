@@ -22,3 +22,4 @@ script = ExtResource("4_pnyab")
 products = Array[ExtResource("2_08xfb")]([SubResource("Resource_daqyn")])
 time_to_craft = 4.0
 ingredients = Array[ExtResource("2_08xfb")]([SubResource("Resource_jcljw")])
+required_items = Array[ExtResource("2_08xfb")]([])
