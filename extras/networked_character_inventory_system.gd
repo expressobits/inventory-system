@@ -1,4 +1,4 @@
-class_name MPCharacterInventorySystem
+class_name NetworkedCharacterInventorySystem
 extends CharacterInventorySystem
 
 func _ready():
