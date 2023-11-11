@@ -7,8 +7,18 @@ signal changed_burning_state(is_burning : bool)
 @export var burnable_category : ItemCategory
 @onready var gpu_particles_3d = $Node/GPUParticles3D
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
+@export var toggle_fire_action : InteractAction
 
 @export var decrease_fuel_multiplier = 1
+
+var active_fire : bool = true:
+	set(value):
+		active_fire = value
+		if value:
+			is_burning = fuel > 0.0
+		else:
+			is_burning = false
+		
 
 var fuel := 0.0:
 	set(new_value):
@@ -42,6 +52,8 @@ func _on_input_inventory_item_added(_item, _amount):
 
 
 func check() -> bool:
+	if not active_fire:
+		return false
 	if is_burning:
 		return false
 	if not input_inventory.contains_category(burnable_category):
@@ -58,6 +70,8 @@ func check() -> bool:
 
 
 func _process(delta):
+	if not active_fire:
+		return
 	if fuel > 0.0:
 		fuel -= delta * decrease_fuel_multiplier
 
@@ -69,8 +83,18 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 	if craft_station.input_inventory.is_open:
 		return []
+	var actions : Array[InteractAction] = self.actions.duplicate()
+	if fuel > 0.0:
+		if active_fire:
+			toggle_fire_action.description = "Disable Fire"
+		else:
+			toggle_fire_action.description = "Enable Fire"
+		actions.append(toggle_fire_action)
 	return actions
 
 
-func interact(interactor : InventoryInteractor, _action_index : int = 0):
-	interactor.get_parent().open_inventory(craft_station.input_inventory)
+func interact(interactor : InventoryInteractor, action_index : int = 0):
+	if action_index == 0:
+		interactor.get_parent().open_inventory(craft_station.input_inventory)
+	else:
+		active_fire = !active_fire

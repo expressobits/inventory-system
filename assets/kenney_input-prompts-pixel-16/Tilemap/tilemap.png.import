@@ -1,0 +1,26 @@
+[remap]
+
+importer="2d_array_texture"
+type="CompressedTexture2DArray"
+uid="uid://b7tn5gosdk4na"
+path="res://.godot/imported/tilemap.png-c4c671538ea249c7b35eaf3fcd1842c9.ctexarray"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/kenney_input-prompts-pixel-16/Tilemap/tilemap.png"
+dest_files=["res://.godot/imported/tilemap.png-c4c671538ea249c7b35eaf3fcd1842c9.ctexarray"]
+
+[params]
+
+compress/mode=0
+compress/high_quality=false
+compress/lossy_quality=0.7
+compress/hdr_compression=1
+compress/channel_pack=0
+mipmaps/generate=false
+mipmaps/limit=-1
+slices/horizontal=34
+slices/vertical=24

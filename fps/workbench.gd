@@ -15,5 +15,8 @@ func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 	return actions
 
 
-func interact(interactor : InventoryInteractor, _action_index : int = 0):
-	interactor.get_parent().open_station(craft_station)
+func interact(interactor : InventoryInteractor, action_index : int = 0):
+	if action_index == 0:
+		interactor.get_parent().open_station(craft_station)
+	else:
+		self.rotate(Vector3.UP, 90)

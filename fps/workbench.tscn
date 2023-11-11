@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvjagvllelgcf"]
+[gd_scene load_steps=11 format=3 uid="uid://bvjagvllelgcf"]
 
 [ext_resource type="Script" path="res://fps/workbench.gd" id="1_sr5uf"]
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
@@ -14,6 +14,12 @@ input = "interact"
 description = "Open Station"
 code = 0
 
+[sub_resource type="Resource" id="Resource_mwd72"]
+script = ExtResource("2_r0km1")
+input = "rotate"
+description = "Rotate"
+code = 1
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
 
@@ -22,7 +28,7 @@ transform = Transform3D(0.92406, 0, 0.382248, 0, 1, 0, -0.382248, 0, 0.92406, -3
 collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_sr5uf")
-actions = Array[ExtResource("2_r0km1")]([SubResource("Resource_ypp5l")])
+actions = Array[ExtResource("2_r0km1")]([SubResource("Resource_ypp5l"), SubResource("Resource_mwd72")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249215, 0)
