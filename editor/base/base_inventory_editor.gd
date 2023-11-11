@@ -12,7 +12,7 @@ const ITEM_COPY_RESOURCE_PATH = 100
 const ITEM_REMOVE = 105
 const ITEM_REMOVE_AND_DELETE = 106
 
-@onready var new_resource_dialog : FileDialog = $NewResourceDialog
+@onready var new_resource_dialog : FileDialog = %NewResourceDialog
 @onready var open_resource_dialog = $OpenResourceDialog
 @onready var remove_confirmation_dialog = %RemoveConfirmationDialog
 @onready var remove_and_delete_confirmation_dialog = %RemoveAndDeleteConfirmationDialog
