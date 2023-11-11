@@ -33,6 +33,8 @@ var slots_sync : Array:
 
 func _ready():
 	super._ready()
+	if Engine.is_editor_hint():
+		return
 	multiplayer.peer_connected.connect(_on_connected.bind())
 	slot_added.connect(_on_slot_added.bind())
 	updated_slot.connect(_on_updated_slot.bind())
