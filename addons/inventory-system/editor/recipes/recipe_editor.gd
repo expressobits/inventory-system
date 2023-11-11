@@ -13,7 +13,9 @@ signal changed
 @export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var ingredients_v_box_container = %IngredientsVBoxContainer
 @onready var products_v_box_container = %ProductsVBoxContainer
+@onready var required_items_v_box_container = %RequiredItemsVBoxContainer
 @onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
+@onready var new_required_item_button = $MarginContainer/MarginContainer/VBoxContainer/ExtraRequiredItems/RequiredItemsVBoxContainer/NewRequiredItemButton
 
 
 var editor_plugin : EditorPlugin
@@ -23,6 +25,7 @@ var ids_list : Array[int]
 var stations_list : Array[CraftStationType]
 var ingredients : Array[IngredientEditor]
 var products : Array[IngredientEditor]
+var required_items : Array[IngredientEditor]
 
 var connected : bool
 
@@ -52,6 +55,7 @@ func connect_signals():
 	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected.bind())
 	item_resource_edit_button.pressed.connect(_on_item_resource_edit_button_pressed.bind())
 	item_resource_file_dialog.file_selected.connect(_on_recipe_resource_file_dialog_file_selected.bind())
+	new_required_item_button.pressed.connect(_on_new_required_item_button_pressed.bind())
 	connected = true
 
 
@@ -64,6 +68,7 @@ func disconnect_signals():
 	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected.bind())
 	item_resource_edit_button.pressed.disconnect(_on_item_resource_edit_button_pressed.bind())
 	item_resource_file_dialog.file_selected.disconnect(_on_recipe_resource_file_dialog_file_selected.bind())
+	new_required_item_button.pressed.disconnect(_on_new_required_item_button_pressed.bind())
 	connected = false
 
 
@@ -99,6 +104,21 @@ func setup_ingredients(recipe : Recipe, database : InventoryDatabase):
 		ingredients.append(ingredient_editor)
 
 
+func setup_required_items(recipe : Recipe, database : InventoryDatabase):
+	for ingredient_editor in required_items:
+		ingredient_editor.queue_free()
+	required_items.clear()
+	for index in recipe.required_items.size():
+		var ingredient = recipe.required_items[index]
+		var ingredient_node = ingredient_scene.instantiate()
+		required_items_v_box_container.add_child(ingredient_node)
+		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
+		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
+		ingredient_editor.changed_slot.connect(_on_changed_slot_required_item.bind())
+		ingredient_editor.request_remove.connect(_request_remove_required_item.bind(index))
+		required_items.append(ingredient_editor)
+
+
 func setup_products(recipe : Recipe, database : InventoryDatabase):
 	for product_editor in products:
 		product_editor.queue_free()
@@ -123,6 +143,7 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	setup_station()
 	setup_ingredients(recipe, database)
 	setup_products(recipe, database)
+	setup_required_items(recipe, database)
 	connect_signals()
 
 
@@ -148,6 +169,12 @@ func _request_remove_ingredient(index):
 	changed.emit()
 
 
+func _request_remove_required_item(index):
+	recipe.required_items.remove_at(index)
+	setup_required_items(recipe, database)
+	changed.emit()
+
+
 func _request_remove_product(index):
 	recipe.products.remove_at(index)
 	setup_products(recipe, database)
@@ -163,6 +190,18 @@ func _on_new_ingredient_button_pressed():
 	changed.emit()
 
 
+func _on_new_required_item_button_pressed():
+	var slot = Slot.new()
+	slot.amount = 1
+	slot.item = database.get_item(0)
+	var required_items : Array[Slot] = []
+	required_items.append_array(recipe.required_items)
+	required_items.append(slot)
+	recipe.required_items = required_items
+	setup_required_items(recipe, database)
+	changed.emit()
+
+
 func _on_new_product_button_pressed():
 	var slot = Slot.new()
 	slot.amount = 1
@@ -174,6 +213,10 @@ func _on_new_product_button_pressed():
 
 
 func _on_changed_slot_in_ingredient():
+	changed.emit()
+
+
+func _on_changed_slot_required_item():
 	changed.emit()
 
 
