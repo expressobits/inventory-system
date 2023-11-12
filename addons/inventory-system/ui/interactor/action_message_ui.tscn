@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system/ui/interactor/default_input_icons.tres" id="3_rgd78"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8sxuh"]
-outline_size = 4
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [node name="ActionMessageUI" type="HBoxContainer" node_paths=PackedStringArray("texture_rect", "interact_message")]
