@@ -43,8 +43,7 @@ signal updated_transaction_slot(item : InventoryItem, amount : int)
 ## Note: Is so important because the inventory node does not have position and rotation information.
 @export_node_path var drop_parent_position_path := NodePath("../..")
 
-## Main [Inventory] node.
-@onready var inventory : Inventory = get_node(inventory_path)
+@export var inventories : Array[Inventory]
 
 ## Drop parent node for [code]drop()[/code].
 @onready var drop_parent := get_node(drop_parent_path)
@@ -86,7 +85,7 @@ func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, 
 
 ## Drops a amount of [InventoryItem] from a inventory.
 ## This function removes the item from the inventory and then calls the function [code]drop[/code].
-func drop_from_inventory(slot_index : int, amount := 1, inventory := self.inventory):
+func drop_from_inventory(slot_index : int, amount := 1, inventory := self.inventories[0]):
 	if inventory.slots.size() <= slot_index:
 		return
 	if inventory.is_empty_slot(slot_index):
@@ -102,7 +101,7 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 
 ## Pick a [InventoryItem] to inventory.
 ## This function adds the item to the inventory and destroys the [DroppedItem] object.
-func pick_to_inventory(dropped_item, inventory := self.inventory):
+func pick_to_inventory(dropped_item, inventory := self.inventories[0]):
 	if not dropped_item is DroppedItem3D and not dropped_item is DroppedItem2D:
 		return false
 	if not dropped_item.is_pickable:
@@ -189,7 +188,7 @@ func close(inventory : Inventory) -> bool:
 		return false
 	opened_inventories.remove_at(index)
 	closed.emit(inventory)
-	if self.inventory == inventory:
+	if self.inventories.find(inventory) != -1:
 		if is_transaction_active():
 			var item = transaction_slot.item
 			var amount_no_add = inventory.add(item, transaction_slot.amount)
@@ -201,7 +200,7 @@ func close(inventory : Inventory) -> bool:
 
 ## Returns [code]true[/code] if main [Inventory] is open.
 func is_open_main_inventory() -> bool:
-	return is_open(inventory)
+	return is_open(inventories[0])
 
 
 ## Returns [code]true[/code] if any [Inventory] is open.
@@ -216,12 +215,12 @@ func is_open(inventory : Inventory) -> bool:
 
 ## Open main [Inventory]. Return [code]true[/code] if opened successfully.
 func open_main_inventory() -> bool:
-	return open(inventory)
+	return open(inventories[0])
 
 
 ## Close main [Inventory]. Return [code]true[/code] if closed successfully.
 func close_main_inventory() -> bool:
-	return close(inventory)
+	return close(inventories[0])
 
 
 ## Close all open [Inventory]s.

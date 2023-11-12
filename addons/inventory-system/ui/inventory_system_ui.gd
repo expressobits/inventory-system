@@ -21,7 +21,7 @@ var interactor : InventoryInteractor
 @onready var transaction_slot_ui : TransactionSlotUI = get_node(NodePath("TransactionSlotUI"))
 
 ## Player [InventoryUI], Typically the main usage inventory
-@onready var player_inventory_ui : InventoryUI = get_node(NodePath("PlayerInventoryUI") )
+@export var player_inventories_ui : Array[InventoryUI]
 
 ## Loot [InventoryUI], Typically an inventory that has been opened
 @onready var loot_inventory_ui : InventoryUI = get_node(NodePath("LootInventoryUI"))
@@ -42,15 +42,17 @@ var interactor : InventoryInteractor
 
 func _ready():
 	_setup_inventory_system_connection()
-	player_inventory_ui.visible = false
+	for player_inventory_ui in player_inventories_ui:
+		player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
 	drop_area.visible = false
 	hotbar_ui.visible = true
 	player_craft_station_ui.close()
 	other_craft_station_ui.close()
-	player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
-	player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
+	for player_inventory_ui in player_inventories_ui:
+		player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
+		player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 	loot_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 	loot_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 	if other_craft_station_ui.input_inventory_ui != null:
@@ -96,7 +98,8 @@ func _on_hotbar_changed():
 ## Setup inventory handler and connect all signals
 func set_player_inventory_handler(handler : InventoryHandler):
 	inventory_handler = handler
-	set_player_inventory(handler.inventory)
+	set_player_inventories(handler.inventories)
+	
 	inventory_handler.opened.connect(_on_open_inventory)
 	inventory_handler.closed.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
@@ -117,9 +120,10 @@ func set_hotbar(hotbar : Hotbar):
 	hotbar_ui.set_hotbar(hotbar)
 
 
-## Setup player [Inventory]
-func set_player_inventory(player_inventory : Inventory):
-	player_inventory_ui.set_inventory(player_inventory)
+## Setup player inventories
+func set_player_inventories(player_inventories : Array[Inventory]):
+	for i in player_inventories.size():
+		player_inventories_ui[i].set_inventory(player_inventories[i])
 
 
 func _drop_area_input(event : InputEvent):
@@ -129,16 +133,19 @@ func _drop_area_input(event : InputEvent):
 
 
 func _open_player_inventory():
-	player_inventory_ui.visible = true
+	for player_inventory_ui in player_inventories_ui:
+		player_inventory_ui.visible = true
+		
 	hotbar_ui.visible = false
 	drop_area.visible = true
-	if is_console_mode and not player_inventory_ui.slots.is_empty():
-		player_inventory_ui.slots[0].grab_focus()
+	if is_console_mode and not player_inventories_ui.is_empty():
+		if player_inventories_ui[0].slots.is_empty():
+			player_inventories_ui[0].slots[0].grab_focus()
 
 
 # Open Inventory of player	
 func _on_open_inventory(inventory : Inventory):
-	if inventory != inventory_handler.inventory:
+	if inventory_handler.inventories.find(inventory) == -1:
 		loot_inventory_ui.set_inventory(inventory)
 		loot_inventory_ui.visible = true
 	else:
@@ -166,16 +173,16 @@ func _on_close_craft_station(craft_station : CraftStation):
 
 
 func _on_close_inventory(inventory : Inventory):
-	if inventory == inventory_handler.inventory:
+	if inventory_handler.inventories.find(inventory) != -1:
 		_close_player_inventory()
 
 
 func _close_player_inventory():
-	player_inventory_ui.visible = false
+	for player_inventory_ui in player_inventories_ui:
+		player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	if loot_inventory_ui.inventory != null:
 		loot_inventory_ui._disconnect_old_inventory()
-#    hotbarContainer.gameObject.SetActive(false);
 	drop_area.visible = false
 	hotbar_ui.visible = true
 
