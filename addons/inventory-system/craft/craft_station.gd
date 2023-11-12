@@ -36,11 +36,11 @@ signal opened
 signal closed
 		
 
-## [Inventory] used to obtain crafting recipe ingredients
-@export var input_inventory : Inventory
+## [Array[Inventory]] used to obtain crafting recipe ingredients
+@export var input_inventories : Array[Inventory]
 
-## [Inventory] used to store the products of crafts
-@export var output_inventory : Inventory
+## [Array[Inventory]] used to store the products of crafts
+@export var output_inventories : Array[Inventory]
 
 ## Maximum number of crafts you can have in this station
 ## Set -1 to have no limit
@@ -87,7 +87,7 @@ func _ready():
 		var recipe = database.recipes[i]
 		if recipe.station == type:
 			valid_recipes.append(i)
-	if input_inventory != null:
+	for input_inventory in input_inventories:
 		input_inventory.item_added.connect(_on_input_inventory_item_added.bind())
 		input_inventory.item_removed.connect(_on_input_inventory_item_removed.bind())
 
@@ -131,10 +131,16 @@ func can_craft(recipe : Recipe) -> bool:
 ## ingredients of the [Recipe] sent by parameter.
 func contains_ingredients(recipe : Recipe) -> bool:
 	for slot in recipe.ingredients:
-		if not input_inventory.contains(slot.item, slot.amount):
+		var amount_total : int = 0
+		for input_inventory in input_inventories:
+			amount_total += input_inventory.get_amount_of(slot.item)
+		if amount_total < slot.amount:
 			return false
 	for slot in recipe.required_items:
-		if not input_inventory.contains(slot.item, slot.amount):
+		var amount_total : int = 0
+		for input_inventory in input_inventories:
+			amount_total += input_inventory.get_amount_of(slot.item)
+		if amount_total < slot.amount:
 			return false
 	return true
 
@@ -162,7 +168,7 @@ func cancel_craft(crafting_index : int):
 	var recipe = database.recipes[crafting.recipe_index]
 	if not only_remove_ingredients_after_craft:
 		for ingredient in recipe.ingredients:
-			input_inventory.add(ingredient.item, ingredient.amount)
+			input_inventories[0].add(ingredient.item, ingredient.amount)
 	_remove_crafting(crafting_index)
 	
 	
@@ -208,7 +214,9 @@ func _finish_crafting(crafting_index : int):
 		_use_items(recipe)
 	# TODO add function for slot in inventory
 	for product in recipe.products:
-		output_inventory.add(product.item, product.amount)
+		var amount_to_add = product.amount
+		for output_inventory in output_inventories:
+			amount_to_add = output_inventory.add(product.item, product.amount)
 	on_crafted.emit(crafting.recipe_index)
 	_check_for_auto_crafts()
 
@@ -217,7 +225,10 @@ func _use_items(recipe : Recipe) -> bool:
 	if recipe.station != type:
 		return false
 	for ingredient in recipe.ingredients:
-		if input_inventory.remove(ingredient.item, ingredient.amount) > 0:
+		var amount_to_remove = ingredient.amount
+		for input_inventory in input_inventories:
+			amount_to_remove = input_inventory.remove(ingredient.item, amount_to_remove)
+		if amount_to_remove > 0:
 			return false
 	return true
 

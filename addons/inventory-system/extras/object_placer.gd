@@ -20,8 +20,10 @@ func place_item(item : InventoryItem, position : Vector3, rotation : Vector3):
 	var res = load(path)
 	if res is PackedScene:
 		var scene = res as PackedScene
-		inventory_handler.inventory.remove(item)
-		_instantiate_object(scene, position, rotation)
+		for inventory in inventory_handler.inventories:
+			if inventory.remove(item) <= 0:
+				_instantiate_object(scene, position, rotation)
+				return
 
 
 func _instantiate_object(dropped_item : PackedScene, position : Vector3, rotation : Vector3):
