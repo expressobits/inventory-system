@@ -41,10 +41,7 @@ var interactor : InventoryInteractor
 
 
 func _ready():
-	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
-	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
-	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
-	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
+	_setup_inventory_system_connection()
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
@@ -65,12 +62,23 @@ func _ready():
 	drop_area.gui_input.connect(_drop_area_input.bind())
 
 
+func _setup_inventory_system_connection():
+	if InventorySystem.inventory_handler:
+		_on_inventory_handler_changed()
+	if InventorySystem.crafter:
+		_on_crafter_changed()
+	if InventorySystem.interactor:
+		_on_interactor_changed()
+	if InventorySystem.hotbar:
+		_on_hotbar_changed()
+	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
+	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
+	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
+	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
+
+
 func _on_inventory_handler_changed():
 	set_player_inventory_handler(InventorySystem.inventory_handler)
-
-
-func _on_hotbar_changed():
-	set_hotbar(InventorySystem.hotbar)
 
 
 func _on_crafter_changed():
@@ -79,6 +87,10 @@ func _on_crafter_changed():
 
 func _on_interactor_changed():
 	set_interactor(InventorySystem.interactor)
+
+
+func _on_hotbar_changed():
+	set_hotbar(InventorySystem.hotbar)
 
 
 ## Setup inventory handler and connect all signals
@@ -96,13 +108,13 @@ func set_crafter(crafter : Crafter):
 	crafter.closed.connect(_on_close_craft_station.bind())
 
 
-func set_hotbar(hotbar : Hotbar):
-	hotbar_ui.set_hotbar(hotbar)
-
-
 func set_interactor(interactor : InventoryInteractor):
 	self.interactor = interactor
 	interactor_ui.setup(interactor)
+
+
+func set_hotbar(hotbar : Hotbar):
+	hotbar_ui.set_hotbar(hotbar)
 
 
 ## Setup player [Inventory]
