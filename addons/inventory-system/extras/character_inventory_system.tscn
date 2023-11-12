@@ -68,10 +68,10 @@ script = ExtResource("6_qv0d7")
 main_station = NodePath("CraftStation")
 database = ExtResource("3_g5i0f")
 
-[node name="CraftStation" type="Node" parent="Crafter" node_paths=PackedStringArray("input_inventory", "output_inventory")]
+[node name="CraftStation" type="Node" parent="Crafter" node_paths=PackedStringArray("input_inventories", "output_inventories")]
 script = ExtResource("7_jdxm8")
-input_inventory = NodePath("../../InventoryHandler/Inventory")
-output_inventory = NodePath("../../InventoryHandler/Inventory")
+input_inventories = [NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")]
+output_inventories = [NodePath("../../InventoryHandler/Inventory")]
 database = ExtResource("3_g5i0f")
 
 [node name="InventoryInteractor" type="Node" parent="."]

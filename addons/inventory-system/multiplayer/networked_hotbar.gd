@@ -10,14 +10,13 @@ func set_selection_index(new_index : int):
 		set_selection_index_rpc(new_index)
 
 
-@rpc("any_peer","call_local")
+@rpc("any_peer")
 func set_selection_index_rpc(new_index : int):
 	if not multiplayer.is_server():
 		return
-	super.set_selection_index(new_index)
 	set_selection_index_response_rpc.rpc(new_index)
 	
 
-@rpc
+@rpc("call_local")
 func set_selection_index_response_rpc(new_index : int):
 	super.set_selection_index(new_index)
