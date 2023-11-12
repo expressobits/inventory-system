@@ -46,13 +46,19 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 ✔️ Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
 
+✔️ Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
+
 ## In Progress
 
-🔨 Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
+🔨 Equipament Inventory
 
 ## Planneds
 
 📅 Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
+
+📅 Change core to CPP #83
+
+📅 Inventory UI dynamic #83
 
 ## Install
 See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
