@@ -62,6 +62,7 @@ horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 
 [node name="InventoryContent" type="GridContainer" parent="VBoxContainer/MarginContainer/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0

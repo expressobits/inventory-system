@@ -26,7 +26,7 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 	return true
 
 
-func pick_to_inventory(dropped_item, inventory := self.inventory):
+func pick_to_inventory(dropped_item, inventory := self.inventories[0]):
 	if not multiplayer.is_server():
 		pick_to_inventory_rpc.rpc_id(1, dropped_item.get_path(), inventory.get_path())
 	else:
@@ -246,17 +246,17 @@ func close_all_inventories_rpc():
 
 # Returns [code]true[/code] if main [Inventory] is open.
 func is_open_main_inventory() -> bool:
-	return super.is_open(inventory)
+	return super.is_open(inventories[0])
 
 
 ## Open main [Inventory]. Return [code]true[/code] if opened successfully.
 func open_main_inventory() -> bool:
-	return super.open(inventory)
+	return super.open(inventories[0])
 
 
 ## Open main [Inventory]. Return [code]true[/code] if opened successfully.
 func close_main_inventory() -> bool:
-	return super.close(inventory)
+	return super.close(inventories[0])
 
 
 func _instantiate_dropped_item(dropped_item : PackedScene):
