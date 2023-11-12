@@ -86,11 +86,11 @@ func to_transaction(slot_index : int , inventory : Inventory, amount : int):
 		to_transaction_rpc(slot_index, inventory.get_path(), amount)
 
 
-func transaction_to_at(slot_index : int, inventory : Inventory):
+func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
 	if not multiplayer.is_server():
-		transaction_to_at_rpc.rpc_id(1, slot_index, inventory.get_path())
+		transaction_to_at_rpc.rpc_id(1, slot_index, inventory.get_path(), amount_to_move)
 	else:
-		transaction_to_at_rpc(slot_index, inventory.get_path())
+		transaction_to_at_rpc(slot_index, inventory.get_path(), amount_to_move)
 
 
 func transaction_to(inventory : Inventory):
@@ -211,7 +211,7 @@ func to_transaction_rpc(slot_index : int, object_path : NodePath, amount : int):
 
 
 @rpc("any_peer")
-func transaction_to_at_rpc(slot_index : int, object_path : NodePath):
+func transaction_to_at_rpc(slot_index : int, object_path : NodePath, amount_to_move : int):
 	if not multiplayer.is_server():
 		return
 	var object = get_node(object_path)
@@ -220,7 +220,7 @@ func transaction_to_at_rpc(slot_index : int, object_path : NodePath):
 	var inventory = object as Inventory
 	if inventory == null:
 		return
-	super.transaction_to_at(slot_index, inventory)
+	super.transaction_to_at(slot_index, inventory, amount_to_move)
 
 
 @rpc("any_peer")
