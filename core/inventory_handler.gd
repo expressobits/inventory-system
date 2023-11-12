@@ -244,7 +244,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 
 
 ## Moves transfer slot information to the [code]slot_index[/code] slot of [Inventory].
-func transaction_to_at(slot_index : int, inventory : Inventory):
+func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
 	if not is_transaction_active():
 		return
 	var slot = inventory.slots[slot_index]
@@ -252,8 +252,11 @@ func transaction_to_at(slot_index : int, inventory : Inventory):
 	if item == null:
 		return
 	if inventory.is_empty_slot(slot_index) or slot.item == item:
-		var amount_no_add = inventory.add_at(slot_index, item, transaction_slot.amount)
-		_set_transaction_slot(item, amount_no_add)
+		var amount = transaction_slot.amount
+		if amount_to_move >= 0:
+			amount = amount_to_move
+		var amount_no_add = inventory.add_at(slot_index, item, amount)
+		_set_transaction_slot(item, (transaction_slot.amount - amount) + amount_no_add)
 	else:
 		# Different items in slot and other_slot
 		# Check if transaction_slot amount is equal of origin_slot amount
