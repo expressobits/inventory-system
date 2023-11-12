@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=29 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://djh0ig8jxkla5" path="res://mp/mp_player.tscn" id="2_01e0j"]
 [ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="3_aep54"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://fps/labels.tscn" id="5_rvlsk"]
+[ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://base/kenney_input_icons.tres" id="6_52d7a"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://fps/level.tscn" id="8_kfwho"]
@@ -78,6 +79,9 @@ database = ExtResource("3_aep54")
 [node name="Labels" parent="UI" instance=ExtResource("5_rvlsk")]
 
 [node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
+
+[node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
+input_icons = ExtResource("6_52d7a")
 
 [node name="Connect Panel" type="ColorRect" parent="UI"]
 anchors_preset = 15
@@ -195,6 +199,9 @@ sync_item_removed_signal = true
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
 
+[editable path="UI/Inventory System UI"]
+[editable path="UI/Inventory System UI/TransactionSlotUI"]
+[editable path="UI/Inventory System UI/PlayerInventoryUI"]
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]
 [editable path="Workbench"]

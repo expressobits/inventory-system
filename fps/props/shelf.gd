@@ -30,11 +30,11 @@ func interact(interactor : InventoryInteractor, action_index : int = 0):
 	if action_index == 1:
 		var shelf_item = get_actual_item()
 		if shelf_item != null:
-			interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventory, interactor.hotbar.selection_index)
+			interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventories[0], interactor.hotbar.selection_index)
 		return
 	if action_index == 2:
 		if item != null:
-			interactor.inventory_handler.move_between_inventories_at(interactor.inventory_handler.inventory, interactor.hotbar.selection_index, 1, inventory, slot_index)
+			interactor.inventory_handler.move_between_inventories_at(interactor.inventory_handler.inventories[0], interactor.hotbar.selection_index, 1, inventory, slot_index)
 		return
 
 

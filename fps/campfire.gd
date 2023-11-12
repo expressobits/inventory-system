@@ -83,14 +83,14 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 	if craft_station.input_inventory.is_open:
 		return []
-	var actions : Array[InteractAction] = self.actions.duplicate()
+	var current_actions : Array[InteractAction] = self.actions.duplicate()
 	if fuel > 0.0:
 		if active_fire:
 			toggle_fire_action.description = "Disable Fire"
 		else:
 			toggle_fire_action.description = "Enable Fire"
-		actions.append(toggle_fire_action)
-	return actions
+		current_actions.append(toggle_fire_action)
+	return current_actions
 
 
 func interact(interactor : InventoryInteractor, action_index : int = 0):
