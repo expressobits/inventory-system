@@ -41,10 +41,7 @@ var interactor : InventoryInteractor
 
 
 func _ready():
-	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
-	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
-	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
-	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
+	_setup_inventory_system_connection()
 	player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
 	transaction_slot_ui.clear_info()
@@ -65,12 +62,23 @@ func _ready():
 	drop_area.gui_input.connect(_drop_area_input.bind())
 
 
+func _setup_inventory_system_connection():
+	if InventorySystem.inventory_handler:
+		_on_inventory_handler_changed()
+	if InventorySystem.crafter:
+		_on_crafter_changed()
+	if InventorySystem.interactor:
+		_on_interactor_changed()
+	if InventorySystem.hotbar:
+		_on_hotbar_changed()
+	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
+	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
+	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
+	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
+
+
 func _on_inventory_handler_changed():
 	set_player_inventory_handler(InventorySystem.inventory_handler)
-
-
-func _on_hotbar_changed():
-	set_hotbar(InventorySystem.hotbar)
 
 
 func _on_crafter_changed():
@@ -79,6 +87,10 @@ func _on_crafter_changed():
 
 func _on_interactor_changed():
 	set_interactor(InventorySystem.interactor)
+
+
+func _on_hotbar_changed():
+	set_hotbar(InventorySystem.hotbar)
 
 
 ## Setup inventory handler and connect all signals
@@ -96,13 +108,13 @@ func set_crafter(crafter : Crafter):
 	crafter.closed.connect(_on_close_craft_station.bind())
 
 
-func set_hotbar(hotbar : Hotbar):
-	hotbar_ui.set_hotbar(hotbar)
-
-
 func set_interactor(interactor : InventoryInteractor):
 	self.interactor = interactor
 	interactor_ui.setup(interactor)
+
+
+func set_hotbar(hotbar : Hotbar):
+	hotbar_ui.set_hotbar(hotbar)
 
 
 ## Setup player [Inventory]
@@ -169,31 +181,19 @@ func _close_player_inventory():
 
 
 func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
-	if not event is InputEventMouseButton:
-		return
-	var mouse_event : InputEventMouseButton = event as InputEventMouseButton
 	if inventory_handler.is_transaction_active():
-		var amount = _get_amount_per_mouse_event(mouse_event, inventory_handler.transaction_slot.amount)
-		inventory_handler.transaction_to_at(slot_index, inventory, amount)
+		inventory_handler.transaction_to_at(slot_index, inventory)
 		$SlotDrop.play()
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return
 		var slot = inventory.slots[slot_index]
-		var amount = _get_amount_per_mouse_event(mouse_event, slot.amount)
+		var amount = slot.amount
+		if event is InputEventMouseButton and event.button_index == 2:
+			amount = ceili(slot.amount/2.0)
 		inventory_handler.to_transaction(slot_index, inventory, amount)	
 		$SlotClick.play()
-
-
-func _get_amount_per_mouse_event(mouse_event : InputEventMouseButton, amount : int) -> int:
-	if mouse_event.button_index == MOUSE_BUTTON_LEFT:
-		return amount
-	if mouse_event.button_index == MOUSE_BUTTON_RIGHT:
-		return ceili(amount / 2.0)
-	if mouse_event.button_index == MOUSE_BUTTON_MIDDLE:
-		return 1
-	return 0
-
+		
 
 func _inventory_point_down(event : InputEvent, inventory : Inventory):
 	if event.button_index == 3:
