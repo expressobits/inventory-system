@@ -37,20 +37,15 @@ shape = SubResource("BoxShape3D_v5tyu")
 [node name="workbench" parent="." instance=ExtResource("2_2rlru")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 
-[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventory", "output_inventory")]
+[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventories", "output_inventories")]
 script = ExtResource("3_yr08k")
-input_inventory = NodePath("../InputInventory")
-output_inventory = NodePath("../InputInventory")
+input_inventories = [NodePath("../InputInventory")]
+output_inventories = [NodePath("../InputInventory")]
 type = ExtResource("4_g10kw")
 processing_mode = 1
 database = ExtResource("5_d4au8")
 
 [node name="InputInventory" type="Node" parent="."]
-script = ExtResource("6_js2dm")
-slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
-database = ExtResource("5_d4au8")
-
-[node name="OutputInventory" type="Node" parent="."]
 script = ExtResource("6_js2dm")
 slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 database = ExtResource("5_d4au8")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://bd0wd4vw1g86a"]
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://1g5wqbk7eo0d"]
 
 [ext_resource type="Resource" uid="uid://boaxvwlo2suum" path="res://base/categories/helmet.tres" id="1_36npj"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_m2wfa"]
@@ -15,4 +15,4 @@ properties = {
 "dropped_item": "res://fps/dropped_items/helmet_labor.tscn",
 "hand_item": "res://fps/hand_items/helmet_labor.tscn"
 }
-categories = [ExtResource("1_36npj")]
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_36npj")])

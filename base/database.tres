@@ -20,7 +20,7 @@
 [ext_resource type="Resource" uid="uid://dhjsgp1skln2i" path="res://base/items/cooked_meat.tres" id="12_l0xnf"]
 [ext_resource type="Resource" uid="uid://bherblpl7sey5" path="res://base/recipes/campfire.tres" id="12_pfveg"]
 [ext_resource type="Resource" uid="uid://5ln1mamn3e84" path="res://base/recipes/workbench.tres" id="13_jsmdl"]
-[ext_resource type="Resource" uid="uid://bd0wd4vw1g86a" path="res://base/items/helmet_labor.tres" id="15_nj78r"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="15_nj78r"]
 [ext_resource type="Resource" uid="uid://biti0xs8dwla1" path="res://base/recipes/cooked_meat.tres" id="19_03fkg"]
 [ext_resource type="Resource" path="res://base/craft_stations/workbench.tres" id="21_tgyqk"]
 [ext_resource type="Resource" path="res://base/craft_stations/campfire.tres" id="22_5mn07"]

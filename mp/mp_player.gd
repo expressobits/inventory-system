@@ -6,6 +6,8 @@ func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
 	$CharacterInventorySystem/InventoryHandler.set_multiplayer_authority(1)
 	$CharacterInventorySystem/InventoryHandler/Inventory.set_multiplayer_authority(1)
+	$CharacterInventorySystem/InventoryHandler/EquipmentInventory.set_multiplayer_authority(1)
+	$CharacterInventorySystem/Hotbar.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter/CraftStation.set_multiplayer_authority(1)
 

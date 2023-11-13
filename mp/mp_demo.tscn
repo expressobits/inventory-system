@@ -158,11 +158,6 @@ script = ExtResource("7_8khhq")
 sync_item_added_signal = true
 sync_item_removed_signal = true
 
-[node name="OutputInventory" parent="Workbench" index="4"]
-script = ExtResource("7_8khhq")
-sync_item_added_signal = true
-sync_item_removed_signal = true
-
 [node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
 

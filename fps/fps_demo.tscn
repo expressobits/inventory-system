@@ -15,7 +15,7 @@
 [ext_resource type="Resource" path="res://base/categories/tool.tres" id="10_n1hfr"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://fps/workbench.tscn" id="11_fkc5i"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="11_ntpr3"]
-[ext_resource type="Resource" uid="uid://bd0wd4vw1g86a" path="res://base/items/helmet_labor.tres" id="12_hloea"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="12_hloea"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="13_1f730"]
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://fps/level.tscn" id="16_46jkf"]

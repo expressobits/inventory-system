@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="3_onsct"]
 [ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="4_5iaq3"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_fghhy"]
-[ext_resource type="Resource" uid="uid://bd0wd4vw1g86a" path="res://base/items/helmet_labor.tres" id="5_xlkts"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="5_xlkts"]
 [ext_resource type="Resource" path="res://base/craft_stations/workbench.tres" id="7_vaok2"]
 
 [sub_resource type="Resource" id="Resource_cl4p4"]

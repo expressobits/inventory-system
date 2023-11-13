@@ -94,10 +94,10 @@ shape = SubResource("BoxShape3D_v5tyu")
 [node name="campfire" parent="." instance=ExtResource("2_eww0k")]
 transform = Transform3D(5, 0, 4.76837e-07, 0, 5, 0, -4.76837e-07, 0, 5, 0, 0, 0)
 
-[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventory", "output_inventory")]
+[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventories", "output_inventories")]
 script = ExtResource("4_ishni")
-input_inventory = NodePath("../InputInventory")
-output_inventory = NodePath("../InputInventory")
+input_inventories = [NodePath("../InputInventory")]
+output_inventories = [NodePath("../InputInventory")]
 limit_number_crafts = 1
 type = ExtResource("4_bov00")
 only_remove_ingredients_after_craft = true

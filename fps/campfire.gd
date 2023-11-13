@@ -81,7 +81,7 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 
 
 func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
-	if craft_station.input_inventory.is_open:
+	if craft_station.input_inventories[0].is_open:
 		return []
 	var current_actions : Array[InteractAction] = self.actions.duplicate()
 	if fuel > 0.0:
@@ -95,6 +95,6 @@ func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 
 func interact(interactor : InventoryInteractor, action_index : int = 0):
 	if action_index == 0:
-		interactor.get_parent().open_inventory(craft_station.input_inventory)
+		interactor.get_parent().open_inventory(craft_station.input_inventories[0])
 	else:
 		active_fire = !active_fire
