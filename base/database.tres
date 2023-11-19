@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="InventoryDatabase" load_steps=25 format=3 uid="uid://x5huasdaljjl"]
 
 [ext_resource type="Resource" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="1_ll643"]
-[ext_resource type="Resource" path="res://base/categories/tool.tres" id="2_8oy0m"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="2_8oy0m"]
 [ext_resource type="Resource" uid="uid://vf4th6k6nu1k" path="res://base/categories/food.tres" id="3_46uk3"]
 [ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="3_605sl"]
 [ext_resource type="Resource" uid="uid://boaxvwlo2suum" path="res://base/categories/helmet.tres" id="4_r2mmy"]
@@ -22,8 +22,8 @@
 [ext_resource type="Resource" uid="uid://5ln1mamn3e84" path="res://base/recipes/workbench.tres" id="13_jsmdl"]
 [ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="15_nj78r"]
 [ext_resource type="Resource" uid="uid://biti0xs8dwla1" path="res://base/recipes/cooked_meat.tres" id="19_03fkg"]
-[ext_resource type="Resource" path="res://base/craft_stations/workbench.tres" id="21_tgyqk"]
-[ext_resource type="Resource" path="res://base/craft_stations/campfire.tres" id="22_5mn07"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="21_tgyqk"]
+[ext_resource type="Resource" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="22_5mn07"]
 
 [resource]
 script = ExtResource("7_b6gc3")

@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="11_ftexy"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="11_sal7r"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="12_8i3r8"]
-[ext_resource type="Resource" path="res://base/categories/tool.tres" id="13_2tia7"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="13_2tia7"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="14_vlveu"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://fps/campfire.tscn" id="15_tm3xm"]
 [ext_resource type="Script" path="res://mp/networked_campfire.gd" id="16_8v2e4"]
