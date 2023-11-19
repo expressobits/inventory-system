@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_6s0ty")
 id = 6
+can_stack = true
 max_stack = 1
 name = "Campfire"
 icon = ExtResource("1_vhjvv")

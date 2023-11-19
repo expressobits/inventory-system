@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_obepx")
 id = 4
+can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("1_hlhk0")

@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_7pkcg")
 id = 5
+can_stack = true
 max_stack = 16
 name = "Lashing"
 icon = ExtResource("1_w5ivy")

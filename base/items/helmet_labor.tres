@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_m2wfa")
 id = 10
+can_stack = false
 max_stack = 1
 name = "Helmet Labor"
 icon = ExtResource("2_2j8fm")

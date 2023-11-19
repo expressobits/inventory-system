@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_nasbc")
 id = 1
+can_stack = true
 max_stack = 8
 name = "Stone"
 icon = ExtResource("1_ctyjn")
