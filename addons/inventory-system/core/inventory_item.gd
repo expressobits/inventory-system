@@ -17,6 +17,8 @@ class_name InventoryItem
 
 @export var id := 0
 
+@export var can_stack := true
+
 ## Maximum amount of this item within an [Inventory] slot
 @export var max_stack := 0
 

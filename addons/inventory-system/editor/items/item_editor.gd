@@ -20,9 +20,12 @@ var editor_plugin : EditorPlugin
 @onready var custom_properties : CustomPropertiesItemEditor = $ScrollContainer/MarginContainer/VBoxContainer/CustomProperties
 @onready var weight_spin_box = $ScrollContainer/MarginContainer/VBoxContainer/Weight/WeightSpinBox
 @onready var categories_in_item : CategoriesInItem = $ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem
+@onready var can_stack_check_box : CheckBox = %CanStackCheckBox
+@onready var max_stack = %MaxStack
 
 
 func _ready():
+	can_stack_check_box.toggled.connect(_can_stack_check_box_toggled.bind())
 	apply_theme()
 	$ScrollContainer.visible = false
 
@@ -44,10 +47,12 @@ func load_item(item : InventoryItem, database : InventoryDatabase):
 		item_name_text_edit.text = item.name
 		item_max_stack_spin_box.value = item.max_stack
 		weight_spin_box.value = item.weight
+		can_stack_check_box.button_pressed = item.can_stack
 		if is_instance_valid(item.icon):
 			item_icon_text_edit.text = item.icon.resource_path
 		else:
 			item_icon_text_edit.text = ""
+		max_stack.visible = item.can_stack
 		$ScrollContainer.visible = true
 	else:
 		item_resource_text_edit.text = "No resource path item!"
@@ -127,4 +132,10 @@ func _on_item_id_editor_changed(id : int):
 
 func _on_weight_spin_box_value_changed(value):
 	item.weight = weight_spin_box.value
+	changed.emit(item.id)
+
+
+func _can_stack_check_box_toggled(value):
+	item.can_stack = value
+	max_stack.visible = item.can_stack
 	changed.emit(item.id)
