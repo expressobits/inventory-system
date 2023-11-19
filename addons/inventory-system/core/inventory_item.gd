@@ -20,7 +20,12 @@ class_name InventoryItem
 @export var can_stack := true
 
 ## Maximum amount of this item within an [Inventory] slot
-@export var max_stack := 0
+@export var max_stack := 0:
+	get:
+		if can_stack:
+			return max_stack
+		else:
+			return 1
 
 ## Name of item
 @export var name : String
