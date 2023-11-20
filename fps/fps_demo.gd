@@ -6,19 +6,20 @@ class_name FPSDemo
 @export var item_grass : InventoryItem
 @export var database : InventoryDatabase
 
+@onready var main_inventory: Inventory = InventorySystem.inventory_handler.inventories[0]
 
 func _process(_delta):
 	if Input.is_action_just_released("add_item_a"):
-		InventorySystem.inventory_handler.add_to_inventory(InventorySystem.inventory_handler.inventory, item_wood, 1)
+		InventorySystem.inventory_handler.add_to_inventory(main_inventory, item_wood, 1)
 	if Input.is_action_just_released("remove_item_a"):
-		InventorySystem.inventory_handler.inventory.remove(item_wood, 1)
+		main_inventory.remove(item_wood, 1)
 		
 	if Input.is_action_just_released("add_item_b"):
-		InventorySystem.inventory_handler.add_to_inventory(InventorySystem.inventory_handler.inventory, item_stone, 1)
+		InventorySystem.inventory_handler.add_to_inventory(main_inventory, item_stone, 1)
 	if Input.is_action_just_released("remove_item_b"):
-		InventorySystem.inventory_handler.inventory.remove(item_stone, 1)
+		main_inventory.remove(item_stone, 1)
 		
 	if Input.is_action_just_released("add_item_c"):
-		InventorySystem.inventory_handler.add_to_inventory(InventorySystem.inventory_handler.inventory, item_grass, 1)
+		InventorySystem.inventory_handler.add_to_inventory(main_inventory, item_grass, 1)
 	if Input.is_action_just_released("remove_item_c"):
-		InventorySystem.inventory_handler.inventory.remove(item_grass, 1)
+		main_inventory.remove(item_grass, 1)

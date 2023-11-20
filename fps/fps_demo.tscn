@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
 [ext_resource type="Script" path="res://base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
-[ext_resource type="Resource" path="res://base/categories/tool.tres" id="10_n1hfr"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="10_n1hfr"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://fps/workbench.tscn" id="11_fkc5i"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="11_ntpr3"]
 [ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="12_hloea"]
