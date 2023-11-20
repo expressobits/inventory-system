@@ -31,10 +31,6 @@ signal closed(inventory : Inventory)
 ## Called when the function [code]set_transaction_slot()[/code] is executed.
 signal updated_transaction_slot
 
-## Main [Inventory] node path.
-## The main [Inventory] is used in most handler functions as a default inventory.
-@export_node_path("Inventory") var inventory_path := NodePath("Inventory")
-
 ## Path to where a drop of [DroppedItem] should be instantiated by the handler.
 @export_node_path var drop_parent_path := NodePath("../../..")
 
