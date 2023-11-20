@@ -2,6 +2,8 @@
 extends Resource
 class_name Slot
 
+signal updated
+
 @export var item : InventoryItem
 @export var amount := 0
 @export var max_stack := -1
