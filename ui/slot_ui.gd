@@ -26,11 +26,9 @@ func update_info_with_slot(slot : Slot):
 		category_icon.texture = null
 		panel.modulate = Color.WHITE
 		
-	if slot != null and slot.item != null:
-		# TODO Slow call, use cache from node inv base
-		if slot.item != null:
-			update_info_with_item(slot.item, slot.amount)
-			return
+	if slot != null and slot.has_valid():
+		update_info_with_item(slot)
+		return
 	item_icon.texture = null
 	amount_label.visible = false
 
@@ -46,15 +44,15 @@ func is_categorized_slot_and_have_category(slot : Slot):
 ## Update information with [InventoryItem] and amount.
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
-func update_info_with_item(item : InventoryItem, amount := 1):
-	if item != null:
-		item_icon.texture = item.icon
-		tooltip_text = item.name
+func update_info_with_item(slot : Slot):
+	if slot.has_valid():
+		item_icon.texture = slot.item.icon
+		tooltip_text = slot.item.name
 	else:
 		category_icon.texture = null
 		tooltip_text = ""
-	amount_label.text = str(amount)
-	amount_label.visible = amount > 1
+	amount_label.text = str(slot.amount)
+	amount_label.visible = slot.amount > 1
 
 
 ## Clear info slot information

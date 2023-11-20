@@ -80,7 +80,7 @@ func get_index_of_item_id(id : int) -> int:
 		var item = item_list_handler[index]
 		if item.id == id:
 			return index
-	return -1;
+	return -1
 
 func apply_filter() -> void:
 	item_list_handler.clear()

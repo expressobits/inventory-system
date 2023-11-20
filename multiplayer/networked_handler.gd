@@ -265,13 +265,13 @@ func _instantiate_dropped_item(dropped_item : PackedScene):
 	dropped.emit(obj)
 
 
-func _on_updated_transaction_slot(item : InventoryItem, amount : int):
+func _on_updated_transaction_slot():
 	var item_id : int
-	if item == null:
+	if transaction_slot.has_valid():
 		item_id = InventoryItem.NONE
 	else:
-		item_id = item.id
-	_on_updated_transaction_slot_rpc.rpc(item_id, amount)
+		item_id = transaction_slot.item.id
+	_on_updated_transaction_slot_rpc.rpc(item_id, transaction_slot.amount)
 
 
 @rpc

@@ -53,7 +53,7 @@ func get_index_of(station : CraftStationType) -> int:
 		var s = stations_list_handler[index]
 		if s == station:
 			return index
-	return -1;
+	return -1
 
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):

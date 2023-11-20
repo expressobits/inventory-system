@@ -107,8 +107,8 @@ func is_empty_slot(slot_index : int) -> bool:
 		return true
 	var slot = slots[slot_index]
 	if slot != null and slot.amount > 0:
-		return false;
-	return true;
+		return false
+	return true
 
 
 ## Returns true if inventory is empty
@@ -179,7 +179,7 @@ func get_slot_index_with_an_item_of_category(category : ItemCategory) -> int:
 func get_amount_of(item : InventoryItem) -> int:
 	if item == null:
 		return 0
-	var amount_in_inventory = 0;
+	var amount_in_inventory = 0
 	for slot in slots:
 		if slot.item == item:
 			amount_in_inventory += slot.amount
@@ -197,7 +197,7 @@ func get_amount() -> int:
 ## Adds a amount of the item to the inventory and 
 ## returns the amount that was left and not added
 func add(item : InventoryItem, amount : int) -> int:
-	var amount_in_interact = amount;
+	var amount_in_interact = amount
 	var old_amount = get_amount()
 	for i in range(slots.size()):
 		amount_in_interact = _add_to_slot(i, item, amount_in_interact)
@@ -325,7 +325,7 @@ func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	if remaining_amount == amount:
 		return amount
 	updated_slot.emit(slot_index)
-	return remaining_amount;
+	return remaining_amount
 
 
 func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
@@ -333,5 +333,7 @@ func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> i
 	var remaining_amount = slot.remove(item, amount)
 	if remaining_amount == amount:
 		return amount
-	updated_slot.emit(slot_index);
-	return remaining_amount;
+	updated_slot.emit(slot_index)
+	return remaining_amount
+
+

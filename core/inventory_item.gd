@@ -36,6 +36,8 @@ class_name InventoryItem
 ## Item weight in float
 @export var weight : float
 
+@export var durability : int
+
 ## Item custom properties
 @export var properties : Dictionary
 

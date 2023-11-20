@@ -53,7 +53,7 @@ func get_index_of(category : ItemCategory) -> int:
 		var c = categories_list_handler[index]
 		if c == category:
 			return index
-	return -1;
+	return -1
 
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
