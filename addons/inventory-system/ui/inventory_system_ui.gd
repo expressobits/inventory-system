@@ -222,5 +222,5 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 		$SlotDrop.play()
 
 
-func _updated_transaction_slot(item : InventoryItem, amount : int):
-	transaction_slot_ui.update_info_with_item(item, amount)
+func _updated_transaction_slot():
+	transaction_slot_ui.update_info_with_item(inventory_handler.transaction_slot)
