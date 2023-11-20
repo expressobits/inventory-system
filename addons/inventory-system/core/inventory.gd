@@ -333,5 +333,7 @@ func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> i
 	var remaining_amount = slot.remove(item, amount)
 	if remaining_amount == amount:
 		return amount
-	updated_slot.emit(slot_index);
-	return remaining_amount;
+	updated_slot.emit(slot_index)
+	return remaining_amount
+
+

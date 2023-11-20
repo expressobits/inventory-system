@@ -46,7 +46,7 @@ func has_valid_item_id() -> bool:
 	var slot = inventory.slots[selection_index]
 	if slot == null:
 		return false
-	return slot.item != null
+	return slot.has_valid()
 
 
 func has_item_on_selection() -> bool:

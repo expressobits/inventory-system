@@ -29,7 +29,7 @@ signal closed(inventory : Inventory)
 
 ## Emitted when handler transfers slot is updated.
 ## Called when the function [code]set_transaction_slot()[/code] is executed.
-signal updated_transaction_slot(item : InventoryItem, amount : int)
+signal updated_transaction_slot
 
 ## Main [Inventory] node path.
 ## The main [Inventory] is used in most handler functions as a default inventory.
@@ -236,7 +236,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 		return
 	var slot = inventory.slots[slot_index]
 	var item = slot.item
-	if item == null:
+	if not slot.has_valid():
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
 	_set_transaction_slot(item, amount - amount_no_removed)
@@ -248,7 +248,7 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 		return
 	var slot = inventory.slots[slot_index]
 	var item = transaction_slot.item
-	if item == null:
+	if not transaction_slot.has_valid():
 		return
 	if inventory.is_empty_slot(slot_index) or slot.item == item:
 		var amount = transaction_slot.amount
@@ -264,7 +264,7 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 			var c_slot = slot as CategorizedSlot
 			if not c_slot.is_accept_category(item):
 				return
-		_set_transaction_slot(slot.item, inventory.slots[slot_index].amount)
+		_set_transaction_slot(slot.item, slot.amount)
 		inventory.set_slot(slot_index, item, new_amount)
 
 
@@ -281,7 +281,7 @@ func transaction_to(inventory : Inventory):
 
 ## Return [code]true[/code] if contains information in slot transaction.
 func is_transaction_active() -> bool:
-	return transaction_slot.item != null
+	return transaction_slot.has_valid()
 
 
 ## Drop [InventoryItem] from slot transaction.
@@ -305,4 +305,4 @@ func _set_transaction_slot(item : InventoryItem, amount : int):
 		transaction_slot.item = item
 	else:
 		transaction_slot.item = null
-	updated_transaction_slot.emit(transaction_slot.item, transaction_slot.amount)
+	updated_transaction_slot.emit()
