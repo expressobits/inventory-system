@@ -21,7 +21,7 @@ func add(item : InventoryItem, amount : int) -> int:
 		return amount
 	var max_stack = get_max_stack_for_item(item)
 	var amount_to_add = min(amount, max_stack - self.amount)
-	self.amount = self.amount + amount_to_add;
+	self.amount = self.amount + amount_to_add
 	if amount_to_add > 0 and self.item == null:
 		self.item = item
 		updated.emit()
@@ -32,12 +32,12 @@ func remove(item : InventoryItem, amount : int) -> int:
 	if item == null:
 		return amount
 	if amount <= 0 or (self.item != item && self.item != null):
-		return amount;
-	var amount_to_remove = min(amount, self.amount);
-	self.amount = self.amount - amount_to_remove;
+		return amount
+	var amount_to_remove = min(amount, self.amount)
+	self.amount = self.amount - amount_to_remove
 	updated.emit()
 	if self.amount <= 0:
-		self.item = null;
+		self.item = null
 	return amount - amount_to_remove
 
 
