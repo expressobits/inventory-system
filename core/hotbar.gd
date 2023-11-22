@@ -58,7 +58,7 @@ func has_item_on_selection() -> bool:
 func get_selected_item() -> InventoryItem:
 	if not has_valid_item_id():
 		return null
-	return inventory.slots[selection_index].item
+	return inventory.slots[selection_index].item.definition
 
 
 func _on_updated_slot(slot_index : int):
