@@ -44,9 +44,31 @@ raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 database = ExtResource("4_ljenf")
 
+[node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
+database = ExtResource("4_ljenf")
+
+[node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
+database = ExtResource("4_ljenf")
+
+[node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
+database = ExtResource("4_ljenf")
+
+[node name="Hotbar" parent="CharacterInventorySystem" index="1"]
+database = ExtResource("4_ljenf")
+
+[node name="Crafter" parent="CharacterInventorySystem" index="2"]
+database = ExtResource("4_ljenf")
+
+[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
+database = ExtResource("4_ljenf")
+
 [node name="InventoryInteractor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera_3d")]
 raycast = NodePath("../../Camera3D/RayCast3D")
 camera_3d = NodePath("../../Camera3D")
+database = ExtResource("4_ljenf")
+
+[node name="ObjectPlacer" parent="CharacterInventorySystem/InventoryInteractor" index="0"]
+database = ExtResource("4_ljenf")
 
 [node name="PickupAudio" parent="CharacterInventorySystem" index="4"]
 stream = ExtResource("5_1ptxj")
