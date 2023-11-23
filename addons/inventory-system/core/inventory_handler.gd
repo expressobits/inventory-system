@@ -57,9 +57,9 @@ var transaction_slot : Slot = Slot.new()
 ## The scene to be instantiated from the item is fetched from the [InventoryDatabase] 
 ## and placed as a child of [code]drop_parent[/code].
 ## For each dropped item a [code]dropped[/code] signal is emitted.
-func drop(item : InventoryItem, amount := 1) -> bool:
-	if item.properties.has("dropped_item"):
-		var path = item.properties["dropped_item"]
+func drop(item : SlotItem, amount := 1) -> bool:
+	if item.definition.properties.has("dropped_item"):
+		var path = item.definition.properties["dropped_item"]
 		var dropped_item = load(path)
 		for i in amount:
 			_instantiate_dropped_item(dropped_item)
@@ -70,7 +70,7 @@ func drop(item : InventoryItem, amount := 1) -> bool:
 
 ## Add an amount of an [InventoryItem] to a inventory.
 ## If this addition fails and the [code]drop_excess[/code] is true then a drop of the unadded items occurs
-func add_to_inventory(inventory : Inventory, item : InventoryItem, amount := 1, drop_excess := false) -> int:
+func add_to_inventory(inventory : Inventory, item : SlotItem, amount := 1, drop_excess := false) -> int:
 	var value_no_added = inventory.add(item, amount)
 	added.emit(item, amount - value_no_added)
 	if (drop_excess):
@@ -87,9 +87,9 @@ func drop_from_inventory(slot_index : int, amount := 1, inventory := self.invent
 	if inventory.is_empty_slot(slot_index):
 		return
 	var slot = inventory.slots[slot_index]
-	var item = slot.item
-	if item == null:
+	if not slot.has_valid():
 		return
+	var item : SlotItem = slot.item
 	var not_removed = inventory.remove_at(slot_index, item, amount)
 	var removed = amount - not_removed
 	drop(item, removed)
@@ -102,9 +102,9 @@ func pick_to_inventory(dropped_item, inventory := self.inventories[0]):
 		return false
 	if not dropped_item.is_pickable:
 		return false
-	var item = dropped_item.item
-	if item == null:
-		printerr("item in dropped_item is null!")
+	var item : SlotItem = dropped_item.item
+	if item == null or item.definition == null:
+		printerr("item or definition in dropped_item is null!")
 	if add_to_inventory(inventory, item) == 0:
 		picked.emit(dropped_item)
 		dropped_item.queue_free()
@@ -141,12 +141,12 @@ func move_between_inventories_at(from : Inventory, slot_index : int, amount : in
 func swap_between_inventories(inventory : Inventory, slot_index : int, other_inventory : Inventory, other_slot_index : int, amount := 1):
 	if inventory.database != other_inventory.database:
 		return
-	var slot = inventory.slots[slot_index]
+	var slot : Slot = inventory.slots[slot_index]
 	var other_slot = other_inventory.slots[other_slot_index]
 	# Same Item in slot and other_slot
-	if other_inventory.is_empty_slot(other_slot_index) or slot.item == other_slot.item:
+	if other_inventory.is_empty_slot(other_slot_index) or slot.item.definition == other_slot.item.definition:
 		var item = slot.item
-		if item == null:
+		if item == null or item.definition == null:
 			return
 		var for_trade = 0
 		if other_inventory.is_empty_slot(other_slot_index):
@@ -295,7 +295,7 @@ func _instantiate_dropped_item(dropped_item : PackedScene):
 	dropped.emit(obj)
 
 
-func _set_transaction_slot(item : InventoryItem, amount : int):
+func _set_transaction_slot(item : SlotItem, amount : int):
 	transaction_slot.amount = amount
 	if amount > 0:
 		transaction_slot.item = item

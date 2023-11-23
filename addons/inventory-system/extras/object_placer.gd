@@ -21,7 +21,9 @@ func place_item(item : InventoryItem, position : Vector3, rotation : Vector3):
 	if res is PackedScene:
 		var scene = res as PackedScene
 		for inventory in inventory_handler.inventories:
-			if inventory.remove(item) <= 0:
+			var slot_item = SlotItem.new()
+			slot_item.definition = item
+			if inventory.remove(slot_item) <= 0:
 				_instantiate_object(scene, position, rotation)
 				return
 

@@ -6,7 +6,7 @@ class_name VisualSlot3D
 @export var distance_for_stack : float = 0.05
 
 var property_name_of_visual : String
-var last_item : InventoryItem = null
+var last_item : SlotItem = null
 var inventory : Inventory
 #var objects_per_id : Dictionary
 var slot_index : int
@@ -28,10 +28,10 @@ func _on_updated_slot(changed_slot_index : int):
 	_clear_last_visual()
 	var item = inventory.slots[slot_index].item
 	var amount = inventory.slots[slot_index].amount
-	if item == null:
+	if item == null or item.definition == null:
 		return
 	var item_scene = null
-	if item.properties.has(property_name_of_visual):
+	if item.definition.properties.has(property_name_of_visual):
 		var path = item.properties[property_name_of_visual]
 		item_scene = load(path)
 	last_item = item

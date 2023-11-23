@@ -10,7 +10,7 @@ class_name HandItemHolder3D
 @export_node_path("InventoryInteractor") var interactor_path = NodePath("../../CharacterInventorySystem/InventoryInteractor")
 @onready var interactor : InventoryInteractor = get_node(interactor_path) 
 
-var last_item : InventoryItem = null
+var last_item : SlotItem = null
 var objects_per_id : Dictionary
 
 

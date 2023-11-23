@@ -29,11 +29,11 @@ func interact(interactor : InventoryInteractor, action_index : int = 0):
 		super.interact(interactor, action_index)
 	if action_index == 1:
 		var shelf_item = get_actual_item()
-		if shelf_item != null:
+		if shelf_item != null and shelf_item.definition != null:
 			interactor.inventory_handler.move_between_inventories_at(inventory, slot_index, 1, interactor.inventory_handler.inventories[0], interactor.hotbar.selection_index)
 		return
 	if action_index == 2:
-		if item != null:
+		if item != null and item.definition != null:
 			interactor.inventory_handler.move_between_inventories_at(interactor.inventory_handler.inventories[0], interactor.hotbar.selection_index, 1, inventory, slot_index)
 		return
 
@@ -50,16 +50,16 @@ func get_actions(interactor : InventoryInteractor) -> Array[InteractAction]:
 		return actions_shelf
 	actions_shelf.append_array(actions)
 	var shelf_item = get_actual_item()
-	if shelf_item != null:
+	if shelf_item != null and shelf_item.definition != null:
 		var action = InteractAction.new()
-		action.description = "Get " + shelf_item.name
+		action.description = "Get " + shelf_item.definition.name
 		action.input = "item_pickup"
 		action.code = 1
 		actions_shelf.append(action)
-	var item = interactor.hotbar.get_selected_item()
-	if item != null and (shelf_item == null or shelf_item == item):
+	var item : SlotItem = interactor.hotbar.get_selected_item()
+	if item != null and item.definition != null and (shelf_item.definition == null or shelf_item.definition == item.definition):
 		var action = InteractAction.new()
-		action.description = "Place " + item.name
+		action.description = "Place " + item.definition.name
 		action.input = "item_place"
 		action.code = 2
 		actions_shelf.append(action)

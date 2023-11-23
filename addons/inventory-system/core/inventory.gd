@@ -19,10 +19,10 @@ signal slot_added(slot_index : int)
 signal slot_removed(slot_index : int)
 
 ## Emitted when a item was added.
-signal item_added(item : InventoryItem, amount : int)
+signal item_added(item : SlotItem, amount : int)
 
 ## Emitted when a item was removed.
-signal item_removed(item : InventoryItem, amount : int)
+signal item_removed(item : SlotItem, amount : int)
 
 ## Emitted when inventory is filled.
 ## This signal is emitted after the  [code]add[/code]  ,  [code]add_at[/code]  or  [code]set_slot[/code]  function and it only happens when all slots are filled.
@@ -76,7 +76,7 @@ func _ready():
 
 
 ## Define slot specific index information
-func set_slot(slot_index : int, item : InventoryItem, amount : int):
+func set_slot(slot_index : int, item : SlotItem, amount : int):
 	if slot_index >= slots.size():
 		return
 	var old_amount = get_amount()
@@ -89,7 +89,7 @@ func set_slot(slot_index : int, item : InventoryItem, amount : int):
 
 
 ## Define slot specific index information
-func set_slot_with_other_slot(slot_index : int, other_slot : Dictionary):
+func set_slot_with_other_slot(slot_index : int, other_slot : Slot):
 	if slot_index >= slots.size():
 		return
 	var old_amount = get_amount()
@@ -125,24 +125,24 @@ func is_full() -> bool:
 
 
 ## Returns true if the inventory contains the quantity of the specified item
-func contains(item : InventoryItem, amount := 1) -> bool:
-	if item == null:
+func contains(item : SlotItem, amount := 1) -> bool:
+	if item == null or item.definition == null:
 		return false
 	var amount_in_inventory = 0
 	for slot in slots:
-		if slot.item == item:
+		if slot.contains(item):
 			amount_in_inventory += slot.amount
 			if amount_in_inventory >= amount:
 				return true
 	return false
 
 
-func contains_at(slot_index : int, item : InventoryItem, amount := 1) -> bool:
-	if item == null:
+func contains_at(slot_index : int, item : SlotItem, amount := 1) -> bool:
+	if item == null or item.definition == null:
 		return false
 	if slot_index < slots.size():
 		var slot = slots[slot_index]
-		if slot.item == item:
+		if slot.contains(item):
 			if slot.amount >= amount:
 				return true
 	return false
@@ -154,9 +154,7 @@ func contains_category(category : ItemCategory, amount := 1) -> bool:
 		return false
 	var amount_in_inventory = 0
 	for slot in slots:
-		if slot.item == null:
-			continue
-		if slot.item.contains_category(category):
+		if slot.contains_category(category):
 			amount_in_inventory += slot.amount
 			if amount_in_inventory >= amount:
 				return true
@@ -170,18 +168,18 @@ func get_slot_index_with_an_item_of_category(category : ItemCategory) -> int:
 	var amount_in_inventory = 0
 	for i in slots.size():
 		var slot = slots[i]
-		if slot.item.contains_category(category):
+		if slot.contains_category(category):
 			return i
 	return -1
 
 
 ## Returns amount of the specified item in inventory
-func get_amount_of(item : InventoryItem) -> int:
+func get_amount_of(item : SlotItem) -> int:
 	if item == null:
 		return 0
 	var amount_in_inventory = 0
 	for slot in slots:
-		if slot.item == item:
+		if slot.contains(item):
 			amount_in_inventory += slot.amount
 	return amount_in_inventory
 
@@ -196,7 +194,7 @@ func get_amount() -> int:
 
 ## Adds a amount of the item to the inventory and 
 ## returns the amount that was left and not added
-func add(item : InventoryItem, amount : int) -> int:
+func add(item : SlotItem, amount : int) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	for i in range(slots.size()):
@@ -213,7 +211,7 @@ func add(item : InventoryItem, amount : int) -> int:
 
 ## Adds a amount of the item to the specified inventory slot index
 ## and returns the amount left over that was not added
-func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
+func add_at(slot_index : int, item : SlotItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	if slot_index < slots.size():
@@ -227,7 +225,7 @@ func add_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
 
 ## Removes a amount of the item from inventory and 
 ## returns the amount that was not removed
-func remove(item : InventoryItem, amount := 1) -> int:
+func remove(item : SlotItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	for i in range(slots.size()-1, -1, -1):
@@ -244,7 +242,7 @@ func remove(item : InventoryItem, amount := 1) -> int:
 
 ## Removes an item quantity to the specified inventory slot index
 ## and returns the remaining value that was not removed
-func remove_at(slot_index : int, item : InventoryItem, amount := 1) -> int:
+func remove_at(slot_index : int, item : SlotItem, amount := 1) -> int:
 	var amount_in_interact = amount
 	var old_amount = get_amount()
 	if slot_index < slots.size():
@@ -282,7 +280,9 @@ func close() -> bool:
 func _load_slots():
 	for i in self.slots.size():
 		if self.slots[i] == null:
-			self.slots[i] = Slot.new()
+			var slot = Slot.new()
+			slot.item = SlotItem.new()
+			self.slots[i] = slot
 	
 #	if recreate_slots_on_ready:
 #		if not create_slot_if_needed:
@@ -302,7 +302,7 @@ func _remove_slot(slot_index : int, emit_signal := true):
 
 func _add_slot(slot_index : int, emit_signal := true):
 	var slot = Slot.new()
-	slot.item = null
+	slot.item = SlotItem.new()
 	slot.amount = 0
 	slots.insert(slot_index, slot)
 	if emit_signal:
@@ -319,7 +319,7 @@ func _call_events(old_amount : int):
 			filled.emit()
 
 
-func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
+func _add_to_slot(slot_index : int, item : SlotItem, amount := 1) -> int:
 	var slot = slots[slot_index]
 	var remaining_amount = slot.add(item, amount)
 	if remaining_amount == amount:
@@ -328,7 +328,7 @@ func _add_to_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
 	return remaining_amount
 
 
-func _remove_from_slot(slot_index : int, item : InventoryItem, amount := 1) -> int:
+func _remove_from_slot(slot_index : int, item : SlotItem, amount := 1) -> int:
 	var slot = slots[slot_index]
 	var remaining_amount = slot.remove(item, amount)
 	if remaining_amount == amount:

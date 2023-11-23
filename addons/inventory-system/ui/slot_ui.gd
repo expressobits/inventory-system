@@ -27,6 +27,7 @@ func update_info_with_slot(slot : Slot):
 		panel.modulate = Color.WHITE
 		
 	if slot != null and slot.has_valid():
+		print("ok")
 		update_info_with_item(slot)
 		return
 	item_icon.texture = null
@@ -45,9 +46,10 @@ func is_categorized_slot_and_have_category(slot : Slot):
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_item(slot : Slot):
+	print("test")
 	if slot.has_valid():
-		item_icon.texture = slot.item.icon
-		tooltip_text = slot.item.name
+		item_icon.texture = slot.item.definition.icon
+		tooltip_text = slot.item.definition.name
 	else:
 		category_icon.texture = null
 		tooltip_text = ""
