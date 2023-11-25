@@ -7,7 +7,7 @@ class_name HandItemHolder2D
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @onready var hotbar : Hotbar = get_node(hotbar_path) 
 
-@export_node_path("Interactor") var interactor_path = NodePath("../../CharacterInventorySystem/Interactor")
+@export_node_path("InventoryInteractor") var interactor_path = NodePath("../../CharacterInventorySystem/InventoryInteractor")
 @onready var interactor : InventoryInteractor = get_node(interactor_path) 
 
 var last_item := InventoryItem.NONE
