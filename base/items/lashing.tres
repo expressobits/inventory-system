@@ -11,6 +11,7 @@ max_stack = 16
 name = "Lashing"
 icon = ExtResource("1_w5ivy")
 weight = 0.0
+durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/lashing.tscn",
 "hand_item": "res://fps/hand_items/lashing.tscn"

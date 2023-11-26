@@ -12,6 +12,7 @@ max_stack = 16
 name = "Grass"
 icon = ExtResource("1_v4col")
 weight = 0.0
+durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/grass.tscn",
 "fuel": 2.0,
