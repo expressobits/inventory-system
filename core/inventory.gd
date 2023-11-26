@@ -77,11 +77,15 @@ func _ready():
 
 ## Define slot specific index information
 func set_slot(slot_index : int, item : SlotItem, amount : int):
+	set_slot_content(slot_index, item.definition, amount)
+
+
+func set_slot_content(slot_index : int, item : InventoryItem, amount : int):
 	if slot_index >= slots.size():
 		return
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
-	slot.item = item
+	slot.item.definition = item
 	slot.amount = amount
 	slots[slot_index] = slot
 	updated_slot.emit(slot_index)
@@ -92,13 +96,7 @@ func set_slot(slot_index : int, item : SlotItem, amount : int):
 func set_slot_with_other_slot(slot_index : int, other_slot : Slot):
 	if slot_index >= slots.size():
 		return
-	var old_amount = get_amount()
-	var slot = slots[slot_index]
-	slot.item = other_slot.item
-	slot.amount = other_slot.amount
-	slots[slot_index] = slot
-	updated_slot.emit(slot_index)
-	_call_events(old_amount)
+	set_slot(slot_index, other_slot.item, other_slot.amount)
 
 
 ## Returns true if the slot is empty
@@ -279,15 +277,22 @@ func close() -> bool:
 
 func _load_slots():
 	for i in self.slots.size():
-		if self.slots[i] == null:
-			var slot = Slot.new()
-			slot.item = SlotItem.new()
-			self.slots[i] = slot
+		var slot = self.slots[i]
+		if slot == null:
+			var temp_slot = Slot.new()
+			slot = temp_slot
+		self.slots[i] = slot
 	
 #	if recreate_slots_on_ready:
 #		if not create_slot_if_needed:
 #			for i in slot_amount:
 #				_add_slot(i, false)
+	for i in self.slots.size():
+		var slot = self.slots[i]
+		if slot.item == null:
+			slot.item = SlotItem.new()
+		self.slots[i] = slot
+	
 	
 	var slots = self.slots.duplicate(true)
 	self.slots = []

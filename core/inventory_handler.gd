@@ -129,7 +129,7 @@ func move_between_inventories(from : Inventory, slot_index : int, amount : int, 
 
 func move_between_inventories_at(from : Inventory, slot_index : int, amount : int, to : Inventory, to_slot_index : int):
 	var slot = from.slots[slot_index]
-	var item = slot.item
+	var item = slot.item.duplicate()
 	var amount_not_removed = from.remove_at(slot_index, item, amount)
 	var amount_for_swap = amount - amount_not_removed
 	var amount_not_swaped = to.add_at(to_slot_index, item, amount_for_swap)
@@ -231,7 +231,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 	if is_transaction_active():
 		return
 	var slot = inventory.slots[slot_index]
-	var item = slot.item
+	var item = slot.item.duplicate()
 	if not slot.has_valid():
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
@@ -246,7 +246,7 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 	var item = transaction_slot.item
 	if not transaction_slot.has_valid():
 		return
-	if inventory.is_empty_slot(slot_index) or slot.item == item:
+	if inventory.is_empty_slot(slot_index) or slot.item.definition == item.definition:
 		var amount = transaction_slot.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move

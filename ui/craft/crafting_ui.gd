@@ -20,7 +20,7 @@ func set_crafting(station : CraftStation, crafting_index : int):
 	var recipe_index = crafting.recipe_index
 	var recipe = station.database.recipes[recipe_index]
 	var item = recipe.products[0].item
-	_icon.texture = item.icon
+	_icon.texture = item.definition.icon
 	_progress_bar.max_value = recipe.time_to_craft
 
 
