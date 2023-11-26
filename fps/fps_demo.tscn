@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=44 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="2_gcjwy"]
@@ -22,6 +22,21 @@
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://fps/campfire.tscn" id="16_47qja"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://fps/props/shelf.tscn" id="17_k32gy"]
+
+[sub_resource type="Resource" id="Resource_s5euc"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("2_ig7ps")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_mcsja"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("3_drnqg")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_5m303"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("4_u8ypt")
+properties = {}
 
 [sub_resource type="Resource" id="Resource_qht8t"]
 script = ExtResource("13_7kmjq")
@@ -132,9 +147,9 @@ max_stack = -1
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
-item_wood = ExtResource("2_ig7ps")
-item_stone = ExtResource("3_drnqg")
-item_grass = ExtResource("4_u8ypt")
+item_wood = SubResource("Resource_s5euc")
+item_stone = SubResource("Resource_mcsja")
+item_grass = SubResource("Resource_5m303")
 database = ExtResource("2_gcjwy")
 
 [node name="UI" type="CanvasLayer" parent="."]
