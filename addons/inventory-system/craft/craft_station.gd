@@ -248,12 +248,12 @@ func _remove_crafting(crafting_index : int):
 	craftings.remove_at(crafting_index)
 
 
-func _on_input_inventory_item_added(item : InventoryItem, amount : int):
+func _on_input_inventory_item_added(_item : SlotItem, _amount : int):
 	if auto_craft:
 		_check_for_auto_crafts()
 
 
-func _on_input_inventory_item_removed(item : InventoryItem, amount : int):
+func _on_input_inventory_item_removed(_item : SlotItem, _amount : int):
 	if only_remove_ingredients_after_craft:
 		var i = 0
 		while i < craftings.size():
