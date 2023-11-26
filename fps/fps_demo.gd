@@ -6,7 +6,10 @@ class_name FPSDemo
 @export var item_grass : InventoryItem
 @export var database : InventoryDatabase
 
-@onready var main_inventory: Inventory = InventorySystem.inventory_handler.inventories[0]
+@onready var main_inventory : Inventory
+
+func _ready():
+	main_inventory = InventorySystem.inventory_handler.inventories[0]
 
 #func _process(_delta):
 #	if Input.is_action_just_released("add_item_a"):

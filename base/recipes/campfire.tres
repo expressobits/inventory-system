@@ -43,6 +43,6 @@ max_stack = -1
 [resource]
 script = ExtResource("5_ux5px")
 products = Array[ExtResource("2_pkutw")]([SubResource("Resource_4afau")])
-time_to_craft = 3.0
+time_to_craft = 10.0
 ingredients = Array[ExtResource("2_pkutw")]([SubResource("Resource_gnn4r"), SubResource("Resource_bhk0q")])
 required_items = Array[ExtResource("2_pkutw")]([])

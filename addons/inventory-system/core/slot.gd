@@ -10,10 +10,10 @@ signal updated
 
 
 func get_item_id() -> int:
-	if item == null or item.item_definition == null:
+	if item == null or item.definition == null:
 		return InventoryItem.NONE
 	else:
-		return item.item_definition.id
+		return item.definition.id
 
 
 func add(item : SlotItem, amount : int = 1) -> int:
