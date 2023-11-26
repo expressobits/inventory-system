@@ -47,11 +47,11 @@ func make_scene_objects_to_network():
 	var spawner = get_node("DroppedItemSpawner")
 	for i in items.get_child_count():
 		var item_dropped = items.get_child(i) as DroppedItem3D
-		var item : InventoryItem = item_dropped.item 
+		var item : SlotItem = item_dropped.item 
 		var position = item_dropped.position
 		var rotation = item_dropped.rotation
 		item_dropped.queue_free()
-		var dropped_item_path = item.properties["dropped_item"]
+		var dropped_item_path = item.definition.properties["dropped_item"]
 		var _obj = spawner.spawn([position, rotation, dropped_item_path])
 
 

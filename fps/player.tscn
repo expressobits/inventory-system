@@ -51,6 +51,7 @@ database = ExtResource("4_ljenf")
 database = ExtResource("4_ljenf")
 
 [node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([])
 database = ExtResource("4_ljenf")
 
 [node name="Hotbar" parent="CharacterInventorySystem" index="1"]

@@ -62,11 +62,11 @@ func check() -> bool:
 	if index == -1:
 		return false
 	var item = input_inventory.slots[index].item
-	if item.properties.has("fuel"):
-		input_inventory.remove(item, 1)
-		fuel += item.properties["fuel"]
-		return true
-	return false
+	if not item.definition.properties.has("fuel"):
+		return false
+	fuel += item.definition.properties["fuel"]
+	input_inventory.remove(item, 1)
+	return true
 
 
 func _process(delta):
