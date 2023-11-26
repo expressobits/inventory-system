@@ -25,7 +25,6 @@ func add(item : SlotItem, amount : int = 1) -> int:
 	var amount_to_add = min(amount, max_stack - self.amount)
 	self.amount = self.amount + amount_to_add
 	if amount_to_add > 0 and self.item.definition == null:
-		print(item.definition.name)
 		self.item.definition = item.definition
 		updated.emit()
 	return amount - amount_to_add

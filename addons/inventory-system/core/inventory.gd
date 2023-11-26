@@ -300,8 +300,6 @@ func _load_slots():
 	self.slots = []
 	for i in slots.size():
 		self.slots.append(slots[i].duplicate())
-		
-	
 
 
 func _remove_slot(slot_index : int, emit_signal := true):
