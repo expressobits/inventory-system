@@ -34,7 +34,7 @@ func add(item : SlotItem, amount : int = 1) -> int:
 func remove(item : SlotItem, amount : int = 1) -> int:
 	if self.item == null:
 		return amount
-	if amount <= 0 or (self.item != null and self.item.definition != null and self.item.definition == item.definition):
+	if amount <= 0 or (self.item != null and self.item.definition != null and self.item.definition != item.definition):
 		return amount
 	var amount_to_remove = min(amount, self.amount)
 	self.amount = self.amount - amount_to_remove
@@ -71,7 +71,7 @@ func remove(item : SlotItem, amount : int = 1) -> int:
 
 
 func get_max_stack_for_item(item : InventoryItem) -> int:
-	if max_stack == -1:
+	if max_stack == -1 and item != null:
 		return item.max_stack
 	else:
 		return max_stack
@@ -108,4 +108,4 @@ func contains_category(category : ItemCategory) -> bool:
 	if item == null or item.definition == null:
 		return false
 	else:
-		return item.definition.contains(category)
+		return item.definition.contains_category(category)

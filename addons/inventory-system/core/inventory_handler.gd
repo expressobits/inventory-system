@@ -231,7 +231,7 @@ func to_transaction(slot_index : int, inventory : Inventory, amount : int):
 	if is_transaction_active():
 		return
 	var slot = inventory.slots[slot_index]
-	var item = slot.item
+	var item = slot.item.duplicate()
 	if not slot.has_valid():
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item, amount)

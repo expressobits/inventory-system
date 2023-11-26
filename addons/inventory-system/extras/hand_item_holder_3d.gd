@@ -25,8 +25,8 @@ func _on_change_selection(new_index : int):
 		return
 	var item = hotbar.get_selected_item()
 	var hand_item_scene = null
-	if item.properties.has("hand_item"):
-		var path = item.properties["hand_item"]
+	if item.definition.properties.has("hand_item"):
+		var path = item.definition.properties["hand_item"]
 		hand_item_scene = load(path)
 	last_item = item
 	if hand_item_scene == null:

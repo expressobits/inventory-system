@@ -32,7 +32,7 @@ func _on_updated_slot(changed_slot_index : int):
 		return
 	var item_scene = null
 	if item.definition.properties.has(property_name_of_visual):
-		var path = item.properties[property_name_of_visual]
+		var path = item.definition.properties[property_name_of_visual]
 		item_scene = load(path)
 	last_item = item
 	
