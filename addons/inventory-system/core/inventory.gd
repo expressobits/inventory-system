@@ -77,16 +77,17 @@ func _ready():
 
 ## Define slot specific index information
 func set_slot(slot_index : int, item : SlotItem, amount : int):
-	set_slot_content(slot_index, item.definition, amount)
+	set_slot_content(slot_index, item.definition, item.properties, amount)
 
 
-func set_slot_content(slot_index : int, item : InventoryItem, amount : int):
+func set_slot_content(slot_index : int, item : InventoryItem, properties : Dictionary, amount : int):
 	if slot_index >= slots.size():
 		return
 	var old_amount = get_amount()
 	var slot = slots[slot_index]
 	slot.item.definition = item
 	slot.amount = amount
+	slot.item.properties = properties
 	slots[slot_index] = slot
 	updated_slot.emit(slot_index)
 	_call_events(old_amount)
