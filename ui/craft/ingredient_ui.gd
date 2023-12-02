@@ -8,5 +8,5 @@ class_name IngredientUI
 
 ## Setup ingredient
 func setup(slot : Slot):
-	self.icon.texture = slot.item.icon
+	self.icon.texture = slot.item.definition.icon
 	self.amount.text = "X "+str(slot.amount)
