@@ -24,23 +24,24 @@ func _on_change_selection(new_index : int):
 	if not hotbar.has_valid_item_id():
 		return
 	var item = hotbar.get_selected_item()
+	var item_definition = item.definition
 	var hand_item_scene = null
-	if item.properties.has("hand_item"):
-		var path = item.properties["hand_item"]
+	if item_definition.properties.has("hand_item"):
+		var path = item_definition.properties["hand_item"]
 		hand_item_scene = load(path)
-	last_item = item
+	last_item = item_definition
 	if hand_item_scene == null:
 		default_hand_item_object.visible = true
 		interactor.actual_hand_object = null
 		return
-	if objects_per_id.has(item):
-		objects_per_id[item].visible = true
+	if objects_per_id.has(item_definition):
+		objects_per_id[item_definition].visible = true
 	else:
 		var hand_item_obj = hand_item_scene.instantiate()
 		hand_item_obj.interactor = interactor
 		add_child(hand_item_obj)
-		objects_per_id[item] = hand_item_obj
-	interactor.actual_hand_object = objects_per_id[item]
+		objects_per_id[item_definition] = hand_item_obj
+	interactor.actual_hand_object = objects_per_id[item_definition]
 
 
 func _clear_last_selection():

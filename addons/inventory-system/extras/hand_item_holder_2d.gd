@@ -10,7 +10,7 @@ class_name HandItemHolder2D
 @export_node_path("InventoryInteractor") var interactor_path = NodePath("../../CharacterInventorySystem/InventoryInteractor")
 @onready var interactor : InventoryInteractor = get_node(interactor_path) 
 
-var last_item := InventoryItem.NONE
+var last_item : InventoryItem = null
 var objects_per_id : Dictionary
 
 
@@ -23,24 +23,30 @@ func _on_change_selection(new_index : int):
 	_clear_last_selection()
 	if not hotbar.has_valid_item_id():
 		return
-	var item_id = hotbar.get_selected_item()
-	var hand_item_scene = hotbar.inventory.database.get_hand_item(item_id)
-	last_item = item_id
-	interactor.actual_hand_object = hand_item_scene
+	var item = hotbar.get_selected_item()
+	var item_definition = item.definition
+	var hand_item_scene = null
+	if item_definition.properties.has("hand_item"):
+		var path = item_definition.properties["hand_item"]
+		hand_item_scene = load(path)
+	last_item = item_definition
 	if hand_item_scene == null:
 		default_hand_item_object.visible = true
+		interactor.actual_hand_object = null
 		return
-	if objects_per_id.has(item_id):
-		objects_per_id[item_id].visible = true
+	if objects_per_id.has(item_definition):
+		objects_per_id[item_definition].visible = true
 	else:
 		var hand_item_obj = hand_item_scene.instantiate()
+		hand_item_obj.interactor = interactor
 		add_child(hand_item_obj)
-		objects_per_id[item_id] = hand_item_obj
+		objects_per_id[item_definition] = hand_item_obj
+	interactor.actual_hand_object = objects_per_id[item_definition]
 
 
 func _clear_last_selection():
 	default_hand_item_object.visible = false
-	if last_item <= InventoryItem.NONE:
+	if last_item == null:
 		return
 	if objects_per_id.has(last_item):
-		objects_per_id[last_item].visible = false	
+		objects_per_id[last_item].visible = false		
