@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
 [ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="3_6pv27"]
-[ext_resource type="Resource" path="res://base/craft_stations/campfire.tres" id="4_bov00"]
+[ext_resource type="Resource" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="4_bov00"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="4_ishni"]
 [ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="5_72vu1"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="6_1ngfx"]
@@ -62,9 +62,9 @@ curve = SubResource("Curve_gbe35")
 direction = Vector3(0, 1, 0)
 spread = 30.38
 flatness = 0.22
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 1.0
 initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_dbr8k")
 color = Color(1, 1, 0.117647, 1)
 

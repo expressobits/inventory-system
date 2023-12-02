@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://crtl4j25smbw7"]
 
-[ext_resource type="PackedScene" path="res://fps/dropped_items/dropped_item.tscn" id="1_0kt0w"]
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_0kt0w"]
 [ext_resource type="Resource" uid="uid://c0pjgqkwob2ep" path="res://base/items/raw_meat.tres" id="2_yjrja"]
 [ext_resource type="PackedScene" uid="uid://be7nc0y8hk716" path="res://assets/kenney_food-kit/Models/GLTF format/meatRaw.glb" id="3_d6j27"]
 

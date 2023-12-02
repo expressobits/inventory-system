@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://c12attlvjbotv"]
 
-[ext_resource type="PackedScene" path="res://fps/dropped_items/dropped_item.tscn" id="1_0jyuw"]
-[ext_resource type="InventoryItem" path="res://base/items/stone_pickaxe.tres" id="2_1l6x4"]
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_0jyuw"]
+[ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="2_1l6x4"]
 [ext_resource type="PackedScene" uid="uid://d4g1cglqsrhg6" path="res://assets/survival-kit-1.1/Models/GLTF format/toolPickaxe.glb" id="4_f7yg5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]

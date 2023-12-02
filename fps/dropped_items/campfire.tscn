@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://dw64nwtd16ipc"]
 
-[ext_resource type="PackedScene" path="res://fps/dropped_items/dropped_item.tscn" id="1_ffr75"]
-[ext_resource type="InventoryItem" uid="uid://dgiqs0s8plx5w" path="res://base/items/campfire.tres" id="2_hlwm8"]
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_ffr75"]
+[ext_resource type="Resource" uid="uid://cricka5cb3hrg" path="res://base/items/campfire.tres" id="2_hlwm8"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="3_qwue6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://deuxh5d2qjr6i"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
-[ext_resource type="Resource" uid="uid://bd0wd4vw1g86a" path="res://base/items/helmet_labor.tres" id="2_der67"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="2_der67"]
 [ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://assets/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_3lr6e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
