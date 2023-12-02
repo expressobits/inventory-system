@@ -17,4 +17,5 @@ properties = {
 "durability": 100.0,
 "hand_item": "res://fps/hand_items/stone_axe.tscn"
 }
+dynamic_properties = Array[String](["durability"])
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_b2ekf")])

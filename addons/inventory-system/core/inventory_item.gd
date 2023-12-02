@@ -39,6 +39,9 @@ class_name InventoryItem
 ## Item custom properties
 @export var properties : Dictionary
 
+## Custom Properties that are instantiated in the [SlotItem] to be used dynamically. Example: current durability
+@export var dynamic_properties : Array[String]
+
 ## Item Categories (Use Bit Flags)
 @export var categories : Array[ItemCategory]
 

@@ -16,4 +16,5 @@ properties = {
 "hand_item": "res://fps/hand_items/workbench.tscn",
 "placeable": "res://fps/workbench.tscn"
 }
+dynamic_properties = Array[String]([])
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

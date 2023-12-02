@@ -13,6 +13,8 @@ signal removed
 @onready var value_bool : CheckBox = $Control/ValueBool
 @onready var value_color = $Control/ValueColor
 @onready var no_compatible = $Control/NoCompatible
+@onready var dynamic_property = $DynamicProperty
+@onready var check_box : CheckBox = $DynamicProperty/CheckBox
 
 @onready var remove_confirmation_dialog = $RemoveConfirmationDialog
 @onready var color_rect = $ColorRect
@@ -27,6 +29,10 @@ var value
 
 
 func _ready():
+	dynamic_property.visible = not item.can_stack
+	var index = item.dynamic_properties.find(key)
+	check_box.button_pressed = index != -1
+	check_box.toggled.connect(_on_dynamic_property_checkbox_toggled.bind())
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
 	delete_button.tooltip_text = "Delete"
 	line_edit.text = key
@@ -55,6 +61,18 @@ func setup(item : InventoryItem,key : String, value):
 	self.item = item
 	self.key = key
 	self.value = value
+
+
+func _on_dynamic_property_checkbox_toggled(toggled : bool):
+	var array = item.dynamic_properties.duplicate()
+	if toggled:
+		array.append(key)
+	else:
+		var index = item.dynamic_properties.find(key)
+		if index == -1:
+			return
+		array.remove_at(index)
+	item.dynamic_properties = array
 
 
 func _on_delete_button_pressed():

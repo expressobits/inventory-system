@@ -17,4 +17,5 @@ properties = {
 "fuel": 8.0,
 "hand_item": "res://fps/hand_items/wood.tscn"
 }
+dynamic_properties = Array[String]([])
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_y6pmb")])
