@@ -11,7 +11,6 @@ max_stack = 8
 name = "Stone"
 icon = ExtResource("1_ctyjn")
 weight = 0.0
-durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/rock.tscn",
 "hand_item": "res://fps/hand_items/rock.tscn"

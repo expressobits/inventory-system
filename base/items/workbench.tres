@@ -11,7 +11,6 @@ max_stack = 1
 name = "Workbench"
 icon = ExtResource("1_bhcp7")
 weight = 0.0
-durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/workbench.tscn",
 "hand_item": "res://fps/hand_items/workbench.tscn",

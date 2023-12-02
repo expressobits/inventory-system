@@ -12,7 +12,6 @@ max_stack = 5
 name = "Cooked Meat"
 icon = ExtResource("1_nnhg3")
 weight = 0.8
-durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/cooked_meat.tscn",
 "hand_item": "res://fps/hand_items/cooked_meat.tscn"
