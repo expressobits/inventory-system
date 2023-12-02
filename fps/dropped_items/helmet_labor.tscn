@@ -1,8 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://deuxh5d2qjr6i"]
+[gd_scene load_steps=9 format=3 uid="uid://deuxh5d2qjr6i"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
 [ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="2_der67"]
 [ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://assets/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_3lr6e"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_v4ghf"]
+
+[sub_resource type="Resource" id="Resource_ery0h"]
+script = ExtResource("3_v4ghf")
+definition = ExtResource("2_der67")
+properties = {}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
 size = Vector3(0.75, 0.25, 0.75)
@@ -14,7 +20,7 @@ albedo_color = Color(1, 0.94902, 0.0980392, 1)
 size = Vector3(0.25, 0.1, 0.25)
 
 [node name="HelmetLabor" instance=ExtResource("1_jic1q")]
-item = ExtResource("2_der67")
+item = SubResource("Resource_ery0h")
 
 [node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource("BoxShape3D_fdkpx")

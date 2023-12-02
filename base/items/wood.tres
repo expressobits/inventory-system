@@ -12,6 +12,7 @@ max_stack = 16
 name = "Wood"
 icon = ExtResource("1_q41wd")
 weight = 0.0
+durability = 0
 properties = {
 "dropped_item": "res://fps/dropped_items/wood.tscn",
 "fuel": 8.0,
