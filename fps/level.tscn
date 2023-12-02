@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c58y8utvxmgl" path="res://assets/survival-kit-1.1/Models/GLTF format/tree.glb" id="6_a1n8f"]
 [ext_resource type="PackedScene" uid="uid://ctr82bvxsayua" path="res://assets/survival-kit-1.1/Models/GLTF format/treeFall.glb" id="7_17gjd"]
 [ext_resource type="PackedScene" uid="uid://ck5n7wn1s1f7a" path="res://assets/survival-kit-1.1/Models/GLTF format/rockA.glb" id="8_0s041"]
-[ext_resource type="PackedScene" path="res://fps/level/sign.tscn" id="10_5mqut"]
+[ext_resource type="PackedScene" uid="uid://bl0a58ab2yv3u" path="res://fps/level/sign.tscn" id="10_5mqut"]
 [ext_resource type="PackedScene" uid="uid://bpefq51seky2l" path="res://assets/survival-kit-1.1/Models/GLTF format/rockFlat.glb" id="11_61v31"]
 [ext_resource type="PackedScene" uid="uid://o1ppm5j2amo3" path="res://fps/dropped_items/grass.tscn" id="11_pyj8y"]
 [ext_resource type="PackedScene" uid="uid://crtl4j25smbw7" path="res://fps/dropped_items/raw_meat.tscn" id="12_nfdq3"]

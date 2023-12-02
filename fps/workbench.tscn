@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
 [ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="2_r0km1"]
 [ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="3_yr08k"]
-[ext_resource type="Resource" path="res://base/craft_stations/workbench.tres" id="4_g10kw"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="4_g10kw"]
 [ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="5_d4au8"]
 [ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="6_js2dm"]
 
