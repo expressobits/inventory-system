@@ -15,8 +15,8 @@ func _ready():
 ## === OVERRIDE MAIN COMMANDS ===
 ## Override all main commands for the client to send to the server through rpc
 
-func drop(item : InventoryItem, amount := 1) -> bool:
-	var item_id = item.id
+func drop(item : SlotItem, amount := 1) -> bool:
+	var item_id = item.definition.id
 	if item_id < InventoryItem.NONE:
 		return false
 	if not multiplayer.is_server():
@@ -107,9 +107,11 @@ func transaction_to(inventory : Inventory):
 func drop_rpc(item_id : int, amount : int):
 	if not multiplayer.is_server():
 		return
-	var item = get_item_from_id(item_id)
-	if item == null:
+	var definition = get_item_from_id(item_id)
+	if definition == null:
 		return
+	var item = SlotItem.new()
+	item.definition = definition
 	super.drop(item, amount)
 
 
@@ -117,9 +119,11 @@ func drop_rpc(item_id : int, amount : int):
 func add_to_inventory_rpc(object_path : NodePath, item_id : int, amount := 1, drop_excess := false):
 	if not multiplayer.is_server():
 		return
-	var item = get_item_from_id(item_id)
-	if item == null:
+	var definition = get_item_from_id(item_id)
+	if definition == null:
 		return
+	var item = SlotItem.new()
+	item.definition = definition
 	var object = get_node(object_path)
 	if object == null:
 		return

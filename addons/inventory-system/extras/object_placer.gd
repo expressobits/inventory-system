@@ -12,11 +12,11 @@ signal placed
 
 
 # TODO Add code to interactor child node (InteractorResponse)
-func place_item(item : InventoryItem, position : Vector3, rotation : Vector3):
+func place_item(item : SlotItem, position : Vector3, rotation : Vector3):
 	# TODO Add 3D Preview
-	if !item.properties.has(property_from_item_for_object_scene):
+	if !item.definition.properties.has(property_from_item_for_object_scene):
 		return
-	var path = item.properties[property_from_item_for_object_scene]
+	var path = item.definition.properties[property_from_item_for_object_scene]
 	var res = load(path)
 	if res is PackedScene:
 		var scene = res as PackedScene

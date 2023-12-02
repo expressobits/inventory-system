@@ -23,7 +23,7 @@ func _process(delta):
 			preview.global_position = interactor.raycast.get_collision_point()
 			preview.visible = true
 		else:
-			preview.visible = true
+			preview.visible = false
 
 
 func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
@@ -36,15 +36,15 @@ func can_preview(interactor : InventoryInteractor) -> bool:
 	if not visible:
 		return false
 	var object = interactor.last_interact_object
-	var node : Node3D = object as Node3D
-	if node == null:
+	if object == null:
 		return false
+	var node : Node3D = object as Node3D
 	if not node.is_in_group(group_name_for_place_area):
 		return false
 	var item = interactor.hotbar.get_selected_item()
 	if item == null:
 		return false
-	if not item.properties.has(property_from_item_for_object_scene):
+	if not item.definition.properties.has(property_from_item_for_object_scene):
 		return false
 	return true
 
