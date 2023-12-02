@@ -62,7 +62,7 @@ func drop(item : SlotItem, amount := 1) -> bool:
 		var path = item.definition.properties["dropped_item"]
 		var dropped_item = load(path)
 		for i in amount:
-			_instantiate_dropped_item(dropped_item)
+			_instantiate_dropped_item(dropped_item, item)
 		return true
 	else:
 		return false
@@ -292,9 +292,10 @@ func drop_transaction():
 	_set_transaction_slot(null, 0)
 
 
-func _instantiate_dropped_item(dropped_item : PackedScene):
+func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
 	var obj = dropped_item.instantiate()
 	drop_parent.add_child(obj)
+	obj.item = item
 	obj.position = drop_parent_position.position
 	obj.rotation = drop_parent_position.rotation
 	dropped.emit(obj)
