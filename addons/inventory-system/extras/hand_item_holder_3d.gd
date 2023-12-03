@@ -38,7 +38,6 @@ func _on_change_selection(new_index : int):
 		objects_per_id[item_definition].visible = true
 	else:
 		var hand_item_obj = hand_item_scene.instantiate()
-		hand_item_obj.interactor = interactor
 		add_child(hand_item_obj)
 		objects_per_id[item_definition] = hand_item_obj
 	interactor.actual_hand_object = objects_per_id[item_definition]
