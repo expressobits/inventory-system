@@ -62,7 +62,7 @@ func drop(item : SlotItem, amount := 1) -> bool:
 		var path = item.definition.properties["dropped_item"]
 		var dropped_item = load(path)
 		for i in amount:
-			_instantiate_dropped_item(dropped_item)
+			_instantiate_dropped_item(dropped_item, item)
 		return true
 	else:
 		return false
@@ -243,10 +243,12 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 	if not is_transaction_active():
 		return
 	var slot = inventory.slots[slot_index]
-	var item = transaction_slot.item
+	var item = SlotItem.new()
+	item.definition = transaction_slot.item.definition
+	item.properties = transaction_slot.item.properties.duplicate()
 	if not transaction_slot.has_valid():
 		return
-	if inventory.is_empty_slot(slot_index) or slot.item.definition == item.definition:
+	if inventory.is_empty_slot(slot_index) or item.is_stack_with(slot.item):
 		var amount = transaction_slot.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move
@@ -255,13 +257,16 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 	else:
 		# Different items in slot and other_slot
 		# Check if transaction_slot amount is equal of origin_slot amount
-		var new_amount = transaction_slot.amount
 		if slot is CategorizedSlot:
 			var c_slot = slot as CategorizedSlot
 			if not c_slot.is_accept_category(item):
 				return
-		_set_transaction_slot(slot.item, slot.amount)
-		inventory.set_slot(slot_index, item, new_amount)
+		var slot_item = SlotItem.new()
+		slot_item.definition = slot.item.definition
+		slot_item.properties = slot.item.properties.duplicate()
+		var new_amount = slot.amount
+		inventory.set_slot_content(slot_index, item.definition, item.properties, transaction_slot.amount)
+		_set_transaction_slot(slot_item, new_amount)
 
 
 ## Moves transfer slot information to [Inventory].
@@ -287,9 +292,10 @@ func drop_transaction():
 	_set_transaction_slot(null, 0)
 
 
-func _instantiate_dropped_item(dropped_item : PackedScene):
+func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
 	var obj = dropped_item.instantiate()
 	drop_parent.add_child(obj)
+	obj.item = item
 	obj.position = drop_parent_position.position
 	obj.rotation = drop_parent_position.rotation
 	dropped.emit(obj)
