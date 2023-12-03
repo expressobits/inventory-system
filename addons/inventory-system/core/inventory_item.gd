@@ -39,6 +39,7 @@ class_name InventoryItem
 ## Item custom properties
 @export var properties : Dictionary
 
+## TODO Use this on craft finish with as option
 ## Custom Properties that are instantiated in the [SlotItem] to be used dynamically. Example: current durability
 @export var dynamic_properties : Array[String]
 

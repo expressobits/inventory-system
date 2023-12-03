@@ -93,6 +93,11 @@ func set_slot_content(slot_index : int, item : InventoryItem, properties : Dicti
 	_call_events(old_amount)
 
 
+func update_slot(slot_index : int):
+	updated_slot.emit(slot_index)
+	_call_events(get_amount())
+
+
 ## Define slot specific index information
 func set_slot_with_other_slot(slot_index : int, other_slot : Slot):
 	if slot_index >= slots.size():
