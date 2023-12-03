@@ -263,7 +263,7 @@ func close_main_inventory() -> bool:
 	return super.close(inventories[0])
 
 
-func _instantiate_dropped_item(dropped_item : PackedScene):
+func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
 	var spawner = get_node("../../../DroppedItemSpawner")
 	var obj = spawner.spawn([get_parent().get_parent().position, get_parent().get_parent().rotation, dropped_item.resource_path])
 	dropped.emit(obj)
@@ -271,14 +271,16 @@ func _instantiate_dropped_item(dropped_item : PackedScene):
 
 func _on_updated_transaction_slot():
 	var item_id : int
-	if transaction_slot.has_valid():
+	if not transaction_slot.has_valid():
 		item_id = InventoryItem.NONE
 	else:
-		item_id = transaction_slot.item.id
+		item_id = transaction_slot.item.definition.id
 	_on_updated_transaction_slot_rpc.rpc(item_id, transaction_slot.amount)
 
 
 @rpc
 func _on_updated_transaction_slot_rpc(item_id : int, amount : int):
-	var item = database.get_item(item_id)
+	var definition : InventoryItem = database.get_item(item_id)
+	var item : SlotItem = SlotItem.new()
+	item.definition = definition
 	_set_transaction_slot(item, amount)

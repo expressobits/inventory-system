@@ -154,7 +154,7 @@ func _updated_slot_rpc(slot_index : int, item_id : int, amount : int):
 	if multiplayer.is_server():
 		return
 	var item : InventoryItem = get_item_from_id(item_id)
-	set_slot_content(slot_index, item, amount)
+	set_slot_content(slot_index, item, slots[slot_index].item.properties, amount)
 
 
 @rpc
