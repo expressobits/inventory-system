@@ -8,6 +8,7 @@ class_name SlotUI
 @onready var selection_background : Panel = get_node(NodePath("Selected"))
 @onready var category_icon : TextureRect = $"Category Icon"
 @onready var panel = $Panel
+@onready var durability : ProgressBar = $Durability
 
 ## Color when mouse enter
 @export var highlight_color = Color.ORANGE
@@ -31,6 +32,7 @@ func update_info_with_slot(slot : Slot):
 		return
 	item_icon.texture = null
 	amount_label.visible = false
+	durability.visible = false
 
 
 func is_categorized_slot_and_have_category(slot : Slot):
@@ -48,9 +50,16 @@ func update_info_with_item(slot : Slot):
 	if slot.has_valid():
 		item_icon.texture = slot.item.definition.icon
 		tooltip_text = slot.item.definition.name
+		if slot.item.properties.has("durability") and slot.item.definition.properties.has("durability"):
+			durability.visible = true
+			durability.value = slot.item.properties.durability
+			durability.max_value = slot.item.definition.properties.durability
+		else:
+			durability.visible = false
 	else:
 		category_icon.texture = null
 		tooltip_text = ""
+		durability.visible = false
 	amount_label.text = str(slot.amount)
 	amount_label.visible = slot.amount > 1
 

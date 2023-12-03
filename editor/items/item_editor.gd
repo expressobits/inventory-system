@@ -139,3 +139,4 @@ func _can_stack_check_box_toggled(value):
 	item.can_stack = value
 	max_stack.visible = item.can_stack
 	changed.emit(item.id)
+	custom_properties.loading_properties()
