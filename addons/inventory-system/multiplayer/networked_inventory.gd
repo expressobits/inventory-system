@@ -99,7 +99,8 @@ func _on_updated_slot(slot_index : int):
 	var amount = slots[slot_index].amount
 	slots_sync[slot_index]["item_id"] = item_id
 	slots_sync[slot_index]["amount"] = amount
-	_updated_slot_rpc.rpc(slot_index, item_id, amount)
+	slots_sync[slot_index]["properties"] = item.properties
+	_updated_slot_rpc.rpc(slot_index, item_id, amount, item.properties)
 
 
 func _on_slot_removed(slot_index : int):
@@ -150,11 +151,11 @@ func _slot_added_rpc(slot_index : int):
 
 
 @rpc
-func _updated_slot_rpc(slot_index : int, item_id : int, amount : int):
+func _updated_slot_rpc(slot_index : int, item_id : int, amount : int, properties : Dictionary):
 	if multiplayer.is_server():
 		return
 	var item : InventoryItem = get_item_from_id(item_id)
-	set_slot_content(slot_index, item, slots[slot_index].item.properties, amount)
+	set_slot_content(slot_index, item, properties, amount)
 
 
 @rpc

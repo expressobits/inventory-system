@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=18 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="7_rl5m0"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/networked_object_placer.gd" id="9_nis2j"]
+[ext_resource type="Script" path="res://mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
@@ -91,5 +92,8 @@ mesh = SubResource("BoxMesh_0fmeo")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4"]
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_fhfrv")
+
+[node name="UseItemsExample" parent="." index="5"]
+script = ExtResource("11_ioyuw")
 
 [editable path="CharacterInventorySystem"]

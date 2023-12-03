@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=30 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://djh0ig8jxkla5" path="res://mp/mp_player.tscn" id="2_01e0j"]
@@ -13,9 +13,12 @@
 [ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="10_b63mc"]
 [ext_resource type="Script" path="res://base/setup_keys.gd" id="10_efc1k"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://fps/workbench.tscn" id="10_jjthn"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="11_6hyks"]
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="11_ftexy"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="11_sal7r"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="12_8i3r8"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="12_m5hbq"]
+[ext_resource type="Resource" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="13_v1ips"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://fps/campfire.tscn" id="15_tm3xm"]
 [ext_resource type="Script" path="res://mp/networked_campfire.gd" id="16_8v2e4"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://fps/props/shelf.tscn" id="17_psfnf"]
@@ -23,6 +26,43 @@
 [sub_resource type="Resource" id="Resource_6euhu"]
 script = ExtResource("10_b63mc")
 amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_qht8t"]
+script = ExtResource("12_m5hbq")
+definition = ExtResource("11_6hyks")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_a5fwf"]
+script = ExtResource("10_b63mc")
+item = SubResource("Resource_qht8t")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_lkgg5"]
+script = ExtResource("12_m5hbq")
+definition = ExtResource("13_v1ips")
+properties = {
+"durability": 52.0
+}
+
+[sub_resource type="Resource" id="Resource_jm1f7"]
+script = ExtResource("10_b63mc")
+item = SubResource("Resource_lkgg5")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_p22tk"]
+script = ExtResource("12_m5hbq")
+definition = ExtResource("13_v1ips")
+properties = {
+"durability": 32.0
+}
+
+[sub_resource type="Resource" id="Resource_afmqk"]
+script = ExtResource("10_b63mc")
+item = SubResource("Resource_p22tk")
+amount = 1
 max_stack = -1
 
 [node name="MPDemo" type="Node"]
@@ -88,6 +128,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 script = ExtResource("7_8khhq")
 sync_item_added_signal = true
 sync_item_removed_signal = true
+slots = Array[ExtResource("10_b63mc")]([SubResource("Resource_a5fwf"), SubResource("Resource_jm1f7"), SubResource("Resource_afmqk"), null, null, null, null, null, null, null, null, null, null, null, null, null])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"

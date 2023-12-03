@@ -20,9 +20,9 @@ func drop(item : SlotItem, amount := 1) -> bool:
 	if item_id < InventoryItem.NONE:
 		return false
 	if not multiplayer.is_server():
-		drop_rpc.rpc_id(1, item_id, amount)
+		drop_rpc.rpc_id(1, item_id, amount, item.properties)
 	else:
-		drop_rpc(item_id, amount)
+		drop_rpc(item_id, amount, item.properties)
 	return true
 
 
@@ -104,7 +104,7 @@ func transaction_to(inventory : Inventory):
 ## === CLIENT COMMANDS TO SERVER ===
 
 @rpc("any_peer")
-func drop_rpc(item_id : int, amount : int):
+func drop_rpc(item_id : int, amount : int, properties : Dictionary):
 	if not multiplayer.is_server():
 		return
 	var definition = get_item_from_id(item_id)
@@ -112,6 +112,7 @@ func drop_rpc(item_id : int, amount : int):
 		return
 	var item = SlotItem.new()
 	item.definition = definition
+	item.properties = properties
 	super.drop(item, amount)
 
 
@@ -265,7 +266,7 @@ func close_main_inventory() -> bool:
 
 func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
 	var spawner = get_node("../../../DroppedItemSpawner")
-	var obj = spawner.spawn([get_parent().get_parent().position, get_parent().get_parent().rotation, dropped_item.resource_path])
+	var obj = spawner.spawn([get_parent().get_parent().position, get_parent().get_parent().rotation, dropped_item.resource_path, item.properties])
 	dropped.emit(obj)
 
 
