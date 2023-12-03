@@ -14,6 +14,8 @@ icon = ExtResource("1_5x1h2")
 weight = 0.0
 properties = {
 "dropped_item": "res://fps/dropped_items/stone_axe.tscn",
+"durability": 100.0,
 "hand_item": "res://fps/hand_items/stone_axe.tscn"
 }
+dynamic_properties = Array[String](["durability"])
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_b2ekf")])

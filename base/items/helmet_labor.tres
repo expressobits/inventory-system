@@ -16,4 +16,5 @@ properties = {
 "dropped_item": "res://fps/dropped_items/helmet_labor.tscn",
 "hand_item": "res://fps/hand_items/helmet_labor.tscn"
 }
+dynamic_properties = Array[String]([])
 categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_36npj")])

@@ -2,7 +2,7 @@ extends Node3D
 
 @onready var inventory : Inventory = $Inventory
 
-@export var item : InventoryItem
+@export var item : SlotItem
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

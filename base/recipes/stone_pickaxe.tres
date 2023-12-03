@@ -34,7 +34,9 @@ max_stack = -1
 [sub_resource type="Resource" id="Resource_fydbi"]
 script = ExtResource("3_ogmqy")
 definition = ExtResource("2_751hi")
-properties = {}
+properties = {
+"durability": 100.0
+}
 
 [sub_resource type="Resource" id="Resource_2phav"]
 script = ExtResource("2_lau0n")
