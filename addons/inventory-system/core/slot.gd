@@ -26,6 +26,7 @@ func add(item : SlotItem, amount : int = 1) -> int:
 	self.amount = self.amount + amount_to_add
 	if amount_to_add > 0 and self.item.definition == null:
 		self.item.definition = item.definition
+		self.item.properties = item.properties
 		updated.emit()
 	return amount - amount_to_add
 

@@ -17,10 +17,12 @@ func _ready():
 	add_button.disabled = line_edit.text.is_empty()
 	build_type_options()
 
+
 func load_item(database : InventoryDatabase, item : InventoryItem):
 	self.database = database
 	self.item = item
 	loading_properties()
+
 
 func make_dictionary_unique(input_dictionary) -> Dictionary:
 	var unique_dictionary := {}
@@ -28,10 +30,13 @@ func make_dictionary_unique(input_dictionary) -> Dictionary:
 		unique_dictionary[key] = input_dictionary[key]
 	return unique_dictionary
 
+
 func loading_properties():
 	for p in properties_obj:
 		p.queue_free()
 	properties_obj.clear()
+	if item == null:
+		return
 	var new_item_properties : Dictionary = make_dictionary_unique(item.properties)
 	for key in new_item_properties.keys():
 		if key is String:
