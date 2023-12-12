@@ -16,12 +16,18 @@ var objects_per_id : Dictionary
 
 func _ready():
 	hotbar.on_change_selection.connect(_on_change_selection.bind())
+	hotbar.on_update_selection_slot.connect(_on_update_selection_slot.bind())
+	_on_change_selection(hotbar.selection_index)
+
+
+func _on_update_selection_slot():
 	_on_change_selection(hotbar.selection_index)
 
 
 func _on_change_selection(new_index : int):
 	_clear_last_selection()
 	if not hotbar.has_valid_item_id():
+		interactor.actual_hand_object = null
 		return
 	var item = hotbar.get_selected_item()
 	var item_definition = item.definition

@@ -4,7 +4,6 @@ class_name InventoryInteractor
 extends NodeInventorySystemBase
 
 signal preview_interacted(actions : Array[InteractAction], position_screen : Vector2)
-signal clear_preview
 signal interacted(object : Node)
 
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("../InventoryHandler")
@@ -32,35 +31,27 @@ func try_interact():
 	if object != null and object.has_method("get_interaction_position") and camera_3d != null:
 		pos = camera_3d.unproject_position(object.get_interaction_position(raycast.get_collision_point()))
 	
-	if not raycast.is_colliding():
-		clear_preview.emit()
-		return
 	
 	var node = object as Node
 	
-#		clear_preview.emit()
-	
-	var actions = get_actions(node)
-	var hand_actions = get_hand_actions(actual_hand_object)
 	var total_actions : Array[InteractAction] = []
-	total_actions.append_array(actions)
+	
+	var object_actions : Array[InteractAction] = []
+	var hand_actions = get_actions(actual_hand_object)
+	
+	if raycast.is_colliding():
+		object_actions = get_actions(node)
+	
+	total_actions.append_array(object_actions)
 	total_actions.append_array(hand_actions)
+		
 	preview_interacted.emit(total_actions, pos)
 	
-	interact_object(object, actions)
+	interact_object(object, object_actions)
 	interact_hand_item(actual_hand_object, hand_actions)
 
 
 func get_actions(node : Node) -> Array[InteractAction]:
-	if inventory_handler.is_open_any_inventory() or crafter.is_open_any_station():
-		return []
-	var actions : Array[InteractAction] = []
-	if node != null and node.has_method("get_actions"):
-		actions = node.get_actions(self)
-	return actions
-
-
-func get_hand_actions(node : Node) -> Array[InteractAction]:
 	if inventory_handler.is_open_any_inventory() or crafter.is_open_any_station():
 		return []
 	var actions : Array[InteractAction] = []

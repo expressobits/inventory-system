@@ -22,6 +22,7 @@ func _ready():
 func _on_change_selection(new_index : int):
 	_clear_last_selection()
 	if not hotbar.has_valid_item_id():
+		interactor.actual_hand_object = null
 		return
 	var item = hotbar.get_selected_item()
 	var item_definition = item.definition
