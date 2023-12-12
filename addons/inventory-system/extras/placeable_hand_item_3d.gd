@@ -7,6 +7,7 @@ extends HandItem3D
 @export var preview_3d : PackedScene
 
 @export var place_action : InteractAction
+var interactor : InventoryInteractor
 
 var preview : Node3D
 
@@ -27,6 +28,7 @@ func _process(delta):
 
 
 func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
+	self.interactor = _interactor
 	if can_preview(_interactor):
 		return [place_action]
 	return []

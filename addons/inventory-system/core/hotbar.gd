@@ -4,10 +4,9 @@ extends NodeInventorySystemBase
 class_name Hotbar
 
 signal on_change_selection(selection_index)
-
+signal on_update_selection_slot
 
 @export var inventory : Inventory
-
 @export var slots_in_hot_bar := 8
 
 var selection_index := 0
@@ -63,4 +62,4 @@ func get_selected_item() -> SlotItem:
 
 func _on_updated_slot(slot_index : int):
 	if slot_index == selection_index:
-		set_selection_index(selection_index)
+		on_update_selection_slot.emit()
