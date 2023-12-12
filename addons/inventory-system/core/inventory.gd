@@ -188,6 +188,19 @@ func get_amount_of(item : SlotItem) -> int:
 	return amount_in_inventory
 
 
+## Returns amount of the specified category in inventory
+func get_amount_of_category(category : ItemCategory) -> int:
+	if category == null:
+		return 0
+	var amount_in_inventory = 0;
+	for slot in slots:
+		if slot == null:
+			continue
+		if slot.contains_category(category):
+			amount_in_inventory += slot.amount
+	return amount_in_inventory
+
+
 ## Returns amount of items in inventory
 func get_amount() -> int:
 	var amount_in_inventory = 0
