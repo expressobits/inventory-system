@@ -13,10 +13,8 @@ var interact_hand_object
 func setup(interactor : InventoryInteractor):
 	if self.interactor != null:
 		interactor.preview_interacted.disconnect(_on_preview_interacted.bind())
-		interactor.clear_preview.connect(_on_interactor_clear_preview.bind())
 	self.interactor = interactor
 	interactor.preview_interacted.connect(_on_preview_interacted.bind())
-	interactor.clear_preview.connect(_on_interactor_clear_preview.bind())
 
 
 func _ready():
@@ -27,11 +25,6 @@ func _ready():
 
 func _on_preview_interacted(actions : Array[InteractAction], position_on_screen : Vector2):
 	preview_interact(actions, position_on_screen)
-
-
-func _on_interactor_clear_preview():
-	for i in interact_messages:
-		i.hide_message()
 
 
 func preview_interact(actions : Array[InteractAction], position_on_screen : Vector2):
