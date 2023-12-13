@@ -1,10 +1,10 @@
 @tool
-extends Control
 class_name ItemEditor
+extends Control
 
 signal changed(id : int)
 
-var item : InventoryItem
+var item : ItemDefinition
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
@@ -35,7 +35,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	apply_theme()
 
 
-func load_item(item : InventoryItem, database : InventoryDatabase):
+func load_item(item : ItemDefinition, database : InventoryDatabase):
 	self.item = item
 	self.database = database
 	if not is_instance_valid(item):
@@ -116,8 +116,8 @@ func _on_item_resource_edit_button_pressed():
 
 func _on_item_resource_file_dialog_file_selected(path):
 	var file = load(path)
-	if file is InventoryItem:
-		var inventory_item : InventoryItem = file
+	if file is ItemDefinition:
+		var inventory_item : ItemDefinition = file
 		load_item(item, database)
 		changed.emit(item.id)
 	else:

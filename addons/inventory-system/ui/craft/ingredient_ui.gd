@@ -1,5 +1,5 @@
-extends Control
 class_name IngredientUI
+extends Control
 
 ## Interface represents Ingredient in [RecipeUI].
 

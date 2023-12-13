@@ -1,6 +1,6 @@
 @tool
-extends InventoryTabEditor
 class_name ItemsEditor
+extends InventoryTabEditor
 
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
@@ -32,7 +32,7 @@ func remove_current_data():
 	remove_item(current_data)
 
 
-func remove_item(item : InventoryItem):
+func remove_item(item : ItemDefinition):
 	if item == null:
 		return
 	database.remove_item(item)
@@ -103,7 +103,7 @@ func _on_item_editor_changed(id):
 
 
 func _on_new_resource_dialog_file_selected(path):
-	var item : InventoryItem = InventoryItem.new()
+	var item : ItemDefinition = ItemDefinition.new()
 	var err = ResourceSaver.save(item, path)
 	if err == OK:
 		item = load(path)
@@ -121,8 +121,8 @@ func _on_new_resource_dialog_file_selected(path):
 func _on_open_resource_dialog_file_selected(path):
 	# TODO Check if resource exist
 	var res = load(path)
-	if res is InventoryItem:
-		var item : InventoryItem = res as InventoryItem
+	if res is ItemDefinition:
+		var item : ItemDefinition = res as ItemDefinition
 		if database.items.has(item):
 			push_warning("The item \""+item.name+"\"("+ item.resource_path +") already exists in the database!")
 			return

@@ -1,6 +1,6 @@
 @tool
-extends Hotbar
 class_name NetworkedHotbar
+extends Hotbar
 
 
 func set_selection_index(new_index : int):

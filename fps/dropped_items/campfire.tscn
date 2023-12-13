@@ -1,12 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dn6p5t574xtto"]
+[gd_scene load_steps=6 format=3 uid="uid://dn6p5t574xtto"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_ffr75"]
 [ext_resource type="Resource" uid="uid://cricka5cb3hrg" path="res://base/items/campfire.tres" id="2_hlwm8"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_3wqxg"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="3_qwue6"]
 
-[sub_resource type="Resource" id="Resource_82w71"]
-script = ExtResource("3_3wqxg")
+[sub_resource type="Item" id="Resource_82w71"]
 definition = ExtResource("2_hlwm8")
 properties = {}
 

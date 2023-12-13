@@ -1,7 +1,7 @@
 @tool
 @icon("res://addons/inventory-system/icons/character_inventory_system.svg")
 class_name CharacterInventorySystem
-extends NodeInventorySystemBase
+extends NodeInventories
 
 
 @export_group("🗃️ Inventory Nodes")
@@ -11,8 +11,8 @@ extends NodeInventorySystemBase
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export_node_path("Crafter") var crafter_path := NodePath("Crafter")
 @onready var crafter : Crafter = get_node(crafter_path)
-@export_node_path("InventoryInteractor") var interactor_path := NodePath("InventoryInteractor")
-@onready var interactor : InventoryInteractor = get_node(interactor_path)
+@export_node_path("Interactor") var interactor_path := NodePath("Interactor")
+@onready var interactor : Interactor = get_node(interactor_path)
 
 
 @export_group("🔊 Audios")
@@ -41,11 +41,13 @@ extends NodeInventorySystemBase
 @export var raycast : RayCast3D:
 	set(value):
 		raycast = value
-		get_node(interactor_path).raycast = value
+		var interactor = get_node(interactor_path)
+		interactor.raycast_path = interactor.get_path_to(value)
 @export var camera_3d : Camera3D:
 	set(value):
 		camera_3d = value
-		get_node(interactor_path).camera_3d = value
+		var interactor = get_node(interactor_path)
+		interactor.camera_path = interactor.get_path_to(value)
 
 
 func _ready():
@@ -59,8 +61,8 @@ func _ready():
 	# Setup for audios 🔊
 	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
 	inventory_handler.dropped.connect(_on_inventory_handler_dropped.bind())
-	inventory_handler.inventories[0].opened.connect(_on_player_inventory_opened.bind())
-	inventory_handler.inventories[0].closed.connect(_on_player_inventory_closed.bind())
+	inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
+	inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
 	hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
 	
 	# Setup for enabled/disabled mouse 🖱️😀
@@ -69,7 +71,7 @@ func _ready():
 		inventory_handler.closed.connect(_update_opened_inventories.bind())
 		crafter.opened.connect(_update_opened_stations.bind())
 		crafter.closed.connect(_update_opened_stations.bind())
-		_update_opened_inventories(inventory_handler.inventories[0])
+		_update_opened_inventories(inventory_handler.get_inventory(0))
 
 
 func _input(event : InputEvent) -> void:
@@ -88,14 +90,14 @@ func _physics_process(_delta : float):
 
 
 func _update_opened_inventories(_inventory : Inventory):
-	if InventorySystem.inventory_handler.is_open_main_inventory():
+	if InventorySystem.get_inventory_handler().is_open_main_inventory():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _update_opened_stations(_craft_station : CraftStation):
-	if InventorySystem.crafter.is_open_any_station():
+	if InventorySystem.get_crafter().is_open_any_station():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -128,9 +130,9 @@ func hot_bar_inputs(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				hotbar.next_item()
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				hotbar.previous_item()
+			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				hotbar.next_item()
 	if event is InputEventKey:
 		var input_key_event = event as InputEventKey
 		if event.is_pressed() and not event.is_echo():

@@ -1,8 +1,8 @@
 @tool
-extends VBoxContainer
 class_name CustomPropertiesItemEditor
+extends VBoxContainer
 
-var item : InventoryItem
+var item : ItemDefinition
 var database : InventoryDatabase
 var properties_obj : Array
 
@@ -18,7 +18,7 @@ func _ready():
 	build_type_options()
 
 
-func load_item(database : InventoryDatabase, item : InventoryItem):
+func load_item(database : InventoryDatabase, item : ItemDefinition):
 	self.database = database
 	self.item = item
 	loading_properties()

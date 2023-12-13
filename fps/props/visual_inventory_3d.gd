@@ -1,5 +1,5 @@
-extends Node3D
 class_name VisualInventory
+extends Node3D
 
 @export var visual_slots_paths : Array[NodePath]
 @export var visual_slots : Array[VisualSlot3D]

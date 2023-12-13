@@ -1,12 +1,12 @@
-extends Node3D
 class_name VisualSlot3D
+extends Node3D
 
 @export_node_path("Node3D") var default_hand_item_object_path = NodePath("DefaultItem3D")
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @export var distance_for_stack : float = 0.05
 
 var property_name_of_visual : String
-var last_item : SlotItem = null
+var last_item : Item = null
 var inventory : Inventory
 #var objects_per_id : Dictionary
 var slot_index : int

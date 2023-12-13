@@ -18,7 +18,7 @@ func _spawn_custom(data : Array):
 	var obj = load(data[2]).instantiate()
 	obj.position = data[0]
 	obj.rotation = data[1]
-	var item = SlotItem.new()
+	var item = Item.new()
 	item.definition = obj.item.definition
 	if data.size() == 4 and typeof(data[3]) == TYPE_DICTIONARY:
 		item.properties = data[3]

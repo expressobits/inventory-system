@@ -1,6 +1,6 @@
 @tool
-extends CraftStation
 class_name NetworkedCraftStation
+extends CraftStation
 
 var craftings_data_sync : Array
 

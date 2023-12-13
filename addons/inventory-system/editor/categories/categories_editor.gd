@@ -1,6 +1,7 @@
 @tool
-extends InventoryTabEditor
 class_name CategoriesEditor
+extends InventoryTabEditor
+
 
 @onready var item_categories_item_list = $HSplitContainer/ItemCategoriesItemList
 @onready var search_icon = $HSplitContainer/ItemCategoriesItemList/Control/SearchIcon

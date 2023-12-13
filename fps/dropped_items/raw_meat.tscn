@@ -1,12 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://crtl4j25smbw7"]
+[gd_scene load_steps=6 format=3 uid="uid://crtl4j25smbw7"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_0kt0w"]
 [ext_resource type="Resource" uid="uid://c0pjgqkwob2ep" path="res://base/items/raw_meat.tres" id="2_yjrja"]
 [ext_resource type="PackedScene" uid="uid://be7nc0y8hk716" path="res://assets/kenney_food-kit/Models/GLTF format/meatRaw.glb" id="3_d6j27"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_j7w4v"]
 
-[sub_resource type="Resource" id="Resource_1n2em"]
-script = ExtResource("3_j7w4v")
+[sub_resource type="Item" id="Resource_1n2em"]
 definition = ExtResource("2_yjrja")
 properties = {}
 

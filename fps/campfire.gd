@@ -1,5 +1,5 @@
-extends Workbench
 class_name Campfire
+extends Workbench
 
 signal changed_burning_state(is_burning : bool)
 
@@ -80,8 +80,8 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
-	if craft_station.input_inventories[0].is_open:
+func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+	if craft_station.get_input_inventory().is_open:
 		return []
 	var current_actions : Array[InteractAction] = self.actions.duplicate()
 	if fuel > 0.0:
@@ -93,8 +93,8 @@ func get_actions(_interactor : InventoryInteractor) -> Array[InteractAction]:
 	return current_actions
 
 
-func interact(interactor : InventoryInteractor, action_index : int = 0):
+func interact(interactor : Interactor, action_index : int = 0):
 	if action_index == 0:
-		interactor.get_parent().open_inventory(craft_station.input_inventories[0])
+		interactor.get_parent().open_inventory(craft_station.get_input_inventory())
 	else:
 		active_fire = !active_fire

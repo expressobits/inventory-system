@@ -1,14 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjfvmoveogy0m"]
+[gd_scene load_steps=6 format=3 uid="uid://bjfvmoveogy0m"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_6pggg"]
-[ext_resource type="Resource" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="2_q6cbt"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_6ijg7"]
+[ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="2_q6cbt"]
 [ext_resource type="PackedScene" uid="uid://bk4j7ww4qljp" path="res://assets/survival-kit-1.1/Models/GLTF format/toolAxe.glb" id="3_52drp"]
 
-[sub_resource type="Resource" id="Resource_xm6wm"]
-script = ExtResource("3_6ijg7")
+[sub_resource type="Item" id="Resource_xm6wm"]
 definition = ExtResource("2_q6cbt")
-properties = {}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
 size = Vector3(0.327105, 0.732304, 0.0987396)

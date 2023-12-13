@@ -1,5 +1,5 @@
-extends Node3D
 class_name HandItemHolder2D
+extends Node3D
 
 @export_node_path("Node2D") var default_hand_item_object_path = NodePath("DefaultHandItem")
 @export_node_path("Hotbar") var hotbar_path = NodePath("../InventoryHandler/Hotbar")
@@ -7,10 +7,10 @@ class_name HandItemHolder2D
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @onready var hotbar : Hotbar = get_node(hotbar_path) 
 
-@export_node_path("InventoryInteractor") var interactor_path = NodePath("../../CharacterInventorySystem/InventoryInteractor")
-@onready var interactor : InventoryInteractor = get_node(interactor_path) 
+@export_node_path("Interactor") var interactor_path = NodePath("../../CharacterInventorySystem/Interactor")
+@onready var interactor : Interactor = get_node(interactor_path) 
 
-var last_item : InventoryItem = null
+var last_item : ItemDefinition = null
 var objects_per_id : Dictionary
 
 

@@ -6,9 +6,9 @@ extends ObjectPlacer
 @onready var dropped_spawner : DropItemSpawner = get_node(dropped_spawner_path)
 
 
-func place_item(item : SlotItem, position : Vector3, rotation : Vector3):
+func place_item(item : Item, position : Vector3, rotation : Vector3):
 	var item_id = item.definition.id
-	if item_id < InventoryItem.NONE:
+	if item_id < ItemDefinition.NONE:
 		return false
 	if not multiplayer.is_server():
 		place_item_rpc.rpc_id(1, item_id, position, rotation)

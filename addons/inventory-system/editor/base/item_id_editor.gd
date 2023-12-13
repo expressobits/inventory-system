@@ -1,6 +1,6 @@
 @tool
-extends HBoxContainer
 class_name ItemIDEditor
+extends HBoxContainer
 
 signal changed(id : int)
 

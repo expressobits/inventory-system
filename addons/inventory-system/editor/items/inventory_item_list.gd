@@ -1,8 +1,8 @@
 @tool
-extends VBoxContainer
 class_name InventoryItemListEditor
+extends VBoxContainer
 
-signal item_selected(item : InventoryItem, index : int)
+signal item_selected(item : ItemDefinition, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
 
 @onready var list : ItemList = %ItemList
@@ -10,9 +10,9 @@ signal item_popup_menu_requested(at_position: Vector2)
 
 var item_map : Dictionary = {}
 var database : InventoryDatabase
-var item_list_handler : Array[InventoryItem]
+var item_list_handler : Array[ItemDefinition]
 
-var items: Array[InventoryItem] = []:
+var items: Array[ItemDefinition] = []:
 	set(next_files):
 		items = next_files
 		items.sort()
@@ -38,7 +38,7 @@ func load_items(database : InventoryDatabase) -> void:
 	apply_filter()
 
 
-func add_item(item : InventoryItem):
+func add_item(item : ItemDefinition):
 	items.append(item)
 	update_item_map()
 	apply_filter()
@@ -54,7 +54,7 @@ func update_item_map() -> void:
 		item_map[item.id] = item
 
 
-func update_item_list(items : Array[InventoryItem]):
+func update_item_list(items : Array[ItemDefinition]):
 	list.clear()
 	for i in items.size():
 		list.add_item("")

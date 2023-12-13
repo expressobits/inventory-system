@@ -1,5 +1,5 @@
-extends SlotUI
 class_name TransactionSlotUI
+extends SlotUI
 
 ## Special [SlotUI] that only represents slot information in transaction
 
@@ -21,7 +21,7 @@ func clear_info():
 
 func _process(delta):
 	if self.visible:
-		if InventorySystem.is_console_mode:
+		if InventorySystem.console_mode:
 			if get_viewport().gui_get_focus_owner():
 				self.global_position = get_viewport().gui_get_focus_owner().global_position
 			else:

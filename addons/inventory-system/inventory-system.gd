@@ -10,8 +10,6 @@ var _inventory_editor : Control
 
 var database_file_cache: Dictionary = {}
 
-var singleton_name : String = "InventorySystem"
-
 func _enter_tree():
 	if Engine.is_editor_hint():
 		InventorySettings.prepare()
@@ -25,13 +23,11 @@ func _enter_tree():
 	#	_inventory_editor.set_editor(self)
 	#	_inventory_editor_plugin = preload("res://addons/inventory-system/editor/inventory-system-inspector.gd").new()
 	#	add_inspector_plugin()
-	add_autoload_singleton(singleton_name, "res://addons/inventory-system/core/inventory_system.tscn")	
 
 
 func _exit_tree():
 	if _inventory_editor:
 		_inventory_editor.queue_free()
-	remove_autoload_singleton(singleton_name)
 	# Clean-up of the plugin goes here.
 #	remove_inspector_plugin()
 

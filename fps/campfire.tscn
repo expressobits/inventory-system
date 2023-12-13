@@ -1,54 +1,38 @@
-[gd_scene load_steps=25 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=21 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
-[ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="3_6pv27"]
-[ext_resource type="Resource" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="4_bov00"]
-[ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="4_ishni"]
-[ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="5_72vu1"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="6_1ngfx"]
-[ext_resource type="Resource" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="8_81xo0"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="9_4hyoe"]
-[ext_resource type="Resource" uid="uid://vf4th6k6nu1k" path="res://base/categories/food.tres" id="10_3i6mn"]
+[ext_resource type="CraftStationType" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="4_bov00"]
+[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="5_72vu1"]
+[ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="8_81xo0"]
+[ext_resource type="ItemCategory" uid="uid://vf4th6k6nu1k" path="res://base/categories/food.tres" id="10_3i6mn"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
 
-[sub_resource type="Resource" id="Resource_tjd2g"]
-script = ExtResource("3_6pv27")
+[sub_resource type="InteractAction" id="Resource_tjd2g"]
 input = "toggle_fire"
 description = "Toggle Fire"
 code = 1
 
-[sub_resource type="Resource" id="Resource_kkhqy"]
-script = ExtResource("3_6pv27")
-input = "interact"
+[sub_resource type="InteractAction" id="Resource_kkhqy"]
 description = "Open Campfire"
-code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
 
-[sub_resource type="Resource" id="Resource_pueei"]
-script = ExtResource("9_4hyoe")
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("8_81xo0")])
-amount = 0
+[sub_resource type="CategorizedSlot" id="Resource_pueei"]
+accepted_categories = Array[ItemCategory]([ExtResource("8_81xo0")])
 max_stack = 8
 
-[sub_resource type="Resource" id="Resource_qil68"]
-script = ExtResource("9_4hyoe")
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_3i6mn")])
-amount = 0
+[sub_resource type="CategorizedSlot" id="Resource_qil68"]
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 
-[sub_resource type="Resource" id="Resource_ahb6e"]
-script = ExtResource("9_4hyoe")
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_3i6mn")])
-amount = 0
+[sub_resource type="CategorizedSlot" id="Resource_ahb6e"]
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 
-[sub_resource type="Resource" id="Resource_8f0qi"]
-script = ExtResource("9_4hyoe")
-accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("10_3i6mn")])
-amount = 0
+[sub_resource type="CategorizedSlot" id="Resource_8f0qi"]
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 
 [sub_resource type="Curve" id="Curve_gbe35"]
@@ -85,7 +69,7 @@ collision_mask = 3
 script = ExtResource("1_11afe")
 burnable_category = ExtResource("8_81xo0")
 toggle_fire_action = SubResource("Resource_tjd2g")
-actions = Array[ExtResource("3_6pv27")]([SubResource("Resource_kkhqy")])
+actions = Array[InteractAction]([SubResource("Resource_kkhqy")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249215, 0)
@@ -94,22 +78,19 @@ shape = SubResource("BoxShape3D_v5tyu")
 [node name="campfire" parent="." instance=ExtResource("2_eww0k")]
 transform = Transform3D(5, 0, 4.76837e-07, 0, 5, 0, -4.76837e-07, 0, 5, 0, 0, 0)
 
-[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventories", "output_inventories")]
-script = ExtResource("4_ishni")
-input_inventories = [NodePath("../InputInventory")]
-output_inventories = [NodePath("../InputInventory")]
+[node name="CraftStation" type="CraftStation" parent="."]
+input_inventories = Array[NodePath]([NodePath("../InputInventory")])
+output_inventories = Array[NodePath]([NodePath("../InputInventory")])
 limit_number_crafts = 1
 type = ExtResource("4_bov00")
 only_remove_ingredients_after_craft = true
 auto_craft = true
 database = ExtResource("5_72vu1")
 
-[node name="InputInventory" type="Node" parent="."]
-script = ExtResource("6_1ngfx")
-slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([SubResource("Resource_pueei"), SubResource("Resource_qil68"), SubResource("Resource_ahb6e"), SubResource("Resource_8f0qi")])
+[node name="InputInventory" type="Inventory" parent="."]
+slots = Array[Slot]([SubResource("Resource_pueei"), SubResource("Resource_qil68"), SubResource("Resource_ahb6e"), SubResource("Resource_8f0qi")])
 slot_amount = 4
 inventory_name = "Campfire"
-recreate_slots_on_ready = false
 database = ExtResource("5_72vu1")
 
 [node name="Node" type="Node3D" parent="."]

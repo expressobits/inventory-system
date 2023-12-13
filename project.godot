@@ -15,10 +15,6 @@ run/main_scene="res://fps/fps_demo.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.png"
 
-[autoload]
-
-InventorySystem="*res://addons/inventory-system/core/inventory_system.tscn"
-
 [dotnet]
 
 project/assembly_name="inventory-system-demos"

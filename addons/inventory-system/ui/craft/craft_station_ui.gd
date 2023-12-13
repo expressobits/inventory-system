@@ -1,5 +1,5 @@
-extends Control
 class_name CraftStationUI
+extends Control
 
 ## Represents a [CraftStation] in the interface.
 ## It uses instanced scenes from [RecipeUI] to represent every possible station recipe.
@@ -45,9 +45,9 @@ func open(craft_station : CraftStation):
 	var valid_input = view_input_inventory and craft_station.input_inventories.size() > 0 and craft_station.input_inventories[0] != null
 	var valid_output = view_output_inventory and craft_station.output_inventories.size() > 0 and craft_station.output_inventories[0] != null
 	if valid_input: 
-		input_inventory_ui.set_inventory(craft_station.input_inventories[0])
+		input_inventory_ui.set_inventory(craft_station.get_input_inventory(0))
 	if valid_output: 
-		input_inventory_ui.set_inventory(craft_station.input_inventories[0])
+		input_inventory_ui.set_inventory(craft_station.get_input_inventory(0))
 	input_inventory_ui.visible = valid_input
 	output_inventory_ui.visible = valid_output
 

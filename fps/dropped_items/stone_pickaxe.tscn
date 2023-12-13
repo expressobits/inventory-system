@@ -1,12 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5dkt6r1s1x0k"]
+[gd_scene load_steps=6 format=3 uid="uid://b5dkt6r1s1x0k"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://fps/dropped_items/dropped_item.tscn" id="1_0jyuw"]
 [ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="2_1l6x4"]
-[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_2h1kb"]
 [ext_resource type="PackedScene" uid="uid://d4g1cglqsrhg6" path="res://assets/survival-kit-1.1/Models/GLTF format/toolPickaxe.glb" id="4_f7yg5"]
 
-[sub_resource type="Resource" id="Resource_0hoji"]
-script = ExtResource("3_2h1kb")
+[sub_resource type="Item" id="Resource_0hoji"]
 definition = ExtResource("2_1l6x4")
 properties = {}
 

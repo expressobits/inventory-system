@@ -1,5 +1,5 @@
-extends Control
 class_name SlotUI
+extends Control
 
 ## Represents a [Slot] visually with item [Texture2D] and amount [Label]
 
@@ -43,7 +43,7 @@ func is_categorized_slot_and_have_category(slot : Slot):
 	return false
 
 
-## Update information with [InventoryItem] and amount.
+## Update information with [ItemDefinition] and amount.
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_item(slot : Slot):

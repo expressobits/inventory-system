@@ -1,6 +1,6 @@
 @tool
-extends HBoxContainer
 class_name SlotSelector
+extends HBoxContainer
 
 signal slot_changed(slot : Slot)
 
@@ -16,7 +16,7 @@ var slot : Slot:
 		return slot
 
 var database : InventoryDatabase
-var ids_list : Array[InventoryItem]
+var ids_list : Array[ItemDefinition]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():		
@@ -64,7 +64,7 @@ func _on_product_amount_spin_box_value_changed(value):
 
 
 func _on_option_button_item_selected(index):
-	var item : InventoryItem = ids_list[index]
+	var item : ItemDefinition = ids_list[index]
 	slot.item.definition = item
 	if item_id_editor.id != item.id:
 		item_id_editor.setup(database, item.id)

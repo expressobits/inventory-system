@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://2fvkeyyvqubl"]
+[gd_scene load_steps=7 format=3 uid="uid://2fvkeyyvqubl"]
 
 [ext_resource type="Script" path="res://fps/tool_hand_item_3d.gd" id="1_v2ig7"]
-[ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="2_h1cg8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6cie"]
 resource_name = "wood"
@@ -69,8 +68,7 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_rnfke")
 
-[sub_resource type="Resource" id="Resource_rmmnd"]
-script = ExtResource("2_h1cg8")
+[sub_resource type="InteractAction" id="Resource_rmmnd"]
 input = "item_pickup"
 description = "Use Pickaxe"
 code = 0
