@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CraftStationType" load_steps=3 format=3 uid="uid://bnofwpkgx0twi"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station_type.gd" id="1_aoetn"]
+[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://assets/icons/campfire.png" id="1_ff7ht"]
+
+[resource]
+script = ExtResource("1_aoetn")
+icon = ExtResource("1_ff7ht")
+name = "Campfire"

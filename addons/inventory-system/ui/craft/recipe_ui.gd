@@ -10,7 +10,8 @@ class_name RecipeUI
 @onready var item_name : Label = get_node("ItemName")
 @onready var time_to_craft : Label = get_node("TimeToCraft")
 @onready var craft_button : Button = get_node("CraftButton")
-@onready var ingredients_container : HBoxContainer = get_node("RequiredItemsList")
+@onready var ingredients_container : HBoxContainer = get_node("IngredientsItemsList")
+@onready var required_items_list = %RequiredItemsList
 
 
 var _recipe_index : int
@@ -26,8 +27,8 @@ func _ready():
 func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
 	self._craft_station = craft_station
 	self._recipe_index = recipe_index
-	icon.texture = recipe.product.item.icon
-	item_name.text = recipe.product.item.name
+	icon.texture = recipe.products[0].item.definition.icon
+	item_name.text = recipe.products[0].item.definition.name
 	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
 	_clear_ingredients()
 	for ingredient in recipe.ingredients:
@@ -35,9 +36,14 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(ingredient)
 		_ingredients.append(ingredient_obj)
+	for ingredient in recipe.required_items:
+		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
+		ingredients_container.add_child(ingredient_obj)
+		ingredient_obj.setup(ingredient)
+		_ingredients.append(ingredient_obj)
 	_check_if_has_ingredients()
-	craft_station.input_inventory.item_added.connect(_on_added_item.bind())
-	craft_station.input_inventory.item_removed.connect(_on_added_item.bind())
+	for input_inventory in craft_station.input_inventories:
+		input_inventory.updated_slot.connect(_on_updated_slot.bind())
 
 
 func _clear_ingredients():
@@ -50,7 +56,7 @@ func _on_craft_button_button_down():
 	_craft_station.craft(_recipe_index)
 
 
-func _on_added_item(item : InventoryItem, amount : int):
+func _on_updated_slot(slot_index : int):
 	_check_if_has_ingredients()
 
 

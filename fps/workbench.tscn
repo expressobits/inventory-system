@@ -1,0 +1,51 @@
+[gd_scene load_steps=11 format=3 uid="uid://bvjagvllelgcf"]
+
+[ext_resource type="Script" path="res://fps/workbench.gd" id="1_sr5uf"]
+[ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
+[ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="2_r0km1"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="3_yr08k"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="4_g10kw"]
+[ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="5_d4au8"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="6_js2dm"]
+
+[sub_resource type="Resource" id="Resource_ypp5l"]
+script = ExtResource("2_r0km1")
+input = "interact"
+description = "Open Station"
+code = 0
+
+[sub_resource type="Resource" id="Resource_mwd72"]
+script = ExtResource("2_r0km1")
+input = "rotate"
+description = "Rotate"
+code = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
+size = Vector3(1.20602, 1.16811, 1.2693)
+
+[node name="Workbench" type="StaticBody3D"]
+transform = Transform3D(0.92406, 0, 0.382248, 0, 1, 0, -0.382248, 0, 0.92406, -3.70525, -2.38419e-07, -3.99706)
+collision_layer = 18
+collision_mask = 3
+script = ExtResource("1_sr5uf")
+actions = Array[ExtResource("2_r0km1")]([SubResource("Resource_ypp5l"), SubResource("Resource_mwd72")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249215, 0)
+shape = SubResource("BoxShape3D_v5tyu")
+
+[node name="workbench" parent="." instance=ExtResource("2_2rlru")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+
+[node name="CraftStation" type="Node" parent="." node_paths=PackedStringArray("input_inventories", "output_inventories")]
+script = ExtResource("3_yr08k")
+input_inventories = [NodePath("../InputInventory")]
+output_inventories = [NodePath("../InputInventory")]
+type = ExtResource("4_g10kw")
+processing_mode = 1
+database = ExtResource("5_d4au8")
+
+[node name="InputInventory" type="Node" parent="."]
+script = ExtResource("6_js2dm")
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+database = ExtResource("5_d4au8")

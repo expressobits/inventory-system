@@ -1,0 +1,20 @@
+[gd_scene load_steps=7 format=3 uid="uid://csvypwppcls1l"]
+
+[ext_resource type="Script" path="res://tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_nssfi"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="1_pcdlj"]
+[ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="2_3lfij"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="2_m66vy"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_q5iyy"]
+
+[sub_resource type="Resource" id="Resource_ilwrx"]
+script = ExtResource("3_q5iyy")
+definition = ExtResource("2_m66vy")
+properties = {}
+
+[node name="InventoryTutorial" type="Node3D"]
+script = ExtResource("1_nssfi")
+item = SubResource("Resource_ilwrx")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("1_pcdlj")
+database = ExtResource("2_3lfij")

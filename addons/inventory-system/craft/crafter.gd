@@ -34,7 +34,7 @@ func open(craft_station : CraftStation) -> bool:
 	if !craft_station.open():
 		return false
 	opened_stations.append(craft_station)
-	emit_signal("opened", craft_station)
+	opened.emit(craft_station)
 	return true
 
 
@@ -47,7 +47,7 @@ func close(craft_station : CraftStation) -> bool:
 	if !craft_station.close():
 		return false
 	opened_stations.remove_at(index)
-	emit_signal("closed", craft_station)
+	closed.emit(craft_station)
 	return true
 
 

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemCategory" load_steps=3 format=3 uid="uid://vf4th6k6nu1k"]
+
+[ext_resource type="Texture2D" uid="uid://d0lrl1mvjsw5u" path="res://assets/icons/food-restaurant-svgrepo-com.svg" id="1_eajbc"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/item_category.gd" id="1_u74ld"]
+
+[resource]
+script = ExtResource("1_u74ld")
+name = "Food"
+color = Color(0.933333, 0.647059, 0.454902, 1)
+icon = ExtResource("1_eajbc")

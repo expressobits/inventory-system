@@ -1,0 +1,99 @@
+[gd_scene load_steps=18 format=3 uid="uid://djh0ig8jxkla5"]
+
+[ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="1_gogru"]
+[ext_resource type="Script" path="res://mp/mp_player.gd" id="2_j20bs"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="4_73by0"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="7_rl5m0"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_object_placer.gd" id="9_nis2j"]
+[ext_resource type="Script" path="res://mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
+size = Vector3(0.125, 0.125, 0.125)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(1, 0.85098, 0.231373, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uhe50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i378q"]
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0, 0.294118, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0fmeo"]
+size = Vector3(0.8, 0.2, 0.4)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_fhfrv"]
+properties/0/path = NodePath("..:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("..:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="MPPlayer" instance=ExtResource("1_gogru")]
+script = ExtResource("2_j20bs")
+
+[node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
+script = ExtResource("3_3qi1x")
+
+[node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
+mesh = SubResource("BoxMesh_d1alo")
+
+[node name="CharacterInventorySystem" parent="." index="2"]
+script = ExtResource("4_73by0")
+
+[node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
+script = ExtResource("3_xjjoy")
+
+[node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
+script = ExtResource("4_ggduv")
+sync_item_added_signal = true
+sync_item_removed_signal = true
+
+[node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
+script = ExtResource("4_ggduv")
+sync_item_added_signal = true
+sync_item_removed_signal = true
+
+[node name="Hotbar" parent="CharacterInventorySystem" index="1"]
+script = ExtResource("7_rl5m0")
+
+[node name="Crafter" parent="CharacterInventorySystem" index="2"]
+script = ExtResource("7_8fje4")
+
+[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
+script = ExtResource("7_c3s0f")
+
+[node name="ObjectPlacer" parent="CharacterInventorySystem/InventoryInteractor" index="0"]
+script = ExtResource("9_nis2j")
+dropped_spawner_path = NodePath("../../../../DroppedItemSpawner")
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="3"]
+material_override = SubResource("StandardMaterial3D_053ih")
+mesh = SubResource("CapsuleMesh_uhe50")
+
+[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
+material_override = SubResource("StandardMaterial3D_i378q")
+mesh = SubResource("BoxMesh_0fmeo")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4"]
+root_path = NodePath("../Mesh")
+replication_config = SubResource("SceneReplicationConfig_fhfrv")
+
+[node name="UseItemsExample" parent="." index="5"]
+script = ExtResource("11_ioyuw")
+
+[editable path="CharacterInventorySystem"]

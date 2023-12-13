@@ -1,8 +1,0 @@
-[gd_resource type="InventoryItem" load_steps=2 format=3 uid="uid://bg4jxrrsteww2"]
-
-[ext_resource type="Texture2D" uid="uid://cvf27dgaa2bv5" path="res://addons/inventory-system/demos/assets/icons/lashing.png" id="1_w5ivy"]
-
-[resource]
-max_stack = 16
-name = "Lashing"
-icon = ExtResource("1_w5ivy")

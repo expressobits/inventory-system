@@ -4,15 +4,15 @@ extends NodeInventorySystemBase
 class_name Hotbar
 
 signal on_change_selection(selection_index)
-
+signal on_update_selection_slot
 
 @export var inventory : Inventory
-
 @export var slots_in_hot_bar := 8
 
 var selection_index := 0
 
 func _ready():
+	super._ready()
 	if inventory != null:
 		inventory.updated_slot.connect(_on_updated_slot.bind())
 
@@ -36,17 +36,16 @@ func set_selection_index(new_index : int):
 	if new_index < 0:
 		new_index += slots_in_hot_bar
 	selection_index = new_index
-	emit_signal("on_change_selection", selection_index)
+	on_change_selection.emit(selection_index)
 
 
 func has_valid_item_id() -> bool:
 	if selection_index >= inventory.slots.size():
 		return false
 	var slot = inventory.slots[selection_index]
-	if not slot.has("item_id"):
+	if slot == null:
 		return false
-	var item_id = slot.item_id
-	return item_id != InventoryItem.NONE
+	return slot.has_valid()
 
 
 func has_item_on_selection() -> bool:
@@ -55,12 +54,12 @@ func has_item_on_selection() -> bool:
 	return true
 
 
-func get_selected_item() -> int:
+func get_selected_item() -> SlotItem:
 	if not has_valid_item_id():
-		return InventoryItem.NONE
-	return inventory.slots[selection_index].item_id
+		return null
+	return inventory.slots[selection_index].item
 
 
 func _on_updated_slot(slot_index : int):
 	if slot_index == selection_index:
-		set_selection_index(selection_index)
+		on_update_selection_slot.emit()

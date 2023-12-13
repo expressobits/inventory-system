@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CraftStationType" load_steps=3 format=3 uid="uid://dvvni8o3rpo4s"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station_type.gd" id="1_p37qn"]
+[ext_resource type="Texture2D" uid="uid://m42ga264uiky" path="res://assets/icons/workbench.png" id="1_rcxbc"]
+
+[resource]
+script = ExtResource("1_p37qn")
+icon = ExtResource("1_rcxbc")
+name = "Workbench"

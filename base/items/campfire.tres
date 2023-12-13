@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://cricka5cb3hrg"]
+
+[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://assets/icons/campfire.png" id="1_vhjvv"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_6s0ty"]
+
+[resource]
+script = ExtResource("2_6s0ty")
+id = 6
+can_stack = true
+max_stack = 1
+name = "Campfire"
+icon = ExtResource("1_vhjvv")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/campfire.tscn",
+"hand_item": "res://fps/hand_items/campfire.tscn",
+"placeable": "res://fps/campfire.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

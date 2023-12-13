@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bu50ku0vxmpwt"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/core/dropped_item_3d.gd" id="1_qx0iq"]
+[ext_resource type="Script" path="res://addons/inventory-system/interact/interact_action.gd" id="2_ak2cy"]
+
+[sub_resource type="Resource" id="Resource_w5bs8"]
+script = ExtResource("2_ak2cy")
+input = "interact"
+description = "Get Item"
+code = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6n6kg"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[node name="DroppedItem" type="RigidBody3D"]
+collision_layer = 16
+collision_mask = 17
+can_sleep = false
+script = ExtResource("1_qx0iq")
+actions = Array[ExtResource("2_ak2cy")]([SubResource("Resource_w5bs8")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6n6kg")
+
+[node name="Visual" type="Node3D" parent="."]

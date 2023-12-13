@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="InventoryDatabase" load_steps=25 format=3 uid="uid://x5huasdaljjl"]
+
+[ext_resource type="Resource" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="1_ll643"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="2_8oy0m"]
+[ext_resource type="Resource" uid="uid://vf4th6k6nu1k" path="res://base/categories/food.tres" id="3_46uk3"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="3_605sl"]
+[ext_resource type="Resource" uid="uid://boaxvwlo2suum" path="res://base/categories/helmet.tres" id="4_r2mmy"]
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="6_lh8gi"]
+[ext_resource type="Resource" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="7_4afv6"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_database.gd" id="7_b6gc3"]
+[ext_resource type="Resource" uid="uid://85ffsqwt3ore" path="res://base/items/workbench.tres" id="8_ofbhm"]
+[ext_resource type="Resource" uid="uid://cricka5cb3hrg" path="res://base/items/campfire.tres" id="9_ac6d4"]
+[ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="9_b0fqm"]
+[ext_resource type="Resource" uid="uid://bdk8gxu8477w6" path="res://base/recipes/stone_axe.tres" id="9_ijyjw"]
+[ext_resource type="Resource" uid="uid://boa4f5gromfvx" path="res://base/items/lashing.tres" id="10_0ktg3"]
+[ext_resource type="Resource" uid="uid://bv6p72jphx0xc" path="res://base/recipes/stone_pickaxe.tres" id="10_kgixi"]
+[ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://base/items/grass.tres" id="11_kmxri"]
+[ext_resource type="Resource" uid="uid://c0pjgqkwob2ep" path="res://base/items/raw_meat.tres" id="11_tmkw2"]
+[ext_resource type="Resource" uid="uid://b0uaieon41psr" path="res://base/recipes/lashing.tres" id="11_vrhlt"]
+[ext_resource type="Resource" uid="uid://dhjsgp1skln2i" path="res://base/items/cooked_meat.tres" id="12_l0xnf"]
+[ext_resource type="Resource" uid="uid://bherblpl7sey5" path="res://base/recipes/campfire.tres" id="12_pfveg"]
+[ext_resource type="Resource" uid="uid://5ln1mamn3e84" path="res://base/recipes/workbench.tres" id="13_jsmdl"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="15_nj78r"]
+[ext_resource type="Resource" uid="uid://biti0xs8dwla1" path="res://base/recipes/cooked_meat.tres" id="19_03fkg"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="21_tgyqk"]
+[ext_resource type="Resource" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="22_5mn07"]
+
+[resource]
+script = ExtResource("7_b6gc3")
+items = Array[Resource("res://addons/inventory-system/core/inventory_item.gd")]([ExtResource("11_kmxri"), ExtResource("7_4afv6"), ExtResource("9_b0fqm"), ExtResource("8_ofbhm"), ExtResource("3_605sl"), ExtResource("9_ac6d4"), ExtResource("10_0ktg3"), ExtResource("6_lh8gi"), ExtResource("11_tmkw2"), ExtResource("12_l0xnf"), ExtResource("15_nj78r")])
+recipes = Array[Resource("res://addons/inventory-system/craft/recipe.gd")]([ExtResource("9_ijyjw"), ExtResource("10_kgixi"), ExtResource("11_vrhlt"), ExtResource("12_pfveg"), ExtResource("13_jsmdl"), ExtResource("19_03fkg")])
+stations_type = Array[Resource("res://addons/inventory-system/craft/craft_station_type.gd")]([ExtResource("21_tgyqk"), ExtResource("22_5mn07")])
+item_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_ll643"), ExtResource("2_8oy0m"), ExtResource("3_46uk3"), ExtResource("4_r2mmy")])

@@ -1,0 +1,88 @@
+[gd_scene load_steps=14 format=3 uid="uid://cw4rwxc3dyovc"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="1_mwfdb"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_handler.gd" id="2_3gbyo"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory.gd" id="4_bnxby"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="5_2pj24"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/hotbar.gd" id="5_aotfb"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/crafter.gd" id="6_qv0d7"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/craft_station.gd" id="7_jdxm8"]
+[ext_resource type="Script" path="res://addons/inventory-system/interact/inventory_interactor.gd" id="8_o2ogx"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_3ia0e"]
+
+[sub_resource type="Resource" id="Resource_rb0kk"]
+script = ExtResource("5_2pj24")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_y52mx"]
+script = ExtResource("5_2pj24")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_cijqa"]
+script = ExtResource("5_2pj24")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_ndhf7"]
+script = ExtResource("5_2pj24")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])
+amount = 0
+max_stack = -1
+
+[node name="CharacterInventorySystem" type="Node"]
+script = ExtResource("1_mwfdb")
+
+[node name="InventoryHandler" type="Node" parent="." node_paths=PackedStringArray("inventories")]
+script = ExtResource("2_3gbyo")
+inventories = [NodePath("Inventory"), NodePath("EquipmentInventory")]
+
+[node name="Inventory" type="Node" parent="InventoryHandler"]
+script = ExtResource("4_bnxby")
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_amount = 32
+inventory_name = "Player Inventory"
+
+[node name="EquipmentInventory" type="Node" parent="InventoryHandler"]
+script = ExtResource("4_bnxby")
+slots = Array[Resource("res://addons/inventory-system/core/slot.gd")]([SubResource("Resource_rb0kk"), SubResource("Resource_y52mx"), SubResource("Resource_cijqa"), SubResource("Resource_ndhf7")])
+slot_amount = 4
+inventory_name = "Equipment"
+
+[node name="Hotbar" type="Node" parent="." node_paths=PackedStringArray("inventory")]
+script = ExtResource("5_aotfb")
+inventory = NodePath("../InventoryHandler/Inventory")
+
+[node name="Crafter" type="Node" parent="." node_paths=PackedStringArray("main_station")]
+script = ExtResource("6_qv0d7")
+main_station = NodePath("CraftStation")
+
+[node name="CraftStation" type="Node" parent="Crafter" node_paths=PackedStringArray("input_inventories", "output_inventories")]
+script = ExtResource("7_jdxm8")
+input_inventories = [NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")]
+output_inventories = [NodePath("../../InventoryHandler/Inventory")]
+
+[node name="InventoryInteractor" type="Node" parent="."]
+script = ExtResource("8_o2ogx")
+
+[node name="ObjectPlacer" type="Node" parent="InventoryInteractor"]
+script = ExtResource("9_3ia0e")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

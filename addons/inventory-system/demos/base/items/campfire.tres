@@ -1,8 +1,0 @@
-[gd_resource type="InventoryItem" load_steps=2 format=3 uid="uid://b6xju8cni0ma3"]
-
-[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system/demos/assets/icons/campfire.png" id="1_vhjvv"]
-
-[resource]
-max_stack = 1
-name = "Campfire"
-icon = ExtResource("1_vhjvv")

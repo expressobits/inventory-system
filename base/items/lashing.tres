@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://boa4f5gromfvx"]
+
+[ext_resource type="Texture2D" uid="uid://cvf27dgaa2bv5" path="res://assets/icons/lashing.png" id="1_w5ivy"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_7pkcg"]
+
+[resource]
+script = ExtResource("2_7pkcg")
+id = 5
+can_stack = true
+max_stack = 16
+name = "Lashing"
+icon = ExtResource("1_w5ivy")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/lashing.tscn",
+"hand_item": "res://fps/hand_items/lashing.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

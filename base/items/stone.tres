@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=3 format=3 uid="uid://cq41uaiw3k82b"]
+
+[ext_resource type="Texture2D" uid="uid://nawk2ttd0thl" path="res://assets/icons/stone.png" id="1_ctyjn"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_nasbc"]
+
+[resource]
+script = ExtResource("2_nasbc")
+id = 1
+can_stack = true
+max_stack = 8
+name = "Stone"
+icon = ExtResource("1_ctyjn")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/rock.tscn",
+"hand_item": "res://fps/hand_items/rock.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([])

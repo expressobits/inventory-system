@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=11 format=3 uid="uid://biti0xs8dwla1"]
+
+[ext_resource type="Resource" uid="uid://c0pjgqkwob2ep" path="res://base/items/raw_meat.tres" id="1_lvab7"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="1_t0huv"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="2_bq2uo"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_j8xh5"]
+[ext_resource type="Resource" uid="uid://dhjsgp1skln2i" path="res://base/items/cooked_meat.tres" id="4_l7cgq"]
+[ext_resource type="Resource" uid="uid://bnofwpkgx0twi" path="res://base/craft_stations/campfire.tres" id="5_e7bry"]
+
+[sub_resource type="Resource" id="Resource_u5nrk"]
+script = ExtResource("2_bq2uo")
+definition = ExtResource("1_lvab7")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_glbqw"]
+script = ExtResource("2_j8xh5")
+item = SubResource("Resource_u5nrk")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_try3b"]
+script = ExtResource("2_bq2uo")
+definition = ExtResource("4_l7cgq")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_0h1ry"]
+script = ExtResource("2_j8xh5")
+item = SubResource("Resource_try3b")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("1_t0huv")
+products = Array[ExtResource("2_j8xh5")]([SubResource("Resource_0h1ry")])
+time_to_craft = 8.0
+station = ExtResource("5_e7bry")
+ingredients = Array[ExtResource("2_j8xh5")]([SubResource("Resource_glbqw")])
+required_items = Array[ExtResource("2_j8xh5")]([])

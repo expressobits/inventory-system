@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://mlfnrjl6taog"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_fcne4"]
+[ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://assets/icons/branch.png" id="1_q41wd"]
+[ext_resource type="Resource" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="1_y6pmb"]
+
+[resource]
+script = ExtResource("1_fcne4")
+id = 0
+can_stack = true
+max_stack = 16
+name = "Wood"
+icon = ExtResource("1_q41wd")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/wood.tscn",
+"fuel": 8.0,
+"hand_item": "res://fps/hand_items/wood.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_y6pmb")])

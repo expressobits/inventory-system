@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=14 format=3 uid="uid://bdk8gxu8477w6"]
+
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="1_xgppx"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_0u4c8"]
+[ext_resource type="Resource" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="2_hisy8"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_nmv3d"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="4_uanvi"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="6_6f5fq"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="6_j60y6"]
+
+[sub_resource type="Resource" id="Resource_ssww0"]
+script = ExtResource("3_nmv3d")
+definition = ExtResource("1_xgppx")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_c1w71"]
+script = ExtResource("2_0u4c8")
+item = SubResource("Resource_ssww0")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_rrwc6"]
+script = ExtResource("3_nmv3d")
+definition = ExtResource("4_uanvi")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_kal3n"]
+script = ExtResource("2_0u4c8")
+item = SubResource("Resource_rrwc6")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_5ibkr"]
+script = ExtResource("3_nmv3d")
+definition = ExtResource("2_hisy8")
+properties = {
+"durability": 100.0
+}
+
+[sub_resource type="Resource" id="Resource_uk8t5"]
+script = ExtResource("2_0u4c8")
+item = SubResource("Resource_5ibkr")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("6_6f5fq")
+products = Array[ExtResource("2_0u4c8")]([SubResource("Resource_uk8t5")])
+time_to_craft = 16.0
+station = ExtResource("6_j60y6")
+ingredients = Array[ExtResource("2_0u4c8")]([SubResource("Resource_c1w71"), SubResource("Resource_kal3n")])
+required_items = Array[ExtResource("2_0u4c8")]([])

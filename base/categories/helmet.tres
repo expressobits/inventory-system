@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemCategory" load_steps=3 format=3 uid="uid://boaxvwlo2suum"]
+
+[ext_resource type="Texture2D" uid="uid://t3olj7qicyss" path="res://assets/icons/hat-svgrepo-com.svg" id="1_mn611"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/item_category.gd" id="2_b43xh"]
+
+[resource]
+script = ExtResource("2_b43xh")
+name = "Helmet"
+color = Color(1, 1, 1, 1)
+icon = ExtResource("1_mn611")

@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://clj2qii0ta8lx"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_g1usf"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="2_0s4ew"]
+[ext_resource type="PackedScene" uid="uid://dn6l1p7td2wlb" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_item_list.tscn" id="3_j8duy"]
+[ext_resource type="PackedScene" uid="uid://cdv6y2uu0ywq0" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.tscn" id="4_1l8uv"]
+
+[node name="InventoryTabEditor" instance=ExtResource("1_g1usf")]
+script = ExtResource("2_0s4ew")
+
+[node name="CraftStationTypesItemList" parent="HSplitContainer" index="0" instance=ExtResource("3_j8duy")]
+layout_mode = 2
+
+[node name="CraftStationTypeEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_1l8uv")]
+layout_mode = 2
+
+[node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="." index="1"]
+size = Vector2i(28, 8)
+
+[node name="NewResourceDialog" parent="." index="2"]
+filters = PackedStringArray("*.tres ; CraftStationType")
+
+[node name="OpenResourceDialog" parent="." index="3"]
+filters = PackedStringArray("*.tres ; CraftStationType")
+
+[connection signal="item_popup_menu_requested" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_item_popup_menu_requested"]
+[connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
+[connection signal="changed" from="HSplitContainer/CraftStationTypeEditor" to="." method="_on_craft_station_type_editor_changed"]
+[connection signal="id_pressed" from="CraftStationTypesPopupMenu" to="." method="_on_craft_station_types_popup_menu_id_pressed"]

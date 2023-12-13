@@ -1,0 +1,64 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=17 format=3 uid="uid://bv6p72jphx0xc"]
+
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="1_em5mw"]
+[ext_resource type="Resource" uid="uid://cm2wwn11jv4ev" path="res://base/items/stone_pickaxe.tres" id="2_751hi"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_lau0n"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_ogmqy"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="4_3sjpa"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_fghhy"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="6_3qi07"]
+[ext_resource type="Resource" uid="uid://dvvni8o3rpo4s" path="res://base/craft_stations/workbench.tres" id="7_vaok2"]
+
+[sub_resource type="Resource" id="Resource_117lb"]
+script = ExtResource("3_ogmqy")
+definition = ExtResource("1_em5mw")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_cl4p4"]
+script = ExtResource("2_lau0n")
+item = SubResource("Resource_117lb")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_djelc"]
+script = ExtResource("3_ogmqy")
+definition = ExtResource("4_3sjpa")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_tiivj"]
+script = ExtResource("2_lau0n")
+item = SubResource("Resource_djelc")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_fydbi"]
+script = ExtResource("3_ogmqy")
+definition = ExtResource("2_751hi")
+properties = {
+"durability": 100.0
+}
+
+[sub_resource type="Resource" id="Resource_2phav"]
+script = ExtResource("2_lau0n")
+item = SubResource("Resource_fydbi")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_tnuqy"]
+script = ExtResource("3_ogmqy")
+definition = ExtResource("6_3qi07")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_pu4hm"]
+script = ExtResource("2_lau0n")
+item = SubResource("Resource_tnuqy")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("5_fghhy")
+products = Array[ExtResource("2_lau0n")]([SubResource("Resource_2phav")])
+time_to_craft = 4.0
+station = ExtResource("7_vaok2")
+ingredients = Array[ExtResource("2_lau0n")]([SubResource("Resource_cl4p4"), SubResource("Resource_tiivj")])
+required_items = Array[ExtResource("2_lau0n")]([SubResource("Resource_pu4hm")])

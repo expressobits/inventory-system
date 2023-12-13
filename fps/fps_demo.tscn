@@ -1,0 +1,243 @@
+[gd_scene load_steps=49 format=3 uid="uid://cldhwvccvg8ma"]
+
+[ext_resource type="Script" path="res://fps/fps_demo.gd" id="1_mxj54"]
+[ext_resource type="Resource" uid="uid://x5huasdaljjl" path="res://base/database.tres" id="2_gcjwy"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="2_ig7ps"]
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="3_drnqg"]
+[ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://base/items/grass.tres" id="4_u8ypt"]
+[ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://fps/labels.tscn" id="6_5epcx"]
+[ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system/ui/inventory_system_ui.tscn" id="6_gphqh"]
+[ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://base/kenney_input_icons.tres" id="8_6rygg"]
+[ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://fps/box_inventory.tscn" id="9_ia5mg"]
+[ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
+[ext_resource type="Script" path="res://base/setup_keys.gd" id="10_1ncja"]
+[ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
+[ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://fps/workbench.tscn" id="11_fkc5i"]
+[ext_resource type="Resource" uid="uid://1g5wqbk7eo0d" path="res://base/items/helmet_labor.tres" id="12_5uvei"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="13_1f730"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="13_7kmjq"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="13_ptimm"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/categorized_slot.gd" id="14_bq6p0"]
+[ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://fps/player.tscn" id="14_kqlku"]
+[ext_resource type="Resource" uid="uid://dbxx0l6t8pihv" path="res://base/items/stone_axe.tres" id="15_dwxtk"]
+[ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://fps/level.tscn" id="16_46jkf"]
+[ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://fps/campfire.tscn" id="16_47qja"]
+[ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://fps/props/shelf.tscn" id="17_k32gy"]
+
+[sub_resource type="Resource" id="Resource_s5euc"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("2_ig7ps")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_mcsja"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("3_drnqg")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_5m303"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("4_u8ypt")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_qht8t"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("12_5uvei")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_a5fwf"]
+script = ExtResource("13_1f730")
+item = SubResource("Resource_qht8t")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_lkgg5"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("15_dwxtk")
+properties = {
+"durability": 52.0
+}
+
+[sub_resource type="Resource" id="Resource_jm1f7"]
+script = ExtResource("13_1f730")
+item = SubResource("Resource_lkgg5")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_p22tk"]
+script = ExtResource("13_7kmjq")
+definition = ExtResource("15_dwxtk")
+properties = {
+"durability": 32.0
+}
+
+[sub_resource type="Resource" id="Resource_afmqk"]
+script = ExtResource("13_1f730")
+item = SubResource("Resource_p22tk")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_86q2j"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_50c12"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_2luqh"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_6eb8p"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_vg71i"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_q4mae"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_mieis"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_vukda"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_4vfo6"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_wooe2"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_x3hnn"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_j6h4i"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_p0mwy"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_f10nw"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_3kekd"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_h422t"]
+script = ExtResource("14_bq6p0")
+accepted_categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("13_ptimm")])
+amount = 0
+max_stack = -1
+
+[node name="Demo" type="Node"]
+script = ExtResource("1_mxj54")
+item_wood = SubResource("Resource_s5euc")
+item_stone = SubResource("Resource_mcsja")
+item_grass = SubResource("Resource_5m303")
+database = ExtResource("2_gcjwy")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Labels" parent="UI" instance=ExtResource("6_5epcx")]
+
+[node name="Inventory System UI" parent="UI" instance=ExtResource("6_gphqh")]
+
+[node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
+input_icons = ExtResource("8_6rygg")
+
+[node name="Player" parent="." instance=ExtResource("14_kqlku")]
+
+[node name="Level" parent="." instance=ExtResource("16_46jkf")]
+
+[node name="Box Inventory" parent="." instance=ExtResource("9_ia5mg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory" index="1"]
+slots = Array[ExtResource("13_1f730")]([])
+inventory_name = "Dynamic Inventory"
+
+[node name="Box Inventory2" parent="." instance=ExtResource("9_ia5mg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory2" index="1"]
+slots = Array[ExtResource("13_1f730")]([SubResource("Resource_a5fwf"), SubResource("Resource_jm1f7"), SubResource("Resource_afmqk"), null, null, null, null, null, null, null, null, null, null, null, null, null])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Static Inventory"
+
+[node name="Box Inventory3" parent="." instance=ExtResource("9_ia5mg")]
+transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
+
+[node name="Inventory" parent="Box Inventory3" index="1"]
+slots = Array[ExtResource("13_1f730")]([SubResource("Resource_86q2j"), SubResource("Resource_50c12"), SubResource("Resource_2luqh"), SubResource("Resource_6eb8p"), SubResource("Resource_vg71i"), SubResource("Resource_q4mae"), SubResource("Resource_mieis"), SubResource("Resource_vukda"), SubResource("Resource_4vfo6"), SubResource("Resource_wooe2"), SubResource("Resource_x3hnn"), SubResource("Resource_j6h4i"), SubResource("Resource_p0mwy"), SubResource("Resource_f10nw"), SubResource("Resource_3kekd"), SubResource("Resource_h422t")])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Tools Inventory"
+recreate_slots_on_ready = false
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("10_1ncja")
+
+[node name="workbenchGrind" parent="." instance=ExtResource("9_ltu3q")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319963)
+
+[node name="workbenchAnvil" parent="." instance=ExtResource("10_ds5rh")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
+
+[node name="Workbench" parent="." instance=ExtResource("11_fkc5i")]
+
+[node name="Campfire" parent="." instance=ExtResource("16_47qja")]
+transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612, -1.97455, 0, -3.89435)
+
+[node name="Shelf" parent="." instance=ExtResource("17_k32gy")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)
+
+[editable path="UI/Inventory System UI"]
+[editable path="UI/Inventory System UI/TransactionSlotUI"]
+[editable path="UI/Inventory System UI/PlayerInventoryUI"]
+[editable path="Box Inventory"]
+[editable path="Box Inventory2"]
+[editable path="Box Inventory3"]

@@ -3,10 +3,7 @@ extends Resource
 class_name Recipe
 
 ## Main end result of crafting done with this recipe.
-@export var product : Slot
-
-## Products that are generated in addition to the main product when finished crafting this recipe
-@export var byproducts : Array[Slot]
+@export var products : Array[Slot]
 
 ## Time to complete this craft
 @export var time_to_craft := 4.0
@@ -16,3 +13,6 @@ class_name Recipe
 
 ## Ingredient List For crafting this recipe, the ingredients contain a [Slot] data structure, which stores an [InventoryItem] type and its quantity.
 @export var ingredients : Array[Slot]
+
+## Same ingredient, but these items will not be used in crafting
+@export var required_items : Array[Slot]

@@ -1,8 +1,0 @@
-[gd_resource type="InventoryItem" load_steps=2 format=3 uid="uid://d4dbqgguhb8cj"]
-
-[ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system/demos/assets/icons/grass.png" id="1_v4col"]
-
-[resource]
-max_stack = 16
-name = "Grass"
-icon = ExtResource("1_v4col")

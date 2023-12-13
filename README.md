@@ -1,9 +1,14 @@
-# <img src="https://raw.githubusercontent.com/expressobits/inventory-system/main/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.6.1-blue.svg?cacheSeconds=2592000)
+# <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
+![Version](https://img.shields.io/badge/version-0.8.71-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
+
+See demos in:
+Github: [Branch demos](https://github.com/expressobits/inventory-system/tree/demos)
+Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
+
 
 ## Features
 
@@ -31,23 +36,29 @@
 
 ✔️ Craft System.
 
+✔️ Item Editor.
+
+✔️ Categories. (https://github.com/expressobits/inventory-system/issues/5)
+
+  - [[WIKI] Item Categories](https://github.com/expressobits/inventory-system/wiki/Item-Categories)
+
+✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
+
+✔️ Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
+
+✔️ Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
+
 ## In Progress
 
-🔨 Item Editor.
+🔨 Equipament Inventory
 
 ## Planneds
 
-📅 Item Editor. https://github.com/expressobits/inventory-system/issues/7
-
-📅 Categories. (https://github.com/expressobits/inventory-system/issues/5)
-
-📅 Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
-
-📅 Autocrafts. (https://github.com/expressobits/inventory-system/issues/34)
-
 📅 Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
 
-📅  Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
+📅 Change core to CPP #83
+
+📅 Inventory UI dynamic #83
 
 ## Install
 See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)

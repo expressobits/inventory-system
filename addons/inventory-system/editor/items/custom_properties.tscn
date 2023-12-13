@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1am6gfdvbcgx"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/custom_properties.gd" id="1_d01x1"]
+[ext_resource type="PackedScene" uid="uid://bggb1gnxppq0x" path="res://addons/inventory-system/editor/items/base_property.tscn" id="2_rp4o4"]
+
+[node name="CustomProperties" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_d01x1")
+property_scene = ExtResource("2_rp4o4")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Custom Properties"
+horizontal_alignment = 1
+
+[node name="Panel" type="Control" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label2" type="Label" parent="Panel/HBoxContainer"]
+layout_mode = 2
+text = "New Property:"
+horizontal_alignment = 1
+
+[node name="NewKeyLineEdit" type="LineEdit" parent="Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Place New Property Key Name Here..."
+
+[node name="NewTypeOptionButton" type="OptionButton" parent="Panel/HBoxContainer"]
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="Panel/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Add New Property"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="text_changed" from="Panel/HBoxContainer/NewKeyLineEdit" to="." method="_on_new_key_line_edit_text_changed"]
+[connection signal="pressed" from="Panel/HBoxContainer/AddButton" to="." method="_on_add_button_pressed"]

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://cm2wwn11jv4ev"]
+
+[ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://assets/icons/stone_pickaxe.png" id="1_hlhk0"]
+[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://base/categories/tool.tres" id="1_jl1dl"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_obepx"]
+
+[resource]
+script = ExtResource("2_obepx")
+id = 4
+can_stack = false
+max_stack = 1
+name = "Stone Pickaxe"
+icon = ExtResource("1_hlhk0")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/stone_pickaxe.tscn",
+"durability": 100.0,
+"hand_item": "res://fps/hand_items/stone_pickaxe.tscn"
+}
+dynamic_properties = Array[String](["durability"])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_jl1dl")])

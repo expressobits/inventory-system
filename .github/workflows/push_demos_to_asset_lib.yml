@@ -1,0 +1,52 @@
+name: "Push Demos To Asset Lib"
+on:
+  workflow_dispatch:
+    inputs:
+      plugin_version:
+        description: 'Plugin version number:'
+        required: true
+        type: string
+        default: '1.0.0'
+  push:
+    tags:
+      - demos-*
+
+env:
+  PLUGIN_VERSION: 0.0.1
+    
+jobs:
+  
+  publish:
+    # needs: [env-setup]
+    runs-on: ubuntu-latest
+    name: Publish new version to asset lib
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: set_plugin_version
+      id: set_plugin_version
+      run: |
+        VERSION=$(grep version addons/inventory-system/plugin.cfg | cut -d "=" -f 2 | tr -d '"')
+        echo "PLUGIN_VERSION=${VERSION}" >> $GITHUB_ENV
+
+    - name: Godot Asset Lib
+      # You may pin to the exact commit or the version.
+      # uses: deep-entertainment/godot-asset-lib-action@81addbb4db62199a69e4aa5535741a8928d6abb6
+      uses: deep-entertainment/godot-asset-lib-action@v0.4.0
+      with:
+        action: addEdit
+        # Godot asset lib username
+        username: expressobits
+        # Godot asset lib password
+        password: ${{ secrets.GODOT_ASSET_LIB_PASSWORD }}
+        # ID of the asset in the asset store
+        assetId: 1895
+        # Path to asset template file
+        assetTemplate: .github/workflows/.asset-template-demos.json.hb
+        # Godot asset lib base url
+        baseUrl: https://godotengine.org/asset-library/api
+
+    - name: Debug Godot Asset Lib
+      run: echo $PLUGIN_VERSION

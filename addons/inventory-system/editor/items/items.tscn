@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://kuckh8lq8mwr"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_nu8gk"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/items/items_editor.gd" id="2_8swun"]
+[ext_resource type="PackedScene" uid="uid://d0ykb6vojc7ga" path="res://addons/inventory-system/editor/items/inventory_item_list.tscn" id="3_dqmno"]
+[ext_resource type="PackedScene" uid="uid://5wb5xuou85vf" path="res://addons/inventory-system/editor/items/item_editor.tscn" id="4_ppg00"]
+
+[node name="InventoryTabEditor" instance=ExtResource("1_nu8gk")]
+script = ExtResource("2_8swun")
+
+[node name="InventoryItemList" parent="HSplitContainer" index="0" instance=ExtResource("3_dqmno")]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+
+[node name="ItemsPopupMenu" type="PopupMenu" parent="HSplitContainer/InventoryItemList" index="2"]
+size = Vector2i(100, 24)
+
+[node name="ItemEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_ppg00")]
+layout_mode = 2
+
+[node name="NewResourceDialog" parent="." index="1"]
+unique_name_in_owner = true
+
+[connection signal="item_popup_menu_requested" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_popup_menu_requested"]
+[connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
+[connection signal="id_pressed" from="HSplitContainer/InventoryItemList/ItemsPopupMenu" to="." method="_on_items_popup_menu_id_pressed"]
+[connection signal="changed" from="HSplitContainer/ItemEditor" to="." method="_on_item_editor_changed"]

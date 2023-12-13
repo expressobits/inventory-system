@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=10 format=3 uid="uid://b0uaieon41psr"]
+
+[ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://base/items/grass.tres" id="1_5nk1u"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="2_kkl3n"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_vut2c"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="4_2ch3e"]
+[ext_resource type="Resource" uid="uid://boa4f5gromfvx" path="res://base/items/lashing.tres" id="4_eevq6"]
+
+[sub_resource type="Resource" id="Resource_a31cl"]
+script = ExtResource("2_kkl3n")
+definition = ExtResource("1_5nk1u")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_pqywp"]
+script = ExtResource("2_vut2c")
+item = SubResource("Resource_a31cl")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_eqab1"]
+script = ExtResource("2_kkl3n")
+definition = ExtResource("4_eevq6")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_lda27"]
+script = ExtResource("2_vut2c")
+item = SubResource("Resource_eqab1")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("4_2ch3e")
+products = Array[ExtResource("2_vut2c")]([SubResource("Resource_lda27")])
+time_to_craft = 2.0
+ingredients = Array[ExtResource("2_vut2c")]([SubResource("Resource_pqywp")])
+required_items = Array[ExtResource("2_vut2c")]([])

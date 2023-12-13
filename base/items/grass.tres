@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://c20jkkonitixx"]
+
+[ext_resource type="Resource" uid="uid://041ut5vu78mt" path="res://base/categories/burnables.tres" id="1_gjdk4"]
+[ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://assets/icons/grass.png" id="1_v4col"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="2_w8awx"]
+
+[resource]
+script = ExtResource("2_w8awx")
+id = 2
+can_stack = true
+max_stack = 16
+name = "Grass"
+icon = ExtResource("1_v4col")
+weight = 0.0
+properties = {
+"dropped_item": "res://fps/dropped_items/grass.tscn",
+"fuel": 2.0,
+"hand_item": "res://fps/hand_items/grass.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_gjdk4")])

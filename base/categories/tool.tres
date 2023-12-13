@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemCategory" load_steps=3 format=3 uid="uid://b5xbt36cc6cji"]
+
+[ext_resource type="Texture2D" uid="uid://hu23uplhyra5" path="res://assets/icons/tool-svgrepo-com.svg" id="1_5w14s"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/item_category.gd" id="2_w17xb"]
+
+[resource]
+script = ExtResource("2_w17xb")
+name = "Tools"
+color = Color(0.694118, 0.87451, 0.576471, 1)
+icon = ExtResource("1_5w14s")

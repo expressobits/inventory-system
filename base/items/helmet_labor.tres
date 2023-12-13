@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="InventoryItem" load_steps=4 format=3 uid="uid://1g5wqbk7eo0d"]
+
+[ext_resource type="Resource" uid="uid://boaxvwlo2suum" path="res://base/categories/helmet.tres" id="1_36npj"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/inventory_item.gd" id="1_m2wfa"]
+[ext_resource type="Texture2D" uid="uid://c6rpas6jwthqy" path="res://assets/icons/helmet_labor.png" id="2_2j8fm"]
+
+[resource]
+script = ExtResource("1_m2wfa")
+id = 10
+can_stack = false
+max_stack = 1
+name = "Helmet Labor"
+icon = ExtResource("2_2j8fm")
+weight = 1.0
+properties = {
+"dropped_item": "res://fps/dropped_items/helmet_labor.tscn",
+"hand_item": "res://fps/hand_items/helmet_labor.tscn"
+}
+dynamic_properties = Array[String]([])
+categories = Array[Resource("res://addons/inventory-system/core/item_category.gd")]([ExtResource("1_36npj")])

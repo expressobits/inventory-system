@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="Recipe" load_steps=13 format=3 uid="uid://bherblpl7sey5"]
+
+[ext_resource type="Resource" uid="uid://cq41uaiw3k82b" path="res://base/items/stone.tres" id="1_363hv"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot.gd" id="2_pkutw"]
+[ext_resource type="Resource" uid="uid://cricka5cb3hrg" path="res://base/items/campfire.tres" id="2_yk3s7"]
+[ext_resource type="Script" path="res://addons/inventory-system/core/slot_item.gd" id="3_5pwil"]
+[ext_resource type="Resource" uid="uid://mlfnrjl6taog" path="res://base/items/wood.tres" id="4_s2okj"]
+[ext_resource type="Script" path="res://addons/inventory-system/craft/recipe.gd" id="5_ux5px"]
+
+[sub_resource type="Resource" id="Resource_b361d"]
+script = ExtResource("3_5pwil")
+definition = ExtResource("1_363hv")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_gnn4r"]
+script = ExtResource("2_pkutw")
+item = SubResource("Resource_b361d")
+amount = 2
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_1sypq"]
+script = ExtResource("3_5pwil")
+definition = ExtResource("4_s2okj")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_bhk0q"]
+script = ExtResource("2_pkutw")
+item = SubResource("Resource_1sypq")
+amount = 1
+max_stack = -1
+
+[sub_resource type="Resource" id="Resource_xp44j"]
+script = ExtResource("3_5pwil")
+definition = ExtResource("2_yk3s7")
+properties = {}
+
+[sub_resource type="Resource" id="Resource_4afau"]
+script = ExtResource("2_pkutw")
+item = SubResource("Resource_xp44j")
+amount = 1
+max_stack = -1
+
+[resource]
+script = ExtResource("5_ux5px")
+products = Array[ExtResource("2_pkutw")]([SubResource("Resource_4afau")])
+time_to_craft = 10.0
+ingredients = Array[ExtResource("2_pkutw")]([SubResource("Resource_gnn4r"), SubResource("Resource_bhk0q")])
+required_items = Array[ExtResource("2_pkutw")]([])

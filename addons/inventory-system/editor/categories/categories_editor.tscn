@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfevgv38d1bll"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_7csdk"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/categories/categories_editor.gd" id="2_eyvx1"]
+[ext_resource type="PackedScene" uid="uid://yb8wore3as0d" path="res://addons/inventory-system/editor/categories/item_categories_item_list.tscn" id="3_tvsx7"]
+[ext_resource type="PackedScene" uid="uid://dqcgncj4oicwn" path="res://addons/inventory-system/editor/categories/item_category_editor.tscn" id="4_0s65b"]
+
+[node name="Categories" instance=ExtResource("1_7csdk")]
+script = ExtResource("2_eyvx1")
+
+[node name="ItemCategoriesItemList" parent="HSplitContainer" index="0" instance=ExtResource("3_tvsx7")]
+layout_mode = 2
+
+[node name="ItemCategoryEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_0s65b")]
+layout_mode = 2
+
+[node name="ItemCategoryPopupMenu" type="PopupMenu" parent="." index="1"]
+size = Vector2i(28, 8)
+
+[node name="NewResourceDialog" parent="." index="2"]
+filters = PackedStringArray("*.tres ; ItemCategory")
+
+[node name="OpenResourceDialog" parent="." index="3"]
+filters = PackedStringArray("*.tres ; ItemCategory")
+
+[connection signal="category_selected" from="HSplitContainer/ItemCategoriesItemList" to="." method="_on_item_categories_item_list_category_selected"]
+[connection signal="item_popup_menu_requested" from="HSplitContainer/ItemCategoriesItemList" to="." method="_on_item_categories_item_list_item_popup_menu_requested"]
+[connection signal="changed" from="HSplitContainer/ItemCategoryEditor" to="." method="_on_item_category_editor_changed"]
+[connection signal="id_pressed" from="ItemCategoryPopupMenu" to="." method="_on_item_category_popup_menu_id_pressed"]

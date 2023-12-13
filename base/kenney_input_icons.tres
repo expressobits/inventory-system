@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="InputIcons" load_steps=24 format=3 uid="uid://vm1ta374rw08"]
+
+[ext_resource type="Texture2D" uid="uid://bnu2hk8d00py1" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0157.png" id="1_qbiie"]
+[ext_resource type="Texture2D" uid="uid://1b03v1iwds35" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0087.png" id="1_x5ob6"]
+[ext_resource type="Texture2D" uid="uid://l0bhuyle78xg" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0077.png" id="2_1d7hw"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/interactor/input_icons.gd" id="2_hd7g5"]
+[ext_resource type="Texture2D" uid="uid://dusktr1nffo7i" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0018.png" id="3_0smbw"]
+[ext_resource type="Texture2D" uid="uid://btxrda6ke6v0q" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0079.png" id="3_4m730"]
+[ext_resource type="Texture2D" uid="uid://c4v7db7odefn3" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0092.png" id="3_7j7xx"]
+[ext_resource type="Texture2D" uid="uid://cnfrjih17gs64" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0078.png" id="3_k3ere"]
+[ext_resource type="Texture2D" uid="uid://cydj86pho73m" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0019.png" id="4_06yue"]
+[ext_resource type="Texture2D" uid="uid://bjalbi131ann2" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0081.png" id="4_ix5tc"]
+[ext_resource type="Texture2D" uid="uid://0peb7d8wsr7v" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0027.png" id="4_sf6f8"]
+[ext_resource type="Texture2D" uid="uid://cfkimcedsvqsw" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0080.png" id="5_8hcw8"]
+[ext_resource type="Texture2D" uid="uid://bd3hgdlly6mo4" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0020.png" id="5_opoby"]
+[ext_resource type="Texture2D" uid="uid://dj875ibgewn1o" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0028.png" id="5_pmc7x"]
+[ext_resource type="Texture2D" uid="uid://c33rjqp80shl3" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0029.png" id="6_j6g6w"]
+[ext_resource type="Texture2D" uid="uid://wprpvsmxy34e" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0021.png" id="6_yg4fh"]
+[ext_resource type="Texture2D" uid="uid://drjod8i1s1kf1" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0022.png" id="10_0khp7"]
+[ext_resource type="Texture2D" uid="uid://bixu4yl8pjj8u" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0023.png" id="11_y71ik"]
+[ext_resource type="Texture2D" uid="uid://bx5og08e0wbs6" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0024.png" id="12_m1wbh"]
+[ext_resource type="Texture2D" uid="uid://8xwx0eeyjd2b" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0025.png" id="13_gms53"]
+[ext_resource type="Texture2D" uid="uid://bqbtqog4v4u84" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0026.png" id="14_iioir"]
+[ext_resource type="Texture2D" uid="uid://duje60snyw2ax" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0088.png" id="16_skd50"]
+[ext_resource type="Texture2D" uid="uid://b5q3jrcl5wah" path="res://assets/kenney_input-prompts-pixel-16/Tiles/tile_0089.png" id="17_jd2q2"]
+
+[resource]
+script = ExtResource("2_hd7g5")
+keyboard_c = ExtResource("1_qbiie")
+keyboard_e = ExtResource("1_x5ob6")
+keyboard_i = ExtResource("3_7j7xx")
+keyboard_r = ExtResource("16_skd50")
+keyboard_t = ExtResource("17_jd2q2")
+keyboard_f1 = ExtResource("3_0smbw")
+keyboard_f2 = ExtResource("4_06yue")
+keyboard_f3 = ExtResource("5_opoby")
+keyboard_f4 = ExtResource("6_yg4fh")
+keyboard_f5 = ExtResource("10_0khp7")
+keyboard_f6 = ExtResource("11_y71ik")
+keyboard_f7 = ExtResource("12_m1wbh")
+keyboard_f8 = ExtResource("13_gms53")
+keyboard_f9 = ExtResource("14_iioir")
+keyboard_f10 = ExtResource("4_sf6f8")
+keyboard_f11 = ExtResource("5_pmc7x")
+keyboard_f12 = ExtResource("6_j6g6w")
+mouse_lmb = ExtResource("2_1d7hw")
+mouse_rmb = ExtResource("3_k3ere")
+mouse_mmb = ExtResource("3_4m730")
+mouse_mw_up = ExtResource("5_8hcw8")
+mouse_mw_down = ExtResource("4_ix5tc")
