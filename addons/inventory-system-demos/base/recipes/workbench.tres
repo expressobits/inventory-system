@@ -1,0 +1,22 @@
+[gd_resource type="Recipe" load_steps=7 format=3 uid="uid://5ln1mamn3e84"]
+
+[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="1_2aqrt"]
+[ext_resource type="ItemDefinition" uid="uid://85ffsqwt3ore" path="res://addons/inventory-system-demos/base/items/workbench.tres" id="4_njlku"]
+
+[sub_resource type="Item" id="Resource_hqqpa"]
+definition = ExtResource("1_2aqrt")
+
+[sub_resource type="Slot" id="Resource_jcljw"]
+item = SubResource("Resource_hqqpa")
+amount = 4
+
+[sub_resource type="Item" id="Resource_32mbs"]
+definition = ExtResource("4_njlku")
+
+[sub_resource type="Slot" id="Resource_daqyn"]
+item = SubResource("Resource_32mbs")
+amount = 1
+
+[resource]
+products = Array[Slot]([SubResource("Resource_daqyn")])
+ingredients = Array[Slot]([SubResource("Resource_jcljw")])

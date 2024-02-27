@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://o1ppm5j2amo3"]
+
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_0i1lv"]
+[ext_resource type="Resource" uid="uid://c20jkkonitixx" path="res://addons/inventory-system-demos/base/items/grass.tres" id="2_4vdln"]
+[ext_resource type="PackedScene" uid="uid://2lv3lwkrjfn4" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/grass.glb" id="3_wcbcv"]
+
+[sub_resource type="Item" id="Resource_trit4"]
+definition = ExtResource("2_4vdln")
+properties = {}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]
+size = Vector3(0.306273, 0.130522, 0.24074)
+
+[node name="Grass" instance=ExtResource("1_0i1lv")]
+item = SubResource("Resource_trit4")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0769588, 0)
+shape = SubResource("BoxShape3D_ffk2p")
+
+[node name="grass" parent="Visual" index="0" instance=ExtResource("3_wcbcv")]

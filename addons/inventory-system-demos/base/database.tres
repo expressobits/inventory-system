@@ -1,0 +1,31 @@
+[gd_resource type="InventoryDatabase" load_steps=24 format=3 uid="uid://x5huasdaljjl"]
+
+[ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="1_ll643"]
+[ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="2_8oy0m"]
+[ext_resource type="ItemCategory" uid="uid://vf4th6k6nu1k" path="res://addons/inventory-system-demos/base/categories/food.tres" id="2_q8j5y"]
+[ext_resource type="ItemCategory" uid="uid://boaxvwlo2suum" path="res://addons/inventory-system-demos/base/categories/helmet.tres" id="4_r2mmy"]
+[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="5_bprwt"]
+[ext_resource type="ItemDefinition" uid="uid://cq41uaiw3k82b" path="res://addons/inventory-system-demos/base/items/stone.tres" id="6_o4ev3"]
+[ext_resource type="ItemDefinition" uid="uid://c20jkkonitixx" path="res://addons/inventory-system-demos/base/items/grass.tres" id="7_sa86g"]
+[ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="8_hu6h8"]
+[ext_resource type="Recipe" uid="uid://bdk8gxu8477w6" path="res://addons/inventory-system-demos/base/recipes/stone_axe.tres" id="9_ijyjw"]
+[ext_resource type="ItemDefinition" uid="uid://cm2wwn11jv4ev" path="res://addons/inventory-system-demos/base/items/stone_pickaxe.tres" id="9_veihm"]
+[ext_resource type="ItemDefinition" uid="uid://boa4f5gromfvx" path="res://addons/inventory-system-demos/base/items/lashing.tres" id="10_i5kgb"]
+[ext_resource type="Recipe" uid="uid://bv6p72jphx0xc" path="res://addons/inventory-system-demos/base/recipes/stone_pickaxe.tres" id="10_kgixi"]
+[ext_resource type="ItemDefinition" uid="uid://cricka5cb3hrg" path="res://addons/inventory-system-demos/base/items/campfire.tres" id="11_unpv7"]
+[ext_resource type="Recipe" uid="uid://b0uaieon41psr" path="res://addons/inventory-system-demos/base/recipes/lashing.tres" id="11_vrhlt"]
+[ext_resource type="ItemDefinition" uid="uid://85ffsqwt3ore" path="res://addons/inventory-system-demos/base/items/workbench.tres" id="12_ew1c7"]
+[ext_resource type="Recipe" uid="uid://bherblpl7sey5" path="res://addons/inventory-system-demos/base/recipes/campfire.tres" id="12_pfveg"]
+[ext_resource type="Recipe" uid="uid://5ln1mamn3e84" path="res://addons/inventory-system-demos/base/recipes/workbench.tres" id="13_jsmdl"]
+[ext_resource type="ItemDefinition" uid="uid://c0pjgqkwob2ep" path="res://addons/inventory-system-demos/base/items/raw_meat.tres" id="13_wgfex"]
+[ext_resource type="ItemDefinition" uid="uid://dhjsgp1skln2i" path="res://addons/inventory-system-demos/base/items/cooked_meat.tres" id="14_xjauo"]
+[ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="15_wr5s2"]
+[ext_resource type="Recipe" uid="uid://biti0xs8dwla1" path="res://addons/inventory-system-demos/base/recipes/cooked_meat.tres" id="19_03fkg"]
+[ext_resource type="CraftStationType" uid="uid://dvvni8o3rpo4s" path="res://addons/inventory-system-demos/base/craft_stations/workbench.tres" id="21_tgyqk"]
+[ext_resource type="CraftStationType" uid="uid://bnofwpkgx0twi" path="res://addons/inventory-system-demos/base/craft_stations/campfire.tres" id="22_5mn07"]
+
+[resource]
+items = Array[ItemDefinition]([ExtResource("5_bprwt"), ExtResource("6_o4ev3"), ExtResource("7_sa86g"), ExtResource("8_hu6h8"), ExtResource("9_veihm"), ExtResource("10_i5kgb"), ExtResource("11_unpv7"), ExtResource("12_ew1c7"), ExtResource("13_wgfex"), ExtResource("14_xjauo"), ExtResource("15_wr5s2")])
+recipes = Array[Recipe]([ExtResource("9_ijyjw"), ExtResource("10_kgixi"), ExtResource("11_vrhlt"), ExtResource("12_pfveg"), ExtResource("13_jsmdl"), ExtResource("19_03fkg")])
+stations_type = Array[CraftStationType]([ExtResource("21_tgyqk"), ExtResource("22_5mn07")])
+item_categories = Array[ItemCategory]([ExtResource("1_ll643"), ExtResource("2_8oy0m"), ExtResource("2_q8j5y"), ExtResource("4_r2mmy")])

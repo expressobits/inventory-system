@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://bkk318xcbwoj1"]
+
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
+[ext_resource type="Resource" uid="uid://boa4f5gromfvx" path="res://addons/inventory-system-demos/base/items/lashing.tres" id="2_o1jb2"]
+[ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_3lr6e"]
+
+[sub_resource type="Item" id="Resource_e73js"]
+definition = ExtResource("2_o1jb2")
+properties = {}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
+size = Vector3(0.75, 0.25, 0.75)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i8sr7"]
+albedo_color = Color(0.372549, 0.494118, 0.0980392, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_0e6jl"]
+size = Vector3(0.25, 0.1, 0.25)
+
+[node name="Lashing" instance=ExtResource("1_jic1q")]
+item = SubResource("Resource_e73js")
+
+[node name="CollisionShape3D" parent="." index="0"]
+shape = SubResource("BoxShape3D_fdkpx")
+
+[node name="resourceStone" parent="Visual" index="0" instance=ExtResource("3_3lr6e")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.154406, 0)
+
+[node name="resourceStone2" parent="Visual/resourceStone" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+material_override = SubResource("StandardMaterial3D_i8sr7")
+mesh = SubResource("BoxMesh_0e6jl")
+
+[editable path="Visual/resourceStone"]

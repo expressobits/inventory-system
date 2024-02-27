@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://lwi2lvfj5ltx"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/props/shelf.gd" id="1_0djpg"]
+[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="2_bmkoo"]
+[ext_resource type="PackedScene" uid="uid://43yusxh6v15d" path="res://addons/inventory-system-demos/fps/props/visual_inventory_3d.tscn" id="4_mhihf"]
+[ext_resource type="PackedScene" uid="uid://dm2evx8m3spa5" path="res://addons/inventory-system-demos/fps/props/visual_slot_3d.tscn" id="5_r40cv"]
+[ext_resource type="Material" uid="uid://crejuaexbgbp3" path="res://addons/inventory-system-demos/fps/materials/wood.tres" id="7_lelhm"]
+
+[sub_resource type="InteractAction" id="Resource_m6qwa"]
+input = "interact"
+description = "Open Shelf"
+code = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4yfqi"]
+size = Vector3(0.489384, 1, 2.10216)
+
+[sub_resource type="BoxMesh" id="BoxMesh_olkf5"]
+
+[node name="Shelf" type="StaticBody3D"]
+collision_layer = 18
+collision_mask = 3
+script = ExtResource("1_0djpg")
+actions = Array[InteractAction]([SubResource("Resource_m6qwa")])
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4yfqi")
+
+[node name="Inventory" type="Inventory" parent="."]
+slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+database = ExtResource("2_bmkoo")
+
+[node name="VisualInventory3D" parent="." instance=ExtResource("4_mhihf")]
+visual_slots_paths = Array[NodePath]([NodePath("VisualSlot3D"), NodePath("VisualSlot3D2"), NodePath("VisualSlot3D3"), NodePath("VisualSlot3D4"), NodePath("VisualSlot3D5"), NodePath("VisualSlot3D6"), NodePath("VisualSlot3D7"), NodePath("VisualSlot3D8"), NodePath("VisualSlot3D9"), NodePath("VisualSlot3D10"), NodePath("VisualSlot3D11"), NodePath("VisualSlot3D12"), NodePath("VisualSlot3D13"), NodePath("VisualSlot3D14"), NodePath("VisualSlot3D15"), NodePath("VisualSlot3D16")])
+property_name_of_visual = "hand_item"
+
+[node name="VisualSlot3D" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.84)
+
+[node name="VisualSlot3D2" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.6)
+
+[node name="VisualSlot3D3" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.36)
+
+[node name="VisualSlot3D4" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0.12)
+
+[node name="VisualSlot3D5" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.12)
+
+[node name="VisualSlot3D6" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.36)
+
+[node name="VisualSlot3D7" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.6)
+
+[node name="VisualSlot3D8" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, -0.84)
+
+[node name="VisualSlot3D9" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, 0.84)
+
+[node name="VisualSlot3D10" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, 0.6)
+
+[node name="VisualSlot3D11" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, 0.36)
+
+[node name="VisualSlot3D12" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, 0.12)
+
+[node name="VisualSlot3D13" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, -0.12)
+
+[node name="VisualSlot3D14" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, -0.36)
+
+[node name="VisualSlot3D15" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, -0.6)
+
+[node name="VisualSlot3D16" parent="VisualInventory3D" instance=ExtResource("5_r40cv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.443528, -0.84)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, 0, 0)
+material_override = ExtResource("7_lelhm")
+mesh = SubResource("BoxMesh_olkf5")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-09, -1.2, 0, 0.1, -5.24537e-08, 0, -0.1, 1)
+material_override = ExtResource("7_lelhm")
+mesh = SubResource("BoxMesh_olkf5")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -4.37114e-09, -1.2, 0, 0.1, -5.24537e-08, 0, -0.1, -1)
+material_override = ExtResource("7_lelhm")
+mesh = SubResource("BoxMesh_olkf5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, -0.5, 0)
+material_override = ExtResource("7_lelhm")
+mesh = SubResource("BoxMesh_olkf5")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, 0.5, 0)
+material_override = ExtResource("7_lelhm")
+mesh = SubResource("BoxMesh_olkf5")

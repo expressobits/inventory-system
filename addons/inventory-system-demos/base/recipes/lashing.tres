@@ -1,0 +1,23 @@
+[gd_resource type="Recipe" load_steps=7 format=3 uid="uid://b0uaieon41psr"]
+
+[ext_resource type="ItemDefinition" uid="uid://c20jkkonitixx" path="res://addons/inventory-system-demos/base/items/grass.tres" id="1_5nk1u"]
+[ext_resource type="ItemDefinition" uid="uid://boa4f5gromfvx" path="res://addons/inventory-system-demos/base/items/lashing.tres" id="4_eevq6"]
+
+[sub_resource type="Item" id="Resource_a31cl"]
+definition = ExtResource("1_5nk1u")
+
+[sub_resource type="Slot" id="Resource_pqywp"]
+item = SubResource("Resource_a31cl")
+amount = 2
+
+[sub_resource type="Item" id="Resource_eqab1"]
+definition = ExtResource("4_eevq6")
+
+[sub_resource type="Slot" id="Resource_lda27"]
+item = SubResource("Resource_eqab1")
+amount = 1
+
+[resource]
+products = Array[Slot]([SubResource("Resource_lda27")])
+time_to_craft = 2.0
+ingredients = Array[Slot]([SubResource("Resource_pqywp")])

@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://smufql3yl2b6"]
+
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_tfgf4"]
+[ext_resource type="Resource" uid="uid://85ffsqwt3ore" path="res://addons/inventory-system-demos/base/items/workbench.tres" id="2_lidvt"]
+[ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="3_igfii"]
+
+[sub_resource type="Item" id="Resource_6rm8y"]
+definition = ExtResource("2_lidvt")
+properties = {}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]
+size = Vector3(0.230849, 0.262369, 0.22973)
+
+[node name="Workbench" instance=ExtResource("1_tfgf4")]
+item = SubResource("Resource_6rm8y")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0769588, 0)
+shape = SubResource("BoxShape3D_ffk2p")
+
+[node name="workbench" parent="Visual" index="0" instance=ExtResource("3_igfii")]

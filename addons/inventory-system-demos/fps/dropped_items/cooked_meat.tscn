@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://cpsfowho6jqi0"]
+
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_34eqv"]
+[ext_resource type="Resource" uid="uid://dhjsgp1skln2i" path="res://addons/inventory-system-demos/base/items/cooked_meat.tres" id="2_kd8r3"]
+[ext_resource type="PackedScene" uid="uid://cm2rkvaq8t6yu" path="res://addons/inventory-system-demos/assets/kenney_food-kit/Models/GLTF format/meatCooked.glb" id="3_o1l3j"]
+
+[sub_resource type="Item" id="Resource_nhhn0"]
+definition = ExtResource("2_kd8r3")
+properties = {}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]
+size = Vector3(0.230849, 0.0370853, 0.22973)
+
+[node name="CookedMeat" instance=ExtResource("1_34eqv")]
+item = SubResource("Resource_nhhn0")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0181821, 0)
+shape = SubResource("BoxShape3D_ffk2p")
+
+[node name="meatCooked" parent="Visual" index="0" instance=ExtResource("3_o1l3j")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

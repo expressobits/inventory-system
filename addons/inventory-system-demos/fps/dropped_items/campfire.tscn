@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dn6p5t574xtto"]
+
+[ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_ffr75"]
+[ext_resource type="Resource" uid="uid://cricka5cb3hrg" path="res://addons/inventory-system-demos/base/items/campfire.tres" id="2_hlwm8"]
+[ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="3_qwue6"]
+
+[sub_resource type="Item" id="Resource_82w71"]
+definition = ExtResource("2_hlwm8")
+properties = {}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ffk2p"]
+size = Vector3(0.230849, 0.262369, 0.22973)
+
+[node name="Campfire" instance=ExtResource("1_ffr75")]
+item = SubResource("Resource_82w71")
+
+[node name="CollisionShape3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0769588, 0)
+shape = SubResource("BoxShape3D_ffk2p")
+
+[node name="campfire" parent="Visual" index="0" instance=ExtResource("3_qwue6")]
+
+[node name="campfire2" parent="Visual/campfire" index="0"]
+mesh = null
+
+[node name="bucket" parent="Visual/campfire/campfire2" index="0"]
+visible = false
+
+[editable path="Visual/campfire"]

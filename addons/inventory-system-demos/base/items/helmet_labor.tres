@@ -1,0 +1,17 @@
+[gd_resource type="ItemDefinition" load_steps=3 format=3 uid="uid://1g5wqbk7eo0d"]
+
+[ext_resource type="ItemCategory" uid="uid://boaxvwlo2suum" path="res://addons/inventory-system-demos/base/categories/helmet.tres" id="1_36npj"]
+[ext_resource type="Texture2D" uid="uid://c6rpas6jwthqy" path="res://addons/inventory-system-demos/assets/icons/helmet_labor.png" id="2_2j8fm"]
+
+[resource]
+id = 10
+can_stack = false
+max_stack = 1
+name = "Helmet Labor"
+icon = ExtResource("2_2j8fm")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/helmet_labor.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/helmet_labor.tscn"
+}
+categories = Array[ItemCategory]([ExtResource("1_36npj")])

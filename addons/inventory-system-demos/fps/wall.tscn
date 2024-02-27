@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c88tbne1ovnu"]
+
+[ext_resource type="Material" uid="uid://ba1vq8oib6x85" path="res://addons/inventory-system-demos/fps/materials/wall_material.tres" id="1_0g2jm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4wr8p"]
+size = Vector3(10, 12.3069, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_opmv2"]
+size = Vector3(10, 2, 1)
+
+[node name="Wall" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_4wr8p")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_opmv2")
+surface_material_override/0 = ExtResource("1_0g2jm")

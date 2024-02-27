@@ -1,0 +1,36 @@
+[gd_resource type="Recipe" load_steps=11 format=3 uid="uid://bdk8gxu8477w6"]
+
+[ext_resource type="ItemDefinition" uid="uid://cq41uaiw3k82b" path="res://addons/inventory-system-demos/base/items/stone.tres" id="1_xgppx"]
+[ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="2_hisy8"]
+[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="4_uanvi"]
+[ext_resource type="CraftStationType" uid="uid://dvvni8o3rpo4s" path="res://addons/inventory-system-demos/base/craft_stations/workbench.tres" id="6_j60y6"]
+
+[sub_resource type="Item" id="Resource_ssww0"]
+definition = ExtResource("1_xgppx")
+
+[sub_resource type="Slot" id="Resource_c1w71"]
+item = SubResource("Resource_ssww0")
+amount = 2
+
+[sub_resource type="Item" id="Resource_rrwc6"]
+definition = ExtResource("4_uanvi")
+
+[sub_resource type="Slot" id="Resource_kal3n"]
+item = SubResource("Resource_rrwc6")
+amount = 2
+
+[sub_resource type="Item" id="Resource_5ibkr"]
+definition = ExtResource("2_hisy8")
+properties = {
+"durability": 100.0
+}
+
+[sub_resource type="Slot" id="Resource_uk8t5"]
+item = SubResource("Resource_5ibkr")
+amount = 1
+
+[resource]
+products = Array[Slot]([SubResource("Resource_uk8t5")])
+time_to_craft = 16.0
+station = ExtResource("6_j60y6")
+ingredients = Array[Slot]([SubResource("Resource_c1w71"), SubResource("Resource_kal3n")])

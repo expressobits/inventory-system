@@ -1,0 +1,25 @@
+[gd_scene load_steps=8 format=3 uid="uid://csvypwppcls1l"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_nssfi"]
+[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="2_3lfij"]
+[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="2_m66vy"]
+[ext_resource type="ItemDefinition" uid="uid://cricka5cb3hrg" path="res://addons/inventory-system-demos/base/items/campfire.tres" id="3_craem"]
+
+[sub_resource type="Item" id="Resource_ilwrx"]
+definition = ExtResource("2_m66vy")
+
+[sub_resource type="Item" id="Item_g55bv"]
+definition = ExtResource("3_craem")
+
+[sub_resource type="Slot" id="Slot_2qtip"]
+item = SubResource("Item_g55bv")
+amount = 1
+
+[node name="InventoryTutorial" type="Node3D"]
+script = ExtResource("1_nssfi")
+item = SubResource("Resource_ilwrx")
+
+[node name="Inventory" type="Inventory" parent="."]
+slots = Array[Slot]([SubResource("Slot_2qtip")])
+create_slot_if_needed = true
+database = ExtResource("2_3lfij")

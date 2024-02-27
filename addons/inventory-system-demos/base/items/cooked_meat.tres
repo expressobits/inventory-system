@@ -1,0 +1,16 @@
+[gd_resource type="ItemDefinition" load_steps=3 format=3 uid="uid://dhjsgp1skln2i"]
+
+[ext_resource type="Texture2D" uid="uid://ctt1gph1bjta0" path="res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatCooked.png" id="1_nnhg3"]
+[ext_resource type="ItemCategory" uid="uid://vf4th6k6nu1k" path="res://addons/inventory-system-demos/base/categories/food.tres" id="1_wo5w3"]
+
+[resource]
+id = 9
+max_stack = 5
+name = "Cooked Meat"
+icon = ExtResource("1_nnhg3")
+weight = 0.8
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/cooked_meat.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/cooked_meat.tscn"
+}
+categories = Array[ItemCategory]([ExtResource("1_wo5w3")])

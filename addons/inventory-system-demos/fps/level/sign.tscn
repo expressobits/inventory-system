@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl0a58ab2yv3u"]
+
+[ext_resource type="PackedScene" uid="uid://dg5cl8nqk41as" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/signpostSingle.glb" id="1_uhjoa"]
+[ext_resource type="Material" uid="uid://crejuaexbgbp3" path="res://addons/inventory-system-demos/fps/materials/wood.tres" id="2_us55a"]
+
+[node name="Sign" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.07986, 0, -3.8075)
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(0.995329, -0.0965407, 0, 0.0965407, 0.995329, 0, 0, 0, 1, 0, 1.17597, 0.0772328)
+texture_filter = 0
+modulate = Color(0.662745, 0.709804, 0, 1)
+text = "Dynamic
+Inventory"
+font_size = 16
+outline_size = 0
+
+[node name="signpostSingle" parent="." instance=ExtResource("1_uhjoa")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="signpostSingle2" parent="signpostSingle" index="0"]
+surface_material_override/0 = ExtResource("2_us55a")
+
+[editable path="signpostSingle"]
