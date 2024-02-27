@@ -1,5 +1,5 @@
-extends VBoxContainer
 class_name CraftingsUI
+extends VBoxContainer
 
 ## Represents the active craftings of [CraftStation] with a user interface.
 

@@ -4,13 +4,13 @@ extends Control
 @export var interact_messages : Array[ActionMessageUI]
 @onready var interact_position : Control = $InteractPosition
 var default_interact_message_position : Vector2
-@export var interactor : InventoryInteractor
+@export var interactor : Interactor
 @export var input_icons : InputIcons
 
 var interact_object
 var interact_hand_object
 
-func setup(interactor : InventoryInteractor):
+func setup(interactor : Interactor):
 	if self.interactor != null:
 		interactor.preview_interacted.disconnect(_on_preview_interacted.bind())
 	self.interactor = interactor

@@ -1,6 +1,6 @@
 @tool
-extends InventoryTabEditor
 class_name CraftStationTypesEditor
+extends InventoryTabEditor
 
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
 @onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList

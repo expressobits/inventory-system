@@ -1,6 +1,6 @@
 @tool
-extends HBoxContainer
 class_name IngredientEditor
+extends HBoxContainer
 
 signal changed_slot
 signal request_remove

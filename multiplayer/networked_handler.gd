@@ -1,13 +1,12 @@
 @tool
-extends InventoryHandler
 class_name NetworkedHandler
+extends InventoryHandler
 
 ## Network version of the InventoryHandler, the main inventory handler calls are 
 ## intercepted by this script to propagate rpc calls to the server and later if 
 ## necessary make response rpc calls to the client.
 
 func _ready():
-	super._ready()
 	if multiplayer.is_server():
 		updated_transaction_slot.connect(_on_updated_transaction_slot.bind())
 
@@ -15,9 +14,9 @@ func _ready():
 ## === OVERRIDE MAIN COMMANDS ===
 ## Override all main commands for the client to send to the server through rpc
 
-func drop(item : SlotItem, amount := 1) -> bool:
+func drop(item : Item, amount := 1) -> bool:
 	var item_id = item.definition.id
-	if item_id < InventoryItem.NONE:
+	if item_id < ItemDefinition.NONE:
 		return false
 	if not multiplayer.is_server():
 		drop_rpc.rpc_id(1, item_id, amount, item.properties)
@@ -110,7 +109,7 @@ func drop_rpc(item_id : int, amount : int, properties : Dictionary):
 	var definition = get_item_from_id(item_id)
 	if definition == null:
 		return
-	var item = SlotItem.new()
+	var item = Item.new()
 	item.definition = definition
 	item.properties = properties
 	super.drop(item, amount)
@@ -123,7 +122,7 @@ func add_to_inventory_rpc(object_path : NodePath, item_id : int, amount := 1, dr
 	var definition = get_item_from_id(item_id)
 	if definition == null:
 		return
-	var item = SlotItem.new()
+	var item = Item.new()
 	item.definition = definition
 	var object = get_node(object_path)
 	if object == null:
@@ -264,7 +263,7 @@ func close_main_inventory() -> bool:
 	return super.close(inventories[0])
 
 
-func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
+func _instantiate_dropped_item(dropped_item : PackedScene, item : Item):
 	var spawner = get_node("../../../DroppedItemSpawner")
 	var obj = spawner.spawn([get_parent().get_parent().position, get_parent().get_parent().rotation, dropped_item.resource_path, item.properties])
 	dropped.emit(obj)
@@ -273,7 +272,7 @@ func _instantiate_dropped_item(dropped_item : PackedScene, item : SlotItem):
 func _on_updated_transaction_slot():
 	var item_id : int
 	if not transaction_slot.has_valid():
-		item_id = InventoryItem.NONE
+		item_id = ItemDefinition.NONE
 	else:
 		item_id = transaction_slot.item.definition.id
 	_on_updated_transaction_slot_rpc.rpc(item_id, transaction_slot.amount)
@@ -281,7 +280,7 @@ func _on_updated_transaction_slot():
 
 @rpc
 func _on_updated_transaction_slot_rpc(item_id : int, amount : int):
-	var definition : InventoryItem = database.get_item(item_id)
-	var item : SlotItem = SlotItem.new()
+	var definition : ItemDefinition = database.get_item(item_id)
+	var item : Item = Item.new()
 	item.definition = definition
 	_set_transaction_slot(item, amount)

@@ -1,6 +1,6 @@
 @tool
-extends VBoxContainer
 class_name CraftStationTypesItemList
+extends VBoxContainer
 
 signal station_selected(station : CraftStationType)
 signal item_popup_menu_requested(at_position: Vector2)

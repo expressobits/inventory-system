@@ -20,8 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 @tool
-extends Resource
 class_name InputHelper
+extends Resource
 
 enum InputType {INVALID, KEYBOARD, MOUSE, GP_BTN, GP_MOTION}
 

@@ -1,5 +1,5 @@
 class_name ObjectPlacer
-extends NodeInventorySystemBase
+extends NodeInventories
 
 signal dropped
 signal placed
@@ -12,7 +12,7 @@ signal placed
 
 
 # TODO Add code to interactor child node (InteractorResponse)
-func place_item(item : SlotItem, position : Vector3, rotation : Vector3):
+func place_item(item : Item, position : Vector3, rotation : Vector3):
 	# TODO Add 3D Preview
 	if !item.definition.properties.has(property_from_item_for_object_scene):
 		return
@@ -20,8 +20,8 @@ func place_item(item : SlotItem, position : Vector3, rotation : Vector3):
 	var res = load(path)
 	if res is PackedScene:
 		var scene = res as PackedScene
-		for inventory in inventory_handler.inventories:
-			if inventory.remove(item) <= 0:
+		for i in inventory_handler.inventories.size():
+			if inventory_handler.get_inventory(i).remove(item) <= 0:
 				_instantiate_object(scene, position, rotation)
 				return
 

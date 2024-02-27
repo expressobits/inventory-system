@@ -1,5 +1,5 @@
-extends Control
 class_name CraftingUI
+extends Control
 
 ## Interface that represents a crafting that is in a craft station list.
 
@@ -7,7 +7,7 @@ class_name CraftingUI
 var station : CraftStation
 
 ## Crafting information (Time and recipe)
-var crafting : CraftStation.Crafting 
+var crafting : Crafting 
 
 @onready var _icon : TextureRect = %Icon
 @onready var _progress_bar : ProgressBar = %ProgressBar

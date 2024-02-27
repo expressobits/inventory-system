@@ -1,6 +1,6 @@
 @tool
-extends Crafter
 class_name NetworkedCrafter
+extends Crafter
 
 func open(craft_station : CraftStation) -> bool:
 	if not multiplayer.is_server():

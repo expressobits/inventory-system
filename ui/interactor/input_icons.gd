@@ -21,8 +21,8 @@
 # SOFTWARE.
 
 @tool
-extends Resource
 class_name InputIcons
+extends Resource
 
 var property_map: Dictionary = {
 	"keycodes": {

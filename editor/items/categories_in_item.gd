@@ -1,9 +1,9 @@
 @tool
-extends HBoxContainer
 class_name CategoriesInItem
+extends HBoxContainer
 
 
-var item : InventoryItem
+var item : ItemDefinition
 var database : InventoryDatabase
 var objs : Array[CheckBox]
 
@@ -11,7 +11,7 @@ var objs : Array[CheckBox]
 @onready var h_flow_container = $ScrollContainer/HFlowContainer
 
 
-func load_item(database : InventoryDatabase, item : InventoryItem):
+func load_item(database : InventoryDatabase, item : ItemDefinition):
 	self.database = database
 	self.item = item
 	loading_categories()

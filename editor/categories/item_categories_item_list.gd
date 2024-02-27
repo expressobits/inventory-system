@@ -1,6 +1,7 @@
 @tool
-extends VBoxContainer
 class_name ItemCategoriesItemList
+extends VBoxContainer
+
 
 signal category_selected(category : ItemCategory)
 signal item_popup_menu_requested(at_position: Vector2)

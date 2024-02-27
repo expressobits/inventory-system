@@ -1,6 +1,6 @@
 @tool
-extends Control
 class_name ItemCategoryEditor
+extends Control
 
 signal changed(category : ItemCategory)
 

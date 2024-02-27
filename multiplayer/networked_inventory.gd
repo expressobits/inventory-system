@@ -1,6 +1,6 @@
 @tool
-extends Inventory
 class_name NetworkedInventory
+extends Inventory
 
 @export var sync_item_added_signal := true
 @export var sync_item_removed_signal := true
@@ -26,7 +26,7 @@ var slots_sync : Array:
 			for i in slots_sync.size():
 				if i >= slots.size():
 					var slot = Slot.new()
-					slot.item = SlotItem.new()
+					slot.item = Item.new()
 					slots.append(slot)
 				slots[i].amount = slots_sync[i].amount
 				var item = database.get_item(slots_sync[i].item_id)
@@ -34,7 +34,6 @@ var slots_sync : Array:
 
 
 func _ready():
-	super._ready()
 	if Engine.is_editor_hint():
 		return
 	multiplayer.peer_connected.connect(_on_connected.bind())
@@ -82,7 +81,7 @@ func _on_slot_added(slot_index : int):
 	if not multiplayer.is_server():
 		return
 	var slot = slots[slot_index]
-	var slot_dict = {"item_id" = InventoryItem.NONE , "amount" = 0}
+	var slot_dict = {"item_id" = ItemDefinition.NONE , "amount" = 0}
 	slots_sync.append(slot_dict)
 	_slot_added_rpc.rpc(slot_index)
 
@@ -90,10 +89,10 @@ func _on_slot_added(slot_index : int):
 func _on_updated_slot(slot_index : int):
 	if not multiplayer.is_server():
 		return
-	var item : SlotItem = slots[slot_index].item
+	var item : Item = slots[slot_index].item
 	var item_id : int
 	if item.definition == null:
-		item_id = InventoryItem.NONE
+		item_id = ItemDefinition.NONE
 	else:
 		item_id = item.definition.id
 	var amount = slots[slot_index].amount
@@ -110,16 +109,16 @@ func _on_slot_removed(slot_index : int):
 	_slot_removed_rpc.rpc(slot_index)
 
 
-func _on_item_added(item : SlotItem, amount : int):
+func _on_item_added(item : Item, amount : int):
 	if not multiplayer.is_server():
 		return
 	_item_added_rpc.rpc(item.definition.id, amount)
 
 
-func _on_item_removed(item : SlotItem, amount : int):
+func _on_item_removed(definition : ItemDefinition, amount : int):
 	if not multiplayer.is_server():
 		return
-	_item_removed_rpc.rpc(item.definition.id, amount)
+	_item_removed_rpc.rpc(definition.id, amount)
 
 
 @rpc
@@ -147,14 +146,14 @@ func _closed_rpc():
 func _slot_added_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	_add_slot(slot_index)
+	add_slot(slot_index)
 
 
 @rpc
 func _updated_slot_rpc(slot_index : int, item_id : int, amount : int, properties : Dictionary):
 	if multiplayer.is_server():
 		return
-	var item : InventoryItem = get_item_from_id(item_id)
+	var item : ItemDefinition = get_item_from_id(item_id)
 	set_slot_content(slot_index, item, properties, amount)
 
 
@@ -162,14 +161,14 @@ func _updated_slot_rpc(slot_index : int, item_id : int, amount : int, properties
 func _slot_removed_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	_remove_slot(slot_index)
+	remove_slot(slot_index)
 
 
 @rpc
 func _item_added_rpc(item_id : int, amount : int):
 	if multiplayer.is_server():
 		return
-	var item = SlotItem.new()
+	var item = Item.new()
 	item.definition = database.get_item(item_id)
 	if item.definition == null:
 		return
@@ -180,8 +179,7 @@ func _item_added_rpc(item_id : int, amount : int):
 func _item_removed_rpc(item_id : int, amount : int):
 	if multiplayer.is_server():
 		return
-	var item = SlotItem.new()
-	item.definition = database.get_item(item_id)
-	if item.definition == null:
+	var definition : ItemDefinition = database.get_item(item_id)
+	if definition == null:
 		return
-	item_removed.emit(item, amount)
+	item_removed.emit(definition, amount)

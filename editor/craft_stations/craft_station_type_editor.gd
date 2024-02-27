@@ -1,6 +1,6 @@
 @tool
-extends Control
 class_name CraftStationTypeEditor
+extends Control
 
 signal changed(station : CraftStationType)
 

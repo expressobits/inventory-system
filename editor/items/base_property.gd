@@ -1,6 +1,6 @@
 @tool
-extends HBoxContainer
 class_name BasePropertyItemEditor
+extends HBoxContainer
 
 signal removed
 
@@ -23,7 +23,7 @@ signal removed
 #@export var colors_in_light_theme : Array[Color]
 @export var icons_name : Array[String]
 
-var item : InventoryItem
+var item : ItemDefinition
 var key : String
 var value
 
@@ -57,7 +57,7 @@ func _ready():
 		_:
 			no_compatible.visible = true
 
-func setup(item : InventoryItem,key : String, value):
+func setup(item : ItemDefinition, key : String, value):
 	self.item = item
 	self.key = key
 	self.value = value
