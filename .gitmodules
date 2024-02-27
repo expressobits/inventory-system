@@ -1,0 +1,6 @@
+[submodule "godot-cpp"]
+	path = godot-cpp
+	url = https://github.com/godotengine/godot-cpp.git
+[submodule "inventory-system"]
+	path = inventory-system
+	url = https://github.com/expressobits/inventory-system.git
