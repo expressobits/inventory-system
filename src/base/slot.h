@@ -4,6 +4,9 @@
 #include "item.h"
 #include <godot_cpp/classes/resource.hpp>
 
+#include <godot_cpp/core/binder_common.hpp>
+#include <godot_cpp/core/gdvirtual.gen.inc>
+
 using namespace godot;
 
 class Slot : public Resource {
@@ -35,6 +38,7 @@ public:
 	bool has_valid() const;
 	bool contains(Ref<Item> item, int amount) const;
 	bool contains_category(Ref<ItemCategory> category) const;
+	GDVIRTUAL2R(int, _on_add, Ref<Item>, int);
 };
 
 #endif // SLOT_CLASS_H

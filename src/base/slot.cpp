@@ -20,6 +20,7 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("has_valid"), &Slot::has_valid);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &Slot::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category"), &Slot::contains_category);
+	GDVIRTUAL_BIND(_on_add, "item", "amount");
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
@@ -98,6 +99,10 @@ int Slot::get_item_id() const {
 }
 
 int Slot::add(const Ref<Item> item, const int &amount) {
+	int amount_result = 0;
+	if (GDVIRTUAL_CALL(_on_add, item, amount, amount_result)) {
+		return amount_result;
+	}
 	if (this->item == nullptr) {
 		return amount;
 	}
