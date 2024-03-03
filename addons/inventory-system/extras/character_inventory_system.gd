@@ -137,7 +137,7 @@ func hot_bar_inputs(event : InputEvent):
 		var input_key_event = event as InputEventKey
 		if event.is_pressed() and not event.is_echo():
 			if input_key_event.keycode > KEY_0 and input_key_event.keycode < KEY_9:
-				hotbar.set_selection_index(input_key_event.keycode - KEY_1)
+				hotbar.change_selection(input_key_event.keycode - KEY_1)
 
 
 func open_inventory(inventory : Inventory):

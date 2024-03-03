@@ -1,18 +1,18 @@
-[gd_scene load_steps=18 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=20 format=3 uid="uid://djh0ig8jxkla5"]
 
-[ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_handler.gd" id="3_xjjoy"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="4_73by0"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="7_rl5m0"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_object_placer.gd" id="9_nis2j"]
+[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_agnea"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="5_kc6gu"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="6_5rh7a"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
+size = Vector3(0.125, 0.125, 0.125)
+
+[sub_resource type="BoxMesh" id="BoxMesh_4xpja"]
 size = Vector3(0.125, 0.125, 0.125)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_053ih"]
@@ -40,60 +40,115 @@ properties/1/path = NodePath("..:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="MPPlayer" instance=ExtResource("1_gogru")]
+[sub_resource type="Slot" id="Slot_o4skw"]
+
+[sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
+
+[sub_resource type="CategorizedSlot" id="Resource_y52mx"]
+
+[sub_resource type="CategorizedSlot" id="Resource_cijqa"]
+
+[sub_resource type="CategorizedSlot" id="Resource_ndhf7"]
+
+[node name="MPPlayer" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 2
 script = ExtResource("2_j20bs")
 
-[node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D" index="2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ccrms")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396227, 0)
+current = true
+
+[node name="RayCast3D" type="RayCast3D" parent="Camera3D"]
+target_position = Vector3(0, 0, -2)
+collision_mask = 16
+
+[node name="HandItem" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.382065)
 script = ExtResource("3_3qi1x")
 
-[node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem" index="0"]
+[node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/HandItem"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="CharacterInventorySystem" parent="." index="2"]
-script = ExtResource("4_73by0")
+[node name="ThirdPersonHandItem" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.232194, -0.16177, -0.690647)
+script = ExtResource("3_3qi1x")
+hotbar_path = NodePath("")
+interactor_path = NodePath("")
 
-[node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
-script = ExtResource("3_xjjoy")
+[node name="DefaultHandItem" type="MeshInstance3D" parent="Camera3D/ThirdPersonHandItem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
+mesh = SubResource("BoxMesh_4xpja")
 
-[node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
-script = ExtResource("4_ggduv")
-sync_item_added_signal = true
-sync_item_removed_signal = true
-
-[node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
-script = ExtResource("4_ggduv")
-sync_item_added_signal = true
-sync_item_removed_signal = true
-
-[node name="Hotbar" parent="CharacterInventorySystem" index="1"]
-script = ExtResource("7_rl5m0")
-
-[node name="Crafter" parent="CharacterInventorySystem" index="2"]
-script = ExtResource("7_8fje4")
-
-[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
-script = ExtResource("7_c3s0f")
-
-[node name="ObjectPlacer" parent="CharacterInventorySystem/InventoryInteractor" index="0"]
-script = ExtResource("9_nis2j")
-dropped_spawner_path = NodePath("../../../../DroppedItemSpawner")
-
-[node name="Mesh" type="MeshInstance3D" parent="." index="3"]
+[node name="Mesh" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_053ih")
 mesh = SubResource("CapsuleMesh_uhe50")
 
-[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
+[node name="Glass" type="MeshInstance3D" parent="Mesh"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
 material_override = SubResource("StandardMaterial3D_i378q")
 mesh = SubResource("BoxMesh_0fmeo")
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4"]
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_fhfrv")
 
-[node name="UseItemsExample" parent="." index="5"]
+[node name="UseItemsExample" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("11_ioyuw")
 
-[editable path="CharacterInventorySystem"]
+[node name="CharacterInventorySystem" type="NodeInventories" parent="." node_paths=PackedStringArray("raycast", "camera_3d")]
+database = ExtResource("5_agnea")
+script = ExtResource("5_kc6gu")
+raycast = NodePath("../Camera3D/RayCast3D")
+camera_3d = NodePath("../Camera3D")
+
+[node name="InventoryHandler" type="InventoryHandler" parent="CharacterInventorySystem"]
+inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
+transaction_slot = SubResource("Slot_o4skw")
+
+[node name="Inventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]
+slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_amount = 32
+inventory_name = "Player Inventory"
+
+[node name="EquipmentInventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]
+slots = Array[Slot]([SubResource("Resource_rb0kk"), SubResource("Resource_y52mx"), SubResource("Resource_cijqa"), SubResource("Resource_ndhf7")])
+slot_amount = 4
+inventory_name = "Equipment"
+
+[node name="Hotbar" type="NetworkedHotbar" parent="CharacterInventorySystem"]
+inventory = NodePath("../InventoryHandler/Inventory")
+
+[node name="Crafter" type="Crafter" parent="CharacterInventorySystem"]
+main_station = NodePath("CraftStation")
+
+[node name="CraftStation" type="CraftStation" parent="CharacterInventorySystem/Crafter"]
+input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])
+output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory")])
+
+[node name="Interactor" type="Interactor" parent="CharacterInventorySystem"]
+raycast_path = NodePath("../../Camera3D/RayCast3D")
+camera_path = NodePath("../../Camera3D")
+
+[node name="ObjectPlacer" type="NodeInventories" parent="CharacterInventorySystem/Interactor"]
+script = ExtResource("6_5rh7a")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DropAudio" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="CharacterInventorySystem"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

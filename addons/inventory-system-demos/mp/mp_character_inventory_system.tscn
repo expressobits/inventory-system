@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://ebgaes0h4gny"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="1_7ytp6"]
+[ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="2_828p5"]
+
+[sub_resource type="Slot" id="Slot_we3a1"]
+
+[sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
+
+[sub_resource type="CategorizedSlot" id="Resource_y52mx"]
+
+[sub_resource type="CategorizedSlot" id="Resource_cijqa"]
+
+[sub_resource type="CategorizedSlot" id="Resource_ndhf7"]
+
+[node name="MPCharacterInventorySystem" type="NodeInventories"]
+script = ExtResource("1_7ytp6")
+
+[node name="InventoryHandler" type="InventoryHandler" parent="."]
+inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
+transaction_slot = SubResource("Slot_we3a1")
+
+[node name="Inventory" type="Inventory" parent="InventoryHandler"]
+slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slot_amount = 32
+inventory_name = "Player Inventory"
+
+[node name="EquipmentInventory" type="Inventory" parent="InventoryHandler"]
+slots = Array[Slot]([SubResource("Resource_rb0kk"), SubResource("Resource_y52mx"), SubResource("Resource_cijqa"), SubResource("Resource_ndhf7")])
+slot_amount = 4
+inventory_name = "Equipment"
+
+[node name="Hotbar" type="NetworkedHotbar" parent="."]
+inventory = NodePath("../InventoryHandler/Inventory")
+
+[node name="Crafter" type="Crafter" parent="."]
+main_station = NodePath("CraftStation")
+
+[node name="CraftStation" type="CraftStation" parent="Crafter"]
+input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])
+output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory")])
+
+[node name="Interactor" type="Interactor" parent="."]
+
+[node name="ObjectPlacer" type="NodeInventories" parent="Interactor"]
+script = ExtResource("2_828p5")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

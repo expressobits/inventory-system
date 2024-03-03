@@ -6,7 +6,7 @@ var craftings_data_sync : Array
 
 
 func _ready():
-	super._ready()
+	#super._ready()
 	multiplayer.peer_connected.connect(_on_connected.bind())
 	crafting_added.connect(_on_crafting_added.bind())
 #	updated_crafting.connect(_on_updated_crafting.bind())
@@ -36,7 +36,8 @@ func cancel_craft(crafting_index : int):
 
 func _finish_crafting(crafting_index : int):
 	if multiplayer.is_server():
-		super._finish_crafting(crafting_index)
+		pass
+		#super._finish_crafting(crafting_index)
 
 
 ## === CLIENT COMMANDS TO SERVER ===
@@ -105,14 +106,14 @@ func _crafting_added_rpc(recipe_index : int):
 	if multiplayer.is_server():
 		return
 	var recipe = database.recipes[recipe_index]
-	_add_crafting(recipe_index, recipe)
+	#_add_crafting(recipe_index, recipe)
 
 
 @rpc
 func _crafting_removed_rpc(crafting_index : int):
 	if multiplayer.is_server():
 		return
-	_remove_crafting(crafting_index)
+	#_remove_crafting(crafting_index)
 
 
 @rpc
