@@ -39,6 +39,7 @@ public:
 	bool contains(Ref<Item> item, int amount) const;
 	bool contains_category(Ref<ItemCategory> category) const;
 	GDVIRTUAL2R(int, _on_add, Ref<Item>, int);
+	GDVIRTUAL2R(int, add, Ref<Item>, int);
 };
 
 #endif // SLOT_CLASS_H

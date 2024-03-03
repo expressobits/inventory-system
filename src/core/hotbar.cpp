@@ -14,7 +14,8 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_slots_in_hot_bar"), &Hotbar::get_slots_in_hot_bar);
 	ClassDB::bind_method(D_METHOD("set_selection_index", "selection_index"), &Hotbar::set_selection_index);
 	ClassDB::bind_method(D_METHOD("get_selection_index"), &Hotbar::get_selection_index);
-	ClassDB::bind_method(D_METHOD("change_selection", "index"), &Hotbar::change_selection);
+	ClassDB::bind_method(D_METHOD("change_selection", "index"), &Hotbar::internal_change_selection);
+	ClassDB::bind_method(D_METHOD("internal_change_selection", "index"), &Hotbar::internal_change_selection);
 	ClassDB::bind_method(D_METHOD("next_item"), &Hotbar::next_item);
 	ClassDB::bind_method(D_METHOD("previous_item"), &Hotbar::previous_item);
 	ClassDB::bind_method(D_METHOD("has_valid_item_id"), &Hotbar::has_valid_item_id);
@@ -68,6 +69,12 @@ int Hotbar::get_selection_index() const {
 }
 
 void Hotbar::change_selection(const int &new_index) {
+	if (GDVIRTUAL_CALL(_change_selection, new_index))
+		return;
+	internal_change_selection(new_index);
+}
+
+void Hotbar::internal_change_selection(const int &new_index){
 	selection_index = new_index;
 	if (selection_index >= slots_in_hot_bar) {
 		selection_index -= slots_in_hot_bar;
