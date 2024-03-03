@@ -31,7 +31,7 @@ public:
 	int get_slots_in_hot_bar() const;
 	void set_selection_index(const int &new_selection_index);
 	int get_selection_index() const;
-	void change_selection(const int &new_index);
+	virtual void change_selection(const int &new_index);
 	void next_item();
 	void previous_item();
 	bool has_valid_item_id() const;

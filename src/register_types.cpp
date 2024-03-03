@@ -22,6 +22,7 @@
 #include "craft/crafting.h"
 #include "interact/interact_action.h"
 #include "inventory_system.h"
+#include "network/networked_hotbar.h"
 
 using namespace godot;
 
@@ -49,6 +50,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<InteractAction>();
 	ClassDB::register_class<Interactor>();
 	ClassDB::register_class<InventorySystem>();
+	ClassDB::register_class<NetworkedHotbar>();
 
 	inventory_system = memnew(InventorySystem);
 	godot::Engine::get_singleton()->register_singleton("InventorySystem", inventory_system);
