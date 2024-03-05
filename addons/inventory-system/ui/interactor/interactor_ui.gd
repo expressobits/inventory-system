@@ -23,11 +23,11 @@ func _ready():
 	default_interact_message_position = interact_position.position
 
 
-func _on_preview_interacted(actions : Array[InteractAction], position_on_screen : Vector2):
+func _on_preview_interacted(actions : Array, position_on_screen : Vector2):
 	preview_interact(actions, position_on_screen)
 
 
-func preview_interact(actions : Array[InteractAction], position_on_screen : Vector2):
+func preview_interact(actions : Array, position_on_screen : Vector2):
 	for i in interact_messages:
 		i.visible = true
 	if position_on_screen == Vector2.ZERO:
@@ -40,6 +40,7 @@ func preview_interact(actions : Array[InteractAction], position_on_screen : Vect
 		var interact_message = interact_messages[i]
 		if i < actions.size():
 			interact_message.show_message(actions[i].input, actions[i].description)
+			
 		else:
 			interact_message.hide_message()
 		
