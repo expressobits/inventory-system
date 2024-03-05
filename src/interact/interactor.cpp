@@ -1,5 +1,6 @@
 #include "interactor.h"
 #include <godot_cpp/classes/input.hpp>
+#include <string>
 
 void Interactor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_inventory_handler_path", "inventory_handler_path"), &Interactor::set_inventory_handler_path);
@@ -21,7 +22,7 @@ void Interactor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_inventory_handler"), &Interactor::get_inventory_handler);
 	ClassDB::bind_method(D_METHOD("get_crafter"), &Interactor::get_crafter);
 	ClassDB::bind_method(D_METHOD("get_hotbar"), &Interactor::get_hotbar);
-	ADD_SIGNAL(MethodInfo("preview_interacted", PropertyInfo(Variant::ARRAY, "actions", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "InteractAction"))));
+	ADD_SIGNAL(MethodInfo("preview_interacted", PropertyInfo(Variant::ARRAY, "actions"), PropertyInfo(Variant::VECTOR2, "positions")));
 	// ADD_SIGNAL(MethodInfo("interacted", PropertyInfo(Variant::OBJECT, "object")));
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory_handler_path"), "set_inventory_handler_path", "get_inventory_handler_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "crafter_path"), "set_crafter_path", "get_crafter_path");
@@ -85,8 +86,12 @@ void Interactor::try_interact() {
 		return;
 	Node *raycast = get_raycast();
 	ERR_FAIL_NULL_MSG(raycast, "'raycast' is null in Interactor!");
-	Object *object = raycast->call("get_collider");
-	last_interact_object = object;
+	Object *object = nullptr;
+	if (raycast->has_method("get_collider")) {
+		Variant object_var = raycast->call("get_collider");
+		object = object_var;
+		last_interact_object = object;
+	}
 	Vector2 pos = Vector2(0, 0);
 	Node *camera_node = get_node_or_null(camera_path);
 	ERR_FAIL_NULL_MSG(camera_node, "'camera' is null in Interactor!");
@@ -103,8 +108,11 @@ void Interactor::try_interact() {
 	if (raycast->call("is_colliding")) {
 		object_actions = get_actions(node);
 	}
-	total_actions.append_array(object_actions);
-	total_actions.append_array(hand_actions);
+	for (size_t i = 0; i < object_actions.size(); i++)
+		total_actions.append(object_actions[i]);
+	for (size_t i = 0; i < hand_actions.size(); i++)
+		total_actions.append(hand_actions[i]);
+
 	emit_signal("preview_interacted", total_actions, pos);
 	interact_object(node, object_actions);
 	interact_hand_item(actual_hand_object, hand_actions);
@@ -123,7 +131,7 @@ TypedArray<InteractAction> Interactor::get_actions(Node *node) const {
 		return actions;
 	if (node != nullptr && node->has_method("get_interact_actions")) {
 		Variant actions_var = node->call("get_interact_actions", this);
-		TypedArray<InteractAction> actions = TypedArray<InteractAction>(actions_var);
+		actions = TypedArray<InteractAction>(actions_var);
 	}
 	return actions;
 }
