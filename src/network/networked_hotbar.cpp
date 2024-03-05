@@ -13,8 +13,8 @@ void NetworkedHotbar::change_selection_response_rpc(const int new_index) {
 }
 
 void NetworkedHotbar::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("change_selection_a_rpc"), &NetworkedHotbar::change_selection_rpc);
-	ClassDB::bind_method(D_METHOD("change_selection_response_a_rpc"), &NetworkedHotbar::change_selection_response_rpc);
+	ClassDB::bind_method(D_METHOD("change_selection_rpc"), &NetworkedHotbar::change_selection_rpc);
+	ClassDB::bind_method(D_METHOD("change_selection_response_rpc"), &NetworkedHotbar::change_selection_response_rpc);
 }
 
 void NetworkedHotbar::_ready() {
