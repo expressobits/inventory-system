@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=17 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_gogru"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_j20bs"]
@@ -8,7 +8,6 @@
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_crafter.gd" id="7_8fje4"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_hotbar.gd" id="7_rl5m0"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/networked_object_placer.gd" id="9_nis2j"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
 
@@ -68,7 +67,6 @@ sync_item_added_signal = true
 sync_item_removed_signal = true
 
 [node name="Hotbar" parent="CharacterInventorySystem" index="1"]
-script = ExtResource("7_rl5m0")
 
 [node name="Crafter" parent="CharacterInventorySystem" index="2"]
 script = ExtResource("7_8fje4")
