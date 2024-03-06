@@ -55,11 +55,9 @@ public:
 	void transaction_to_rpc(const NodePath object_path);
 	void close_all_inventories_rpc();
 	void _on_updated_transaction_slot_rpc(const int item_id, const int amount);
-	// === LOCAL INVENTORY CALLS ===
-	// Calling the main inventory can be local, avoiding a new network rpc call
-	bool is_open_main_inventory() const override;
-	bool open_main_inventory() override;
-	bool close_main_inventory() override;
+	// === SERVER RESPONSES ===
+	void open_response_rpc(const NodePath object_path);
+	void close_response_rpc(const NodePath object_path);
 };
 
 #endif // NETWORKED_INVENTORY_HANDLER_CLASS_H

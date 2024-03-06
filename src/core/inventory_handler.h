@@ -17,11 +17,11 @@ private:
 	Node *drop_parent;
 	Node *drop_parent_position;
 	// TypedArray<Inventory> inventories;
-	TypedArray<NodePath> opened_inventories;
 	// TODO More slot transactions (Queue transactions equal Project Zomboid)
 	Ref<Slot> transaction_slot;
 
 protected:
+	TypedArray<NodePath> opened_inventories;
 	static void _bind_methods();
 	virtual void _instantiate_dropped_item(Ref<PackedScene> &dropped_item, const Ref<Item> &item);
 	void _set_transaction_slot(const Ref<Item> &item, const int &amount);

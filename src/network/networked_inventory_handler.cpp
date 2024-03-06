@@ -13,15 +13,19 @@ void NetworkedInventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("close_rpc"), &NetworkedInventoryHandler::close_rpc);
 	ClassDB::bind_method(D_METHOD("to_transaction_rpc", "slot_index", "object_path", "amount"), &NetworkedInventoryHandler::to_transaction_rpc);
 	ClassDB::bind_method(D_METHOD("transaction_to_at_rpc", "slot_index", "object_path", "amount_to_move"), &NetworkedInventoryHandler::transaction_to_at_rpc);
-	ClassDB::bind_method(D_METHOD("transaction_to_rpc", "object_path"), &NetworkedInventoryHandler::transaction_to_at_rpc);
+	ClassDB::bind_method(D_METHOD("transaction_to_rpc", "object_path"), &NetworkedInventoryHandler::transaction_to_rpc);
 	ClassDB::bind_method(D_METHOD("close_all_inventories_rpc"), &NetworkedInventoryHandler::close_all_inventories_rpc);
 	ClassDB::bind_method(D_METHOD("_on_updated_transaction_slot_rpc"), &NetworkedInventoryHandler::_on_updated_transaction_slot_rpc);
+	ClassDB::bind_method(D_METHOD("open_response_rpc"), &NetworkedInventoryHandler::open_response_rpc);
+	ClassDB::bind_method(D_METHOD("close_response_rpc"), &NetworkedInventoryHandler::close_response_rpc);
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "drop_item_spawner_path"), "set_drop_item_spawner_path", "get_drop_item_spawner_path");
 }
 
 void NetworkedInventoryHandler::_ready() {
-	if (get_multiplayer()->is_server())
+	if (get_multiplayer()->is_server()){
 		connect("updated_transaction_slot", callable_mp(this, &NetworkedInventoryHandler::_on_updated_transaction_slot));
+		// connect("opened", callable_mp(this, &NetworkedInventoryHandler::_on_updated_transaction_slot));
+	}
 	create_rpc_config("drop_rpc");
 	create_rpc_config("add_to_inventory_rpc");
 	create_rpc_config("pick_to_inventory_rpc");
@@ -34,6 +38,8 @@ void NetworkedInventoryHandler::_ready() {
 	create_rpc_config("transaction_to_rpc");
 	create_rpc_config("close_all_inventories_rpc");
 	create_rpc_config("_on_updated_transaction_slot_rpc", MultiplayerAPI::RPC_MODE_AUTHORITY);
+	create_rpc_config("open_response_rpc", MultiplayerAPI::RPC_MODE_AUTHORITY);
+	create_rpc_config("close_response_rpc", MultiplayerAPI::RPC_MODE_AUTHORITY);
 	InventoryHandler::_ready();
 }
 
@@ -92,7 +98,6 @@ void NetworkedInventoryHandler::drop_transaction() {
 bool NetworkedInventoryHandler::open(Inventory *inventory) {
 	if (!get_multiplayer()->is_server()) {
 		rpc_id(1, "open_rpc", inventory->get_path());
-		// emit_signal("opened", inventory);
 	} else
 		open_rpc(inventory->get_path());
 	return true;
@@ -213,7 +218,9 @@ void NetworkedInventoryHandler::open_rpc(const NodePath object_path) {
 	Inventory *inventory = get_node<Inventory>(object_path);
 	if (inventory == nullptr)
 		return;
-	InventoryHandler::open(inventory);
+	if(InventoryHandler::open(inventory)){
+		rpc("open_response_rpc", object_path);
+	}
 }
 
 void NetworkedInventoryHandler::close_rpc(const NodePath object_path) {
@@ -222,7 +229,9 @@ void NetworkedInventoryHandler::close_rpc(const NodePath object_path) {
 	Inventory *inventory = get_node<Inventory>(object_path);
 	if (inventory == nullptr)
 		return;
-	InventoryHandler::close(inventory);
+	if(InventoryHandler::close(inventory)){
+		rpc("close_response_rpc", object_path);
+	}
 }
 
 void NetworkedInventoryHandler::to_transaction_rpc(const int slot_index, const NodePath object_path, const int amount) {
@@ -263,24 +272,23 @@ void NetworkedInventoryHandler::_on_updated_transaction_slot_rpc(const int item_
 	_set_transaction_slot(item, amount);
 }
 
-bool NetworkedInventoryHandler::is_open_main_inventory() const {
-	return InventoryHandler::is_open(get_inventory(0));
+void NetworkedInventoryHandler::open_response_rpc(const NodePath object_path) {
+	Inventory *inventory = get_node<Inventory>(object_path);
+	if (inventory == nullptr)
+		return;
+	opened_inventories.append(inventory->get_path());
+	emit_signal("opened", inventory);
 }
 
-bool NetworkedInventoryHandler::open_main_inventory() {
-	return InventoryHandler::open(get_inventory(0));
-}
-
-bool NetworkedInventoryHandler::close_main_inventory() {
-	bool response = InventoryHandler::close(get_inventory(0));
-	if (response && is_transaction_active()) {
-		Ref<Item> item = get_transaction_slot()->get_item();
-		int amount_no_add = get_inventory(0)->add(item, get_transaction_slot()->get_amount());
-		if (amount_no_add > 0)
-			drop(item, amount_no_add);
-		_set_transaction_slot(nullptr, 0);
-	}
-	return response;
+void NetworkedInventoryHandler::close_response_rpc(const NodePath object_path) {
+	Inventory *inventory = get_node<Inventory>(object_path);
+	if (inventory == nullptr)
+		return;
+	int index = opened_inventories.find(inventory->get_path());
+	if (index == -1)
+		return;
+	opened_inventories.remove_at(index);
+	emit_signal("closed", inventory);
 }
 
 void NetworkedInventoryHandler::_instantiate_dropped_item(Ref<PackedScene> &dropped_item, const Ref<Item> &item) {
