@@ -73,9 +73,11 @@ InventoryHandler::~InventoryHandler() {
 }
 
 void InventoryHandler::_ready() {
+	if(transaction_slot == nullptr) {
+		set_transaction_slot(memnew(Slot()));
+	}
 	drop_parent = get_node_or_null(drop_parent_path);
 	drop_parent_position = get_node_or_null(drop_parent_position_path);
-	set_transaction_slot(memnew(Slot()));
 	NodeInventories::_ready();
 }
 
@@ -347,6 +349,7 @@ void InventoryHandler::transaction_to(Inventory *inventory) {
 }
 
 bool InventoryHandler::is_transaction_active() const {
+	ERR_FAIL_NULL_V_MSG(transaction_slot, false, "transaction_slot is null in is_transaction_active() method on InventoryHandler!");
 	return transaction_slot->has_valid();
 }
 
