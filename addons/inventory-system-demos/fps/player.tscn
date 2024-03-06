@@ -16,7 +16,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_cvc2x"]
+[sub_resource type="Slot" id="Slot_frdne"]
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -45,7 +45,7 @@ mesh = SubResource("BoxMesh_d1alo")
 [node name="CharacterInventorySystem" parent="." instance=ExtResource("3_hbu24")]
 
 [node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
-transaction_slot = SubResource("Slot_cvc2x")
+transaction_slot = SubResource("Slot_frdne")
 database = ExtResource("4_ljenf")
 
 [node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
