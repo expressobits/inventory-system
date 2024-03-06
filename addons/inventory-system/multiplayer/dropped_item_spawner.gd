@@ -16,6 +16,7 @@ func _spawn_custom(data : Array):
 		print("data incompatible!")
 		return null
 	var obj = load(data[2]).instantiate()
+	PackedScene
 	obj.position = data[0]
 	obj.rotation = data[1]
 	var item = Item.new()

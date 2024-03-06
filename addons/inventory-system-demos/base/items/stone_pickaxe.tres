@@ -1,7 +1,7 @@
 [gd_resource type="ItemDefinition" load_steps=3 format=3 uid="uid://cm2wwn11jv4ev"]
 
 [ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system-demos/assets/icons/stone_pickaxe.png" id="1_hlhk0"]
-[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="1_jl1dl"]
+[ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="1_jl1dl"]
 
 [resource]
 id = 4
@@ -9,7 +9,6 @@ can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("1_hlhk0")
-weight = 0.0
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
 "durability": 100.0,

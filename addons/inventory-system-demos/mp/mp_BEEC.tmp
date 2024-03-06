@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=27 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="4_jao3a"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/craft/networked_craft_station.gd" id="7_c3s0f"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_hx8ff"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="10_12bug"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
@@ -21,7 +22,7 @@ size = Vector3(0.125, 0.125, 0.125)
 [sub_resource type="BoxMesh" id="BoxMesh_i0mw4"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_irq24"]
+[sub_resource type="Slot" id="Slot_b5h60"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -89,12 +90,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_i0mw4")
 
 [node name="CharacterInventorySystem" type="NodeInventories" parent="."]
-database = ExtResource("4_jao3a")
 script = ExtResource("4_73by0")
 
-[node name="InventoryHandler" type="NetworkedInventoryHandler" parent="CharacterInventorySystem"]
+[node name="InventoryHandler" type="InventoryHandler" parent="CharacterInventorySystem"]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_irq24")
+transaction_slot = SubResource("Slot_b5h60")
 database = ExtResource("4_jao3a")
 
 [node name="Inventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]
@@ -123,6 +123,7 @@ database = ExtResource("4_jao3a")
 input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])
 output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory")])
 database = ExtResource("4_jao3a")
+script = ExtResource("7_c3s0f")
 
 [node name="Interactor" type="Interactor" parent="CharacterInventorySystem"]
 raycast_path = NodePath("../../Camera3D/RayCast3D")

@@ -1,7 +1,7 @@
 [gd_resource type="ItemDefinition" load_steps=3 format=3 uid="uid://dbxx0l6t8pihv"]
 
 [ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://addons/inventory-system-demos/assets/icons/stone-axe.png" id="1_5x1h2"]
-[ext_resource type="Resource" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="1_b2ekf"]
+[ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="1_b2ekf"]
 
 [resource]
 id = 3
@@ -9,7 +9,6 @@ can_stack = false
 max_stack = 1
 name = "Stone Axe"
 icon = ExtResource("1_5x1h2")
-weight = 0.0
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
 "durability": 100.0,
