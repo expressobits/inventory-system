@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=26 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://djh0ig8jxkla5" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -15,7 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="11_ftexy"]
 [ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="12_8i3r8"]
 [ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="13_v1ips"]
+[ext_resource type="PackedScene" uid="uid://ck0mex6rxeyan" path="res://addons/inventory-system-demos/mp/workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://addons/inventory-system-demos/fps/props/shelf.tscn" id="17_psfnf"]
+[ext_resource type="PackedScene" uid="uid://buvddtc72m2fk" path="res://addons/inventory-system-demos/mp/campfire.tscn" id="17_qo5oj"]
 
 [sub_resource type="Slot" id="Resource_6euhu"]
 
@@ -124,6 +126,8 @@ transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319
 [node name="workbenchAnvil" parent="." instance=ExtResource("12_8i3r8")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
 
+[node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
+
 [node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
 
@@ -133,6 +137,8 @@ create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Tools Inventory"
 script = ExtResource("7_8khhq")
+
+[node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
 
 [node name="Shelf" parent="." instance=ExtResource("17_psfnf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)

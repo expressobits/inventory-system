@@ -21,7 +21,7 @@ size = Vector3(0.125, 0.125, 0.125)
 [sub_resource type="BoxMesh" id="BoxMesh_i0mw4"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_8hga1"]
+[sub_resource type="Slot" id="Slot_yhfo5"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -94,7 +94,7 @@ script = ExtResource("4_73by0")
 
 [node name="InventoryHandler" type="NetworkedInventoryHandler" parent="CharacterInventorySystem"]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_8hga1")
+transaction_slot = SubResource("Slot_yhfo5")
 database = ExtResource("4_jao3a")
 
 [node name="Inventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]
@@ -115,11 +115,11 @@ script = ExtResource("4_ggduv")
 inventory = NodePath("../InventoryHandler/Inventory")
 database = ExtResource("4_jao3a")
 
-[node name="Crafter" type="Crafter" parent="CharacterInventorySystem"]
+[node name="Crafter" type="NetworkedCrafter" parent="CharacterInventorySystem"]
 main_station = NodePath("CraftStation")
 database = ExtResource("4_jao3a")
 
-[node name="CraftStation" type="CraftStation" parent="CharacterInventorySystem/Crafter"]
+[node name="CraftStation" type="NetworkedCraftStation" parent="CharacterInventorySystem/Crafter"]
 input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])
 output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory")])
 database = ExtResource("4_jao3a")
