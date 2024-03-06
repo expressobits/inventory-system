@@ -99,12 +99,13 @@ bool Crafter::close_main_craft_station() {
 }
 
 void Crafter::close_all_craft_stations() {
-	while (opened_stations.size() > 0) {
-		NodePath station_path = opened_stations[0];
+	int opened_stations_size = opened_stations.size();
+	for (size_t i = opened_stations_size; i > 0; i--) {
+		NodePath station_path = opened_stations[i - 1];
 		CraftStation *craft_station = get_craft_station(station_path);
 		if (craft_station == nullptr) {
 			ERR_PRINT("Passed object is not a CraftStation!");
-			opened_stations.remove_at(0);
+			opened_stations.remove_at(i);
 			continue;
 		}
 		close(craft_station);

@@ -24,6 +24,8 @@
 #include "inventory_system.h"
 #include "network/networked_hotbar.h"
 #include "network/networked_inventory_handler.h"
+#include "network/networked_craft_station.h"
+#include "network/networked_crafter.h"
 
 using namespace godot;
 
@@ -53,6 +55,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<InventorySystem>();
 	ClassDB::register_class<NetworkedHotbar>();
 	ClassDB::register_class<NetworkedInventoryHandler>();
+	ClassDB::register_class<NetworkedCraftStation>();
+	ClassDB::register_class<NetworkedCrafter>();
 
 	inventory_system = memnew(InventorySystem);
 	godot::Engine::get_singleton()->register_singleton("InventorySystem", inventory_system);

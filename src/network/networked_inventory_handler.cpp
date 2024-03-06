@@ -22,10 +22,9 @@ void NetworkedInventoryHandler::_bind_methods() {
 }
 
 void NetworkedInventoryHandler::_ready() {
-	if (get_multiplayer()->is_server()){
+	if (get_multiplayer()->is_server())
 		connect("updated_transaction_slot", callable_mp(this, &NetworkedInventoryHandler::_on_updated_transaction_slot));
-		// connect("opened", callable_mp(this, &NetworkedInventoryHandler::_on_updated_transaction_slot));
-	}
+	
 	create_rpc_config("drop_rpc");
 	create_rpc_config("add_to_inventory_rpc");
 	create_rpc_config("pick_to_inventory_rpc");

@@ -23,7 +23,6 @@ private:
 	bool auto_craft = false;
 	int processing_mode = 0;
 	bool is_open = false;
-	TypedArray<Crafting> craftings;
 	TypedArray<int> valid_recipes;
 
 	void _process_crafts(float delta);
@@ -33,6 +32,7 @@ private:
 	void _check_auto_crafts();
 
 protected:
+	TypedArray<Crafting> craftings;
 	static void _bind_methods();
 
 public:
@@ -48,13 +48,13 @@ public:
 	void _setup_connections();
 	void add_crafting(int recipe_index, const Ref<Recipe> &recipe);
 	void remove_crafting(int crafting_index);
-	void finish_crafting(int crafting_index);
+	virtual void finish_crafting(int crafting_index);
 	bool is_crafting() const;
 	int crafting_count() const;
 	bool can_craft(const Ref<Recipe> &recipe) const;
 	bool contains_ingredients(const Ref<Recipe> &recipe) const;
-	void craft(int recipe_index);
-	void cancel_craft(int crafting_index);
+	virtual void craft(int recipe_index);
+	virtual void cancel_craft(int crafting_index);
 	bool open();
 	bool close();
 	Inventory *get_input_inventory(const int &index = 0) const;

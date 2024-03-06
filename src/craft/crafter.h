@@ -14,9 +14,9 @@ class Crafter : public NodeInventories {
 
 private:
 	NodePath main_station;
-	TypedArray<NodePath> opened_stations;
 
 protected:
+	TypedArray<NodePath> opened_stations;
 	static void _bind_methods();
 
 public:
@@ -26,8 +26,8 @@ public:
 	NodePath get_main_station() const;
 	void set_opened_stations(const TypedArray<NodePath> &new_opened_stations);
 	TypedArray<NodePath> get_opened_stations() const;
-	bool open(CraftStation *craft_station);
-	bool close(CraftStation *craft_station);
+	virtual bool open(CraftStation *craft_station);
+	virtual bool close(CraftStation *craft_station);
 	bool is_open_main_craft_station() const;
 	bool is_open_any_station() const;
 	bool is_open(const CraftStation *craft_station) const;
