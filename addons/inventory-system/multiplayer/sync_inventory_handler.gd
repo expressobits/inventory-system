@@ -42,14 +42,14 @@ func updated_transaction_slot_rpc(item_id : int, amount : int):
 @rpc
 func opened_rpc(inventory_path : NodePath):
 	var inventory = inventory_handler.get_node(inventory_path)
-	inventory_handler.opened_inventories.append(inventory.get_path())
+	inventory_handler.opened_inventories.append(inventory_handler.get_path_to(inventory))
 	inventory_handler.opened.emit(inventory)
 
 
 @rpc
 func closed_rpc(inventory_path : NodePath):
 	var inventory = inventory_handler.get_node(inventory_path)
-	var index = inventory_handler.opened_inventories.find(inventory.get_path())
+	var index = inventory_handler.opened_inventories.find(inventory_handler.get_path_to(inventory))
 	if index == -1:
 		return
 	inventory_handler.opened_inventories.remove_at(index)
