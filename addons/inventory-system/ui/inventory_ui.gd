@@ -19,8 +19,12 @@ signal inventory_point_down(event: InputEvent, inventory : Inventory)
 ## Parent [Control] for the [SlotUI] instances
 @export var slots_container : Container
 
+@export var console_mode : bool
+
 ## List of [SlotUI] representing each [Inventory] slot
 var slots : Array[SlotUI]
+
+
 
 
 func _ready():
@@ -67,7 +71,7 @@ func _update_slots():
 		slots.append(slot_obj)
 		slot_obj.update_info_with_slot(slot)
 		
-	if not InventorySystem.console_mode:
+	if not console_mode:
 		return
 
 	## Set focus neighbors
@@ -109,7 +113,7 @@ func _on_slot_removed(index):
 
 
 func _on_slot_gui_input(event : InputEvent, slot_obj):
-	if event is InputEventMouseButton or (InventorySystem.console_mode and event.is_action("ui_accept")):
+	if event is InputEventMouseButton or (console_mode and event.is_action("ui_accept")):
 		if event.pressed:	
 			var index = slots.find(slot_obj)
 			if index < 0:

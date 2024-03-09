@@ -19,6 +19,8 @@ func create_player(peer_id : int):
 	players.append(player)
 	player.position = Vector3(0,2,0)
 	add_child(player)
+	if multiplayer.get_unique_id() == peer_id:
+		$"UI/Inventory System UI".setup(player.get_node("CharacterInventorySystem"))
 
 
 @rpc	

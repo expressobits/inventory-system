@@ -3,6 +3,8 @@ extends Control
 
 ## Represents a [Recipe] in the interface. It is instantiated by [CraftStationUI]
 
+signal on_craft(station : CraftStation, recipe_index : int)
+
 # Scene to instantiate the [IngredientUI]
 @export var ingredient_scene : PackedScene
 
@@ -14,19 +16,15 @@ extends Control
 @onready var required_items_list = %RequiredItemsList
 
 
-var _recipe_index : int
-var _craft_station : CraftStation
+var recipe_index : int
+var craft_station : CraftStation
 var _ingredients : Array[IngredientUI]
-
-func _ready():
-	craft_button.button_down.connect(_on_craft_button_button_down.bind())
-
 
 ## Configures the recipe with index values from [Recipe] from [InventoryDatabase].
 ## Called by [CraftStationUI].
 func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
-	self._craft_station = craft_station
-	self._recipe_index = recipe_index
+	self.craft_station = craft_station
+	self.recipe_index = recipe_index
 	icon.texture = recipe.products[0].item.definition.icon
 	item_name.text = recipe.products[0].item.definition.name
 	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
@@ -52,10 +50,6 @@ func _clear_ingredients():
 		_ingredients.clear()		
 
 
-func _on_craft_button_button_down():
-	_craft_station.craft(_recipe_index)
-
-
 func _on_updated_slot(slot_index : int):
 	_check_if_has_ingredients()
 
@@ -65,5 +59,5 @@ func _on_removed_item(item : ItemDefinition, amount : int):
 
 
 func _check_if_has_ingredients():
-	var recipe = _craft_station.database.recipes[_recipe_index]
-	craft_button.disabled = not _craft_station.can_craft(recipe)
+	var recipe = craft_station.database.recipes[recipe_index]
+	craft_button.disabled = not craft_station.can_craft(recipe)

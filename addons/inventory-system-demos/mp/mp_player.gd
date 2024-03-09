@@ -10,6 +10,7 @@ func _enter_tree():
 	$CharacterInventorySystem/Hotbar.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter.set_multiplayer_authority(1)
 	$CharacterInventorySystem/Crafter/CraftStation.set_multiplayer_authority(1)
+	$SyncCrafter.set_multiplayer_authority(1)
 
 
 func _ready():

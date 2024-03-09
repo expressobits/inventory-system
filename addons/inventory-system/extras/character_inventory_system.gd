@@ -53,10 +53,6 @@ extends NodeInventories
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	InventorySystem.setup_inventory_handler(inventory_handler)
-	InventorySystem.setup_hotbar(hotbar)
-	InventorySystem.setup_crafter(crafter)
-	InventorySystem.setup_interactor(interactor)
 	
 	# Setup for audios 🔊
 	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
@@ -90,17 +86,21 @@ func _physics_process(_delta : float):
 
 
 func _update_opened_inventories(_inventory : Inventory):
-	if InventorySystem.get_inventory_handler().is_open_main_inventory():
+	if inventory_handler.is_open_main_inventory():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
 func _update_opened_stations(_craft_station : CraftStation):
-	if InventorySystem.get_crafter().is_open_any_station():
+	if crafter.is_open_any_station():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+
+func craft(craft_station : CraftStation, recipe_index : int):
+	craft_station.craft(recipe_index)
 
 
 func inventory_inputs():
@@ -115,8 +115,7 @@ func inventory_inputs():
 		if inventory_handler.is_open_main_inventory():
 			inventory_handler.close_main_inventory()
 			inventory_handler.close_all_inventories()
-		if crafter.is_open_any_station():
-			crafter.close_all_craft_stations()
+		close_craft_stations()
 			
 	if Input.is_action_just_released(toggle_craft_panel_input):
 		if crafter.is_open_main_craft_station():
@@ -124,6 +123,11 @@ func inventory_inputs():
 			crafter.close_all_craft_stations()
 		else:
 			crafter.open_main_craft_station()
+
+
+func close_craft_stations():
+	if crafter.is_open_any_station():
+		crafter.close_all_craft_stations()
 
 
 func hot_bar_inputs(event : InputEvent):
@@ -150,7 +154,6 @@ func open_inventory(inventory : Inventory):
 func open_station(craft_station : CraftStation):
 	if not crafter.is_open(craft_station):
 		crafter.open(craft_station)
-
 
 func _on_inventory_handler_picked(_dropped_item):
 	picked_audio.play()

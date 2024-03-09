@@ -5,7 +5,7 @@ extends Control
 ## It uses instanced scenes from [RecipeUI] to represent every possible station recipe.
 ## Use the [CraftingsUI] to represent each active crafting in the station.
 
-
+signal on_craft(craft_station : CraftStation, recipe_index : int)
 
 ## It uses instanced scenes from [RecipeUI] to represent every possible station recipe.
 @export var recipe_ui_scene : PackedScene
@@ -41,6 +41,7 @@ func open(craft_station : CraftStation):
 		_recipe_uis.append(recipe_ui)
 		_recipes_container.add_child(recipe_ui)
 		recipe_ui.set_recipe(craft_station, recipe, recipe_index)
+		recipe_ui.craft_button.button_down.connect(_on_craft_button_button_down.bind(craft_station, recipe_index))
 	visible = true
 	var valid_input = view_input_inventory and craft_station.input_inventories.size() > 0 and craft_station.input_inventories[0] != null
 	var valid_output = view_output_inventory and craft_station.output_inventories.size() > 0 and craft_station.output_inventories[0] != null
@@ -61,3 +62,6 @@ func _clear():
 	for recipe_ui in _recipe_uis:
 		recipe_ui.queue_free()
 	_recipe_uis.clear()
+
+func _on_craft_button_button_down(craft_station : CraftStation, recipe_index : int):
+	on_craft.emit(craft_station, recipe_index)

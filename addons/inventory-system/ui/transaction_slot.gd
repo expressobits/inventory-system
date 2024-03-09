@@ -3,6 +3,8 @@ extends SlotUI
 
 ## Special [SlotUI] that only represents slot information in transaction
 
+var console_mode : bool
+
 func _ready():
 	clear_info()
 	
@@ -21,7 +23,7 @@ func clear_info():
 
 func _process(delta):
 	if self.visible:
-		if InventorySystem.console_mode:
+		if console_mode:
 			if get_viewport().gui_get_focus_owner():
 				self.global_position = get_viewport().gui_get_focus_owner().global_position
 			else:

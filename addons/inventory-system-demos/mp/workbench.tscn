@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ck0mex6rxeyan"]
+[gd_scene load_steps=10 format=3 uid="uid://ck0mex6rxeyan"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/workbench.gd" id="1_x8r4c"]
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_l37cw"]
 [ext_resource type="CraftStationType" uid="uid://dvvni8o3rpo4s" path="res://addons/inventory-system-demos/base/craft_stations/workbench.tres" id="3_exela"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="4_648t7"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="5_8yf84"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="5_wlv7c"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_craft_station.gd" id="6_rypik"]
 
 [sub_resource type="InteractAction" id="Resource_ypp5l"]
 description = "Open Station"
@@ -31,7 +32,7 @@ shape = SubResource("BoxShape3D_v5tyu")
 [node name="workbench" parent="." instance=ExtResource("2_l37cw")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 
-[node name="CraftStation" type="NetworkedCraftStation" parent="."]
+[node name="CraftStation" type="CraftStation" parent="."]
 input_inventories = Array[NodePath]([NodePath("../InputInventory")])
 output_inventories = Array[NodePath]([NodePath("../InputInventory")])
 type = ExtResource("3_exela")
@@ -41,4 +42,11 @@ database = ExtResource("4_648t7")
 [node name="InputInventory" type="Inventory" parent="."]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 database = ExtResource("4_648t7")
-script = ExtResource("5_8yf84")
+
+[node name="NetworkedInventory" type="Node" parent="." node_paths=PackedStringArray("inventory")]
+script = ExtResource("5_wlv7c")
+inventory = NodePath("../InputInventory")
+
+[node name="SyncCraftStation" type="Node" parent="." node_paths=PackedStringArray("craft_station")]
+script = ExtResource("6_rypik")
+craft_station = NodePath("../CraftStation")

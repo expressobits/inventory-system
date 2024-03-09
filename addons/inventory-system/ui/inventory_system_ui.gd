@@ -6,16 +6,18 @@ extends Control
 
 @export var console_mode : bool = false:
 	set(value):
-		InventorySystem.console_mode = value
+		transaction_slot_ui.console_mode = console_mode
+		for inventory_ui in player_inventories_ui:
+			inventory_ui.console_mode = console_mode
+		loot_inventory_ui.console_mode = console_mode
 		console_mode = value
-
+		
+@export var character : CharacterInventorySystem
 ## Stores [InventoryHandler] information to connect all signals and callbacks
-var inventory_handler : InventoryHandler
-
+@export var inventory_handler : InventoryHandler
 ## Stores [Crafter] information to connect all signals and callbacks
-var crafter : Crafter
-
-var interactor : Interactor
+@export var crafter : Crafter
+@export var interactor : Interactor
 
 ## SlotUI special that stores inventory transaction information
 @onready var transaction_slot_ui : TransactionSlotUI = get_node(NodePath("TransactionSlotUI"))
@@ -41,7 +43,8 @@ var interactor : Interactor
 
 
 func _ready():
-	_setup_inventory_system_connection()
+	# TODO connect
+	# _setup_inventory_system_connection()
 	for player_inventory_ui in player_inventories_ui:
 		player_inventory_ui.visible = false
 	loot_inventory_ui.visible = false
@@ -62,65 +65,33 @@ func _ready():
 		other_craft_station_ui.output_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
 		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
 	drop_area.gui_input.connect(_drop_area_input.bind())
-
-
-func _setup_inventory_system_connection():
-	if InventorySystem.get_inventory_handler():
-		_on_inventory_handler_changed()
-	if InventorySystem.get_crafter():
-		_on_crafter_changed()
-	if InventorySystem.get_interactor():
-		_on_interactor_changed()
-	if InventorySystem.get_hotbar():
-		_on_hotbar_changed()
-	InventorySystem.inventory_handler_changed.connect(_on_inventory_handler_changed.bind())
-	InventorySystem.crafter_changed.connect(_on_crafter_changed.bind())
-	InventorySystem.interactor_changed.connect(_on_interactor_changed.bind())
-	InventorySystem.hotbar_changed.connect(_on_hotbar_changed.bind())
-
-
-func _on_inventory_handler_changed():
-	set_player_inventory_handler(InventorySystem.get_inventory_handler())
-
-
-func _on_crafter_changed():
-	set_crafter(InventorySystem.get_crafter())
-
-
-func _on_interactor_changed():
-	set_interactor(InventorySystem.get_interactor())
-
-
-func _on_hotbar_changed():
-	set_hotbar(InventorySystem.get_hotbar())
+	
+	other_craft_station_ui.on_craft.connect(_on_craft.bind())
 
 
 ## Setup inventory handler and connect all signals
-func set_player_inventory_handler(handler : InventoryHandler):
-	inventory_handler = handler
+func setup(character : CharacterInventorySystem):
+	self.character = character
+	# Handler
+	inventory_handler = character.inventory_handler
 	var inventories : Array[Inventory]
-	for i in handler.inventories_path.size():
-		inventories.append(handler.get_inventory(i))
+	for i in character.inventory_handler.inventories_path.size():
+		inventories.append(character.inventory_handler.get_inventory(i))
 	set_player_inventories(inventories)
-	
 	inventory_handler.opened.connect(_on_open_inventory)
 	inventory_handler.closed.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 	
-
-func set_crafter(crafter : Crafter):
-	self.crafter = crafter
+	# Crafter
+	self.crafter = character.crafter
 	crafter.opened.connect(_on_open_craft_station.bind())
 	crafter.closed.connect(_on_close_craft_station.bind())
-
-
-func set_interactor(interactor : Interactor):
+	# Interactor
 	self.interactor = interactor
-	interactor_ui.setup(interactor)
-
-
-func set_hotbar(hotbar : Hotbar):
-	hotbar_ui.set_hotbar(hotbar)
+	interactor_ui.setup(character.interactor)
+	# Hotbar
+	hotbar_ui.set_hotbar(character.hotbar)
+	
 
 
 ## Setup player inventories
@@ -158,7 +129,7 @@ func _on_open_inventory(inventory : Inventory):
 # Open Craft Station	
 func _on_open_craft_station(craft_station : CraftStation):
 	# TODO #42 Different skins for different types of craft stations
-	if craft_station.get_path() == crafter.main_station:
+	if craft_station.get_path_to(crafter) == crafter.main_station:
 		player_craft_station_ui.open(craft_station)
 	else:
 		other_craft_station_ui.open(craft_station)
@@ -167,7 +138,7 @@ func _on_open_craft_station(craft_station : CraftStation):
 
 
 func _on_close_craft_station(craft_station : CraftStation):
-	if craft_station.get_path() == crafter.main_station:
+	if craft_station.get_path_to(crafter) == crafter.main_station:
 		player_craft_station_ui.close()
 	else:
 		other_craft_station_ui.close()
@@ -227,3 +198,6 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 
 func _updated_transaction_slot():
 	transaction_slot_ui.update_info_with_item(inventory_handler.transaction_slot)
+
+func _on_craft(craft_station : CraftStation, recipe_index : int):
+	character.craft(craft_station, recipe_index)
