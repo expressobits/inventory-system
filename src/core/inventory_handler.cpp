@@ -241,22 +241,24 @@ void InventoryHandler::swap_between_inventories(Inventory *inventory, const int 
 }
 
 bool InventoryHandler::open(Inventory *inventory) {
-	if (opened_inventories.has(inventory->get_path()))
+	NodePath inventory_path = get_path_to(inventory);
+	if (opened_inventories.has(inventory_path))
 		return false;
 	if (!inventory->open())
 		return false;
-	opened_inventories.append(inventory->get_path());
+	opened_inventories.append(inventory_path);
 	emit_signal("opened", inventory);
 	return true;
 }
 
 bool InventoryHandler::close(Inventory *inventory) {
-	int index = opened_inventories.find(inventory->get_path());
+	NodePath inventory_path = get_path_to(inventory);
+	int index = opened_inventories.find(inventory_path);
 	if (index == -1)
 		return false;
 	if (!inventory->close())
 		return false;
-	if (inventories_path.find(this->get_path_to(inventory)) != -1) {
+	if (inventories_path.find(inventory_path) != -1) {
 		if (is_transaction_active()) {
 			Ref<Item> item = transaction_slot->get_item();
 			int amount_no_add = inventory->add(item, transaction_slot->get_amount());
@@ -279,8 +281,9 @@ bool InventoryHandler::is_open_any_inventory() const {
 	return opened_inventories.size() > 0;
 }
 
-bool InventoryHandler::is_open(const Inventory *inventory) const {
-	return inventory->get_is_open() && opened_inventories.find(inventory->get_path()) != -1;
+bool InventoryHandler::is_open(Inventory *inventory) const {
+	NodePath inventory_path = get_path_to(inventory);
+	return inventory->get_is_open() && opened_inventories.find(inventory_path) != -1;
 }
 
 bool InventoryHandler::open_main_inventory() {

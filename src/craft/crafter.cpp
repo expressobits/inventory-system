@@ -42,17 +42,19 @@ TypedArray<NodePath> Crafter::get_opened_stations() const {
 }
 
 bool Crafter::open(CraftStation *craft_station) {
-	if (opened_stations.has(craft_station->get_path()))
+	NodePath craft_station_path = get_path_to(craft_station);
+	if (opened_stations.has(craft_station_path))
 		return false;
 	if (!craft_station->open())
 		return false;
-	opened_stations.append(craft_station->get_path());
+	opened_stations.append(craft_station_path);
 	emit_signal("opened", craft_station);
 	return true;
 }
 
 bool Crafter::close(CraftStation *craft_station) {
-	uint32_t index = opened_stations.find(craft_station->get_path());
+	NodePath craft_station_path = get_path_to(craft_station);
+	uint32_t index = opened_stations.find(craft_station_path);
 	if (index == -1)
 		return false;
 	if (!craft_station->close()) {

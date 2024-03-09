@@ -51,7 +51,7 @@ public:
 	virtual bool close(Inventory *inventory);
 	virtual bool is_open_main_inventory() const;
 	bool is_open_any_inventory() const;
-	bool is_open(const Inventory *inventory) const;
+	bool is_open(Inventory *inventory) const;
 	virtual bool open_main_inventory();
 	virtual bool close_main_inventory();
 	virtual void close_all_inventories();
