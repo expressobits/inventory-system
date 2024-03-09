@@ -71,4 +71,3 @@ func _update_craftings_rpc(craftings_data : Array):
 		var crafting = Crafting.new()
 		crafting.from_data(data)
 		craft_station.craftings.append(crafting)
-		print("loaded crafting")

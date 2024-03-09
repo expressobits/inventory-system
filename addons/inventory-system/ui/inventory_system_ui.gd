@@ -103,7 +103,7 @@ func set_player_inventories(player_inventories : Array[Inventory]):
 func _drop_area_input(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			inventory_handler.drop_transaction()
+			character.drop_transaction()
 
 
 func _open_player_inventory():

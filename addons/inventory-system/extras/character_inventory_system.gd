@@ -86,6 +86,11 @@ func _physics_process(_delta : float):
 
 
 func _update_opened_inventories(_inventory : Inventory):
+	print(inventory_handler.is_open_main_inventory())
+	print(inventory_handler.get_inventory(0).get_is_open())
+	print(inventory_handler.is_open(inventory_handler.get_inventory(0)))
+	print(inventory_handler.opened_inventories)
+	print(inventory_handler.inventories_path)
 	if inventory_handler.is_open_main_inventory():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
@@ -158,6 +163,10 @@ func open_inventory(inventory : Inventory):
 		inventory_handler.open(inventory)
 		if not inventory_handler.is_open_main_inventory():
 			inventory_handler.open_main_inventory()
+
+
+func drop_transaction():
+	inventory_handler.drop_transaction()
 
 
 func open_station(craft_station : CraftStation):

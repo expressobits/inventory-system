@@ -62,6 +62,12 @@ func hotbar_next_item():
 	else:
 		hotbar_next_item_rpc.rpc()
 
+func drop_transaction():
+	if multiplayer.is_server():
+		drop_transaction_rpc()
+	else:
+		drop_transaction_rpc.rpc()
+
 @rpc
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 	var station = get_node(craft_station_path)
@@ -78,7 +84,12 @@ func hotbar_previous_item_rpc():
 @rpc	
 func hotbar_next_item_rpc():
 	hotbar.next_item()
+
+@rpc
+func drop_transaction_rpc():
+	super.drop_transaction()
 	
+
 func _physics_process(_delta : float):
 	if Engine.is_editor_hint():
 		return

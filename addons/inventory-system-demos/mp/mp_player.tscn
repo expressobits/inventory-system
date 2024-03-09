@@ -1,10 +1,11 @@
-[gd_scene load_steps=28 format=3 uid="uid://djh0ig8jxkla5"]
+[gd_scene load_steps=29 format=3 uid="uid://djh0ig8jxkla5"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_j20bs"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_3qi1x"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="4_73by0"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="4_ggduv"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="4_jao3a"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_inventory_handler.gd" id="6_kt7ex"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_hx8ff"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="10_12bug"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="11_ioyuw"]
@@ -23,7 +24,7 @@ size = Vector3(0.125, 0.125, 0.125)
 [sub_resource type="BoxMesh" id="BoxMesh_i0mw4"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_034uy"]
+[sub_resource type="Slot" id="Slot_mfm08"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -96,7 +97,7 @@ script = ExtResource("4_73by0")
 
 [node name="InventoryHandler" type="NetworkedInventoryHandler" parent="CharacterInventorySystem"]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_034uy")
+transaction_slot = SubResource("Slot_mfm08")
 database = ExtResource("4_jao3a")
 
 [node name="Inventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]
@@ -118,6 +119,10 @@ database = ExtResource("4_jao3a")
 [node name="NetworkedInventory" type="Node" parent="CharacterInventorySystem/InventoryHandler/EquipmentInventory" node_paths=PackedStringArray("inventory")]
 script = ExtResource("4_ggduv")
 inventory = NodePath("../../Inventory")
+
+[node name="SyncInventoryHandler" type="Node" parent="CharacterInventorySystem/InventoryHandler" node_paths=PackedStringArray("inventory_handler")]
+script = ExtResource("6_kt7ex")
+inventory_handler = NodePath("..")
 
 [node name="Hotbar" type="Hotbar" parent="CharacterInventorySystem"]
 inventory = NodePath("../InventoryHandler/Inventory")
