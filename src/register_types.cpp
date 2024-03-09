@@ -20,16 +20,12 @@
 #include "craft/craft_station.h"
 #include "craft/crafter.h"
 #include "craft/crafting.h"
+#include "interact/interactor.h"
 #include "interact/interact_action.h"
-#include "inventory_system.h"
 #include "network/networked_hotbar.h"
 #include "network/networked_inventory_handler.h"
-#include "network/networked_craft_station.h"
-#include "network/networked_crafter.h"
 
 using namespace godot;
-
-InventorySystem *inventory_system = nullptr;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
@@ -52,22 +48,14 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<Crafting>();
 	ClassDB::register_class<InteractAction>();
 	ClassDB::register_class<Interactor>();
-	ClassDB::register_class<InventorySystem>();
 	ClassDB::register_class<NetworkedHotbar>();
 	ClassDB::register_class<NetworkedInventoryHandler>();
-	ClassDB::register_class<NetworkedCraftStation>();
-	ClassDB::register_class<NetworkedCrafter>();
-
-	inventory_system = memnew(InventorySystem);
-	godot::Engine::get_singleton()->register_singleton("InventorySystem", inventory_system);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	Engine::get_singleton()->unregister_singleton("InventorySystem");
-	memdelete(inventory_system);
 }
 
 extern "C" {
