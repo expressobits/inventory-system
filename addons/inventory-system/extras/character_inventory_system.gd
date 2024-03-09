@@ -134,15 +134,24 @@ func hot_bar_inputs(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
-				hotbar.previous_item()
+				hotbar_previous_item()
 			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-				hotbar.next_item()
+				hotbar_next_item()
 	if event is InputEventKey:
 		var input_key_event = event as InputEventKey
 		if event.is_pressed() and not event.is_echo():
 			if input_key_event.keycode > KEY_0 and input_key_event.keycode < KEY_9:
-				hotbar.set_selection_index(input_key_event.keycode - KEY_1)
+				hotbar_change_selection(input_key_event.keycode - KEY_1)
 
+
+func hotbar_change_selection(index : int):
+	hotbar.change_selection(index)
+
+func hotbar_previous_item():
+	hotbar.previous_item()
+	
+func hotbar_next_item():
+	hotbar.next_item()
 
 func open_inventory(inventory : Inventory):
 	if not inventory_handler.is_open(inventory):

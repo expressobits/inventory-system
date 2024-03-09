@@ -39,13 +39,45 @@ func _input(event : InputEvent):
 		inventory_inputs()
 
 func craft(craft_station : CraftStation, recipe_index : int):
-	craft_rpc.rpc(craft_station.get_path(), recipe_index)
+	if multiplayer.is_server():
+		craft_rpc(craft_station.get_path(), recipe_index)
+	else:
+		craft_rpc.rpc(craft_station.get_path(), recipe_index)
+
+func hotbar_change_selection(index : int):
+	if multiplayer.is_server():
+		hotbar_change_selection_rpc(index)
+	else:
+		hotbar_change_selection_rpc.rpc(index)
+	
+func hotbar_previous_item():
+	if multiplayer.is_server():
+		hotbar_previous_item_rpc()
+	else:
+		hotbar_previous_item_rpc.rpc()
+	
+func hotbar_next_item():
+	if multiplayer.is_server():
+		hotbar_next_item_rpc()
+	else:
+		hotbar_next_item_rpc.rpc()
 
 @rpc
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 	var station = get_node(craft_station_path)
 	station.craft(recipe_index)
 	
+@rpc
+func hotbar_change_selection_rpc(index : int):
+	hotbar.change_selection(index)
+
+@rpc
+func hotbar_previous_item_rpc():
+	hotbar.previous_item()
+	
+@rpc	
+func hotbar_next_item_rpc():
+	hotbar.next_item()
 	
 func _physics_process(_delta : float):
 	if Engine.is_editor_hint():
