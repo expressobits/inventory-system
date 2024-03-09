@@ -24,7 +24,6 @@ protected:
 	TypedArray<NodePath> opened_inventories;
 	static void _bind_methods();
 	virtual void _instantiate_dropped_item(Ref<PackedScene> &dropped_item, const Ref<Item> &item);
-	void _set_transaction_slot(const Ref<Item> &item, const int &amount);
 
 public:
 	InventoryHandler();
@@ -38,6 +37,9 @@ public:
 	TypedArray<NodePath> get_inventories_path() const;
 	void set_transaction_slot(const Ref<Slot> new_transaction_slot);
 	Ref<Slot> get_transaction_slot() const;
+	void set_opened_inventories(const TypedArray<NodePath> new_opened_inventories);
+	TypedArray<NodePath> get_opened_inventories() const;
+	void change_transaction_slot(const Ref<Item> &item, const int &amount);
 	virtual bool drop(const Ref<Item> &item, const int &amount = 1);
 	int add_to_inventory(Inventory *inventory, const Ref<Item> item, const int &amount = 1, bool drop_excess = false);
 	void drop_from_inventory(const int &slot_index, const int &amount = 1, Inventory *inventory = nullptr);

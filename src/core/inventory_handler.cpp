@@ -12,6 +12,9 @@ void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_inventories_path"), &InventoryHandler::get_inventories_path);
 	// ClassDB::bind_method(D_METHOD("set_transaction_slot", "transaction_slot"), &InventoryHandler::set_transaction_slot);
 	ClassDB::bind_method(D_METHOD("get_transaction_slot"), &InventoryHandler::get_transaction_slot);
+	ClassDB::bind_method(D_METHOD("set_opened_inventories", "opened_inventories"), &InventoryHandler::set_opened_inventories);
+	ClassDB::bind_method(D_METHOD("get_opened_inventories"), &InventoryHandler::get_opened_inventories);
+	ClassDB::bind_method(D_METHOD("change_transaction_slot", "item", "amount"), &InventoryHandler::change_transaction_slot);
 	ClassDB::bind_method(D_METHOD("drop", "item", "amount"), &InventoryHandler::drop, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("add_to_inventory", "inventory", "item", "amount", "drop_excess"), &InventoryHandler::add_to_inventory, DEFVAL(1), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount", "inventory"), &InventoryHandler::drop_from_inventory, DEFVAL(1), DEFVAL(nullptr));
@@ -42,6 +45,7 @@ void InventoryHandler::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "drop_parent_path"), "set_drop_parent_path", "get_drop_parent_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "drop_parent_position_path"), "set_drop_parent_position_path", "get_drop_parent_position_path");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "inventories_path", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_inventories_path", "get_inventories_path");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "opened_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_opened_inventories", "get_opened_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "transaction_slot", PROPERTY_HINT_RESOURCE_TYPE, "Slot"), "", "get_transaction_slot");
 }
 
@@ -54,16 +58,6 @@ void InventoryHandler::_instantiate_dropped_item(Ref<PackedScene> &dropped_item,
 	node->set("position", drop_parent_position->get("position"));
 	node->set("rotation", drop_parent_position->get("position"));
 	emit_signal("dropped", node);
-}
-
-void InventoryHandler::_set_transaction_slot(const Ref<Item> &item, const int &amount) {
-	transaction_slot->set_amount(amount);
-	if (amount > 0) {
-		transaction_slot->set_item(item);
-	} else {
-		transaction_slot->set_item(nullptr);
-	}
-	emit_signal("updated_transaction_slot");
 }
 
 InventoryHandler::InventoryHandler() {
@@ -111,6 +105,24 @@ void InventoryHandler::set_transaction_slot(const Ref<Slot> new_transaction_slot
 
 Ref<Slot> InventoryHandler::get_transaction_slot() const {
 	return transaction_slot;
+}
+
+void InventoryHandler::set_opened_inventories(const TypedArray<NodePath> new_opened_inventories) {
+	opened_inventories = new_opened_inventories;
+}
+
+TypedArray<NodePath> InventoryHandler::get_opened_inventories() const {
+	return opened_inventories;
+}
+
+void InventoryHandler::change_transaction_slot(const Ref<Item> &item, const int &amount) {
+	transaction_slot->set_amount(amount);
+	if (amount > 0) {
+		transaction_slot->set_item(item);
+	} else {
+		transaction_slot->set_item(nullptr);
+	}
+	emit_signal("updated_transaction_slot");
 }
 
 bool InventoryHandler::drop(const Ref<Item> &item, const int &amount) {
@@ -250,7 +262,7 @@ bool InventoryHandler::close(Inventory *inventory) {
 			int amount_no_add = inventory->add(item, transaction_slot->get_amount());
 			if (amount_no_add > 0)
 				drop(item, amount_no_add);
-			_set_transaction_slot(nullptr, 0);
+			change_transaction_slot(nullptr, 0);
 		}
 	}
 	opened_inventories.remove_at(index);
@@ -301,7 +313,7 @@ void InventoryHandler::to_transaction(const int &slot_index, Inventory *inventor
 		return;
 	}
 	int amount_no_removed = inventory->remove_at(slot_index, item, amount);
-	_set_transaction_slot(item, amount - amount_no_removed);
+	change_transaction_slot(item, amount - amount_no_removed);
 }
 
 void InventoryHandler::transaction_to_at(const int &slot_index, Inventory *inventory, const int &amount_to_move) {
@@ -319,7 +331,7 @@ void InventoryHandler::transaction_to_at(const int &slot_index, Inventory *inven
 		if (amount_to_move >= 0)
 			amount = amount_to_move;
 		int amount_no_add = inventory->add_at(slot_index, item, amount);
-		_set_transaction_slot(item, (transaction_slot->get_amount() - amount) + amount_no_add);
+		change_transaction_slot(item, (transaction_slot->get_amount() - amount) + amount_no_add);
 	} else {
 		// Different items in slot and other_slot
 		// Check if transaction_slot amount is equal of origin_slot amount
@@ -334,7 +346,7 @@ void InventoryHandler::transaction_to_at(const int &slot_index, Inventory *inven
 		temp_item->set_properties(slot->get_item()->get_properties().duplicate());
 		int new_amount = slot->get_amount();
 		inventory->set_slot_content(slot_index, item->get_definition(), item->get_properties(), transaction_slot->get_amount());
-		_set_transaction_slot(temp_item, new_amount);
+		change_transaction_slot(temp_item, new_amount);
 	}
 }
 
@@ -345,7 +357,7 @@ void InventoryHandler::transaction_to(Inventory *inventory) {
 	if (item == nullptr)
 		return;
 	int amount_no_add = inventory->add(item, transaction_slot->get_amount());
-	_set_transaction_slot(item, amount_no_add);
+	change_transaction_slot(item, amount_no_add);
 }
 
 bool InventoryHandler::is_transaction_active() const {
@@ -356,12 +368,11 @@ bool InventoryHandler::is_transaction_active() const {
 void InventoryHandler::drop_transaction() {
 	if (is_transaction_active())
 		drop(transaction_slot->get_item(), transaction_slot->get_amount());
-	_set_transaction_slot(nullptr, 0);
+	change_transaction_slot(nullptr, 0);
 }
 
 Inventory *InventoryHandler::get_inventory(const int &index) const {
-	Node *node_inv = get_node_or_null(inventories_path[index]);
-	Inventory *inventory = Object::cast_to<Inventory>(node_inv);
+	Inventory *inventory = get_node<Inventory>(inventories_path[index]);
 	if (inventory == nullptr) {
 		ERR_PRINT("Get Inventory Index is null!");
 	}
