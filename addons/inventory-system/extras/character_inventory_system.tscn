@@ -1,9 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw4rwxc3dyovc"]
+[gd_scene load_steps=7 format=3 uid="uid://cw4rwxc3dyovc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="1_mwfdb"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_3ia0e"]
-
-[sub_resource type="Slot" id="Slot_3cd5c"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -18,7 +16,6 @@ script = ExtResource("1_mwfdb")
 
 [node name="InventoryHandler" type="InventoryHandler" parent="."]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_3cd5c")
 
 [node name="Inventory" type="Inventory" parent="InventoryHandler"]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

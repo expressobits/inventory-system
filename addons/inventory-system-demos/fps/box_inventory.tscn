@@ -8,9 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
 
 [sub_resource type="InteractAction" id="Resource_opm00"]
-input = "interact"
 description = "Open Box"
-code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2vdb"]
 

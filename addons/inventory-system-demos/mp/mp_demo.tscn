@@ -105,7 +105,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory" index="1"]
 slots = Array[Slot]([SubResource("Resource_6euhu"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
-is_open = true
 inventory_name = "Dynamic Inventory"
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
