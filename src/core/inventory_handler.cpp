@@ -1,6 +1,8 @@
 #include "inventory_handler.h"
 #include "core/categorized_slot.h"
 #include "inventory.h"
+#include <godot_cpp/classes/engine.hpp>
+
 
 void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_inventories_path", "inventories_path"), &InventoryHandler::set_inventories_path);
@@ -50,8 +52,10 @@ InventoryHandler::~InventoryHandler() {
 }
 
 void InventoryHandler::_ready() {
-	if(transaction_slot == nullptr) {
-		set_transaction_slot(memnew(Slot()));
+	if (!Engine::get_singleton()->is_editor_hint()) {
+		if(transaction_slot == nullptr) {
+			set_transaction_slot(memnew(Slot()));
+		}
 	}
 	NodeInventories::_ready();
 }
