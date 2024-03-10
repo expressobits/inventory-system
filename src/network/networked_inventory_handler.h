@@ -31,7 +31,6 @@ public:
 	virtual void _ready() override;
 	void set_drop_item_spawner_path(const NodePath new_drop_item_spawner_path);
 	NodePath get_drop_item_spawner_path() const;
-	bool drop(const Ref<Item> &item, const int &amount = 1) override;
 	bool pick_to_inventory(Node *dropped_item, Inventory *inventory = nullptr) override;
 	void move_between_inventories_at(Inventory *from, const int slot_index, const int amount, Inventory *to, const int to_slot_index) override;
 	bool open(Inventory *inventory) override;
@@ -41,7 +40,6 @@ public:
 	void transaction_to_at(const int &slot_index, Inventory *inventory, const int &amount_to_move = -1) override;
 	void transaction_to(Inventory *inventory) override;
 	// === CLIENT COMMANDS TO SERVER ===
-	void drop_rpc(const int item_id, const int amount, const Dictionary properties);
 	void add_to_inventory_rpc(const NodePath object_path, const int item_id, const int amount = 1, const bool drop_excess = false);
 	void pick_to_inventory_rpc(const NodePath pick_object_path, const NodePath object_path);
 	void move_between_inventories_at_rpc(const NodePath from_path, const int slot_index, const int amount, const NodePath to_path, const int to_slot_index);

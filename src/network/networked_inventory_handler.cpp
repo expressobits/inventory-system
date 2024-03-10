@@ -4,7 +4,7 @@
 void NetworkedInventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_drop_item_spawner_path", "drop_item_spawner_path"), &NetworkedInventoryHandler::set_drop_item_spawner_path);
 	ClassDB::bind_method(D_METHOD("get_drop_item_spawner_path"), &NetworkedInventoryHandler::get_drop_item_spawner_path);
-	ClassDB::bind_method(D_METHOD("drop_rpc", "item_id", "amount", "properties"), &NetworkedInventoryHandler::drop_rpc);
+	// ClassDB::bind_method(D_METHOD("drop_rpc", "item_id", "amount", "properties"), &NetworkedInventoryHandler::drop_rpc);
 	ClassDB::bind_method(D_METHOD("add_to_inventory_rpc", "object_path", "item_id", "amount", "drop_excess"), &NetworkedInventoryHandler::add_to_inventory_rpc);
 	ClassDB::bind_method(D_METHOD("pick_to_inventory_rpc", "pick_object_path", "object_path"), &NetworkedInventoryHandler::pick_to_inventory_rpc);
 	ClassDB::bind_method(D_METHOD("move_between_inventories_at_rpc", "from_path", "slot_index", "amount", "to_path"), &NetworkedInventoryHandler::move_between_inventories_at_rpc);
@@ -41,17 +41,17 @@ NodePath NetworkedInventoryHandler::get_drop_item_spawner_path() const {
 	return drop_item_spawner_path;
 }
 
-bool NetworkedInventoryHandler::drop(const Ref<Item> &item, const int &amount) {
-	int item_id = item->get_definition()->get_id();
-	if (item_id <= ItemDefinition::NONE) {
-		return false;
-	}
-	if (!get_multiplayer()->is_server())
-		rpc_id(1, "drop_rpc", item_id, amount, item->get_properties());
-	else
-		drop_rpc(item_id, amount, item->get_properties());
-	return true;
-}
+// bool NetworkedInventoryHandler::drop(const Ref<Item> &item, const int &amount) {
+// 	int item_id = item->get_definition()->get_id();
+// 	if (item_id <= ItemDefinition::NONE) {
+// 		return false;
+// 	}
+// 	if (!get_multiplayer()->is_server())
+// 		rpc_id(1, "drop_rpc", item_id, amount, item->get_properties());
+// 	else
+// 		drop_rpc(item_id, amount, item->get_properties());
+// 	return true;
+// }
 
 bool NetworkedInventoryHandler::pick_to_inventory(Node *dropped_item, Inventory *inventory) {
 	if (inventory == nullptr) {
@@ -125,17 +125,17 @@ void NetworkedInventoryHandler::transaction_to(Inventory *inventory) {
 		transaction_to_rpc(inventory->get_path());
 }
 
-void NetworkedInventoryHandler::drop_rpc(const int item_id, const int amount, const Dictionary properties) {
-	if (!get_multiplayer()->is_server())
-		return;
-	Ref<ItemDefinition> definition = get_item_from_id(item_id);
-	if (definition == nullptr)
-		return;
-	Ref<Item> item = memnew(Item());
-	item->set_definition(definition);
-	item->set_properties(properties);
-	InventoryHandler::drop(item, amount);
-}
+// void NetworkedInventoryHandler::drop_rpc(const int item_id, const int amount, const Dictionary properties) {
+// 	if (!get_multiplayer()->is_server())
+// 		return;
+// 	Ref<ItemDefinition> definition = get_item_from_id(item_id);
+// 	if (definition == nullptr)
+// 		return;
+// 	Ref<Item> item = memnew(Item());
+// 	item->set_definition(definition);
+// 	item->set_properties(properties);
+// 	InventoryHandler::drop(item, amount);
+// }
 
 void NetworkedInventoryHandler::add_to_inventory_rpc(const NodePath object_path, const int item_id, const int amount, const bool drop_excess) {
 	if (!get_multiplayer()->is_server())

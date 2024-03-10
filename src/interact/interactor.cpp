@@ -3,6 +3,8 @@
 #include <string>
 
 void Interactor::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_node_base_to_interactions", "node_base_to_interactions"), &Interactor::set_node_base_to_interactions);
+	ClassDB::bind_method(D_METHOD("get_node_base_to_interactions"), &Interactor::get_node_base_to_interactions);
 	ClassDB::bind_method(D_METHOD("set_inventory_handler_path", "inventory_handler_path"), &Interactor::set_inventory_handler_path);
 	ClassDB::bind_method(D_METHOD("get_inventory_handler_path"), &Interactor::get_inventory_handler_path);
 	ClassDB::bind_method(D_METHOD("set_crafter_path", "crafter_path"), &Interactor::set_crafter_path);
@@ -13,6 +15,7 @@ void Interactor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_raycast_path"), &Interactor::get_raycast_path);
 	ClassDB::bind_method(D_METHOD("set_camera_path", "camera_path"), &Interactor::set_camera_path);
 	ClassDB::bind_method(D_METHOD("get_camera_path"), &Interactor::get_camera_path);
+	ClassDB::bind_method(D_METHOD("get_last_interact_object"), &Interactor::get_last_interact_object);
 	ClassDB::bind_method(D_METHOD("get_raycast"), &Interactor::get_raycast);
 	ClassDB::bind_method(D_METHOD("try_interact"), &Interactor::try_interact);
 	ClassDB::bind_method(D_METHOD("get_actions", "node"), &Interactor::get_actions);
@@ -24,11 +27,20 @@ void Interactor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_hotbar"), &Interactor::get_hotbar);
 	ADD_SIGNAL(MethodInfo("preview_interacted", PropertyInfo(Variant::ARRAY, "actions"), PropertyInfo(Variant::VECTOR2, "positions")));
 	// ADD_SIGNAL(MethodInfo("interacted", PropertyInfo(Variant::OBJECT, "object")));
+	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "node_base_to_interactions"), "set_node_base_to_interactions", "get_node_base_to_interactions");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory_handler_path"), "set_inventory_handler_path", "get_inventory_handler_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "crafter_path"), "set_crafter_path", "get_crafter_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "hotbar_path"), "set_hotbar_path", "get_hotbar_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "raycast_path", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "RayCast3D, RayCast2D"), "set_raycast_path", "get_raycast_path");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "camera_path", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Camera3D, Camera2D"), "set_camera_path", "get_camera_path");
+}
+
+void Interactor::set_node_base_to_interactions(NodePath new_node_base_to_interactions) {
+	node_base_to_interactions = new_node_base_to_interactions;
+}
+
+NodePath Interactor::get_node_base_to_interactions() const {
+	return node_base_to_interactions;
 }
 
 void Interactor::set_inventory_handler_path(NodePath new_inventory_handler_path) {
@@ -69,6 +81,10 @@ void Interactor::set_camera_path(NodePath new_camera_path) {
 
 NodePath Interactor::get_camera_path() const {
 	return camera_path;
+}
+
+Object *Interactor::get_last_interact_object() const {
+	return last_interact_object;
 }
 
 Node *Interactor::get_raycast() const {
@@ -137,20 +153,22 @@ TypedArray<InteractAction> Interactor::get_actions(Node *node) const {
 }
 
 void Interactor::interact_object(Node *node, TypedArray<InteractAction> actions) {
+	Node* node_base = get_node<Node>(node_base_to_interactions);
 	for (size_t i = 0; i < actions.size(); i++) {
 		Ref<InteractAction> action = actions[i];
 		if (Input::get_singleton()->is_action_just_pressed(action->get_input())) {
-			node->call("interact", this, action->get_code());
+			node->call("interact", node_base, action->get_code());
 			return;
 		}
 	}
 }
 
 void Interactor::interact_hand_item(Node *hand_node, TypedArray<InteractAction> hand_actions) {
+	Node* node = get_node<Node>(node_base_to_interactions);
 	for (size_t i = 0; i < hand_actions.size(); i++) {
 		Ref<InteractAction> action = hand_actions[i];
 		if (Input::get_singleton()->is_action_just_pressed(action->get_input())) {
-			hand_node->call("interact", this, action->get_code());
+			hand_node->call("interact", node, action->get_code());
 			return;
 		}
 	}
