@@ -21,12 +21,13 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 	return near_position
 
 
-func interact(interactor : Interactor, action_index : int = 0):
+func interact(character : Node, action_index : int = 0):
 	if inventory.is_open:
 		return
+	var interactor = character.character_inventory_system.interactor
 	var item = interactor.get_hotbar().get_selected_item()
 	if action_index == 0:
-		super.interact(interactor, action_index)
+		super.interact(character, action_index)
 	if action_index == 1:
 		var shelf_item = get_actual_item()
 		if shelf_item != null and shelf_item.definition != null:

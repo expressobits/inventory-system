@@ -1,0 +1,160 @@
+[gd_scene load_steps=26 format=3 uid="uid://bbqbopdyaknlx"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
+[ext_resource type="PackedScene" uid="uid://djh0ig8jxkla5" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
+[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_aep54"]
+[ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system-demos/fps/labels.tscn" id="5_rvlsk"]
+[ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="6_52d7a"]
+[ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system/ui/inventory_system_ui.tscn" id="6_asmwx"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_inventory.gd" id="7_8khhq"]
+[ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="8_kfwho"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
+[ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_y0513"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_efc1k"]
+[ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="11_6hyks"]
+[ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="11_ftexy"]
+[ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="12_8i3r8"]
+[ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="13_v1ips"]
+[ext_resource type="PackedScene" uid="uid://ck0mex6rxeyan" path="res://addons/inventory-system-demos/mp/workbench.tscn" id="16_qnjnu"]
+[ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://addons/inventory-system-demos/fps/props/shelf.tscn" id="17_psfnf"]
+[ext_resource type="PackedScene" uid="uid://buvddtc72m2fk" path="res://addons/inventory-system-demos/mp/campfire.tscn" id="17_qo5oj"]
+
+[sub_resource type="Slot" id="Resource_6euhu"]
+
+[sub_resource type="Item" id="Resource_qht8t"]
+definition = ExtResource("11_6hyks")
+
+[sub_resource type="Slot" id="Resource_a5fwf"]
+item = SubResource("Resource_qht8t")
+amount = 1
+
+[sub_resource type="Item" id="Resource_lkgg5"]
+definition = ExtResource("13_v1ips")
+properties = {
+"durability": 52.0
+}
+
+[sub_resource type="Slot" id="Resource_jm1f7"]
+item = SubResource("Resource_lkgg5")
+amount = 1
+
+[sub_resource type="Item" id="Resource_p22tk"]
+definition = ExtResource("13_v1ips")
+properties = {
+"durability": 32.0
+}
+
+[sub_resource type="Slot" id="Resource_afmqk"]
+item = SubResource("Resource_p22tk")
+amount = 1
+
+[node name="MPDemo" type="Node"]
+script = ExtResource("1_fcmcx")
+player_scene = ExtResource("2_01e0j")
+database = ExtResource("3_aep54")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Labels" parent="UI" instance=ExtResource("5_rvlsk")]
+
+[node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
+
+[node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
+input_icons = ExtResource("6_52d7a")
+
+[node name="Connect Panel" type="ColorRect" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.490196, 0.388235, 0.34902, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Connect Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HostButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+layout_mode = 2
+text = "HOST"
+
+[node name="ConnectButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+layout_mode = 2
+text = "CONNECT TO LOCALHOST"
+
+[node name="Level" parent="." instance=ExtResource("8_kfwho")]
+
+[node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory" index="1"]
+slots = Array[Slot]([SubResource("Resource_6euhu"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+is_open = true
+inventory_name = "Dynamic Inventory"
+
+[node name="NetworkedInventory" type="Node" parent="Box Inventory/Inventory" index="0" node_paths=PackedStringArray("inventory")]
+script = ExtResource("7_8khhq")
+inventory = NodePath("..")
+
+[node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+
+[node name="Inventory" parent="Box Inventory2" index="1"]
+slots = Array[Slot]([SubResource("Resource_a5fwf"), SubResource("Resource_jm1f7"), SubResource("Resource_afmqk"), null, null, null, null, null, null, null, null, null, null, null, null, null])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Static Inventory"
+
+[node name="NetworkedInventory" type="Node" parent="Box Inventory2/Inventory" index="0" node_paths=PackedStringArray("inventory")]
+script = ExtResource("7_8khhq")
+inventory = NodePath("..")
+
+[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = ExtResource("8_m78qf")
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("10_efc1k")
+
+[node name="workbenchGrind" parent="." instance=ExtResource("11_ftexy")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319963)
+
+[node name="workbenchAnvil" parent="." instance=ExtResource("12_8i3r8")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
+
+[node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
+
+[node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
+
+[node name="Inventory" parent="Box Inventory3" index="1"]
+slots = Array[Slot]([])
+create_slot_if_needed = false
+remove_slot_if_empty = false
+inventory_name = "Tools Inventory"
+
+[node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
+
+[node name="Shelf" parent="." instance=ExtResource("17_psfnf")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)
+
+[connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
+
+[editable path="UI/Inventory System UI"]
+[editable path="UI/Inventory System UI/TransactionSlotUI"]
+[editable path="UI/Inventory System UI/PlayerInventoryUI"]
+[editable path="Box Inventory"]
+[editable path="Box Inventory2"]
+[editable path="Box Inventory3"]
+[editable path="Shelf"]

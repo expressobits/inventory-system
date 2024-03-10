@@ -26,11 +26,6 @@ func close_craft_stations():
 	else:
 		close_stations_rpc.rpc_id(1)
 
-@rpc("any_peer")
-func close_stations_rpc():
-	if multiplayer.is_server():
-		super.close_craft_stations()
-
 func _input(event : InputEvent):
 	if Engine.is_editor_hint():
 		return
@@ -38,11 +33,20 @@ func _input(event : InputEvent):
 		hot_bar_inputs(event)
 		inventory_inputs()
 
+
 func craft(craft_station : CraftStation, recipe_index : int):
 	if multiplayer.is_server():
 		craft_rpc(craft_station.get_path(), recipe_index)
 	else:
 		craft_rpc.rpc(craft_station.get_path(), recipe_index)
+		
+
+func open_station(craft_station : CraftStation):
+	if multiplayer.is_server():
+		open_station_rpc(crafter.get_path_to(craft_station))
+	else:
+		open_station_rpc.rpc(crafter.get_path_to(craft_station))
+
 
 func hotbar_change_selection(index : int):
 	if multiplayer.is_server():
@@ -55,18 +59,32 @@ func hotbar_previous_item():
 		hotbar_previous_item_rpc()
 	else:
 		hotbar_previous_item_rpc.rpc()
-	
+
+
 func hotbar_next_item():
 	if multiplayer.is_server():
 		hotbar_next_item_rpc()
 	else:
 		hotbar_next_item_rpc.rpc()
 
+
 func drop_transaction():
 	if multiplayer.is_server():
 		drop_transaction_rpc()
 	else:
 		drop_transaction_rpc.rpc()
+
+
+@rpc
+func open_station_rpc(craft_station_path : NodePath):
+	var station = crafter.get_node(craft_station_path)
+	super.open_station(station)
+
+@rpc
+func close_stations_rpc():
+	if multiplayer.is_server():
+		super.close_craft_stations()
+
 
 @rpc
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):

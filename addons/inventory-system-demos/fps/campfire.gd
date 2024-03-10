@@ -93,8 +93,8 @@ func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
 	return current_actions
 
 
-func interact(interactor : Interactor, action_index : int = 0):
+func interact(character : Node, action_index : int = 0):
 	if action_index == 0:
-		interactor.get_parent().open_inventory(craft_station.get_input_inventory())
+		character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
 	else:
 		active_fire = !active_fire

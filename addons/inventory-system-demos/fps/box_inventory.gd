@@ -38,5 +38,5 @@ func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
 	return actions
 
 
-func interact(interactor : Interactor, _action_index : int = 0):
-	interactor.get_parent().open_inventory(inventory)
+func interact(character : Node, _action_index : int = 0):
+	character.character_inventory_system.open_inventory(inventory)
