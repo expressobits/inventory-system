@@ -16,7 +16,7 @@
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_lg3qu"]
+[sub_resource type="Slot" id="Slot_fc6c0"]
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -47,7 +47,7 @@ raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 
 [node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
-transaction_slot = SubResource("Slot_lg3qu")
+transaction_slot = SubResource("Slot_fc6c0")
 database = ExtResource("4_ljenf")
 
 [node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
@@ -71,24 +71,24 @@ raycast_path = NodePath("../../Camera3D/RayCast3D")
 camera_path = NodePath("../../Camera3D")
 database = ExtResource("4_ljenf")
 
-[node name="PickupAudio" parent="CharacterInventorySystem" index="4"]
-stream = ExtResource("5_1ptxj")
-
-[node name="DropAudio" parent="CharacterInventorySystem" index="5"]
-stream = ExtResource("6_3rbsy")
-
-[node name="HotbarChangeAudio" parent="CharacterInventorySystem" index="6"]
-stream = ExtResource("7_77smm")
-
-[node name="PlayerInventoryOpenAudio" parent="CharacterInventorySystem" index="7"]
-stream = ExtResource("8_vym5c")
-
-[node name="PlayerInventoryCloseAudio" parent="CharacterInventorySystem" index="8"]
-stream = ExtResource("9_su3a2")
-
 [node name="UseItemsExample" type="Node3D" parent="." node_paths=PackedStringArray("hotbar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("10_mt1fm")
 hotbar = NodePath("../CharacterInventorySystem/Hotbar")
+
+[node name="PickupAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_1ptxj")
+
+[node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_3rbsy")
+
+[node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_77smm")
+
+[node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_vym5c")
+
+[node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("9_su3a2")
 
 [editable path="CharacterInventorySystem"]

@@ -12,6 +12,7 @@ func _enter_tree():
 
 
 func _ready():
+	super._ready()
 	if is_multiplayer_authority():
 		$Camera3D.make_current()
 	else:

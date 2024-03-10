@@ -6,17 +6,8 @@ extends CharacterInventorySystem
 
 
 func _ready():
-	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
 	inventory_handler.request_drop_obj.connect(_on_request_drop_obj.bind())
-	dropped.connect(_on_inventory_handler_dropped.bind())
-	inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
-	inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
 	if is_multiplayer_authority():
-		#InventorySystem.setup_inventory_handler(inventory_handler)
-		#InventorySystem.setup_hotbar(hotbar)
-		#InventorySystem.setup_crafter(crafter)
-		#InventorySystem.setup_interactor(interactor)
-		
 		# Setup for enabled/disabled mouse 🖱️😀
 		inventory_handler.opened.connect(_update_opened_inventories.bind())
 		inventory_handler.closed.connect(_update_opened_inventories.bind())

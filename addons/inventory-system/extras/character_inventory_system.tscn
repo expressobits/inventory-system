@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="1_mwfdb"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_3ia0e"]
 
-[sub_resource type="Slot" id="Slot_hrcqb"]
+[sub_resource type="Slot" id="Slot_3cd5c"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -18,7 +18,7 @@ script = ExtResource("1_mwfdb")
 
 [node name="InventoryHandler" type="InventoryHandler" parent="."]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_hrcqb")
+transaction_slot = SubResource("Slot_3cd5c")
 
 [node name="Inventory" type="Inventory" parent="InventoryHandler"]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
@@ -44,18 +44,3 @@ output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory
 
 [node name="ObjectPlacer" type="NodeInventories" parent="Interactor"]
 script = ExtResource("9_3ia0e")
-
-[node name="PickupAudio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-
-[node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

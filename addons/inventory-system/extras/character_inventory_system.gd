@@ -20,19 +20,6 @@ signal dropped(node : Node)
 @onready var drop_parent_position : Node = get_node(drop_parent_position_path)
 
 
-@export_group("🔊 Audios")
-@export_node_path("AudioStreamPlayer3D") var picked_audio_path := NodePath("PickupAudio")
-@onready var picked_audio : AudioStreamPlayer3D = get_node(picked_audio_path)
-@export_node_path("AudioStreamPlayer3D") var drop_audio_path := NodePath("DropAudio")
-@onready var drop_audio : AudioStreamPlayer3D = get_node(drop_audio_path)
-@export_node_path("AudioStreamPlayer3D") var hotbar_change_audio_path := NodePath("HotbarChangeAudio")
-@onready var hotbar_change_audio : AudioStreamPlayer3D = get_node(hotbar_change_audio_path)
-@export_node_path("AudioStreamPlayer3D") var player_inventory_open_audio_path := NodePath("PlayerInventoryOpenAudio")
-@onready var player_inventory_open_audio : AudioStreamPlayer3D = get_node(player_inventory_open_audio_path)
-@export_node_path("AudioStreamPlayer3D") var player_inventory_close_audio_path := NodePath("PlayerInventoryCloseAudio")
-@onready var player_inventory_close_audio : AudioStreamPlayer3D = get_node(player_inventory_close_audio_path)
-
-
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
 @export var change_mouse_state : bool = true
@@ -58,14 +45,7 @@ signal dropped(node : Node)
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	
-	# Setup for audios 🔊
-	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
-	dropped.connect(_on_inventory_handler_dropped.bind())
 	inventory_handler.request_drop_obj.connect(_on_request_drop_obj.bind())
-	inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
-	inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
-	hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
 	
 	# Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
@@ -211,22 +191,3 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 func open_station(craft_station : CraftStation):
 	if not crafter.is_open(craft_station):
 		crafter.open(craft_station)
-
-func _on_inventory_handler_picked(_dropped_item):
-	picked_audio.play()
-
-
-func _on_inventory_handler_dropped(_dropped_item):
-	drop_audio.play()
-	
-
-func _on_player_inventory_opened():
-	player_inventory_open_audio.play()
-
-
-func _on_player_inventory_closed():
-	player_inventory_close_audio.play()
-
-
-func _on_hotbar_changed(_selection : int):
-	hotbar_change_audio.play()

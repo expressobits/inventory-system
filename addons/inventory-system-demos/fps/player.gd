@@ -14,6 +14,46 @@ var rot := Vector3()
 @onready var raycast : RayCast3D = $Camera3D/RayCast3D
 @onready var camera_3d : Camera3D = $Camera3D
 
+@export_group("🔊 Audios")
+@export_node_path("AudioStreamPlayer3D") var picked_audio_path := NodePath("PickupAudio")
+@onready var picked_audio : AudioStreamPlayer3D = get_node(picked_audio_path)
+@export_node_path("AudioStreamPlayer3D") var drop_audio_path := NodePath("DropAudio")
+@onready var drop_audio : AudioStreamPlayer3D = get_node(drop_audio_path)
+@export_node_path("AudioStreamPlayer3D") var hotbar_change_audio_path := NodePath("HotbarChangeAudio")
+@onready var hotbar_change_audio : AudioStreamPlayer3D = get_node(hotbar_change_audio_path)
+@export_node_path("AudioStreamPlayer3D") var player_inventory_open_audio_path := NodePath("PlayerInventoryOpenAudio")
+@onready var player_inventory_open_audio : AudioStreamPlayer3D = get_node(player_inventory_open_audio_path)
+@export_node_path("AudioStreamPlayer3D") var player_inventory_close_audio_path := NodePath("PlayerInventoryCloseAudio")
+@onready var player_inventory_close_audio : AudioStreamPlayer3D = get_node(player_inventory_close_audio_path)
+
+
+func _ready():
+	# Setup for audios 🔊
+	character_inventory_system.inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
+	character_inventory_system.dropped.connect(_on_inventory_handler_dropped.bind())
+	character_inventory_system.inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
+	character_inventory_system.inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
+	character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
+	
+	
+func _on_inventory_handler_picked(_dropped_item):
+	picked_audio.play()
+
+
+func _on_inventory_handler_dropped(_dropped_item):
+	drop_audio.play()
+	
+
+func _on_player_inventory_opened():
+	player_inventory_open_audio.play()
+
+
+func _on_player_inventory_closed():
+	player_inventory_close_audio.play()
+
+
+func _on_hotbar_changed(_selection : int):
+	hotbar_change_audio.play()
 
 func _physics_process(delta):
 	# Add the gravity.
