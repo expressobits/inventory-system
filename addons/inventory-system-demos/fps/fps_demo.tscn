@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=44 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="2_gcjwy"]
@@ -9,9 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="8_6rygg"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_ia5mg"]
-[ext_resource type="PackedScene" uid="uid://ds8coutyid33j" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchGrind.glb" id="9_ltu3q"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_1ncja"]
-[ext_resource type="PackedScene" uid="uid://dxm5l6pst55ip" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbenchAnvil.glb" id="10_ds5rh"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="11_fkc5i"]
 [ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="12_5uvei"]
 [ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="13_ptimm"]
@@ -112,6 +110,11 @@ item_stone = SubResource("Resource_mcsja")
 item_grass = SubResource("Resource_5m303")
 database = ExtResource("2_gcjwy")
 
+[node name="Player" parent="." instance=ExtResource("14_kqlku")]
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("10_1ncja")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Labels" parent="UI" instance=ExtResource("6_5epcx")]
@@ -120,8 +123,6 @@ database = ExtResource("2_gcjwy")
 
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("8_6rygg")
-
-[node name="Player" parent="." instance=ExtResource("14_kqlku")]
 
 [node name="Level" parent="." instance=ExtResource("16_46jkf")]
 
@@ -170,15 +171,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 [node name="boxOpen" parent="Box Inventory3" index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 visible = true
-
-[node name="Setup Keys" type="Node" parent="."]
-script = ExtResource("10_1ncja")
-
-[node name="workbenchGrind" parent="." instance=ExtResource("9_ltu3q")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13883, -4.76837e-07, 0.319963)
-
-[node name="workbenchAnvil" parent="." instance=ExtResource("10_ds5rh")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, -4.13225, 4.76837e-07, -1.60825)
 
 [node name="Workbench" parent="." instance=ExtResource("11_fkc5i")]
 

@@ -1,14 +1,11 @@
 extends Campfire
 class_name NetworkedCampfire
 
-
-
 func _ready():
 	super._ready()
 	changed_burning_state.connect(_changed_burning_state)
 	multiplayer.peer_connected.connect(_on_connected.bind())
-	$SyncInventory.inventory = input_inventory
-	$SyncCraftStation.craft_station = craft_station
+
 
 func check():
 	if not multiplayer.is_server():

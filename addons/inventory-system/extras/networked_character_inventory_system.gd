@@ -148,7 +148,6 @@ func drop_transaction():
 
 
 func _on_request_drop_obj(dropped_item : String, item : Item):
-	print("ok??")
 	if(drop_item_spawner == null):
 		printerr("Spawner is null!")
 		return
