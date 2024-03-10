@@ -1,6 +1,7 @@
 name: Builds
 
-on: push
+on: 
+    workflow_call
 
 env:
   LIBNAME: inventory-system
