@@ -31,11 +31,11 @@ func interact(character : Node, action_index : int = 0):
 	if action_index == 1:
 		var shelf_item = get_actual_item()
 		if shelf_item != null and shelf_item.definition != null:
-			interactor.get_inventory_handler().move_between_inventories_at(inventory, slot_index, 1, interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index)
+			character.character_inventory_system.move_between_inventories_at(inventory, slot_index, 1, interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index)
 		return
 	if action_index == 2:
 		if item != null and item.definition != null:
-			interactor.get_inventory_handler().move_between_inventories_at(interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index, 1, inventory, slot_index)
+			character.character_inventory_system.move_between_inventories_at(interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index, 1, inventory, slot_index)
 		return
 
 

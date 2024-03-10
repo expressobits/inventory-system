@@ -24,7 +24,7 @@ size = Vector3(0.125, 0.125, 0.125)
 [sub_resource type="BoxMesh" id="BoxMesh_i0mw4"]
 size = Vector3(0.125, 0.125, 0.125)
 
-[sub_resource type="Slot" id="Slot_pmgf6"]
+[sub_resource type="Slot" id="Slot_63bqk"]
 
 [sub_resource type="CategorizedSlot" id="Resource_rb0kk"]
 
@@ -95,9 +95,9 @@ mesh = SubResource("BoxMesh_i0mw4")
 database = ExtResource("4_jao3a")
 script = ExtResource("4_73by0")
 
-[node name="InventoryHandler" type="NetworkedInventoryHandler" parent="CharacterInventorySystem"]
+[node name="InventoryHandler" type="InventoryHandler" parent="CharacterInventorySystem"]
 inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
-transaction_slot = SubResource("Slot_pmgf6")
+transaction_slot = SubResource("Slot_63bqk")
 database = ExtResource("4_jao3a")
 
 [node name="Inventory" type="Inventory" parent="CharacterInventorySystem/InventoryHandler"]

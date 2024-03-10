@@ -148,10 +148,6 @@ inventory_name = "Tools Inventory"
 [node name="Shelf" parent="." instance=ExtResource("17_psfnf")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)
 
-[node name="SyncInventory" type="Node" parent="Shelf" node_paths=PackedStringArray("inventory")]
-script = ExtResource("7_8khhq")
-inventory = NodePath("../Inventory")
-
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
 

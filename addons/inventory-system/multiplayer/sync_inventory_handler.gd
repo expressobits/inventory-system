@@ -8,7 +8,7 @@ func _ready() -> void:
 	inventory_handler.opened.connect(on_opened.bind())
 	inventory_handler.closed.connect(on_closed.bind())
 
-
+	
 func on_updated_transaction_slot():
 	if not multiplayer.is_server():
 		return
@@ -21,9 +21,11 @@ func on_updated_transaction_slot():
 
 
 func on_opened(inventory : Inventory):
+	print(multiplayer.get_unique_id()," on_opened ", inventory)
 	if not multiplayer.is_server():
 		return
 	opened_rpc.rpc(inventory_handler.get_path_to(inventory))
+	print(multiplayer.get_unique_id()," on_opened ", inventory)
 
 
 func on_closed(inventory : Inventory):
@@ -41,6 +43,7 @@ func updated_transaction_slot_rpc(item_id : int, amount : int):
 
 @rpc
 func opened_rpc(inventory_path : NodePath):
+	print(multiplayer.get_unique_id()," opened_rpc ", inventory_path)
 	var inventory = inventory_handler.get_node(inventory_path)
 	inventory_handler.opened_inventories.append(inventory_handler.get_path_to(inventory))
 	inventory_handler.opened.emit(inventory)

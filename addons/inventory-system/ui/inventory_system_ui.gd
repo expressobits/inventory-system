@@ -165,16 +165,16 @@ func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventor
 	if not event is InputEventMouseButton:
 		return
 	var mouse_event : InputEventMouseButton = event as InputEventMouseButton
-	if inventory_handler.is_transaction_active():
-		var amount = _get_amount_per_mouse_event(mouse_event, inventory_handler.transaction_slot.amount)
-		inventory_handler.transaction_to_at(slot_index, inventory, amount)
+	if character.inventory_handler.is_transaction_active():
+		var amount = _get_amount_per_mouse_event(mouse_event, character.inventory_handler.transaction_slot.amount)
+		character.transaction_to_at(slot_index, inventory, amount)
 		$SlotDrop.play()
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return
 		var slot = inventory.slots[slot_index]
 		var amount = _get_amount_per_mouse_event(mouse_event, slot.amount)
-		inventory_handler.to_transaction(slot_index, inventory, amount)	
+		character.to_transaction(slot_index, inventory, amount)	
 		$SlotClick.play()
 
 
@@ -191,8 +191,8 @@ func _get_amount_per_mouse_event(mouse_event : InputEventMouseButton, amount : i
 func _inventory_point_down(event : InputEvent, inventory : Inventory):
 	if event.button_index == 3:
 		return
-	if inventory_handler.is_transaction_active():
-		inventory_handler.transaction_to(inventory)
+	if character.inventory_handler.is_transaction_active():
+		character.transaction_to(inventory)
 		$SlotDrop.play()
 
 

@@ -3,6 +3,7 @@
 class_name CharacterInventorySystem
 extends NodeInventories
 
+signal dropped(node : Node)
 
 @export_group("🗃️ Inventory Nodes")
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("InventoryHandler")
@@ -13,6 +14,10 @@ extends NodeInventories
 @onready var crafter : Crafter = get_node(crafter_path)
 @export_node_path("Interactor") var interactor_path := NodePath("Interactor")
 @onready var interactor : Interactor = get_node(interactor_path)
+@export_node_path var drop_parent_path := NodePath("../..");
+@onready var drop_parent : Node = get_node(drop_parent_path)
+@export_node_path var drop_parent_position_path := NodePath("..");
+@onready var drop_parent_position : Node = get_node(drop_parent_position_path)
 
 
 @export_group("🔊 Audios")
@@ -56,7 +61,8 @@ func _ready():
 	
 	# Setup for audios 🔊
 	inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
-	inventory_handler.dropped.connect(_on_inventory_handler_dropped.bind())
+	dropped.connect(_on_inventory_handler_dropped.bind())
+	inventory_handler.request_drop_obj.connect(_on_request_drop_obj.bind())
 	inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
 	inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
 	hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
@@ -99,30 +105,62 @@ func _update_opened_stations(_craft_station : CraftStation):
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
+func inventory_inputs():
+	if Input.is_action_just_released(toggle_inventory_input):
+		if not inventory_handler.is_open_any_inventory() and not crafter.is_open_any_station():
+			open_main_inventory()
+	
+	if Input.is_action_just_released(exit_inventory_and_craft_panel_input):
+		close_inventories()
+		close_craft_stations()
+			
+	if Input.is_action_just_released(toggle_craft_panel_input):
+		if not inventory_handler.is_open_any_inventory() and not crafter.is_open_any_station():
+			open_main_craft_station()
+
+
+## Inventories/Handler
+func open_main_inventory():
+	inventory_handler.open_main_inventory()
+
+
+func open_inventory(inventory : Inventory):
+	if not inventory_handler.is_open(inventory):
+		inventory_handler.open(inventory)
+		if not inventory_handler.is_open_main_inventory():
+			inventory_handler.open_main_inventory()
+
+
+func close_inventories():
+	inventory_handler.close_all_inventories()
+
+
+func move_between_inventories_at(from : Inventory, from_slot_index : int, amount : int, to : Inventory, to_slot_index : int):
+	inventory_handler.move_between_inventories_at(from, from_slot_index, amount, to, to_slot_index)
+
+
+func to_transaction(slot_index : int, inventory : Inventory, amount : int):
+	inventory_handler.to_transaction(slot_index, inventory, amount)
+
+
+func transaction_to(inventory : Inventory):
+	inventory_handler.transaction_to(inventory)
+
+
+func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
+	inventory_handler.transaction_to_at(slot_index, inventory, amount_to_move)
+
+
+func pick_to_inventory(node : Node):
+	inventory_handler.pick_to_inventory(node)
+
+## Crafter
 func craft(craft_station : CraftStation, recipe_index : int):
 	craft_station.craft(recipe_index)
 
 
-func inventory_inputs():
-	if Input.is_action_just_released(toggle_inventory_input):
-		if inventory_handler.is_open_main_inventory():
-			inventory_handler.close_main_inventory()
-			inventory_handler.close_all_inventories()
-		else:
-			inventory_handler.open_main_inventory()
-	
-	if Input.is_action_just_released(exit_inventory_and_craft_panel_input):
-		if inventory_handler.is_open_main_inventory():
-			inventory_handler.close_main_inventory()
-			inventory_handler.close_all_inventories()
-		close_craft_stations()
-			
-	if Input.is_action_just_released(toggle_craft_panel_input):
-		if crafter.is_open_main_craft_station():
-			crafter.close_main_craft_station()
-			crafter.close_all_craft_stations()
-		else:
-			crafter.open_main_craft_station()
+func open_main_craft_station():
+	inventory_handler.open_main_inventory()
 
 
 func close_craft_stations():
@@ -147,25 +185,27 @@ func hot_bar_inputs(event : InputEvent):
 func hotbar_change_selection(index : int):
 	hotbar.change_selection(index)
 
+
 func hotbar_previous_item():
 	hotbar.previous_item()
 	
+
 func hotbar_next_item():
 	hotbar.next_item()
-
-func open_inventory(inventory : Inventory):
-	if not inventory_handler.is_open(inventory):
-		inventory_handler.open(inventory)
-		if not inventory_handler.is_open_main_inventory():
-			inventory_handler.open_main_inventory()
 
 
 func drop_transaction():
 	inventory_handler.drop_transaction()
 
 
-func pick_to_inventory(node : Node):
-	inventory_handler.pick_to_inventory(node)
+func _on_request_drop_obj(dropped_item : String, item : Item):
+	var packed_scene : PackedScene = load(dropped_item)
+	var node = packed_scene.instantiate()
+	drop_parent.add_child(node)
+	node.set("item", item)
+	node.set("position", drop_parent_position.get("position"))
+	node.set("rotation", drop_parent_position.get("position"))
+	dropped.emit(node)
 
 
 func open_station(craft_station : CraftStation):
