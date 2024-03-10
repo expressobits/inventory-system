@@ -11,11 +11,7 @@ class InventoryHandler : public NodeInventories {
 	GDCLASS(InventoryHandler, NodeInventories);
 
 private:
-	NodePath drop_parent_path = NodePath("../../..");
-	NodePath drop_parent_position_path = NodePath("../..");
 	TypedArray<NodePath> inventories_path;
-	Node *drop_parent;
-	Node *drop_parent_position;
 	// TypedArray<Inventory> inventories;
 	// TODO More slot transactions (Queue transactions equal Project Zomboid)
 	Ref<Slot> transaction_slot;
@@ -23,16 +19,11 @@ private:
 protected:
 	TypedArray<NodePath> opened_inventories;
 	static void _bind_methods();
-	virtual void _instantiate_dropped_item(Ref<PackedScene> &dropped_item, const Ref<Item> &item);
 
 public:
 	InventoryHandler();
 	~InventoryHandler();
 	virtual void _ready() override;
-	void set_drop_parent_path(const NodePath new_drop_parent_path);
-	NodePath get_drop_parent_path() const;
-	void set_drop_parent_position_path(const NodePath new_drop_parent_position_path);
-	NodePath get_drop_parent_position_path() const;
 	void set_inventories_path(const TypedArray<NodePath> new_inventories_path);
 	TypedArray<NodePath> get_inventories_path() const;
 	void set_transaction_slot(const Ref<Slot> new_transaction_slot);

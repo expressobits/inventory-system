@@ -22,7 +22,6 @@
 #include "craft/crafting.h"
 #include "interact/interactor.h"
 #include "interact/interact_action.h"
-#include "network/networked_inventory_handler.h"
 
 using namespace godot;
 
@@ -47,7 +46,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<Crafting>();
 	ClassDB::register_class<InteractAction>();
 	ClassDB::register_class<Interactor>();
-	ClassDB::register_class<NetworkedInventoryHandler>();
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {

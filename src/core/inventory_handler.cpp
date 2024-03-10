@@ -1,13 +1,8 @@
 #include "inventory_handler.h"
 #include "core/categorized_slot.h"
 #include "inventory.h"
-#include <godot_cpp/classes/resource_loader.hpp>
 
 void InventoryHandler::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_drop_parent_path", "drop_parent_path"), &InventoryHandler::set_drop_parent_path);
-	ClassDB::bind_method(D_METHOD("get_drop_parent_path"), &InventoryHandler::get_drop_parent_path);
-	ClassDB::bind_method(D_METHOD("set_drop_parent_position_path", "drop_parent_position_path"), &InventoryHandler::set_drop_parent_position_path);
-	ClassDB::bind_method(D_METHOD("get_drop_parent_position_path"), &InventoryHandler::get_drop_parent_position_path);
 	ClassDB::bind_method(D_METHOD("set_inventories_path", "inventories_path"), &InventoryHandler::set_inventories_path);
 	ClassDB::bind_method(D_METHOD("get_inventories_path"), &InventoryHandler::get_inventories_path);
 	// ClassDB::bind_method(D_METHOD("set_transaction_slot", "transaction_slot"), &InventoryHandler::set_transaction_slot);
@@ -41,23 +36,11 @@ void InventoryHandler::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("added", PropertyInfo(Variant::OBJECT, "item_definition", PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition"), PropertyInfo(Variant::INT, "amount")));
 	ADD_SIGNAL(MethodInfo("opened", PropertyInfo(Variant::OBJECT, "inventory")));
 	ADD_SIGNAL(MethodInfo("closed", PropertyInfo(Variant::OBJECT, "inventory")));
+	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "dropp_item_packed_scene_path"), PropertyInfo(Variant::OBJECT, "item")));
 	ADD_SIGNAL(MethodInfo("updated_transaction_slot"));
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "drop_parent_path"), "set_drop_parent_path", "get_drop_parent_path");
-	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "drop_parent_position_path"), "set_drop_parent_position_path", "get_drop_parent_position_path");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "inventories_path", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_inventories_path", "get_inventories_path");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "opened_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_opened_inventories", "get_opened_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "transaction_slot", PROPERTY_HINT_RESOURCE_TYPE, "Slot"), "", "get_transaction_slot");
-}
-
-void InventoryHandler::_instantiate_dropped_item(Ref<PackedScene> &dropped_item, const Ref<Item> &item) {
-	Node *node = dropped_item->instantiate();
-	ERR_FAIL_NULL_MSG(drop_parent, "Dropped parent path is null reference.");
-	ERR_FAIL_NULL_MSG(drop_parent_position, "Dropped parent position path is null reference.");
-	drop_parent->add_child(node);
-	node->set("item", item);
-	node->set("position", drop_parent_position->get("position"));
-	node->set("rotation", drop_parent_position->get("position"));
-	emit_signal("dropped", node);
 }
 
 InventoryHandler::InventoryHandler() {
@@ -70,25 +53,7 @@ void InventoryHandler::_ready() {
 	if(transaction_slot == nullptr) {
 		set_transaction_slot(memnew(Slot()));
 	}
-	drop_parent = get_node_or_null(drop_parent_path);
-	drop_parent_position = get_node_or_null(drop_parent_position_path);
 	NodeInventories::_ready();
-}
-
-void InventoryHandler::set_drop_parent_path(const NodePath new_drop_parent_path) {
-	drop_parent_path = new_drop_parent_path;
-}
-
-NodePath InventoryHandler::get_drop_parent_path() const {
-	return drop_parent_path;
-}
-
-void InventoryHandler::set_drop_parent_position_path(const NodePath new_drop_parent_position_path) {
-	drop_parent_position_path = new_drop_parent_position_path;
-}
-
-NodePath InventoryHandler::get_drop_parent_position_path() const {
-	return drop_parent_position_path;
 }
 
 void InventoryHandler::set_inventories_path(const TypedArray<NodePath> new_inventories_path) {
@@ -128,10 +93,8 @@ void InventoryHandler::change_transaction_slot(const Ref<Item> &item, const int 
 bool InventoryHandler::drop(const Ref<Item> &item, const int &amount) {
 	if (item->get_definition()->get_properties().has("dropped_item")) {
 		String path = item->get_definition()->get_properties()["dropped_item"];
-		ResourceLoader *resource_loader = ResourceLoader::get_singleton();
-		Ref<PackedScene> dropped_item = resource_loader->load(path);
 		for (size_t i = 0; i < amount; i++) {
-			_instantiate_dropped_item(dropped_item, item);
+			emit_signal("request_drop_obj", path, item);
 		}
 		return true;
 	}
@@ -297,12 +260,13 @@ bool InventoryHandler::close_main_inventory() {
 }
 
 void InventoryHandler::close_all_inventories() {
-	while(opened_inventories.size() > 0) {
-		NodePath inv_path = opened_inventories[0];
+	int opened_inventories_size = opened_inventories.size();
+	for (size_t i = opened_inventories_size; i > 0; i--) {
+		NodePath inv_path = opened_inventories[i - 1];
 		Node *node_inv = get_node_or_null(inv_path);
 		Inventory *inventory = Object::cast_to<Inventory>(node_inv);
 		if (inventory == nullptr || !close(inventory)) {
-			opened_inventories.remove_at(0);
+			opened_inventories.remove_at(i - 1);
 		}
 	}
 }

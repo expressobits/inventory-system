@@ -56,8 +56,7 @@ sources = [
     Glob('src/base/*.cpp'),
     Glob('src/core/*.cpp'),
     Glob('src/craft/*.cpp'),
-    Glob('src/interact/*.cpp'),
-    Glob('src/network/*.cpp')
+    Glob('src/interact/*.cpp')
     ]
 
 file = "{}{}{}".format(libname, env["suffix"], env["SHLIBSUFFIX"])

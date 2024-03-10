@@ -107,7 +107,7 @@ void Crafter::close_all_craft_stations() {
 		CraftStation *craft_station = get_craft_station(station_path);
 		if (craft_station == nullptr) {
 			ERR_PRINT("Passed object is not a CraftStation!");
-			opened_stations.remove_at(i);
+			opened_stations.remove_at(i - 1);
 			continue;
 		}
 		close(craft_station);
