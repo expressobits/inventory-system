@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://43yusxh6v15d"]
-
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/props/visual_inventory_3d.gd" id="1_vj8ma"]
-
-[node name="VisualInventory3D" type="Node3D"]
-script = ExtResource("1_vj8ma")

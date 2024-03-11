@@ -1,9 +1,0 @@
-[gd_resource type="ItemCategory" load_steps=2 format=3 uid="uid://boaxvwlo2suum"]
-
-[ext_resource type="Texture2D" uid="uid://t3olj7qicyss" path="res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg" id="1_mn611"]
-
-[resource]
-name = "Helmet"
-color = Color(1, 1, 1, 1)
-icon = ExtResource("1_mn611")
-code = 8

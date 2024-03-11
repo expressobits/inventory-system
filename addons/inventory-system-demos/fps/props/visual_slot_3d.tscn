@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dm2evx8m3spa5"]
-
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/props/visual_slot_3d.gd" id="1_hwemv"]
-
-[node name="VisualSlot3D" type="Node3D"]
-script = ExtResource("1_hwemv")
-
-[node name="DefaultItem3D" type="Node3D" parent="."]

@@ -1,9 +1,0 @@
-[gd_resource type="ItemCategory" load_steps=2 format=3 uid="uid://041ut5vu78mt"]
-
-[ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_ld0ab"]
-
-[resource]
-name = "Burnables"
-color = Color(1, 0.917647, 0.466667, 1)
-icon = ExtResource("1_ld0ab")
-code = 1
