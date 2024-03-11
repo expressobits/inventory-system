@@ -1,7 +1,9 @@
 name: Builds
 
 on: 
-    workflow_call
+  push:
+    tags:
+      - gdextension
 
 env:
   LIBNAME: inventory-system
