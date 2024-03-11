@@ -28,6 +28,8 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_limit_number_crafts"), &CraftStation::get_limit_number_crafts);
 	ClassDB::bind_method(D_METHOD("set_can_processing_craftings", "can_processing_craftings"), &CraftStation::set_can_processing_craftings);
 	ClassDB::bind_method(D_METHOD("get_can_processing_craftings"), &CraftStation::get_can_processing_craftings);
+	ClassDB::bind_method(D_METHOD("set_can_finish_craftings", "can_finish_craftings"), &CraftStation::set_can_finish_craftings);
+	ClassDB::bind_method(D_METHOD("get_can_finish_craftings"), &CraftStation::get_can_finish_craftings);
 	ClassDB::bind_method(D_METHOD("set_type", "type"), &CraftStation::set_type);
 	ClassDB::bind_method(D_METHOD("get_type"), &CraftStation::get_type);
 	ClassDB::bind_method(D_METHOD("set_only_remove_ingredients_after_craft", "only_remove_ingredients_after_craft"), &CraftStation::set_only_remove_ingredients_after_craft);
@@ -53,6 +55,7 @@ void CraftStation::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "output_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_output_inventories", "get_output_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "limit_number_crafts"), "set_limit_number_crafts", "get_limit_number_crafts");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_processing_craftings"), "set_can_processing_craftings", "get_can_processing_craftings");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_finish_craftings"), "set_can_finish_craftings", "get_can_finish_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType"), "set_type", "get_type");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "only_remove_ingredients_after_craft"), "set_only_remove_ingredients_after_craft", "get_only_remove_ingredients_after_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_craft"), "set_auto_craft", "get_auto_craft");
@@ -214,7 +217,7 @@ void CraftStation::_process(float delta) {
 	_process_crafts(delta);
 	for (size_t i = 0; i < craftings.size(); i++) {
 		Ref<Crafting> crafting = craftings[i];
-		if (crafting->is_finished()) {
+		if (crafting->is_finished() && can_finish_craftings) {
 			finish_crafting(i);
 			return;
 		}
@@ -370,6 +373,14 @@ void CraftStation::set_can_processing_craftings(const bool &new_can_processing_c
 
 bool CraftStation::get_can_processing_craftings() const {
 	return can_processing_craftings;
+}
+
+void CraftStation::set_can_finish_craftings(const bool &new_can_finish_craftings) {
+	can_finish_craftings = new_can_finish_craftings;
+}
+
+bool CraftStation::get_can_finish_craftings() const {
+	return can_finish_craftings;
 }
 
 void CraftStation::set_type(const Ref<CraftStationType> &new_type) {

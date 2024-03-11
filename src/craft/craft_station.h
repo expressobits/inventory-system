@@ -18,6 +18,7 @@ private:
 	TypedArray<NodePath> output_inventories;
 	int limit_number_crafts = -1;
 	bool can_processing_craftings = true;
+	bool can_finish_craftings = true;
 	Ref<CraftStationType> type;
 	bool only_remove_ingredients_after_craft = false;
 	bool auto_craft = false;
@@ -67,6 +68,8 @@ public:
 	int get_limit_number_crafts() const;
 	void set_can_processing_craftings(const bool &new_can_processing_craftings);
 	bool get_can_processing_craftings() const;
+	void set_can_finish_craftings(const bool &new_can_finish_craftings);
+	bool get_can_finish_craftings() const;
 	void set_type(const Ref<CraftStationType> &new_type);
 	Ref<CraftStationType> get_type() const;
 	void set_only_remove_ingredients_after_craft(const bool &new_only_remove_ingredients_after_craft);
