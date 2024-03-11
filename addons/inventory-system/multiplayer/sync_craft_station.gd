@@ -6,17 +6,18 @@ var craftings_data : Array
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_connected.bind())
-
-
-func _on_connected(peer_id : int):
-	if not multiplayer.is_server():
-		return
-	if craft_station.is_open:
-		open_rpc.rpc_id(peer_id)
 	craft_station.opened.connect(_on_opened)
 	craft_station.closed.connect(_on_closed)
 	craft_station.crafting_added.connect(_on_crafting_added)
 	craft_station.crafting_removed.connect(_on_crafting_removed)
+
+
+func _on_connected(peer_id : int):
+	if not multiplayer.is_server():
+		craft_station.can_finish_craftings = false
+		return
+	if craft_station.is_open:
+		open_rpc.rpc_id(peer_id)
 	_update_craftings_rpc.rpc_id(peer_id, craftings_data)
 
 

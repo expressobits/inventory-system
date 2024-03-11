@@ -45,7 +45,6 @@ raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 
 [node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
-transaction_slot = null
 database = ExtResource("4_ljenf")
 
 [node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
