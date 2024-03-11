@@ -3,7 +3,7 @@ name: Builds
 on: 
   push:
     tags:
-      - gdextension
+      - core-*
 
 env:
   LIBNAME: inventory-system
