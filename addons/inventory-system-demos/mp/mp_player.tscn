@@ -8,7 +8,7 @@
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_1eelt"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_crafter.gd" id="3_15sbs"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_g726w"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/networked_character_inventory_system.gd" id="3_lbhsf"]
+[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_character_inventory_system.gd" id="3_lbhsf"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
