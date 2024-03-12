@@ -1,20 +1,20 @@
+extends "../../object_placer.gd"
 class_name NetworkedObjectPlacer
-extends ObjectPlacer
 
 
-@export_node_path var dropped_spawner_path : NodePath = "../../../../DroppedItemSpawner"
+@export_node_path var dropped_spawner_path : NodePath = NodePath("../../../../DroppedItemSpawner")
 @onready var dropped_spawner : DropItemSpawner = get_node(dropped_spawner_path)
 
 
 func place_item(item : Item, position : Vector3, rotation : Vector3):
 	var item_id = item.definition.id
 	if item_id < ItemDefinition.NONE:
-		return false
+		return
 	if not multiplayer.is_server():
 		place_item_rpc.rpc_id(1, item_id, position, rotation)
 	else:
 		place_item_rpc(item_id, position, rotation)
-	return true
+	return
 
 
 @rpc("any_peer")
