@@ -34,12 +34,14 @@ signal dropped(node : Node)
 	set(value):
 		raycast = value
 		var interactor = get_node(interactor_path)
-		interactor.raycast_path = interactor.get_path_to(value)
+		if interactor != null and value != null:
+			interactor.raycast_path = interactor.get_path_to(value)
 @export var camera_3d : Camera3D:
 	set(value):
 		camera_3d = value
 		var interactor = get_node(interactor_path)
-		interactor.camera_path = interactor.get_path_to(value)
+		if interactor != null and value != null:
+			interactor.camera_path = interactor.get_path_to(value)
 
 
 func _ready():
