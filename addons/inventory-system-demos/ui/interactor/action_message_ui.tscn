@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://4ateud0jxegv"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/action_message_ui.gd" id="1_d8uh5"]
+[ext_resource type="Resource" uid="uid://bxe7obvu1xl0x" path="res://addons/inventory-system-demos/ui/interactor/default_input_helper.tres" id="2_3rlpb"]
+[ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system-demos/ui/interactor/default_input_icons.tres" id="3_rgd78"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8sxuh"]
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ActionMessageUI" type="HBoxContainer" node_paths=PackedStringArray("texture_rect", "interact_message")]
+mouse_filter = 2
+script = ExtResource("1_d8uh5")
+input_helper = ExtResource("2_3rlpb")
+input_icons = ExtResource("3_rgd78")
+texture_rect = NodePath("TextureRect")
+interact_message = NodePath("InteractMessage")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="InteractMessage" type="Label" parent="."]
+layout_mode = 2
+text = "Test Message"
+label_settings = SubResource("LabelSettings_8sxuh")
+horizontal_alignment = 1
+vertical_alignment = 1

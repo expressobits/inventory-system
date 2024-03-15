@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=3 uid="uid://duq60fhdry5hv"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/recipe_ui.gd" id="1_7ru1f"]
+[ext_resource type="PackedScene" uid="uid://bapqyqy7nvi8s" path="res://addons/inventory-system-demos/ui/craft/ingredient_ui.tscn" id="4_4p25f"]
+
+[node name="RecipeUI" type="Panel"]
+custom_minimum_size = Vector2(0, 64)
+script = ExtResource("1_7ru1f")
+ingredient_scene = ExtResource("4_4p25f")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 64.0
+
+[node name="ItemIcon" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="ItemName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 7.0
+offset_right = 217.0
+offset_bottom = 55.0
+theme_override_font_sizes/font_size = 16
+text = "Stone Axe"
+
+[node name="TimeToCraft" type="Label" parent="."]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 4.0
+offset_right = 336.0
+offset_bottom = 52.0
+theme_override_font_sizes/font_size = 16
+text = "4 Seconds"
+
+[node name="IngredientsItemsLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 32.0
+offset_right = 182.0
+offset_bottom = 58.0
+text = "Ingredients"
+
+[node name="IngredientsItemsList" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 162.0
+offset_top = 27.0
+offset_right = 336.0
+offset_bottom = 59.0
+
+[node name="RequiredItemsLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 32.0
+offset_right = 182.0
+offset_bottom = 58.0
+text = "Required Items"
+
+[node name="RequiredItemsList" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 162.0
+offset_top = 27.0
+offset_right = 336.0
+offset_bottom = 59.0
+
+[node name="CraftButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = -20.0
+offset_right = -16.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Craft"

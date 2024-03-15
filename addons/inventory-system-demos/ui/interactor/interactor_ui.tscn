@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://doyklj58bvj21"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.gd" id="1_pqjjt"]
+[ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system-demos/ui/interactor/default_input_icons.tres" id="2_u8m00"]
+[ext_resource type="PackedScene" uid="uid://4ateud0jxegv" path="res://addons/inventory-system-demos/ui/interactor/action_message_ui.tscn" id="3_mapbq"]
+
+[node name="InteractorUI" type="Control" node_paths=PackedStringArray("interact_messages")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -0.5
+offset_right = 0.5
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_pqjjt")
+interact_messages = [NodePath("InteractPosition/VBoxContainer/ActionMessageUI"), NodePath("InteractPosition/VBoxContainer/ActionMessageUI2"), NodePath("InteractPosition/VBoxContainer/ActionMessageUI3"), NodePath("InteractPosition/VBoxContainer/ActionMessageUI4"), NodePath("InteractPosition/VBoxContainer/ActionMessageUI5")]
+input_icons = ExtResource("2_u8m00")
+
+[node name="InteractPosition" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -0.5
+offset_right = -0.5
+offset_bottom = -0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="InteractPosition"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_right = 52.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="ActionMessageUI" parent="InteractPosition/VBoxContainer" instance=ExtResource("3_mapbq")]
+layout_mode = 2
+
+[node name="ActionMessageUI2" parent="InteractPosition/VBoxContainer" instance=ExtResource("3_mapbq")]
+layout_mode = 2
+
+[node name="ActionMessageUI3" parent="InteractPosition/VBoxContainer" instance=ExtResource("3_mapbq")]
+layout_mode = 2
+
+[node name="ActionMessageUI4" parent="InteractPosition/VBoxContainer" instance=ExtResource("3_mapbq")]
+layout_mode = 2
+
+[node name="ActionMessageUI5" parent="InteractPosition/VBoxContainer" instance=ExtResource("3_mapbq")]
+layout_mode = 2

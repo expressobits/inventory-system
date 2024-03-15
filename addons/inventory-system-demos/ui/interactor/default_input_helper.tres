@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="InputHelper" load_steps=2 format=3 uid="uid://bxe7obvu1xl0x"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/input_helper.gd" id="1_qpl2t"]
+
+[resource]
+script = ExtResource("1_qpl2t")
+joy_name_abbr = {
+"PS4 Controller": "ps",
+"PS5 Controller": "ps",
+"Sony DualSense": "ps",
+"Switch": "switch",
+"XInput Gamepad": "xbox",
+"Xbox Series Controller": "xbox"
+}
+labels = {
+"motion": [{
+"+": "LStick Right",
+"-": "LStick Left"
+}, {
+"+": "LStick Down",
+"-": "LStick Up"
+}, {
+"+": "RStick Right",
+"-": "RStick Left"
+}, {
+"+": "RStick Down",
+"-": "RStick Up"
+}, {
+"+": "Left Trigger"
+}, {
+"+": "Right Trigger"
+}],
+"mouse": ["LMB", "RMB", "MMB", "MW Up", "MW Down", "MW Left", "MW Right", "MB1", "MB2"],
+"other": ["A", "B", "X", "Y", "Back", "Home", "Start", "L", "R", "LB", "RB", "DPad Up", "DPad Down", "DPad Left", "DPad Right", "Share", "Paddle 1", "Paddle 2", "Paddle 3", "Paddle 4", "Touch"],
+"ps": ["Cross", "Circle", "Square", "Triangle", "Select", "PS", "Start", "L3", "R3", "L1", "R1", "DPad Up", "DPad Down", "DPad Left", "DPad Right", "Microphone"],
+"switch": ["B", "A", "Y", "X", "Minus", "", "Plus", "", "", "", "", "DPad Up", "DPad Down", "DPad Left", "DPad Right", "Capture"],
+"xbox": ["A", "B", "X", "Y", "Back", "Home", "Start", "L", "R", "LB", "RB", "DPad Up", "DPad Down", "DPad Left", "DPad Right", "Share"]
+}

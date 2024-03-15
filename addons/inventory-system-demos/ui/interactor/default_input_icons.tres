@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="InputIcons" load_steps=3 format=3 uid="uid://c2cuwwcpbs81y"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/input_icons.gd" id="1_6ji74"]
+[ext_resource type="Texture2D" uid="uid://dsewxlrqmqe30" path="res://addons/inventory-system/icons/crafter.svg" id="1_d3f5v"]
+
+[resource]
+script = ExtResource("1_6ji74")
+keyboard_e = ExtResource("1_d3f5v")

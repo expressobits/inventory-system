@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://db7sndy7hfpq2"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/crafting_ui.gd" id="1_vqyhb"]
+
+[node name="CraftingUI" type="Panel"]
+custom_minimum_size = Vector2(64, 64)
+script = ExtResource("1_vqyhb")
+
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -16.0
+offset_right = 16.0
+offset_bottom = 32.0
+grow_horizontal = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+step = 0.1
+value = 45.0
