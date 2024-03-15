@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="InputHelper" load_steps=2 format=3 uid="uid://bxe7obvu1xl0x"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/interactor/input_helper.gd" id="1_qpl2t"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/input_helper.gd" id="1_qpl2t"]
 
 [resource]
 script = ExtResource("1_qpl2t")

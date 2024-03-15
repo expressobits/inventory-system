@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://1dijqt6vr078"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_ui.gd" id="1_2rmiv"]
-[ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system/ui/slot_ui.tscn" id="2_powq7"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_ui.gd" id="1_2rmiv"]
+[ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system-demos/ui/slot_ui.tscn" id="2_powq7"]
 
 [node name="InventoryUI" type="Panel" node_paths=PackedStringArray("slots_container")]
 texture_filter = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://db7sndy7hfpq2"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/crafting_ui.gd" id="1_vqyhb"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/crafting_ui.gd" id="1_vqyhb"]
 
 [node name="CraftingUI" type="Panel"]
 custom_minimum_size = Vector2(64, 64)

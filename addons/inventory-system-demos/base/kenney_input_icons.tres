@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bnu2hk8d00py1" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0157.png" id="1_qbiie"]
 [ext_resource type="Texture2D" uid="uid://1b03v1iwds35" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0087.png" id="1_x5ob6"]
 [ext_resource type="Texture2D" uid="uid://l0bhuyle78xg" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0077.png" id="2_1d7hw"]
-[ext_resource type="Script" path="res://addons/inventory-system/ui/interactor/input_icons.gd" id="2_hd7g5"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/input_icons.gd" id="2_hd7g5"]
 [ext_resource type="Texture2D" uid="uid://dusktr1nffo7i" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0018.png" id="3_0smbw"]
 [ext_resource type="Texture2D" uid="uid://btxrda6ke6v0q" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0079.png" id="3_4m730"]
 [ext_resource type="Texture2D" uid="uid://c4v7db7odefn3" path="res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0092.png" id="3_7j7xx"]

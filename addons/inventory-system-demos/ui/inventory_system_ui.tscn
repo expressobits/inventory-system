@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://da2b73383isem"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/inventory_system_ui.gd" id="2_ci0ph"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system/ui/inventory_ui.tscn" id="3_sohfg"]
-[ext_resource type="Script" path="res://addons/inventory-system/ui/transaction_slot.gd" id="3_ugeom"]
-[ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system/ui/slot_ui.tscn" id="4_5h6ud"]
-[ext_resource type="Script" path="res://addons/inventory-system/ui/hotbar_ui.gd" id="7_e17fd"]
-[ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
-[ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/inventory_ui.tscn" id="3_sohfg"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/transaction_slot.gd" id="3_ugeom"]
+[ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system-demos/ui/slot_ui.tscn" id="4_5h6ud"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="7_e17fd"]
+[ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
+[ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
 [node name="Inventory System UI" type="Control" node_paths=PackedStringArray("player_inventories_ui")]
 texture_filter = 1

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dq1rob2nkb0cb"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/slot_ui.gd" id="2_b6rwq"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/slot_ui.gd" id="2_b6rwq"]
 
 [node name="SlotUI" type="Control"]
 texture_filter = 1

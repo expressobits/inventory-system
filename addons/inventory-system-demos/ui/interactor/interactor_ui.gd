@@ -20,6 +20,7 @@ func setup(interactor : Interactor):
 func _ready():
 	for i in interact_messages:
 		i.input_icons = input_icons
+		i.hide_message()
 	default_interact_message_position = interact_position.position
 
 

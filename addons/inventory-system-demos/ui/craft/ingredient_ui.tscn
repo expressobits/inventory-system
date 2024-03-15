@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bapqyqy7nvi8s"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/ingredient_ui.gd" id="1_4e4fk"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/ingredient_ui.gd" id="1_4e4fk"]
 
 [node name="IngredientUI" type="Control"]
 custom_minimum_size = Vector2(64, 32)

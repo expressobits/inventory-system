@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://doyklj58bvj21"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/interactor/interactor_ui.gd" id="1_pqjjt"]
-[ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system/ui/interactor/default_input_icons.tres" id="2_u8m00"]
-[ext_resource type="PackedScene" uid="uid://4ateud0jxegv" path="res://addons/inventory-system/ui/interactor/action_message_ui.tscn" id="3_mapbq"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.gd" id="1_pqjjt"]
+[ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system-demos/ui/interactor/default_input_icons.tres" id="2_u8m00"]
+[ext_resource type="PackedScene" uid="uid://4ateud0jxegv" path="res://addons/inventory-system-demos/ui/interactor/action_message_ui.tscn" id="3_mapbq"]
 
 [node name="InteractorUI" type="Control" node_paths=PackedStringArray("interact_messages")]
 layout_mode = 3

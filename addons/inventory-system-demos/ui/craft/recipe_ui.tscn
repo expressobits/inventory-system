@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://duq60fhdry5hv"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/recipe_ui.gd" id="1_7ru1f"]
-[ext_resource type="PackedScene" uid="uid://bapqyqy7nvi8s" path="res://addons/inventory-system/ui/craft/ingredient_ui.tscn" id="4_4p25f"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/recipe_ui.gd" id="1_7ru1f"]
+[ext_resource type="PackedScene" uid="uid://bapqyqy7nvi8s" path="res://addons/inventory-system-demos/ui/craft/ingredient_ui.tscn" id="4_4p25f"]
 
 [node name="RecipeUI" type="Panel"]
 custom_minimum_size = Vector2(0, 64)

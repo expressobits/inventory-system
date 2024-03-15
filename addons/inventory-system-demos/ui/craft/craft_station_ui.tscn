@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://cci6dwxmbapt1"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/craft_station_ui.gd" id="1_ny8hp"]
-[ext_resource type="PackedScene" uid="uid://duq60fhdry5hv" path="res://addons/inventory-system/ui/craft/recipe_ui.tscn" id="2_jgmgq"]
-[ext_resource type="Script" path="res://addons/inventory-system/ui/craft/craftings_ui.gd" id="3_imm8o"]
-[ext_resource type="PackedScene" uid="uid://db7sndy7hfpq2" path="res://addons/inventory-system/ui/craft/crafting_ui.tscn" id="4_5nmfv"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system/ui/inventory_ui.tscn" id="7_g573c"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.gd" id="1_ny8hp"]
+[ext_resource type="PackedScene" uid="uid://duq60fhdry5hv" path="res://addons/inventory-system-demos/ui/craft/recipe_ui.tscn" id="2_jgmgq"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craftings_ui.gd" id="3_imm8o"]
+[ext_resource type="PackedScene" uid="uid://db7sndy7hfpq2" path="res://addons/inventory-system-demos/ui/craft/crafting_ui.tscn" id="4_5nmfv"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/inventory_ui.tscn" id="7_g573c"]
 
 [node name="CraftStationUI" type="Control" node_paths=PackedStringArray("input_inventory_ui", "output_inventory_ui")]
 layout_mode = 3
