@@ -73,15 +73,20 @@ func _physics_process(_delta : float):
 	interactor.try_interact()
 
 
+func is_any_station_or_inventory_opened() -> bool:
+	return crafter.is_open_any_station() or inventory_handler.is_open_main_inventory()
+
+
 func _update_opened_inventories(_inventory : Inventory):
-	if inventory_handler.is_open_main_inventory():
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_check_inputs()
 
 
 func _update_opened_stations(_craft_station : CraftStation):
-	if crafter.is_open_any_station():
+	_check_inputs()
+
+
+func _check_inputs():
+	if is_any_station_or_inventory_opened():
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -89,7 +94,7 @@ func _update_opened_stations(_craft_station : CraftStation):
 
 func inventory_inputs():
 	if Input.is_action_just_released(toggle_inventory_input):
-		if not inventory_handler.is_open_any_inventory() and not crafter.is_open_any_station():
+		if not is_any_station_or_inventory_opened():
 			open_main_inventory()
 	
 	if Input.is_action_just_released(exit_inventory_and_craft_panel_input):
@@ -97,7 +102,7 @@ func inventory_inputs():
 		close_craft_stations()
 			
 	if Input.is_action_just_released(toggle_craft_panel_input):
-		if not inventory_handler.is_open_any_inventory() and not crafter.is_open_any_station():
+		if not is_any_station_or_inventory_opened():
 			open_main_craft_station()
 
 
@@ -142,7 +147,7 @@ func craft(craft_station : CraftStation, recipe_index : int):
 
 
 func open_main_craft_station():
-	inventory_handler.open_main_inventory()
+	crafter.open_main_craft_station()
 
 
 func close_craft_stations():
