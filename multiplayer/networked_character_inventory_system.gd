@@ -19,7 +19,7 @@ func _ready():
 func _input(event : InputEvent):
 	if Engine.is_editor_hint():
 		return
-	if is_multiplayer_authority():
+	if check_inputs and is_multiplayer_authority():
 		hot_bar_inputs(event)
 		inventory_inputs()
 

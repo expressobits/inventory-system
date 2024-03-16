@@ -23,6 +23,7 @@ signal dropped(node : Node)
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
 @export var change_mouse_state : bool = true
+@export var check_inputs : bool = true
 @export var toggle_inventory_input : String = "toggle_inventory"
 @export var exit_inventory_and_craft_panel_input : String = "escape"
 @export var toggle_craft_panel_input : String = "toggle_craft_panel"
@@ -61,8 +62,9 @@ func _ready():
 func _input(event : InputEvent) -> void:
 	if Engine.is_editor_hint():
 		return
-	hot_bar_inputs(event)
-	inventory_inputs()
+	if check_inputs:
+		hot_bar_inputs(event)
+		inventory_inputs()
 
 
 func _physics_process(_delta : float):
