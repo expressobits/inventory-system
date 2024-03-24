@@ -143,6 +143,11 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 func pick_to_inventory(node : Node):
 	inventory_handler.pick_to_inventory(node)
 
+
+func add_to_inventory(item : Item, amount : int):
+	inventory_handler.add_to_inventory(inventory_handler.get_inventory(0), item, amount)
+
+
 ## Crafter
 func craft(craft_station : CraftStation, recipe_index : int):
 	craft_station.craft(recipe_index)

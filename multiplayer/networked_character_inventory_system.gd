@@ -82,6 +82,13 @@ func pick_to_inventory(node : Node):
 		pick_to_inventory_rpc.rpc_id(1, node.get_path())
 
 
+func add_to_inventory(item : Item, amount : int):
+	if multiplayer.is_server():
+		super.add_to_inventory(item, amount)
+	else:
+		add_to_inventory_rpc.rpc_id(1, item.definition.id, amount)
+
+
 func open_main_craft_station():
 	if multiplayer.is_server():
 		super.open_main_craft_station()
@@ -200,6 +207,13 @@ func pick_to_inventory_rpc(node_path : NodePath):
 
 
 @rpc
+func add_to_inventory_rpc(item_id : int, amount : int):
+	var item = Item.new()
+	item.definition = get_item_from_id(item_id)
+	super.add_to_inventory(item, amount)
+
+
+@rpc
 func open_main_craft_station_rpc():
 	super.open_main_craft_station()
 
@@ -220,7 +234,8 @@ func close_stations_rpc():
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 	var station = get_node(craft_station_path)
 	station.craft(recipe_index)
-	
+
+
 @rpc
 func hotbar_change_selection_rpc(index : int):
 	hotbar.change_selection(index)
