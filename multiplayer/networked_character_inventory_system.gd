@@ -258,5 +258,5 @@ func _physics_process(_delta : float):
 		return
 	if not can_interact:
 		return
-	if is_multiplayer_authority():
+	if multiplayer.multiplayer_peer != null and is_multiplayer_authority():
 		interactor.try_interact()
