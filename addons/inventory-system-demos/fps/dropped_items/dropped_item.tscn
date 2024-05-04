@@ -3,9 +3,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system/extras/dropped_item_3d.gd" id="1_qx0iq"]
 
 [sub_resource type="InteractAction" id="Resource_w5bs8"]
-input = "interact"
 description = "Get Item"
-code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6n6kg"]
 size = Vector3(0.4, 0.4, 0.4)
