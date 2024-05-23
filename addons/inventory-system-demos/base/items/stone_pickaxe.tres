@@ -9,6 +9,7 @@ can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("1_hlhk0")
+weight = 2.0
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
 "durability": 100.0,
