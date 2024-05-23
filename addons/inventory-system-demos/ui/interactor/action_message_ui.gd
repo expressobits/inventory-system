@@ -18,6 +18,8 @@ extends HBoxContainer
 
 func setup_icon(input_text : String):
 	var action_0_events : Array[InputEvent] = InputMap.action_get_events(input_text)
+	if action_0_events.is_empty():
+		return
 	var action_0_event_0 : InputEvent = action_0_events[0]
 	var texture = input_helper.get_event_as_icon(action_0_event_0, input_icons)
 	texture_rect.visible = true
