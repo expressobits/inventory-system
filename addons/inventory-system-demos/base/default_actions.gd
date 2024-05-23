@@ -33,6 +33,15 @@ const CHARACTER_CONTROLLER_LEFT := {
 	]
 }
 
+const CHARACTER_CONTROLLER_JUMP := {
+	"name": "jump_move",
+	"events": [
+		{
+			"physical_keycode": KEY_SPACE,
+		}
+	]
+}
+
 const CHARACTER_CONTROLLER_ESCAPE := {
 	"name": "escape",
 	"events": [
