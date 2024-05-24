@@ -17,7 +17,7 @@ private:
 	int max_stack = 0;
 	String name;
 	Ref<Texture2D> icon;
-	float weight;
+	float weight = 0.0;
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
