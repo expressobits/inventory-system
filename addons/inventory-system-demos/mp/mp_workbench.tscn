@@ -9,6 +9,7 @@
 [node name="SyncCraftStation" type="Node" parent="." index="4" node_paths=PackedStringArray("craft_station")]
 script = ExtResource("2_qdlmm")
 craft_station = NodePath("../CraftStation")
+sync_input_inventories = true
 
 [node name="SyncInventory" type="Node" parent="." index="5" node_paths=PackedStringArray("inventory")]
 script = ExtResource("3_j3l4y")

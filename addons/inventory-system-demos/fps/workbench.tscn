@@ -6,9 +6,7 @@
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_d4au8"]
 
 [sub_resource type="InteractAction" id="Resource_ypp5l"]
-input = "interact"
 description = "Open Station"
-code = 0
 
 [sub_resource type="InteractAction" id="Resource_mwd72"]
 input = "rotate"

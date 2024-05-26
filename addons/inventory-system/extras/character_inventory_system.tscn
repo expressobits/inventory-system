@@ -32,6 +32,7 @@ inventory = NodePath("../InventoryHandler/Inventory")
 
 [node name="Crafter" type="Crafter" parent="."]
 main_station = NodePath("CraftStation")
+inventories_for_stations = Array[NodePath]([NodePath("../InventoryHandler/Inventory"), NodePath("../InventoryHandler/EquipmentInventory")])
 
 [node name="CraftStation" type="CraftStation" parent="Crafter"]
 input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])

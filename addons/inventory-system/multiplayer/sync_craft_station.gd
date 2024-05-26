@@ -2,7 +2,9 @@ extends Node
 class_name SyncCraftStation
 
 @export var craft_station : CraftStation
+@export var sync_input_inventories : bool
 var craftings_data : Array
+
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_connected.bind())
@@ -10,6 +12,9 @@ func _ready() -> void:
 	craft_station.closed.connect(_on_closed)
 	craft_station.crafting_added.connect(_on_crafting_added)
 	craft_station.crafting_removed.connect(_on_crafting_removed)
+	if sync_input_inventories:
+		craft_station.input_inventory_added.connect(_on_input_inventory_added.bind())
+		craft_station.input_inventory_removed.connect(_on_input_inventory_removed.bind())
 
 
 func _on_connected(peer_id : int):
@@ -46,6 +51,15 @@ func _on_crafting_removed(crafting_index : int):
 	crafting_removed_rpc.rpc(crafting_index)
 	craftings_data.remove_at(crafting_index)
 
+func _on_input_inventory_added(inventory_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	input_inventory_added_rpc.rpc(inventory_path)
+	
+func _on_input_inventory_removed(inventory_path : NodePath):
+	if not multiplayer.is_server():
+		return
+	input_inventory_removed_rpc.rpc(inventory_path)
 
 @rpc
 func open_rpc():
@@ -74,3 +88,11 @@ func _update_craftings_rpc(craftings_data : Array):
 		var crafting = Crafting.new()
 		crafting.from_data(data)
 		craft_station.craftings.append(crafting)
+		
+@rpc
+func input_inventory_added_rpc(inventory_path : NodePath):
+	craft_station.add_input_inventory(craft_station.get_node(inventory_path))
+
+@rpc
+func input_inventory_removed_rpc(inventory_path : NodePath):
+	craft_station.remove_input_inventory(craft_station.get_node(inventory_path))

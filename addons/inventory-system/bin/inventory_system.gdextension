@@ -9,10 +9,8 @@ windows.debug.x86_64 = "windows/inventory_system.windows.template_debug.x86_64.d
 windows.debug.x86_32 = "windows/inventory_system.windows.template_debug.x86_32.dll"
 windows.release.x86_64 = "windows/inventory_system.windows.template_release.x86_64.dll"
 windows.release.x86_32 = "windows/inventory_system.windows.template_release.x86_32.dll"
-linux.debug.x86_64 = "linux64/inventory_system.linux.template_debug.x86_64.so"
-linux.debug.x86_32 = "linux32/inventory_system.linux.template_debug.x86_32.so"
-linux.release.x86_64 = "linux64/inventory_system.linux.template_release.x86_64.so"
-linux.release.x86_32 = "linux32/inventory_system.linux.template_release.x86_32.so"
+linux.debug.x86_64 = "linux/libinventory_system.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "linux/libinventory_system.linux.template_release.x86_64.so"
 
 [icons]
 ItemCategory = "res://addons/inventory-system/icons/item_category.svg"
