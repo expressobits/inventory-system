@@ -14,6 +14,7 @@ class Crafter : public NodeInventories {
 
 private:
 	NodePath main_station;
+	TypedArray<NodePath> inventories_for_stations;
 
 protected:
 	TypedArray<NodePath> opened_stations;
@@ -23,6 +24,8 @@ public:
 	Crafter();
 	~Crafter();
 	void set_main_station(const NodePath &new_main_station);
+	TypedArray<NodePath> get_inventories_for_stations() const;
+	void set_inventories_for_stations(const TypedArray<NodePath> &new_inventories_for_stations);
 	NodePath get_main_station() const;
 	void set_opened_stations(const TypedArray<NodePath> &new_opened_stations);
 	TypedArray<NodePath> get_opened_stations() const;
@@ -35,6 +38,7 @@ public:
 	bool close_main_craft_station();
 	void close_all_craft_stations();
 	CraftStation *get_craft_station(const NodePath craft_station_path) const;
+	Inventory *get_input_inventory_for_stations(const NodePath inventory_path) const;
 };
 
 #endif // CRAFTER_CLASS_H

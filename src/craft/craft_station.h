@@ -23,6 +23,7 @@ private:
 	bool only_remove_ingredients_after_craft = false;
 	bool auto_craft = false;
 	int processing_mode = 0;
+	bool can_add_input_inventory = true;
 	bool is_open = false;
 	TypedArray<int> valid_recipes;
 
@@ -78,12 +79,16 @@ public:
 	bool get_auto_craft() const;
 	void set_processing_mode(const int &new_processing_mode);
 	int get_processing_mode() const;
+	void set_can_add_input_inventory(const bool &new_can_add_input_inventory);
+	bool get_can_add_input_inventory() const;
 	void set_is_open(const bool &new_is_open);
 	bool get_is_open() const;
 	void set_craftings(const TypedArray<Crafting> &new_craftings);
 	TypedArray<Crafting> get_craftings() const;
 	void set_valid_recipes(const TypedArray<int> &new_valid_recipes);
 	TypedArray<int> get_valid_recipes() const;
+	void add_input_inventory(Inventory* input_inventory);
+	void remove_input_inventory(Inventory* input_inventory);
 };
 
 VARIANT_ENUM_CAST(CraftStation::ProcessingMode);

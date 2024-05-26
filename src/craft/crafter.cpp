@@ -3,6 +3,8 @@
 void Crafter::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_main_station"), &Crafter::get_main_station);
 	ClassDB::bind_method(D_METHOD("set_main_station", "main_station"), &Crafter::set_main_station);
+	ClassDB::bind_method(D_METHOD("get_inventories_for_stations"), &Crafter::get_inventories_for_stations);
+	ClassDB::bind_method(D_METHOD("set_inventories_for_stations", "inventories_for_stations"), &Crafter::set_inventories_for_stations);
 	ClassDB::bind_method(D_METHOD("get_opened_stations"), &Crafter::get_opened_stations);
 	ClassDB::bind_method(D_METHOD("set_opened_stations", "opened_stations"), &Crafter::set_opened_stations);
 	ClassDB::bind_method(D_METHOD("open", "craft_station"), &Crafter::open);
@@ -16,6 +18,7 @@ void Crafter::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("opened", PropertyInfo(Variant::NODE_PATH, "craft_station", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "CraftStation")));
 	ADD_SIGNAL(MethodInfo("closed"));
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "main_station", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "CraftStation"), "set_main_station", "get_main_station");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "inventories_for_stations", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_inventories_for_stations", "get_inventories_for_stations");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "opened_stations", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "CraftStation")), "set_opened_stations", "get_opened_stations");
 }
 
@@ -33,6 +36,14 @@ NodePath Crafter::get_main_station() const {
 	return main_station;
 }
 
+TypedArray<NodePath> Crafter::get_inventories_for_stations() const {
+	return inventories_for_stations;
+}
+
+void Crafter::set_inventories_for_stations(const TypedArray<NodePath> &new_inventories_for_stations) {
+	inventories_for_stations = new_inventories_for_stations;
+}
+
 void Crafter::set_opened_stations(const TypedArray<NodePath> &new_opened_stations) {
 	opened_stations = new_opened_stations;
 }
@@ -47,6 +58,11 @@ bool Crafter::open(CraftStation *craft_station) {
 		return false;
 	if (!craft_station->open())
 		return false;
+	if (craft_station_path != main_station) {
+		for (size_t i = 0; i < inventories_for_stations.size(); i++) {
+			craft_station->add_input_inventory(get_input_inventory_for_stations(inventories_for_stations[i]));
+		}
+	}
 	opened_stations.append(craft_station_path);
 	emit_signal("opened", craft_station);
 	return true;
@@ -59,6 +75,11 @@ bool Crafter::close(CraftStation *craft_station) {
 		return false;
 	if (!craft_station->close()) {
 		return false;
+	}
+	if (get_path_to(craft_station) != main_station) {
+		for (size_t i = 0; i < inventories_for_stations.size(); i++) {
+			craft_station->remove_input_inventory(get_input_inventory_for_stations(inventories_for_stations[i]));
+		}
 	}
 	opened_stations.remove_at(index);
 	emit_signal("closed", craft_station);
@@ -121,4 +142,13 @@ CraftStation *Crafter::get_craft_station(const NodePath craft_station_path) cons
 		ERR_PRINT("Get Craft Station is null!");
 	}
 	return craft_station;
+}
+
+Inventory *Crafter::get_input_inventory_for_stations(const NodePath inventory_path) const {
+	Node *node_inventory = get_node_or_null(inventory_path);
+	Inventory *inventory = Object::cast_to<Inventory>(node_inventory);
+	if (inventory == nullptr) {
+		ERR_PRINT("Get Input Inventory is null!");
+	}
+	return inventory;
 }
