@@ -11,7 +11,7 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 🪹[main](https://github.com/expressobits/inventory-system/tree/main):
 🪹[module](https://github.com/expressobits/inventory-system/tree/module): 
-Same compiled version but just the addon folder, to be added as a git 
+Compiled version but just the addon folder, to be added as a git 
 
 🪹[gdextension](https://github.com/expressobits/inventory-system/tree/gdextension): Contains C++ Plugin
 
