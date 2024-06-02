@@ -1,13 +1,21 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.8.71-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-1.1.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
-See demos in:
-Github: [Branch demos](https://github.com/expressobits/inventory-system/tree/demos)
 Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
+
+## Branchs Map
+
+🪹[main](https://github.com/expressobits/inventory-system/tree/main):
+🪹[module](https://github.com/expressobits/inventory-system/tree/module): 
+Compiled version but just the addon folder, to be added as a git 
+
+🪹[gdextension](https://github.com/expressobits/inventory-system/tree/gdextension): Contains C++ Plugin
+
+🪹[addon](https://github.com/expressobits/inventory-system/tree/addon): Compiled version of the libs that are in the godot asset lib store.
 
 
 ## Features
@@ -48,9 +56,11 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 ✔️ Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
 
+✔️ Equipament Inventory
+
 ## In Progress
 
-🔨 Equipament Inventory
+🔨 No Features in progress
 
 ## Planneds
 
