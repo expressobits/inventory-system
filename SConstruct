@@ -61,7 +61,7 @@ sources = [
 
 file = "{}{}{}".format(libname, env["suffix"], env["SHLIBSUFFIX"])
 
-if env["platform"] == "macos":
+if env["platform"] == "macos" or env["platform"] == "ios":
     platlibname = "{}.{}.{}".format(libname, env["platform"], env["target"])
     file = "{}.framework/{}".format(env["platform"], platlibname, platlibname)
 
