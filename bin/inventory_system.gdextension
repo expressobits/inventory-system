@@ -3,12 +3,10 @@ entry_symbol = "inventory_system_init"
 compatibility_minimum = 4.2
 
 [libraries]
-macos.debug = "osx/inventory_system.macos.template_debug.framework"
-macos.release = "osx/inventory_system.macos.template_release.framework"
+macos.debug = "macos/libinventory_system.macos.template_debug.framework"
+macos.release = "macos/libinventory_system.macos.template_release.framework"
 windows.debug.x86_64 = "windows/inventory_system.windows.template_debug.x86_64.dll"
-windows.debug.x86_32 = "windows/inventory_system.windows.template_debug.x86_32.dll"
 windows.release.x86_64 = "windows/inventory_system.windows.template_release.x86_64.dll"
-windows.release.x86_32 = "windows/inventory_system.windows.template_release.x86_32.dll"
 linux.debug.x86_64 = "linux/libinventory_system.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "linux/libinventory_system.linux.template_release.x86_64.so"
 
