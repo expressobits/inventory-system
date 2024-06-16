@@ -24,6 +24,7 @@ public:
 	void set_properties(const Dictionary &new_properties);
 	Dictionary get_properties() const;
 	bool is_stack_with(Ref<Item> other_item) const;
+	void create_dynamic_properties();
 };
 
 #endif // ITEM_CLASS_H

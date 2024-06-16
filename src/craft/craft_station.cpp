@@ -108,7 +108,9 @@ void CraftStation::finish_crafting(int crafting_index) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return;
 			}
-			amount_to_add = inventory->add(product->get_item(), product->get_amount());
+			Ref<Item> item = product->get_item();
+			item->create_dynamic_properties();
+			amount_to_add = inventory->add(item, product->get_amount());
 		}
 	}
 	emit_signal("on_crafted", crafting->get_recipe_index());
