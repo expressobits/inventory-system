@@ -1,0 +1,178 @@
+# This file incorporates work covered by the following copyright and permission notice:  
+# 
+#     Copyright (c) Mikael Hermansson and Godot Jolt contributors.
+#     Copyright (c) Dragos Daian.
+# 
+#     Permission is hereby granted, free of charge, to any person obtaining a copy of
+#     this software and associated documentation files (the "Software"), to deal in
+#     the Software without restriction, including without limitation the rights to
+#     use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+#     the Software, and to permit persons to whom the Software is furnished to do so,
+#     subject to the following conditions:
+# 
+#     The above copyright notice and this permission notice shall be included in all
+#     copies or substantial portions of the Software.
+# 
+#     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+#     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+#     FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+#     COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+#     IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+#     CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+name: GDExtension Sign
+description: Sign Mac GDExtension
+
+inputs:
+  FRAMEWORK_PATH:
+    description: The path of the artifact. Eg. bin/addons/my_addon/bin/libmy_addon.macos.template_release.universal.framework
+    required: true
+  SIGN_FLAGS:
+    description: The extra flags to use. Eg. --deep
+    required: false
+  APPLE_CERT_BASE64:
+    required: true
+    description: Base64 file from p12 certificate.
+  APPLE_CERT_PASSWORD:
+    required: true
+    description: Password set when creating p12 certificate from .cer certificate.
+  APPLE_DEV_PASSWORD:
+    required: true
+    description: Apple App-Specific Password. Eg. abcd-abcd-abcd-abcd
+  APPLE_DEV_ID:
+    required: true
+    description: Email used for Apple Id. Eg. email@provider.com
+  APPLE_DEV_TEAM_ID:
+    required: true
+    description: Apple Team Id. Eg. 1ABCD23EFG
+  APPLE_DEV_APP_ID:
+    required: true
+    description: |
+      Certificate name from get info -> Common name . Eg. Developer ID Application: Common Name (1ABCD23EFG)
+outputs:
+  zip_path:
+    value: ${{ steps.sign.outputs.path }}
+
+
+runs:
+  using: composite
+  steps:
+  - name: Sign
+    id: sign
+    shell: pwsh
+    run: |
+      #!/usr/bin/env pwsh
+
+      # Copyright (c) Mikael Hermansson and Godot Jolt contributors.
+
+      # Permission is hereby granted, free of charge, to any person obtaining a copy of
+      # this software and associated documentation files (the "Software"), to deal in
+      # the Software without restriction, including without limitation the rights to
+      # use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+      # the Software, and to permit persons to whom the Software is furnished to do so,
+      # subject to the following conditions:
+
+      # The above copyright notice and this permission notice shall be included in all
+      # copies or substantial portions of the Software.
+
+      # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+      # FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+      # COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+      # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+      # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+      # Taken from https://github.com/godot-jolt/godot-jolt/blob/master/scripts/ci_sign_macos.ps1
+
+      Set-StrictMode -Version Latest
+      $ErrorActionPreference = "Stop"
+
+      $CodesignPath = Get-Command codesign | Resolve-Path
+
+      $CertificateBase64 = "${{inputs.APPLE_CERT_BASE64}}"
+      $CertificatePassword = "${{inputs.APPLE_CERT_PASSWORD}}"
+      $CertificatePath = [IO.Path]::ChangeExtension((New-TemporaryFile), "p12")
+
+      $Keychain = "ephemeral.keychain"
+      $KeychainPassword = (New-Guid).ToString().Replace("-", "")
+
+      $DevId = "${{ inputs.APPLE_DEV_ID }}"
+      $DevTeamId = "${{ inputs.APPLE_DEV_TEAM_ID }}"
+      $DevPassword = "${{ inputs.APPLE_DEV_PASSWORD }}"
+      $DeveloperIdApplication = "${{ inputs.APPLE_DEV_APP_ID }}"
+
+      if (!$CertificateBase64) { throw "No certificate provided" }
+      if (!$CertificatePassword) { throw "No certificate password provided" }
+      if (!$DevId) { throw "No Apple Developer ID provided" }
+      if (!$DeveloperIdApplication) { throw "No Apple Developer ID Application provided" }
+      if (!$DevTeamId) { throw "No Apple Team ID provided" }
+      if (!$DevPassword) { throw "No Apple Developer password provided" }
+
+      Write-Output "Decoding certificate..."
+
+      $Certificate = [Convert]::FromBase64String($CertificateBase64)
+
+      Write-Output "Writing certificate to disk..."
+
+      [IO.File]::WriteAllBytes($CertificatePath, $Certificate)
+
+      Write-Output "Creating keychain..."
+
+      security create-keychain -p $KeychainPassword $Keychain
+
+      Write-Output "Setting keychain as default..."
+
+      security default-keychain -s $Keychain
+
+      Write-Output "Importing certificate into keychain..."
+      security import $CertificatePath `
+        -k ~/Library/Keychains/$Keychain `
+        -P $CertificatePassword `
+        -T $CodesignPath
+      Write-Output "Check identities..."
+
+      security find-identity
+
+      Write-Output "Granting access to keychain..."
+
+      security set-key-partition-list -S "apple-tool:,apple:" -s -k $KeychainPassword $Keychain
+
+      $Framework = "${{ inputs.FRAMEWORK_PATH }}"
+      $SignFlags = "${{ inputs.SIGN_FLAGS }}"
+      $Archive = [IO.Path]::ChangeExtension((New-TemporaryFile), "zip")
+
+      Write-Output "Signing '$Framework'..."
+
+      & $CodesignPath --verify --timestamp --verbose "$SignFlags" --sign $DeveloperIdApplication "$Framework"
+
+      Write-Output "Verifying signing..."
+
+      & $CodesignPath --verify -dvvv "$Framework"
+
+      Get-ChildItem -Force -Recurse -Path "$Framework"
+
+      Write-Output "Archiving framework to '$Archive'..."
+
+      ditto -ck -rsrc --sequesterRsrc --keepParent "$Framework" "$Archive"
+
+      Write-Output "Submitting archive for notarization..."
+
+      $output = xcrun notarytool submit "$Archive" `
+        --apple-id $DevId `
+        --team-id $DevTeamId `
+        --password $DevPassword `
+        --wait
+      echo $output
+      $matches = $output -match '((\d|[a-z])+-(\d|[a-z])+-(\d|[a-z])+-(\d|[a-z])+-(\d|[a-z])+)'
+      if ($output) {
+        $id_res = $matches[0].Substring(6)
+      }
+      xcrun notarytool log $id_res `
+        --apple-id $DevId `
+        --team-id $DevTeamId `
+        --password $DevPassword `
+        developer_log.json
+      get-content developer_log.json
+
+      echo "path=$Archive" >> $env:GITHUB_OUTPUT
+
