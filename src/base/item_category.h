@@ -14,6 +14,8 @@ private:
 	Color color;
 	Ref<Texture2D> icon;
 	int code = 0;
+	Dictionary item_properties;
+	TypedArray<String> item_dynamic_properties;
 
 protected:
 	static void _bind_methods();
@@ -29,6 +31,10 @@ public:
 	Ref<Texture2D> get_icon() const;
 	void set_code(const int &new_code);
 	int get_code() const;
+	void set_item_properties(const Dictionary &new_item_properties);
+	Dictionary get_item_properties() const;
+	void set_item_dynamic_properties(const TypedArray<String> &new_item_dynamic_properties);
+	TypedArray<String> get_item_dynamic_properties() const;
 };
 
 #endif // ITEM_CATEGORY

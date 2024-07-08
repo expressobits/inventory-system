@@ -115,6 +115,21 @@ TypedArray<String> ItemDefinition::get_dynamic_properties() const {
 
 void ItemDefinition::set_categories(const TypedArray<ItemCategory> &new_categories) {
 	categories = new_categories;
+	Dictionary properties = get_properties();
+	Array dynamic_properties = get_dynamic_properties();
+	for (size_t i = 0; i < categories.size(); i++) {
+		Ref<ItemCategory> category = categories[i];
+		for (size_t i = 0; i < category->get_item_properties().size(); i++) {
+			Variant property_key = category->get_item_properties().keys()[i];
+			if (properties.keys().find(property_key) == -1) {
+				// The item does not have the key in its properties, which is found in the category properties template.
+				properties[property_key] = category->get_item_properties()[property_key];
+				if(category->get_item_dynamic_properties().find(property_key) != -1){
+					dynamic_properties.append(property_key);
+				}
+			}
+		}
+	}
 }
 
 TypedArray<ItemCategory> ItemDefinition::get_categories() const {
