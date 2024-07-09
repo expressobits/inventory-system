@@ -1,7 +1,7 @@
 name: Build GDExtension
 on:
   workflow_dispatch:
-  # push:
+  push:
 
 env:
   LIBNAME: inventory-system
