@@ -1,10 +1,10 @@
 name: Build GDExtension
 on:
-  workflow_call:
+  workflow_dispatch:
   # push:
 
 env:
-  LIBNAME: example
+  LIBNAME: inventory-system
 
 jobs:
   build:
@@ -80,128 +80,128 @@ jobs:
             target-type: template_release
             os: ubuntu-20.04
 
-          # - platform: windows
-          #   float-precision: single
-          #   arch: x86_32
-          #   target-type: template_release
-          #   os: windows-latest
-
-          # - platform: windows
-          #   float-precision: single
-          #   arch: x86_64
-          #   target-type: template_release
-          #   os: windows-latest
-
-          # - platform: macos
-          #   float-precision: single
-          #   arch: universal
-          #   target-type: template_release
-          #   os: macos-latest
-
-          # - platform: android
-          #   float-precision: single
-          #   arch: arm64
-          #   target-type: template_release
-          #   os: ubuntu-20.04
-
-          # - platform: android
-          #   float-precision: single
-          #   arch: arm32
-          #   target-type: template_release
-          #   os: ubuntu-20.04
-
-          # - platform: android
-          #   float-precision: single
-          #   arch: x86_64
-          #   target-type: template_release
-          #   os: ubuntu-20.04
-
-          # - platform: android
-          #   float-precision: single
-          #   arch: x86_32
-          #   target-type: template_release
-          #   os: ubuntu-20.04
-
-          # - platform: ios
-          #   float-precision: single
-          #   arch: arm64
-          #   target-type: template_release
-          #   os: macos-latest
-
-          # - platform: web
-          #   float-precision: single
-          #   arch: wasm32
-          #   target-type: template_release
-          #   os: ubuntu-20.04
-
-        # Double precision templates
-        # Double precision debug templates
-          - platform: linux
-            float-precision: double
-            arch: x86_64
-            target-type: template_debug
-            os: ubuntu-20.04
-
           - platform: windows
-            float-precision: double
+            float-precision: single
             arch: x86_32
-            target-type: template_debug
+            target-type: template_release
             os: windows-latest
 
           - platform: windows
-            float-precision: double
+            float-precision: single
             arch: x86_64
-            target-type: template_debug
+            target-type: template_release
             os: windows-latest
 
           - platform: macos
-            float-precision: double
+            float-precision: single
             arch: universal
-            target-type: template_debug
+            target-type: template_release
             os: macos-latest
 
           - platform: android
-            float-precision: double
+            float-precision: single
             arch: arm64
-            target-type: template_debug
+            target-type: template_release
             os: ubuntu-20.04
 
           - platform: android
-            float-precision: double
+            float-precision: single
             arch: arm32
-            target-type: template_debug
+            target-type: template_release
             os: ubuntu-20.04
 
           - platform: android
-            float-precision: double
-            arch: x86_64
-            target-type: template_debug
-            os: ubuntu-20.04
-
-          - platform: android
-            float-precision: double
-            arch: x86_32
-            target-type: template_debug
-            os: ubuntu-20.04
-
-          - platform: ios
-            float-precision: double
-            arch: arm64
-            target-type: template_debug
-            os: macos-latest
-
-          - platform: web
-            float-precision: double
-            arch: wasm32
-            target-type: template_debug
-            os: ubuntu-20.04
-
-        # Double precision release templates
-          - platform: linux
-            float-precision: double
+            float-precision: single
             arch: x86_64
             target-type: template_release
             os: ubuntu-20.04
+
+          - platform: android
+            float-precision: single
+            arch: x86_32
+            target-type: template_release
+            os: ubuntu-20.04
+
+          - platform: ios
+            float-precision: single
+            arch: arm64
+            target-type: template_release
+            os: macos-latest
+
+          - platform: web
+            float-precision: single
+            arch: wasm32
+            target-type: template_release
+            os: ubuntu-20.04
+
+        # Double precision templates
+        # Double precision debug templates
+          # - platform: linux
+          #   float-precision: double
+          #   arch: x86_64
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+          # - platform: windows
+          #   float-precision: double
+          #   arch: x86_32
+          #   target-type: template_debug
+          #   os: windows-latest
+
+          # - platform: windows
+          #   float-precision: double
+          #   arch: x86_64
+          #   target-type: template_debug
+          #   os: windows-latest
+
+          # - platform: macos
+          #   float-precision: double
+          #   arch: universal
+          #   target-type: template_debug
+          #   os: macos-latest
+
+          # - platform: android
+          #   float-precision: double
+          #   arch: arm64
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+          # - platform: android
+          #   float-precision: double
+          #   arch: arm32
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+          # - platform: android
+          #   float-precision: double
+          #   arch: x86_64
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+          # - platform: android
+          #   float-precision: double
+          #   arch: x86_32
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+          # - platform: ios
+          #   float-precision: double
+          #   arch: arm64
+          #   target-type: template_debug
+          #   os: macos-latest
+
+          # - platform: web
+          #   float-precision: double
+          #   arch: wasm32
+          #   target-type: template_debug
+          #   os: ubuntu-20.04
+
+        # Double precision release templates
+          # - platform: linux
+          #   float-precision: double
+          #   arch: x86_64
+          #   target-type: template_release
+          #   os: ubuntu-20.04
 
           # - platform: windows
           #   float-precision: double
