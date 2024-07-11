@@ -64,15 +64,15 @@ func setup(category : ItemCategory, key : String, value):
 
 
 func _on_dynamic_property_checkbox_toggled(toggled : bool):
-	var array = category.dynamic_properties.duplicate()
+	var array = category.item_dynamic_properties.duplicate()
 	if toggled:
 		array.append(key)
 	else:
-		var index = category.dynamic_properties.find(key)
+		var index = category.item_dynamic_properties.find(key)
 		if index == -1:
 			return
 		array.remove_at(index)
-	category.dynamic_properties = array
+	category.item_dynamic_properties = array
 
 
 func _on_delete_button_pressed():
