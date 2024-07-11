@@ -7,3 +7,7 @@ name = "Tools"
 color = Color(0.694118, 0.87451, 0.576471, 1)
 icon = ExtResource("1_5w14s")
 code = 2
+item_properties = {
+"durability": 100.0
+}
+item_dynamic_properties = Array[String](["durability"])
