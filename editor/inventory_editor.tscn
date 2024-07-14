@@ -45,14 +45,14 @@ theme_override_constants/separation = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+text = "New Database"
 flat = true
-icon_alignment = 1
 
 [node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
-icon_alignment = 1
+text = "Open Database"
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
@@ -63,8 +63,8 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Inventory Item"
 disabled = true
+text = "New Item"
 icon = ExtResource("2_lu5r1")
-icon_alignment = 1
 item_count = 2
 popup/item_0/text = "New Item With New Resource"
 popup/item_0/id = 100
@@ -80,8 +80,8 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Recipe"
 disabled = true
+text = "New Recipe"
 icon = ExtResource("3_clewf")
-icon_alignment = 1
 item_count = 2
 popup/item_0/text = "New Recipe With New Resource"
 popup/item_0/id = 100
@@ -97,8 +97,8 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Craft Station Type"
 disabled = true
+text = "New CraftStation"
 icon = ExtResource("4_jbtk0")
-icon_alignment = 1
 item_count = 2
 popup/item_0/text = "New Craft Station Type With New Resource"
 popup/item_0/id = 100
@@ -122,19 +122,23 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Item Category"
 disabled = true
+text = "New Category"
 icon = ExtResource("5_4w1hd")
-icon_alignment = 1
 item_count = 2
 popup/item_0/text = "New Item Category With New Resource"
 popup/item_0/id = 100
 popup/item_1/text = "New Item Category With Existing Resource"
 popup/item_1/id = 101
 
+[node name="VSeparator5" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+layout_mode = 2
+
 [node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Open a InventoryDatabase resource to see contents here"
+text = "Open the InventoryDatabase resource to see the content here"
+horizontal_alignment = 2
 vertical_alignment = 2
 text_overrun_behavior = 1
 structured_text_bidi_override = 2
