@@ -1,6 +1,6 @@
 name: Build GDExtension
 on:
-  workflow_call:
+  workflow_dispatch:
       inputs:
         inventory_tag:
           required: false
