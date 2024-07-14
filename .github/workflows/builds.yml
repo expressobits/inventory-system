@@ -346,5 +346,6 @@ jobs:
           done
           echo "Done"
         env:
+          GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           BRANCH: gdextension
