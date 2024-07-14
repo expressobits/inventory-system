@@ -1,7 +1,10 @@
 name: Build GDExtension
 on:
-  workflow_dispatch:
-  push:
+  workflow_call:
+      inputs:
+        inventory_tag:
+          required: false
+          type: string
 
 env:
   LIBNAME: inventory-system
