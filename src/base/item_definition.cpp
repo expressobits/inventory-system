@@ -5,6 +5,17 @@
 
 using namespace godot;
 
+void ItemDefinition::check_invalid_dynamic_properties() {
+	// Checking if dynamic property is a reference to a property that does not exist
+	for (size_t i = 0; i < dynamic_properties.size(); i++)
+	{
+		if (properties.keys().find(dynamic_properties[i]) == -1) {
+			dynamic_properties.remove_at(i);
+			i--;
+		}
+	}
+}
+
 void ItemDefinition::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_id", "id"), &ItemDefinition::set_id);
 	ClassDB::bind_method(D_METHOD("get_id"), &ItemDefinition::get_id);
@@ -99,6 +110,7 @@ float ItemDefinition::get_weight() const {
 
 void ItemDefinition::set_properties(const Dictionary &new_properties) {
 	properties = new_properties;
+	check_invalid_dynamic_properties();
 }
 
 Dictionary ItemDefinition::get_properties() const {

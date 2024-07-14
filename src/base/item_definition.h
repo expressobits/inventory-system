@@ -21,6 +21,7 @@ private:
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
+	void check_invalid_dynamic_properties();
 
 protected:
 	static void _bind_methods();
