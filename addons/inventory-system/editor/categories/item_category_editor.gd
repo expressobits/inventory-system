@@ -15,6 +15,7 @@ var editor_plugin : EditorPlugin
 @onready var resource_text_edit : LineEdit = %ResourceLineEdit
 @onready var resource_edit_button : Button = %ResourceEditButton
 @onready var resource_file_dialog : FileDialog = $ResourceFileDialog
+@onready var custom_properties : CustomPropertiesCategoryEditor = $MarginContainer/VBoxContainer/CategoryCustomProperties
 @onready var color_picker = %ColorPicker
 
 
@@ -41,6 +42,7 @@ func load_category(category : ItemCategory):
 		icon_text_edit.text = category.icon.resource_path
 	else:
 		icon_text_edit.text = ""
+	custom_properties.load_item(category)
 
 
 func apply_theme() -> void:

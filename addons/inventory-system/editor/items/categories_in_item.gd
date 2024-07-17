@@ -2,6 +2,7 @@
 class_name CategoriesInItem
 extends HBoxContainer
 
+signal changed
 
 var item : ItemDefinition
 var database : InventoryDatabase
@@ -53,3 +54,4 @@ func _on_toggled_category_option(toggled : bool, category : ItemCategory):
 		if index > -1:
 			new_categories.remove_at(index)
 	item.categories = new_categories
+	changed.emit()

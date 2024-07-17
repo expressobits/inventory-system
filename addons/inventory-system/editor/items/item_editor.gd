@@ -62,6 +62,8 @@ func load_item(item : ItemDefinition, database : InventoryDatabase):
 	custom_properties.load_item(database, item)
 	categories_in_item.load_item(database, item)
 
+func reload_item():
+	load_item(item, database)
 
 # Apply theme colors and icons to the UI
 func apply_theme() -> void:
@@ -140,3 +142,8 @@ func _can_stack_check_box_toggled(value):
 	max_stack.visible = item.can_stack
 	changed.emit(item.id)
 	custom_properties.loading_properties()
+
+
+func _on_categories_in_item_changed():
+	changed.emit(item.id)
+	reload_item()
