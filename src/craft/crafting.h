@@ -9,8 +9,8 @@ class Crafting : public Resource {
 	GDCLASS(Crafting, Resource);
 
 private:
-	int recipe_index;
-	float time;
+	int recipe_index = 0;
+	float time = 0.0f;
 
 protected:
 	static void _bind_methods();
