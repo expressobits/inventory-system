@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Inventory" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		This Node stores an array of slots via [Dictionary].
+		This slot contains information about an [Item] and its quantity.
+	</brief_description>
+	<description>
+		This slot contains information about an [Item] and its quantity.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+				Adds a quantity of [Item] to the inventory and returns the quantity that cannot be added.
+			</description>
+		</method>
+		<method name="add_at">
+			<return type="int" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="item" type="Item" />
+			<param index="2" name="amount" type="int" default="1" />
+			<description>
+				Adds a quantity of [Item] to a specific inventory slot and returns the quantity that cannot be added.
+			</description>
+		</method>
+		<method name="add_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="emit_signal" type="bool" default="true" />
+			<description>
+				Add a new slot to the inventory, a trigger signal flag can be set.
+			</description>
+		</method>
+		<method name="close">
+			<return type="bool" />
+			<description>
+				Closes the inventory and returns true if done successfully.
+				Emits the [signal closed] signal if was previously open.
+			</description>
+		</method>
+		<method name="contains" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+				Returns true if contains the amount of the specified [Item]
+			</description>
+		</method>
+		<method name="contains_at" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="item" type="Item" />
+			<param index="2" name="amount" type="int" default="1" />
+			<description>
+				Returns true if the slot index contains the amount of the specified [Item]
+			</description>
+		</method>
+		<method name="contains_category" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="category" type="ItemCategory" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+				Returns true if contains the amount of [Item] with the specified [ItemCategory].
+			</description>
+		</method>
+		<method name="get_amount" qualifiers="const">
+			<return type="int" />
+			<description>
+				Returns amount of items.
+			</description>
+		</method>
+		<method name="get_amount_of" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<description>
+				Returns amount of the specified [Item].
+			</description>
+		</method>
+		<method name="get_amount_of_category" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+				Returns amount of the specified [ItemCategory].
+			</description>
+		</method>
+		<method name="get_slot_index_with_an_item_of_category" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+				Returns the index of the [Slot] that contains the [Item] of the [ItemCategory], returns [code]-1[/code] if there is no item of that category.
+			</description>
+		</method>
+		<method name="is_empty" qualifiers="const">
+			<return type="bool" />
+			<description>
+				Returns true if inventory is empty.
+			</description>
+		</method>
+		<method name="is_empty_slot" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Returns true if the [Slot] is empty.
+			</description>
+		</method>
+		<method name="is_full" qualifiers="const">
+			<return type="bool" />
+			<description>
+				Returns true if inventory is full.
+			</description>
+		</method>
+		<method name="open">
+			<return type="bool" />
+			<description>
+				Opens the inventory and returns true if done successfully.
+				Emits the [signal opened] signal if the was previously closed.
+			</description>
+		</method>
+		<method name="remove">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+				Removes a amount of the [Item] from inventory and returns the amount that was not removed.
+			</description>
+		</method>
+		<method name="remove_at">
+			<return type="int" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="item" type="Item" />
+			<param index="2" name="amount" type="int" default="1" />
+			<description>
+				Removes an [Item] amount to the specified inventory [Slot] index and returns the remaining value that was not removed.
+			</description>
+		</method>
+		<method name="remove_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="emit_signal" type="bool" default="true" />
+			<description>
+			</description>
+		</method>
+		<method name="set_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="item" type="Item" />
+			<param index="2" name="amount" type="int" />
+			<description>
+				Define [Slot] specific index information.
+			</description>
+		</method>
+		<method name="set_slot_content">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="item" type="ItemDefinition" />
+			<param index="2" name="properties" type="Dictionary" />
+			<param index="3" name="amount" type="int" />
+			<description>
+				Define [Slot] specific index information.
+			</description>
+		</method>
+		<method name="set_slot_with_other_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="other_slot" type="Slot" />
+			<description>
+			</description>
+		</method>
+		<method name="update_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Call update slot to trigger events.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="create_slot_if_needed" type="bool" setter="set_create_slot_if_needed" getter="get_create_slot_if_needed" default="false">
+			Creates a [Slot] when use  [method add]  for adding item to inventory when it is full.
+		</member>
+		<member name="inventory_name" type="String" setter="set_inventory_name" getter="get_inventory_name" default="&quot;Inventory&quot;">
+			The name of the inventory, to be displayed in UI.
+		</member>
+		<member name="is_open" type="bool" setter="set_is_open" getter="get_is_open" default="false">
+			It stores information if this inventory is open or not.
+		</member>
+		<member name="remove_slot_if_empty" type="bool" setter="set_remove_slot_if_empty" getter="get_remove_slot_if_empty" default="false">
+			Removes a [Slot] when the slot becomes empty using [method remove] function.
+		</member>
+		<member name="slot_amount" type="int" setter="set_slot_amount" getter="get_slot_amount" default="16">
+			Sets the initial amount of [Slot]s in the inventory in the [method _ready] function.
+		</member>
+		<member name="slots" type="Slot[]" setter="set_slots" getter="get_slots" default="[]">
+			Array of [Slot] that stores items and their quantities. The slot uses [Item] to store item id information and [b]"amount"[/b] for your quantity.
+		</member>
+	</members>
+	<signals>
+		<signal name="closed">
+			<description>
+				Emitted when inventory is closed. Called inside the [method close()] function when the inventory is closed.
+			</description>
+		</signal>
+		<signal name="emptied">
+			<description>
+				Emitted when inventory is empty. This signal is emitted after the [method remove], [method remove_at] or [method set_slot] function and it only happens when all slots are empty or there are no slots.
+			</description>
+		</signal>
+		<signal name="filled">
+			<description>
+				Emitted when inventory is filled. This signal is emitted after the [method add], [method add_at] or [method set_slot] function and it only happens when all slots are filled.
+			</description>
+		</signal>
+		<signal name="inventory_changed">
+			<description>
+				Emitted when a amount or [Item] has changed in any [Slot].
+			</description>
+		</signal>
+		<signal name="item_added">
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Emitted when a [Item] was added.
+			</description>
+		</signal>
+		<signal name="item_removed">
+			<param index="0" name="item_definition" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+				Emitted when a [Item] was removed.
+			</description>
+		</signal>
+		<signal name="opened">
+			<description>
+				Emitted when inventory is opened. Called inside the [method open()] function when the inventory is opened.
+			</description>
+		</signal>
+		<signal name="slot_added">
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Emitted when a [Slot] was added. This signal is emitted after calling [method add] function and happens only when there is no space available and [member create_slot_if_needed] is set to true.
+			</description>
+		</signal>
+		<signal name="slot_removed">
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Emitted when a [Slot] was removed. This signal is emitted after calling the [method remove] function and happens only when the [Slot] is empty and the [member remove_slot_if_empty] is set to true.
+			</description>
+		</signal>
+		<signal name="updated_slot">
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Emitted when a [Slot] has been changed. This signal is emitted after functions that change the inventory content: [method add], [method add_at], [method remove], [method remove-at] and [method set_slot].
+			</description>
+		</signal>
+	</signals>
+</class>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Item" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="create_dynamic_properties">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="is_stack_with" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="other_item" type="Item" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="definition" type="ItemDefinition" setter="set_definition" getter="get_definition">
+		</member>
+		<member name="properties" type="Dictionary" setter="set_properties" getter="get_properties" default="{}">
+		</member>
+	</members>
+</class>

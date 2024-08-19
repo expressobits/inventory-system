@@ -48,3 +48,4 @@ compile_commands.json
 # VSCode
 .vscode/*
 !.vscode/extensions.json
+src/gen/doc_data.gen.cpp

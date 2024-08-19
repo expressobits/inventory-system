@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventoryDatabase" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add_new_category">
+			<return type="void" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+		<method name="add_new_item">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="get_category">
+			<return type="ItemCategory" />
+			<param index="0" name="code" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_item" qualifiers="const">
+			<return type="ItemDefinition" />
+			<param index="0" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_new_valid_id" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_valid_id" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="has_item_id" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="remove_category">
+			<return type="void" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+		<method name="remove_item">
+			<return type="void" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="item_categories" type="ItemCategory[]" setter="set_item_categories" getter="get_item_categories" default="[]">
+		</member>
+		<member name="items" type="ItemDefinition[]" setter="set_items" getter="get_items" default="[]">
+		</member>
+		<member name="recipes" type="Recipe[]" setter="set_recipes" getter="get_recipes" default="[]">
+		</member>
+		<member name="stations_type" type="CraftStationType[]" setter="set_stations_type" getter="get_stations_type" default="[]">
+		</member>
+	</members>
+</class>

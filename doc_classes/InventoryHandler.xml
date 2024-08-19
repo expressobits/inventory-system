@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventoryHandler" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add_to_inventory">
+			<return type="int" />
+			<param index="0" name="inventory" type="Inventory" />
+			<param index="1" name="item" type="Item" />
+			<param index="2" name="amount" type="int" default="1" />
+			<param index="3" name="drop_excess" type="bool" default="true" />
+			<description>
+			</description>
+		</method>
+		<method name="change_transaction_slot">
+			<return type="void" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="close">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="close_all_inventories">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="close_main_inventory">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="drop">
+			<return type="bool" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+		<method name="drop_from_inventory">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="inventory" type="Inventory" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="drop_transaction">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="get_inventory" qualifiers="const">
+			<return type="Inventory" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_open" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="is_open_any_inventory" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="is_open_main_inventory" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="is_transaction_active" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="move_between_inventories">
+			<return type="int" />
+			<param index="0" name="from" type="Inventory" />
+			<param index="1" name="slot_index" type="int" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="to" type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="move_between_inventories_at">
+			<return type="void" />
+			<param index="0" name="from" type="Inventory" />
+			<param index="1" name="slot_index" type="int" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="to" type="Inventory" />
+			<param index="4" name="to_slot_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="open">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="open_main_inventory">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="pick_to_inventory">
+			<return type="bool" />
+			<param index="0" name="dropped_item" type="Node" />
+			<param index="1" name="inventory" type="Inventory" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="swap_between_inventories">
+			<return type="void" />
+			<param index="0" name="inventory" type="Inventory" />
+			<param index="1" name="slot_index" type="int" />
+			<param index="2" name="other_inventory" type="Inventory" />
+			<param index="3" name="other_slot_index" type="int" />
+			<param index="4" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+		<method name="to_transaction">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="inventory" type="Inventory" />
+			<param index="2" name="amount" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="transaction_to">
+			<return type="void" />
+			<param index="0" name="inventory" type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="transaction_to_at">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<param index="1" name="inventory" type="Inventory" />
+			<param index="2" name="amount_to_move" type="int" default="-1" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="inventories_path" type="NodePath[]" setter="set_inventories_path" getter="get_inventories_path" default="[]">
+		</member>
+		<member name="opened_inventories" type="NodePath[]" setter="set_opened_inventories" getter="get_opened_inventories" default="[]">
+		</member>
+		<member name="transaction_slot" type="Slot" setter="" getter="get_transaction_slot">
+		</member>
+	</members>
+	<signals>
+		<signal name="added">
+			<param index="0" name="item_definition" type="ItemDefinition" />
+			<param index="1" name="amount" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="closed">
+			<param index="0" name="inventory" type="Object" />
+			<description>
+			</description>
+		</signal>
+		<signal name="dropped">
+			<param index="0" name="dropped_item" type="Object" />
+			<description>
+			</description>
+		</signal>
+		<signal name="opened">
+			<param index="0" name="inventory" type="Object" />
+			<description>
+			</description>
+		</signal>
+		<signal name="picked">
+			<param index="0" name="dropped_item" type="Object" />
+			<description>
+			</description>
+		</signal>
+		<signal name="request_drop_obj">
+			<param index="0" name="dropp_item_packed_scene_path" type="String" />
+			<param index="1" name="item" type="Object" />
+			<description>
+			</description>
+		</signal>
+		<signal name="updated_transaction_slot">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

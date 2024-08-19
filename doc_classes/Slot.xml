@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Slot" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+		<method name="contains" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+		<method name="contains_category" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+		<method name="get_item_id" qualifiers="const">
+			<return type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_max_stack_for_item" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="has_valid" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="is_empty" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="is_full" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="remove">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		</member>
+		<member name="item" type="Item" setter="set_item" getter="get_item">
+		</member>
+		<member name="max_stack" type="int" setter="set_max_stack" getter="get_max_stack" default="-1">
+		</member>
+	</members>
+	<signals>
+		<signal name="updated">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

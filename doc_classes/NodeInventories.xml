@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="NodeInventories" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="get_id_from_item" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="get_item_from_id" qualifiers="const">
+			<return type="ItemDefinition" />
+			<param index="0" name="id" type="int" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="database" type="InventoryDatabase" setter="set_database" getter="get_database">
+		</member>
+	</members>
+</class>

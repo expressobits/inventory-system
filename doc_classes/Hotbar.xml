@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Hotbar" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="change_selection">
+			<return type="void" />
+			<param index="0" name="index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="get_inventory" qualifiers="const">
+			<return type="Inventory" />
+			<description>
+			</description>
+		</method>
+		<method name="get_selected_item" qualifiers="const">
+			<return type="Item" />
+			<description>
+			</description>
+		</method>
+		<method name="has_item_on_selection" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="has_valid_item_id" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="next_item">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="previous_item">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="inventory" type="NodePath" setter="set_inventory_path" getter="get_inventory_path" default="NodePath(&quot;&quot;)">
+		</member>
+		<member name="selection_index" type="int" setter="set_selection_index" getter="get_selection_index" default="0">
+		</member>
+		<member name="slots_in_hot_bar" type="int" setter="set_slots_in_hot_bar" getter="get_slots_in_hot_bar" default="8">
+		</member>
+	</members>
+	<signals>
+		<signal name="on_change_selection">
+			<param index="0" name="selection_index" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="on_update_selection_slot">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

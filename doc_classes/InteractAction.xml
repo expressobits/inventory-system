@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InteractAction" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="code" type="int" setter="set_code" getter="get_code" default="0">
+		</member>
+		<member name="description" type="String" setter="set_description" getter="get_description" default="&quot;to Interact&quot;">
+		</member>
+		<member name="input" type="String" setter="set_input" getter="get_input" default="&quot;interact&quot;">
+		</member>
+	</members>
+</class>

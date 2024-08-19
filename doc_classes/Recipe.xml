@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Recipe" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="ingredients" type="Slot[]" setter="set_ingredients" getter="get_ingredients" default="[]">
+		</member>
+		<member name="products" type="Slot[]" setter="set_products" getter="get_products" default="[]">
+		</member>
+		<member name="required_items" type="Slot[]" setter="set_required_items" getter="get_required_items" default="[]">
+		</member>
+		<member name="station" type="CraftStationType" setter="set_station" getter="get_station">
+		</member>
+		<member name="time_to_craft" type="float" setter="set_time_to_craft" getter="get_time_to_craft" default="4.0">
+		</member>
+	</members>
+</class>

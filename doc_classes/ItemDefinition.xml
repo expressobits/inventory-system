@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemDefinition" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="contains_category" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="can_stack" type="bool" setter="set_can_stack" getter="get_can_stack" default="true">
+		</member>
+		<member name="categories" type="ItemCategory[]" setter="set_categories" getter="get_categories" default="[]">
+		</member>
+		<member name="dynamic_properties" type="String[]" setter="set_dynamic_properties" getter="get_dynamic_properties" default="[]">
+		</member>
+		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
+		</member>
+		<member name="id" type="int" setter="set_id" getter="get_id" default="0">
+		</member>
+		<member name="max_stack" type="int" setter="set_max_stack" getter="get_max_stack" default="0">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+		<member name="properties" type="Dictionary" setter="set_properties" getter="get_properties" default="{}">
+		</member>
+		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="0.0">
+		</member>
+	</members>
+	<constants>
+		<constant name="NONE" value="-1">
+		</constant>
+	</constants>
+</class>

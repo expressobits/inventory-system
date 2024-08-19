@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemCategory" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="code" type="int" setter="set_code" getter="get_code" default="0">
+		</member>
+		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+		</member>
+		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
+		</member>
+		<member name="item_dynamic_properties" type="String[]" setter="set_item_dynamic_properties" getter="get_item_dynamic_properties" default="[]">
+		</member>
+		<member name="item_properties" type="Dictionary" setter="set_item_properties" getter="get_item_properties" default="{}">
+		</member>
+		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+		</member>
+	</members>
+</class>
