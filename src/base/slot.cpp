@@ -1,6 +1,7 @@
 #include "slot.h"
 
 #include "item_definition.h"
+#include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
@@ -11,6 +12,10 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_amount"), &Slot::get_amount);
 	ClassDB::bind_method(D_METHOD("set_max_stack", "max_stack"), &Slot::set_max_stack);
 	ClassDB::bind_method(D_METHOD("get_max_stack"), &Slot::get_max_stack);
+	ClassDB::bind_method(D_METHOD("set_categorized", "categorized"), &Slot::set_categorized);
+	ClassDB::bind_method(D_METHOD("is_categorized"), &Slot::is_categorized);
+	ClassDB::bind_method(D_METHOD("set_accepted_categories", "accepted_categories"), &Slot::set_accepted_categories);
+	ClassDB::bind_method(D_METHOD("get_accepted_categories"), &Slot::get_accepted_categories);
 	ClassDB::bind_method(D_METHOD("get_item_id"), &Slot::get_item_id);
 	ClassDB::bind_method(D_METHOD("add", "item", "amount"), &Slot::add, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Slot::remove, DEFVAL(1));
@@ -20,12 +25,47 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("has_valid"), &Slot::has_valid);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &Slot::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category"), &Slot::contains_category);
+	ClassDB::bind_method(D_METHOD("is_accept_any_categories_of_item", "item"), &Slot::is_accept_any_categories_of_item);
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "item", PROPERTY_HINT_RESOURCE_TYPE, "Item"), "set_item", "get_item");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "categorized"), "set_categorized", "is_categorized");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "accepted_categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_accepted_categories", "get_accepted_categories");
+}
+
+void Slot::_update_categories_code() {
+	accepted_categories_code = 0;
+	if (!Engine::get_singleton()->is_editor_hint()) {
+		for (size_t i = 0; i < accepted_categories.size(); i++) {
+			Ref<ItemCategory> c = accepted_categories[i];
+			if (c == nullptr)
+				continue;
+			accepted_categories_code |= c->get_code();
+		}
+	}
+}
+
+bool Slot::_is_accept_any_categories(const TypedArray<ItemCategory> &other_list) const {
+	for (size_t i = 0; i < other_list.size(); i++) {
+		Ref<ItemCategory> c = other_list[i];
+		if (c == nullptr)
+			continue;
+		if ((accepted_categories_code & c->get_code()) > 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
+void Slot::_validate_property(PropertyInfo &p_property) const {
+	if (p_property.name == StringName("accepted_categories")) {
+		if (!categorized) {
+			p_property.usage = PROPERTY_USAGE_NO_EDITOR;
+		}
+	}
 }
 
 Slot::Slot() {
@@ -56,6 +96,24 @@ void Slot::set_max_stack(const int &new_max_stack) {
 
 int Slot::get_max_stack() const {
 	return max_stack;
+}
+
+void Slot::set_categorized(const bool &new_categorized) {
+	categorized = new_categorized;
+	notify_property_list_changed();
+}
+
+int Slot::is_categorized() const {
+	return categorized;
+}
+
+void Slot::set_accepted_categories(const TypedArray<ItemCategory> &new_accepted_categories) {
+	accepted_categories = new_accepted_categories;
+	_update_categories_code();
+}
+
+TypedArray<ItemCategory> Slot::get_accepted_categories() const {
+	return accepted_categories;
 }
 
 bool Slot::is_full() const {
@@ -89,6 +147,10 @@ bool Slot::contains_category(Ref<ItemCategory> category) const {
 	}
 }
 
+bool Slot::is_accept_any_categories_of_item(const Ref<ItemDefinition> &other_item) const {
+	return accepted_categories_code == 0 || _is_accept_any_categories(other_item->get_categories());
+}
+
 int Slot::get_item_id() const {
 	if (this->item == nullptr || this->item->get_definition() == nullptr) {
 		return ItemDefinition::NONE;
@@ -98,6 +160,13 @@ int Slot::get_item_id() const {
 }
 
 int Slot::add(const Ref<Item> item, const int &amount) {
+	if (categorized) {
+		_update_categories_code();
+		if (!is_accept_any_categories_of_item(item->get_definition())) {
+			return amount;
+		}
+	}
+
 	if (this->item == nullptr) {
 		return amount;
 	}

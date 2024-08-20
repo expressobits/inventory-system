@@ -13,7 +13,6 @@
 #include "base/node_inventories.h"
 #include "base/recipe.h"
 #include "base/slot.h"
-#include "core/categorized_slot.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
 #include "core/inventory_handler.h"
@@ -37,7 +36,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<NodeInventories>();
 	ClassDB::register_class<Recipe>();
 	ClassDB::register_class<Slot>();
-	ClassDB::register_class<CategorizedSlot>();
 	ClassDB::register_class<Hotbar>();
 	ClassDB::register_class<Inventory>();
 	ClassDB::register_class<InventoryHandler>();

@@ -43,6 +43,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="is_accept_any_categories_of_item" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
 		<method name="is_empty" qualifiers="const">
 			<return type="bool" />
 			<description>
@@ -62,7 +68,11 @@
 		</method>
 	</methods>
 	<members>
+		<member name="accepted_categories" type="ItemCategory[]" setter="set_accepted_categories" getter="get_accepted_categories" default="[]">
+		</member>
 		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		</member>
+		<member name="categorized" type="int" setter="set_categorized" getter="is_categorized" default="0">
 		</member>
 		<member name="item" type="Item" setter="set_item" getter="get_item">
 		</member>

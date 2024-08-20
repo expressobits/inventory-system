@@ -1,5 +1,4 @@
 #include "inventory_handler.h"
-#include "core/categorized_slot.h"
 #include "inventory.h"
 #include <godot_cpp/classes/engine.hpp>
 
@@ -306,9 +305,8 @@ void InventoryHandler::transaction_to_at(const int &slot_index, Inventory *inven
 	} else {
 		// Different items in slot and other_slot
 		// Check if transaction_slot amount is equal of origin_slot amount
-		CategorizedSlot *c_slot = Object::cast_to<CategorizedSlot>(*slot);
-		if (c_slot != nullptr) {
-			if (!c_slot->is_accept_any_categories_of_item(item->get_definition())) {
+		if (slot->is_categorized()) {
+			if (!slot->is_accept_any_categories_of_item(item->get_definition())) {
 				return;
 			}
 		}
