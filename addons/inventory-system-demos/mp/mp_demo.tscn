@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
 
 [sub_resource type="Slot" id="Resource_6euhu"]
+categorized = 1
 
 [sub_resource type="Item" id="Resource_qht8t"]
 definition = ExtResource("11_6hyks")
@@ -26,6 +27,7 @@ definition = ExtResource("11_6hyks")
 [sub_resource type="Slot" id="Resource_a5fwf"]
 item = SubResource("Resource_qht8t")
 amount = 1
+categorized = 1
 
 [sub_resource type="Item" id="Resource_lkgg5"]
 definition = ExtResource("13_v1ips")
@@ -36,6 +38,7 @@ properties = {
 [sub_resource type="Slot" id="Resource_jm1f7"]
 item = SubResource("Resource_lkgg5")
 amount = 1
+categorized = 1
 
 [sub_resource type="Item" id="Resource_p22tk"]
 definition = ExtResource("13_v1ips")
@@ -46,6 +49,7 @@ properties = {
 [sub_resource type="Slot" id="Resource_afmqk"]
 item = SubResource("Resource_p22tk")
 amount = 1
+categorized = 1
 
 [sub_resource type="InteractAction" id="Resource_tjd2g"]
 input = "toggle_fire"

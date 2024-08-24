@@ -56,7 +56,7 @@ properties = {
 [sub_resource type="Slot" id="Resource_afmqk"]
 item = SubResource("Resource_p22tk")
 amount = 1
-categorized = 114
+categorized = 1
 
 [sub_resource type="Slot" id="Resource_86q2j"]
 categorized = 1
@@ -71,6 +71,7 @@ categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
 [sub_resource type="Slot" id="Resource_6eb8p"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
 [sub_resource type="Slot" id="Resource_vg71i"]
