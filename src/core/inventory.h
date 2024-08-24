@@ -37,6 +37,7 @@ public:
 	bool is_empty_slot(const int &slot_index) const;
 	bool is_empty() const;
 	bool is_full() const;
+	int size() const;
 	bool contains(const Ref<Item> &item, const int &amount = 1) const;
 	bool contains_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1) const;
 	bool contains_category(const Ref<ItemCategory> &category, const int &amount = 1) const;

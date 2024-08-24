@@ -171,6 +171,9 @@ int Inventory::add(const Ref<Item> &item, const int &amount) {
 	int old_amount = get_amount();
 	for (size_t i = 0; i < slots.size(); i++) {
 		amount_in_interact = _add_to_slot(i, item, amount_in_interact);
+		if (amount_in_interact == 0) {
+			break;
+		}
 	}
 	if (create_slot_if_needed && amount_in_interact > 0) {
 		add_slot(slots.size());
@@ -208,6 +211,9 @@ int Inventory::remove(const Ref<Item> &item, const int &amount) {
 		if (remove_slot_if_empty && slot->get_amount() == 0) {
 			remove_slot(i);
 			_call_events(old_amount);
+		}
+		if (amount_in_interact == 0) {
+			break;
 		}
 	}
 	int _removed = amount - amount_in_interact;
