@@ -13,7 +13,7 @@ private:
 	Ref<Item> item;
 	int amount = 0;
 	int max_stack = -1;
-	bool categorized;
+	bool categorized = false;
 	TypedArray<ItemCategory> accepted_categories;
 	int accepted_categories_code = 0;
 	void _update_categories_code();
