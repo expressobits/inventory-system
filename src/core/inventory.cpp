@@ -58,6 +58,10 @@ bool Inventory::is_full() const {
 	return true;
 }
 
+int Inventory::size() const {
+	return slots.size();
+}
+
 bool Inventory::contains(const Ref<Item> &item, const int &amount) const {
 	if (item == nullptr || item->get_definition() == nullptr) {
 		return false;
@@ -352,6 +356,7 @@ void Inventory::_call_events(int old_amount) {
 }
 
 int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
+	ERR_FAIL_COND_V_MSG(slot_index >= size(), 0, "The 'slot index' exceeds the inventory size.");
 	Ref<Slot> slot = slots[slot_index];
 	int _remaining_amount = slot->add(item, amount);
 	if (_remaining_amount == amount) {
@@ -380,6 +385,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_empty_slot", "slot_index"), &Inventory::is_empty_slot);
 	ClassDB::bind_method(D_METHOD("is_empty"), &Inventory::is_empty);
 	ClassDB::bind_method(D_METHOD("is_full"), &Inventory::is_full);
+	ClassDB::bind_method(D_METHOD("size"), &Inventory::size);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &Inventory::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_at", "slot_index", "item", "amount"), &Inventory::contains_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category", "amount"), &Inventory::contains_category, DEFVAL(1));
