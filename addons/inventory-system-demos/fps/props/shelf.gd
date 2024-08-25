@@ -32,15 +32,15 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 	if action_index == 1:
 		var shelf_item = get_actual_item(actual_slot_index)
 		if shelf_item != null and shelf_item.definition != null:
-			inventory.transfer(actual_slot_index, char_inventory, char_slot_index)
+			inventory.transfer(actual_slot_index, char_inventory, char_slot_index, 1)
 		return
 	if action_index == 2:
 		if item != null and item.definition != null:
-			char_inventory.transfer(char_slot_index, inventory, actual_slot_index)
+			char_inventory.transfer(char_slot_index, inventory, actual_slot_index, 1)
 		return
 
 func interact(character : Node, action_index : int = 0):
-	interact_with_slot(character, action_index, get_actual_item(slot_index))
+	interact_with_slot(character, action_index, slot_index)
 
 
 func get_actual_item(actual_slot_index):
