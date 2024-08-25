@@ -20,28 +20,32 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 			slot_index = i
 	return near_position
 
-
-func interact(character : Node, action_index : int = 0):
+func interact_with_slot(character : Node, action_index : int = 0, actual_slot_index := 0):
 	if inventory.is_open:
 		return
 	var interactor = character.character_inventory_system.interactor
 	var item = interactor.get_hotbar().get_selected_item()
+	var char_inventory = interactor.get_inventory_handler().get_inventory(0)
+	var char_slot_index = interactor.get_hotbar().selection_index
 	if action_index == 0:
 		super.interact(character, action_index)
 	if action_index == 1:
-		var shelf_item = get_actual_item()
+		var shelf_item = get_actual_item(actual_slot_index)
 		if shelf_item != null and shelf_item.definition != null:
-			character.character_inventory_system.move_between_inventories_at(inventory, slot_index, 1, interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index)
+			inventory.transfer(actual_slot_index, char_inventory, char_slot_index)
 		return
 	if action_index == 2:
 		if item != null and item.definition != null:
-			character.character_inventory_system.move_between_inventories_at(interactor.get_inventory_handler().get_inventory(0), interactor.get_hotbar().selection_index, 1, inventory, slot_index)
+			char_inventory.transfer(char_slot_index, inventory, actual_slot_index)
 		return
 
+func interact(character : Node, action_index : int = 0):
+	interact_with_slot(character, action_index, get_actual_item(slot_index))
 
-func get_actual_item():
-	if slot_index != -1:
-		return inventory.slots[slot_index].item
+
+func get_actual_item(actual_slot_index):
+	if actual_slot_index != -1:
+		return inventory.slots[actual_slot_index].item
 	return null
 
 
@@ -50,7 +54,7 @@ func get_interact_actions(interactor : Interactor) -> Array[InteractAction]:
 	if inventory.is_open:
 		return actions_shelf
 	actions_shelf.append_array(actions)
-	var shelf_item = get_actual_item()
+	var shelf_item = get_actual_item(slot_index)
 	if shelf_item != null and shelf_item.definition != null:
 		var action = InteractAction.new()
 		action.description = "Get " + shelf_item.definition.name
