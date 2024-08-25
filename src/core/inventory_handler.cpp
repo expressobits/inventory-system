@@ -15,8 +15,6 @@ void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_to_inventory", "inventory", "item", "amount", "drop_excess"), &InventoryHandler::add_to_inventory, DEFVAL(1), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount", "inventory"), &InventoryHandler::drop_from_inventory, DEFVAL(1), DEFVAL(nullptr));
 	ClassDB::bind_method(D_METHOD("pick_to_inventory", "dropped_item", "inventory"), &InventoryHandler::pick_to_inventory, DEFVAL(nullptr));
-	ClassDB::bind_method(D_METHOD("move_between_inventories", "from", "slot_index", "amount", "to"), &InventoryHandler::move_between_inventories);
-	ClassDB::bind_method(D_METHOD("move_between_inventories_at", "from", "slot_index", "amount", "to", "to_slot_index"), &InventoryHandler::move_between_inventories_at);
 	ClassDB::bind_method(D_METHOD("swap_between_inventories", "inventory", "slot_index", "other_inventory", "other_slot_index", "amount"), &InventoryHandler::swap_between_inventories, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("open", "inventory"), &InventoryHandler::open);
 	ClassDB::bind_method(D_METHOD("close", "inventory"), &InventoryHandler::close);
@@ -148,34 +146,6 @@ bool InventoryHandler::pick_to_inventory(Node *dropped_item, Inventory *inventor
 	}
 	ERR_PRINT("pick_to_inventory return false");
 	return false;
-}
-
-int InventoryHandler::move_between_inventories(Inventory *from, const int slot_index, const int amount, Inventory *to) {
-	if (from->get_database() != to->get_database()) {
-		ERR_PRINT("Operation between inventories that do not have the same database is invalid.");
-		return amount;
-	}
-	Ref<Slot> slot = from->get_slots()[slot_index];
-	Ref<Item> item = slot->get_item();
-	int amount_not_removed = from->remove_at(slot_index, item, amount);
-	int amount_for_swap = amount - amount_not_removed;
-	int amount_not_swaped = to->add(item, amount_for_swap);
-	int amount_not_undo = from->add_at(slot_index, item, amount_not_swaped);
-	return amount_not_undo;
-}
-
-void InventoryHandler::move_between_inventories_at(Inventory *from, const int slot_index, const int amount, Inventory *to, const int to_slot_index) {
-	if (from->get_database() != to->get_database()) {
-		ERR_PRINT("Operation between inventories that do not have the same database is invalid.");
-		return;
-	}
-	Ref<Slot> slot = from->get_slots()[slot_index];
-	Ref<Item> item = slot->get_item()->duplicate();
-	int amount_not_removed = from->remove_at(slot_index, item, amount);
-	int amount_for_swap = amount - amount_not_removed;
-	int amount_not_swaped = to->add_at(to_slot_index, item, amount_for_swap);
-	int amount_not_undo = from->add_at(slot_index, item, amount_not_swaped);
-	//drop(item, amount_not_undo)
 }
 
 void InventoryHandler::swap_between_inventories(Inventory *inventory, const int slot_index, Inventory *other_inventory, const int other_slot_index, int amount) {

@@ -35,8 +35,6 @@ public:
 	int add_to_inventory(Inventory *inventory, const Ref<Item> item, const int &amount = 1, bool drop_excess = false);
 	void drop_from_inventory(const int &slot_index, const int &amount = 1, Inventory *inventory = nullptr);
 	virtual bool pick_to_inventory(Node *dropped_item, Inventory *inventory = nullptr);
-	int move_between_inventories(Inventory *from, const int slot_index, const int amount, Inventory *to);
-	virtual void move_between_inventories_at(Inventory *from, const int slot_index, const int amount, Inventory *to, const int to_slot_index);
 	void swap_between_inventories(Inventory *inventory, const int slot_index, Inventory *other_inventory, const int other_slot_index, int amount = 1);
 	virtual bool open(Inventory *inventory);
 	virtual bool close(Inventory *inventory);

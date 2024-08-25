@@ -242,6 +242,36 @@ int Inventory::remove_at(const int &slot_index, const Ref<Item> &item, const int
 	return amount_in_interact;
 }
 
+void Inventory::transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount) {
+	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
+	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
+	ERR_FAIL_COND_MSG(slot_index >= size() || slot_index < 0, "The 'slot index' exceeds the inventory size or negative value.");
+	ERR_FAIL_COND_MSG(destination_slot_index >= destination->size() || destination_slot_index < 0, "The 'destination slot index' exceeds the destinationinventory size or negative value.");
+
+	Ref<Slot> slot = get_slots()[slot_index];
+	Ref<Item> item = slot->get_item()->duplicate();
+	int amount_to_interact = amount;
+
+	if (amount_to_interact == -1) {
+		amount_to_interact = slot->get_amount();
+	}
+	Ref<Slot> destination_slot = destination->get_slots()[destination_slot_index];
+	int amount_to_left = destination_slot->left_to_fill();
+	if (amount_to_left > -1) {
+		amount_to_interact = MIN(amount_to_interact, amount_to_left);
+	}
+	if (amount_to_interact == 0)
+		return;
+	int amount_not_removed = remove_at(slot_index, item, amount_to_interact);
+	int amount_to_transfer = amount_to_interact - amount_not_removed;
+	if (amount_to_transfer == 0)
+		return;
+	int amount_not_transfered = destination->add_at(destination_slot_index, item, amount_to_transfer);
+	if (amount_not_transfered == 0)
+		return;
+	add_at(slot_index, item, amount_not_transfered);
+}
+
 bool Inventory::open() {
 	if (!is_open) {
 		is_open = true;
@@ -363,7 +393,10 @@ void Inventory::_call_events(int old_amount) {
 
 int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 	ERR_FAIL_COND_V_MSG(slot_index >= size(), 0, "The 'slot index' exceeds the inventory size.");
+	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 	Ref<Slot> slot = slots[slot_index];
+	ERR_FAIL_NULL_V_MSG(slot, 0, "The 'amount' is negative.");
 	int _remaining_amount = slot->add(item, amount);
 	if (_remaining_amount == amount) {
 		return amount;
@@ -403,6 +436,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_at", "slot_index", "item", "amount"), &Inventory::add_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "slot_index", "item", "amount"), &Inventory::remove_at, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("transfer", "slot_index", "destination", "destination_slot_index", "amount"), &Inventory::transfer, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("open"), &Inventory::open);
 	ClassDB::bind_method(D_METHOD("close"), &Inventory::close);
 

@@ -86,25 +86,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="move_between_inventories">
-			<return type="int" />
-			<param index="0" name="from" type="Inventory" />
-			<param index="1" name="slot_index" type="int" />
-			<param index="2" name="amount" type="int" />
-			<param index="3" name="to" type="Inventory" />
-			<description>
-			</description>
-		</method>
-		<method name="move_between_inventories_at">
-			<return type="void" />
-			<param index="0" name="from" type="Inventory" />
-			<param index="1" name="slot_index" type="int" />
-			<param index="2" name="amount" type="int" />
-			<param index="3" name="to" type="Inventory" />
-			<param index="4" name="to_slot_index" type="int" />
-			<description>
-			</description>
-		</method>
 		<method name="open">
 			<return type="bool" />
 			<param index="0" name="inventory" type="Inventory" />

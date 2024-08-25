@@ -151,6 +151,13 @@ bool Slot::is_accept_any_categories_of_item(const Ref<ItemDefinition> &other_ite
 	return accepted_categories_code == 0 || _is_accept_any_categories(other_item->get_categories());
 }
 
+int Slot::left_to_fill() {
+	if (has_valid()) {
+		return get_max_stack() - amount;
+	}
+	return -1;
+}
+
 int Slot::get_item_id() const {
 	if (this->item == nullptr || this->item->get_definition() == nullptr) {
 		return ItemDefinition::NONE;
@@ -160,6 +167,8 @@ int Slot::get_item_id() const {
 }
 
 int Slot::add(const Ref<Item> item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 	if (categorized) {
 		_update_categories_code();
 		if (!is_accept_any_categories_of_item(item->get_definition())) {

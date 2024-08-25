@@ -49,6 +49,7 @@ public:
 	int add_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	int remove(const Ref<Item> &item, const int &amount = 1);
 	int remove_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
+	void transfer(const int &slot_index, Inventory* destination, const int &destination_slot_index, const int &amount);
 	bool open();
 	bool close();
 	void set_slots(const TypedArray<Slot> &new_slots);

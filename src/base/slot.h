@@ -46,6 +46,7 @@ public:
 	bool contains(Ref<Item> item, int amount) const;
 	bool contains_category(Ref<ItemCategory> category) const;
 	bool is_accept_any_categories_of_item(const Ref<ItemDefinition> &other_item) const;
+	int left_to_fill();
 };
 
 #endif // SLOT_CLASS_H
