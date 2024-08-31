@@ -167,23 +167,45 @@ int Inventory::get_amount() const {
 }
 
 int Inventory::add(const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, amount, "The 'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
 	int amount_in_interact = amount;
 	int old_amount = get_amount();
+
 	for (size_t i = 0; i < slots.size(); i++) {
+		int previous_amount = amount_in_interact;
 		amount_in_interact = _add_to_slot(i, item, amount_in_interact);
+
+		// Check for potential integer underflow
+		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot.");
+
 		if (amount_in_interact == 0) {
 			break;
 		}
 	}
+
 	if (create_slot_if_needed && amount_in_interact > 0) {
 		add_slot(slots.size());
+		int previous_amount = amount_in_interact;
 		amount_in_interact = _add_to_slot(slots.size() - 1, item, amount_in_interact);
+
+		// Check for potential integer underflow
+		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot after creating new slot.");
+
 		_call_events(old_amount);
 	}
+
+	// Use subtraction to avoid potential overflow
 	int _added = amount - amount_in_interact;
+
+	// Sanity check
+	ERR_FAIL_COND_V_MSG(_added < 0 || _added > amount, amount, "Invalid _added value calculated.");
+
 	if (_added > 0) {
 		emit_signal("item_added", item, _added);
 	}
+
 	return amount_in_interact;
 }
 
@@ -392,15 +414,20 @@ void Inventory::_call_events(int old_amount) {
 }
 
 int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
-	ERR_FAIL_COND_V_MSG(slot_index >= size(), 0, "The 'slot index' exceeds the inventory size.");
+	// Check if slot_index is within valid range (0 <= slot_index < size())
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), 0, "The 'slot index' is out of bounds.");
 	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
+
 	Ref<Slot> slot = slots[slot_index];
-	ERR_FAIL_NULL_V_MSG(slot, 0, "The 'amount' is negative.");
+	ERR_FAIL_NULL_V_MSG(slot, 0, "The 'slot' is null.");
+
 	int _remaining_amount = slot->add(item, amount);
+
 	if (_remaining_amount == amount) {
 		return amount;
 	}
+
 	emit_signal("updated_slot", slot_index);
 	return _remaining_amount;
 }

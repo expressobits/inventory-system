@@ -2,7 +2,6 @@
 #include "inventory.h"
 #include <godot_cpp/classes/engine.hpp>
 
-
 void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_inventories_path", "inventories_path"), &InventoryHandler::set_inventories_path);
 	ClassDB::bind_method(D_METHOD("get_inventories_path"), &InventoryHandler::get_inventories_path);
@@ -50,8 +49,8 @@ InventoryHandler::~InventoryHandler() {
 
 void InventoryHandler::_ready() {
 	if (!Engine::get_singleton()->is_editor_hint()) {
-		if(transaction_slot == nullptr) {
-			set_transaction_slot(memnew(Slot()));
+		if (transaction_slot.is_null()) {
+			set_transaction_slot(Ref<Slot>(memnew(Slot())));
 		}
 	}
 	NodeInventories::_ready();
@@ -82,19 +81,23 @@ TypedArray<NodePath> InventoryHandler::get_opened_inventories() const {
 }
 
 void InventoryHandler::change_transaction_slot(const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_COND(transaction_slot.is_null());
 	transaction_slot->set_amount(amount);
-	if (amount > 0) {
+	if (amount > 0 && item.is_valid()) {
 		transaction_slot->set_item(item);
 	} else {
-		transaction_slot->set_item(nullptr);
+		transaction_slot->set_item(Ref<Item>());
 	}
 	emit_signal("updated_transaction_slot");
 }
 
 bool InventoryHandler::drop(const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_COND_V(item.is_null(), false);
+	ERR_FAIL_COND_V(item->get_definition().is_null(), false);
 	if (item->get_definition()->get_properties().has("dropped_item")) {
 		String path = item->get_definition()->get_properties()["dropped_item"];
-		for (size_t i = 0; i < amount; i++) {
+		// We have i < 1000 to have some enforced upper limit preventing long loops
+		for (size_t i = 0; i < amount && i < 1000; i++) {
 			emit_signal("request_drop_obj", path, item);
 		}
 		return true;
@@ -103,6 +106,9 @@ bool InventoryHandler::drop(const Ref<Item> &item, const int &amount) {
 }
 
 int InventoryHandler::add_to_inventory(Inventory *inventory, const Ref<Item> item, const int &amount, bool drop_excess) {
+	ERR_FAIL_COND_V(inventory == nullptr, amount);
+	ERR_FAIL_COND_V(item.is_null(), amount);
+
 	int value_no_added = inventory->add(item, amount);
 	emit_signal("added", item, amount - value_no_added);
 	if (drop_excess) {
@@ -115,6 +121,8 @@ int InventoryHandler::add_to_inventory(Inventory *inventory, const Ref<Item> ite
 void InventoryHandler::drop_from_inventory(const int &slot_index, const int &amount, Inventory *inventory) {
 	if (inventory == nullptr)
 		inventory = get_inventory(0);
+	ERR_FAIL_COND(inventory == nullptr);
+	ERR_FAIL_COND(slot_index < 0 || slot_index >= inventory->get_slots().size());
 	if (inventory->get_slots().size() <= slot_index)
 		return;
 	if (inventory->is_empty_slot(slot_index))
@@ -129,16 +137,23 @@ void InventoryHandler::drop_from_inventory(const int &slot_index, const int &amo
 }
 
 bool InventoryHandler::pick_to_inventory(Node *dropped_item, Inventory *inventory) {
+	ERR_FAIL_NULL_V(dropped_item, false);
+
 	if (inventory == nullptr) {
 		inventory = get_inventory(0);
 	}
+	ERR_FAIL_NULL_V(inventory, false);
+
 	if (!dropped_item->get("is_pickable")) {
 		return false;
 	}
-	Ref<Item> item = dropped_item->get("item");
-	if (item == nullptr || item->get_definition() == nullptr) {
-		ERR_PRINT("Item or Item Definition in dropped_item is null!");
-	}
+	Variant item_variant = dropped_item->get("item");
+	ERR_FAIL_COND_V(item_variant.get_type() != Variant::OBJECT, false);
+
+	Ref<Item> item = item_variant;
+	ERR_FAIL_COND_V(item.is_null(), false);
+	ERR_FAIL_COND_V(item->get_definition().is_null(), false);
+
 	if (add_to_inventory(inventory, item) == 0) {
 		emit_signal("picked", dropped_item);
 		dropped_item->queue_free();
@@ -218,6 +233,7 @@ bool InventoryHandler::is_open_any_inventory() const {
 }
 
 bool InventoryHandler::is_open(Inventory *inventory) const {
+	ERR_FAIL_NULL_V(inventory, false);
 	NodePath inventory_path = get_path_to(inventory);
 	return inventory->get_is_open() && opened_inventories.find(inventory_path) != -1;
 }
