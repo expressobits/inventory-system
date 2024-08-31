@@ -17,7 +17,6 @@ private:
 	TypedArray<NodePath> inventories_for_stations;
 
 protected:
-	TypedArray<NodePath> opened_stations;
 	static void _bind_methods();
 
 public:
@@ -27,16 +26,6 @@ public:
 	TypedArray<NodePath> get_inventories_for_stations() const;
 	void set_inventories_for_stations(const TypedArray<NodePath> &new_inventories_for_stations);
 	NodePath get_main_station() const;
-	void set_opened_stations(const TypedArray<NodePath> &new_opened_stations);
-	TypedArray<NodePath> get_opened_stations() const;
-	virtual bool open(CraftStation *craft_station);
-	virtual bool close(CraftStation *craft_station);
-	bool is_open_main_craft_station() const;
-	bool is_open_any_station() const;
-	bool is_open(const CraftStation *craft_station) const;
-	bool open_main_craft_station();
-	bool close_main_craft_station();
-	void close_all_craft_stations();
 	CraftStation *get_craft_station(const NodePath craft_station_path) const;
 	Inventory *get_input_inventory_for_stations(const NodePath inventory_path) const;
 };
