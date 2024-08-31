@@ -432,7 +432,6 @@ int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 	return _remaining_amount;
 }
 
-
 int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amount) {
 	Ref<Slot> slot = slots[slot_index];
 	int _remaining_amount = slot->remove(item, amount);

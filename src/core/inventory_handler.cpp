@@ -2,7 +2,6 @@
 #include "inventory.h"
 #include <godot_cpp/classes/engine.hpp>
 
-
 void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_inventories_path", "inventories_path"), &InventoryHandler::set_inventories_path);
 	ClassDB::bind_method(D_METHOD("get_inventories_path"), &InventoryHandler::get_inventories_path);
@@ -50,8 +49,8 @@ InventoryHandler::~InventoryHandler() {
 
 void InventoryHandler::_ready() {
 	if (!Engine::get_singleton()->is_editor_hint()) {
-		if(transaction_slot.is_null()) {
-			set_transaction_slot(Ref<Slot> (memnew(Slot())));
+		if (transaction_slot.is_null()) {
+			set_transaction_slot(Ref<Slot>(memnew(Slot())));
 		}
 	}
 	NodeInventories::_ready();
@@ -145,13 +144,13 @@ bool InventoryHandler::pick_to_inventory(Node *dropped_item, Inventory *inventor
 	}
 	ERR_FAIL_NULL_V(inventory, false);
 
-	if (!dropped_item->get("is_pickable")){
+	if (!dropped_item->get("is_pickable")) {
 		return false;
 	}
 	Variant item_variant = dropped_item->get("item");
 	ERR_FAIL_COND_V(item_variant.get_type() != Variant::OBJECT, false);
 
-    Ref<Item> item = item_variant;
+	Ref<Item> item = item_variant;
 	ERR_FAIL_COND_V(item.is_null(), false);
 	ERR_FAIL_COND_V(item->get_definition().is_null(), false);
 
