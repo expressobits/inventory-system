@@ -3,13 +3,14 @@ extends Node3D
 
 @onready var inventory : Inventory = $Inventory
 @export var actions : Array[InteractAction]
+@onready var openable : Openable = $Openable
+
+func _ready():
+	openable.closed.connect(_on_openable_closed)
+	openable.opened.connect(_on_openable_opened)
 
 func get_inventory() -> Inventory:
 	return $Inventory
-
-
-func _on_inventory_closed():
-	_on_close()
 
 
 func _on_inventory_opened():
@@ -40,3 +41,19 @@ func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
 
 func interact(character : Node, _action_index : int = 0):
 	character.character_inventory_system.open_inventory(inventory)
+	open(character)
+
+
+func open(character : Node):
+	openable.open(character)
+
+func close(character : Node):
+	print("close")
+	openable.close(character)
+
+func _on_openable_opened(character: Node) -> void:
+	_on_open()
+
+
+func _on_openable_closed(character: Node) -> void:
+	_on_close()

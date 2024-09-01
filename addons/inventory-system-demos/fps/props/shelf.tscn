@@ -1,15 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://lwi2lvfj5ltx"]
+[gd_scene load_steps=10 format=3 uid="uid://lwi2lvfj5ltx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/props/shelf.gd" id="1_0djpg"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="2_bmkoo"]
 [ext_resource type="PackedScene" uid="uid://43yusxh6v15d" path="res://addons/inventory-system-demos/fps/props/visual_inventory_3d.tscn" id="4_mhihf"]
 [ext_resource type="PackedScene" uid="uid://dm2evx8m3spa5" path="res://addons/inventory-system-demos/fps/props/visual_slot_3d.tscn" id="5_r40cv"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="6_cmn4q"]
 [ext_resource type="Material" uid="uid://crejuaexbgbp3" path="res://addons/inventory-system-demos/fps/materials/wood.tres" id="7_lelhm"]
 
 [sub_resource type="InteractAction" id="Resource_m6qwa"]
-input = "interact"
 description = "Open Shelf"
-code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4yfqi"]
 size = Vector3(0.489384, 1, 2.10216)
@@ -105,3 +104,6 @@ mesh = SubResource("BoxMesh_olkf5")
 transform = Transform3D(0.5, 0, 0, 0, 0.1, 0, 0, 0, 2, 0, 0.5, 0)
 material_override = ExtResource("7_lelhm")
 mesh = SubResource("BoxMesh_olkf5")
+
+[node name="Openable" type="Node" parent="."]
+script = ExtResource("6_cmn4q")

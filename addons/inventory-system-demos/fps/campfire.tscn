@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=22 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
 [ext_resource type="CraftStationType" uid="uid://bnofwpkgx0twi" path="res://addons/inventory-system-demos/base/craft_stations/campfire.tres" id="4_bov00"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_72vu1"]
 [ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="8_81xo0"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="8_g2guq"]
 [ext_resource type="ItemCategory" uid="uid://vf4th6k6nu1k" path="res://addons/inventory-system-demos/base/categories/food.tres" id="10_3i6mn"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://addons/inventory-system-demos/assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
 
@@ -20,23 +21,23 @@ description = "Open Campfire"
 size = Vector3(1.20602, 1.16811, 1.2693)
 
 [sub_resource type="Slot" id="Resource_pueei"]
-accepted_categories = Array[ItemCategory]([ExtResource("8_81xo0")])
 max_stack = 8
+accepted_categories = Array[ItemCategory]([ExtResource("8_81xo0")])
 
 [sub_resource type="Slot" id="Resource_qil68"]
-categorized = true
-accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
+categorized = 1
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 
 [sub_resource type="Slot" id="Resource_ahb6e"]
-categorized = true
-accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
+categorized = 1
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 
 [sub_resource type="Slot" id="Resource_8f0qi"]
-categorized = true
-accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
+categorized = 1
+accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 
 [sub_resource type="Curve" id="Curve_gbe35"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -109,5 +110,8 @@ light_color = Color(1, 1, 0.0901961, 1)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Node"]
 stream = ExtResource("11_dck0x")
+
+[node name="Openable" type="Node" parent="."]
+script = ExtResource("8_g2guq")
 
 [connection signal="item_added" from="InputInventory" to="." method="_on_input_inventory_item_added"]

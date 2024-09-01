@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cn6sy338tb7m4"]
+[gd_scene load_steps=10 format=3 uid="uid://cn6sy338tb7m4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/box_inventory.gd" id="1_f8i83"]
 [ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
 [ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]
 [ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="7_nxnqq"]
 
 [sub_resource type="InteractAction" id="Resource_opm00"]
 description = "Open Box"
@@ -41,5 +42,5 @@ stream = ExtResource("5_sufq2")
 [node name="Close" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_x0aos")
 
-[connection signal="closed" from="Inventory" to="." method="_on_inventory_closed"]
-[connection signal="opened" from="Inventory" to="." method="_on_inventory_opened"]
+[node name="Openable" type="Node" parent="."]
+script = ExtResource("7_nxnqq")

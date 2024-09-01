@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvjagvllelgcf"]
+[gd_scene load_steps=9 format=3 uid="uid://bvjagvllelgcf"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/workbench.gd" id="1_sr5uf"]
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
 [ext_resource type="CraftStationType" uid="uid://dvvni8o3rpo4s" path="res://addons/inventory-system-demos/base/craft_stations/workbench.tres" id="4_g10kw"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="5_c7aqi"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_d4au8"]
 
 [sub_resource type="InteractAction" id="Resource_ypp5l"]
@@ -40,3 +41,6 @@ database = ExtResource("5_d4au8")
 [node name="InputInventory" type="Inventory" parent="."]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 database = ExtResource("5_d4au8")
+
+[node name="Openable" type="Node" parent="."]
+script = ExtResource("5_c7aqi")
