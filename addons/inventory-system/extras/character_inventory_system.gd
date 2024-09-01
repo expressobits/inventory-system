@@ -115,7 +115,7 @@ func inventory_inputs():
 			open_main_craft_station()
 
 
-## Inventories/Handler
+#region Inventories/Handler
 func move_between_inventories_at(from : Inventory, from_slot_index : int, amount : int, to : Inventory, to_slot_index : int):
 	inventory_handler.move_between_inventories_at(from, from_slot_index, amount, to, to_slot_index)
 
@@ -139,12 +139,27 @@ func pick_to_inventory(node : Node):
 func add_to_inventory(item : Item, amount : int):
 	inventory_handler.add_to_inventory(inventory_handler.get_inventory(0), item, amount)
 
+func drop_transaction():
+	inventory_handler.drop_transaction()
 
-## Crafter
+
+func _on_request_drop_obj(dropped_item : String, item : Item):
+	var packed_scene : PackedScene = load(dropped_item)
+	var node = packed_scene.instantiate()
+	drop_parent.add_child(node)
+	node.set("item", item)
+	node.set("position", drop_parent_position.get("position"))
+	node.set("rotation", drop_parent_position.get("position"))
+	dropped.emit(node)
+#endregion
+
+#region Crafter
 func craft(craft_station : CraftStation, recipe_index : int):
 	craft_station.craft(recipe_index)
 
+#endregion
 
+#region Hotbar
 func hot_bar_inputs(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
@@ -170,19 +185,7 @@ func hotbar_previous_item():
 func hotbar_next_item():
 	hotbar.next_item()
 
-
-func drop_transaction():
-	inventory_handler.drop_transaction()
-
-
-func _on_request_drop_obj(dropped_item : String, item : Item):
-	var packed_scene : PackedScene = load(dropped_item)
-	var node = packed_scene.instantiate()
-	drop_parent.add_child(node)
-	node.set("item", item)
-	node.set("position", drop_parent_position.get("position"))
-	node.set("rotation", drop_parent_position.get("position"))
-	dropped.emit(node)
+#endregion
 
 #region Open Inventories
 func is_open_inventory(inventory : Inventory):
