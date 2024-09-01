@@ -3,13 +3,14 @@ class_name SyncCraftStation
 
 @export var craft_station : CraftStation
 @export var sync_input_inventories : bool
+@export var openeable : Openable
 var craftings_data : Array
 
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_connected.bind())
-	craft_station.opened.connect(_on_opened)
-	craft_station.closed.connect(_on_closed)
+	openeable.opened.connect(_on_opened)
+	openeable.closed.connect(_on_closed)
 	craft_station.crafting_added.connect(_on_crafting_added)
 	craft_station.crafting_removed.connect(_on_crafting_removed)
 	if sync_input_inventories:
@@ -63,11 +64,11 @@ func _on_input_inventory_removed(inventory_path : NodePath):
 
 @rpc
 func open_rpc():
-	craft_station.open()
+	openeable.open()
 
 @rpc
 func close_rpc():
-	craft_station.close()
+	openeable.close()
 	
 @rpc
 func crafting_added_rpc(recipe_index : int):
