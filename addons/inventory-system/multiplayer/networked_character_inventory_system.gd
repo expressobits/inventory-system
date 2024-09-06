@@ -9,10 +9,10 @@ func _ready():
 	inventory_handler.request_drop_obj.connect(_on_request_drop_obj)
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
-		inventory_handler.opened.connect(_update_opened_inventories)
-		inventory_handler.closed.connect(_update_opened_inventories)
-		crafter.opened.connect(_update_opened_stations)
-		crafter.closed.connect(_update_opened_stations)
+		opened_inventory.connect(_update_opened_inventories)
+		closed_inventory.connect(_update_opened_inventories)
+		opened_station.connect(_update_opened_stations)
+		closed_station.connect(_update_opened_stations)
 		_update_opened_inventories(inventory_handler.get_inventory(0))
 
 
@@ -35,7 +35,19 @@ func open_inventory(inventory : Inventory):
 	if multiplayer.is_server():
 		super.open_inventory(inventory)
 	else:
-		open_inventory_rpc.rpc_id(1, inventory_handler.get_path_to(inventory))
+		open_inventory_rpc.rpc_id(1, inventory.get_path())
+
+
+func add_open_inventory(inventory : Inventory):
+	if multiplayer.is_server():
+		add_open_inventory_rpc.rpc(inventory.get_path())
+	super.add_open_inventory(inventory)
+
+
+func remove_open_inventory(inventory : Inventory):
+	if multiplayer.is_server():
+		remove_open_inventory_rpc.rpc(inventory.get_path())
+	super.remove_open_inventory(inventory)
 
 
 func close_inventories():
@@ -117,6 +129,18 @@ func open_station(craft_station : CraftStation):
 		open_station_rpc.rpc(crafter.get_path_to(craft_station))
 
 
+func add_open_station(craft_station : CraftStation):
+	if multiplayer.is_server():
+		add_open_station_rpc.rpc(craft_station.get_path())
+	super.add_open_station(craft_station)
+
+
+func remove_open_station(craft_station : CraftStation):
+	if multiplayer.is_server():
+		remove_open_station_rpc.rpc(craft_station.get_path())
+	super.remove_open_station(craft_station)
+
+
 func hotbar_change_selection(index : int):
 	if multiplayer.is_server():
 		hotbar_change_selection_rpc(index)
@@ -159,16 +183,40 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 	dropped.emit(obj)
 
 
-@rpc
+@rpc("any_peer")
 func open_main_inventory_rpc():
 	super.open_main_inventory()
 
 
 @rpc
 func open_inventory_rpc(inventory_path : NodePath):
-	var inventory = inventory_handler.get_node(inventory_path)
+	var inventory = get_node(inventory_path)
 	super.open_inventory(inventory)
-	
+
+
+@rpc("any_peer")
+func add_open_inventory_rpc(inventory_path : NodePath):
+	var inventory = get_node(inventory_path)
+	super.add_open_inventory(inventory)
+
+
+@rpc("any_peer")
+func remove_open_inventory_rpc(inventory_path : NodePath):
+	var inventory = get_node(inventory_path)
+	super.remove_open_inventory(inventory)
+
+
+@rpc("any_peer")
+func add_open_station_rpc(station_path : NodePath):
+	var station = get_node(station_path)
+	super.add_open_station(station)
+
+
+@rpc("any_peer")
+func remove_open_station_rpc(station_path : NodePath):
+	var station = get_node(station_path)
+	super.remove_open_station(station)
+
 
 @rpc
 func close_inventories_rpc():

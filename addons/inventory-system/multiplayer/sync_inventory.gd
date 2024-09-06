@@ -49,8 +49,6 @@ func setup():
 		inventory.item_added.connect(_on_item_added)
 	if sync_item_removed_signal:
 		inventory.item_removed.connect(_on_item_removed)
-	inventory.opened.connect(_on_opened)
-	inventory.closed.connect(_on_closed)
 	slots_sync.clear()
 	for i in inventory.slots.size():
 		var slot = inventory.slots[i]
@@ -64,22 +62,7 @@ func _on_connected(id):
 	for i in inventory.slots.size():
 		var slot = inventory.slots[i]
 		slots_sync.append({"item_id" = slot.get_item_id() , "amount" = slot.amount})
-	if inventory.is_open:
-		_opened_rpc.rpc_id(id)
 	_update_slots_rpc.rpc_id(id, slots_sync)
-	
- 
-
-func _on_opened():
-	if not multiplayer.is_server():
-		return
-	_opened_rpc.rpc()
-
-
-func _on_closed():
-	if not multiplayer.is_server():
-		return
-	_closed_rpc.rpc()
 
 
 func _on_slot_added(slot_index : int):
@@ -129,22 +112,6 @@ func _on_item_removed(definition : ItemDefinition, amount : int):
 @rpc
 func _update_slots_rpc(slots_sync : Array):
 	self.slots_sync = slots_sync
-
-
-@rpc
-func _opened_rpc():
-	if multiplayer.is_server():
-		return
-	inventory.is_open = true
-	inventory.opened.emit()
-
-
-@rpc
-func _closed_rpc():
-	if multiplayer.is_server():
-		return
-	inventory.is_open = false
-	inventory.closed.emit()
 
 
 @rpc

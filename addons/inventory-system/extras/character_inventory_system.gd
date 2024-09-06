@@ -194,27 +194,36 @@ func is_open_inventory(inventory : Inventory):
 func open_inventory(inventory : Inventory):
 	if is_open_inventory(inventory):
 		return
+	add_open_inventory(inventory)
+
+
+func add_open_inventory(inventory : Inventory):
 	opened_inventories.append(inventory)
 	opened_inventory.emit(inventory)
 	if not is_open_main_inventory():
 		open_main_inventory()
-	
 	
 func open_main_inventory():
 	open_inventory(inventory_handler.get_inventory(0))
 	
 	
 func close_inventory(inventory : Inventory):
-	var index = opened_inventories.find(inventory)
-	opened_inventories.remove_at(index)
 	if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) == -1:
 		inventory.get_parent().close(get_parent())
+	remove_open_inventory(inventory)
+
+
+func remove_open_inventory(inventory : Inventory):
+	var index = opened_inventories.find(inventory)
+	opened_inventories.remove_at(index)
 	closed_inventory.emit(inventory)
-	
+
+
 func close_inventories():
 	for index in range(opened_inventories.size() - 1, -1, -1):
 		close_inventory(opened_inventories[index])
-		
+
+
 func is_open_any_inventory():
 	return !opened_inventories.is_empty()
 	
@@ -230,6 +239,10 @@ func is_open_station(station : CraftStation):
 func open_station(station : CraftStation):
 	if is_open_station(station):
 		return
+	add_open_station(station)
+
+
+func add_open_station(station : CraftStation):
 	opened_stations.append(station)
 	opened_station.emit(station)
 
@@ -237,11 +250,16 @@ func open_station(station : CraftStation):
 func close_station(station : CraftStation):
 	if not is_open_station(station):
 		return
+	remove_open_station(station)
+
+
+func remove_open_station(station : CraftStation):
 	var index = opened_stations.find(station)
 	opened_stations.remove_at(index)
 	closed_station.emit(station)
 	if crafter.get_node(crafter.main_station) != station:
 		station.get_parent().close(get_parent())
+
 
 func open_main_craft_station():
 	open_station(crafter.get_node(crafter.main_station))
