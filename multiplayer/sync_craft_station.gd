@@ -9,8 +9,6 @@ var craftings_data : Array
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_connected.bind())
-	openeable.opened.connect(_on_opened)
-	openeable.closed.connect(_on_closed)
 	craft_station.crafting_added.connect(_on_crafting_added)
 	craft_station.crafting_removed.connect(_on_crafting_removed)
 	if sync_input_inventories:
@@ -22,20 +20,7 @@ func _on_connected(peer_id : int):
 	if not multiplayer.is_server():
 		craft_station.can_finish_craftings = false
 		return
-	if craft_station.is_open:
-		open_rpc.rpc_id(peer_id)
 	_update_craftings_rpc.rpc_id(peer_id, craftings_data)
-
-
-func _on_opened():
-	if not multiplayer.is_server():
-		return
-	open_rpc.rpc()
-	
-func _on_closed():
-	if not multiplayer.is_server():
-		return
-	close_rpc.rpc()
 	
 
 func _on_crafting_added(crafting_index : int):
@@ -62,13 +47,6 @@ func _on_input_inventory_removed(inventory_path : NodePath):
 		return
 	input_inventory_removed_rpc.rpc(inventory_path)
 
-@rpc
-func open_rpc():
-	openeable.open()
-
-@rpc
-func close_rpc():
-	openeable.close()
 	
 @rpc
 func crafting_added_rpc(recipe_index : int):

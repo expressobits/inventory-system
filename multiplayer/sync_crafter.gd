@@ -4,11 +4,6 @@ class_name SyncCrafter
 @export 
 var crafter : Crafter
 
-func _ready() -> void:
-	if multiplayer.is_server():
-		crafter.opened.connect(_on_opened.bind())
-		crafter.closed.connect(_on_closed.bind())
-
 
 func _on_opened(craft_station : CraftStation):
 	open_rpc.rpc(crafter.get_path_to(craft_station))
