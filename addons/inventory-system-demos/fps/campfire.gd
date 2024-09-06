@@ -81,7 +81,7 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 
 
 func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
-	if craft_station.get_input_inventory().is_open:
+	if openable.is_open:
 		return []
 	var current_actions : Array[InteractAction] = self.actions.duplicate()
 	if fuel > 0.0:
@@ -94,7 +94,8 @@ func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
 
 
 func interact(character : Node, action_index : int = 0):
-	if action_index == 0:
+	if action_index == 0 and !openable.is_open:
 		character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
+		openable.open(character)
 	else:
 		active_fire = !active_fire

@@ -29,7 +29,7 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 	return near_position
 
 func interact_with_slot(character : Node, action_index : int = 0, actual_slot_index := 0):
-	if inventory.is_open:
+	if openable.is_open:
 		return
 	var interactor = character.character_inventory_system.interactor
 	var item = interactor.get_hotbar().get_selected_item()
@@ -59,7 +59,7 @@ func get_actual_item(actual_slot_index):
 
 func get_interact_actions(interactor : Interactor) -> Array[InteractAction]:
 	actions_shelf.clear()
-	if inventory.is_open:
+	if openable.is_open:
 		return actions_shelf
 	actions_shelf.append_array(actions)
 	var shelf_item = get_actual_item(slot_index)
