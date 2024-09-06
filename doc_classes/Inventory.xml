@@ -35,13 +35,6 @@
 				Add a new slot to the inventory, a trigger signal flag can be set.
 			</description>
 		</method>
-		<method name="close">
-			<return type="bool" />
-			<description>
-				Closes the inventory and returns true if done successfully.
-				Emits the [signal closed] signal if was previously open.
-			</description>
-		</method>
 		<method name="contains" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="item" type="Item" />
@@ -113,13 +106,6 @@
 				Returns true if inventory is full.
 			</description>
 		</method>
-		<method name="open">
-			<return type="bool" />
-			<description>
-				Opens the inventory and returns true if done successfully.
-				Emits the [signal opened] signal if the was previously closed.
-			</description>
-		</method>
 		<method name="remove">
 			<return type="int" />
 			<param index="0" name="item" type="Item" />
@@ -180,9 +166,9 @@
 			<param index="0" name="slot_index" type="int" />
 			<param index="1" name="destination" type="Inventory" />
 			<param index="2" name="destination_slot_index" type="int" />
-			<param index="3" name="amount" type="int" default="1" />
+			<param index="3" name="amount" type="int" default="-1" />
 			<description>
-			Transfer the contents of the index slot [param slot index] of this inventory to another slot ([param destination_slot_index]) of [param destination] inventory.
+				Transfer the contents of the index slot [param slot index] of this inventory to another slot ([param destination_slot_index]) of [param destination] inventory.
 			Note: If amount is -1 (default value), the entire contents of the slot are sent to another inventory.
 			</description>
 		</method>
@@ -201,9 +187,6 @@
 		<member name="inventory_name" type="String" setter="set_inventory_name" getter="get_inventory_name" default="&quot;Inventory&quot;">
 			The name of the inventory, to be displayed in UI.
 		</member>
-		<member name="is_open" type="bool" setter="set_is_open" getter="get_is_open" default="false">
-			It stores information if this inventory is open or not.
-		</member>
 		<member name="remove_slot_if_empty" type="bool" setter="set_remove_slot_if_empty" getter="get_remove_slot_if_empty" default="false">
 			Removes a [Slot] when the slot becomes empty using [method remove] function.
 		</member>
@@ -215,11 +198,6 @@
 		</member>
 	</members>
 	<signals>
-		<signal name="closed">
-			<description>
-				Emitted when inventory is closed. Called inside the [method close()] function when the inventory is closed.
-			</description>
-		</signal>
 		<signal name="emptied">
 			<description>
 				Emitted when inventory is empty. This signal is emitted after the [method remove], [method remove_at] or [method set_slot] function and it only happens when all slots are empty or there are no slots.
@@ -247,11 +225,6 @@
 			<param index="1" name="amount" type="int" />
 			<description>
 				Emitted when a [Item] was removed.
-			</description>
-		</signal>
-		<signal name="opened">
-			<description>
-				Emitted when inventory is opened. Called inside the [method open()] function when the inventory is opened.
 			</description>
 		</signal>
 		<signal name="slot_added">

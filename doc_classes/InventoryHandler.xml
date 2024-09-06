@@ -23,22 +23,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="close">
-			<return type="bool" />
-			<param index="0" name="inventory" type="Inventory" />
-			<description>
-			</description>
-		</method>
-		<method name="close_all_inventories">
-			<return type="void" />
-			<description>
-			</description>
-		</method>
-		<method name="close_main_inventory">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
 		<method name="drop">
 			<return type="bool" />
 			<param index="0" name="item" type="Item" />
@@ -65,34 +49,7 @@
 			<description>
 			</description>
 		</method>
-		<method name="is_open" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="inventory" type="Inventory" />
-			<description>
-			</description>
-		</method>
-		<method name="is_open_any_inventory" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-		<method name="is_open_main_inventory" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
 		<method name="is_transaction_active" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-		<method name="open">
-			<return type="bool" />
-			<param index="0" name="inventory" type="Inventory" />
-			<description>
-			</description>
-		</method>
-		<method name="open_main_inventory">
 			<return type="bool" />
 			<description>
 			</description>
@@ -140,8 +97,6 @@
 	<members>
 		<member name="inventories_path" type="NodePath[]" setter="set_inventories_path" getter="get_inventories_path" default="[]">
 		</member>
-		<member name="opened_inventories" type="NodePath[]" setter="set_opened_inventories" getter="get_opened_inventories" default="[]">
-		</member>
 		<member name="transaction_slot" type="Slot" setter="" getter="get_transaction_slot">
 		</member>
 	</members>
@@ -152,18 +107,8 @@
 			<description>
 			</description>
 		</signal>
-		<signal name="closed">
-			<param index="0" name="inventory" type="Object" />
-			<description>
-			</description>
-		</signal>
 		<signal name="dropped">
 			<param index="0" name="dropped_item" type="Object" />
-			<description>
-			</description>
-		</signal>
-		<signal name="opened">
-			<param index="0" name="inventory" type="Object" />
 			<description>
 			</description>
 		</signal>
