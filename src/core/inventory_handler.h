@@ -17,7 +17,6 @@ private:
 	Ref<Slot> transaction_slot;
 
 protected:
-	TypedArray<NodePath> opened_inventories;
 	static void _bind_methods();
 
 public:
@@ -28,22 +27,12 @@ public:
 	TypedArray<NodePath> get_inventories_path() const;
 	void set_transaction_slot(const Ref<Slot> new_transaction_slot);
 	Ref<Slot> get_transaction_slot() const;
-	void set_opened_inventories(const TypedArray<NodePath> new_opened_inventories);
-	TypedArray<NodePath> get_opened_inventories() const;
 	void change_transaction_slot(const Ref<Item> &item, const int &amount);
 	virtual bool drop(const Ref<Item> &item, const int &amount = 1);
 	int add_to_inventory(Inventory *inventory, const Ref<Item> item, const int &amount = 1, bool drop_excess = false);
 	void drop_from_inventory(const int &slot_index, const int &amount = 1, Inventory *inventory = nullptr);
 	virtual bool pick_to_inventory(Node *dropped_item, Inventory *inventory = nullptr);
 	void swap_between_inventories(Inventory *inventory, const int slot_index, Inventory *other_inventory, const int other_slot_index, int amount = 1);
-	virtual bool open(Inventory *inventory);
-	virtual bool close(Inventory *inventory);
-	virtual bool is_open_main_inventory() const;
-	bool is_open_any_inventory() const;
-	bool is_open(Inventory *inventory) const;
-	virtual bool open_main_inventory();
-	virtual bool close_main_inventory();
-	virtual void close_all_inventories();
 	virtual void to_transaction(const int &slot_index, Inventory *inventory, const int &amount);
 	virtual void transaction_to_at(const int &slot_index, Inventory *inventory, const int &amount_to_move = -1);
 	virtual void transaction_to(Inventory *inventory);

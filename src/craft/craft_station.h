@@ -24,7 +24,6 @@ private:
 	bool auto_craft = false;
 	int processing_mode = 0;
 	bool can_add_input_inventory = true;
-	bool is_open = false;
 	TypedArray<int> valid_recipes;
 
 	void _process_crafts(float delta);

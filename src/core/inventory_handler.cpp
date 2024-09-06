@@ -7,22 +7,12 @@ void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_inventories_path"), &InventoryHandler::get_inventories_path);
 	// ClassDB::bind_method(D_METHOD("set_transaction_slot", "transaction_slot"), &InventoryHandler::set_transaction_slot);
 	ClassDB::bind_method(D_METHOD("get_transaction_slot"), &InventoryHandler::get_transaction_slot);
-	ClassDB::bind_method(D_METHOD("set_opened_inventories", "opened_inventories"), &InventoryHandler::set_opened_inventories);
-	ClassDB::bind_method(D_METHOD("get_opened_inventories"), &InventoryHandler::get_opened_inventories);
 	ClassDB::bind_method(D_METHOD("change_transaction_slot", "item", "amount"), &InventoryHandler::change_transaction_slot);
 	ClassDB::bind_method(D_METHOD("drop", "item", "amount"), &InventoryHandler::drop, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("add_to_inventory", "inventory", "item", "amount", "drop_excess"), &InventoryHandler::add_to_inventory, DEFVAL(1), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount", "inventory"), &InventoryHandler::drop_from_inventory, DEFVAL(1), DEFVAL(nullptr));
 	ClassDB::bind_method(D_METHOD("pick_to_inventory", "dropped_item", "inventory"), &InventoryHandler::pick_to_inventory, DEFVAL(nullptr));
 	ClassDB::bind_method(D_METHOD("swap_between_inventories", "inventory", "slot_index", "other_inventory", "other_slot_index", "amount"), &InventoryHandler::swap_between_inventories, DEFVAL(1));
-	ClassDB::bind_method(D_METHOD("open", "inventory"), &InventoryHandler::open);
-	ClassDB::bind_method(D_METHOD("close", "inventory"), &InventoryHandler::close);
-	ClassDB::bind_method(D_METHOD("is_open_main_inventory"), &InventoryHandler::is_open_main_inventory);
-	ClassDB::bind_method(D_METHOD("is_open_any_inventory"), &InventoryHandler::is_open_any_inventory);
-	ClassDB::bind_method(D_METHOD("is_open", "inventory"), &InventoryHandler::is_open);
-	ClassDB::bind_method(D_METHOD("open_main_inventory"), &InventoryHandler::open_main_inventory);
-	ClassDB::bind_method(D_METHOD("close_main_inventory"), &InventoryHandler::close_main_inventory);
-	ClassDB::bind_method(D_METHOD("close_all_inventories"), &InventoryHandler::close_all_inventories);
 	ClassDB::bind_method(D_METHOD("to_transaction", "slot_index", "inventory", "amount"), &InventoryHandler::to_transaction);
 	ClassDB::bind_method(D_METHOD("transaction_to_at", "slot_index", "inventory", "amount_to_move"), &InventoryHandler::transaction_to_at, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("transaction_to", "inventory"), &InventoryHandler::transaction_to);
@@ -32,12 +22,9 @@ void InventoryHandler::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("dropped", PropertyInfo(Variant::OBJECT, "dropped_item")));
 	ADD_SIGNAL(MethodInfo("picked", PropertyInfo(Variant::OBJECT, "dropped_item")));
 	ADD_SIGNAL(MethodInfo("added", PropertyInfo(Variant::OBJECT, "item_definition", PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition"), PropertyInfo(Variant::INT, "amount")));
-	ADD_SIGNAL(MethodInfo("opened", PropertyInfo(Variant::OBJECT, "inventory")));
-	ADD_SIGNAL(MethodInfo("closed", PropertyInfo(Variant::OBJECT, "inventory")));
 	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "dropp_item_packed_scene_path"), PropertyInfo(Variant::OBJECT, "item")));
 	ADD_SIGNAL(MethodInfo("updated_transaction_slot"));
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "inventories_path", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_inventories_path", "get_inventories_path");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "opened_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_opened_inventories", "get_opened_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "transaction_slot", PROPERTY_HINT_RESOURCE_TYPE, "Slot"), "", "get_transaction_slot");
 }
 
@@ -70,14 +57,6 @@ void InventoryHandler::set_transaction_slot(const Ref<Slot> new_transaction_slot
 
 Ref<Slot> InventoryHandler::get_transaction_slot() const {
 	return transaction_slot;
-}
-
-void InventoryHandler::set_opened_inventories(const TypedArray<NodePath> new_opened_inventories) {
-	opened_inventories = new_opened_inventories;
-}
-
-TypedArray<NodePath> InventoryHandler::get_opened_inventories() const {
-	return opened_inventories;
 }
 
 void InventoryHandler::change_transaction_slot(const Ref<Item> &item, const int &amount) {
@@ -187,75 +166,6 @@ void InventoryHandler::swap_between_inventories(Inventory *inventory, const int 
 		if (slot->get_amount() == amount) {
 			inventory->set_slot_with_other_slot(slot_index, other_slot);
 			other_inventory->set_slot_with_other_slot(other_slot_index, slot);
-		}
-	}
-}
-
-bool InventoryHandler::open(Inventory *inventory) {
-	NodePath inventory_path = get_path_to(inventory);
-	if (opened_inventories.has(inventory_path))
-		return false;
-	if (!inventory->open())
-		return false;
-	opened_inventories.append(inventory_path);
-	emit_signal("opened", inventory);
-	return true;
-}
-
-bool InventoryHandler::close(Inventory *inventory) {
-	NodePath inventory_path = get_path_to(inventory);
-	int index = opened_inventories.find(inventory_path);
-	if (index == -1)
-		return false;
-	if (!inventory->close())
-		return false;
-	if (inventories_path.find(inventory_path) != -1) {
-		if (is_transaction_active()) {
-			Ref<Item> item = transaction_slot->get_item();
-			int amount_no_add = inventory->add(item, transaction_slot->get_amount());
-			if (amount_no_add > 0)
-				drop(item, amount_no_add);
-			change_transaction_slot(nullptr, 0);
-		}
-	}
-	opened_inventories.remove_at(index);
-	emit_signal("closed", inventory);
-	return true;
-}
-
-bool InventoryHandler::is_open_main_inventory() const {
-	Inventory *inventory = get_inventory(0);
-	return inventory != nullptr && is_open(inventory);
-}
-
-bool InventoryHandler::is_open_any_inventory() const {
-	return opened_inventories.size() > 0;
-}
-
-bool InventoryHandler::is_open(Inventory *inventory) const {
-	ERR_FAIL_NULL_V(inventory, false);
-	NodePath inventory_path = get_path_to(inventory);
-	return inventory->get_is_open() && opened_inventories.find(inventory_path) != -1;
-}
-
-bool InventoryHandler::open_main_inventory() {
-	Inventory *inventory = get_inventory(0);
-	return inventory != nullptr && open(inventory);
-}
-
-bool InventoryHandler::close_main_inventory() {
-	Inventory *inventory = get_inventory(0);
-	return inventory != nullptr && close(inventory);
-}
-
-void InventoryHandler::close_all_inventories() {
-	int opened_inventories_size = opened_inventories.size();
-	for (size_t i = opened_inventories_size; i > 0; i--) {
-		NodePath inv_path = opened_inventories[i - 1];
-		Node *node_inv = get_node_or_null(inv_path);
-		Inventory *inventory = Object::cast_to<Inventory>(node_inv);
-		if (inventory == nullptr || !close(inventory)) {
-			opened_inventories.remove_at(i - 1);
 		}
 	}
 }

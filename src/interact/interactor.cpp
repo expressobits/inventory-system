@@ -98,8 +98,6 @@ void Interactor::try_interact() {
 	Crafter *crafter = get_crafter();
 	ERR_FAIL_NULL_MSG(crafter, "'crafter' is null in Interactor!");
 
-	// if (inventory_handler->is_open_any_inventory() || crafter->is_open_any_station())
-	// 	return;
 	Node *raycast = get_raycast();
 	ERR_FAIL_NULL_MSG(raycast, "'raycast' is null in Interactor!");
 	Object *object = nullptr;
@@ -143,8 +141,6 @@ TypedArray<InteractAction> Interactor::get_actions(Node *node) const {
 	Crafter *crafter = get_crafter();
 	ERR_FAIL_NULL_V_MSG(crafter, actions, "'crafter' is null in Interactor!");
 
-	// if (inventory_handler->is_open_any_inventory() || crafter->is_open_any_station())
-	// 	return actions;
 	if (node != nullptr && node->has_method("get_interact_actions")) {
 		Variant actions_var = node->call("get_interact_actions", this);
 		actions = TypedArray<InteractAction>(actions_var);
