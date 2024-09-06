@@ -34,22 +34,24 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 
 
 func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
-	if inventory.is_open:
+	if openable.is_open:
 		return []
 	return actions
 
 
 func interact(character : Node, _action_index : int = 0):
-	character.character_inventory_system.open_inventory(inventory)
-	open(character)
+	if !openable.is_open:
+		character.character_inventory_system.open_inventory(inventory)
+		open(character)
 
 
 func open(character : Node):
 	openable.open(character)
 
+
 func close(character : Node):
-	print("close")
 	openable.close(character)
+
 
 func _on_openable_opened(character: Node) -> void:
 	_on_open()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccgrlrqx2vvqf"]
+[gd_scene load_steps=6 format=3 uid="uid://ccgrlrqx2vvqf"]
 
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="1_2iaw6"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_campfire.gd" id="2_hw73w"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_craft_station.gd" id="2_wux35"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_inventory.gd" id="3_jx6wv"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/networked_openable.gd" id="5_1yik4"]
 
 [node name="Campfire" instance=ExtResource("1_2iaw6")]
 script = ExtResource("2_hw73w")
@@ -17,3 +18,6 @@ craft_station = NodePath("../CraftStation")
 [node name="SyncInventory" type="Node" parent="." index="6" node_paths=PackedStringArray("inventory")]
 script = ExtResource("3_jx6wv")
 inventory = NodePath("../InputInventory")
+
+[node name="Openable" parent="." index="7"]
+script = ExtResource("5_1yik4")

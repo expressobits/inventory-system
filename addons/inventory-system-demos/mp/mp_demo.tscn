@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=27 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -9,7 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="8_kfwho"]
 [ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
 [ext_resource type="PackedScene" uid="uid://cc6pmwc0w143c" path="res://addons/inventory-system-demos/mp/mp_box_inventory.tscn" id="9_y0513"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_box_inventory.gd" id="10_4488h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_efc1k"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/networked_openable.gd" id="10_kjp1o"]
 [ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="11_6hyks"]
 [ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="13_v1ips"]
 [ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="14_lpdsd"]
@@ -17,9 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://d2tpdnjwuur2j" path="res://addons/inventory-system-demos/mp/mp_shelf.tscn" id="15_lou51"]
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
-
-[sub_resource type="Slot" id="Resource_6euhu"]
-categorized = 1
 
 [sub_resource type="Item" id="Resource_qht8t"]
 definition = ExtResource("11_6hyks")
@@ -107,13 +106,18 @@ text = "CONNECT TO LOCALHOST"
 
 [node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory" index="1"]
-slots = Array[Slot]([SubResource("Resource_6euhu"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
+slots = Array[Slot]([])
 inventory_name = "Dynamic Inventory"
+
+[node name="Openable" parent="Box Inventory" index="7"]
+script = ExtResource("10_kjp1o")
 
 [node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
 slots = Array[Slot]([SubResource("Resource_a5fwf"), SubResource("Resource_jm1f7"), SubResource("Resource_afmqk"), null, null, null, null, null, null, null, null, null, null, null, null, null])
@@ -121,14 +125,21 @@ create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
 
+[node name="Openable" parent="Box Inventory2" index="7"]
+script = ExtResource("10_kjp1o")
+
 [node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
+script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
 slots = Array[Slot]([])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Tools Inventory"
+
+[node name="Openable" parent="Box Inventory3" index="7"]
+script = ExtResource("10_kjp1o")
 
 [node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
 
