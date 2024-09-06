@@ -31,8 +31,8 @@ func _ready():
 	# Setup for audios 🔊
 	character_inventory_system.inventory_handler.picked.connect(_on_inventory_handler_picked)
 	character_inventory_system.dropped.connect(_on_inventory_handler_dropped)
-	character_inventory_system.inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened)
-	character_inventory_system.inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed)
+	character_inventory_system.opened_inventory.connect(_on_player_inventory_opened)
+	character_inventory_system.closed_inventory.connect(_on_player_inventory_closed)
 	character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
 	
 	
@@ -44,16 +44,17 @@ func _on_inventory_handler_dropped(_dropped_item):
 	drop_audio.play()
 	
 
-func _on_player_inventory_opened():
+func _on_player_inventory_opened(inventory : Inventory):
 	player_inventory_open_audio.play()
 
 
-func _on_player_inventory_closed():
+func _on_player_inventory_closed(inventory : Inventory):
 	player_inventory_close_audio.play()
 
 
 func _on_hotbar_changed(_selection : int):
 	hotbar_change_audio.play()
+
 
 func _physics_process(delta):
 	# Add the gravity.

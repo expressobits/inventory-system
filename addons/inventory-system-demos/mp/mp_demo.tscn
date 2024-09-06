@@ -159,12 +159,6 @@ script = ExtResource("15_7tjb2")
 
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
-[connection signal="closed" from="Box Inventory/Inventory" to="Box Inventory" method="_on_inventory_closed"]
-[connection signal="opened" from="Box Inventory/Inventory" to="Box Inventory" method="_on_inventory_opened"]
-[connection signal="closed" from="Box Inventory2/Inventory" to="Box Inventory2" method="_on_inventory_closed"]
-[connection signal="opened" from="Box Inventory2/Inventory" to="Box Inventory2" method="_on_inventory_opened"]
-[connection signal="closed" from="Box Inventory3/Inventory" to="Box Inventory3" method="_on_inventory_closed"]
-[connection signal="opened" from="Box Inventory3/Inventory" to="Box Inventory3" method="_on_inventory_opened"]
 
 [editable path="UI/Inventory System UI"]
 [editable path="UI/Inventory System UI/TransactionSlotUI"]
