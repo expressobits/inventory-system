@@ -14,8 +14,6 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("contains_ingredients", "recipe"), &CraftStation::contains_ingredients);
 	ClassDB::bind_method(D_METHOD("craft", "recipe_index"), &CraftStation::craft);
 	ClassDB::bind_method(D_METHOD("cancel_craft", "crafting_index"), &CraftStation::cancel_craft);
-	ClassDB::bind_method(D_METHOD("open"), &CraftStation::open);
-	ClassDB::bind_method(D_METHOD("close"), &CraftStation::close);
 	ClassDB::bind_method(D_METHOD("add_crafting", "recipe_index", "recipe"), &CraftStation::add_crafting);
 	ClassDB::bind_method(D_METHOD("remove_crafting", "crafting_index"), &CraftStation::remove_crafting);
 	ClassDB::bind_method(D_METHOD("finish_crafting", "crafting_index"), &CraftStation::finish_crafting);
@@ -38,8 +36,6 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_auto_craft"), &CraftStation::get_auto_craft);
 	ClassDB::bind_method(D_METHOD("set_processing_mode", "processing_mode"), &CraftStation::set_processing_mode);
 	ClassDB::bind_method(D_METHOD("get_processing_mode"), &CraftStation::get_processing_mode);
-	ClassDB::bind_method(D_METHOD("set_is_open", "is_open"), &CraftStation::set_is_open);
-	ClassDB::bind_method(D_METHOD("get_is_open"), &CraftStation::get_is_open);
 	ClassDB::bind_method(D_METHOD("set_can_add_input_inventory", "can_add_input_inventory"), &CraftStation::set_can_add_input_inventory);
 	ClassDB::bind_method(D_METHOD("get_can_add_input_inventory"), &CraftStation::get_can_add_input_inventory);
 	ClassDB::bind_method(D_METHOD("set_craftings", "craftings"), &CraftStation::set_craftings);
@@ -55,8 +51,6 @@ void CraftStation::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("crafting_removed", PropertyInfo(Variant::INT, "crafting_index")));
 	ADD_SIGNAL(MethodInfo("input_inventory_added", PropertyInfo(Variant::NODE_PATH, "input_inventory_path")));
 	ADD_SIGNAL(MethodInfo("input_inventory_removed", PropertyInfo(Variant::NODE_PATH, "input_inventory_path")));
-	ADD_SIGNAL(MethodInfo("opened"));
-	ADD_SIGNAL(MethodInfo("closed"));
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "input_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_input_inventories", "get_input_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "output_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_output_inventories", "get_output_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "limit_number_crafts"), "set_limit_number_crafts", "get_limit_number_crafts");
@@ -66,7 +60,6 @@ void CraftStation::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "only_remove_ingredients_after_craft"), "set_only_remove_ingredients_after_craft", "get_only_remove_ingredients_after_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_craft"), "set_auto_craft", "get_auto_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "processing_mode", PROPERTY_HINT_ENUM, "Parallel,Sequential"), "set_processing_mode", "get_processing_mode");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "is_open"), "set_is_open", "get_is_open");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_add_input_inventory"), "set_can_add_input_inventory", "get_can_add_input_inventory");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "craftings", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Crafting")), "set_craftings", "get_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "valid_recipes"), "set_valid_recipes", "get_valid_recipes");
@@ -316,24 +309,6 @@ void CraftStation::cancel_craft(int crafting_index) {
 	remove_crafting(crafting_index);
 }
 
-bool CraftStation::open() {
-	if (!is_open) {
-		is_open = true;
-		emit_signal("opened");
-		return true;
-	}
-	return false;
-}
-
-bool CraftStation::close() {
-	if (is_open) {
-		is_open = false;
-		emit_signal("closed");
-		return true;
-	}
-	return false;
-}
-
 Inventory *CraftStation::get_input_inventory(const int &index) const {
 	Node *node_inv = get_node_or_null(input_inventories[index]);
 	Inventory *inventory = Object::cast_to<Inventory>(node_inv);
@@ -431,14 +406,6 @@ void CraftStation::set_can_add_input_inventory(const bool &new_can_add_input_inv
 
 bool CraftStation::get_can_add_input_inventory() const {
 	return can_add_input_inventory;
-}
-
-void CraftStation::set_is_open(const bool &new_is_open) {
-	is_open = new_is_open;
-}
-
-bool CraftStation::get_is_open() const {
-	return is_open;
 }
 
 void CraftStation::set_craftings(const TypedArray<Crafting> &new_craftings) {

@@ -11,7 +11,6 @@ class Inventory : public NodeInventories {
 
 private:
 	TypedArray<Slot> slots;
-	bool is_open = false;
 	bool create_slot_if_needed = false;
 	bool remove_slot_if_empty = false;
 	int slot_amount = 16;
@@ -50,12 +49,8 @@ public:
 	int remove(const Ref<Item> &item, const int &amount = 1);
 	int remove_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	void transfer(const int &slot_index, Inventory* destination, const int &destination_slot_index, const int &amount);
-	bool open();
-	bool close();
 	void set_slots(const TypedArray<Slot> &new_slots);
 	TypedArray<Slot> get_slots() const;
-	void set_is_open(const bool &new_is_open);
-	bool get_is_open() const;
 	void set_create_slot_if_needed(const bool &new_create_slot_if_needed);
 	bool get_create_slot_if_needed() const;
 	void set_remove_slot_if_empty(const bool &new_remove_slot_if_empty);

@@ -24,7 +24,6 @@ private:
 	bool auto_craft = false;
 	int processing_mode = 0;
 	bool can_add_input_inventory = true;
-	bool is_open = false;
 	TypedArray<int> valid_recipes;
 
 	void _process_crafts(float delta);
@@ -57,8 +56,6 @@ public:
 	bool contains_ingredients(const Ref<Recipe> &recipe) const;
 	virtual void craft(int recipe_index);
 	virtual void cancel_craft(int crafting_index);
-	bool open();
-	bool close();
 	Inventory *get_input_inventory(const int &index = 0) const;
 	Inventory *get_output_inventory(const int &index = 0) const;
 	void set_input_inventories(const TypedArray<NodePath> &new_input_inventories);
@@ -81,8 +78,6 @@ public:
 	int get_processing_mode() const;
 	void set_can_add_input_inventory(const bool &new_can_add_input_inventory);
 	bool get_can_add_input_inventory() const;
-	void set_is_open(const bool &new_is_open);
-	bool get_is_open() const;
 	void set_craftings(const TypedArray<Crafting> &new_craftings);
 	TypedArray<Crafting> get_craftings() const;
 	void set_valid_recipes(const TypedArray<int> &new_valid_recipes);

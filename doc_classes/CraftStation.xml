@@ -32,11 +32,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="close">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
 		<method name="contains_ingredients" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="recipe" type="Recipe" />
@@ -71,11 +66,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="open">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
 		<method name="remove_crafting">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
@@ -102,8 +92,6 @@
 		</member>
 		<member name="input_inventories" type="NodePath[]" setter="set_input_inventories" getter="get_input_inventories" default="[]">
 		</member>
-		<member name="is_open" type="bool" setter="set_is_open" getter="get_is_open" default="false">
-		</member>
 		<member name="limit_number_crafts" type="int" setter="set_limit_number_crafts" getter="get_limit_number_crafts" default="-1">
 		</member>
 		<member name="only_remove_ingredients_after_craft" type="bool" setter="set_only_remove_ingredients_after_craft" getter="get_only_remove_ingredients_after_craft" default="false">
@@ -118,10 +106,6 @@
 		</member>
 	</members>
 	<signals>
-		<signal name="closed">
-			<description>
-			</description>
-		</signal>
 		<signal name="crafting_added">
 			<param index="0" name="crafting_index" type="int" />
 			<description>
@@ -153,10 +137,6 @@
 		</signal>
 		<signal name="on_request_craft">
 			<param index="0" name="recipe_index" type="int" />
-			<description>
-			</description>
-		</signal>
-		<signal name="opened">
 			<description>
 			</description>
 		</signal>

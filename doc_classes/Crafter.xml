@@ -7,68 +7,10 @@
 	</description>
 	<tutorials>
 	</tutorials>
-	<methods>
-		<method name="close">
-			<return type="bool" />
-			<param index="0" name="craft_station" type="CraftStation" />
-			<description>
-			</description>
-		</method>
-		<method name="close_all_craft_stations">
-			<return type="void" />
-			<description>
-			</description>
-		</method>
-		<method name="close_main_craft_station">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-		<method name="is_open" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="craft_station" type="CraftStation" />
-			<description>
-			</description>
-		</method>
-		<method name="is_open_any_station" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-		<method name="is_open_main_craft_station" qualifiers="const">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-		<method name="open">
-			<return type="bool" />
-			<param index="0" name="craft_station" type="CraftStation" />
-			<description>
-			</description>
-		</method>
-		<method name="open_main_craft_station">
-			<return type="bool" />
-			<description>
-			</description>
-		</method>
-	</methods>
 	<members>
 		<member name="inventories_for_stations" type="NodePath[]" setter="set_inventories_for_stations" getter="get_inventories_for_stations" default="[]">
 		</member>
 		<member name="main_station" type="NodePath" setter="set_main_station" getter="get_main_station" default="NodePath(&quot;&quot;)">
 		</member>
-		<member name="opened_stations" type="NodePath[]" setter="set_opened_stations" getter="get_opened_stations" default="[]">
-		</member>
 	</members>
-	<signals>
-		<signal name="closed">
-			<description>
-			</description>
-		</signal>
-		<signal name="opened">
-			<param index="0" name="craft_station" type="NodePath" />
-			<description>
-			</description>
-		</signal>
-	</signals>
 </class>

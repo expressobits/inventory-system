@@ -294,38 +294,12 @@ void Inventory::transfer(const int &slot_index, Inventory *destination, const in
 	add_at(slot_index, item, amount_not_transfered);
 }
 
-bool Inventory::open() {
-	if (!is_open) {
-		is_open = true;
-		emit_signal("opened");
-		return true;
-	}
-	return false;
-}
-
-bool Inventory::close() {
-	if (is_open) {
-		is_open = false;
-		emit_signal("closed");
-		return true;
-	}
-	return false;
-}
-
 void Inventory::set_slots(const TypedArray<Slot> &new_slots) {
 	slots = new_slots;
 }
 
 TypedArray<Slot> Inventory::get_slots() const {
 	return slots;
-}
-
-void Inventory::set_is_open(const bool &new_is_open) {
-	is_open = new_is_open;
-}
-
-bool Inventory::get_is_open() const {
-	return is_open;
 }
 
 void Inventory::set_create_slot_if_needed(const bool &new_create_slot_if_needed) {
@@ -464,13 +438,9 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "slot_index", "item", "amount"), &Inventory::remove_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer", "slot_index", "destination", "destination_slot_index", "amount"), &Inventory::transfer, DEFVAL(-1));
-	ClassDB::bind_method(D_METHOD("open"), &Inventory::open);
-	ClassDB::bind_method(D_METHOD("close"), &Inventory::close);
 
 	ClassDB::bind_method(D_METHOD("set_slots", "slots"), &Inventory::set_slots);
 	ClassDB::bind_method(D_METHOD("get_slots"), &Inventory::get_slots);
-	ClassDB::bind_method(D_METHOD("set_is_open", "is_open"), &Inventory::set_is_open);
-	ClassDB::bind_method(D_METHOD("get_is_open"), &Inventory::get_is_open);
 	ClassDB::bind_method(D_METHOD("set_create_slot_if_needed", "create_slot_if_needed"), &Inventory::set_create_slot_if_needed);
 	ClassDB::bind_method(D_METHOD("get_create_slot_if_needed"), &Inventory::get_create_slot_if_needed);
 	ClassDB::bind_method(D_METHOD("set_remove_slot_if_empty", "remove_slot_if_empty"), &Inventory::set_remove_slot_if_empty);
@@ -488,11 +458,8 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("filled"));
 	ADD_SIGNAL(MethodInfo("emptied"));
 	ADD_SIGNAL(MethodInfo("updated_slot", PropertyInfo(Variant::INT, "slot_index")));
-	ADD_SIGNAL(MethodInfo("opened"));
-	ADD_SIGNAL(MethodInfo("closed"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "slots", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_slots", "get_slots");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "is_open"), "set_is_open", "get_is_open");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "create_slot_if_needed"), "set_create_slot_if_needed", "get_create_slot_if_needed");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "remove_slot_if_empty"), "set_remove_slot_if_empty", "get_remove_slot_if_empty");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slot_amount"), "set_slot_amount", "get_slot_amount");
