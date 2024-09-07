@@ -15,8 +15,8 @@ func _spawn_custom(data : Array):
 	if typeof(data[0]) != TYPE_VECTOR3 or typeof(data[1]) != TYPE_VECTOR3 or typeof(data[2]) != TYPE_STRING:
 		print("data incompatible!")
 		return null
+		
 	var obj = load(data[2]).instantiate()
-	PackedScene
 	obj.position = data[0]
 	obj.rotation = data[1]
 	var item = Item.new()

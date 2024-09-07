@@ -83,7 +83,6 @@ offset_top = 4.0
 offset_right = 432.0
 offset_bottom = 222.0
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="RecipesContent" type="VBoxContainer" parent="RecipesUI/VBoxContainer/Control/ScrollContainer"]
 unique_name_in_owner = true
