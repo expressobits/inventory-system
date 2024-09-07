@@ -48,14 +48,14 @@ signal dropped(node : Node)
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	inventory_handler.request_drop_obj.connect(_on_request_drop_obj.bind())
+	inventory_handler.request_drop_obj.connect(_on_request_drop_obj)
 	
 	# Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
-		inventory_handler.opened.connect(_update_opened_inventories.bind())
-		inventory_handler.closed.connect(_update_opened_inventories.bind())
-		crafter.opened.connect(_update_opened_stations.bind())
-		crafter.closed.connect(_update_opened_stations.bind())
+		inventory_handler.opened.connect(_update_opened_inventories)
+		inventory_handler.closed.connect(_update_opened_inventories)
+		crafter.opened.connect(_update_opened_stations)
+		crafter.closed.connect(_update_opened_stations)
 		_update_opened_inventories(inventory_handler.get_inventory(0))
 
 

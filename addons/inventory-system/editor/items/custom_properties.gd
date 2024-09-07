@@ -43,7 +43,7 @@ func loading_properties():
 			var property_obj = property_scene.instantiate()
 			var property : BasePropertyItemEditor = property_obj as BasePropertyItemEditor
 			property.setup(item, key, item.properties[key])
-			property.removed.connect(_property_removed.bind())
+			property.removed.connect(_property_removed)
 			properties_obj.append(property_obj)
 			v_box_container.add_child(property_obj)
 	item.properties = new_item_properties

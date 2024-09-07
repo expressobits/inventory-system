@@ -4,7 +4,7 @@ class_name NetworkedCampfire
 func _ready():
 	super._ready()
 	changed_burning_state.connect(_changed_burning_state)
-	multiplayer.peer_connected.connect(_on_connected.bind())
+	multiplayer.peer_connected.connect(_on_connected)
 
 
 func check():

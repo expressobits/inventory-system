@@ -18,11 +18,11 @@ var hotbar : Hotbar
 func set_hotbar(hotbar : Hotbar):
 	if hotbar != self.hotbar:
 		if self.hotbar != null:
-			self.hotbar.on_change_selection.disconnect(_on_changed_selection.bind())
-			self.hotbar.get_inventory().updated_slot.disconnect(_on_updated_slot.bind())
+			self.hotbar.on_change_selection.disconnect(_on_changed_selection)
+			self.hotbar.get_inventory().updated_slot.disconnect(_on_updated_slot)
 		self.hotbar = hotbar
-		self.hotbar.on_change_selection.connect(_on_changed_selection.bind())
-		self.hotbar.get_inventory().updated_slot.connect(_on_updated_slot.bind())
+		self.hotbar.on_change_selection.connect(_on_changed_selection)
+		self.hotbar.get_inventory().updated_slot.connect(_on_updated_slot)
 		_update_slots()
 		_on_changed_selection(hotbar.selection_index)
 

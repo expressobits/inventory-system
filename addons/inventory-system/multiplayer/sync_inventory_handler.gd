@@ -4,9 +4,9 @@ class_name SyncInventoryHandler
 @export var inventory_handler : InventoryHandler
 
 func _ready() -> void:
-	inventory_handler.updated_transaction_slot.connect(on_updated_transaction_slot.bind())
-	inventory_handler.opened.connect(on_opened.bind())
-	inventory_handler.closed.connect(on_closed.bind())
+	inventory_handler.updated_transaction_slot.connect(on_updated_transaction_slot)
+	inventory_handler.opened.connect(on_opened)
+	inventory_handler.closed.connect(on_closed)
 
 	
 func on_updated_transaction_slot():

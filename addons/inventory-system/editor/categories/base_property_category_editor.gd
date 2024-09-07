@@ -32,7 +32,7 @@ func _ready():
 	dynamic_property.visible = true
 	var index = category.item_dynamic_properties.find(key)
 	check_box.button_pressed = index != -1
-	check_box.toggled.connect(_on_dynamic_property_checkbox_toggled.bind())
+	check_box.toggled.connect(_on_dynamic_property_checkbox_toggled)
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
 	delete_button.tooltip_text = "Delete"
 	line_edit.text = key

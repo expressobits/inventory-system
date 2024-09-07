@@ -37,20 +37,20 @@ var slots_sync : Array:
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	multiplayer.peer_connected.connect(_on_connected.bind())
+	multiplayer.peer_connected.connect(_on_connected)
 	if(inventory != null):
 		setup()
 
 func setup():
-	inventory.slot_added.connect(_on_slot_added.bind())
-	inventory.updated_slot.connect(_on_updated_slot.bind())
-	inventory.slot_removed.connect(_on_slot_removed.bind())
+	inventory.slot_added.connect(_on_slot_added)
+	inventory.updated_slot.connect(_on_updated_slot)
+	inventory.slot_removed.connect(_on_slot_removed)
 	if sync_item_added_signal:
-		inventory.item_added.connect(_on_item_added.bind())
+		inventory.item_added.connect(_on_item_added)
 	if sync_item_removed_signal:
-		inventory.item_removed.connect(_on_item_removed.bind())
-	inventory.opened.connect(_on_opened.bind())
-	inventory.closed.connect(_on_closed.bind())
+		inventory.item_removed.connect(_on_item_removed)
+	inventory.opened.connect(_on_opened)
+	inventory.closed.connect(_on_closed)
 	slots_sync.clear()
 	for i in inventory.slots.size():
 		var slot = inventory.slots[i]

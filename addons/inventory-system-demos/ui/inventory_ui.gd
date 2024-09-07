@@ -28,8 +28,8 @@ var slots : Array[SlotUI]
 
 
 func _ready():
-	gui_input.connect(_on_inventory_gui_input.bind())
-#	gui_input.connect(_on_inventory_gui_input.bind())
+	gui_input.connect(_on_inventory_gui_input)
+#	gui_input.connect(_on_inventory_gui_input)
 	if inventory != null:
 		_connect_new_inventory(inventory)
 
@@ -45,16 +45,16 @@ func set_inventory(inventory : Inventory):
 
 
 func _disconnect_old_inventory():
-	self.inventory.updated_slot.disconnect(_on_updated_slot.bind())
-	self.inventory.slot_added.disconnect(_on_slot_added.bind())
-	self.inventory.slot_removed.disconnect(_on_slot_removed.bind())
+	self.inventory.updated_slot.disconnect(_on_updated_slot)
+	self.inventory.slot_added.disconnect(_on_slot_added)
+	self.inventory.slot_removed.disconnect(_on_slot_removed)
 	self.inventory = null
 
 
 func _connect_new_inventory(inventory : Inventory):
-	inventory.updated_slot.connect(_on_updated_slot.bind())
-	inventory.slot_added.connect(_on_slot_added.bind())
-	inventory.slot_removed.connect(_on_slot_removed.bind())
+	inventory.updated_slot.connect(_on_updated_slot)
+	inventory.slot_added.connect(_on_slot_added)
+	inventory.slot_removed.connect(_on_slot_removed)
 	_update_slots()
 
 

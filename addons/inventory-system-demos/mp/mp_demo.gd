@@ -8,8 +8,8 @@ var players : Array
 var peer : ENetMultiplayerPeer
 
 func _ready():
-	multiplayer.peer_connected.connect(_player_connected.bind())
-	multiplayer.peer_disconnected.connect(_player_disconnected.bind())
+	multiplayer.peer_connected.connect(_player_connected)
+	multiplayer.peer_disconnected.connect(_player_disconnected)
 
 
 func create_player(peer_id : int):

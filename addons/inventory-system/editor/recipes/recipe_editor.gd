@@ -51,11 +51,11 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 
 func connect_signals():
-	time_to_craft_spin_box.value_changed.connect(_on_time_to_craft_spin_box_value_changed.bind())
-	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected.bind())
-	item_resource_edit_button.pressed.connect(_on_item_resource_edit_button_pressed.bind())
-	item_resource_file_dialog.file_selected.connect(_on_recipe_resource_file_dialog_file_selected.bind())
-	new_required_item_button.pressed.connect(_on_new_required_item_button_pressed.bind())
+	time_to_craft_spin_box.value_changed.connect(_on_time_to_craft_spin_box_value_changed)
+	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected)
+	item_resource_edit_button.pressed.connect(_on_item_resource_edit_button_pressed)
+	item_resource_file_dialog.file_selected.connect(_on_recipe_resource_file_dialog_file_selected)
+	new_required_item_button.pressed.connect(_on_new_required_item_button_pressed)
 	connected = true
 
 
@@ -63,12 +63,12 @@ func disconnect_signals():
 	if not connected:
 		return
 	#TODO Change list
-#	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed.bind())
-	time_to_craft_spin_box.value_changed.disconnect(_on_time_to_craft_spin_box_value_changed.bind())
-	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected.bind())
-	item_resource_edit_button.pressed.disconnect(_on_item_resource_edit_button_pressed.bind())
-	item_resource_file_dialog.file_selected.disconnect(_on_recipe_resource_file_dialog_file_selected.bind())
-	new_required_item_button.pressed.disconnect(_on_new_required_item_button_pressed.bind())
+#	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed)
+	time_to_craft_spin_box.value_changed.disconnect(_on_time_to_craft_spin_box_value_changed)
+	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected)
+	item_resource_edit_button.pressed.disconnect(_on_item_resource_edit_button_pressed)
+	item_resource_file_dialog.file_selected.disconnect(_on_recipe_resource_file_dialog_file_selected)
+	new_required_item_button.pressed.disconnect(_on_new_required_item_button_pressed)
 	connected = false
 
 
@@ -99,7 +99,7 @@ func setup_ingredients(recipe : Recipe, database : InventoryDatabase):
 		ingredients_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
-		ingredient_editor.changed_slot.connect(_on_changed_slot_in_ingredient.bind())
+		ingredient_editor.changed_slot.connect(_on_changed_slot_in_ingredient)
 		ingredient_editor.request_remove.connect(_request_remove_ingredient.bind(index))
 		ingredients.append(ingredient_editor)
 
@@ -114,7 +114,7 @@ func setup_required_items(recipe : Recipe, database : InventoryDatabase):
 		required_items_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
-		ingredient_editor.changed_slot.connect(_on_changed_slot_required_item.bind())
+		ingredient_editor.changed_slot.connect(_on_changed_slot_required_item)
 		ingredient_editor.request_remove.connect(_request_remove_required_item.bind(index))
 		required_items.append(ingredient_editor)
 
@@ -129,7 +129,7 @@ func setup_products(recipe : Recipe, database : InventoryDatabase):
 		products_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(product, database, "Remove Product")
-		ingredient_editor.changed_slot.connect(_on_changed_slot_in_ingredient.bind())
+		ingredient_editor.changed_slot.connect(_on_changed_slot_in_ingredient)
 		ingredient_editor.request_remove.connect(_request_remove_product.bind(index))
 		products.append(ingredient_editor)
 

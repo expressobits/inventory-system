@@ -6,8 +6,8 @@ var crafter : Crafter
 
 func _ready() -> void:
 	if multiplayer.is_server():
-		crafter.opened.connect(_on_opened.bind())
-		crafter.closed.connect(_on_closed.bind())
+		crafter.opened.connect(_on_opened)
+		crafter.closed.connect(_on_closed)
 
 
 func _on_opened(craft_station : CraftStation):

@@ -7,14 +7,14 @@ var craftings_data : Array
 
 
 func _ready() -> void:
-	multiplayer.peer_connected.connect(_on_connected.bind())
+	multiplayer.peer_connected.connect(_on_connected)
 	craft_station.opened.connect(_on_opened)
 	craft_station.closed.connect(_on_closed)
 	craft_station.crafting_added.connect(_on_crafting_added)
 	craft_station.crafting_removed.connect(_on_crafting_removed)
 	if sync_input_inventories:
-		craft_station.input_inventory_added.connect(_on_input_inventory_added.bind())
-		craft_station.input_inventory_removed.connect(_on_input_inventory_removed.bind())
+		craft_station.input_inventory_added.connect(_on_input_inventory_added)
+		craft_station.input_inventory_removed.connect(_on_input_inventory_removed)
 
 
 func _on_connected(peer_id : int):

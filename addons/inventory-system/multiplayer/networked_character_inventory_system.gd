@@ -6,13 +6,13 @@ extends "../extras/character_inventory_system.gd"
 
 
 func _ready():
-	inventory_handler.request_drop_obj.connect(_on_request_drop_obj.bind())
+	inventory_handler.request_drop_obj.connect(_on_request_drop_obj)
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
-		inventory_handler.opened.connect(_update_opened_inventories.bind())
-		inventory_handler.closed.connect(_update_opened_inventories.bind())
-		crafter.opened.connect(_update_opened_stations.bind())
-		crafter.closed.connect(_update_opened_stations.bind())
+		inventory_handler.opened.connect(_update_opened_inventories)
+		inventory_handler.closed.connect(_update_opened_inventories)
+		crafter.opened.connect(_update_opened_stations)
+		crafter.closed.connect(_update_opened_stations)
 		_update_opened_inventories(inventory_handler.get_inventory(0))
 
 

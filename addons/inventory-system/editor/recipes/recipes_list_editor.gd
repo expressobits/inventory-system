@@ -23,7 +23,7 @@ signal selected(recipe : Recipe)
 
 
 func _ready():
-	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed.bind())
+	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed)
 
 
 func load_recipes(database : InventoryDatabase):
@@ -41,7 +41,7 @@ func update_recipes():
 		recipes_ui.append(recipe_item)
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
-		recipe_item.request_remove.connect(_on_recipe_item_request_remove_menu.bind())
+		recipe_item.request_remove.connect(_on_recipe_item_request_remove_menu)
 	if recipes.size() > 0:
 		recipes_ui[0].select()
 
