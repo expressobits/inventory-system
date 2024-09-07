@@ -36,9 +36,8 @@ func update_info_with_slot(slot : Slot):
 
 
 func is_categorized_slot_and_have_category(slot : Slot):
-	if slot is CategorizedSlot:
-		var c_slot = slot as CategorizedSlot
-		if c_slot.accepted_categories.size() > 0:
+	if slot.categorized:
+		if slot.accepted_categories.size() > 0:
 			return true
 	return false
 

@@ -19,19 +19,22 @@ description = "Open Campfire"
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
 
-[sub_resource type="CategorizedSlot" id="Resource_pueei"]
+[sub_resource type="Slot" id="Resource_pueei"]
 accepted_categories = Array[ItemCategory]([ExtResource("8_81xo0")])
 max_stack = 8
 
-[sub_resource type="CategorizedSlot" id="Resource_qil68"]
+[sub_resource type="Slot" id="Resource_qil68"]
+categorized = true
 accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 
-[sub_resource type="CategorizedSlot" id="Resource_ahb6e"]
+[sub_resource type="Slot" id="Resource_ahb6e"]
+categorized = true
 accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 
-[sub_resource type="CategorizedSlot" id="Resource_8f0qi"]
+[sub_resource type="Slot" id="Resource_8f0qi"]
+categorized = true
 accepted_categories = Array[ItemCategory]([ExtResource("10_3i6mn")])
 max_stack = 1
 

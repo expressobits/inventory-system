@@ -34,6 +34,7 @@ definition = ExtResource("12_5uvei")
 [sub_resource type="Slot" id="Resource_a5fwf"]
 item = SubResource("Resource_qht8t")
 amount = 1
+categorized = 1
 
 [sub_resource type="Item" id="Resource_lkgg5"]
 definition = ExtResource("15_dwxtk")
@@ -44,6 +45,7 @@ properties = {
 [sub_resource type="Slot" id="Resource_jm1f7"]
 item = SubResource("Resource_lkgg5")
 amount = 1
+categorized = 1
 
 [sub_resource type="Item" id="Resource_p22tk"]
 definition = ExtResource("15_dwxtk")
@@ -54,53 +56,69 @@ properties = {
 [sub_resource type="Slot" id="Resource_afmqk"]
 item = SubResource("Resource_p22tk")
 amount = 1
+categorized = 114
 
-[sub_resource type="CategorizedSlot" id="Resource_86q2j"]
+[sub_resource type="Slot" id="Resource_86q2j"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_50c12"]
+[sub_resource type="Slot" id="Resource_50c12"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_2luqh"]
+[sub_resource type="Slot" id="Resource_2luqh"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_6eb8p"]
+[sub_resource type="Slot" id="Resource_6eb8p"]
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_vg71i"]
+[sub_resource type="Slot" id="Resource_vg71i"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_q4mae"]
+[sub_resource type="Slot" id="Resource_q4mae"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_mieis"]
+[sub_resource type="Slot" id="Resource_mieis"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_vukda"]
+[sub_resource type="Slot" id="Resource_vukda"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_4vfo6"]
+[sub_resource type="Slot" id="Resource_4vfo6"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_wooe2"]
+[sub_resource type="Slot" id="Resource_wooe2"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_x3hnn"]
+[sub_resource type="Slot" id="Resource_x3hnn"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_j6h4i"]
+[sub_resource type="Slot" id="Resource_j6h4i"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_p0mwy"]
+[sub_resource type="Slot" id="Resource_p0mwy"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_f10nw"]
+[sub_resource type="Slot" id="Resource_f10nw"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_3kekd"]
+[sub_resource type="Slot" id="Resource_3kekd"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
-[sub_resource type="CategorizedSlot" id="Resource_h422t"]
+[sub_resource type="Slot" id="Resource_h422t"]
+categorized = 1
 accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
 
 [node name="Demo" type="Node"]
