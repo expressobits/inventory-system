@@ -15,11 +15,11 @@ var _craftings : Array[CraftingUI]
 func set_craft_station(craft_station : CraftStation):
 	_clear()
 	if _craft_station != null and _craft_station != craft_station:
-		_craft_station.crafting_added.disconnect(_on_add_crafting_at.bind())
-		_craft_station.crafting_removed.disconnect(_on_remove_crafting_at.bind())
+		_craft_station.crafting_added.disconnect(_on_add_crafting_at)
+		_craft_station.crafting_removed.disconnect(_on_remove_crafting_at)
 	if _craft_station != craft_station:
-		craft_station.crafting_added.connect(_on_add_crafting_at.bind())
-		craft_station.crafting_removed.connect(_on_remove_crafting_at.bind())
+		craft_station.crafting_added.connect(_on_add_crafting_at)
+		craft_station.crafting_removed.connect(_on_remove_crafting_at)
 	_craft_station = craft_station
 	
 	for i in craft_station.craftings.size():

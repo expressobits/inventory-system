@@ -29,11 +29,11 @@ var rot := Vector3()
 
 func _ready():
 	# Setup for audios 🔊
-	character_inventory_system.inventory_handler.picked.connect(_on_inventory_handler_picked.bind())
-	character_inventory_system.dropped.connect(_on_inventory_handler_dropped.bind())
-	character_inventory_system.inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened.bind())
-	character_inventory_system.inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed.bind())
-	character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed.bind())
+	character_inventory_system.inventory_handler.picked.connect(_on_inventory_handler_picked)
+	character_inventory_system.dropped.connect(_on_inventory_handler_dropped)
+	character_inventory_system.inventory_handler.get_inventory(0).opened.connect(_on_player_inventory_opened)
+	character_inventory_system.inventory_handler.get_inventory(0).closed.connect(_on_player_inventory_closed)
+	character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
 	
 	
 func _on_inventory_handler_picked(_dropped_item):

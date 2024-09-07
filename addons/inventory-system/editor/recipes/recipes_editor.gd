@@ -8,9 +8,9 @@ extends InventoryTabEditor
 
 func _ready():
 	super._ready()
-	recipe_editor.changed.connect(_on_recipe_editor_changed.bind())
-	recipes_list.selected.connect(_on_recipes_list_selected.bind())
-	recipes_list.request_remove.connect(_on_recipe_item_editor_request_remove.bind())
+	recipe_editor.changed.connect(_on_recipe_editor_changed)
+	recipes_list.selected.connect(_on_recipes_list_selected)
+	recipes_list.request_remove.connect(_on_recipe_item_editor_request_remove)
 	_apply_theme()
 
 

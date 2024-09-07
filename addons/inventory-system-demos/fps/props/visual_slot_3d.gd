@@ -16,7 +16,7 @@ var objects : Array
 func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
 	self.property_name_of_visual = property
 	self.inventory = inv
-	self.inventory.updated_slot.connect(_on_updated_slot.bind())
+	self.inventory.updated_slot.connect(_on_updated_slot)
 	self.slot_index = new_slot_index
 	_on_updated_slot(slot_index)
 #	objects_per_id = {}

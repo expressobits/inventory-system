@@ -4,8 +4,8 @@ class_name	SyncHotbar
 @export var hotbar : Hotbar
 
 func _ready() -> void:
-	multiplayer.peer_connected.connect(_on_connected.bind())
-	hotbar.on_change_selection.connect(on_change_selection.bind())
+	multiplayer.peer_connected.connect(_on_connected)
+	hotbar.on_change_selection.connect(on_change_selection)
 
 func _on_connected(peer_id : int):
 	if not multiplayer.is_server():

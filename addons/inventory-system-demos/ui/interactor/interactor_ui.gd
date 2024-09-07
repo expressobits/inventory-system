@@ -12,9 +12,9 @@ var interact_hand_object
 
 func setup(interactor : Interactor):
 	if self.interactor != null:
-		interactor.preview_interacted.disconnect(_on_preview_interacted.bind())
+		interactor.preview_interacted.disconnect(_on_preview_interacted)
 	self.interactor = interactor
-	interactor.preview_interacted.connect(_on_preview_interacted.bind())
+	interactor.preview_interacted.connect(_on_preview_interacted)
 
 
 func _ready():

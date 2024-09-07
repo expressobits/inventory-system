@@ -54,19 +54,19 @@ func _ready():
 	player_craft_station_ui.close()
 	other_craft_station_ui.close()
 	for player_inventory_ui in player_inventories_ui:
-		player_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
-		player_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
-	loot_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
-	loot_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
+		player_inventory_ui.slot_point_down.connect(_slot_point_down)
+		player_inventory_ui.inventory_point_down.connect(_inventory_point_down)
+	loot_inventory_ui.slot_point_down.connect(_slot_point_down)
+	loot_inventory_ui.inventory_point_down.connect(_inventory_point_down)
 	if other_craft_station_ui.input_inventory_ui != null:
-		other_craft_station_ui.input_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
-		other_craft_station_ui.input_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
+		other_craft_station_ui.input_inventory_ui.slot_point_down.connect(_slot_point_down)
+		other_craft_station_ui.input_inventory_ui.inventory_point_down.connect(_inventory_point_down)
 	if other_craft_station_ui.output_inventory_ui != null:
-		other_craft_station_ui.output_inventory_ui.slot_point_down.connect(_slot_point_down.bind())
-		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down.bind())
-	drop_area.gui_input.connect(_drop_area_input.bind())
+		other_craft_station_ui.output_inventory_ui.slot_point_down.connect(_slot_point_down)
+		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down)
+	drop_area.gui_input.connect(_drop_area_input)
 	
-	other_craft_station_ui.on_craft.connect(_on_craft.bind())
+	other_craft_station_ui.on_craft.connect(_on_craft)
 
 
 ## Setup inventory handler and connect all signals
@@ -84,8 +84,8 @@ func setup(character : CharacterInventorySystem):
 	
 	# Crafter
 	self.crafter = character.crafter
-	crafter.opened.connect(_on_open_craft_station.bind())
-	crafter.closed.connect(_on_close_craft_station.bind())
+	crafter.opened.connect(_on_open_craft_station)
+	crafter.closed.connect(_on_close_craft_station)
 	# Interactor
 	self.interactor = interactor
 	interactor_ui.setup(character.interactor)

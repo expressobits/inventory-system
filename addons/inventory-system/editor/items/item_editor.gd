@@ -25,7 +25,7 @@ var editor_plugin : EditorPlugin
 
 
 func _ready():
-	can_stack_check_box.toggled.connect(_can_stack_check_box_toggled.bind())
+	can_stack_check_box.toggled.connect(_can_stack_check_box_toggled)
 	apply_theme()
 	$ScrollContainer.visible = false
 

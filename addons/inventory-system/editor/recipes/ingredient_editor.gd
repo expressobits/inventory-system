@@ -15,7 +15,7 @@ var ids_list : Array[int]
 
 
 func _ready():
-	slot_selector.slot_changed.connect(_on_slot_selector_slot_changed.bind())
+	slot_selector.slot_changed.connect(_on_slot_selector_slot_changed)
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
 	delete_button.tooltip_text = "Delete"
 
