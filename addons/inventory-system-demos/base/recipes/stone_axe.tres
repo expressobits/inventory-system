@@ -11,6 +11,7 @@ definition = ExtResource("1_xgppx")
 [sub_resource type="Slot" id="Resource_c1w71"]
 item = SubResource("Resource_ssww0")
 amount = 2
+categorized = 1
 
 [sub_resource type="Item" id="Resource_rrwc6"]
 definition = ExtResource("4_uanvi")
