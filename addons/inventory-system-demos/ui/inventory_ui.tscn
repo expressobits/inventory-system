@@ -59,7 +59,6 @@ theme_override_constants/margin_bottom = 4
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer"]
 layout_mode = 2
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 2
 
 [node name="InventoryContent" type="GridContainer" parent="VBoxContainer/MarginContainer/ScrollContainer"]
 unique_name_in_owner = true
