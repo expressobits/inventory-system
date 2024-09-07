@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bnr02xnvoiun5"]
+[gd_scene load_steps=14 format=3 uid="uid://bnr02xnvoiun5"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="2_toyi4"]
 [ext_resource type="PackedScene" uid="uid://cw4rwxc3dyovc" path="res://addons/inventory-system/extras/character_inventory_system.tscn" id="3_hbu24"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="4_ljenf"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_1ptxj"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="5_u6t8r"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_3rbsy"]
 [ext_resource type="AudioStream" uid="uid://df1ibxkrver3m" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/metalClick.ogg" id="7_77smm"]
 [ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="8_vym5c"]
@@ -53,13 +54,19 @@ database = ExtResource("4_ljenf")
 [node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
 database = ExtResource("4_ljenf")
 
+[node name="Openable" type="Node" parent="CharacterInventorySystem/InventoryHandler" index="2"]
+script = ExtResource("5_u6t8r")
+
 [node name="Hotbar" parent="CharacterInventorySystem" index="1"]
 database = ExtResource("4_ljenf")
 
 [node name="Crafter" parent="CharacterInventorySystem" index="2"]
 database = ExtResource("4_ljenf")
 
-[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="0"]
+[node name="Openable" type="Node" parent="CharacterInventorySystem/Crafter" index="0"]
+script = ExtResource("5_u6t8r")
+
+[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="1"]
 database = ExtResource("4_ljenf")
 
 [node name="Interactor" parent="CharacterInventorySystem" index="3"]

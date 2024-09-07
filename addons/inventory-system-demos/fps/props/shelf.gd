@@ -7,6 +7,14 @@ extends BoxInventory
 var slot_index : int = -1
 var actions_shelf : Array[InteractAction]
 
+func _on_open():
+	pass
+
+
+func _on_close():
+	pass
+
+
 func get_interaction_position(interaction_point : Vector3) -> Vector3:
 	var near_distance : float = 2500
 	var near_position : Vector3 = global_position

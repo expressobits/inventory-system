@@ -78,14 +78,14 @@ func setup(character : CharacterInventorySystem):
 	for i in character.inventory_handler.inventories_path.size():
 		inventories.append(character.inventory_handler.get_inventory(i))
 	set_player_inventories(inventories)
-	inventory_handler.opened.connect(_on_open_inventory)
-	inventory_handler.closed.connect(_on_close_inventory)
+	character.opened_inventory.connect(_on_open_inventory)
+	character.closed_inventory.connect(_on_close_inventory)
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 	
-	# Crafter
+	# Stations
 	self.crafter = character.crafter
-	crafter.opened.connect(_on_open_craft_station)
-	crafter.closed.connect(_on_close_craft_station)
+	character.opened_station.connect(_on_open_craft_station)
+	character.closed_station.connect(_on_close_craft_station)
 	# Interactor
 	self.interactor = interactor
 	interactor_ui.setup(character.interactor)
@@ -147,8 +147,8 @@ func _on_close_craft_station(craft_station : CraftStation):
 
 
 func _on_close_inventory(inventory : Inventory):
-	if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) != -1:
-		_close_player_inventory()
+	#if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) != -1:
+	_close_player_inventory()
 
 
 func _close_player_inventory():
