@@ -1,5 +1,5 @@
 @tool
-@icon("res://addons/inventory-system/icons/character_inventory_system.svg")
+@icon("res://addons/inventory-system-demos/icons/character_inventory_system.svg")
 class_name CharacterInventorySystem
 extends NodeInventories
 

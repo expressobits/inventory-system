@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
 [ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]
 [ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/openable.gd" id="7_nxnqq"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="7_nxnqq"]
 
 [sub_resource type="InteractAction" id="Resource_opm00"]
 description = "Open Box"

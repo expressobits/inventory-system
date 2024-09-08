@@ -1,15 +1,15 @@
 [gd_scene load_steps=17 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_inventory.gd" id="2_2ppxc"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_7hphp"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_hotbar.gd" id="2_kp02v"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_inventory_handler.gd" id="2_ncw1r"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory_handler.gd" id="2_ncw1r"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_1eelt"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/sync_crafter.gd" id="3_15sbs"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_holder_3d.gd" id="3_g726w"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/networked_character_inventory_system.gd" id="3_lbhsf"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/networked_openable.gd" id="8_wtcmp"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_crafter.gd" id="3_15sbs"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="8_wtcmp"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)

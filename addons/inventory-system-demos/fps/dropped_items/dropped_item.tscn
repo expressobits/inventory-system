@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bu50ku0vxmpwt"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/extras/dropped_item_3d.gd" id="1_qx0iq"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/dropped_item_3d.gd" id="1_qx0iq"]
 
 [sub_resource type="InteractAction" id="Resource_w5bs8"]
 description = "Get Item"

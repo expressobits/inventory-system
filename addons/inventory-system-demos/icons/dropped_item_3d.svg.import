@@ -2,16 +2,17 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bchwmv3oj7hqa"
-path="res://.godot/imported/character_inventory_system.svg-db0816289ca06455573e4eac6e1c50ed.ctex"
+uid="uid://co4udsj1scle"
+path="res://.godot/imported/dropped_item_3d.svg-9d477753250199bc08e41352ba1d718e.ctex"
 metadata={
+"has_editor_variant": true,
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/character_inventory_system.svg"
-dest_files=["res://.godot/imported/character_inventory_system.svg-db0816289ca06455573e4eac6e1c50ed.ctex"]
+source_file="res://addons/inventory-system-demos/icons/dropped_item_3d.svg"
+dest_files=["res://.godot/imported/dropped_item_3d.svg-9d477753250199bc08e41352ba1d718e.ctex"]
 
 [params]
 
@@ -33,5 +34,5 @@ process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
 svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
+editor/scale_with_editor_scale=true
+editor/convert_colors_with_editor_theme=true

@@ -1,5 +1,5 @@
 class_name NetworkedCharacterInventorySystem
-extends "../extras/character_inventory_system.gd"
+extends "../character/character_inventory_system.gd"
 
 @export_node_path var drop_item_spawner_path := NodePath("../../DroppedItemSpawner")
 @onready var drop_item_spawner = get_node(drop_item_spawner_path)

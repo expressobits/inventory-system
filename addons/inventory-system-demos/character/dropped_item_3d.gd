@@ -1,4 +1,4 @@
-@icon("res://addons/inventory-system/icons/dropped_item_3d.svg")
+@icon("res://addons/inventory-system-demos/icons/dropped_item_3d.svg")
 class_name DroppedItem3D
 extends Node3D
 

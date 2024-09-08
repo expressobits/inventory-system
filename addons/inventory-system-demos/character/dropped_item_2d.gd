@@ -1,4 +1,4 @@
-@icon("res://addons/inventory-system/icons/dropped_item_2d.svg")
+@icon("res://addons/inventory-system-demos/icons/dropped_item_2d.svg")
 class_name DroppedItem2D
 extends Node2D
 

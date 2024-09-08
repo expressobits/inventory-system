@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://daan81no83gsp"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_xnq37"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_3d.gd" id="1_xnq37"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_goag8"]
 resource_name = "foliage"

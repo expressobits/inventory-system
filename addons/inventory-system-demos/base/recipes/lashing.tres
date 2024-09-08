@@ -9,7 +9,6 @@ definition = ExtResource("1_5nk1u")
 [sub_resource type="Slot" id="Resource_pqywp"]
 item = SubResource("Resource_a31cl")
 amount = 2
-categorized = 1
 
 [sub_resource type="Item" id="Resource_eqab1"]
 definition = ExtResource("4_eevq6")
@@ -17,7 +16,6 @@ definition = ExtResource("4_eevq6")
 [sub_resource type="Slot" id="Resource_lda27"]
 item = SubResource("Resource_eqab1")
 amount = 1
-categorized = 1
 
 [resource]
 products = Array[Slot]([SubResource("Resource_lda27")])

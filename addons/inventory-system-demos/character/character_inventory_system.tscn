@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cw4rwxc3dyovc"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/extras/character_inventory_system.gd" id="1_mwfdb"]
-[ext_resource type="Script" path="res://addons/inventory-system/extras/object_placer.gd" id="9_3ia0e"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/character_inventory_system.gd" id="1_mwfdb"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/object_placer.gd" id="9_3ia0e"]
 
 [sub_resource type="Slot" id="Resource_rb0kk"]
 

@@ -65,4 +65,3 @@ func _build() -> bool:
 			push_error("You have %d error(s) in %s" % [database_file.errors.size(), database_file.path])
 			can_build = false
 	return can_build
-

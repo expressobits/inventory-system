@@ -7,11 +7,11 @@
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="6_52d7a"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system-demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="8_kfwho"]
-[ext_resource type="Script" path="res://addons/inventory-system/multiplayer/dropped_item_spawner.gd" id="8_m78qf"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/dropped_item_spawner.gd" id="8_m78qf"]
 [ext_resource type="PackedScene" uid="uid://cc6pmwc0w143c" path="res://addons/inventory-system-demos/mp/mp_box_inventory.tscn" id="9_y0513"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_box_inventory.gd" id="10_4488h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_efc1k"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/extras/networked_openable.gd" id="10_kjp1o"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="10_kjp1o"]
 [ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="11_6hyks"]
 [ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="13_v1ips"]
 [ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="14_lpdsd"]
@@ -26,7 +26,6 @@ definition = ExtResource("11_6hyks")
 [sub_resource type="Slot" id="Resource_a5fwf"]
 item = SubResource("Resource_qht8t")
 amount = 1
-categorized = 1
 
 [sub_resource type="Item" id="Resource_lkgg5"]
 definition = ExtResource("13_v1ips")
@@ -37,7 +36,6 @@ properties = {
 [sub_resource type="Slot" id="Resource_jm1f7"]
 item = SubResource("Resource_lkgg5")
 amount = 1
-categorized = 1
 
 [sub_resource type="Item" id="Resource_p22tk"]
 definition = ExtResource("13_v1ips")
@@ -48,7 +46,6 @@ properties = {
 [sub_resource type="Slot" id="Resource_afmqk"]
 item = SubResource("Resource_p22tk")
 amount = 1
-categorized = 1
 
 [sub_resource type="InteractAction" id="Resource_tjd2g"]
 input = "toggle_fire"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://veyqeuk4xwke"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/extras/hand_item_3d.gd" id="1_46m3k"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_3d.gd" id="1_46m3k"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_li67y"]
 resource_name = "wood"
