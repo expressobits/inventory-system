@@ -56,7 +56,6 @@ sources = [
     Glob('src/base/*.cpp'),
     Glob('src/core/*.cpp'),
     Glob('src/craft/*.cpp'),
-    Glob('src/interact/*.cpp')
     ]
 
 if env["target"] in ["editor", "template_debug"]:
