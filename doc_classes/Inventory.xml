@@ -169,7 +169,7 @@
 			<param index="3" name="amount" type="int" default="-1" />
 			<description>
 				Transfer the contents of the index slot [param slot index] of this inventory to another slot ([param destination_slot_index]) of [param destination] inventory.
-			Note: If amount is -1 (default value), the entire contents of the slot are sent to another inventory.
+				Note: If amount is -1 (default value), the entire contents of the slot are sent to another inventory.
 			</description>
 		</method>
 		<method name="update_slot">
