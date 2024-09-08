@@ -1,20 +1,25 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=22 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="3_sl0h4"]
 [ext_resource type="CraftStationType" uid="uid://bnofwpkgx0twi" path="res://addons/inventory-system-demos/base/craft_stations/campfire.tres" id="4_bov00"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_72vu1"]
 [ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="8_81xo0"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="8_g2guq"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://addons/inventory-system-demos/assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
 
-[sub_resource type="InteractAction" id="Resource_tjd2g"]
+[sub_resource type="Resource" id="Resource_3wlgv"]
+script = ExtResource("3_sl0h4")
 input = "toggle_fire"
 description = "Toggle Fire"
 code = 1
 
-[sub_resource type="InteractAction" id="Resource_kkhqy"]
+[sub_resource type="Resource" id="Resource_y0w28"]
+script = ExtResource("3_sl0h4")
+input = "interact"
 description = "Open Campfire"
+code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
@@ -64,8 +69,8 @@ collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_11afe")
 burnable_category = ExtResource("8_81xo0")
-toggle_fire_action = SubResource("Resource_tjd2g")
-actions = Array[InteractAction]([SubResource("Resource_kkhqy")])
+toggle_fire_action = SubResource("Resource_3wlgv")
+actions = [SubResource("Resource_y0w28")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249215, 0)

@@ -1,6 +1,8 @@
 class_name PlaceableHandItem3D
 extends HandItem3D
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 @export var group_name_for_place_area : String = "placeable_area"
 @export var property_from_item_for_object_scene : String = "placeable"
 @export var input_for_place_item : String = "place_hand_item"
@@ -27,7 +29,7 @@ func _process(delta):
 			preview.visible = false
 
 
-func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(_interactor : Interactor) -> Array:
 	self.interactor = _interactor
 	if can_preview(_interactor):
 		return [place_action]

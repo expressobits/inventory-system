@@ -9,7 +9,6 @@
 [node name="Campfire" instance=ExtResource("1_2iaw6")]
 script = ExtResource("2_hw73w")
 burnable_category = null
-toggle_fire_action = null
 
 [node name="SyncCraftStation" type="Node" parent="." index="5" node_paths=PackedStringArray("craft_station")]
 script = ExtResource("2_wux35")

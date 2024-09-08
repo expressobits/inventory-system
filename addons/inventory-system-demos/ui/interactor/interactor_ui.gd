@@ -1,6 +1,8 @@
 class_name InteractorUI
 extends Control
 
+const Interactor = preload("../../interaction_system/inventory_interactor.gd")
+
 @export var interact_messages : Array[ActionMessageUI]
 @onready var interact_position : Control = $InteractPosition
 var default_interact_message_position : Vector2
@@ -35,8 +37,6 @@ func preview_interact(actions : Array, position_on_screen : Vector2):
 		interact_position.position = default_interact_message_position
 	else:
 		interact_position.position = position_on_screen
-#	for action in actions:
-#		message += "["+get_input_string(action.input)+"] " + action.description + "\n"
 	for i in interact_messages.size():
 		var interact_message = interact_messages[i]
 		if i < actions.size():

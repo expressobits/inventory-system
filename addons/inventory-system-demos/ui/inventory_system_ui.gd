@@ -1,6 +1,8 @@
 class_name InventorySystemUI
 extends Control
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 ## This script manages inventory system UI information
 ## Contains drag slot information, UI inventories and item drop area
 

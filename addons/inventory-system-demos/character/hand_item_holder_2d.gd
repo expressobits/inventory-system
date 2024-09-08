@@ -1,13 +1,15 @@
 class_name HandItemHolder2D
 extends Node3D
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 @export_node_path("Node2D") var default_hand_item_object_path = NodePath("DefaultHandItem")
 @export_node_path("Hotbar") var hotbar_path = NodePath("../InventoryHandler/Hotbar")
 
 @onready var default_hand_item_object := get_node(default_hand_item_object_path) 
 @onready var hotbar : Hotbar = get_node(hotbar_path) 
 
-@export_node_path("Interactor") var interactor_path = NodePath("../../CharacterInventorySystem/Interactor")
+@export_node_path var interactor_path = NodePath("../../CharacterInventorySystem/Interactor")
 @onready var interactor : Interactor = get_node(interactor_path) 
 
 var last_item : ItemDefinition = null

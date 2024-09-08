@@ -1,7 +1,10 @@
 class_name Workbench
 extends Node3D
 
-@export var actions : Array[InteractAction]
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
+
+@export var actions : Array
 @onready var craft_station : CraftStation = $CraftStation
 @onready var openable : Openable = $Openable
 
@@ -12,7 +15,7 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(_interactor : Interactor) -> Array:
 	if openable.is_open:
 		return []
 	return actions

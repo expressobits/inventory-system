@@ -5,7 +5,7 @@ extends BoxInventory
 
 
 var slot_index : int = -1
-var actions_shelf : Array[InteractAction]
+var actions_shelf : Array
 
 func _on_open():
 	pass
@@ -32,9 +32,9 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 	if openable.is_open:
 		return
 	var interactor = character.character_inventory_system.interactor
-	var item = interactor.get_hotbar().get_selected_item()
-	var char_inventory = interactor.get_inventory_handler().get_inventory(0)
-	var char_slot_index = interactor.get_hotbar().selection_index
+	var item = interactor.hotbar.get_selected_item()
+	var char_inventory = character.character_inventory_system.inventory_handler.get_inventory(0)
+	var char_slot_index = interactor.hotbar.selection_index
 	if action_index == 0:
 		super.interact(character, action_index)
 	if action_index == 1:
@@ -57,7 +57,7 @@ func get_actual_item(actual_slot_index):
 	return null
 
 
-func get_interact_actions(interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(interactor : Interactor) -> Array:
 	actions_shelf.clear()
 	if openable.is_open:
 		return actions_shelf
@@ -69,7 +69,7 @@ func get_interact_actions(interactor : Interactor) -> Array[InteractAction]:
 		action.input = "item_pickup"
 		action.code = 1
 		actions_shelf.append(action)
-	var item : Item = interactor.get_hotbar().get_selected_item()
+	var item : Item = interactor.hotbar.get_selected_item()
 	if item != null and item.definition != null and (shelf_item.definition == null or shelf_item.definition == item.definition):
 		var action = InteractAction.new()
 		action.description = "Place " + item.definition.name

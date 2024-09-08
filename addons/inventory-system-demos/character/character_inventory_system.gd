@@ -9,6 +9,8 @@ signal closed_station(station : CraftStation)
 signal opened_inventory(inventory : Inventory)
 signal closed_inventory(inventory : Inventory)
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 @export_group("🗃️ Inventory Nodes")
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
@@ -16,7 +18,7 @@ signal closed_inventory(inventory : Inventory)
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export_node_path("Crafter") var crafter_path := NodePath("Crafter")
 @onready var crafter : Crafter = get_node(crafter_path)
-@export_node_path("Interactor") var interactor_path := NodePath("Interactor")
+@export_node_path var interactor_path := NodePath("Interactor")
 @onready var interactor : Interactor = get_node(interactor_path)
 @export_node_path var drop_parent_path := NodePath("../..");
 @onready var drop_parent : Node = get_node(drop_parent_path)
@@ -43,13 +45,13 @@ var opened_inventories : Array[Inventory]
 		raycast = value
 		var interactor = get_node(interactor_path)
 		if interactor != null and value != null:
-			interactor.raycast_path = interactor.get_path_to(value)
+			interactor.raycast = value
 @export var camera_3d : Camera3D:
 	set(value):
 		camera_3d = value
 		var interactor = get_node(interactor_path)
 		if interactor != null and value != null:
-			interactor.camera_path = interactor.get_path_to(value)
+			interactor.camera = value
 
 
 func _ready():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=26 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -46,11 +46,6 @@ properties = {
 [sub_resource type="Slot" id="Resource_afmqk"]
 item = SubResource("Resource_p22tk")
 amount = 1
-
-[sub_resource type="InteractAction" id="Resource_tjd2g"]
-input = "toggle_fire"
-description = "Toggle Fire"
-code = 1
 
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
@@ -142,10 +137,10 @@ script = ExtResource("10_kjp1o")
 
 [node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
 burnable_category = ExtResource("14_lpdsd")
-toggle_fire_action = SubResource("Resource_tjd2g")
 
 [node name="Shelf" parent="." instance=ExtResource("15_lou51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36572, 0.6775, 1.94776)
+actions = Array[Slot]([])
 
 [node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")

@@ -1,4 +1,4 @@
-extends "../extras/object_placer.gd"
+extends "../character/object_placer.gd"
 class_name NetworkedObjectPlacer
 
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://cn6sy338tb7m4"]
+[gd_scene load_steps=11 format=3 uid="uid://cn6sy338tb7m4"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/box_inventory.gd" id="1_f8i83"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_o7yjt"]
 [ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_h8sic"]
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
@@ -8,8 +9,11 @@
 [ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="7_nxnqq"]
 
-[sub_resource type="InteractAction" id="Resource_opm00"]
-description = "Open Box"
+[sub_resource type="Resource" id="Resource_nqvfx"]
+script = ExtResource("2_o7yjt")
+input = "interact"
+description = "Open"
+code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x2vdb"]
 
@@ -18,7 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3.28112)
 collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_f8i83")
-actions = Array[InteractAction]([SubResource("Resource_opm00")])
+actions = [SubResource("Resource_nqvfx")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_x2vdb")

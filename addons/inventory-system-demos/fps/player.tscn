@@ -69,11 +69,11 @@ script = ExtResource("5_u6t8r")
 [node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="1"]
 database = ExtResource("4_ljenf")
 
-[node name="Interactor" parent="CharacterInventorySystem" index="3"]
-node_base_to_interactions = NodePath("../..")
-raycast_path = NodePath("../../Camera3D/RayCast3D")
-camera_path = NodePath("../../Camera3D")
+[node name="Interactor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera")]
 database = ExtResource("4_ljenf")
+node_base_to_interactions = NodePath("../..")
+raycast = NodePath("../../Camera3D/RayCast3D")
+camera = NodePath("../../Camera3D")
 
 [node name="UseItemsExample" type="Node3D" parent="." node_paths=PackedStringArray("hotbar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

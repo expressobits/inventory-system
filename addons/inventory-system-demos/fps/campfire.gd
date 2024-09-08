@@ -80,10 +80,10 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(_interactor : Interactor) -> Array:
 	if openable.is_open:
 		return []
-	var current_actions : Array[InteractAction] = self.actions.duplicate()
+	var current_actions : Array = self.actions.duplicate()
 	if fuel > 0.0:
 		if active_fire:
 			toggle_fire_action.description = "Disable Fire"

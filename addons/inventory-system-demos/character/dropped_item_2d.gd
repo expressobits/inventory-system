@@ -2,9 +2,11 @@
 class_name DroppedItem2D
 extends Node2D
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 @export var item : ItemDefinition
 @export var is_pickable := true
-@export var actions : Array[InteractAction]
+@export var actions : Array
 
 func _ready():
 	actions[0].description = actions[0].description.replace("Item", item.name)
@@ -14,7 +16,7 @@ func get_interaction_position(interaction_point : Vector2) -> Vector2:
 	return position
 
 
-func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(_interactor : Interactor) -> Array:
 	return actions
 
 

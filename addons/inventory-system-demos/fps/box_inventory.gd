@@ -1,8 +1,10 @@
 class_name BoxInventory
 extends Node3D
 
+const Interactor = preload("../interaction_system/inventory_interactor.gd")
+
 @onready var inventory : Inventory = $Inventory
-@export var actions : Array[InteractAction]
+@export var actions : Array
 @onready var openable : Openable = $Openable
 
 func _ready():
@@ -33,7 +35,7 @@ func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 
-func get_interact_actions(_interactor : Interactor) -> Array[InteractAction]:
+func get_interact_actions(_interactor : Interactor) -> Array:
 	if openable.is_open:
 		return []
 	return actions
