@@ -12,7 +12,6 @@ void InventoryHandler::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_to_inventory", "inventory", "item", "amount", "drop_excess"), &InventoryHandler::add_to_inventory, DEFVAL(1), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount", "inventory"), &InventoryHandler::drop_from_inventory, DEFVAL(1), DEFVAL(nullptr));
 	ClassDB::bind_method(D_METHOD("pick_to_inventory", "dropped_item", "inventory"), &InventoryHandler::pick_to_inventory, DEFVAL(nullptr));
-	ClassDB::bind_method(D_METHOD("swap_between_inventories", "inventory", "slot_index", "other_inventory", "other_slot_index", "amount"), &InventoryHandler::swap_between_inventories, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("to_transaction", "slot_index", "inventory", "amount"), &InventoryHandler::to_transaction);
 	ClassDB::bind_method(D_METHOD("transaction_to_at", "slot_index", "inventory", "amount_to_move"), &InventoryHandler::transaction_to_at, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("transaction_to", "inventory"), &InventoryHandler::transaction_to);
@@ -140,34 +139,6 @@ bool InventoryHandler::pick_to_inventory(Node *dropped_item, Inventory *inventor
 	}
 	ERR_PRINT("pick_to_inventory return false");
 	return false;
-}
-
-void InventoryHandler::swap_between_inventories(Inventory *inventory, const int slot_index, Inventory *other_inventory, const int other_slot_index, int amount) {
-	if (inventory->get_database() != other_inventory->get_database()) {
-		ERR_PRINT("Operation between inventories that do not have the same database is invalid.");
-		return;
-	}
-	Ref<Slot> slot = inventory->get_slots()[slot_index];
-	Ref<Slot> other_slot = other_inventory->get_slots()[other_slot_index];
-	if (other_inventory->is_empty_slot(other_slot_index) || slot->get_item()->get_definition() == other_slot->get_item()->get_definition()) {
-		Ref<Item> item = slot->get_item();
-		if (item == nullptr || item->get_definition() == nullptr) {
-			return;
-		}
-		int for_trade = 0;
-		if (other_inventory->is_empty_slot(other_slot_index)) {
-			for_trade = amount;
-		} else {
-			for_trade = MIN(item->get_definition()->get_max_stack() - other_slot->get_amount(), amount);
-		}
-		int no_remove = inventory->remove_at(slot_index, item, for_trade);
-		other_inventory->add_at(other_slot_index, item, for_trade - no_remove);
-	} else {
-		if (slot->get_amount() == amount) {
-			inventory->set_slot_with_other_slot(slot_index, other_slot);
-			other_inventory->set_slot_with_other_slot(other_slot_index, slot);
-		}
-	}
 }
 
 void InventoryHandler::to_transaction(const int &slot_index, Inventory *inventory, const int &amount) {
