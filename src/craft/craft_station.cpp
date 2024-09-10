@@ -254,7 +254,7 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			amount_total += inventory->get_amount_of(slot->get_item());
+			amount_total += inventory->amount_of_item(slot->get_item());
 		}
 		if (amount_total < slot->get_amount()) {
 			return false;
@@ -269,7 +269,7 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			amount_total += inventory->get_amount_of(slot->get_item());
+			amount_total += inventory->amount_of_item(slot->get_item());
 		}
 		if (amount_total < slot->get_amount()) {
 			return false;

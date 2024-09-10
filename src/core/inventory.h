@@ -14,6 +14,7 @@ private:
 	bool create_slot_if_needed = false;
 	bool remove_slot_if_empty = false;
 	int slot_amount = 16;
+	int max_size = 16;
 	String inventory_name = "Inventory";
 	void _load_slots();
 	void _call_events(int old_amount);
@@ -28,8 +29,9 @@ public:
 	~Inventory();
 	virtual void _enter_tree() override;
 	void update_slot(const int slot_index);
-	void add_slot(int slot_index, bool emit_signal = true);
-	void remove_slot(int slot_index, bool emit_signal = true);
+	void add_slot();
+	void insert_slot(int slot_index);
+	void remove_slot_at(int slot_index);
 	void set_slot(const int &slot_index, const Ref<Item> &item, const int &amount);
 	void set_slot_content(const int slot_index, const Ref<ItemDefinition> &definition, const Dictionary &properties, const int &amount);
 	void set_slot_with_other_slot(const int slot_index, const Ref<Slot> &other_slot);
@@ -41,9 +43,9 @@ public:
 	bool contains_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1) const;
 	bool contains_category(const Ref<ItemCategory> &category, const int &amount = 1) const;
 	int get_slot_index_with_an_item_of_category(const Ref<ItemCategory> &category) const;
-	int get_amount_of(const Ref<Item> &item) const;
-	int get_amount_of_category(const Ref<ItemCategory> &category) const;
-	int get_amount() const;
+	int amount_of_item(const Ref<Item> &item) const;
+	int amount_of_category(const Ref<ItemCategory> &category) const;
+	int amount() const;
 	int add(const Ref<Item> &item, const int &amount);
 	int add_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	int remove(const Ref<Item> &item, const int &amount = 1);

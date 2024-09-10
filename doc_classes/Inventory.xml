@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="Inventory" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		This Node stores an array of slots via [Dictionary].
-		This slot contains information about an [Item] and its quantity.
+		This node is a slot container.
 	</brief_description>
 	<description>
-		This slot contains information about an [Item] and its quantity.
+		Each slot contains data about amount, [ItemDefinition] and custom properties.
+		Slots are stored in an Array, which can be accessed with inventory.slots, but it is best to avoid changing data directly and instead use methods within this node, such as [method add], [method remove], [method set_slot], ...
+		The methods correctly call signals when necessary.
+
+		Some methods have their general version and a direct version of some [Slot] index, such as [method contains] and [method contains_at].
 	</description>
 	<tutorials>
+		<link title="Add items to inventory">https://github.com/expressobits/inventory-system/wiki/Inventory-Node#Add-items-to-inventory</link>
 	</tutorials>
 	<methods>
 		<method name="add">
@@ -15,7 +19,27 @@
 			<param index="0" name="item" type="Item" />
 			<param index="1" name="amount" type="int" default="1" />
 			<description>
-				Adds a quantity of [Item] to the inventory and returns the quantity that cannot be added.
+				Adds an amount of [Item] to the inventory and returns the amount that cannot be added.
+				[codeblocks]
+				[gdscript]
+				@export var my_item_definition : ItemDefinition
+				...
+				var my_item : Item = Item.new()
+				my_item.definition = my_item_definition
+				inventory.add(my_item, 2) # Add two my_item to inventory
+				[/gdscript]
+				[/codeblocks]
+
+				There are cases where the inventory may be full or does not accept this item by its category, so the return of this call corresponds to the quantity that was not added (If it returns 0 it means that all items were added correctly)
+				[codeblocks]
+				[gdscript]
+				var unadded_amount = inventory.add(my_item, 2) # Add two my_item to inventory
+				if unadded_amount == 0:
+					print("All items added!")
+				else:
+					print(unadded_amount, " items were not added")
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="add_at">
@@ -24,15 +48,29 @@
 			<param index="1" name="item" type="Item" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Adds a quantity of [Item] to a specific inventory slot and returns the quantity that cannot be added.
+				Adds an amount of [Item] to a specific inventory slot and returns the amount that cannot be added.
+				[codeblocks]
+				[gdscript]
+				@export var my_item : Item
+				...
+				var my_item : Item = Item.new()
+				my_item.definition = my_item_definition
+				inventory.add(3, my_item, 2) # Add two my_item to inventory in 3 slot index
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="add_slot">
 			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="emit_signal" type="bool" default="true" />
 			<description>
 				Add a new slot to the inventory, a trigger signal flag can be set.
+			</description>
+		</method>
+		<method name="amount_of_item" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="item" type="Item" />
+			<description>
+				Returns amount of the specified [Item].
 			</description>
 		</method>
 		<method name="contains" qualifiers="const">
@@ -66,13 +104,6 @@
 				Returns amount of items.
 			</description>
 		</method>
-		<method name="get_amount_of" qualifiers="const">
-			<return type="int" />
-			<param index="0" name="item" type="Item" />
-			<description>
-				Returns amount of the specified [Item].
-			</description>
-		</method>
 		<method name="get_amount_of_category" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="category" type="ItemCategory" />
@@ -85,6 +116,12 @@
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
 				Returns the index of the [Slot] that contains the [Item] of the [ItemCategory], returns [code]-1[/code] if there is no item of that category.
+			</description>
+		</method>
+		<method name="insert_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
 			</description>
 		</method>
 		<method name="is_empty" qualifiers="const">
@@ -123,11 +160,11 @@
 				Removes an [Item] amount to the specified inventory [Slot] index and returns the remaining value that was not removed.
 			</description>
 		</method>
-		<method name="remove_slot">
+		<method name="remove_slot_at">
 			<return type="void" />
 			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="emit_signal" type="bool" default="true" />
 			<description>
+				Remove slot with [param slot_index] parameter, set [param emit_signal] to false to disable events called by [method update_slot].
 			</description>
 		</method>
 		<method name="set_slot">
@@ -154,11 +191,13 @@
 			<param index="0" name="slot_index" type="int" />
 			<param index="1" name="other_slot" type="Slot" />
 			<description>
+				Define [Slot] specific index information with content of other [Slot].
 			</description>
 		</method>
 		<method name="size" qualifiers="const">
 			<return type="int" />
 			<description>
+				Returns the sum of the amount of items in all slots.
 			</description>
 		</method>
 		<method name="transfer">
@@ -242,7 +281,7 @@
 		<signal name="updated_slot">
 			<param index="0" name="slot_index" type="int" />
 			<description>
-				Emitted when a [Slot] has been changed. This signal is emitted after functions that change the inventory content: [method add], [method add_at], [method remove], [method remove-at] and [method set_slot].
+				Emitted when a [Slot] has been changed. This signal is emitted after functions that change the inventory content: [method add], [method add_at], [method remove], [method remove_at] and [method set_slot].
 			</description>
 		</signal>
 	</signals>

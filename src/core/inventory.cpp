@@ -14,13 +14,16 @@ void Inventory::_enter_tree() {
 }
 
 void Inventory::set_slot(const int &slot_index, const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_NULL_MSG(item, "'item' is null.");
+
 	set_slot_content(slot_index, item->get_definition(), item->get_properties(), amount);
 }
 
 void Inventory::set_slot_content(const int slot_index, const Ref<ItemDefinition> &definition, const Dictionary &properties, const int &amount) {
-	if (slot_index >= slots.size())
-		return;
-	int old_amount = get_amount();
+	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index >= size(), "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");
+
+	int old_amount = this->amount();
 	Ref<Slot> slot = slots[slot_index];
 	slot->get_item()->set_definition(definition);
 	slot->set_amount(amount);
@@ -31,14 +34,14 @@ void Inventory::set_slot_content(const int slot_index, const Ref<ItemDefinition>
 }
 
 void Inventory::set_slot_with_other_slot(const int slot_index, const Ref<Slot> &other_slot) {
-	if (slot_index >= slots.size())
-		return;
+	ERR_FAIL_NULL_MSG(other_slot, "'other_slot' is null.");
+
 	set_slot(slot_index, other_slot->get_item(), other_slot->get_amount());
 }
 
 bool Inventory::is_empty_slot(const int &slot_index) const {
-	if (slot_index >= slots.size())
-		return true;
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), true, "The 'slot index' is out of bounds.");
+
 	Ref<Slot> slot = slots[slot_index];
 	if (slot != nullptr && !slot->is_empty())
 		return false;
@@ -46,7 +49,7 @@ bool Inventory::is_empty_slot(const int &slot_index) const {
 }
 
 bool Inventory::is_empty() const {
-	return get_amount() == 0;
+	return amount() == 0;
 }
 
 bool Inventory::is_full() const {
@@ -63,16 +66,17 @@ int Inventory::size() const {
 }
 
 bool Inventory::contains(const Ref<Item> &item, const int &amount) const {
-	if (item == nullptr || item->get_definition() == nullptr) {
-		return false;
-		int amount_in_inventory = 0;
-		for (size_t i = 0; i < slots.size(); i++) {
-			Ref<Slot> slot = slots[i];
-			if (slot->contains(item, 1)) {
-				amount_in_inventory += slot->get_amount();
-				if (amount_in_inventory >= amount) {
-					return true;
-				}
+	ERR_FAIL_NULL_V_MSG(item, false, "'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, false, "'amount' is negative.");
+	ERR_FAIL_NULL_V_MSG(item->get_definition(), false, "'item definition' is null.");
+
+	int amount_in_inventory = 0;
+	for (size_t i = 0; i < slots.size(); i++) {
+		Ref<Slot> slot = slots[i];
+		if (slot->contains(item, 1)) {
+			amount_in_inventory += slot->get_amount();
+			if (amount_in_inventory >= amount) {
+				return true;
 			}
 		}
 	}
@@ -80,9 +84,11 @@ bool Inventory::contains(const Ref<Item> &item, const int &amount) const {
 }
 
 bool Inventory::contains_at(const int &slot_index, const Ref<Item> &item, const int &amount) const {
-	if (item == nullptr || item->get_definition() == nullptr) {
-		return false;
-	}
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), false, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, false, "The 'amount' is negative.");
+	ERR_FAIL_NULL_V_MSG(item, false, "'item' is null.");
+	ERR_FAIL_NULL_V_MSG(item->get_definition(), false, "'item definition' is null.");
+
 	if (slot_index < slots.size()) {
 		Ref<Slot> slot = slots[slot_index];
 		if (slot->contains(item, 1)) {
@@ -93,9 +99,9 @@ bool Inventory::contains_at(const int &slot_index, const Ref<Item> &item, const 
 }
 
 bool Inventory::contains_category(const Ref<ItemCategory> &category, const int &amount) const {
-	if (category == nullptr) {
-		return false;
-	}
+	ERR_FAIL_NULL_V_MSG(category, false, "'category' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, false, "The 'amount' is negative.");
+
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -110,9 +116,8 @@ bool Inventory::contains_category(const Ref<ItemCategory> &category, const int &
 }
 
 int Inventory::get_slot_index_with_an_item_of_category(const Ref<ItemCategory> &category) const {
-	if (category == nullptr) {
-		return false;
-	}
+	ERR_FAIL_NULL_V_MSG(category, 0, "'category' is null.");
+
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -123,10 +128,9 @@ int Inventory::get_slot_index_with_an_item_of_category(const Ref<ItemCategory> &
 	return -1;
 }
 
-int Inventory::get_amount_of(const Ref<Item> &item) const {
-	if (item == nullptr) {
-		return 0;
-	}
+int Inventory::amount_of_item(const Ref<Item> &item) const {
+	ERR_FAIL_NULL_V_MSG(item, 0, "'item' is null.");
+
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -137,10 +141,9 @@ int Inventory::get_amount_of(const Ref<Item> &item) const {
 	return amount_in_inventory;
 }
 
-int Inventory::get_amount_of_category(const Ref<ItemCategory> &category) const {
-	if (category == nullptr) {
-		return 0;
-	}
+int Inventory::amount_of_category(const Ref<ItemCategory> &category) const {
+	ERR_FAIL_NULL_V_MSG(category, 0, "'category' is null.");
+
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -154,7 +157,7 @@ int Inventory::get_amount_of_category(const Ref<ItemCategory> &category) const {
 	return amount_in_inventory;
 }
 
-int Inventory::get_amount() const {
+int Inventory::amount() const {
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -171,7 +174,7 @@ int Inventory::add(const Ref<Item> &item, const int &amount) {
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
-	int old_amount = get_amount();
+	int old_amount = this->amount();
 
 	for (size_t i = 0; i < slots.size(); i++) {
 		int previous_amount = amount_in_interact;
@@ -186,7 +189,7 @@ int Inventory::add(const Ref<Item> &item, const int &amount) {
 	}
 
 	if (create_slot_if_needed && amount_in_interact > 0) {
-		add_slot(slots.size());
+		insert_slot(slots.size());
 		int previous_amount = amount_in_interact;
 		amount_in_interact = _add_to_slot(slots.size() - 1, item, amount_in_interact);
 
@@ -210,8 +213,12 @@ int Inventory::add(const Ref<Item> &item, const int &amount) {
 }
 
 int Inventory::add_at(const int &slot_index, const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, amount, "'item' is null.");
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
 	int amount_in_interact = amount;
-	int old_amount = get_amount();
+	int old_amount = this->amount();
 	if (slot_index < slots.size()) {
 		amount_in_interact = _add_to_slot(slot_index, item, amount_in_interact);
 		_call_events(old_amount);
@@ -224,14 +231,17 @@ int Inventory::add_at(const int &slot_index, const Ref<Item> &item, const int &a
 }
 
 int Inventory::remove(const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, amount, "'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
 	int amount_in_interact = amount;
-	int old_amount = get_amount();
+	int old_amount = this->amount();
 	Ref<ItemDefinition> _definition = item->get_definition();
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
 		amount_in_interact = _remove_from_slot(i, item, amount_in_interact);
 		if (remove_slot_if_empty && slot->get_amount() == 0) {
-			remove_slot(i);
+			remove_slot_at(i);
 			_call_events(old_amount);
 		}
 		if (amount_in_interact == 0) {
@@ -246,14 +256,18 @@ int Inventory::remove(const Ref<Item> &item, const int &amount) {
 }
 
 int Inventory::remove_at(const int &slot_index, const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, amount, "'item' is null.");
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
 	int amount_in_interact = amount;
-	int old_amount = get_amount();
+	int old_amount = this->amount();
 	Ref<ItemDefinition> _definition = item->get_definition();
 	if (slot_index < slots.size()) {
 		Ref<Slot> slot = slots[slot_index];
 		amount_in_interact = _remove_from_slot(slot_index, item, amount_in_interact);
 		if (remove_slot_if_empty && slot->get_amount() == 0) {
-			remove_slot(slot_index);
+			remove_slot_at(slot_index);
 			_call_events(old_amount);
 		}
 	}
@@ -265,10 +279,11 @@ int Inventory::remove_at(const int &slot_index, const Ref<Item> &item, const int
 }
 
 void Inventory::transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount) {
-	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
+	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index >= size(), "The 'slot index' is out of bounds.");
 	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
-	ERR_FAIL_COND_MSG(slot_index >= size() || slot_index < 0, "The 'slot index' exceeds the inventory size or negative value.");
-	ERR_FAIL_COND_MSG(destination_slot_index >= destination->size() || destination_slot_index < 0, "The 'destination slot index' exceeds the destinationinventory size or negative value.");
+	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
+	ERR_FAIL_COND_MSG(destination_slot_index >= destination->size() || destination_slot_index < 0, "The 'destination slot index' exceeds the destination inventory size or negative value.");
+	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");
 
 	Ref<Slot> slot = get_slots()[slot_index];
 	Ref<Item> item = slot->get_item()->duplicate();
@@ -288,10 +303,10 @@ void Inventory::transfer(const int &slot_index, Inventory *destination, const in
 	int amount_to_transfer = amount_to_interact - amount_not_removed;
 	if (amount_to_transfer == 0)
 		return;
-	int amount_not_transfered = destination->add_at(destination_slot_index, item, amount_to_transfer);
-	if (amount_not_transfered == 0)
+	int amount_not_transferred = destination->add_at(destination_slot_index, item, amount_to_transfer);
+	if (amount_not_transferred == 0)
 		return;
-	add_at(slot_index, item, amount_not_transfered);
+	add_at(slot_index, item, amount_not_transferred);
 }
 
 void Inventory::set_slots(const TypedArray<Slot> &new_slots) {
@@ -357,25 +372,33 @@ void Inventory::_load_slots() {
 	}
 }
 
-void Inventory::remove_slot(int slot_index, bool emit_signal) {
+void Inventory::remove_slot_at(int slot_index) {
+	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index >= size(), "The 'slot index' is out of bounds.");
+
 	slots.remove_at(slot_index);
-	if (emit_signal) {
-		this->emit_signal("slot_removed", slot_index);
-	}
+	this->emit_signal("slot_removed", slot_index);
 }
 
-void Inventory::add_slot(int slot_index, bool emit_signal) {
+void Inventory::add_slot() {
+	Ref<Slot> slot = memnew(Slot());
+	slot->set_item(memnew(Item()));
+	slot->set_amount(0);
+	slots.append(slot);
+	this->emit_signal("slot_added", slots.size());
+}
+
+void Inventory::insert_slot(int slot_index) {
+	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index > size(), "The 'slot index' is out of bounds.");
+
 	Ref<Slot> slot = memnew(Slot());
 	slot->set_item(memnew(Item()));
 	slot->set_amount(0);
 	slots.insert(slot_index, slot);
-	if (emit_signal) {
-		this->emit_signal("slot_added", slot_index);
-	}
+	this->emit_signal("slot_added", slot_index);
 }
 
 void Inventory::_call_events(int old_amount) {
-	int actual_amount = get_amount();
+	int actual_amount = amount();
 	if (old_amount != actual_amount) {
 		emit_signal("inventory_changed");
 		if (is_empty()) {
@@ -388,7 +411,6 @@ void Inventory::_call_events(int old_amount) {
 }
 
 int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
-	// Check if slot_index is within valid range (0 <= slot_index < size())
 	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), 0, "The 'slot index' is out of bounds.");
 	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
@@ -407,6 +429,10 @@ int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 }
 
 int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amount) {
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_NULL_V_MSG(item, amount, "The 'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
 	Ref<Slot> slot = slots[slot_index];
 	int _remaining_amount = slot->remove(item, amount);
 	if (_remaining_amount == amount) {
@@ -417,8 +443,9 @@ int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amou
 }
 
 void Inventory::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("add_slot", "slot_index", "emit_signal"), &Inventory::add_slot, DEFVAL(true));
-	ClassDB::bind_method(D_METHOD("remove_slot", "slot_index", "emit_signal"), &Inventory::remove_slot, DEFVAL(true));
+	ClassDB::bind_method(D_METHOD("add_slot"), &Inventory::add_slot);
+	ClassDB::bind_method(D_METHOD("insert_slot", "slot_index"), &Inventory::insert_slot);
+	ClassDB::bind_method(D_METHOD("remove_slot_at", "slot_index"), &Inventory::remove_slot_at);
 	ClassDB::bind_method(D_METHOD("set_slot", "slot_index", "item", "amount"), &Inventory::set_slot);
 	ClassDB::bind_method(D_METHOD("set_slot_content", "slot_index", "item", "properties", "amount"), &Inventory::set_slot_content);
 	ClassDB::bind_method(D_METHOD("set_slot_with_other_slot", "slot_index", "other_slot"), &Inventory::set_slot_with_other_slot);
@@ -430,9 +457,9 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("contains_at", "slot_index", "item", "amount"), &Inventory::contains_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category", "amount"), &Inventory::contains_category, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("get_slot_index_with_an_item_of_category", "category"), &Inventory::get_slot_index_with_an_item_of_category);
-	ClassDB::bind_method(D_METHOD("get_amount_of", "item"), &Inventory::get_amount_of);
-	ClassDB::bind_method(D_METHOD("get_amount_of_category", "category"), &Inventory::get_amount_of_category);
-	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::get_amount);
+	ClassDB::bind_method(D_METHOD("amount_of_item", "item"), &Inventory::amount_of_item);
+	ClassDB::bind_method(D_METHOD("get_amount_of_category", "category"), &Inventory::amount_of_category);
+	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::amount);
 	ClassDB::bind_method(D_METHOD("add", "item", "amount"), &Inventory::add, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("add_at", "slot_index", "item", "amount"), &Inventory::add_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Inventory::remove, DEFVAL(1));
@@ -468,5 +495,5 @@ void Inventory::_bind_methods() {
 
 void Inventory::update_slot(const int slot_index) {
 	emit_signal("updated_slot", slot_index);
-	_call_events(get_amount());
+	_call_events(amount());
 }
