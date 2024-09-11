@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="NodeInventories" inherits="Node" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Base node for nodes that use the inventory database.
 	</brief_description>
 	<description>
+		This node contains the property that sets the inventory database to be used and contains methods that assist with the resources of this inventory database.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -11,17 +13,20 @@
 			<return type="int" />
 			<param index="0" name="item" type="ItemDefinition" />
 			<description>
+				Returns the id of an item.
 			</description>
 		</method>
 		<method name="get_item_from_id" qualifiers="const">
 			<return type="ItemDefinition" />
 			<param index="0" name="id" type="int" />
 			<description>
+				Returns the [ItemDefinition] with a parameter of [param id]. This method uses an optimized cache fetch to avoid repeated processes.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="database" type="InventoryDatabase" setter="set_database" getter="get_database">
+			The database that this node will use as a base. Two inventories with different databases cannot interact, for example the use of [method Inventory.transfer] will not happen.
 		</member>
 	</members>
 </class>

@@ -3,39 +3,54 @@
 	<brief_description>
 	</brief_description>
 	<description>
+		Abstract definition of an item, with values for stack, icon, name, etc.
+		This definition is not the same as an [Item] placed in the inventory, the item added to an inventory needs this definition to know how many items can be added to a [Slot].
+		This resource is configured and added to the items list of the [InventoryDatabase]. This can be easily changed in the plugin's own editor.
 	</description>
 	<tutorials>
+		<link title="Creating items in database">https://github.com/expressobits/inventory-system/wiki/Creating-Items-in-Database</link>
 	</tutorials>
 	<methods>
-		<method name="contains_category" qualifiers="const">
+		<method name="is_of_category" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
+				Returns true if this item is from [param category].
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="can_stack" type="bool" setter="set_can_stack" getter="get_can_stack" default="true">
+			Defines whether there is a [member max_stack] for the item containing this item definition, unchecked means the item can be added unlimitedly to a slot.
 		</member>
 		<member name="categories" type="ItemCategory[]" setter="set_categories" getter="get_categories" default="[]">
+			Categories this item is in are used for categorized slots to only accept specific items. See in [member Slot.categorized]
 		</member>
 		<member name="dynamic_properties" type="String[]" setter="set_dynamic_properties" getter="get_dynamic_properties" default="[]">
+			Properties that are defined as dynamic and are calculated for individual items within the slot. Can only be used when [member max_stack] is 1.
 		</member>
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
+			Item icon in texture2D, displayed by UI e.g.
 		</member>
 		<member name="id" type="int" setter="set_id" getter="get_id" default="0">
+			Unique item identifier number within the [InventoryDatabase].
+			This number can be used in the database to return an item by its id See [member InventoryDatabase.get_item]
 		</member>
 		<member name="max_stack" type="int" setter="set_max_stack" getter="get_max_stack" default="0">
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+			Name of the item to be displayed in the UI e.g.
 		</member>
 		<member name="properties" type="Dictionary" setter="set_properties" getter="get_properties" default="{}">
+			Properties of this item, additional information here can be added (For example the 3d item that drops from this item, or its item from the player's hand, etc.)
 		</member>
 		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="0.0">
+			Item weight in float.
 		</member>
 	</members>
 	<constants>
 		<constant name="NONE" value="-1">
+			Id represents none item. This id is normally linked to the [Slot] that has no item for example.
 		</constant>
 	</constants>
 </class>

@@ -9,15 +9,6 @@ void NodeInventories::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "database", PROPERTY_HINT_RESOURCE_TYPE, "InventoryDatabase"), "set_database", "get_database");
 }
 
-void NodeInventories::_ready() {
-	if (database == nullptr)
-		return;
-	for (size_t i = 0; i < database->get_items().size(); i++) {
-		Ref<ItemDefinition> item = database->get_items()[i];
-		items_cache[item->get_id()] = item;
-	}
-}
-
 NodeInventories::NodeInventories() {
 }
 
@@ -45,5 +36,8 @@ Ref<ItemDefinition> NodeInventories::get_item_from_id(const int id) const {
 }
 
 int NodeInventories::get_id_from_item(const Ref<ItemDefinition> item) const {
+	if(item.is_null()){
+		return ItemDefinition::NONE;
+	}
 	return item->get_id();
 }

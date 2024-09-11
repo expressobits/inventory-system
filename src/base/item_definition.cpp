@@ -5,7 +5,7 @@
 
 using namespace godot;
 
-void ItemDefinition::check_invalid_dynamic_properties() {
+void ItemDefinition::_check_invalid_dynamic_properties() {
 	// Checking if dynamic property is a reference to a property that does not exist
 	for (size_t i = 0; i < dynamic_properties.size(); i++)
 	{
@@ -35,7 +35,7 @@ void ItemDefinition::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_dynamic_properties"), &ItemDefinition::get_dynamic_properties);
 	ClassDB::bind_method(D_METHOD("set_categories", "categories"), &ItemDefinition::set_categories);
 	ClassDB::bind_method(D_METHOD("get_categories"), &ItemDefinition::get_categories);
-	ClassDB::bind_method(D_METHOD("contains_category", "category"), &ItemDefinition::contains_category);
+	ClassDB::bind_method(D_METHOD("is_of_category", "category"), &ItemDefinition::is_in_category);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_stack"), "set_can_stack", "get_can_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
@@ -110,7 +110,7 @@ float ItemDefinition::get_weight() const {
 
 void ItemDefinition::set_properties(const Dictionary &new_properties) {
 	properties = new_properties;
-	check_invalid_dynamic_properties();
+	_check_invalid_dynamic_properties();
 }
 
 Dictionary ItemDefinition::get_properties() const {
@@ -131,6 +131,7 @@ void ItemDefinition::set_categories(const TypedArray<ItemCategory> &new_categori
 	Array dynamic_properties = get_dynamic_properties();
 	for (size_t i = 0; i < categories.size(); i++) {
 		Ref<ItemCategory> category = categories[i];
+		ERR_FAIL_NULL_MSG(category, "'category' is null.");
 		for (size_t i = 0; i < category->get_item_properties().size(); i++) {
 			Variant property_key = category->get_item_properties().keys()[i];
 			if (properties.keys().find(property_key) == -1) {
@@ -148,7 +149,9 @@ TypedArray<ItemCategory> ItemDefinition::get_categories() const {
 	return categories;
 }
 
-bool ItemDefinition::contains_category(const Ref<ItemCategory> category) const {
+bool ItemDefinition::is_in_category(const Ref<ItemCategory> category) const {
+	ERR_FAIL_NULL_V_MSG(category, false, "'category' is null.");
+
 	for (size_t i = 0; i < categories.size(); i++) {
 		Ref<ItemCategory> c = categories[i];
 		if (c == category) {

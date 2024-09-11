@@ -15,13 +15,13 @@ private:
 	int id = 0;
 	bool can_stack = true;
 	int max_stack = 0;
-	String name;
+	String name = "";
 	Ref<Texture2D> icon;
 	float weight = 0.0;
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
-	void check_invalid_dynamic_properties();
+	void _check_invalid_dynamic_properties();
 
 protected:
 	static void _bind_methods();
@@ -51,7 +51,7 @@ public:
 	TypedArray<String> get_dynamic_properties() const;
 	void set_categories(const TypedArray<ItemCategory> &new_categories);
 	TypedArray<ItemCategory> get_categories() const;
-	bool contains_category(const Ref<ItemCategory> category) const;
+	bool is_in_category(const Ref<ItemCategory> category) const;
 };
 
 #endif

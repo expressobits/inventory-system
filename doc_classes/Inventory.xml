@@ -35,9 +35,9 @@
 				[gdscript]
 				var unadded_amount = inventory.add(my_item, 2) # Add two my_item to inventory
 				if unadded_amount == 0:
-					print("All items added!")
+				    print("All items added!")
 				else:
-					print(unadded_amount, " items were not added")
+				    print(unadded_amount, " items were not added")
 				[/gdscript]
 				[/codeblocks]
 			</description>

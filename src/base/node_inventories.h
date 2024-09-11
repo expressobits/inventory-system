@@ -12,7 +12,6 @@ class NodeInventories : public Node {
 
 private:
 	Ref<InventoryDatabase> database;
-	Dictionary items_cache;
 
 protected:
 	static void _bind_methods();
@@ -20,7 +19,6 @@ protected:
 public:
 	NodeInventories();
 	~NodeInventories();
-	virtual void _ready() override;
 	virtual PackedStringArray _get_configuration_warnings() const override;
 	void set_database(const Ref<InventoryDatabase> new_database);
 	Ref<InventoryDatabase> get_database() const;

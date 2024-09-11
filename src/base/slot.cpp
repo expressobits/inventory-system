@@ -143,7 +143,7 @@ bool Slot::contains_category(Ref<ItemCategory> category) const {
 	if (this->item == nullptr || this->item->get_definition() == nullptr) {
 		return false;
 	} else {
-		return this->item->get_definition()->contains_category(category);
+		return this->item->get_definition()->is_in_category(category);
 	}
 }
 
