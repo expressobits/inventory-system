@@ -118,7 +118,7 @@ func _update_slots_rpc(slots_sync : Array):
 func _slot_added_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	inventory.add_slot(slot_index)
+	inventory.insert_slot(slot_index)
 
 
 @rpc
@@ -133,7 +133,7 @@ func _updated_slot_rpc(slot_index : int, item_id : int, amount : int, properties
 func _slot_removed_rpc(slot_index : int):
 	if multiplayer.is_server():
 		return
-	inventory.remove_slot(slot_index)
+	inventory.remove_slot_at(slot_index)
 
 
 @rpc
