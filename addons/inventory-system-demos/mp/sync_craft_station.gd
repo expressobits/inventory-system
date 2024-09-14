@@ -28,7 +28,7 @@ func _on_crafting_added(crafting_index : int):
 		return
 	var crafting = craft_station.craftings[crafting_index]
 	crafting_added_rpc.rpc(crafting.recipe_index)
-	craftings_data.append(crafting.to_data())
+	craftings_data.append(crafting.serialize())
 
 
 func _on_crafting_removed(crafting_index : int):
@@ -65,7 +65,7 @@ func crafting_removed_rpc(crafting_index : int):
 func _update_craftings_rpc(craftings_data : Array):
 	for data in craftings_data:
 		var crafting = Crafting.new()
-		crafting.from_data(data)
+		crafting.deserialize(data)
 		craft_station.craftings.append(crafting)
 		
 @rpc
