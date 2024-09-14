@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="Recipe" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Resource that contains the definition of items needed for [Crafting] at the [CraftStation].
 	</brief_description>
 	<description>
+		This recipe is used by [CraftStation] to list all possible recipes available, A [CraftStation] load available recipes in the [method Node._ready].
+		Note: [CraftStation] must have the same [CraftStationType] as the recipe for it to work. If the recipe does not have [member station] set it will be listed on a [CraftStation] that also does not have [member CraftStation.type] set.
 	</description>
 	<tutorials>
 	</tutorials>
 	<members>
 		<member name="ingredients" type="Slot[]" setter="set_ingredients" getter="get_ingredients" default="[]">
+			[Slot] list for [Item]s needed for crafting. If [member CraftStation.only_remove_ingredients_after_craft] is true these items are removed from [Inventory] after crafting, if false will be removed at the beginning of the crafting process, after calling [method CraftStation.craft].
 		</member>
 		<member name="products" type="Slot[]" setter="set_products" getter="get_products" default="[]">
+			List of slotted items from the result after crafting is completed. These items must be added in [Inventory] after crafting is complete.
 		</member>
 		<member name="required_items" type="Slot[]" setter="set_required_items" getter="get_required_items" default="[]">
+			[Slot] of items that are required for crafting. Unlike [member ingredients] items, these items are not removed after the crafting process.
 		</member>
 		<member name="station" type="CraftStationType" setter="set_station" getter="get_station">
+			[CraftStationType] required for this crafting to work.
 		</member>
 		<member name="time_to_craft" type="float" setter="set_time_to_craft" getter="get_time_to_craft" default="4.0">
+			Time (in ticks) to complete the crafting process.
 		</member>
 	</members>
 </class>
