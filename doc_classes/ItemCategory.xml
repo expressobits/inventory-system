@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="ItemCategory" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Category to specify an [ItemDefinition].
 	</brief_description>
 	<description>
+		This resource is used to add the same properties to multiple [ItemDefinition] at the same time. This category is also used by [member Slot.categorized] to specify a slot that can only accept a certain type of category.
 	</description>
 	<tutorials>
 	</tutorials>
+	<methods>
+		<method name="get_code" qualifiers="const">
+			<return type="int" />
+			<description>
+				Code used to get fast category on [member InventoryDatabase.get_category].
+			</description>
+		</method>
+	</methods>
 	<members>
-		<member name="code" type="int" setter="set_code" getter="get_code" default="0">
-		</member>
 		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
+			Color to identify the category. Used for example in a UI to paint a categorized [Slot].
 		</member>
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
+			Category icon. Used for example for a background of a categorized [Slot].
 		</member>
 		<member name="item_dynamic_properties" type="String[]" setter="set_item_dynamic_properties" getter="get_item_dynamic_properties" default="[]">
+			Defines dynamic properties for items that contain this category. Added automatically when [member ItemDefinition.categories] is set.
 		</member>
 		<member name="item_properties" type="Dictionary" setter="set_item_properties" getter="get_item_properties" default="{}">
+			Defines properties for items that contain this category. Added automatically when [member ItemDefinition.categories] is set.
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+			Name of category.
 		</member>
 	</members>
 </class>
