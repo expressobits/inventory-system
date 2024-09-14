@@ -18,7 +18,6 @@
 #include "core/inventory_handler.h"
 #include "craft/craft_station.h"
 #include "craft/crafter.h"
-#include "craft/crafting.h"
 
 using namespace godot;
 

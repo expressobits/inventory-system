@@ -5,10 +5,30 @@
 #include "base/inventory_database.h"
 #include "base/node_inventories.h"
 #include "core/inventory.h"
-#include "crafting.h"
 #include <godot_cpp/classes/node.hpp>
 
 using namespace godot;
+
+class Crafting : public Resource {
+	GDCLASS(Crafting, Resource);
+
+private:
+	int recipe_index = 0;
+	float time = 0.0f;
+
+protected:
+	static void _bind_methods();
+
+public:
+	void set_recipe_index(const int &new_recipe);
+	int get_recipe_index() const;
+	void set_time(const float &new_time);
+	float get_time() const;
+	bool is_finished() const;
+	void process(float delta);
+	Array to_data() const;
+	void from_data(Array data);
+};
 
 class CraftStation : public NodeInventories {
 	GDCLASS(CraftStation, NodeInventories);

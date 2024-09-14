@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="Crafter" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="Crafter" inherits="NodeInventories" deprecated="Use [CraftStation] only." xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		dasdsa
 	</brief_description>
 	<description>
 	</description>
