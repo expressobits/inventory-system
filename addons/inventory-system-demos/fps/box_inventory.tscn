@@ -42,9 +42,11 @@ visible = false
 
 [node name="Open" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_sufq2")
+volume_db = -40.0
 
 [node name="Close" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_x0aos")
+volume_db = -30.0
 
 [node name="Openable" type="Node" parent="."]
 script = ExtResource("7_nxnqq")

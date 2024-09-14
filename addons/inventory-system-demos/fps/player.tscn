@@ -82,17 +82,22 @@ hotbar = NodePath("../CharacterInventorySystem/Hotbar")
 
 [node name="PickupAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_1ptxj")
+volume_db = -30.0
 
 [node name="DropAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_3rbsy")
+volume_db = -30.0
 
 [node name="HotbarChangeAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("7_77smm")
+volume_db = -30.0
 
 [node name="PlayerInventoryOpenAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("8_vym5c")
+volume_db = -30.0
 
 [node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("9_su3a2")
+volume_db = -30.0
 
 [editable path="CharacterInventorySystem"]

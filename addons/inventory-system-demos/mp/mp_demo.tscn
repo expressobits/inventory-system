@@ -104,6 +104,12 @@ script = ExtResource("10_4488h")
 slots = Array[Slot]([])
 inventory_name = "Dynamic Inventory"
 
+[node name="Open" parent="Box Inventory" index="4"]
+volume_db = 0.0
+
+[node name="Close" parent="Box Inventory" index="5"]
+volume_db = 0.0
+
 [node name="Openable" parent="Box Inventory" index="7"]
 script = ExtResource("10_kjp1o")
 
@@ -117,6 +123,12 @@ create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
 
+[node name="Open" parent="Box Inventory2" index="4"]
+volume_db = 0.0
+
+[node name="Close" parent="Box Inventory2" index="5"]
+volume_db = 0.0
+
 [node name="Openable" parent="Box Inventory2" index="7"]
 script = ExtResource("10_kjp1o")
 
@@ -129,6 +141,12 @@ slots = Array[Slot]([])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Tools Inventory"
+
+[node name="Open" parent="Box Inventory3" index="4"]
+volume_db = 0.0
+
+[node name="Close" parent="Box Inventory3" index="5"]
+volume_db = 0.0
 
 [node name="Openable" parent="Box Inventory3" index="7"]
 script = ExtResource("10_kjp1o")
