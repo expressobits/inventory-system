@@ -4,37 +4,44 @@
 		Resource that identifies a creation process happening in [CraftStation].
 	</brief_description>
 	<description>
+		Crafting process is stored in its own resource and can be serialized ([method serialize]) and deserialized ([method deserialize]) for persistence and networking purposes. It also contains a [method process] that is called to update the time process of a crafting.
 	</description>
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="from_data">
+		<method name="deserialize">
 			<return type="void" />
-			<param index="0" name="data" type="Array" />
+			<param index="0" name="data" type="Dictionary" />
 			<description>
+				Updates the data for this crafting process with a [param data] dictionary. Useful for game persistence and network synchronization.
 			</description>
 		</method>
 		<method name="is_finished" qualifiers="const">
 			<return type="bool" />
 			<description>
+				Returns true if this crafting has finished.
 			</description>
 		</method>
 		<method name="process">
 			<return type="void" />
 			<param index="0" name="delta" type="float" />
 			<description>
+				Calls a time process for crafting to happen, this should be called by [CraftStation].
 			</description>
 		</method>
-		<method name="to_data" qualifiers="const">
-			<return type="Array" />
+		<method name="serialize" qualifiers="const">
+			<return type="Dictionary" />
 			<description>
+				Transforms crafting process data into a dictionary. Useful for game persistence and network synchronization.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="recipe_index" type="int" setter="set_recipe_index" getter="get_recipe_index" default="0">
+			Recipe index on [CraftStation].
 		</member>
 		<member name="time" type="float" setter="set_time" getter="get_time" default="0.0">
+			Elapsed crafting time.
 		</member>
 	</members>
 </class>

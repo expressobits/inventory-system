@@ -8,8 +8,8 @@ void Crafting::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_time"), &Crafting::get_time);
 	ClassDB::bind_method(D_METHOD("is_finished"), &Crafting::is_finished);
 	ClassDB::bind_method(D_METHOD("process", "delta"), &Crafting::process);
-	ClassDB::bind_method(D_METHOD("to_data"), &Crafting::to_data);
-	ClassDB::bind_method(D_METHOD("from_data", "data"), &Crafting::from_data);
+	ClassDB::bind_method(D_METHOD("serialize"), &Crafting::serialize);
+	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Crafting::deserialize);
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "recipe_index"), "set_recipe_index", "get_recipe_index");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "time"), "set_time", "get_time");
 }
@@ -38,16 +38,16 @@ void Crafting::process(float delta) {
 	time -= delta;
 }
 
-Array Crafting::to_data() const {
-	Array a = Array();
-	a.append(recipe_index);
-	a.append(time);
-	return a;
+Dictionary Crafting::serialize() const {
+	Dictionary dict = Dictionary();
+	dict["recipe_index"] = recipe_index;
+	dict["time"] = time;
+	return dict;
 }
 
-void Crafting::from_data(Array data) {
-	recipe_index = data[0];
-	time = data[1];
+void Crafting::deserialize(Dictionary data) {
+	recipe_index = data["recipe_index"];
+	time = data["time"];
 }
 
 

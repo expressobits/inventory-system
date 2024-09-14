@@ -26,8 +26,8 @@ public:
 	float get_time() const;
 	bool is_finished() const;
 	void process(float delta);
-	Array to_data() const;
-	void from_data(Array data);
+	Dictionary serialize() const;
+	void deserialize(Dictionary data);
 };
 
 class CraftStation : public NodeInventories {
