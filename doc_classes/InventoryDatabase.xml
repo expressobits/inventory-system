@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="InventoryDatabase" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Database of items, recipe, categories and craftstations.
 	</brief_description>
 	<description>
 	</description>
@@ -11,63 +12,76 @@
 			<return type="void" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
+				Add new [ItemCategory] to database. This method update category code cache for fast check categories in running game.
 			</description>
 		</method>
 		<method name="add_new_item">
 			<return type="void" />
 			<param index="0" name="item" type="ItemDefinition" />
 			<description>
+				Add new [ItemDefinition] to database. This method update item definition code cache for fast check items id in running game.
 			</description>
 		</method>
 		<method name="get_category">
 			<return type="ItemCategory" />
 			<param index="0" name="code" type="int" />
 			<description>
+				Return [ItemCategory] of code. This code is used as a bitflag to easily access the item in your category list when running the game.
 			</description>
 		</method>
 		<method name="get_item" qualifiers="const">
 			<return type="ItemDefinition" />
 			<param index="0" name="id" type="int" />
 			<description>
+				Returns an [ItemDefinition] based on the param [param id]. This ID is searched for in the cache list managed by this database, this list is updated when we run the game. 
 			</description>
 		</method>
 		<method name="get_new_valid_id" qualifiers="const">
 			<return type="int" />
 			<description>
+				Returns a new valid identifier for the [ItemDefinition]. This method does not return ids that already exist.
 			</description>
 		</method>
 		<method name="get_valid_id" qualifiers="const">
 			<return type="int" />
 			<description>
+				Returns an existing id of [member items].
 			</description>
 		</method>
 		<method name="has_item_id" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="id" type="int" />
 			<description>
+				Returns true if there is an [ItemDefinition] with the [param id].
 			</description>
 		</method>
 		<method name="remove_category">
 			<return type="void" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
+				Remove [ItemCategory] from database. This method updates the category bitflag cache.
 			</description>
 		</method>
 		<method name="remove_item">
 			<return type="void" />
 			<param index="0" name="item" type="ItemDefinition" />
 			<description>
+				Remove [ItemDefinition] from database. This method update item definition code cache for fast check items id in running game.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="item_categories" type="ItemCategory[]" setter="set_item_categories" getter="get_item_categories" default="[]">
+			[ItemCategory] list in database. Use [method add_category] for add and [method remove_category] for remove.
 		</member>
 		<member name="items" type="ItemDefinition[]" setter="set_items" getter="get_items" default="[]">
+			[ItemDefinition] list in database. Use [method add_new_item] for add and [method remove_item] for remove.
 		</member>
 		<member name="recipes" type="Recipe[]" setter="set_recipes" getter="get_recipes" default="[]">
+			[Recipe] list in database.
 		</member>
 		<member name="stations_type" type="CraftStationType[]" setter="set_stations_type" getter="get_stations_type" default="[]">
+			[CraftStationType] list in database.
 		</member>
 	</members>
 </class>

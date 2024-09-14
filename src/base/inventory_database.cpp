@@ -122,11 +122,15 @@ void InventoryDatabase::remove_item(const Ref<ItemDefinition> item) {
 }
 
 void InventoryDatabase::add_new_category(const Ref<ItemCategory> category) {
+	ERR_FAIL_NULL_MSG(category, "'category' is null.");
+
 	item_categories.append(category);
 	_update_items_categories_cache();
 }
 
 void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
+	ERR_FAIL_NULL_MSG(category, "'category' is null.");
+	
 	int index = item_categories.find(category);
 	if (index > -1) {
 		item_categories.remove_at(index);
