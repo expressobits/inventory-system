@@ -33,7 +33,7 @@
 			<return type="ItemDefinition" />
 			<param index="0" name="id" type="int" />
 			<description>
-				Returns an [ItemDefinition] based on the param [param id]. This ID is searched for in the cache list managed by this database, this list is updated when we run the game. 
+				Returns an [ItemDefinition] based on the param [param id]. This ID is searched for in the cache list managed by this database, this list is updated when we run the game.
 			</description>
 		</method>
 		<method name="get_new_valid_id" qualifiers="const">
