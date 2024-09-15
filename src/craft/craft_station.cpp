@@ -217,12 +217,18 @@ void CraftStation::remove_crafting(int crafting_index) {
 }
 
 void CraftStation::_on_input_inventory_item_added(Ref<Item> item, int amount) {
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
 	if (auto_craft)
 		_check_auto_crafts();
 }
 
 void CraftStation::_on_input_inventory_item_removed(Ref<Item> item, int amount) {
-	ERR_FAIL_COND_MSG(get_database() == nullptr, "Database is null.");
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
+
+	ERR_FAIL_NULL_MSG(get_database(), "Database is null.");
+
 	if (only_remove_ingredients_after_craft) {
 		int i = 0;
 		while (i < craftings.size()) {
@@ -240,9 +246,13 @@ void CraftStation::_on_input_inventory_item_removed(Ref<Item> item, int amount) 
 void CraftStation::_check_auto_crafts() {
 	if (Engine::get_singleton()->is_editor_hint())
 		return;
+
+	ERR_FAIL_NULL_MSG(get_database(), "'InventoryDatabase' is null.");
+
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
 	if (!auto_craft)
 		return;
-	// ERR_FAIL_COND_MSG(get_database() == nullptr, "Database is null!");
 	for (size_t i = 0; i < valid_recipes.size(); i++) {
 		Ref<Recipe> recipe = get_database()->get_recipes()[valid_recipes[i]];
 		if (!can_craft(recipe))
@@ -254,6 +264,9 @@ void CraftStation::_check_auto_crafts() {
 void CraftStation::_ready() {
 	if (Engine::get_singleton()->is_editor_hint())
 		return;
+
+	ERR_FAIL_COND_MSG(get_database() == nullptr, "'InventoryDatabase' is null.");
+
 	valid_recipes.clear();
 	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
 		Ref<Recipe> recipe = get_database()->get_recipes()[i];
@@ -309,7 +322,6 @@ void CraftStation::_physic_process(float delta) {
 		tick(delta);
 	}
 }
-
 
 bool CraftStation::is_crafting() const {
 	return !craftings.is_empty();
@@ -483,7 +495,8 @@ bool CraftStation::get_only_remove_ingredients_after_craft() const {
 
 void CraftStation::set_auto_craft(const bool &new_auto_craft) {
 	auto_craft = new_auto_craft;
-	_check_auto_crafts();
+	if (auto_craft && is_node_ready())
+		_check_auto_crafts();
 }
 
 bool CraftStation::get_auto_craft() const {

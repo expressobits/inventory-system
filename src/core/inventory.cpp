@@ -281,6 +281,8 @@ int Inventory::remove_at(const int &slot_index, const Ref<Item> &item, const int
 void Inventory::transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount) {
 	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index >= size(), "The 'slot index' is out of bounds.");
 	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
+	ERR_FAIL_NULL_MSG(get_database(), "InventoryDatabase is null.");
+	ERR_FAIL_NULL_MSG(destination->get_database(), "InventoryDatabase is null.");
 	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
 	ERR_FAIL_COND_MSG(destination_slot_index >= destination->size() || destination_slot_index < 0, "The 'destination slot index' exceeds the destination inventory size or negative value.");
 	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");

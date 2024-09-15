@@ -17,7 +17,6 @@
 #include "core/inventory.h"
 #include "core/inventory_handler.h"
 #include "craft/craft_station.h"
-#include "craft/crafter.h"
 
 using namespace godot;
 
@@ -37,7 +36,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<Inventory>();
 	ClassDB::register_class<InventoryHandler>();
 	ClassDB::register_class<CraftStation>();
-	ClassDB::register_class<Crafter>();
 	ClassDB::register_class<Crafting>();
 }
 
