@@ -1,65 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="Hotbar" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Node representing the player's hotbar related to an [Inventory].
 	</brief_description>
 	<description>
 	</description>
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="change_selection">
-			<return type="void" />
-			<param index="0" name="index" type="int" />
-			<description>
-			</description>
-		</method>
 		<method name="get_inventory" qualifiers="const">
 			<return type="Inventory" />
 			<description>
+				Returns the [Inventory] that is related to this hotbar.
 			</description>
 		</method>
 		<method name="get_selected_item" qualifiers="const">
 			<return type="Item" />
 			<description>
+				Returns the selected [Item] in the hotbar.
 			</description>
 		</method>
 		<method name="has_item_on_selection" qualifiers="const">
 			<return type="bool" />
 			<description>
+				Returns true if a valid [Item] is in the current selection.
 			</description>
 		</method>
 		<method name="has_valid_item_id" qualifiers="const">
 			<return type="bool" />
 			<description>
+				Returns true if a valid [Item] is in the current selection.
 			</description>
 		</method>
 		<method name="next_item">
 			<return type="void" />
 			<description>
+				Switches from the current [member selection_index] to the next selection.
 			</description>
 		</method>
 		<method name="previous_item">
 			<return type="void" />
 			<description>
+				Switches from the current [member selection_index] to the previous selection.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="inventory" type="NodePath" setter="set_inventory_path" getter="get_inventory_path" default="NodePath(&quot;&quot;)">
+			[Inventory] related to hotbar.
 		</member>
 		<member name="selection_index" type="int" setter="set_selection_index" getter="get_selection_index" default="0">
+			Current selection within the hotbar.
 		</member>
 		<member name="slots_in_hot_bar" type="int" setter="set_slots_in_hot_bar" getter="get_slots_in_hot_bar" default="8">
+			Number of slots in the hotbar. This value determines what limit the [member selection_index] should have.
 		</member>
 	</members>
 	<signals>
 		<signal name="on_change_selection">
 			<param index="0" name="selection_index" type="int" />
 			<description>
+				Emitted when [member selection_index] changes.
 			</description>
 		</signal>
 		<signal name="on_update_selection_slot">
 			<description>
+				Emitted when the currently selected inventory slot is changed.
 			</description>
 		</signal>
 	</signals>

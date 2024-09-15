@@ -14,7 +14,6 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_slots_in_hot_bar"), &Hotbar::get_slots_in_hot_bar);
 	ClassDB::bind_method(D_METHOD("set_selection_index", "selection_index"), &Hotbar::set_selection_index);
 	ClassDB::bind_method(D_METHOD("get_selection_index"), &Hotbar::get_selection_index);
-	ClassDB::bind_method(D_METHOD("change_selection", "index"), &Hotbar::change_selection);
 	ClassDB::bind_method(D_METHOD("next_item"), &Hotbar::next_item);
 	ClassDB::bind_method(D_METHOD("previous_item"), &Hotbar::previous_item);
 	ClassDB::bind_method(D_METHOD("has_valid_item_id"), &Hotbar::has_valid_item_id);
@@ -60,30 +59,30 @@ int Hotbar::get_slots_in_hot_bar() const {
 }
 
 void Hotbar::set_selection_index(const int &new_selection_index) {
+	int old_selection = selection_index;
 	selection_index = new_selection_index;
-}
-
-int Hotbar::get_selection_index() const {
-	return selection_index;
-}
-
-void Hotbar::change_selection(const int &new_index) {
-	selection_index = new_index;
 	if (selection_index >= slots_in_hot_bar) {
 		selection_index -= slots_in_hot_bar;
 	}
 	if (selection_index < 0) {
 		selection_index += slots_in_hot_bar;
 	}
-	emit_signal("on_change_selection", selection_index);
+	if(old_selection != selection_index)
+	{
+		emit_signal("on_change_selection", selection_index);
+	}
+}
+
+int Hotbar::get_selection_index() const {
+	return selection_index;
 }
 
 void Hotbar::next_item() {
-	change_selection(selection_index + 1);
+	set_selection_index(selection_index + 1);
 }
 
 void Hotbar::previous_item() {
-	change_selection(selection_index - 1);
+	set_selection_index(selection_index - 1);
 }
 
 bool Hotbar::has_valid_item_id() const {
