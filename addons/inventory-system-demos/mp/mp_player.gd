@@ -7,9 +7,8 @@ func _enter_tree():
 	$CharacterInventorySystem/InventoryHandler.set_multiplayer_authority(1)
 	$CharacterInventorySystem/InventoryHandler/Inventory.set_multiplayer_authority(1)
 	$CharacterInventorySystem/InventoryHandler/EquipmentInventory.set_multiplayer_authority(1)
-	$SyncCrafter.set_multiplayer_authority(1)
 	$SyncHotbar.set_multiplayer_authority(1)
-
+	$CharacterInventorySystem/CraftStation/SyncCraftStation.set_multiplayer_authority(1)
 
 func _ready():
 	super._ready()

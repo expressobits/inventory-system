@@ -124,9 +124,9 @@ func craft(craft_station : CraftStation, recipe_index : int):
 
 func open_station(craft_station : CraftStation):
 	if multiplayer.is_server():
-		open_station_rpc(crafter.get_path_to(craft_station))
+		open_station_rpc(get_path_to(craft_station))
 	else:
-		open_station_rpc.rpc(crafter.get_path_to(craft_station))
+		open_station_rpc.rpc(get_path_to(craft_station))
 
 
 func add_open_station(craft_station : CraftStation):
@@ -268,7 +268,7 @@ func open_main_craft_station_rpc():
 
 @rpc
 func open_station_rpc(craft_station_path : NodePath):
-	var station = crafter.get_node(craft_station_path)
+	var station = get_node(craft_station_path)
 	super.open_station(station)
 
 
@@ -286,7 +286,7 @@ func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 
 @rpc
 func hotbar_change_selection_rpc(index : int):
-	hotbar.change_selection(index)
+	hotbar.selection_index = index
 
 @rpc
 func hotbar_previous_item_rpc():

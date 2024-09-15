@@ -20,4 +20,4 @@ func on_change_selection(selection_index : int):
 	
 @rpc
 func change_selection_rpc(selection_index : int):
-	hotbar.change_selection(selection_index)
+	hotbar.selection_index = selection_index

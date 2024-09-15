@@ -8,8 +8,6 @@ signal interacted(object : Node)
 @export var node_base_to_interactions := NodePath(".");
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("../InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
-@export_node_path("InventoryHandler") var crafter_path := NodePath("../Crafter")
-@onready var crafter : Crafter = get_node(crafter_path)
 @export_node_path("Hotbar") var hotbar_path := NodePath("../Hotbar")
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export var raycast : RayCast3D

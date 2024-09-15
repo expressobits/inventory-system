@@ -31,13 +31,9 @@ inventory_name = "Equipment"
 [node name="Hotbar" type="Hotbar" parent="."]
 inventory = NodePath("../InventoryHandler/Inventory")
 
-[node name="Crafter" type="Crafter" parent="."]
-main_station = NodePath("CraftStation")
-inventories_for_stations = Array[NodePath]([NodePath("../InventoryHandler/Inventory"), NodePath("../InventoryHandler/EquipmentInventory")])
-
-[node name="CraftStation" type="CraftStation" parent="Crafter"]
-input_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory"), NodePath("../../InventoryHandler/EquipmentInventory")])
-output_inventories = Array[NodePath]([NodePath("../../InventoryHandler/Inventory")])
+[node name="CraftStation" type="CraftStation" parent="."]
+input_inventories = Array[NodePath]([NodePath("../InventoryHandler/Inventory"), NodePath("../InventoryHandler/EquipmentInventory")])
+output_inventories = Array[NodePath]([NodePath("../InventoryHandler/Inventory")])
 
 [node name="Interactor" type="NodeInventories" parent="."]
 script = ExtResource("2_ja62h")

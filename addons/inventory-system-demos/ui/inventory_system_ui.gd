@@ -18,7 +18,6 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 ## Stores [InventoryHandler] information to connect all signals and callbacks
 @export var inventory_handler : InventoryHandler
 ## Stores [Crafter] information to connect all signals and callbacks
-@export var crafter : Crafter
 @export var interactor : Interactor
 
 ## SlotUI special that stores inventory transaction information
@@ -68,6 +67,7 @@ func _ready():
 		other_craft_station_ui.output_inventory_ui.inventory_point_down.connect(_inventory_point_down)
 	drop_area.gui_input.connect(_drop_area_input)
 	
+	player_craft_station_ui.on_craft.connect(_on_craft)
 	other_craft_station_ui.on_craft.connect(_on_craft)
 
 
@@ -85,7 +85,6 @@ func setup(character : CharacterInventorySystem):
 	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
 	
 	# Stations
-	self.crafter = character.crafter
 	character.opened_station.connect(_on_open_craft_station)
 	character.closed_station.connect(_on_close_craft_station)
 	# Interactor
@@ -131,7 +130,7 @@ func _on_open_inventory(inventory : Inventory):
 # Open Craft Station	
 func _on_open_craft_station(craft_station : CraftStation):
 	# TODO #42 Different skins for different types of craft stations
-	if craft_station.get_path_to(crafter) == crafter.main_station:
+	if craft_station == character.main_station:
 		player_craft_station_ui.open(craft_station)
 	else:
 		other_craft_station_ui.open(craft_station)
@@ -140,7 +139,7 @@ func _on_open_craft_station(craft_station : CraftStation):
 
 
 func _on_close_craft_station(craft_station : CraftStation):
-	if craft_station.get_path_to(crafter) == crafter.main_station:
+	if craft_station == character.main_station:
 		player_craft_station_ui.close()
 	else:
 		other_craft_station_ui.close()

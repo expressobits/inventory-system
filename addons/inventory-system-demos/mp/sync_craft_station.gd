@@ -3,7 +3,6 @@ class_name SyncCraftStation
 
 @export var craft_station : CraftStation
 @export var sync_input_inventories : bool
-@export var openeable : Openable
 var craftings_data : Array
 
 

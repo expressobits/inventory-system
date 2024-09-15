@@ -16,8 +16,8 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 @export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
 @onready var hotbar : Hotbar = get_node(hotbar_path)
-@export_node_path("Crafter") var crafter_path := NodePath("Crafter")
-@onready var crafter : Crafter = get_node(crafter_path)
+@export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
+@onready var main_station : CraftStation = get_node(main_station_path)
 @export_node_path var interactor_path := NodePath("Interactor")
 @onready var interactor : Interactor = get_node(interactor_path)
 @export_node_path var drop_parent_path := NodePath("../..");
@@ -177,7 +177,7 @@ func hot_bar_inputs(event : InputEvent):
 
 
 func hotbar_change_selection(index : int):
-	hotbar.change_selection(index)
+	hotbar.selection_index = index
 
 
 func hotbar_previous_item():
@@ -259,12 +259,12 @@ func remove_open_station(station : CraftStation):
 	var index = opened_stations.find(station)
 	opened_stations.remove_at(index)
 	closed_station.emit(station)
-	if crafter.get_node(crafter.main_station) != station:
+	if main_station != station:
 		station.get_parent().close(get_parent())
 
 
 func open_main_craft_station():
-	open_station(crafter.get_node(crafter.main_station))
+	open_station(main_station)
 
 
 func close_craft_stations():

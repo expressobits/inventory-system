@@ -6,10 +6,10 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory_handler.gd" id="2_ncw1r"]
 [ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_1eelt"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_crafter.gd" id="3_15sbs"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="8_wtcmp"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="9_c6j5p"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
 size = Vector3(0.125, 0.125, 0.125)
@@ -74,6 +74,10 @@ inventory_handler = NodePath("..")
 [node name="Openable" parent="CharacterInventorySystem/InventoryHandler" index="3"]
 script = ExtResource("8_wtcmp")
 
+[node name="SyncCraftStation" type="Node" parent="CharacterInventorySystem/CraftStation" index="0" node_paths=PackedStringArray("craft_station")]
+script = ExtResource("9_c6j5p")
+craft_station = NodePath("..")
+
 [node name="Mesh" type="MeshInstance3D" parent="." index="4"]
 material_override = SubResource("StandardMaterial3D_tipcy")
 mesh = SubResource("CapsuleMesh_v040h")
@@ -90,9 +94,5 @@ replication_config = SubResource("SceneReplicationConfig_bfpca")
 [node name="SyncHotbar" type="Node" parent="." index="6" node_paths=PackedStringArray("hotbar")]
 script = ExtResource("2_kp02v")
 hotbar = NodePath("../CharacterInventorySystem/Hotbar")
-
-[node name="SyncCrafter" type="Node" parent="." index="7" node_paths=PackedStringArray("crafter")]
-script = ExtResource("3_15sbs")
-crafter = NodePath("../CharacterInventorySystem/Crafter")
 
 [editable path="CharacterInventorySystem"]

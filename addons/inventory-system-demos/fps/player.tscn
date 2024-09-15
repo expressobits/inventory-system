@@ -60,13 +60,7 @@ script = ExtResource("5_u6t8r")
 [node name="Hotbar" parent="CharacterInventorySystem" index="1"]
 database = ExtResource("4_ljenf")
 
-[node name="Crafter" parent="CharacterInventorySystem" index="2"]
-database = ExtResource("4_ljenf")
-
-[node name="Openable" type="Node" parent="CharacterInventorySystem/Crafter" index="0"]
-script = ExtResource("5_u6t8r")
-
-[node name="CraftStation" parent="CharacterInventorySystem/Crafter" index="1"]
+[node name="CraftStation" parent="CharacterInventorySystem" index="2"]
 database = ExtResource("4_ljenf")
 
 [node name="Interactor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera")]

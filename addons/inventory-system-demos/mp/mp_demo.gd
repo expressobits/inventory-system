@@ -11,6 +11,8 @@ func _ready():
 	multiplayer.peer_connected.connect(_player_connected)
 	multiplayer.peer_disconnected.connect(_player_disconnected)
 
+func _process(delta: float) -> void:
+	pass
 
 func create_player(peer_id : int):
 	connected_peer_ids.append(peer_id)
