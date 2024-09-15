@@ -50,7 +50,6 @@ void Crafting::deserialize(Dictionary data) {
 	time = data["time"];
 }
 
-
 CraftStation::CraftStation() {
 }
 
@@ -58,8 +57,8 @@ CraftStation::~CraftStation() {
 }
 
 void CraftStation::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("tick", "delta"), &CraftStation::tick);
 	ClassDB::bind_method(D_METHOD("is_crafting"), &CraftStation::is_crafting);
-	ClassDB::bind_method(D_METHOD("crafting_count"), &CraftStation::crafting_count);
 	ClassDB::bind_method(D_METHOD("can_craft", "recipe"), &CraftStation::can_craft);
 	ClassDB::bind_method(D_METHOD("contains_ingredients", "recipe"), &CraftStation::contains_ingredients);
 	ClassDB::bind_method(D_METHOD("craft", "recipe_index"), &CraftStation::craft);
@@ -72,6 +71,8 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_input_inventories"), &CraftStation::get_input_inventories);
 	ClassDB::bind_method(D_METHOD("set_output_inventories", "output_inventories"), &CraftStation::set_output_inventories);
 	ClassDB::bind_method(D_METHOD("get_output_inventories"), &CraftStation::get_output_inventories);
+	ClassDB::bind_method(D_METHOD("set_has_limit_crafts", "has_limit_crafts"), &CraftStation::set_has_limit_crafts);
+	ClassDB::bind_method(D_METHOD("get_has_limit_crafts"), &CraftStation::get_has_limit_crafts);
 	ClassDB::bind_method(D_METHOD("set_limit_number_crafts", "limit_number_crafts"), &CraftStation::set_limit_number_crafts);
 	ClassDB::bind_method(D_METHOD("get_limit_number_crafts"), &CraftStation::get_limit_number_crafts);
 	ClassDB::bind_method(D_METHOD("set_can_processing_craftings", "can_processing_craftings"), &CraftStation::set_can_processing_craftings);
@@ -86,15 +87,14 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_auto_craft"), &CraftStation::get_auto_craft);
 	ClassDB::bind_method(D_METHOD("set_processing_mode", "processing_mode"), &CraftStation::set_processing_mode);
 	ClassDB::bind_method(D_METHOD("get_processing_mode"), &CraftStation::get_processing_mode);
-	ClassDB::bind_method(D_METHOD("set_can_add_input_inventory", "can_add_input_inventory"), &CraftStation::set_can_add_input_inventory);
-	ClassDB::bind_method(D_METHOD("get_can_add_input_inventory"), &CraftStation::get_can_add_input_inventory);
+	ClassDB::bind_method(D_METHOD("set_tick_update_method", "tick_update_method"), &CraftStation::set_tick_update_method);
+	ClassDB::bind_method(D_METHOD("get_tick_update_method"), &CraftStation::get_tick_update_method);
 	ClassDB::bind_method(D_METHOD("set_craftings", "craftings"), &CraftStation::set_craftings);
 	ClassDB::bind_method(D_METHOD("get_craftings"), &CraftStation::get_craftings);
 	ClassDB::bind_method(D_METHOD("set_valid_recipes", "valid_recipes"), &CraftStation::set_valid_recipes);
 	ClassDB::bind_method(D_METHOD("get_valid_recipes"), &CraftStation::get_valid_recipes);
 	ClassDB::bind_method(D_METHOD("add_input_inventory", "input_inventory"), &CraftStation::add_input_inventory);
 	ClassDB::bind_method(D_METHOD("remove_input_inventory", "input_inventory"), &CraftStation::remove_input_inventory);
-	ADD_SIGNAL(MethodInfo("inventory_changed"));
 	ADD_SIGNAL(MethodInfo("on_crafted", PropertyInfo(Variant::INT, "recipe_index")));
 	ADD_SIGNAL(MethodInfo("on_request_craft", PropertyInfo(Variant::INT, "recipe_index")));
 	ADD_SIGNAL(MethodInfo("crafting_added", PropertyInfo(Variant::INT, "crafting_index")));
@@ -103,6 +103,7 @@ void CraftStation::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("input_inventory_removed", PropertyInfo(Variant::NODE_PATH, "input_inventory_path")));
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "input_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_input_inventories", "get_input_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "output_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_output_inventories", "get_output_inventories");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "has_limit_crafts"), "set_has_limit_crafts", "get_has_limit_crafts");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "limit_number_crafts"), "set_limit_number_crafts", "get_limit_number_crafts");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_processing_craftings"), "set_can_processing_craftings", "get_can_processing_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_finish_craftings"), "set_can_finish_craftings", "get_can_finish_craftings");
@@ -110,9 +111,23 @@ void CraftStation::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "only_remove_ingredients_after_craft"), "set_only_remove_ingredients_after_craft", "get_only_remove_ingredients_after_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_craft"), "set_auto_craft", "get_auto_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "processing_mode", PROPERTY_HINT_ENUM, "Parallel,Sequential"), "set_processing_mode", "get_processing_mode");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_add_input_inventory"), "set_can_add_input_inventory", "get_can_add_input_inventory");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "tick_update_method", PROPERTY_HINT_ENUM, "Process,Physic Process,Custom"), "set_tick_update_method", "get_tick_update_method");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "craftings", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Crafting")), "set_craftings", "get_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "valid_recipes"), "set_valid_recipes", "get_valid_recipes");
+}
+
+void CraftStation::_validate_property(PropertyInfo &p_property) const {
+	if (p_property.name == StringName("limit_number_crafts")) {
+		if (!has_limit_crafts) {
+			p_property.usage = PROPERTY_USAGE_NO_EDITOR;
+		}
+	}
+	if (p_property.name == StringName("craftings")) {
+		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
+	}
+	if (p_property.name == StringName("valid_recipes")) {
+		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
+	}
 }
 
 void CraftStation::_process_crafts(float delta) {
@@ -131,7 +146,8 @@ void CraftStation::_process_crafts(float delta) {
 void CraftStation::finish_crafting(int crafting_index) {
 	ERR_FAIL_COND_MSG(get_database() == nullptr, "Database is null.");
 	ERR_FAIL_COND_MSG(crafting_index < 0 || crafting_index >= craftings.size(), "Crafting Index incorrect!");
-	ERR_FAIL_COND_MSG(input_inventories.is_empty(), "Craft Station does not contain any input inventory.");
+	ERR_FAIL_COND_MSG(output_inventories.is_empty(), "Craft Station does not contain any output inventory.");
+
 	Ref<Crafting> crafting = craftings[crafting_index];
 	Ref<Recipe> recipe = get_database()->get_recipes()[crafting->get_recipe_index()];
 	remove_crafting(crafting_index);
@@ -161,7 +177,8 @@ void CraftStation::finish_crafting(int crafting_index) {
 }
 
 bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
-	ERR_FAIL_COND_V_MSG(input_inventories.is_empty(), false, "Craft Station does not contain any input inventory.");
+	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
+
 	if (recipe->get_station() != type)
 		return false;
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
@@ -183,6 +200,8 @@ bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 }
 
 void CraftStation::add_crafting(int recipe_index, const Ref<Recipe> &recipe) {
+	ERR_FAIL_NULL_MSG(recipe, "'recipe' is null.");
+
 	Ref<Crafting> crafting = memnew(Crafting());
 	crafting->set_recipe_index(recipe_index);
 	crafting->set_time(recipe->get_time_to_craft());
@@ -192,6 +211,7 @@ void CraftStation::add_crafting(int recipe_index, const Ref<Recipe> &recipe) {
 
 void CraftStation::remove_crafting(int crafting_index) {
 	ERR_FAIL_COND_MSG(crafting_index < 0 || crafting_index >= craftings.size(), "Crafting Index incorrect!");
+
 	craftings.remove_at(crafting_index);
 	emit_signal("crafting_removed", crafting_index);
 }
@@ -257,9 +277,7 @@ void CraftStation::_setup_connections() {
 	}
 }
 
-void CraftStation::_process(float delta) {
-	if (Engine::get_singleton()->is_editor_hint())
-		return;
+void CraftStation::tick(float delta) {
 	if (!can_processing_craftings)
 		return;
 	if (!is_crafting())
@@ -276,25 +294,40 @@ void CraftStation::_process(float delta) {
 	}
 }
 
+void CraftStation::_process(float delta) {
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
+	if (tick_update_method == TickUpdateMethod::PROCESS) {
+		tick(delta);
+	}
+}
+
+void CraftStation::_physic_process(float delta) {
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
+	if (tick_update_method == TickUpdateMethod::PHYSIC_PROCESS) {
+		tick(delta);
+	}
+}
+
+
 bool CraftStation::is_crafting() const {
 	return !craftings.is_empty();
 }
 
-int CraftStation::crafting_count() const {
-	return craftings.size();
-}
-
 bool CraftStation::can_craft(const Ref<Recipe> &recipe) const {
-	if (recipe == nullptr)
-		return false;
+	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
+
 	if (recipe->get_station() != type)
 		return false;
-	if (limit_number_crafts >= 0 && limit_number_crafts <= craftings.size())
+	if (has_limit_crafts && limit_number_crafts <= craftings.size())
 		return false;
 	return contains_ingredients(recipe);
 }
 
 bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
+	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
+
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
 		Ref<Slot> slot = recipe->get_ingredients()[i];
 		int amount_total = 0;
@@ -330,7 +363,8 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 
 void CraftStation::craft(int recipe_index) {
 	ERR_FAIL_COND_MSG(get_database() == nullptr, "Database is null.");
-	ERR_FAIL_COND_MSG(get_database()->get_recipes().size() <= recipe_index, "Recipe index is lower than the number of recipes in the database.");
+	ERR_FAIL_COND_MSG(get_database()->get_recipes().size() <= recipe_index || recipe_index < 0, "Recipe index is lower than the number of recipes in the database.");
+
 	Ref<Recipe> recipe = get_database()->get_recipes()[recipe_index];
 	emit_signal("on_request_craft", recipe_index);
 	if (!can_craft(recipe))
@@ -343,6 +377,7 @@ void CraftStation::craft(int recipe_index) {
 void CraftStation::cancel_craft(int crafting_index) {
 	ERR_FAIL_COND_MSG(get_database() == nullptr, "Database is null.");
 	ERR_FAIL_COND_MSG(crafting_index < 0 || crafting_index >= craftings.size(), "Incorrect crafting index.");
+
 	Ref<Crafting> crafting = craftings[crafting_index];
 	Ref<Recipe> recipe = get_database()->get_recipes()[crafting->get_recipe_index()];
 	if (!only_remove_ingredients_after_craft) {
@@ -360,6 +395,8 @@ void CraftStation::cancel_craft(int crafting_index) {
 }
 
 Inventory *CraftStation::get_input_inventory(const int &index) const {
+	ERR_FAIL_COND_V_MSG(index < 0 || index >= input_inventories.size(), nullptr, "input inventory index out of bounds.");
+
 	Node *node_inv = get_node_or_null(input_inventories[index]);
 	Inventory *inventory = Object::cast_to<Inventory>(node_inv);
 	if (inventory == nullptr) {
@@ -369,6 +406,8 @@ Inventory *CraftStation::get_input_inventory(const int &index) const {
 }
 
 Inventory *CraftStation::get_output_inventory(const int &index) const {
+	ERR_FAIL_COND_V_MSG(index < 0 || index >= input_inventories.size(), nullptr, "output inventory index out of bounds.");
+
 	Node *node_inv = get_node_or_null(output_inventories[index]);
 	Inventory *inventory = Object::cast_to<Inventory>(node_inv);
 	if (inventory == nullptr) {
@@ -391,6 +430,15 @@ void CraftStation::set_output_inventories(const TypedArray<NodePath> &new_output
 
 TypedArray<NodePath> CraftStation::get_output_inventories() const {
 	return output_inventories;
+}
+
+void CraftStation::set_has_limit_crafts(const bool &new_has_limit_craftings) {
+	has_limit_crafts = new_has_limit_craftings;
+	notify_property_list_changed();
+}
+
+bool CraftStation::get_has_limit_crafts() const {
+	return has_limit_crafts;
 }
 
 void CraftStation::set_limit_number_crafts(const int &new_limit_number_crafts) {
@@ -450,12 +498,12 @@ int CraftStation::get_processing_mode() const {
 	return processing_mode;
 }
 
-void CraftStation::set_can_add_input_inventory(const bool &new_can_add_input_inventory) {
-	can_add_input_inventory = new_can_add_input_inventory;
+void CraftStation::set_tick_update_method(const int &new_tick_update_method) {
+	tick_update_method = new_tick_update_method;
 }
 
-bool CraftStation::get_can_add_input_inventory() const {
-	return can_add_input_inventory;
+int CraftStation::get_tick_update_method() const {
+	return tick_update_method;
 }
 
 void CraftStation::set_craftings(const TypedArray<Crafting> &new_craftings) {
@@ -475,13 +523,16 @@ TypedArray<int> CraftStation::get_valid_recipes() const {
 }
 
 void CraftStation::add_input_inventory(Inventory *input_inventory) {
-	if(!can_add_input_inventory) return;
+	ERR_FAIL_NULL_MSG(input_inventory, "param 'input_inventory' is null.");
+
 	NodePath path = get_path_to(input_inventory);
 	input_inventories.append(path);
 	emit_signal("input_inventory_added", path);
 }
 
 void CraftStation::remove_input_inventory(Inventory *input_inventory) {
+	ERR_FAIL_NULL_MSG(input_inventory, "param 'input_inventory' is null.");
+
 	NodePath path = get_path_to(input_inventory);
 	int64_t index = input_inventories.find(path);
 	if (index == -1)

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="CraftStation" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Station where new [Crafting] processes are generated.
 	</brief_description>
 	<description>
+		This node has a list of recipes that are generated based on the recipes in [member NodeInventories.database] filtered by the [member type] of this station (If there is no type defined, the recipes will be those that also have no type defined. See more in [Recipe])
+		The node also maintains a list of crafting processes currently being performed, which are created by [method craft] and finished by [method finish_craft].
 	</description>
 	<tutorials>
 	</tutorials>
@@ -12,132 +15,188 @@
 			<param index="0" name="recipe_index" type="int" />
 			<param index="1" name="recipe" type="Recipe" />
 			<description>
+				Adds a new crafting process with the [param recipe] index [param recipe_index] to the station's crafting process list. It emits the signal [signal crafting_added].
 			</description>
 		</method>
 		<method name="add_input_inventory">
 			<return type="void" />
 			<param index="0" name="input_inventory" type="Inventory" />
 			<description>
+				Adds a new [Inventory] used as input for crafting. Items in this inventory will be used as [member Recipe.ingredients] and [member Recipe.required_items] for crafting.
 			</description>
 		</method>
 		<method name="can_craft" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="recipe" type="Recipe" />
 			<description>
+				Returns true if the [param recipe] can be created. It checks whether the ingredients are present in the [member input_inventories] and whether this recipe is of the [CraftStationType] type of this station.
 			</description>
 		</method>
 		<method name="cancel_craft">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
 			<description>
+				Cancels [Crafting] with index [param crafting_index] and returns the items used by crafting to the input inventory. Note: Canceling does not return items to their previous positions, such as [Inventory] or a specific [Slot].
 			</description>
 		</method>
 		<method name="contains_ingredients" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="recipe" type="Recipe" />
 			<description>
+				Returns true if the input inventories have the [member Recipe.ingredients] and [member Recipe.required_items] for this [Crafting] recipe.
 			</description>
 		</method>
 		<method name="craft">
 			<return type="void" />
 			<param index="0" name="recipe_index" type="int" />
 			<description>
-			</description>
-		</method>
-		<method name="crafting_count" qualifiers="const">
-			<return type="int" />
-			<description>
+				Calls a new craft with recipe from index [param recipe_index] of [member valid_recipes] to be processed (added to the [member.craftings] list). Note: It will only be included if [method contains_ingredients] is true.
 			</description>
 		</method>
 		<method name="finish_crafting">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
 			<description>
+				Finishes a craft from the [member craftings] process list with index [param crafting_index]. This method removes the items from [member Recipe.ingredients] from the input inventories if the [member only_remove_ingredients_after_craft] option is enabled. Adds the [member Recipe.products] to the output inventories. The [signal on_crafted] is emitted when successfully removed.
 			</description>
 		</method>
 		<method name="get_input_inventory" qualifiers="const">
 			<return type="Inventory" />
 			<param index="0" name="index" type="int" default="0" />
 			<description>
+				Returns an input [Inventory] by the index of [param index].
 			</description>
 		</method>
 		<method name="is_crafting" qualifiers="const">
 			<return type="bool" />
 			<description>
+				Returns true if the craftstation is processing a crafting.
 			</description>
 		</method>
 		<method name="remove_crafting">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
 			<description>
+				Removes a crafting from the list of [member craftings] with index [param crafting_index]. This is called by [method finish_crafting]. Note: This method does not do the same as [method finish_crafting], it does not add crafting after removal. It emits the signal [signal crafting_removed].
 			</description>
 		</method>
 		<method name="remove_input_inventory">
 			<return type="void" />
 			<param index="0" name="input_inventory" type="Inventory" />
 			<description>
+				Remove a [Inventory] used as input for crafting.
+			</description>
+		</method>
+		<method name="tick">
+			<return type="void" />
+			<param index="0" name="delta" type="float" />
+			<description>
+				Method called to update the list of [member craftings]. This method can be called internally or by your code by setting the [member tick_update_method].
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="auto_craft" type="bool" setter="set_auto_craft" getter="get_auto_craft" default="false">
-		</member>
-		<member name="can_add_input_inventory" type="bool" setter="set_can_add_input_inventory" getter="get_can_add_input_inventory" default="true">
+			When activating the station upon identifying a change in the input inventories, it can call the [method craft] method when possible. This is used in the demo with the campfire, it activates this option when it is turned on with fuel.
+			[codeblocks]
+			[gdscript]
+			func _update_is_burning():
+			    ...
+			    craft_station.auto_craft = is_burning
+			    ...
+			[/gdscript]
+			[/codeblocks]
 		</member>
 		<member name="can_finish_craftings" type="bool" setter="set_can_finish_craftings" getter="get_can_finish_craftings" default="true">
+			If true calls [method finish_craft] after [Crafting] finish.
 		</member>
 		<member name="can_processing_craftings" type="bool" setter="set_can_processing_craftings" getter="get_can_processing_craftings" default="true">
+			If true the station processes crafts based on the method [method tick] called (This method is called differently depending on the option chosen in [member tick_update_method]).
+			In the demo the is_burning of campfire is used to turn this option on/off.
+			[codeblocks]
+			[gdscript]
+			func _update_is_burning():
+			    ...
+			    craft_station.can_processing_craftings = is_burning
+			    ...
+			[/gdscript]
+			[/codeblocks]
 		</member>
 		<member name="craftings" type="Crafting[]" setter="set_craftings" getter="get_craftings" default="[]">
+			List of current craftings being processed, if the [member processing_mode] option is [member processing_mode.Parallel] the processings will be happening together, otherwise only one will be processing and the others will be waiting for the first one to finish.
+			An example of using this list is in the demo in [code]crafting_ui.gd[/code]:
+			[codeblocks]
+			[gdscript]
+			func set_crafting(station : CraftStation, crafting_index : int):
+			    crafting = station.craftings[crafting_index]
+			    var recipe = station.database.recipes[recipe_index]
+			    var item = recipe.products[0].item
+			[/gdscript]
+			[/codeblocks]
+		</member>
+		<member name="has_limit_crafts" type="bool" setter="set_has_limit_crafts" getter="get_has_limit_crafts" default="false">
+			If true the craftstation may have a limit of [member limit_number_crafts] to process in the [member craftings] list.
 		</member>
 		<member name="input_inventories" type="NodePath[]" setter="set_input_inventories" getter="get_input_inventories" default="[]">
+			List of [Inventory] items that will be used for crafting [member Recipe.ingredients] items.
 		</member>
-		<member name="limit_number_crafts" type="int" setter="set_limit_number_crafts" getter="get_limit_number_crafts" default="-1">
+		<member name="limit_number_crafts" type="int" setter="set_limit_number_crafts" getter="get_limit_number_crafts" default="4">
+			Limit the number of craftings in the [member craftings] list. This value is only set if [member has_limit_crafts] is true.
 		</member>
 		<member name="only_remove_ingredients_after_craft" type="bool" setter="set_only_remove_ingredients_after_craft" getter="get_only_remove_ingredients_after_craft" default="false">
+			Removes ingredients only when the crafting process finishes in [method finish_craft], this is used in the demo campfire to not remove meats while crafting is happening.
 		</member>
 		<member name="output_inventories" type="NodePath[]" setter="set_output_inventories" getter="get_output_inventories" default="[]">
+			Craft product output inventory, after [method finish_craft] happens a list of products from [member Recipe.produts] is added to these inventories. Note: An inventory can be part of both [member input_inventories] and [member output_inventories] at the same time.
 		</member>
 		<member name="processing_mode" type="int" setter="set_processing_mode" getter="get_processing_mode" default="0">
+			Processing mode for [member craftings]. If set to [code]Parallel[/code], all craftings will happen together, if set to [code]Sequential[/code] only one craft will be processed at a time.
+		</member>
+		<member name="tick_update_method" type="int" setter="set_tick_update_method" getter="get_tick_update_method" default="0">
+			Method for updating crafting processes. If marked as [code]Process[/code] or [code]Physic Process[/code] , the [method tick] call will happen internally in your respective godot calls. If marked as [code]Custom[/code] the [method tick] method will not be called anywhere and you will have to call it in your code, it should be useful for multiplayer systems where the server manages this time.
 		</member>
 		<member name="type" type="CraftStationType" setter="set_type" getter="get_type">
+			Defines the station type with resource [CraftStationType]. This resource must be created in [InventoryDatabase] with a custom editor. This defines which recipes will be valid for this station in the variable [member valid_recipes].
 		</member>
 		<member name="valid_recipes" type="int[]" setter="set_valid_recipes" getter="get_valid_recipes" default="[]">
+			Valid recipes that are filtered based on the defined station type. See in [member type].
 		</member>
 	</members>
 	<signals>
 		<signal name="crafting_added">
 			<param index="0" name="crafting_index" type="int" />
 			<description>
+				Emitted when a new crafting is added to the [member craftings] list. This signal is emitted after [method add_crafting] method occurs.
 			</description>
 		</signal>
 		<signal name="crafting_removed">
 			<param index="0" name="crafting_index" type="int" />
 			<description>
+				Emitted when a crafting is removed from the list of [member craftings]. This signal is emitted after [method remove_crafting] method occurs.
 			</description>
 		</signal>
 		<signal name="input_inventory_added">
 			<param index="0" name="input_inventory_path" type="NodePath" />
 			<description>
+				Emitted when a new [Inventory] is added to the [member input_inventories] list. This signal is emitted after the [method add_input_inventory] method occurs.
 			</description>
 		</signal>
 		<signal name="input_inventory_removed">
 			<param index="0" name="input_inventory_path" type="NodePath" />
 			<description>
-			</description>
-		</signal>
-		<signal name="inventory_changed">
-			<description>
+				Emitted when a new [Inventory] is removed from the [member input_inventories] list. This signal is emitted after the [method remove_input_inventory] method occurs.
 			</description>
 		</signal>
 		<signal name="on_crafted">
 			<param index="0" name="recipe_index" type="int" />
 			<description>
+				Emitted when a [Crafting] is successfully completed. This signal is emitted after the [method finish_craft] method successfully completes.
 			</description>
 		</signal>
 		<signal name="on_request_craft">
 			<param index="0" name="recipe_index" type="int" />
 			<description>
+				Emitted when a [Crafting] is requested, unlike crafting_added, this signal can happen even when the crafting cannot be done. This signal is emitted at the start of the [method craft] method.
 			</description>
 		</signal>
 	</signals>

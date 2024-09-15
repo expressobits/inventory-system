@@ -9,6 +9,7 @@
 
 using namespace godot;
 
+
 class Crafting : public Resource {
 	GDCLASS(Crafting, Resource);
 
@@ -36,16 +37,18 @@ class CraftStation : public NodeInventories {
 private:
 	TypedArray<NodePath> input_inventories;
 	TypedArray<NodePath> output_inventories;
-	int limit_number_crafts = -1;
+	bool has_limit_crafts = false;
+	int limit_number_crafts = 4;
 	bool can_processing_craftings = true;
 	bool can_finish_craftings = true;
 	Ref<CraftStationType> type;
 	bool only_remove_ingredients_after_craft = false;
 	bool auto_craft = false;
 	int processing_mode = 0;
-	bool can_add_input_inventory = true;
 	TypedArray<int> valid_recipes;
+	int tick_update_method = 0;
 
+	void _validate_property(PropertyInfo &p_property) const;
 	void _process_crafts(float delta);
 	bool _use_items(const Ref<Recipe> &recipe);
 	void _on_input_inventory_item_added(Ref<Item> item, int amount);
@@ -62,16 +65,24 @@ public:
 		SEQUENTIAL,
 	};
 
+	enum TickUpdateMethod{
+		PROCESS = 0, 
+		PHYSIC_PROCESS = 1,
+		CUSTOM  = 2
+	};
+	
+
 	CraftStation();
 	~CraftStation();
 	virtual void _ready() override;
 	virtual void _process(float delta);
+	virtual void _physic_process(float delta);
 	void _setup_connections();
+	void tick(float delta);
 	void add_crafting(int recipe_index, const Ref<Recipe> &recipe);
 	void remove_crafting(int crafting_index);
 	virtual void finish_crafting(int crafting_index);
 	bool is_crafting() const;
-	int crafting_count() const;
 	bool can_craft(const Ref<Recipe> &recipe) const;
 	bool contains_ingredients(const Ref<Recipe> &recipe) const;
 	virtual void craft(int recipe_index);
@@ -82,6 +93,8 @@ public:
 	TypedArray<NodePath> get_input_inventories() const;
 	void set_output_inventories(const TypedArray<NodePath> &new_output_inventories);
 	TypedArray<NodePath> get_output_inventories() const;
+	void set_has_limit_crafts(const bool &new_has_limit_craftings);
+	bool get_has_limit_crafts() const;
 	void set_limit_number_crafts(const int &new_limit_number_crafts);
 	int get_limit_number_crafts() const;
 	void set_can_processing_craftings(const bool &new_can_processing_craftings);
@@ -96,8 +109,8 @@ public:
 	bool get_auto_craft() const;
 	void set_processing_mode(const int &new_processing_mode);
 	int get_processing_mode() const;
-	void set_can_add_input_inventory(const bool &new_can_add_input_inventory);
-	bool get_can_add_input_inventory() const;
+	void set_tick_update_method(const int &new_tick_update_method);
+	int get_tick_update_method() const;
 	void set_craftings(const TypedArray<Crafting> &new_craftings);
 	TypedArray<Crafting> get_craftings() const;
 	void set_valid_recipes(const TypedArray<int> &new_valid_recipes);
@@ -107,5 +120,6 @@ public:
 };
 
 VARIANT_ENUM_CAST(CraftStation::ProcessingMode);
+VARIANT_ENUM_CAST(CraftStation::TickUpdateMethod);
 
 #endif // CRAFT_STATION_CLASS_H
