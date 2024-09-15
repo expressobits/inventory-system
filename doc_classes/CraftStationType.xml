@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="CraftStationType" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Determines the type of [CraftStation].
 	</brief_description>
 	<description>
+		This is used by [CraftStation] to filter the valid [Recipe]s in the [CraftStation.valid_recipes] list using the value set in the [Recipe.station] recipes.
 	</description>
 	<tutorials>
 	</tutorials>
 	<members>
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
+			Station type icon.
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
+			Station type name.
 		</member>
 	</members>
 </class>
