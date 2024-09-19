@@ -7,8 +7,8 @@ signal placed
 @export var property_from_item_for_object_scene : String = "placeable"
 @export var drop_node_path : NodePath = "../../../.."
 @onready var drop_node_parent : Node = get_node(drop_node_path)
-@export_node_path("InventoryHandler") var inventory_handler_path := NodePath("../../InventoryHandler")
-@onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+@export_node_path("Inventory") var main_inventory_path := NodePath("../../InventoryHandler/Inventory")
+@onready var main_inventory : Inventory = get_node(main_inventory_path)
 
 
 # TODO Add code to interactor child node (InteractorResponse)
@@ -20,10 +20,9 @@ func place_item(item : Item, position : Vector3, rotation : Vector3):
 	var res = load(path)
 	if res is PackedScene:
 		var scene = res as PackedScene
-		for i in inventory_handler.inventories_path.size():
-			if inventory_handler.get_inventory(i).remove(item) <= 0:
-				_instantiate_object(scene, position, rotation)
-				return
+		if main_inventory.remove(item) <= 0:
+			_instantiate_object(scene, position, rotation)
+			return
 
 
 func _instantiate_object(dropped_item : PackedScene, position : Vector3, rotation : Vector3):

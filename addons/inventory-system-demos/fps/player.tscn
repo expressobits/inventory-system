@@ -42,6 +42,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." node_paths=PackedStringArray("raycast", "camera_3d") instance=ExtResource("3_hbu24")]
+database = ExtResource("4_ljenf")
 raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 

@@ -33,7 +33,7 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 		return
 	var interactor = character.character_inventory_system.interactor
 	var item = interactor.hotbar.get_selected_item()
-	var char_inventory = character.character_inventory_system.inventory_handler.get_inventory(0)
+	var char_inventory = character.character_inventory_system.main_inventory
 	var char_slot_index = interactor.hotbar.selection_index
 	if action_index == 0:
 		super.interact(character, action_index)

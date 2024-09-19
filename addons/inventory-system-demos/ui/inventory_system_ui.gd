@@ -77,8 +77,8 @@ func setup(character : CharacterInventorySystem):
 	# Handler
 	inventory_handler = character.inventory_handler
 	var inventories : Array[Inventory]
-	for i in character.inventory_handler.inventories_path.size():
-		inventories.append(character.inventory_handler.get_inventory(i))
+	inventories.append(character.main_inventory)
+	inventories.append(character.equipment_inventory)
 	set_player_inventories(inventories)
 	character.opened_inventory.connect(_on_open_inventory)
 	character.closed_inventory.connect(_on_close_inventory)
@@ -120,7 +120,7 @@ func _open_player_inventory():
 
 # Open Inventory of player	
 func _on_open_inventory(inventory : Inventory):
-	if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) == -1:
+	if character.main_inventory != inventory:
 		loot_inventory_ui.set_inventory(inventory)
 		loot_inventory_ui.visible = true
 	else:

@@ -6,14 +6,21 @@ extends "../character/character_inventory_system.gd"
 
 
 func _ready():
-	inventory_handler.request_drop_obj.connect(_on_request_drop_obj)
+	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
+	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
 		opened_inventory.connect(_update_opened_inventories)
 		closed_inventory.connect(_update_opened_inventories)
 		opened_station.connect(_update_opened_stations)
 		closed_station.connect(_update_opened_stations)
-		_update_opened_inventories(inventory_handler.get_inventory(0))
+		_update_opened_inventories(main_inventory)
+	else:
+		picked.connect(_on_picked)
+
+
+func _on_picked(obj : Node):
+	picked_rpc.rpc(obj.get_path())
 
 
 func _input(event : InputEvent):
@@ -92,13 +99,6 @@ func pick_to_inventory(node : Node):
 		super.pick_to_inventory(node)
 	else:
 		pick_to_inventory_rpc.rpc_id(1, node.get_path())
-
-
-func add_to_inventory(item : Item, amount : int):
-	if multiplayer.is_server():
-		super.add_to_inventory(item, amount)
-	else:
-		add_to_inventory_rpc.rpc_id(1, item.definition.id, amount)
 
 
 func open_main_craft_station():
@@ -182,6 +182,11 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 	var obj = drop_item_spawner.spawn(data)
 	dropped.emit(obj)
 
+@rpc("any_peer")
+func picked_rpc(obj_path : NodePath):
+	var obj = get_node(obj_path)
+	picked.emit(obj)
+
 
 @rpc("any_peer")
 func open_main_inventory_rpc():
@@ -252,13 +257,6 @@ func transaction_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_t
 @rpc
 func pick_to_inventory_rpc(node_path : NodePath):
 	super.pick_to_inventory(get_node(node_path))
-
-
-@rpc
-func add_to_inventory_rpc(item_id : int, amount : int):
-	var item = Item.new()
-	item.definition = get_item_from_id(item_id)
-	super.add_to_inventory(item, amount)
 
 
 @rpc

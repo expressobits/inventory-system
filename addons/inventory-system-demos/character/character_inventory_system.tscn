@@ -16,7 +16,6 @@
 script = ExtResource("1_mwfdb")
 
 [node name="InventoryHandler" type="InventoryHandler" parent="."]
-inventories_path = Array[NodePath]([NodePath("Inventory"), NodePath("EquipmentInventory")])
 
 [node name="Inventory" type="Inventory" parent="InventoryHandler"]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])

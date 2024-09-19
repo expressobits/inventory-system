@@ -8,12 +8,17 @@ signal opened_station(station : CraftStation)
 signal closed_station(station : CraftStation)
 signal opened_inventory(inventory : Inventory)
 signal closed_inventory(inventory : Inventory)
+signal picked(obj : Node)
 
 const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @export_group("🗃️ Inventory Nodes")
 @export_node_path("InventoryHandler") var inventory_handler_path := NodePath("InventoryHandler")
 @onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
+@export_node_path var main_inventory_path := NodePath("InventoryHandler/Inventory")
+@onready var main_inventory : Inventory = get_node(main_inventory_path)
+@export_node_path var equipment_inventory_path := NodePath("InventoryHandler/EquipmentInventory")
+@onready var equipment_inventory : Inventory = get_node(equipment_inventory_path)
 @export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
@@ -24,6 +29,8 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var drop_parent : Node = get_node(drop_parent_path)
 @export_node_path var drop_parent_position_path := NodePath("..");
 @onready var drop_parent_position : Node = get_node(drop_parent_position_path)
+
+var transaction_slot : Slot
 
 var opened_stations : Array[CraftStation]
 var opened_inventories : Array[Inventory]
@@ -57,7 +64,8 @@ var opened_inventories : Array[Inventory]
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	inventory_handler.request_drop_obj.connect(_on_request_drop_obj)
+	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
+	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	
 	# Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
@@ -65,7 +73,7 @@ func _ready():
 		closed_inventory.connect(_update_opened_inventories)
 		opened_station.connect(_update_opened_stations)
 		closed_station.connect(_update_opened_stations)
-		_update_opened_inventories(inventory_handler.get_inventory(0))
+		_update_opened_inventories(main_inventory)
 
 
 func _input(event : InputEvent) -> void:
@@ -135,14 +143,27 @@ func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move :
 
 
 func pick_to_inventory(node : Node):
-	inventory_handler.pick_to_inventory(node)
+	if main_inventory == null:
+		return
 
+	if !node.get("is_pickable"):
+		return
+		
+	var item = node.item
+	
+	if item == null:
+		return
 
-func add_to_inventory(item : Item, amount : int):
-	inventory_handler.add_to_inventory(inventory_handler.get_inventory(0), item, amount)
+	if main_inventory.add(item, 1, true) == 0:
+		emit_signal("picked", node)
+		node.queue_free();
+		return
+		
+	printerr("pick_to_inventory return false");
+
 
 func drop_transaction():
-	inventory_handler.drop_transaction()
+	inventory_handler.drop_transaction(main_inventory)
 
 
 func _on_request_drop_obj(dropped_item : String, item : Item):
@@ -206,11 +227,11 @@ func add_open_inventory(inventory : Inventory):
 		open_main_inventory()
 	
 func open_main_inventory():
-	open_inventory(inventory_handler.get_inventory(0))
+	open_inventory(main_inventory)
 	
 	
 func close_inventory(inventory : Inventory):
-	if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) == -1:
+	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
 	remove_open_inventory(inventory)
 
@@ -230,7 +251,7 @@ func is_open_any_inventory():
 	return !opened_inventories.is_empty()
 	
 func is_open_main_inventory():
-	return is_open_inventory(inventory_handler.get_inventory(0))
+	return is_open_inventory(main_inventory)
 #endregion
 
 #region Open Craft Stations
