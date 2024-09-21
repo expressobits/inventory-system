@@ -18,13 +18,11 @@
 
 ✔️ Separate UI inventory logic.
 
-✔️ Inventory Handler - which manages inventories.
-
 ✔️ First Person demo with chests.
 
 ✔️ Fully commented core and UI code.
 
-✔️ Item as Extendable Resource.
+✔️ Item Definition as Extendable Resource.
 
 ✔️ Demonstrations of dropped items and item pickup.
 

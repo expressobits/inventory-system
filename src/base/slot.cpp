@@ -76,6 +76,7 @@ Slot::~Slot() {
 
 void Slot::set_item(const Ref<Item> &new_item) {
 	item = new_item;
+	emit_signal("updated");
 }
 
 Ref<Item> Slot::get_item() const {
@@ -84,6 +85,7 @@ Ref<Item> Slot::get_item() const {
 
 void Slot::set_amount(const int &new_amount) {
 	amount = new_amount;
+	emit_signal("updated");
 }
 
 int Slot::get_amount() const {

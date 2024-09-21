@@ -15,7 +15,6 @@
 #include "base/slot.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
-#include "core/inventory_handler.h"
 #include "craft/craft_station.h"
 
 using namespace godot;
@@ -34,7 +33,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	ClassDB::register_class<Slot>();
 	ClassDB::register_class<Hotbar>();
 	ClassDB::register_class<Inventory>();
-	ClassDB::register_class<InventoryHandler>();
 	ClassDB::register_class<CraftStation>();
 	ClassDB::register_class<Crafting>();
 }
