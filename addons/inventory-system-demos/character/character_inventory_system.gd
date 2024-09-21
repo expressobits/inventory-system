@@ -234,6 +234,8 @@ func close_inventory(inventory : Inventory):
 	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
 	remove_open_inventory(inventory)
+	if inventory_handler.is_transaction_active():
+		inventory_handler.drop_transaction(main_inventory)
 
 
 func remove_open_inventory(inventory : Inventory):
