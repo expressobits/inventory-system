@@ -169,7 +169,7 @@ int Inventory::amount() const {
 	return amount_in_inventory;
 }
 
-int Inventory::add(const Ref<Item> &item, const int &amount) {
+int Inventory::add(const Ref<Item> &item, const int &amount, const bool &drop_excess) {
 	ERR_FAIL_NULL_V_MSG(item, amount, "The 'item' is null.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
@@ -207,6 +207,11 @@ int Inventory::add(const Ref<Item> &item, const int &amount) {
 
 	if (_added > 0) {
 		emit_signal("item_added", item, _added);
+	}
+
+	if (drop_excess) {
+		drop(item, amount_in_interact);
+		return 0;
 	}
 
 	return amount_in_interact;
@@ -351,6 +356,36 @@ String Inventory::get_inventory_name() const {
 	return inventory_name;
 }
 
+bool Inventory::drop(const Ref<Item> &item, const int &amount) {
+	ERR_FAIL_COND_V(item.is_null(), false);
+	ERR_FAIL_COND_V(item->get_definition().is_null(), false);
+	if (item->get_definition()->get_properties().has("dropped_item")) {
+		String path = item->get_definition()->get_properties()["dropped_item"];
+		// We have i < 1000 to have some enforced upper limit preventing long loops
+		for (size_t i = 0; i < amount && i < 1000; i++) {
+			emit_signal("request_drop_obj", path, item);
+		}
+		return true;
+	}
+	return false;
+}
+
+void Inventory::drop_from_inventory(const int &slot_index, const int &amount) {
+	ERR_FAIL_COND(slot_index < 0 || slot_index >= slots.size());
+
+	if (slots.size() <= slot_index)
+		return;
+	if (is_empty_slot(slot_index))
+		return;
+	Ref<Slot> slot = slots[slot_index];
+	if (!slot->has_valid())
+		return;
+	Ref<Item> item = slot->get_item();
+	int not_removed = remove_at(slot_index, item, amount);
+	int removed = amount - not_removed;
+	drop(item, removed);
+}
+
 void Inventory::_load_slots() {
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -462,11 +497,14 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("amount_of_item", "item"), &Inventory::amount_of_item);
 	ClassDB::bind_method(D_METHOD("get_amount_of_category", "category"), &Inventory::amount_of_category);
 	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::amount);
-	ClassDB::bind_method(D_METHOD("add", "item", "amount"), &Inventory::add, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("add", "item", "amount", "drop_excess"), &Inventory::add, DEFVAL(1), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("add_at", "slot_index", "item", "amount"), &Inventory::add_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "slot_index", "item", "amount"), &Inventory::remove_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer", "slot_index", "destination", "destination_slot_index", "amount"), &Inventory::transfer, DEFVAL(-1));
+
+	ClassDB::bind_method(D_METHOD("drop", "item", "amount"), &Inventory::drop, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount"), &Inventory::drop_from_inventory, DEFVAL(1));
 
 	ClassDB::bind_method(D_METHOD("set_slots", "slots"), &Inventory::set_slots);
 	ClassDB::bind_method(D_METHOD("get_slots"), &Inventory::get_slots);
@@ -487,6 +525,8 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("filled"));
 	ADD_SIGNAL(MethodInfo("emptied"));
 	ADD_SIGNAL(MethodInfo("updated_slot", PropertyInfo(Variant::INT, "slot_index")));
+
+	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::OBJECT, "item")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "slots", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_slots", "get_slots");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "create_slot_if_needed"), "set_create_slot_if_needed", "get_create_slot_if_needed");

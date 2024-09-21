@@ -46,11 +46,13 @@ public:
 	int amount_of_item(const Ref<Item> &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
-	int add(const Ref<Item> &item, const int &amount);
+	int add(const Ref<Item> &item, const int &amount, const bool &drop_excess = false);
 	int add_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	int remove(const Ref<Item> &item, const int &amount = 1);
 	int remove_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
-	void transfer(const int &slot_index, Inventory* destination, const int &destination_slot_index, const int &amount);
+	void transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount);
+	virtual bool drop(const Ref<Item> &item, const int &amount = 1);
+	void drop_from_inventory(const int &slot_index, const int &amount = 1);
 	void set_slots(const TypedArray<Slot> &new_slots);
 	TypedArray<Slot> get_slots() const;
 	void set_create_slot_if_needed(const bool &new_create_slot_if_needed);
