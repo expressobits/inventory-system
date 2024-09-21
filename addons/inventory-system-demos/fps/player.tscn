@@ -41,30 +41,21 @@ script = ExtResource("2_toyi4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
+[node name="CharacterInventorySystem_InventoryHandler#Openable" type="Node" parent="."]
+script = ExtResource("5_u6t8r")
+
 [node name="CharacterInventorySystem" parent="." node_paths=PackedStringArray("raycast", "camera_3d") instance=ExtResource("3_hbu24")]
 database = ExtResource("4_ljenf")
 raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 
-[node name="InventoryHandler" parent="CharacterInventorySystem" index="0"]
+[node name="Hotbar" parent="CharacterInventorySystem" index="2"]
 database = ExtResource("4_ljenf")
 
-[node name="Inventory" parent="CharacterInventorySystem/InventoryHandler" index="0"]
+[node name="CraftStation" parent="CharacterInventorySystem" index="3"]
 database = ExtResource("4_ljenf")
 
-[node name="EquipmentInventory" parent="CharacterInventorySystem/InventoryHandler" index="1"]
-database = ExtResource("4_ljenf")
-
-[node name="Openable" type="Node" parent="CharacterInventorySystem/InventoryHandler" index="2"]
-script = ExtResource("5_u6t8r")
-
-[node name="Hotbar" parent="CharacterInventorySystem" index="1"]
-database = ExtResource("4_ljenf")
-
-[node name="CraftStation" parent="CharacterInventorySystem" index="2"]
-database = ExtResource("4_ljenf")
-
-[node name="Interactor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera")]
+[node name="Interactor" parent="CharacterInventorySystem" index="4" node_paths=PackedStringArray("raycast", "camera")]
 database = ExtResource("4_ljenf")
 node_base_to_interactions = NodePath("../..")
 raycast = NodePath("../../Camera3D/RayCast3D")

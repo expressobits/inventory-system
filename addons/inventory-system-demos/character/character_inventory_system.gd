@@ -13,8 +13,6 @@ signal picked(obj : Node)
 const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @export_group("🗃️ Inventory Nodes")
-@export_node_path("InventoryHandler") var inventory_handler_path := NodePath("InventoryHandler")
-@onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 @export_node_path var main_inventory_path := NodePath("InventoryHandler/Inventory")
 @onready var main_inventory : Inventory = get_node(main_inventory_path)
 @export_node_path var equipment_inventory_path := NodePath("InventoryHandler/EquipmentInventory")
@@ -30,11 +28,9 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @export_node_path var drop_parent_position_path := NodePath("..");
 @onready var drop_parent_position : Node = get_node(drop_parent_position_path)
 
-var transaction_slot : Slot
-
 var opened_stations : Array[CraftStation]
 var opened_inventories : Array[Inventory]
-
+var slot_holder : Slot
 
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
@@ -64,6 +60,7 @@ var opened_inventories : Array[Inventory]
 func _ready():
 	if Engine.is_editor_hint():
 		return
+	slot_holder = Slot.new()
 	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	
@@ -125,21 +122,60 @@ func inventory_inputs():
 			open_main_craft_station()
 
 
-#region Inventories/Handler
-func move_between_inventories_at(from : Inventory, from_slot_index : int, amount : int, to : Inventory, to_slot_index : int):
-	inventory_handler.move_between_inventories_at(from, from_slot_index, amount, to, to_slot_index)
+#region Slot Holder
+func change_holder(item : Item, amount : int):
+	slot_holder.amount = amount
+	if amount > 0 and item != null:
+		slot_holder.item = item
+	else:
+		slot_holder.item = Item.new()
 
 
-func to_transaction(slot_index : int, inventory : Inventory, amount : int):
-	inventory_handler.to_transaction(slot_index, inventory, amount)
+func to_holder(slot_index : int, inventory : Inventory, amount : int):
+	if slot_holder.has_valid():
+		return
+	var slot : Slot = inventory.slots[slot_index]
+	var item : Item = slot.item.duplicate()
+	if not slot.has_valid():
+		return
+	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
+	change_holder(item, amount - amount_no_removed)
 
 
-func transaction_to(inventory : Inventory):
-	inventory_handler.transaction_to(inventory)
+func holder_to(inventory : Inventory):
+	if not slot_holder.has_valid():
+		return
+	if slot_holder.item == null:
+		return
+	var amount_no_add : int = inventory.add(slot_holder.item, slot_holder.amount)
+	change_holder(slot_holder.item, amount_no_add)
 
 
-func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
-	inventory_handler.transaction_to_at(slot_index, inventory, amount_to_move)
+func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
+	if not slot_holder.has_valid():
+		return
+	var slot : Slot = inventory.slots[slot_index];
+	var item : Item = Item.new()
+	item.definition = slot_holder.item.definition
+	item.properties = slot_holder.item.properties.duplicate()
+	if inventory.is_empty_slot(slot_index) or item.is_stack_with(slot.item):
+		var amount = slot_holder.amount
+		if amount_to_move >= 0:
+			amount = amount_to_move
+		var amount_no_add = inventory.add_at(slot_index, item, amount)
+		change_holder(item, slot_holder.amount - amount + amount_no_add)
+	else:
+		# Different items in slot and other_slot
+		# Check if slot_holder amount is equal of origin_slot amount
+		if slot.categorized and not slot.is_accept_any_categories_of_item(item.definition):
+			return
+		var temp_item : Item = Item.new()
+		temp_item.definition = slot.item.definition
+		temp_item.properties = slot.item.properties.duplicate()
+		var new_amount = slot.amount
+		inventory.set_slot_content(slot_index, item.definition, item.properties, slot_holder.amount)
+		change_holder(temp_item, new_amount)
+		
 
 
 func pick_to_inventory(node : Node):
@@ -162,8 +198,9 @@ func pick_to_inventory(node : Node):
 	printerr("pick_to_inventory return false");
 
 
-func drop_transaction():
-	inventory_handler.drop_transaction(main_inventory)
+func drop_holder():
+	main_inventory.drop(slot_holder.item, slot_holder.amount)
+	change_holder(null, 0)
 
 
 func _on_request_drop_obj(dropped_item : String, item : Item):
@@ -234,8 +271,8 @@ func close_inventory(inventory : Inventory):
 	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
 	remove_open_inventory(inventory)
-	if inventory_handler.is_transaction_active():
-		inventory_handler.drop_transaction(main_inventory)
+	if slot_holder.has_valid():
+		drop_holder()
 
 
 func remove_open_inventory(inventory : Inventory):

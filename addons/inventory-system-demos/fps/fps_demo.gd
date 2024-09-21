@@ -10,7 +10,7 @@ var main_inventory : Inventory
 
 func _ready():
 	$"UI/Inventory System UI".setup($"Player/CharacterInventorySystem")
-	main_inventory = get_node("Player").get_node("CharacterInventorySystem").get_node("InventoryHandler").get_node("Inventory")
+	main_inventory = get_node("Player").get_node("CharacterInventorySystem").get_node("Inventory")
 	
 #
 func _process(_delta):

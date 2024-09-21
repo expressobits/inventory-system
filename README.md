@@ -16,8 +16,6 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 ✔️ Separate UI inventory logic.
 
-✔️ Inventory Handler - which manages inventories.
-
 ✔️ First Person demo with chests.
 
 ✔️ Fully commented core and UI code.

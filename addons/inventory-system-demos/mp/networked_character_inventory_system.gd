@@ -64,34 +64,25 @@ func close_inventories():
 		close_inventories_rpc.rpc_id(1)
 
 
-func move_between_inventories_at(from : Inventory, from_slot_index : int, amount : int, to : Inventory, to_slot_index : int):
+func to_holder(slot_index : int, inventory : Inventory, amount : int):
 	if multiplayer.is_server():
-		super.move_between_inventories_at(from, from_slot_index, amount, to, to_slot_index)
+		super.to_holder(slot_index, inventory, amount)
 	else:
-		var from_path = inventory_handler.get_path_to(from)
-		var to_path = inventory_handler.get_path_to(to)
-		move_between_inventories_at_rpc.rpc_id(1, from_path, from_slot_index, amount, to_path, to_slot_index)
+		to_holder_rpc.rpc_id(1, slot_index, slot_holder.get_path_to(inventory), amount)
 
 
-func to_transaction(slot_index : int, inventory : Inventory, amount : int):
+func holder_to(inventory : Inventory):
 	if multiplayer.is_server():
-		super.to_transaction(slot_index, inventory, amount)
+		super.holder_to(inventory)
 	else:
-		to_transaction_rpc.rpc_id(1, slot_index, inventory_handler.get_path_to(inventory), amount)
+		holder_to_rpc.rpc_id(1, slot_holder.get_path_to(inventory))
 
 
-func transaction_to(inventory : Inventory):
+func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
 	if multiplayer.is_server():
-		super.transaction_to(inventory)
+		super.holder_to_at(slot_index, inventory, amount_to_move)
 	else:
-		transaction_to_rpc.rpc_id(1, inventory_handler.get_path_to(inventory))
-
-
-func transaction_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
-	if multiplayer.is_server():
-		super.transaction_to_at(slot_index, inventory, amount_to_move)
-	else:
-		transaction_to_at_rpc.rpc_id(1, slot_index, inventory_handler.get_path_to(inventory), amount_to_move)
+		holder_to_at_rpc.rpc_id(1, slot_index, slot_holder.get_path_to(inventory), amount_to_move)
 
 
 func pick_to_inventory(node : Node):
@@ -162,11 +153,11 @@ func hotbar_next_item():
 		hotbar_next_item_rpc.rpc()
 
 
-func drop_transaction():
+func drop_holder():
 	if multiplayer.is_server():
-		drop_transaction_rpc()
+		drop_holder_rpc()
 	else:
-		drop_transaction_rpc.rpc()
+		drop_holder_rpc.rpc()
 
 
 func _on_request_drop_obj(dropped_item : String, item : Item):
@@ -230,28 +221,21 @@ func close_inventories_rpc():
 
 
 @rpc
-func move_between_inventories_at_rpc(from_path : NodePath, from_slot_index : int, amount : int, to_path : NodePath, to_slot_index : int):
-	var from : Inventory = inventory_handler.get_node(from_path)
-	var to : Inventory = inventory_handler.get_node(to_path)
-	super.move_between_inventories_at(from, from_slot_index, amount, to, to_slot_index)
+func to_holder_rpc(slot_index : int, inventory_path : NodePath, amount : int):
+	var inventory : Inventory = get_node(inventory_path)
+	super.to_holder(slot_index, inventory, amount)
 
 
 @rpc
-func to_transaction_rpc(slot_index : int, inventory_path : NodePath, amount : int):
-	var inventory : Inventory = inventory_handler.get_node(inventory_path)
-	super.to_transaction(slot_index, inventory, amount)
+func holder_to_rpc(inventory_path : NodePath):
+	var inventory : Inventory = get_node(inventory_path)
+	super.holder_to(inventory)
 
 
 @rpc
-func transaction_to_rpc(inventory_path : NodePath):
-	var inventory : Inventory = inventory_handler.get_node(inventory_path)
-	super.transaction_to(inventory)
-
-
-@rpc
-func transaction_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_move : int):
-	var inventory : Inventory = inventory_handler.get_node(inventory_path)
-	super.transaction_to_at(slot_index, inventory, amount_to_move)
+func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_move : int):
+	var inventory : Inventory = get_node(inventory_path)
+	super.holder_to_at(slot_index, inventory, amount_to_move)
 
 
 @rpc
@@ -295,8 +279,8 @@ func hotbar_next_item_rpc():
 	hotbar.next_item()
 
 @rpc
-func drop_transaction_rpc():
-	super.drop_transaction()
+func drop_holder_rpc():
+	super.drop_holder()
 	
 
 func _physics_process(_delta : float):

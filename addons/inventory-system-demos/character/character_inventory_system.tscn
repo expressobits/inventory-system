@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw4rwxc3dyovc"]
+[gd_scene load_steps=9 format=3 uid="uid://cw4rwxc3dyovc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/character_inventory_system.gd" id="1_mwfdb"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/inventory_interactor.gd" id="2_ja62h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/object_placer.gd" id="9_3ia0e"]
+
+[sub_resource type="Slot" id="Slot_77dub"]
 
 [sub_resource type="Slot" id="Resource_rb0kk"]
 
@@ -14,28 +16,30 @@
 
 [node name="CharacterInventorySystem" type="NodeInventories"]
 script = ExtResource("1_mwfdb")
+slot_holder = SubResource("Slot_77dub")
+main_inventory_path = NodePath("Inventory")
+equipment_inventory_path = NodePath("EquipmentInventory")
 
-[node name="InventoryHandler" type="InventoryHandler" parent="."]
-
-[node name="Inventory" type="Inventory" parent="InventoryHandler"]
+[node name="Inventory" type="Inventory" parent="."]
 slots = Array[Slot]([null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 slot_amount = 32
 inventory_name = "Player Inventory"
 
-[node name="EquipmentInventory" type="Inventory" parent="InventoryHandler"]
+[node name="EquipmentInventory" type="Inventory" parent="."]
 slots = Array[Slot]([SubResource("Resource_rb0kk"), SubResource("Resource_y52mx"), SubResource("Resource_cijqa"), SubResource("Resource_ndhf7")])
 slot_amount = 4
 inventory_name = "Equipment"
 
 [node name="Hotbar" type="Hotbar" parent="."]
-inventory = NodePath("../InventoryHandler/Inventory")
+inventory = NodePath("../Inventory")
 
 [node name="CraftStation" type="CraftStation" parent="."]
-input_inventories = Array[NodePath]([NodePath("../InventoryHandler/Inventory"), NodePath("../InventoryHandler/EquipmentInventory")])
-output_inventories = Array[NodePath]([NodePath("../InventoryHandler/Inventory")])
+input_inventories = Array[NodePath]([NodePath("../Inventory"), NodePath("../EquipmentInventory")])
+output_inventories = Array[NodePath]([NodePath("../Inventory")])
 
 [node name="Interactor" type="NodeInventories" parent="."]
 script = ExtResource("2_ja62h")
 
 [node name="ObjectPlacer" type="NodeInventories" parent="Interactor"]
 script = ExtResource("9_3ia0e")
+main_inventory_path = NodePath("../../Inventory")

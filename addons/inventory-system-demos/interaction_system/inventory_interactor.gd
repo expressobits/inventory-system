@@ -6,8 +6,6 @@ signal preview_interacted(actions : Array, position_screen : Vector2)
 signal interacted(object : Node)
 
 @export var node_base_to_interactions := NodePath(".");
-@export_node_path("InventoryHandler") var inventory_handler_path := NodePath("../InventoryHandler")
-@onready var inventory_handler : InventoryHandler = get_node(inventory_handler_path)
 @export_node_path("Hotbar") var hotbar_path := NodePath("../Hotbar")
 @onready var hotbar : Hotbar = get_node(hotbar_path)
 @export var raycast : RayCast3D
@@ -45,8 +43,6 @@ func try_interact():
 
 
 func get_actions(node : Node) -> Array:
-	#if inventory_handler.is_open_any_inventory() or crafter.is_open_any_station():
-		#return []
 	var actions : Array = []
 	if node != null and node.has_method("get_interact_actions"):
 		actions = node.get_interact_actions(self)

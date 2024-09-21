@@ -15,8 +15,7 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 		console_mode = value
 		
 @export var character : CharacterInventorySystem
-## Stores [InventoryHandler] information to connect all signals and callbacks
-@export var inventory_handler : InventoryHandler
+
 ## Stores [Crafter] information to connect all signals and callbacks
 @export var interactor : Interactor
 
@@ -74,15 +73,14 @@ func _ready():
 ## Setup inventory handler and connect all signals
 func setup(character : CharacterInventorySystem):
 	self.character = character
-	# Handler
-	inventory_handler = character.inventory_handler
+	
 	var inventories : Array[Inventory]
 	inventories.append(character.main_inventory)
 	inventories.append(character.equipment_inventory)
 	set_player_inventories(inventories)
 	character.opened_inventory.connect(_on_open_inventory)
 	character.closed_inventory.connect(_on_close_inventory)
-	inventory_handler.updated_transaction_slot.connect(_updated_transaction_slot)
+	character.slot_holder.updated.connect(_updated_transaction_slot)
 	
 	# Stations
 	character.opened_station.connect(_on_open_craft_station)
@@ -104,7 +102,7 @@ func set_player_inventories(player_inventories : Array[Inventory]):
 func _drop_area_input(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.pressed:
-			character.drop_transaction()
+			character.drop_holder()
 
 
 func _open_player_inventory():
@@ -148,7 +146,6 @@ func _on_close_craft_station(craft_station : CraftStation):
 
 
 func _on_close_inventory(inventory : Inventory):
-	#if inventory_handler.inventories_path.find(inventory_handler.get_path_to(inventory)) != -1:
 	_close_player_inventory()
 
 
@@ -166,16 +163,16 @@ func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventor
 	if not event is InputEventMouseButton:
 		return
 	var mouse_event : InputEventMouseButton = event as InputEventMouseButton
-	if character.inventory_handler.is_transaction_active():
-		var amount = _get_amount_per_mouse_event(mouse_event, character.inventory_handler.transaction_slot.amount)
-		character.transaction_to_at(slot_index, inventory, amount)
+	if character.slot_holder.has_valid():
+		var amount = _get_amount_per_mouse_event(mouse_event, character.slot_holder.amount)
+		character.holder_to_at(slot_index, inventory, amount)
 		$SlotDrop.play()
 	else:
 		if inventory.is_empty_slot(slot_index):
 			return
 		var slot = inventory.slots[slot_index]
 		var amount = _get_amount_per_mouse_event(mouse_event, slot.amount)
-		character.to_transaction(slot_index, inventory, amount)	
+		character.to_holder(slot_index, inventory, amount)	
 		$SlotClick.play()
 
 
@@ -192,13 +189,13 @@ func _get_amount_per_mouse_event(mouse_event : InputEventMouseButton, amount : i
 func _inventory_point_down(event : InputEvent, inventory : Inventory):
 	if event.button_index == 3:
 		return
-	if character.inventory_handler.is_transaction_active():
-		character.transaction_to(inventory)
+	if character.slot_holder.has_valid():
+		character.holder_to(inventory)
 		$SlotDrop.play()
 
 
 func _updated_transaction_slot():
-	transaction_slot_ui.update_info_with_item(inventory_handler.transaction_slot)
+	transaction_slot_ui.update_info_with_item(character.slot_holder)
 
 func _on_craft(craft_station : CraftStation, recipe_index : int):
 	character.craft(craft_station, recipe_index)
