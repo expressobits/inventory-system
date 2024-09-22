@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cw4rwxc3dyovc"]
+[gd_scene load_steps=8 format=3 uid="uid://cw4rwxc3dyovc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/character_inventory_system.gd" id="1_mwfdb"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/inventory_interactor.gd" id="2_ja62h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/object_placer.gd" id="9_3ia0e"]
-
-[sub_resource type="Slot" id="Slot_77dub"]
 
 [sub_resource type="Slot" id="Resource_rb0kk"]
 
@@ -16,7 +14,6 @@
 
 [node name="CharacterInventorySystem" type="NodeInventories"]
 script = ExtResource("1_mwfdb")
-slot_holder = SubResource("Slot_77dub")
 main_inventory_path = NodePath("Inventory")
 equipment_inventory_path = NodePath("EquipmentInventory")
 

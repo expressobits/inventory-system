@@ -6,8 +6,10 @@ extends "../character/character_inventory_system.gd"
 
 
 func _ready():
+	slot_holder = Slot.new()
 	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
+	slot_holder.updated.connect(_on_slot_holder_updated)
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
 		opened_inventory.connect(_update_opened_inventories)
@@ -15,6 +17,7 @@ func _ready():
 		opened_station.connect(_update_opened_stations)
 		closed_station.connect(_update_opened_stations)
 		_update_opened_inventories(main_inventory)
+		
 	else:
 		picked.connect(_on_picked)
 
@@ -68,21 +71,21 @@ func to_holder(slot_index : int, inventory : Inventory, amount : int):
 	if multiplayer.is_server():
 		super.to_holder(slot_index, inventory, amount)
 	else:
-		to_holder_rpc.rpc_id(1, slot_index, slot_holder.get_path_to(inventory), amount)
+		to_holder_rpc.rpc_id(1, slot_index, get_path_to(inventory), amount)
 
 
 func holder_to(inventory : Inventory):
 	if multiplayer.is_server():
 		super.holder_to(inventory)
 	else:
-		holder_to_rpc.rpc_id(1, slot_holder.get_path_to(inventory))
+		holder_to_rpc.rpc_id(1, get_path_to(inventory))
 
 
 func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
 	if multiplayer.is_server():
 		super.holder_to_at(slot_index, inventory, amount_to_move)
 	else:
-		holder_to_at_rpc.rpc_id(1, slot_index, slot_holder.get_path_to(inventory), amount_to_move)
+		holder_to_at_rpc.rpc_id(1, slot_index, get_path_to(inventory), amount_to_move)
 
 
 func pick_to_inventory(node : Node):
@@ -173,6 +176,15 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 	var obj = drop_item_spawner.spawn(data)
 	dropped.emit(obj)
 
+
+func _on_slot_holder_updated():
+	if not multiplayer.is_server():
+		return
+	var item_id = slot_holder.get_item_id()
+	var amount = slot_holder.get_amount()
+	slot_holder_updated_rpc.rpc(item_id, amount)
+
+
 @rpc("any_peer")
 func picked_rpc(obj_path : NodePath):
 	var obj = get_node(obj_path)
@@ -236,6 +248,13 @@ func holder_to_rpc(inventory_path : NodePath):
 func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_move : int):
 	var inventory : Inventory = get_node(inventory_path)
 	super.holder_to_at(slot_index, inventory, amount_to_move)
+
+
+@rpc("any_peer")
+func slot_holder_updated_rpc(item_id : int, amount : int):
+	var item = Item.new()
+	item.definition = database.get_item(item_id)
+	change_holder(item, amount)
 
 
 @rpc

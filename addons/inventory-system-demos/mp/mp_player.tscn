@@ -1,18 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://dnlxnu6jpej17"]
+[gd_scene load_steps=14 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_7hphp"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory_handler.gd" id="2_ncw1r"]
-[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_1eelt"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="8_wtcmp"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="9_c6j5p"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
-size = Vector3(0.125, 0.125, 0.125)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tipcy"]
 shading_mode = 2
@@ -39,8 +33,28 @@ properties/1/path = NodePath("..:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
+[sub_resource type="BoxMesh" id="BoxMesh_d1alo"]
+size = Vector3(0.125, 0.125, 0.125)
+
 [node name="Player" instance=ExtResource("1_067pm")]
 script = ExtResource("2_7hphp")
+
+[node name="Mesh" type="MeshInstance3D" parent="." index="1"]
+material_override = SubResource("StandardMaterial3D_tipcy")
+mesh = SubResource("CapsuleMesh_v040h")
+
+[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
+material_override = SubResource("StandardMaterial3D_t21mf")
+mesh = SubResource("BoxMesh_biea6")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="2"]
+root_path = NodePath("../Mesh")
+replication_config = SubResource("SceneReplicationConfig_bfpca")
+
+[node name="SyncHotbar" type="Node" parent="." index="3" node_paths=PackedStringArray("hotbar")]
+script = ExtResource("2_kp02v")
+hotbar = NodePath("../CharacterInventorySystem/Hotbar")
 
 [node name="HandItem" parent="Camera3D" index="1"]
 visible = false
@@ -54,45 +68,20 @@ script = ExtResource("3_g726w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="CharacterInventorySystem" parent="." index="2"]
-database = ExtResource("3_1eelt")
+[node name="CharacterInventorySystem" parent="." index="5"]
 script = ExtResource("3_lbhsf")
 drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
 
-[node name="SyncInventory" type="Node" parent="CharacterInventorySystem/InventoryHandler/Inventory" index="0" node_paths=PackedStringArray("inventory")]
+[node name="SyncInventory" type="Node" parent="CharacterInventorySystem/Inventory" index="1" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_2ppxc")
 inventory = NodePath("..")
 
-[node name="SyncInventory" type="Node" parent="CharacterInventorySystem/InventoryHandler/EquipmentInventory" index="0" node_paths=PackedStringArray("inventory")]
+[node name="SyncInventory" type="Node" parent="CharacterInventorySystem/EquipmentInventory" index="0" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_2ppxc")
 inventory = NodePath("..")
-
-[node name="SyncInventoryHandler" type="Node" parent="CharacterInventorySystem/InventoryHandler" index="2" node_paths=PackedStringArray("inventory_handler")]
-script = ExtResource("2_ncw1r")
-inventory_handler = NodePath("..")
-
-[node name="Openable" parent="CharacterInventorySystem/InventoryHandler" index="3"]
-script = ExtResource("8_wtcmp")
 
 [node name="SyncCraftStation" type="Node" parent="CharacterInventorySystem/CraftStation" index="0" node_paths=PackedStringArray("craft_station")]
 script = ExtResource("9_c6j5p")
 craft_station = NodePath("..")
-
-[node name="Mesh" type="MeshInstance3D" parent="." index="4"]
-material_override = SubResource("StandardMaterial3D_tipcy")
-mesh = SubResource("CapsuleMesh_v040h")
-
-[node name="Glass" type="MeshInstance3D" parent="Mesh" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.474874, -0.272574)
-material_override = SubResource("StandardMaterial3D_t21mf")
-mesh = SubResource("BoxMesh_biea6")
-
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="5"]
-root_path = NodePath("../Mesh")
-replication_config = SubResource("SceneReplicationConfig_bfpca")
-
-[node name="SyncHotbar" type="Node" parent="." index="6" node_paths=PackedStringArray("hotbar")]
-script = ExtResource("2_kp02v")
-hotbar = NodePath("../CharacterInventorySystem/Hotbar")
 
 [editable path="CharacterInventorySystem"]

@@ -4,9 +4,8 @@ class_name MPPlayer
 
 func _enter_tree():
 	set_multiplayer_authority(str(name).to_int())
-	$CharacterInventorySystem/InventoryHandler.set_multiplayer_authority(1)
-	$CharacterInventorySystem/InventoryHandler/Inventory.set_multiplayer_authority(1)
-	$CharacterInventorySystem/InventoryHandler/EquipmentInventory.set_multiplayer_authority(1)
+	$CharacterInventorySystem/Inventory/SyncInventory.set_multiplayer_authority(1)
+	$CharacterInventorySystem/EquipmentInventory/SyncInventory.set_multiplayer_authority(1)
 	$SyncHotbar.set_multiplayer_authority(1)
 	$CharacterInventorySystem/CraftStation/SyncCraftStation.set_multiplayer_authority(1)
 

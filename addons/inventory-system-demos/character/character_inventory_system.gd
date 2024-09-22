@@ -199,6 +199,8 @@ func pick_to_inventory(node : Node):
 
 
 func drop_holder():
+	if not slot_holder.has_valid():
+		return
 	main_inventory.drop(slot_holder.item, slot_holder.amount)
 	change_holder(null, 0)
 

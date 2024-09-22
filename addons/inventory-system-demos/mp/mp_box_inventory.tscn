@@ -5,6 +5,12 @@
 
 [node name="Box Inventory" instance=ExtResource("1_oluqa")]
 
+[node name="Open" parent="." index="4"]
+volume_db = -40.0
+
+[node name="Close" parent="." index="5"]
+volume_db = -40.0
+
 [node name="SyncInventory" type="Node" parent="." index="6" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_mkq3m")
 inventory = NodePath("../Inventory")

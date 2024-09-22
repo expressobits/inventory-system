@@ -74,8 +74,7 @@ script = ExtResource("10_efc1k")
 
 [node name="Labels" parent="UI" instance=ExtResource("5_rvlsk")]
 
-[node name="Inventory System UI" parent="UI" node_paths=PackedStringArray("player_inventories_ui") instance=ExtResource("6_asmwx")]
-player_inventories_ui = []
+[node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
 
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("6_52d7a")
@@ -117,14 +116,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory" index="1"]
-slots = []
+slots = Array[Slot]([])
 inventory_name = "Dynamic Inventory"
-
-[node name="Open" parent="Box Inventory" index="4"]
-volume_db = 0.0
-
-[node name="Close" parent="Box Inventory" index="5"]
-volume_db = 0.0
 
 [node name="Openable" parent="Box Inventory" index="7"]
 script = ExtResource("10_kjp1o")
@@ -139,12 +132,6 @@ create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
 
-[node name="Open" parent="Box Inventory2" index="4"]
-volume_db = 0.0
-
-[node name="Close" parent="Box Inventory2" index="5"]
-volume_db = 0.0
-
 [node name="Openable" parent="Box Inventory2" index="7"]
 script = ExtResource("10_kjp1o")
 
@@ -153,16 +140,10 @@ transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.05268
 script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
-slots = []
+slots = Array[Slot]([])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Tools Inventory"
-
-[node name="Open" parent="Box Inventory3" index="4"]
-volume_db = 0.0
-
-[node name="Close" parent="Box Inventory3" index="5"]
-volume_db = 0.0
 
 [node name="Openable" parent="Box Inventory3" index="7"]
 script = ExtResource("10_kjp1o")
@@ -174,7 +155,7 @@ burnable_category = ExtResource("14_lpdsd")
 
 [node name="Shelf" parent="." instance=ExtResource("15_lou51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36572, 0.6775, 1.94776)
-actions = []
+actions = Array[Slot]([])
 
 [node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")
