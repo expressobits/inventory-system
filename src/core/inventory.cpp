@@ -387,6 +387,7 @@ void Inventory::drop_from_inventory(const int &slot_index, const int &amount) {
 }
 
 void Inventory::_load_slots() {
+	Array slots = this->slots.duplicate(true);
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
 		if (slot == nullptr) {
@@ -395,11 +396,6 @@ void Inventory::_load_slots() {
 		}
 		slots[i] = slot;
 	}
-	TypedArray<Slot> temp_slots = slots.duplicate(true);
-	slots.clear();
-	for (size_t i = 0; i < temp_slots.size(); i++) {
-		slots.append(temp_slots[i].duplicate());
-	}
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
 		if (slot->get_item() == nullptr) {
@@ -407,6 +403,7 @@ void Inventory::_load_slots() {
 		}
 		slots[i] = slot;
 	}
+	this->slots = slots;
 }
 
 void Inventory::remove_slot_at(int slot_index) {
