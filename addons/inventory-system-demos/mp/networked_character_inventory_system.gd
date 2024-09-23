@@ -180,9 +180,8 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 func _on_slot_holder_updated():
 	if not multiplayer.is_server():
 		return
-	var item_id = slot_holder.get_item_id()
-	var amount = slot_holder.get_amount()
-	slot_holder_updated_rpc.rpc(item_id, amount)
+	var data = main_inventory.database.serialize_slot(slot_holder)
+	slot_holder_updated_rpc.rpc(data)
 
 
 @rpc("any_peer")
@@ -251,10 +250,8 @@ func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_mov
 
 
 @rpc("any_peer")
-func slot_holder_updated_rpc(item_id : int, amount : int):
-	var item = Item.new()
-	item.definition = database.get_item(item_id)
-	change_holder(item, amount)
+func slot_holder_updated_rpc(data : Dictionary):
+	main_inventory.database.deserialize_slot(slot_holder, data)
 
 
 @rpc
