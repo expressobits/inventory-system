@@ -63,6 +63,8 @@ public:
 	int get_slot_amount() const;
 	void set_inventory_name(const String &new_inventory_name);
 	String get_inventory_name() const;
+	Dictionary serialize() const;
+	void deserialize(const Dictionary data);
 };
 
 #endif // INVENTORY_CLASS_H

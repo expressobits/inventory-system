@@ -356,6 +356,40 @@ String Inventory::get_inventory_name() const {
 	return inventory_name;
 }
 
+Dictionary Inventory::serialize() const {
+	Dictionary data = Dictionary();
+	Array slots_data = Array();
+	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
+		Dictionary slot_data = Dictionary();
+		Ref<Slot> slot = slots[slot_index];
+		slot_data = get_database()->serialize_slot(slot);
+		slots_data.append(slot_data);
+	}
+	data["slots"] = slots_data;
+	return data;
+}
+
+void Inventory::deserialize(const Dictionary data) {
+	ERR_FAIL_COND_MSG(!data.has("slots"), "Data to deserialize is invalid: Does not contain the 'slots' field");
+	Array slots_data = data["slots"];
+	for (size_t slot_index = 0; slot_index < slots_data.size(); slot_index++) {
+		if (slot_index >= slots.size()) {
+			Ref<Slot> slot = memnew(Slot());
+			get_database()->deserialize_slot(slot, slots_data[slot_index]);
+			slots.append(slot);
+		} else {
+			Ref<Slot> slot = slots[slot_index];
+			get_database()->deserialize_slot(slot, slots_data[slot_index]);
+			// slots[slot_index] = slot;
+		}
+		update_slot(slot_index);
+	}
+	int size = slots.size();
+	for (size_t slot_index = slots_data.size(); slot_index < size; slot_index++) {
+		slots.remove_at(slots_data.size());
+	}
+}
+
 bool Inventory::drop(const Ref<Item> &item, const int &amount) {
 	ERR_FAIL_COND_V(item.is_null(), false);
 	ERR_FAIL_COND_V(item->get_definition().is_null(), false);
@@ -499,9 +533,10 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "slot_index", "item", "amount"), &Inventory::remove_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer", "slot_index", "destination", "destination_slot_index", "amount"), &Inventory::transfer, DEFVAL(-1));
-
 	ClassDB::bind_method(D_METHOD("drop", "item", "amount"), &Inventory::drop, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount"), &Inventory::drop_from_inventory, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
+	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
 
 	ClassDB::bind_method(D_METHOD("set_slots", "slots"), &Inventory::set_slots);
 	ClassDB::bind_method(D_METHOD("get_slots"), &Inventory::get_slots);

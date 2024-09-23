@@ -47,6 +47,8 @@ public:
 	bool contains_category(Ref<ItemCategory> category) const;
 	bool is_accept_any_categories_of_item(const Ref<ItemDefinition> &other_item) const;
 	int left_to_fill();
+	// Dictionary serialize() const;
+	// void deserialize(const Dictionary data);
 };
 
 #endif // SLOT_CLASS_H

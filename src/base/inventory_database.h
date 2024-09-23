@@ -53,6 +53,9 @@ public:
 	int get_valid_id() const;
 	int get_new_valid_id() const;
 	Ref<ItemCategory> get_category(int code);
+
+	Dictionary serialize_slot(const Ref<Slot> slot) const;
+	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H

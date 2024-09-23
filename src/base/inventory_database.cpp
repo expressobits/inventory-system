@@ -45,6 +45,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
 	ClassDB::bind_method(D_METHOD("get_new_valid_id"), &InventoryDatabase::get_new_valid_id);
 	ClassDB::bind_method(D_METHOD("get_category", "code"), &InventoryDatabase::get_category);
+	ClassDB::bind_method(D_METHOD("serialize_slot", "slot"), &InventoryDatabase::serialize_slot);
+	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
@@ -168,4 +170,42 @@ int InventoryDatabase::get_new_valid_id() const {
 
 Ref<ItemCategory> InventoryDatabase::get_category(int code) {
 	return categories_code_cache[code];
+}
+
+Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
+	Dictionary data = Dictionary();
+	Ref<Item> item = slot->get_item();
+	if (item != nullptr) {
+		Dictionary item_data = Dictionary();
+		if (item->get_definition() == nullptr) {
+			item_data["id"] = ItemDefinition::NONE;
+		} else {
+			item_data["id"] = item->get_definition()->get_id();
+		}
+		item_data["properties"] = item->get_properties();
+		data["item"] = item_data;
+	}
+	data["amount"] = slot->get_amount();
+	// data["categorized"] = slot->is_categorized();
+	return data;
+}
+
+void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Dictionary data) const {
+	ERR_FAIL_COND_MSG(!data.has("amount"), "Data to deserialize slot is invalid: Does not contain the 'amount' field");
+	// ERR_FAIL_COND_MSG(!data.has("categorized"), "Data to deserialize slot is invalid: Does not contain the 'categorized' field");
+	if(data.has("item"))
+	{
+		Dictionary item_data = data["item"];
+		ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
+		ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
+		Ref<Item> item = slot->get_item();
+		if (item == nullptr) {
+			item.instantiate();
+		}
+		item->set_definition(get_item(item_data["id"]));
+		item->set_properties(item_data["properties"]);
+		slot->set_item(item);
+	}
+	slot->set_amount(data["amount"]);
+	// slot->set_categorized(data["categorized"]);
 }
