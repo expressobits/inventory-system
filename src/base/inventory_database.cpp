@@ -37,6 +37,7 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stations_type"), &InventoryDatabase::get_stations_type);
 	ClassDB::bind_method(D_METHOD("set_item_categories", "item_categories"), &InventoryDatabase::set_item_categories);
 	ClassDB::bind_method(D_METHOD("get_item_categories"), &InventoryDatabase::get_item_categories);
+
 	ClassDB::bind_method(D_METHOD("add_new_item", "item"), &InventoryDatabase::add_new_item);
 	ClassDB::bind_method(D_METHOD("remove_item", "item"), &InventoryDatabase::remove_item);
 	ClassDB::bind_method(D_METHOD("add_new_category", "category"), &InventoryDatabase::add_new_category);
@@ -46,6 +47,10 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
 	ClassDB::bind_method(D_METHOD("get_new_valid_id"), &InventoryDatabase::get_new_valid_id);
 	ClassDB::bind_method(D_METHOD("get_category", "code"), &InventoryDatabase::get_category);
+	ClassDB::bind_method(D_METHOD("serialize_item_definition", "definition"), &InventoryDatabase::serialize_item_definition);
+	ClassDB::bind_method(D_METHOD("deserialize_item_definition", "definition", "data"), &InventoryDatabase::deserialize_item_definition);
+	ClassDB::bind_method(D_METHOD("serialize_item_category", "category"), &InventoryDatabase::serialize_item_category);
+	ClassDB::bind_method(D_METHOD("deserialize_item_category", "category", "data"), &InventoryDatabase::deserialize_item_category);
 	ClassDB::bind_method(D_METHOD("serialize_slot", "slot"), &InventoryDatabase::serialize_slot);
 	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
 
@@ -194,7 +199,7 @@ Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition
 }
 
 void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definition, const Dictionary data) const {
-	if (data.has("icon_path")) {
+	if (data.has("id")) {
 		definition->set_id(data["id"]);
 	}
 	if (data.has("can_stack")) {
@@ -227,6 +232,39 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 			categories.append(category);
 		}
 		definition->set_categories(categories);
+	}
+}
+
+Dictionary InventoryDatabase::serialize_item_category(const Ref<ItemCategory> category) const {
+	Dictionary data = Dictionary();
+	data["name"] = category->get_name();
+	data["icon_path"] = category->get_icon()->get_path();
+	data["color"] = category->get_color();
+	data["code"] = category->get_code();
+	data["item_properties"] = category->get_item_properties();
+	data["item_dynamic_properties"] = category->get_item_dynamic_properties();
+	return data;
+}
+
+void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, const Dictionary data) const {
+	if (data.has("name")) {
+		category->set_name(data["name"]);
+	}
+	if (data.has("icon_path")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+		category->set_icon(icon);
+	}
+	if (data.has("color")) {
+		category->set_color(data["color"]);
+	}
+	if (data.has("code")) {
+		category->set_code(data["code"]);
+	}
+	if (data.has("item_properties")) {
+		category->set_item_properties(data["item_properties"]);
+	}
+	if (data.has("item_dynamic_properties")) {
+		category->set_item_dynamic_properties(data["item_dynamic_properties"]);
 	}
 }
 
