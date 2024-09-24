@@ -3,7 +3,6 @@ class_name SyncCraftStation
 
 @export var craft_station : CraftStation
 @export var sync_input_inventories : bool
-var craftings_data : Array
 
 
 func _ready() -> void:
@@ -19,7 +18,7 @@ func _on_connected(peer_id : int):
 	if not multiplayer.is_server():
 		craft_station.can_finish_craftings = false
 		return
-	_update_craftings_rpc.rpc_id(peer_id, craftings_data)
+	_update_craftings_rpc.rpc_id(peer_id, craft_station.serialize())
 	
 
 func _on_crafting_added(crafting_index : int):
@@ -27,20 +26,20 @@ func _on_crafting_added(crafting_index : int):
 		return
 	var crafting = craft_station.craftings[crafting_index]
 	crafting_added_rpc.rpc(crafting.recipe_index)
-	craftings_data.append(crafting.serialize())
 
 
 func _on_crafting_removed(crafting_index : int):
 	if not multiplayer.is_server():
 		return
 	crafting_removed_rpc.rpc(crafting_index)
-	craftings_data.remove_at(crafting_index)
+
 
 func _on_input_inventory_added(inventory_path : NodePath):
 	if not multiplayer.is_server():
 		return
 	input_inventory_added_rpc.rpc(inventory_path)
-	
+
+
 func _on_input_inventory_removed(inventory_path : NodePath):
 	if not multiplayer.is_server():
 		return
@@ -53,23 +52,24 @@ func crafting_added_rpc(recipe_index : int):
 		return
 	var recipe = craft_station.database.recipes[recipe_index]
 	craft_station.add_crafting(recipe_index, recipe)
-	
+
+
 @rpc
 func crafting_removed_rpc(crafting_index : int):
 	if multiplayer.is_server():
 		return
 	craft_station.remove_crafting(crafting_index)
 
+
 @rpc
-func _update_craftings_rpc(craftings_data : Array):
-	for data in craftings_data:
-		var crafting = Crafting.new()
-		crafting.deserialize(data)
-		craft_station.craftings.append(crafting)
-		
+func _update_craftings_rpc(craftings_data : Dictionary):
+	craft_station.deserialize(craftings_data)
+
+
 @rpc
 func input_inventory_added_rpc(inventory_path : NodePath):
 	craft_station.add_input_inventory(craft_station.get_node(inventory_path))
+
 
 @rpc
 func input_inventory_removed_rpc(inventory_path : NodePath):
