@@ -380,7 +380,6 @@ void Inventory::deserialize(const Dictionary data) {
 		} else {
 			Ref<Slot> slot = slots[slot_index];
 			get_database()->deserialize_slot(slot, slots_data[slot_index]);
-			// slots[slot_index] = slot;
 		}
 		update_slot(slot_index);
 	}

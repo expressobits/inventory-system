@@ -54,6 +54,9 @@ public:
 	int get_new_valid_id() const;
 	Ref<ItemCategory> get_category(int code);
 
+	Dictionary serialize_item_definition(const Ref<ItemDefinition> definition) const;
+	void deserialize_item_definition(Ref<ItemDefinition> definition, const Dictionary data) const;
+
 	Dictionary serialize_slot(const Ref<Slot> slot) const;
 	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
 };

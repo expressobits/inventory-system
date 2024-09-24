@@ -1,6 +1,7 @@
 #include "inventory_database.h"
 
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
@@ -132,7 +133,7 @@ void InventoryDatabase::add_new_category(const Ref<ItemCategory> category) {
 
 void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 	ERR_FAIL_NULL_MSG(category, "'category' is null.");
-	
+
 	int index = item_categories.find(category);
 	if (index > -1) {
 		item_categories.remove_at(index);
@@ -172,6 +173,63 @@ Ref<ItemCategory> InventoryDatabase::get_category(int code) {
 	return categories_code_cache[code];
 }
 
+Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition> definition) const {
+	Dictionary data = Dictionary();
+	data["id"] = definition->get_id();
+	data["can_stack"] = definition->get_can_stack();
+	data["max_stack"] = definition->get_max_stack();
+	data["name"] = definition->get_name();
+	data["icon_path"] = definition->get_icon()->get_path();
+	data["weight"] = definition->get_weight();
+	data["properties"] = definition->get_properties();
+	data["dynamic_properties"] = definition->get_dynamic_properties();
+	TypedArray<String> categories_path = TypedArray<String>();
+	TypedArray<ItemCategory> categories = definition->get_categories();
+	for (size_t category_index = 0; category_index < categories.size(); category_index++) {
+		Ref<ItemCategory> category = categories[category_index];
+		categories_path.append(category->get_path());
+	}
+	data["categories_path"] = categories_path;
+	return data;
+}
+
+void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definition, const Dictionary data) const {
+	if (data.has("icon_path")) {
+		definition->set_id(data["id"]);
+	}
+	if (data.has("can_stack")) {
+		definition->set_can_stack(data["can_stack"]);
+	}
+	if (data.has("max_stack")) {
+		definition->set_max_stack(data["max_stack"]);
+	}
+	if (data.has("name")) {
+		definition->set_name(data["name"]);
+	}
+	if (data.has("icon_path")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+		definition->set_icon(icon);
+	}
+	if (data.has("weight")) {
+		definition->set_weight(data["weight"]);
+	}
+	if (data.has("properties")) {
+		definition->set_properties(data["properties"]);
+	}
+	if (data.has("dynamic_properties")) {
+		definition->set_dynamic_properties(data["dynamic_properties"]);
+	}
+	if (data.has("categories_path")) {
+		TypedArray<ItemCategory> categories = TypedArray<ItemCategory>();
+		TypedArray<String> categories_path = data["categories_path"];
+		for (size_t category_index = 0; category_index < categories_path.size(); category_index++) {
+			Ref<ItemCategory> category = ResourceLoader::get_singleton()->load(categories_path[category_index]);
+			categories.append(category);
+		}
+		definition->set_categories(categories);
+	}
+}
+
 Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 	Dictionary data = Dictionary();
 	Ref<Item> item = slot->get_item();
@@ -193,8 +251,7 @@ Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Dictionary data) const {
 	ERR_FAIL_COND_MSG(!data.has("amount"), "Data to deserialize slot is invalid: Does not contain the 'amount' field");
 	// ERR_FAIL_COND_MSG(!data.has("categorized"), "Data to deserialize slot is invalid: Does not contain the 'categorized' field");
-	if(data.has("item"))
-	{
+	if (data.has("item")) {
 		Dictionary item_data = data["item"];
 		ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
 		ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
