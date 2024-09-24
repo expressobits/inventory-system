@@ -45,7 +45,7 @@ Dictionary Crafting::serialize() const {
 	return dict;
 }
 
-void Crafting::deserialize(Dictionary data) {
+void Crafting::deserialize(const Dictionary data) {
 	recipe_index = data["recipe_index"];
 	time = data["time"];
 }
@@ -67,6 +67,9 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove_crafting", "crafting_index"), &CraftStation::remove_crafting);
 	ClassDB::bind_method(D_METHOD("finish_crafting", "crafting_index"), &CraftStation::finish_crafting);
 	ClassDB::bind_method(D_METHOD("get_input_inventory", "index"), &CraftStation::get_input_inventory, DEFVAL(0));
+	ClassDB::bind_method(D_METHOD("serialize"), &CraftStation::serialize);
+	ClassDB::bind_method(D_METHOD("deserialize", "data"), &CraftStation::deserialize);
+
 	ClassDB::bind_method(D_METHOD("set_input_inventories", "input_inventories"), &CraftStation::set_input_inventories);
 	ClassDB::bind_method(D_METHOD("get_input_inventories"), &CraftStation::get_input_inventories);
 	ClassDB::bind_method(D_METHOD("set_output_inventories", "output_inventories"), &CraftStation::set_output_inventories);
@@ -95,12 +98,14 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_valid_recipes"), &CraftStation::get_valid_recipes);
 	ClassDB::bind_method(D_METHOD("add_input_inventory", "input_inventory"), &CraftStation::add_input_inventory);
 	ClassDB::bind_method(D_METHOD("remove_input_inventory", "input_inventory"), &CraftStation::remove_input_inventory);
+
 	ADD_SIGNAL(MethodInfo("on_crafted", PropertyInfo(Variant::INT, "recipe_index")));
 	ADD_SIGNAL(MethodInfo("on_request_craft", PropertyInfo(Variant::INT, "recipe_index")));
 	ADD_SIGNAL(MethodInfo("crafting_added", PropertyInfo(Variant::INT, "crafting_index")));
 	ADD_SIGNAL(MethodInfo("crafting_removed", PropertyInfo(Variant::INT, "crafting_index")));
 	ADD_SIGNAL(MethodInfo("input_inventory_added", PropertyInfo(Variant::NODE_PATH, "input_inventory_path")));
 	ADD_SIGNAL(MethodInfo("input_inventory_removed", PropertyInfo(Variant::NODE_PATH, "input_inventory_path")));
+
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "input_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_input_inventories", "get_input_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "output_inventories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::NODE_PATH, PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory")), "set_output_inventories", "get_output_inventories");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "has_limit_crafts"), "set_has_limit_crafts", "get_has_limit_crafts");
@@ -552,4 +557,36 @@ void CraftStation::remove_input_inventory(Inventory *input_inventory) {
 		return;
 	input_inventories.remove_at(index);
 	emit_signal("input_inventory_removed", path);
+}
+
+Dictionary CraftStation::serialize() const {
+	Dictionary data = Dictionary();
+	Array craftings_data = Array();
+	for (size_t crafting_index = 0; crafting_index < craftings.size(); crafting_index++) {
+		Dictionary slot_data = Dictionary();
+		Ref<Crafting> crafting = craftings[crafting_index];
+		slot_data = crafting->serialize();
+		craftings_data.append(slot_data);
+	}
+	data["craftings"] = craftings_data;
+	return data;
+}
+
+void CraftStation::deserialize(const Dictionary data) {
+	Array craftings_data = data["craftings"];
+	for (size_t crafting_index = 0; crafting_index < craftings_data.size(); crafting_index++) {
+		if (crafting_index >= craftings.size()) {
+			Ref<Crafting> crafting = memnew(Crafting());
+			crafting->deserialize(craftings_data[crafting_index]);
+			craftings.append(crafting);
+		} else {
+			Ref<Crafting> crafting = craftings[crafting_index];
+			crafting->deserialize(craftings_data[crafting_index]);
+		}
+		// update_slot(crafting_index);
+	}
+	int size = craftings.size();
+	for (size_t slot_index = craftings_data.size(); slot_index < size; slot_index++) {
+		craftings.remove_at(craftings_data.size());
+	}
 }

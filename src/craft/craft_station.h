@@ -28,7 +28,7 @@ public:
 	bool is_finished() const;
 	void process(float delta);
 	Dictionary serialize() const;
-	void deserialize(Dictionary data);
+	void deserialize(const Dictionary data);
 };
 
 class CraftStation : public NodeInventories {
@@ -117,6 +117,8 @@ public:
 	TypedArray<int> get_valid_recipes() const;
 	void add_input_inventory(Inventory* input_inventory);
 	void remove_input_inventory(Inventory* input_inventory);
+	Dictionary serialize() const;
+	void deserialize(const Dictionary data);
 };
 
 VARIANT_ENUM_CAST(CraftStation::ProcessingMode);
