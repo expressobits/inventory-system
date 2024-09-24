@@ -358,13 +358,7 @@ String Inventory::get_inventory_name() const {
 
 Dictionary Inventory::serialize() const {
 	Dictionary data = Dictionary();
-	Array slots_data = Array();
-	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
-		Dictionary slot_data = Dictionary();
-		Ref<Slot> slot = slots[slot_index];
-		slot_data = get_database()->serialize_slot(slot);
-		slots_data.append(slot_data);
-	}
+	TypedArray<Slot> slots_data = get_database()->serialize_slots(slots);
 	data["slots"] = slots_data;
 	return data;
 }
@@ -372,20 +366,9 @@ Dictionary Inventory::serialize() const {
 void Inventory::deserialize(const Dictionary data) {
 	ERR_FAIL_COND_MSG(!data.has("slots"), "Data to deserialize is invalid: Does not contain the 'slots' field");
 	Array slots_data = data["slots"];
-	for (size_t slot_index = 0; slot_index < slots_data.size(); slot_index++) {
-		if (slot_index >= slots.size()) {
-			Ref<Slot> slot = memnew(Slot());
-			get_database()->deserialize_slot(slot, slots_data[slot_index]);
-			slots.append(slot);
-		} else {
-			Ref<Slot> slot = slots[slot_index];
-			get_database()->deserialize_slot(slot, slots_data[slot_index]);
-		}
+	get_database()->deserialize_slots(slots, slots_data);
+	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
 		update_slot(slot_index);
-	}
-	int size = slots.size();
-	for (size_t slot_index = slots_data.size(); slot_index < size; slot_index++) {
-		slots.remove_at(slots_data.size());
 	}
 }
 

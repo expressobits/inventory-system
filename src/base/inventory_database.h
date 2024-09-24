@@ -60,8 +60,13 @@ public:
 	Dictionary serialize_item_category(const Ref<ItemCategory> category) const;
 	void deserialize_item_category(Ref<ItemCategory> category, const Dictionary data) const;
 
+	Dictionary serialize_recipe(const Ref<Recipe> recipe) const;
+	void deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const;
+
 	Dictionary serialize_slot(const Ref<Slot> slot) const;
 	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
+	TypedArray<Dictionary> serialize_slots(const TypedArray<Slot> slots) const;
+	void deserialize_slots(TypedArray<Slot> slots, const TypedArray<Dictionary> data) const;
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H

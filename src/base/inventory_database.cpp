@@ -268,6 +268,33 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 	}
 }
 
+Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
+	Dictionary data = Dictionary();
+	data["products"] = serialize_slots(recipe->get_products());
+	data["time_to_craft"] = recipe->get_time_to_craft();
+	data["ingredients"] = serialize_slots(recipe->get_ingredients());
+	data["required_items"] = serialize_slots(recipe->get_required_items());
+	return data;
+}
+
+void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const {
+	if (data.has("products")) {
+		TypedArray<Slot> slots = recipe->get_products();
+		deserialize_slots(slots, data["products"]);
+	}
+	if (data.has("time_to_craft")) {
+		recipe->set_time_to_craft(data["time_to_craft"]);
+	}
+	if (data.has("ingredients")) {
+		TypedArray<Slot> slots = recipe->get_ingredients();
+		deserialize_slots(slots, data["ingredients"]);
+	}
+	if (data.has("required_items")) {
+		TypedArray<Slot> slots = recipe->get_required_items();
+		deserialize_slots(slots, data["required_items"]);
+	}
+}
+
 Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 	Dictionary data = Dictionary();
 	Ref<Item> item = slot->get_item();
@@ -303,4 +330,30 @@ void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Dictionary data) 
 	}
 	slot->set_amount(data["amount"]);
 	// slot->set_categorized(data["categorized"]);
+}
+
+TypedArray<Dictionary> InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
+	TypedArray<Dictionary> slots_data = TypedArray<Dictionary>();;
+	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
+		Dictionary data = serialize_slot(slots[slot_index]);
+		slots_data.append(data);
+	}
+	return slots_data;
+}
+
+void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const TypedArray<Dictionary> data) const {
+	for (size_t slot_index = 0; slot_index < data.size(); slot_index++) {
+		if (slot_index >= slots.size()) {
+			Ref<Slot> slot = memnew(Slot());
+			deserialize_slot(slot, data[slot_index]);
+			slots.append(slot);
+		} else {
+			Ref<Slot> slot = slots[slot_index];
+			deserialize_slot(slot, data[slot_index]);
+		}
+	}
+	int size = slots.size();
+	for (size_t slot_index = data.size(); slot_index < size; slot_index++) {
+		slots.remove_at(data.size());
+	}
 }
