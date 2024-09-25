@@ -355,8 +355,8 @@ void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Dictionary data) 
 	// slot->set_categorized(data["categorized"]);
 }
 
-TypedArray<Dictionary> InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
-	TypedArray<Dictionary> slots_data = TypedArray<Dictionary>();;
+Array InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
+	Array slots_data = Array();
 	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
 		Dictionary data = serialize_slot(slots[slot_index]);
 		slots_data.append(data);
@@ -364,7 +364,7 @@ TypedArray<Dictionary> InventoryDatabase::serialize_slots(const TypedArray<Slot>
 	return slots_data;
 }
 
-void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const TypedArray<Dictionary> data) const {
+void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const Array data) const {
 	for (size_t slot_index = 0; slot_index < data.size(); slot_index++) {
 		if (slot_index >= slots.size()) {
 			Ref<Slot> slot = memnew(Slot());

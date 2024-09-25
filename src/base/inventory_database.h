@@ -64,8 +64,8 @@ public:
 	void deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const;
 	Dictionary serialize_slot(const Ref<Slot> slot) const;
 	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
-	TypedArray<Dictionary> serialize_slots(const TypedArray<Slot> slots) const;
-	void deserialize_slots(TypedArray<Slot> slots, const TypedArray<Dictionary> data) const;
+	Array serialize_slots(const TypedArray<Slot> slots) const;
+	void deserialize_slots(TypedArray<Slot> slots, const Array data) const;
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H
