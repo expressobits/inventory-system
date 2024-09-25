@@ -51,8 +51,14 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_item_definition", "definition", "data"), &InventoryDatabase::deserialize_item_definition);
 	ClassDB::bind_method(D_METHOD("serialize_item_category", "category"), &InventoryDatabase::serialize_item_category);
 	ClassDB::bind_method(D_METHOD("deserialize_item_category", "category", "data"), &InventoryDatabase::deserialize_item_category);
+	ClassDB::bind_method(D_METHOD("serialize_recipe", "recipe"), &InventoryDatabase::serialize_recipe);
+	ClassDB::bind_method(D_METHOD("deserialize_recipe", "recipe", "data"), &InventoryDatabase::deserialize_recipe);
+	ClassDB::bind_method(D_METHOD("serialize_station_type", "station_type"), &InventoryDatabase::serialize_station_type);
+	ClassDB::bind_method(D_METHOD("deserialize_station_type", "station_type", "data"), &InventoryDatabase::deserialize_station_type);
 	ClassDB::bind_method(D_METHOD("serialize_slot", "slot"), &InventoryDatabase::serialize_slot);
 	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
+	ClassDB::bind_method(D_METHOD("serialize_slots", "slots"), &InventoryDatabase::serialize_slots);
+	ClassDB::bind_method(D_METHOD("deserialize_slots", "slots", "data"), &InventoryDatabase::deserialize_slots);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
@@ -292,6 +298,23 @@ void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary 
 	if (data.has("required_items")) {
 		TypedArray<Slot> slots = recipe->get_required_items();
 		deserialize_slots(slots, data["required_items"]);
+	}
+}
+
+Dictionary InventoryDatabase::serialize_station_type(const Ref<CraftStationType> craft_station_type) const {
+	Dictionary data = Dictionary();
+	data["name"] = craft_station_type->get_name();
+	data["icon_path"] = craft_station_type->get_icon()->get_path();
+	return data;
+}
+
+void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const {
+	if (data.has("name")) {
+		craft_station_type->set_name(data["name"]);
+	}
+	if (data.has("icon_path")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+		craft_station_type->set_icon(icon);
 	}
 }
 
