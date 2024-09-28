@@ -2,7 +2,7 @@
 class_name ItemEditor
 extends Control
 
-signal changed(id : int)
+signal changed(id : String)
 
 var item : ItemDefinition
 var database : InventoryDatabase
@@ -126,7 +126,7 @@ func _on_item_resource_file_dialog_file_selected(path):
 		print("Error on open scene!")
 
 
-func _on_item_id_editor_changed(id : int):
+func _on_item_id_editor_changed(id : String):
 	item.id = id
 	database.update_items_cache()
 	changed.emit(item.id)

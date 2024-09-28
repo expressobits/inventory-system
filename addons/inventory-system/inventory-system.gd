@@ -10,9 +10,14 @@ var _inventory_editor : Control
 
 var database_file_cache: Dictionary = {}
 
+var import_plugin
+
 func _enter_tree():
 	if Engine.is_editor_hint():
 		InventorySettings.prepare()
+		
+		import_plugin = preload("import_plugin.gd").new()
+		add_import_plugin(import_plugin)
 		
 		_inventory_editor = inventory_editor_scene.instantiate()
 		_inventory_editor.name = "Inventory System"
@@ -30,6 +35,8 @@ func _exit_tree():
 		_inventory_editor.queue_free()
 	# Clean-up of the plugin goes here.
 #	remove_inspector_plugin()
+	remove_import_plugin(import_plugin)
+	import_plugin = null
 
 
 func _has_main_screen():

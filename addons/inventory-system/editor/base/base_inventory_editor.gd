@@ -54,7 +54,10 @@ func new_data_pressed():
 	if not is_instance_valid(database):
 		return
 	
-	new_resource_dialog.popup_centered()
+	#new_resource_dialog.popup_centered()
+	
+	database.add_item()
+	on_load_database()
 
 
 func new_data_from_resource_pressed():

@@ -21,6 +21,8 @@ var editor_plugin: EditorPlugin
 @onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Categories"
 
 
+var database : InventoryDatabase
+
 # Dialogs
 @onready var new_dialog: FileDialog = $NewDialog
 @onready var save_dialog: FileDialog = $SaveDialog
@@ -29,6 +31,7 @@ var editor_plugin: EditorPlugin
 # Toolbar
 @onready var new_button: Button = %NewButton
 @onready var open_button: MenuButton = %OpenButton
+@onready var save_button: Button = %SaveButton
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button : MenuButton = %NewItemButton
@@ -48,6 +51,7 @@ func _ready():
 	build_new_recipe_menu()
 	build_new_craft_station_menu()
 	build_new_item_category_menu()
+	save_button.pressed.connect(save_file)
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -91,11 +95,25 @@ func open_file(path: String) -> void:
 		return
 	var database : InventoryDatabase = res as InventoryDatabase
 	load_database(database)
+	self.database = database
 	
 	title_label.text = path
 	
 	InventorySettings.add_recent_file(path)
 	build_open_menu()
+	
+
+func save_file() -> void:
+	
+	var json = database.export_to_invdata()
+	
+	var path = title_label.text
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	if file == null:
+		return FileAccess.get_open_error()
+	file.store_string(json)
+	
+	ResourceSaver.save(database, database.resource_path)
 	
 #	files_list.files = open_buffers.keys()
 #	files_list.select_file(path)

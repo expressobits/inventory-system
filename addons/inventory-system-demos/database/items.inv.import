@@ -1,0 +1,14 @@
+[remap]
+
+importer="inventory_system.items"
+type="InventoryDatabase"
+uid="uid://42wuulgikujh"
+path="res://.godot/imported/items.inv-ce0a70e7d0341e52f60b3547db557cb3.tres"
+
+[deps]
+
+source_file="res://addons/inventory-system-demos/database/items.inv"
+dest_files=["res://.godot/imported/items.inv-ce0a70e7d0341e52f60b3547db557cb3.tres"]
+
+[params]
+

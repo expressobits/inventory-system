@@ -41,10 +41,10 @@ func remove_item(item : ItemDefinition):
 	data_changed.emit()
 
 
-func select(id : int):
+func select(id : String):
 	for item_in_list in database.items:
 		if item_in_list.id == id:
-			item_editor.load_item(database.items[id], database)
+			item_editor.load_item(database.get_item(id), database)
 
 
 func _apply_theme():

@@ -1,0 +1,151 @@
+{
+	"items": [
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"icon_path": "res://addons/inventory-system-demos/assets/icons/branch.png",
+			"id": "wood",
+			"max_stack": 16,
+			"name": "Wood",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"icon_path": "res://addons/inventory-system-demos/assets/icons/stone.png",
+			"id": "stone",
+			"max_stack": 16,
+			"name": "Stone",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"icon_path": "res://addons/inventory-system-demos/assets/icons/grass.png",
+			"id": "grass",
+			"max_stack": 0,
+			"name": "Grass",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "3",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "4",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "5",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "6",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "7",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "8",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "9",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "10",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"categories_path": [],
+			"dynamic_properties": [],
+			"id": "0",
+			"max_stack": 0,
+			"name": "",
+			"properties": {
+
+			},
+			"weight": 0
+		}
+	]
+}

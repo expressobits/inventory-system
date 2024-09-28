@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=24 format=3 uid="uid://x5huasdaljjl"]
+[gd_resource type="InventoryDatabase" load_steps=24 format=3 uid="uid://cw7nsrfmysx81"]
 
 [ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="1_ll643"]
 [ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="2_8oy0m"]

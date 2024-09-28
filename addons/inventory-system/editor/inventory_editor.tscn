@@ -54,6 +54,13 @@ custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 text = "Open Database"
 
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+text = "Save Database"
+flat = true
+
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
@@ -155,7 +162,6 @@ custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "dsadasdsa"
-popup/item_0/id = 0
 popup/item_1/text = "dadsadsa"
 popup/item_1/id = 1
 
@@ -173,6 +179,7 @@ theme_override_constants/margin_right = 4
 [node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
 layout_mode = 2
 mouse_filter = 2
+current_tab = 0
 script = ExtResource("2_3cl1k")
 items_icon = ExtResource("3_6kl7v")
 recipes_icon = ExtResource("4_20x4i")
@@ -182,22 +189,26 @@ categories_icon = ExtResource("10_86ysm")
 [node name="Items" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("5_fwymy")]
 layout_mode = 2
 mouse_filter = 1
+metadata/_tab_index = 0
 
 [node name="Recipes" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 1
+metadata/_tab_index = 1
 
 [node name="Craft Stations" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
+metadata/_tab_index = 2
 
 [node name="Categories" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("12_kvj1p")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
+metadata/_tab_index = 3
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
@@ -205,22 +216,21 @@ access = 2
 filters = PackedStringArray("*.tres ; InventoryDatabase")
 
 [node name="SaveDialog" type="FileDialog" parent="."]
-size = Vector2i(312, 157)
+size = Vector2i(312, 180)
 dialog_hide_on_ok = true
 filters = PackedStringArray("*.inv ; Inventory")
 
 [node name="OpenDialog" type="FileDialog" parent="."]
 title = "Open a File"
-size = Vector2i(312, 157)
+size = Vector2i(312, 175)
 ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
-filters = PackedStringArray("*.tres ; InventoryDatabase")
+filters = PackedStringArray("*.inv ; InventoryDatabase")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
 [connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
-[connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Items" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]
 [connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]
 [connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
 [connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]

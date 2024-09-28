@@ -185,7 +185,6 @@ func _on_new_ingredient_button_pressed():
 	var slot = Slot.new()
 	slot.amount = 1
 	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
 	recipe.ingredients.append(slot)
 	setup_ingredients(recipe, database)
 	changed.emit()
@@ -195,7 +194,6 @@ func _on_new_required_item_button_pressed():
 	var slot = Slot.new()
 	slot.amount = 1
 	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
 	var required_items : Array[Slot] = []
 	required_items.append_array(recipe.required_items)
 	required_items.append(slot)
@@ -208,7 +206,6 @@ func _on_new_product_button_pressed():
 	var slot = Slot.new()
 	slot.amount = 1
 	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
 	recipe.products.append(slot)
 	setup_products(recipe, database)
 	changed.emit()
