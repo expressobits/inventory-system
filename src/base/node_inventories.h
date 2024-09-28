@@ -22,8 +22,8 @@ public:
 	virtual PackedStringArray _get_configuration_warnings() const override;
 	void set_database(const Ref<InventoryDatabase> new_database);
 	Ref<InventoryDatabase> get_database() const;
-	Ref<ItemDefinition> get_item_from_id(const int id) const;
-	int get_id_from_item(const Ref<ItemDefinition> item) const;
+	Ref<ItemDefinition> get_item_from_id(const String id) const;
+	String get_id_from_item(const Ref<ItemDefinition> item) const;
 };
 
 #endif // NODE_INVENTORIES_CLASS_H

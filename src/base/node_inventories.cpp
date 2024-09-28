@@ -31,13 +31,13 @@ Ref<InventoryDatabase> NodeInventories::get_database() const {
 	return database;
 }
 
-Ref<ItemDefinition> NodeInventories::get_item_from_id(const int id) const {
+Ref<ItemDefinition> NodeInventories::get_item_from_id(const String id) const {
 	return database->get_item(id);
 }
 
-int NodeInventories::get_id_from_item(const Ref<ItemDefinition> item) const {
+String NodeInventories::get_id_from_item(const Ref<ItemDefinition> item) const {
 	if(item.is_null()){
-		return ItemDefinition::NONE;
+		return "";
 	}
 	return item->get_id();
 }

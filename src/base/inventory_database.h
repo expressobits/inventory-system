@@ -15,7 +15,7 @@ class InventoryDatabase : public Resource {
 	GDCLASS(InventoryDatabase, Resource);
 
 private:
-	TypedArray<ItemDefinition> items;
+	Array items;
 	TypedArray<Recipe> recipes;
 	TypedArray<CraftStationType> stations_type;
 	TypedArray<ItemCategory> item_categories;
@@ -48,10 +48,10 @@ public:
 	void remove_item(const Ref<ItemDefinition> item);
 	void add_new_category(const Ref<ItemCategory> category);
 	void remove_category(const Ref<ItemCategory> category);
-	Ref<ItemDefinition> get_item(int id) const;
-	bool has_item_id(int id) const;
-	int get_valid_id() const;
-	int get_new_valid_id() const;
+	Ref<ItemDefinition> get_item(String id) const;
+	bool has_item_id(String id) const;
+	String get_valid_id() const;
+	String get_new_valid_id() const;
 	Ref<ItemCategory> get_category(int code);
 
 	Dictionary serialize_item_definition(const Ref<ItemDefinition> definition) const;
@@ -66,6 +66,17 @@ public:
 	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
 	Array serialize_slots(const TypedArray<Slot> slots) const;
 	void deserialize_slots(TypedArray<Slot> slots, const Array data) const;
+
+	void add_item();
+
+	Dictionary serialize() const;
+	Array serialize_items() const;
+	void deserialize_items(Array items_data);
+	Array serialize_item_categories() const;
+	void deserialize_item_categories(Array items_data);
+
+	String export_to_invdata() const;
+	void import_to_invdata(const String json);
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H

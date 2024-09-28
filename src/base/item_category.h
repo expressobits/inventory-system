@@ -10,6 +10,7 @@ class ItemCategory : public Resource {
 	GDCLASS(ItemCategory, Resource);
 
 private:
+	String id;
 	String name;
 	Color color;
 	Ref<Texture2D> icon;
@@ -23,6 +24,8 @@ protected:
 public:
 	ItemCategory();
 	~ItemCategory();
+	void set_id(const String &new_id);
+	String get_id() const;
 	void set_name(const String &new_name);
 	String get_name() const;
 	void set_color(const Color &new_color);

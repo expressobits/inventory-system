@@ -12,7 +12,7 @@ class ItemDefinition : public Resource {
 	GDCLASS(ItemDefinition, Resource);
 
 private:
-	int id = 0;
+	String id = "";
 	bool can_stack = true;
 	int max_stack = 0;
 	String name = "";
@@ -27,14 +27,10 @@ protected:
 	static void _bind_methods();
 
 public:
-	enum {
-		NONE = -1
-	};
-
 	ItemDefinition();
 	~ItemDefinition();
-	void set_id(const int &new_id);
-	int get_id() const;
+	void set_id(const String &new_id);
+	String get_id() const;
 	void set_can_stack(const bool &new_can_stack);
 	bool get_can_stack() const;
 	void set_max_stack(const int &new_max_stack);

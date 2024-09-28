@@ -7,6 +7,8 @@
 using namespace godot;
 
 void ItemCategory::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_id", "id"), &ItemCategory::set_id);
+	ClassDB::bind_method(D_METHOD("get_id"), &ItemCategory::get_id);
 	ClassDB::bind_method(D_METHOD("set_name", "name"), &ItemCategory::set_name);
 	ClassDB::bind_method(D_METHOD("get_name"), &ItemCategory::get_name);
 	ClassDB::bind_method(D_METHOD("set_color", "color"), &ItemCategory::set_color);
@@ -18,6 +20,7 @@ void ItemCategory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_item_dynamic_properties", "item_dynamic_properties"), &ItemCategory::set_item_dynamic_properties);
 	ClassDB::bind_method(D_METHOD("get_item_dynamic_properties"), &ItemCategory::get_item_dynamic_properties);
 	ClassDB::bind_method(D_METHOD("get_code"), &ItemCategory::get_code);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "color"), "set_color", "get_color");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
@@ -29,6 +32,14 @@ ItemCategory::ItemCategory() {
 }
 
 ItemCategory::~ItemCategory() {
+}
+
+void ItemCategory::set_id(const String &new_id) {
+	this->id = new_id;
+}
+
+String ItemCategory::get_id() const {
+	return id;
 }
 
 // Properties

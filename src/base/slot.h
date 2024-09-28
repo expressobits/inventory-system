@@ -36,7 +36,7 @@ public:
 	int is_categorized() const;
 	void set_accepted_categories(const TypedArray<ItemCategory> &new_accepted_categories);
 	TypedArray<ItemCategory> get_accepted_categories() const;
-	int get_item_id() const;
+	String get_item_id() const;
 	virtual int add(const Ref<Item> item, const int &amount);
 	int remove(const Ref<Item> item, const int &amount);
 	int get_max_stack_for_item(Ref<ItemDefinition> item) const;

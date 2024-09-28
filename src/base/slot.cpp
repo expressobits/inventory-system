@@ -170,9 +170,9 @@ int Slot::left_to_fill() {
 // void Slot::deserialize(const Dictionary data) {
 // }
 
-int Slot::get_item_id() const {
+String Slot::get_item_id() const {
 	if (this->item == nullptr || this->item->get_definition() == nullptr) {
-		return ItemDefinition::NONE;
+		return "";
 	} else {
 		return this->item->get_definition()->get_id();
 	}

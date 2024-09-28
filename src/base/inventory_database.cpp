@@ -1,9 +1,15 @@
 #include "inventory_database.h"
 
 #include <godot_cpp/classes/engine.hpp>
-#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/core/class_db.hpp>
+
+#include <godot_cpp/variant/variant.hpp>
+
+#include <godot_cpp/variant/utility_functions.hpp>
+
+#include <godot_cpp/classes/json.hpp>
 
 void InventoryDatabase::_update_items_cache() {
 	items_cache.clear();
@@ -59,6 +65,11 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
 	ClassDB::bind_method(D_METHOD("serialize_slots", "slots"), &InventoryDatabase::serialize_slots);
 	ClassDB::bind_method(D_METHOD("deserialize_slots", "slots", "data"), &InventoryDatabase::deserialize_slots);
+
+	ClassDB::bind_method(D_METHOD("add_item"), &InventoryDatabase::add_item);
+
+	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
+	ClassDB::bind_method(D_METHOD("import_to_invdata", "json"), &InventoryDatabase::import_to_invdata);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
@@ -152,32 +163,27 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 	}
 }
 
-Ref<ItemDefinition> InventoryDatabase::get_item(int id) const {
+Ref<ItemDefinition> InventoryDatabase::get_item(String id) const {
 	if (has_item_id(id)) {
 		return items_cache[id];
 	}
 	return nullptr;
 }
 
-bool InventoryDatabase::has_item_id(int id) const {
+bool InventoryDatabase::has_item_id(String id) const {
 	return items_cache.has(id);
 }
 
-int InventoryDatabase::get_valid_id() const {
+String InventoryDatabase::get_valid_id() const {
 	for (size_t i = 0; i < items.size(); i++) {
 		Ref<ItemDefinition> item = items[i];
 		return item->get_id();
 	}
-	return -1;
+	return "";
 }
 
-int InventoryDatabase::get_new_valid_id() const {
-	for (size_t i = 0; i < 92233720368547758; i++) {
-		if (!has_item_id(i)) {
-			return i;
-		}
-	}
-	return -1;
+String InventoryDatabase::get_new_valid_id() const {
+	return "";
 }
 
 Ref<ItemCategory> InventoryDatabase::get_category(int code) {
@@ -190,17 +196,19 @@ Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition
 	data["can_stack"] = definition->get_can_stack();
 	data["max_stack"] = definition->get_max_stack();
 	data["name"] = definition->get_name();
-	data["icon_path"] = definition->get_icon()->get_path();
+	if (definition->get_icon() != nullptr) {
+		data["icon_path"] = definition->get_icon()->get_path();
+	}
 	data["weight"] = definition->get_weight();
 	data["properties"] = definition->get_properties();
 	data["dynamic_properties"] = definition->get_dynamic_properties();
-	TypedArray<String> categories_path = TypedArray<String>();
+	TypedArray<String> categories_ids = TypedArray<String>();
 	TypedArray<ItemCategory> categories = definition->get_categories();
 	for (size_t category_index = 0; category_index < categories.size(); category_index++) {
 		Ref<ItemCategory> category = categories[category_index];
-		categories_path.append(category->get_path());
+		categories_ids.append(category->get_id());
 	}
-	data["categories_path"] = categories_path;
+	data["categories"] = categories_ids;
 	return data;
 }
 
@@ -230,9 +238,9 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 	if (data.has("dynamic_properties")) {
 		definition->set_dynamic_properties(data["dynamic_properties"]);
 	}
-	if (data.has("categories_path")) {
+	if (data.has("categories")) {
 		TypedArray<ItemCategory> categories = TypedArray<ItemCategory>();
-		TypedArray<String> categories_path = data["categories_path"];
+		TypedArray<String> categories_path = data["categories"];
 		for (size_t category_index = 0; category_index < categories_path.size(); category_index++) {
 			Ref<ItemCategory> category = ResourceLoader::get_singleton()->load(categories_path[category_index]);
 			categories.append(category);
@@ -243,6 +251,7 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 
 Dictionary InventoryDatabase::serialize_item_category(const Ref<ItemCategory> category) const {
 	Dictionary data = Dictionary();
+	data["id"] = category->get_id();
 	data["name"] = category->get_name();
 	data["icon_path"] = category->get_icon()->get_path();
 	data["color"] = category->get_color();
@@ -253,6 +262,9 @@ Dictionary InventoryDatabase::serialize_item_category(const Ref<ItemCategory> ca
 }
 
 void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, const Dictionary data) const {
+	if (data.has("id")) {
+		category->set_id(data["id"]);
+	}
 	if (data.has("name")) {
 		category->set_name(data["name"]);
 	}
@@ -324,7 +336,7 @@ Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 	if (item != nullptr) {
 		Dictionary item_data = Dictionary();
 		if (item->get_definition() == nullptr) {
-			item_data["id"] = ItemDefinition::NONE;
+			item_data["id"] = "";
 		} else {
 			item_data["id"] = item->get_definition()->get_id();
 		}
@@ -378,5 +390,67 @@ void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const Array da
 	int size = slots.size();
 	for (size_t slot_index = data.size(); slot_index < size; slot_index++) {
 		slots.remove_at(data.size());
+	}
+}
+
+void InventoryDatabase::add_item() {
+	Ref<ItemDefinition> definition = memnew(ItemDefinition());
+	items.append(definition);
+}
+
+Dictionary InventoryDatabase::serialize() const {
+	Dictionary data = Dictionary();
+	data["items"] = serialize_items();
+	return data;
+}
+
+Array InventoryDatabase::serialize_items() const {
+	Array items_data = Array();
+	for (size_t i = 0; i < this->items.size(); i++) {
+		Ref<ItemDefinition> definition = this->items[i];
+		if (definition == nullptr)
+			continue;
+		Dictionary item_data = serialize_item_definition(definition);
+		items_data.append(item_data);
+	}
+	return items_data;
+}
+
+void InventoryDatabase::deserialize_items(Array items_data) {
+	items.clear();
+	for (size_t i = 0; i < items_data.size(); i++) {
+		Ref<ItemDefinition> definition = memnew(ItemDefinition());
+		deserialize_item_definition(definition, items_data[i]);
+		items.append(definition);
+	}
+}
+
+Array InventoryDatabase::serialize_item_categories() const {
+	Array items_data = Array();
+	for (size_t i = 0; i < this->items.size(); i++) {
+		Ref<ItemDefinition> definition = this->items[i];
+		if (definition == nullptr)
+			continue;
+		Dictionary item_data = serialize_item_definition(definition);
+		items_data.append(item_data);
+	}
+	return items_data;
+}
+
+void InventoryDatabase::deserialize_item_categories(Array items_data) {
+}
+
+String InventoryDatabase::export_to_invdata() const {
+	Dictionary data = serialize();
+	String json = JSON::stringify(data, "\t");
+	UtilityFunctions::print(json);
+	return json;
+}
+
+void InventoryDatabase::import_to_invdata(const String json) {
+	Dictionary data = Dictionary();
+	data = JSON::parse_string(json);
+	if (data.has("items")) {
+		deserialize_items(data["items"]);
 	}
 }
