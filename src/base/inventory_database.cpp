@@ -438,10 +438,18 @@ void InventoryDatabase::add_craft_station_type() {
 
 Dictionary InventoryDatabase::serialize() const {
 	Dictionary data = Dictionary();
-	data["item_categories"] = serialize_item_categories();
-	data["items"] = serialize_items();
-	data["recipes"] = serialize_recipes();
-	data["craft_station_types"] = serialize_craft_station_types();
+	Array item_categories_data = serialize_item_categories();
+	if (!item_categories_data.is_empty())
+		data["item_categories"] = item_categories_data;
+	Array items_data = serialize_items();
+	if (!items_data.is_empty())
+		data["items"] = items_data;
+	Array recipes_data = serialize_recipes();
+	if (!recipes_data.is_empty())
+		data["recipes"] = recipes_data;
+	Array craft_station_types_data = serialize_craft_station_types();
+	if (!craft_station_types_data.is_empty())
+		data["craft_station_types"] = craft_station_types_data;
 	return data;
 }
 

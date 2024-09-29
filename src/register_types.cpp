@@ -23,18 +23,18 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
-	ClassDB::register_class<CraftStationType>();
-	ClassDB::register_class<InventoryDatabase>();
-	ClassDB::register_class<Item>();
-	ClassDB::register_class<ItemCategory>();
-	ClassDB::register_class<ItemDefinition>();
-	ClassDB::register_class<NodeInventories>();
-	ClassDB::register_class<Recipe>();
-	ClassDB::register_class<Slot>();
-	ClassDB::register_class<Hotbar>();
-	ClassDB::register_class<Inventory>();
-	ClassDB::register_class<CraftStation>();
-	ClassDB::register_class<Crafting>();
+	GDREGISTER_CLASS(CraftStationType);
+	GDREGISTER_CLASS(InventoryDatabase);
+	GDREGISTER_CLASS(Item);
+	GDREGISTER_CLASS(ItemCategory);
+	GDREGISTER_CLASS(ItemDefinition);
+	GDREGISTER_CLASS(NodeInventories);
+	GDREGISTER_CLASS(Recipe);
+	GDREGISTER_CLASS(Slot);
+	GDREGISTER_CLASS(Hotbar);
+	GDREGISTER_CLASS(Inventory);
+	GDREGISTER_CLASS(CraftStation);
+	GDREGISTER_CLASS(Crafting);
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
