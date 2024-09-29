@@ -1,11 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=20 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="3_sl0h4"]
-[ext_resource type="CraftStationType" uid="uid://bnofwpkgx0twi" path="res://addons/inventory-system-demos/base/craft_stations/campfire.tres" id="4_bov00"]
-[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="5_72vu1"]
-[ext_resource type="ItemCategory" uid="uid://041ut5vu78mt" path="res://addons/inventory-system-demos/base/categories/burnables.tres" id="8_81xo0"]
+[ext_resource type="InventoryDatabase" uid="uid://42wuulgikujh" path="res://addons/inventory-system-demos/database/items.inv" id="5_72vu1"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="8_g2guq"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://addons/inventory-system-demos/assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
 
@@ -68,7 +66,6 @@ transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612
 collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_11afe")
-burnable_category = ExtResource("8_81xo0")
 toggle_fire_action = SubResource("Resource_3wlgv")
 actions = [SubResource("Resource_y0w28")]
 
@@ -84,7 +81,7 @@ input_inventories = Array[NodePath]([NodePath("../InputInventory")])
 output_inventories = Array[NodePath]([NodePath("../InputInventory")])
 has_limit_crafts = true
 limit_number_crafts = 1
-type = ExtResource("4_bov00")
+type_id = "campfire"
 only_remove_ingredients_after_craft = true
 auto_craft = true
 database = ExtResource("5_72vu1")

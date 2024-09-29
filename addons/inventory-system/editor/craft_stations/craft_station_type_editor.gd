@@ -12,10 +12,12 @@ var editor_plugin : EditorPlugin
 @onready var icon_text_edit : LineEdit = %IconLineEdit
 @onready var icon_edit_button : Button = %IconEditButton
 @onready var icon_file_dialog : FileDialog = $IconFileDialog
+@onready var craft_station_type_id_editor: CraftStationTypeIDEditor = $MarginContainer/VBoxContainer/CraftStationTypeIDEditor
 
 func _ready():
 	apply_theme()
 	$MarginContainer.visible = false
+	craft_station_type_id_editor.changed.connect(_on_craft_station_type_id_changed)
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -23,12 +25,13 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	apply_theme()
 
 
-func load_station(station : CraftStationType):
+func load_station(database : InventoryDatabase, station : CraftStationType):
 	self.station = station
 	if not is_instance_valid(station):
 		$MarginContainer.visible = false
 		return
 	$MarginContainer.visible = true
+	craft_station_type_id_editor.setup(database, station.id)
 	name_text_edit.text = station.name
 	if is_instance_valid(station.icon):
 		icon_text_edit.text = station.icon.resource_path
@@ -49,6 +52,11 @@ func apply_theme() -> void:
 
 func _on_theme_changed():
 	apply_theme()
+
+
+func _on_craft_station_type_id_changed(id : String):
+	station.id = id
+	changed.emit(station)
 
 
 func _on_name_text_edit_text_changed(new_text):

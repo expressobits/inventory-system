@@ -1,12 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkk318xcbwoj1"]
+[gd_scene load_steps=6 format=3 uid="uid://bkk318xcbwoj1"]
 
 [ext_resource type="PackedScene" uid="uid://bu50ku0vxmpwt" path="res://addons/inventory-system-demos/fps/dropped_items/dropped_item.tscn" id="1_jic1q"]
-[ext_resource type="Resource" uid="uid://boa4f5gromfvx" path="res://addons/inventory-system-demos/base/items/lashing.tres" id="2_o1jb2"]
 [ext_resource type="PackedScene" uid="uid://c16vhlb80bs1u" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/resourceStone.glb" id="3_3lr6e"]
-
-[sub_resource type="Item" id="Resource_e73js"]
-definition = ExtResource("2_o1jb2")
-properties = {}
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fdkpx"]
 size = Vector3(0.75, 0.25, 0.75)
@@ -18,7 +13,7 @@ albedo_color = Color(0.372549, 0.494118, 0.0980392, 1)
 size = Vector3(0.25, 0.1, 0.25)
 
 [node name="Lashing" instance=ExtResource("1_jic1q")]
-item = SubResource("Resource_e73js")
+item_id = "lashing"
 
 [node name="CollisionShape3D" parent="." index="0"]
 shape = SubResource("BoxShape3D_fdkpx")

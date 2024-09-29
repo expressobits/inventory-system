@@ -22,12 +22,12 @@ func _apply_theme():
 	
 
 func on_load_database() -> void:
-	craft_station_type_editor.load_station(null)
+	craft_station_type_editor.load_station(database, null)
 	load_craft_station_types()
 
 
 func select(station : CraftStationType):
-	craft_station_type_editor.load_station(station)
+	craft_station_type_editor.load_station(database, station)
 
 
 func load_craft_station_types():

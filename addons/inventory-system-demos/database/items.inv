@@ -2,10 +2,12 @@
 	"craft_station_types": [
 		{
 			"icon": "res://addons/inventory-system-demos/assets/icons/workbench.png",
+			"id": "workbench",
 			"name": "Workbench"
 		},
 		{
 			"icon": "res://addons/inventory-system-demos/assets/icons/campfire.png",
+			"id": "campfire",
 			"name": "Campfire"
 		}
 	],
@@ -207,7 +209,7 @@
 	],
 	"recipes": [
 		{
-			"craft_station_type": "Workbench",
+			"craft_station_type": "workbench",
 			"ingredients": [
 				"stone 2",
 				"wood 2"
@@ -218,7 +220,7 @@
 			"time_to_craft": 16
 		},
 		{
-			"craft_station_type": "Workbench",
+			"craft_station_type": "workbench",
 			"ingredients": [
 				"stone 2",
 				"wood 2"
@@ -260,7 +262,7 @@
 			"time_to_craft": 4
 		},
 		{
-			"craft_station_type": "Campfire",
+			"craft_station_type": "campfire",
 			"ingredients": [
 				"raw_meat 1"
 			],

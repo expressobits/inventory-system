@@ -185,10 +185,15 @@ func pick_to_inventory(node : Node):
 	if !node.get("is_pickable"):
 		return
 		
-	var item = node.item
+	var item_id = node.item_id
 	
-	if item == null:
+	var item_definition = database.get_item(item_id)
+	
+	if item_definition == null:
 		return
+		
+	var item = Item.new()
+	item.definition = item_definition
 
 	if main_inventory.add(item, 1, true) == 0:
 		emit_signal("picked", node)

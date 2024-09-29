@@ -4,7 +4,7 @@
 [ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="1_jl1dl"]
 
 [resource]
-id = 4
+id = "4"
 can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"

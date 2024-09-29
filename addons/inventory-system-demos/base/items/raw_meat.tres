@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://wfcb6icswom6" path="res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatRaw.png" id="1_hsqvv"]
 
 [resource]
-id = 8
+id = "8"
 max_stack = 5
 name = "Raw Meat"
 icon = ExtResource("1_hsqvv")

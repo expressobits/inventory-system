@@ -4,7 +4,7 @@ extends Node3D
 
 const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
-@export var item : Item
+@export var item_id : String
 @export var is_pickable := true
 @export var actions : Array
 @export var default_description : String = "Get Item"
@@ -15,7 +15,7 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 
 
 func get_interact_actions(_interactor : Interactor) -> Array:
-	actions[0].description = default_description.replace("Item", item.definition.name)
+	actions[0].description = default_description.replace("Item", item_id)
 	return actions
 
 

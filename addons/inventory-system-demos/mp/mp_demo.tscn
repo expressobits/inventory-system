@@ -1,11 +1,8 @@
-[gd_scene load_steps=32 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=26 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
-[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="3_aep54"]
-[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="3_h8fke"]
-[ext_resource type="ItemDefinition" uid="uid://cq41uaiw3k82b" path="res://addons/inventory-system-demos/base/items/stone.tres" id="4_4wrtk"]
-[ext_resource type="ItemDefinition" uid="uid://c20jkkonitixx" path="res://addons/inventory-system-demos/base/items/grass.tres" id="5_5wf7m"]
+[ext_resource type="InventoryDatabase" uid="uid://42wuulgikujh" path="res://addons/inventory-system-demos/database/items.inv" id="3_aep54"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system-demos/fps/labels.tscn" id="5_rvlsk"]
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="6_52d7a"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system-demos/ui/inventory_system_ui.tscn" id="6_asmwx"]
@@ -22,15 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://d2tpdnjwuur2j" path="res://addons/inventory-system-demos/mp/mp_shelf.tscn" id="15_lou51"]
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
-
-[sub_resource type="Item" id="Resource_s5euc"]
-definition = ExtResource("3_h8fke")
-
-[sub_resource type="Item" id="Item_qd8jj"]
-definition = ExtResource("4_4wrtk")
-
-[sub_resource type="Item" id="Item_x2mc1"]
-definition = ExtResource("5_5wf7m")
 
 [sub_resource type="Item" id="Resource_qht8t"]
 definition = ExtResource("11_6hyks")
@@ -62,9 +50,6 @@ amount = 1
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
 player_scene = ExtResource("2_01e0j")
-item_wood = SubResource("Resource_s5euc")
-item_stone = SubResource("Item_qd8jj")
-item_grass = SubResource("Item_x2mc1")
 database = ExtResource("3_aep54")
 
 [node name="Setup Keys" type="Node" parent="."]
