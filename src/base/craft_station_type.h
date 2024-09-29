@@ -10,6 +10,7 @@ class CraftStationType : public Resource {
 	GDCLASS(CraftStationType, Resource);
 
 private:
+	String id;
 	String name;
 	Ref<Texture2D> icon;
 
@@ -19,6 +20,8 @@ protected:
 public:
 	CraftStationType();
 	~CraftStationType();
+	void set_id(const String &new_id);
+	String get_id() const;
 	void set_name(const String &new_name);
 	String get_name() const;
 	void set_icon(const Ref<Texture2D> &new_icon);

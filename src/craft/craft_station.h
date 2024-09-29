@@ -42,6 +42,7 @@ private:
 	bool can_processing_craftings = true;
 	bool can_finish_craftings = true;
 	Ref<CraftStationType> type;
+	String type_id;
 	bool only_remove_ingredients_after_craft = false;
 	bool auto_craft = false;
 	int processing_mode = 0;
@@ -103,6 +104,8 @@ public:
 	bool get_can_finish_craftings() const;
 	void set_type(const Ref<CraftStationType> &new_type);
 	Ref<CraftStationType> get_type() const;
+	void set_type_id(const String &new_type_id);
+	String get_type_id() const;
 	void set_only_remove_ingredients_after_craft(const bool &new_only_remove_ingredients_after_craft);
 	bool get_only_remove_ingredients_after_craft() const;
 	void set_auto_craft(const bool &new_auto_craft);

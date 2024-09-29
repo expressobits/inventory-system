@@ -47,6 +47,7 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove_category", "category"), &InventoryDatabase::remove_category);
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
 	ClassDB::bind_method(D_METHOD("has_item_id", "id"), &InventoryDatabase::has_item_id);
+	ClassDB::bind_method(D_METHOD("has_craft_station_type_id", "id"), &InventoryDatabase::has_craft_station_type_id);
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
 	ClassDB::bind_method(D_METHOD("get_new_valid_id"), &InventoryDatabase::get_new_valid_id);
 	ClassDB::bind_method(D_METHOD("get_category", "code"), &InventoryDatabase::get_category);
@@ -62,6 +63,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
 	ClassDB::bind_method(D_METHOD("serialize_slots", "slots"), &InventoryDatabase::serialize_slots);
 	ClassDB::bind_method(D_METHOD("deserialize_slots", "slots", "data"), &InventoryDatabase::deserialize_slots);
+
+	ClassDB::bind_method(D_METHOD("get_category_from_id", "id"), &InventoryDatabase::get_category_from_id);
 
 	ClassDB::bind_method(D_METHOD("add_item"), &InventoryDatabase::add_item);
 	ClassDB::bind_method(D_METHOD("add_item_category"), &InventoryDatabase::add_item_category);
@@ -172,6 +175,15 @@ Ref<ItemDefinition> InventoryDatabase::get_item(String id) const {
 
 bool InventoryDatabase::has_item_id(String id) const {
 	return items_cache.has(id);
+}
+
+bool InventoryDatabase::has_craft_station_type_id(String id) const {
+	for (size_t i = 0; i < stations_type.size(); i++)
+	{
+		Ref<CraftStationType> craft_station_type = stations_type[i];
+		if(craft_station_type->get_id() == id) return true;
+	}
+	return false;
 }
 
 String InventoryDatabase::get_valid_id() const {
@@ -305,7 +317,7 @@ Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 	if (!recipe->get_required_items().is_empty())
 		data["required_items"] = serialize_slots(recipe->get_required_items());
 	if (recipe->get_station() != nullptr)
-		data["craft_station_type"] = recipe->get_station()->get_name();
+		data["craft_station_type"] = recipe->get_station()->get_id();
 
 	return data;
 }
@@ -326,10 +338,15 @@ void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary 
 		TypedArray<Slot> slots = recipe->get_required_items();
 		deserialize_slots(slots, data["required_items"]);
 	}
+	if (data.has("craft_station_type")) {
+		Ref<CraftStationType> craft_station_type = get_craft_station_from_id(data["craft_station_type"]);
+		recipe->set_station(craft_station_type);
+	}
 }
 
 Dictionary InventoryDatabase::serialize_station_type(const Ref<CraftStationType> craft_station_type) const {
 	Dictionary data = Dictionary();
+	data["id"] = craft_station_type->get_id();
 	data["name"] = craft_station_type->get_name();
 	if (craft_station_type->get_icon() != nullptr) {
 		data["icon"] = craft_station_type->get_icon()->get_path();
@@ -338,6 +355,9 @@ Dictionary InventoryDatabase::serialize_station_type(const Ref<CraftStationType>
 }
 
 void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const {
+	if (data.has("id")) {
+		craft_station_type->set_id(data["id"]);
+	}
 	if (data.has("name")) {
 		craft_station_type->set_name(data["name"]);
 	}
@@ -434,6 +454,24 @@ void InventoryDatabase::add_recipe() {
 void InventoryDatabase::add_craft_station_type() {
 	Ref<CraftStationType> craft_station_type = memnew(CraftStationType());
 	stations_type.append(craft_station_type);
+}
+
+Ref<ItemCategory> InventoryDatabase::get_category_from_id(String id) const {
+	for (size_t category_index = 0; category_index < item_categories.size(); category_index++) {
+		Ref<ItemCategory> category = item_categories[category_index];
+		if (category->get_id() == id)
+			return category;
+	}
+	return nullptr;
+}
+
+Ref<CraftStationType> InventoryDatabase::get_craft_station_from_id(String id) const {
+	for (size_t i = 0; i < stations_type.size(); i++) {
+		Ref<CraftStationType> station = stations_type[i];
+		if (station->get_id() == id)
+			return station;
+	}
+	return nullptr;
 }
 
 Dictionary InventoryDatabase::serialize() const {

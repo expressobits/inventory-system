@@ -84,6 +84,8 @@ void CraftStation::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_can_finish_craftings"), &CraftStation::get_can_finish_craftings);
 	ClassDB::bind_method(D_METHOD("set_type", "type"), &CraftStation::set_type);
 	ClassDB::bind_method(D_METHOD("get_type"), &CraftStation::get_type);
+	ClassDB::bind_method(D_METHOD("set_type_id", "type_id"), &CraftStation::set_type_id);
+	ClassDB::bind_method(D_METHOD("get_type_id"), &CraftStation::get_type_id);
 	ClassDB::bind_method(D_METHOD("set_only_remove_ingredients_after_craft", "only_remove_ingredients_after_craft"), &CraftStation::set_only_remove_ingredients_after_craft);
 	ClassDB::bind_method(D_METHOD("get_only_remove_ingredients_after_craft"), &CraftStation::get_only_remove_ingredients_after_craft);
 	ClassDB::bind_method(D_METHOD("set_auto_craft", "auto_craft"), &CraftStation::set_auto_craft);
@@ -113,6 +115,7 @@ void CraftStation::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_processing_craftings"), "set_can_processing_craftings", "get_can_processing_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_finish_craftings"), "set_can_finish_craftings", "get_can_finish_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType"), "set_type", "get_type");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "type_id"), "set_type_id", "get_type_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "only_remove_ingredients_after_craft"), "set_only_remove_ingredients_after_craft", "get_only_remove_ingredients_after_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_craft"), "set_auto_craft", "get_auto_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "processing_mode", PROPERTY_HINT_ENUM, "Parallel,Sequential"), "set_processing_mode", "get_processing_mode");
@@ -130,6 +133,9 @@ void CraftStation::_validate_property(PropertyInfo &p_property) const {
 	if (p_property.name == StringName("craftings")) {
 		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
 	}
+	// if (p_property.name == StringName("craftings")) {
+	// 	p_property.usage = PROPERTY_USAGE_NO_EDITOR;
+	// }
 	if (p_property.name == StringName("valid_recipes")) {
 		p_property.usage = PROPERTY_USAGE_NO_EDITOR;
 	}
@@ -271,6 +277,8 @@ void CraftStation::_ready() {
 		return;
 
 	ERR_FAIL_COND_MSG(get_database() == nullptr, "'InventoryDatabase' is null.");
+
+	type = get_database()->get_craft_station_from_id(type_id);
 
 	valid_recipes.clear();
 	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
@@ -488,6 +496,14 @@ void CraftStation::set_type(const Ref<CraftStationType> &new_type) {
 
 Ref<CraftStationType> CraftStation::get_type() const {
 	return type;
+}
+
+void CraftStation::set_type_id(const String &new_type_id) {
+	type_id = new_type_id;
+}
+
+String CraftStation::get_type_id() const {
+	return type_id;
 }
 
 void CraftStation::set_only_remove_ingredients_after_craft(const bool &new_only_remove_ingredients_after_craft) {

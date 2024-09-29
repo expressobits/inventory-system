@@ -7,10 +7,13 @@
 using namespace godot;
 
 void CraftStationType::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_id", "id"), &CraftStationType::set_id);
+	ClassDB::bind_method(D_METHOD("get_id"), &CraftStationType::get_id);
 	ClassDB::bind_method(D_METHOD("set_name", "name"), &CraftStationType::set_name);
 	ClassDB::bind_method(D_METHOD("get_name"), &CraftStationType::get_name);
 	ClassDB::bind_method(D_METHOD("set_icon", "icon"), &CraftStationType::set_icon);
 	ClassDB::bind_method(D_METHOD("get_icon"), &CraftStationType::get_icon);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
 }
@@ -19,6 +22,14 @@ CraftStationType::CraftStationType() {
 }
 
 CraftStationType::~CraftStationType() {
+}
+
+void CraftStationType::set_id(const String &new_id) {
+	id = new_id;
+}
+
+String CraftStationType::get_id() const {
+	return id;
 }
 
 void CraftStationType::set_name(const String &new_name) {

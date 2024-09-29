@@ -50,6 +50,7 @@ public:
 	void remove_category(const Ref<ItemCategory> category);
 	Ref<ItemDefinition> get_item(String id) const;
 	bool has_item_id(String id) const;
+	bool has_craft_station_type_id(String id) const;
 	String get_valid_id() const;
 	String get_new_valid_id() const;
 	Ref<ItemCategory> get_category(int code);
@@ -71,6 +72,9 @@ public:
 	void add_item_category();
 	void add_recipe();
 	void add_craft_station_type();
+
+	Ref<ItemCategory> get_category_from_id(String id) const;
+	Ref<CraftStationType> get_craft_station_from_id(String id) const;
 
 	Dictionary serialize() const;
 	void deserialize(const Dictionary data);
