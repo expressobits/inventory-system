@@ -197,7 +197,7 @@ metadata/_tab_index = 3
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
 access = 2
-filters = PackedStringArray("*.tres ; InventoryDatabase")
+filters = PackedStringArray("*.inv ; InventoryDatabase")
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 size = Vector2i(312, 180)
@@ -213,8 +213,4 @@ file_mode = 0
 filters = PackedStringArray("*.inv ; InventoryDatabase")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Toolbar/NewButton" to="." method="_on_new_button_pressed"]
-[connection signal="about_to_popup" from="MarginContainer/VBoxContainer/Toolbar/OpenButton" to="." method="_on_open_button_about_to_popup"]
 [connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]
-[connection signal="file_selected" from="NewDialog" to="." method="_on_new_dialog_file_selected"]
-[connection signal="file_selected" from="OpenDialog" to="." method="_on_open_dialog_file_selected"]

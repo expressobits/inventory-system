@@ -4,7 +4,7 @@ extends HBoxContainer
 
 signal changed(id : int)
 
-@onready var id_line_edit : LineEdit = %IDInput
+@onready var id_line_edit : LineEdit = $IDInput
 @onready var button : Button = $Button
 @export var ids_must_exist_in_database := false
 
@@ -13,6 +13,8 @@ var id : String
 
 func _ready():
 	id_line_edit.text_changed.connect(_on_id_value_changed)
+	button.pressed.connect(_on_button_pressed)
+	theme_changed.connect(_on_theme_changed)
 	_apply_theme()
 
 

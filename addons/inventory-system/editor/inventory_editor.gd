@@ -48,6 +48,10 @@ func _ready():
 	categories_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
+	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
+	open_dialog.file_selected.connect(_on_open_dialog_file_selected)
+	new_button.pressed.connect(_on_new_button_pressed)
+	open_button.pressed.connect(_on_open_button_about_to_popup)
 	new_item_button.pressed.connect(_on_new_item_menu_id_pressed)
 	new_recipe_button.pressed.connect(_on_new_recipe_menu_id_pressed)
 	new_craft_station_type_button.pressed.connect(_on_new_craft_station_menu_id_pressed)
@@ -79,11 +83,10 @@ func load_database(database : InventoryDatabase):
 
 
 func new_file(path: String, content: String = "") -> void:
-#	if open_buffers.has(path):
-#		remove_file_from_open_buffers(path)
 	var database : InventoryDatabase = InventoryDatabase.new()
-	
-	ResourceSaver.save(database, path)
+	self.database = database
+	self.database_path = path
+	save_file()
 	
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	load_database(database)
@@ -107,10 +110,6 @@ func open_file(path: String) -> void:
 	
 
 func save_file() -> void:
-	
-	
-	#ResourceSaver.save(database, database_path)
-	
 	var json = database.export_to_invdata()
 	
 	var path = database_path
@@ -184,18 +183,22 @@ func _on_open_menu_id_pressed(id: int) -> void:
 
 func _on_new_item_menu_id_pressed() -> void:
 	database.add_item()
+	load_database(database)
 
 
 func _on_new_recipe_menu_id_pressed() -> void:
 	database.add_recipe()
+	load_database(database)
 
 
 func _on_new_craft_station_menu_id_pressed() -> void:
 	database.add_craft_station_type()
+	load_database(database)
 
 
 func _on_new_item_category_menu_id_pressed() -> void:
 	database.add_item_category()
+	load_database(database)
 
 
 func _on_theme_changed():
