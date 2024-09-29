@@ -62,18 +62,27 @@ public:
 	void deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const;
 	Dictionary serialize_station_type(const Ref<CraftStationType> craft_station_type) const;
 	void deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const;
-	Dictionary serialize_slot(const Ref<Slot> slot) const;
-	void deserialize_slot(Ref<Slot> slot, const Dictionary data) const;
+	String serialize_slot(const Ref<Slot> slot) const;
+	void deserialize_slot(Ref<Slot> slot, const String data) const;
 	Array serialize_slots(const TypedArray<Slot> slots) const;
 	void deserialize_slots(TypedArray<Slot> slots, const Array data) const;
 
 	void add_item();
+	void add_item_category();
+	void add_recipe();
+	void add_craft_station_type();
 
 	Dictionary serialize() const;
+	void deserialize(const Dictionary data);
+
 	Array serialize_items() const;
-	void deserialize_items(Array items_data);
+	void deserialize_items(Array datas);
 	Array serialize_item_categories() const;
-	void deserialize_item_categories(Array items_data);
+	void deserialize_item_categories(Array datas);
+	Array serialize_craft_station_types() const;
+	void deserialize_craft_station_types(Array datas);
+	Array serialize_recipes() const;
+	void deserialize_recipes(Array datas);
 
 	String export_to_invdata() const;
 	void import_to_invdata(const String json);

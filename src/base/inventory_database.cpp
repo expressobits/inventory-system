@@ -5,11 +5,8 @@
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
-#include <godot_cpp/variant/variant.hpp>
-
-#include <godot_cpp/variant/utility_functions.hpp>
-
 #include <godot_cpp/classes/json.hpp>
+#include <godot_cpp/variant/variant.hpp>
 
 void InventoryDatabase::_update_items_cache() {
 	items_cache.clear();
@@ -67,6 +64,9 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_slots", "slots", "data"), &InventoryDatabase::deserialize_slots);
 
 	ClassDB::bind_method(D_METHOD("add_item"), &InventoryDatabase::add_item);
+	ClassDB::bind_method(D_METHOD("add_item_category"), &InventoryDatabase::add_item_category);
+	ClassDB::bind_method(D_METHOD("add_recipe"), &InventoryDatabase::add_recipe);
+	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_to_invdata", "json"), &InventoryDatabase::import_to_invdata);
@@ -197,18 +197,22 @@ Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition
 	data["max_stack"] = definition->get_max_stack();
 	data["name"] = definition->get_name();
 	if (definition->get_icon() != nullptr) {
-		data["icon_path"] = definition->get_icon()->get_path();
+		data["icon"] = definition->get_icon()->get_path();
 	}
 	data["weight"] = definition->get_weight();
-	data["properties"] = definition->get_properties();
-	data["dynamic_properties"] = definition->get_dynamic_properties();
-	TypedArray<String> categories_ids = TypedArray<String>();
-	TypedArray<ItemCategory> categories = definition->get_categories();
-	for (size_t category_index = 0; category_index < categories.size(); category_index++) {
-		Ref<ItemCategory> category = categories[category_index];
-		categories_ids.append(category->get_id());
+	if (!definition->get_properties().is_empty())
+		data["properties"] = definition->get_properties();
+	if (!definition->get_dynamic_properties().is_empty())
+		data["dynamic_properties"] = definition->get_dynamic_properties();
+	if (!definition->get_categories().is_empty()) {
+		TypedArray<String> categories_ids = TypedArray<String>();
+		TypedArray<ItemCategory> categories = definition->get_categories();
+		for (size_t category_index = 0; category_index < categories.size(); category_index++) {
+			Ref<ItemCategory> category = categories[category_index];
+			categories_ids.append(category->get_id());
+		}
+		data["categories"] = categories_ids;
 	}
-	data["categories"] = categories_ids;
 	return data;
 }
 
@@ -225,8 +229,8 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 	if (data.has("name")) {
 		definition->set_name(data["name"]);
 	}
-	if (data.has("icon_path")) {
-		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+	if (data.has("icon")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon"]);
 		definition->set_icon(icon);
 	}
 	if (data.has("weight")) {
@@ -240,10 +244,15 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 	}
 	if (data.has("categories")) {
 		TypedArray<ItemCategory> categories = TypedArray<ItemCategory>();
-		TypedArray<String> categories_path = data["categories"];
-		for (size_t category_index = 0; category_index < categories_path.size(); category_index++) {
-			Ref<ItemCategory> category = ResourceLoader::get_singleton()->load(categories_path[category_index]);
-			categories.append(category);
+		TypedArray<String> categories_names = data["categories"];
+		for (size_t category_index = 0; category_index < categories_names.size(); category_index++) {
+			String category_id = categories_names[category_index];
+			for (size_t i = 0; i < item_categories.size(); i++) {
+				Ref<ItemCategory> category = item_categories[i];
+				if (category->get_id() == category_id) {
+					categories.append(category);
+				}
+			}
 		}
 		definition->set_categories(categories);
 	}
@@ -253,11 +262,14 @@ Dictionary InventoryDatabase::serialize_item_category(const Ref<ItemCategory> ca
 	Dictionary data = Dictionary();
 	data["id"] = category->get_id();
 	data["name"] = category->get_name();
-	data["icon_path"] = category->get_icon()->get_path();
-	data["color"] = category->get_color();
-	data["code"] = category->get_code();
-	data["item_properties"] = category->get_item_properties();
-	data["item_dynamic_properties"] = category->get_item_dynamic_properties();
+	if (category->get_icon() != nullptr) {
+		data["icon"] = category->get_icon()->get_path();
+	}
+	data["color"] = category->get_color().to_html();
+	if (!category->get_item_properties().is_empty())
+		data["item_properties"] = category->get_item_properties();
+	if (!category->get_item_dynamic_properties().is_empty())
+		data["item_dynamic_properties"] = category->get_item_dynamic_properties();
 	return data;
 }
 
@@ -268,15 +280,12 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 	if (data.has("name")) {
 		category->set_name(data["name"]);
 	}
-	if (data.has("icon_path")) {
-		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+	if (data.has("icon")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon"]);
 		category->set_icon(icon);
 	}
-	if (data.has("color")) {
-		category->set_color(data["color"]);
-	}
-	if (data.has("code")) {
-		category->set_code(data["code"]);
+	if (data.has("color") && Color::html_is_valid(data["color"])) {
+		category->set_color(Color::html(data["color"]));
 	}
 	if (data.has("item_properties")) {
 		category->set_item_properties(data["item_properties"]);
@@ -288,10 +297,16 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 
 Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 	Dictionary data = Dictionary();
-	data["products"] = serialize_slots(recipe->get_products());
+	if (!recipe->get_products().is_empty())
+		data["products"] = serialize_slots(recipe->get_products());
 	data["time_to_craft"] = recipe->get_time_to_craft();
-	data["ingredients"] = serialize_slots(recipe->get_ingredients());
-	data["required_items"] = serialize_slots(recipe->get_required_items());
+	if (!recipe->get_ingredients().is_empty())
+		data["ingredients"] = serialize_slots(recipe->get_ingredients());
+	if (!recipe->get_required_items().is_empty())
+		data["required_items"] = serialize_slots(recipe->get_required_items());
+	if (recipe->get_station() != nullptr)
+		data["craft_station_type"] = recipe->get_station()->get_name();
+
 	return data;
 }
 
@@ -316,7 +331,9 @@ void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary 
 Dictionary InventoryDatabase::serialize_station_type(const Ref<CraftStationType> craft_station_type) const {
 	Dictionary data = Dictionary();
 	data["name"] = craft_station_type->get_name();
-	data["icon_path"] = craft_station_type->get_icon()->get_path();
+	if (craft_station_type->get_icon() != nullptr) {
+		data["icon"] = craft_station_type->get_icon()->get_path();
+	}
 	return data;
 }
 
@@ -324,53 +341,59 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 	if (data.has("name")) {
 		craft_station_type->set_name(data["name"]);
 	}
-	if (data.has("icon_path")) {
-		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon_path"]);
+	if (data.has("icon")) {
+		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon"]);
 		craft_station_type->set_icon(icon);
 	}
 }
 
-Dictionary InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
-	Dictionary data = Dictionary();
+String InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
+	String data = String();
 	Ref<Item> item = slot->get_item();
 	if (item != nullptr) {
 		Dictionary item_data = Dictionary();
 		if (item->get_definition() == nullptr) {
-			item_data["id"] = "";
+			data += "NONE";
 		} else {
-			item_data["id"] = item->get_definition()->get_id();
+			data += item->get_definition()->get_id();
 		}
-		item_data["properties"] = item->get_properties();
-		data["item"] = item_data;
+		// item_data["properties"] = item->get_properties();
+		// data["item"] = item_data;
 	}
-	data["amount"] = slot->get_amount();
+	data += " ";
+	data += String::num_int64(slot->get_amount());
 	// data["categorized"] = slot->is_categorized();
 	return data;
 }
 
-void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Dictionary data) const {
-	ERR_FAIL_COND_MSG(!data.has("amount"), "Data to deserialize slot is invalid: Does not contain the 'amount' field");
+void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const String data) const {
+	PackedStringArray array = data.split(" ");
+	ERR_FAIL_COND_MSG(array.size() < 2, "Data to deserialize slot is invalid: Does not contain the 'amount' field");
 	// ERR_FAIL_COND_MSG(!data.has("categorized"), "Data to deserialize slot is invalid: Does not contain the 'categorized' field");
-	if (data.has("item")) {
-		Dictionary item_data = data["item"];
-		ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
-		ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
+	if (!array[0].is_empty()) {
+		// Dictionary item_data = data["item"];
+		// ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
+		// ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
 		Ref<Item> item = slot->get_item();
 		if (item == nullptr) {
 			item.instantiate();
 		}
-		item->set_definition(get_item(item_data["id"]));
-		item->set_properties(item_data["properties"]);
+		if (array[0] != "NONE") {
+			item->set_definition(get_item(array[0]));
+		}
+		// item->set_properties(item_data["properties"]);
 		slot->set_item(item);
 	}
-	slot->set_amount(data["amount"]);
+	if (!array[1].is_empty()) {
+		slot->set_amount(array[1].to_int());
+	}
 	// slot->set_categorized(data["categorized"]);
 }
 
 Array InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
 	Array slots_data = Array();
 	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
-		Dictionary data = serialize_slot(slots[slot_index]);
+		String data = serialize_slot(slots[slot_index]);
 		slots_data.append(data);
 	}
 	return slots_data;
@@ -398,10 +421,44 @@ void InventoryDatabase::add_item() {
 	items.append(definition);
 }
 
+void InventoryDatabase::add_item_category() {
+	Ref<ItemCategory> category = memnew(ItemCategory());
+	item_categories.append(category);
+}
+
+void InventoryDatabase::add_recipe() {
+	Ref<Recipe> recipe = memnew(Recipe());
+	recipes.append(recipe);
+}
+
+void InventoryDatabase::add_craft_station_type() {
+	Ref<CraftStationType> craft_station_type = memnew(CraftStationType());
+	stations_type.append(craft_station_type);
+}
+
 Dictionary InventoryDatabase::serialize() const {
 	Dictionary data = Dictionary();
+	data["item_categories"] = serialize_item_categories();
 	data["items"] = serialize_items();
+	data["recipes"] = serialize_recipes();
+	data["craft_station_types"] = serialize_craft_station_types();
 	return data;
+}
+
+void InventoryDatabase::deserialize(const Dictionary data) {
+	if (data.has("item_categories")) {
+		deserialize_item_categories(data["item_categories"]);
+	}
+	if (data.has("items")) {
+		deserialize_items(data["items"]);
+	}
+	_update_items_cache();
+	if (data.has("craft_station_types")) {
+		deserialize_craft_station_types(data["craft_station_types"]);
+	}
+	if (data.has("recipes")) {
+		deserialize_recipes(data["recipes"]);
+	}
 }
 
 Array InventoryDatabase::serialize_items() const {
@@ -416,41 +473,85 @@ Array InventoryDatabase::serialize_items() const {
 	return items_data;
 }
 
-void InventoryDatabase::deserialize_items(Array items_data) {
+void InventoryDatabase::deserialize_items(Array datas) {
 	items.clear();
-	for (size_t i = 0; i < items_data.size(); i++) {
+	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<ItemDefinition> definition = memnew(ItemDefinition());
-		deserialize_item_definition(definition, items_data[i]);
+		deserialize_item_definition(definition, datas[i]);
 		items.append(definition);
 	}
 }
 
 Array InventoryDatabase::serialize_item_categories() const {
-	Array items_data = Array();
-	for (size_t i = 0; i < this->items.size(); i++) {
-		Ref<ItemDefinition> definition = this->items[i];
-		if (definition == nullptr)
+	Array categories_data = Array();
+	for (size_t i = 0; i < this->item_categories.size(); i++) {
+		Ref<ItemCategory> category = this->item_categories[i];
+		if (category == nullptr)
 			continue;
-		Dictionary item_data = serialize_item_definition(definition);
-		items_data.append(item_data);
+		Dictionary data = serialize_item_category(category);
+		categories_data.append(data);
 	}
-	return items_data;
+	return categories_data;
 }
 
-void InventoryDatabase::deserialize_item_categories(Array items_data) {
+void InventoryDatabase::deserialize_item_categories(Array datas) {
+	item_categories.clear();
+	for (size_t i = 0; i < datas.size(); i++) {
+		Ref<ItemCategory> category = memnew(ItemCategory());
+		deserialize_item_category(category, datas[i]);
+		item_categories.append(category);
+	}
+}
+
+Array InventoryDatabase::serialize_craft_station_types() const {
+	Array datas = Array();
+	for (size_t i = 0; i < this->stations_type.size(); i++) {
+		Ref<CraftStationType> station = this->stations_type[i];
+		if (station == nullptr)
+			continue;
+		Dictionary data = serialize_station_type(station);
+		datas.append(data);
+	}
+	return datas;
+}
+
+void InventoryDatabase::deserialize_craft_station_types(Array datas) {
+	stations_type.clear();
+	for (size_t i = 0; i < datas.size(); i++) {
+		Ref<CraftStationType> station = memnew(CraftStationType());
+		deserialize_station_type(station, datas[i]);
+		stations_type.append(station);
+	}
+}
+
+Array InventoryDatabase::serialize_recipes() const {
+	Array datas = Array();
+	for (size_t i = 0; i < this->recipes.size(); i++) {
+		Ref<Recipe> recipe = this->recipes[i];
+		if (recipe == nullptr)
+			continue;
+		Dictionary data = serialize_recipe(recipe);
+		datas.append(data);
+	}
+	return datas;
+}
+
+void InventoryDatabase::deserialize_recipes(Array datas) {
+	recipes.clear();
+	for (size_t i = 0; i < datas.size(); i++) {
+		Ref<Recipe> recipe = memnew(Recipe());
+		deserialize_recipe(recipe, datas[i]);
+		recipes.append(recipe);
+	}
 }
 
 String InventoryDatabase::export_to_invdata() const {
 	Dictionary data = serialize();
 	String json = JSON::stringify(data, "\t");
-	UtilityFunctions::print(json);
 	return json;
 }
 
 void InventoryDatabase::import_to_invdata(const String json) {
-	Dictionary data = Dictionary();
-	data = JSON::parse_string(json);
-	if (data.has("items")) {
-		deserialize_items(data["items"]);
-	}
+	Dictionary data = JSON::parse_string(json);
+	deserialize(data);
 }
