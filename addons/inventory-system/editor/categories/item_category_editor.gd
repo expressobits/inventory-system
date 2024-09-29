@@ -12,9 +12,6 @@ var editor_plugin : EditorPlugin
 @onready var icon_text_edit : LineEdit = %IconLineEdit
 @onready var icon_edit_button : Button = %IconEditButton
 @onready var icon_file_dialog : FileDialog = $IconFileDialog
-@onready var resource_text_edit : LineEdit = %ResourceLineEdit
-@onready var resource_edit_button : Button = %ResourceEditButton
-@onready var resource_file_dialog : FileDialog = $ResourceFileDialog
 @onready var custom_properties : CustomPropertiesCategoryEditor = $MarginContainer/VBoxContainer/CategoryCustomProperties
 @onready var color_picker = %ColorPicker
 
@@ -35,7 +32,6 @@ func load_category(category : ItemCategory):
 		$MarginContainer.visible = false
 		return
 	$MarginContainer.visible = true
-	resource_text_edit.text = category.resource_path
 	name_text_edit.text = category.name
 	color_picker.color = category.color
 	if is_instance_valid(category.icon):
@@ -50,14 +46,10 @@ func apply_theme() -> void:
 		return
 	icon_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	icon_edit_button.tooltip_text = "Open Icon Texture2D"
-
-	resource_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
-	resource_edit_button.tooltip_text = "Open Resource Craft Station Type"
 	
 	#Dialogs
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	icon_file_dialog.min_size = Vector2(600, 500) * scale
-	resource_file_dialog.min_size = Vector2(600, 500) * scale
 
 
 func _on_theme_changed():

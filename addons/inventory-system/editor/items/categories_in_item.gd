@@ -41,12 +41,12 @@ func loading_categories():
 func make_array_unique(input_array) -> Array:
 	var unique_array := []
 	for value in input_array:
-		unique_array.append(value)
+		unique_array.append(value.name)
 	return unique_array
 
 
 func _on_toggled_category_option(toggled : bool, category : ItemCategory):
-	var new_categories = make_array_unique(item.categories)
+	var new_categories : Array = make_array_unique(item.categories)
 	if toggled:
 		new_categories.append(category)
 	else:

@@ -1,151 +1,143 @@
 {
+	"craft_station_types": [
+		{
+			"icon": "res://addons/inventory-system-demos/assets/icons/workbench.png",
+			"name": "Workbench"
+		},
+		{
+			"icon": "res://addons/inventory-system-demos/assets/icons/campfire.png",
+			"name": "Campfire"
+		}
+	],
+	"item_categories": [
+		{
+			"color": "ffea77ff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg",
+			"id": "burnables",
+			"item_properties": {
+				"fuel": 0
+			},
+			"name": "Burnables"
+		},
+		{
+			"color": "0038deff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/tool-svgrepo-com.svg",
+			"id": "tools",
+			"name": "Tools"
+		},
+		{
+			"color": "eea574ff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/food-restaurant-svgrepo-com.svg",
+			"id": "food",
+			"name": "Food"
+		},
+		{
+			"color": "ffffffff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg",
+			"id": "",
+			"name": "Helmet"
+		}
+	],
 	"items": [
 		{
 			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"icon_path": "res://addons/inventory-system-demos/assets/icons/branch.png",
+			"categories": [
+				"burnables"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/branch.png",
 			"id": "wood",
 			"max_stack": 16,
-			"name": "Wood",
+			"name": "Woo1",
 			"properties": {
-
+				"fuel": 0
 			},
 			"weight": 0
 		},
 		{
 			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"icon_path": "res://addons/inventory-system-demos/assets/icons/stone.png",
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone.png",
 			"id": "stone",
 			"max_stack": 16,
 			"name": "Stone",
-			"properties": {
-
-			},
 			"weight": 0
 		},
 		{
 			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"icon_path": "res://addons/inventory-system-demos/assets/icons/grass.png",
+			"icon": "res://addons/inventory-system-demos/assets/icons/grass.png",
 			"id": "grass",
 			"max_stack": 0,
 			"name": "Grass",
-			"properties": {
-
-			},
+			"weight": 0
+		},
+		{
+			"can_stack": false,
+			"categories": [
+				"tools"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone-axe.png",
+			"id": "stone_axe",
+			"max_stack": 1,
+			"name": "Stone Axe",
+			"weight": 1
+		},
+		{
+			"can_stack": true,
+			"categories": [
+				"tools"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone_pickaxe.png",
+			"id": "stone_pickaxe",
+			"max_stack": 0,
+			"name": "Stone Pickaxe",
 			"weight": 0
 		},
 		{
 			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "3",
-			"max_stack": 0,
-			"name": "",
+			"categories": [
+				"burnables"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/lashing.png",
+			"id": "lashing",
+			"max_stack": 16,
+			"name": "Lashing",
 			"properties": {
-
+				"fuel": 0
 			},
+			"weight": 0.100000001490116
+		},
+		{
+			"can_stack": true,
+			"icon": "res://addons/inventory-system-demos/assets/icons/campfire.png",
+			"id": "campfire",
+			"max_stack": 0,
+			"name": "Campfire",
 			"weight": 0
 		},
 		{
 			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "4",
+			"id": "",
 			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
+			"name": "Workbench",
 			"weight": 0
+		}
+	],
+	"recipes": [
+		{
+			"ingredients": [
+				"wood 2",
+				"stone 1",
+				"grass 1"
+			],
+			"products": [
+				"grass 1"
+			],
+			"time_to_craft": 5
 		},
 		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "5",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "6",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "7",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "8",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "9",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "10",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
-		},
-		{
-			"can_stack": true,
-			"categories_path": [],
-			"dynamic_properties": [],
-			"id": "0",
-			"max_stack": 0,
-			"name": "",
-			"properties": {
-
-			},
-			"weight": 0
+			"products": [
+				"stone 1"
+			],
+			"time_to_craft": 4
 		}
 	]
 }

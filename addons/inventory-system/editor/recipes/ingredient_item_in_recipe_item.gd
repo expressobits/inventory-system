@@ -7,7 +7,9 @@ extends HBoxContainer
 var slot : Slot
 
 func _ready():
-	if slot.item != null:
+	if slot == null:
+		return
+	if slot.item != null and slot.item.definition != null and slot.item.definition.icon != null:
 		texture_rect.texture = slot.item.definition.icon
 	else:
 		texture_rect.texture = null 

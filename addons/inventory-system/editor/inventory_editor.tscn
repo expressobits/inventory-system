@@ -64,7 +64,7 @@ flat = true
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewItemButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewItemButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -72,16 +72,12 @@ tooltip_text = "New Inventory Item"
 disabled = true
 text = "New Item"
 icon = ExtResource("2_lu5r1")
-item_count = 2
-popup/item_0/text = "New Item With New Resource"
-popup/item_0/id = 100
-popup/item_1/text = "New Item With Existing Resource"
-popup/item_1/id = 101
+flat = true
 
 [node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewRecipeButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewRecipeButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -89,16 +85,12 @@ tooltip_text = "New Recipe"
 disabled = true
 text = "New Recipe"
 icon = ExtResource("3_clewf")
-item_count = 2
-popup/item_0/text = "New Recipe With New Resource"
-popup/item_0/id = 100
-popup/item_1/text = "New Recipe With Existing Resource"
-popup/item_1/id = 101
+flat = true
 
 [node name="VSeparator3" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewCraftStationTypeButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewCraftStationTypeButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -106,11 +98,7 @@ tooltip_text = "New Craft Station Type"
 disabled = true
 text = "New CraftStation"
 icon = ExtResource("4_jbtk0")
-item_count = 2
-popup/item_0/text = "New Craft Station Type With New Resource"
-popup/item_0/id = 100
-popup/item_1/text = "New Craft Station Type With Existing Resource"
-popup/item_1/id = 101
+flat = true
 
 [node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
@@ -123,7 +111,7 @@ icon_alignment = 1
 [node name="VSeparator4" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewItemCategoryButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewItemCategoryButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -131,11 +119,7 @@ tooltip_text = "New Item Category"
 disabled = true
 text = "New Category"
 icon = ExtResource("5_4w1hd")
-item_count = 2
-popup/item_0/text = "New Item Category With New Resource"
-popup/item_0/id = 100
-popup/item_1/text = "New Item Category With Existing Resource"
-popup/item_1/id = 101
+flat = true
 
 [node name="VSeparator5" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
 layout_mode = 2

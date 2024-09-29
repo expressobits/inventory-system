@@ -28,11 +28,12 @@ func _ready():
 func setup(slot : Slot, database : InventoryDatabase):
 	self.slot = slot
 	self.database = database
-	var id = slot.item.definition.id
-	item_id_editor.setup(database, id)
-	product_amount_spin_box.value = slot.amount
-	ids_list.clear()
-	option_button.clear()
+	if slot.item.definition != null:
+		var id = slot.item.definition.id
+		item_id_editor.setup(database, id)
+		product_amount_spin_box.value = slot.amount
+		ids_list.clear()
+		option_button.clear()
 
 	for i in database.items.size():
 		var item = database.items[i]

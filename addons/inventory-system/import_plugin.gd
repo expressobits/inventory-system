@@ -62,8 +62,6 @@ func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
 	while file.get_position() < file.get_length():
 		json += file.get_line() + "\n"
 		
-	print(json)
-		
 	var database = InventoryDatabase.new()
 	
 	database.import_to_invdata(json)

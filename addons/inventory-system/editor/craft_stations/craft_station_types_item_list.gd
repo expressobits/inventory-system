@@ -36,7 +36,7 @@ func update_item(index : int):
 	var station = stations_list_handler[index]
 	var name_to_show : String = station.name
 	var icon : Texture2D = station.icon
-	list.set_item_text(index, name_to_show+" ("+station.resource_path+")")
+	list.set_item_text(index, name_to_show)
 	list.set_item_icon(index, icon)
 
 

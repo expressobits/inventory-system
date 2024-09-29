@@ -18,12 +18,6 @@ size = Vector2i(100, 24)
 [node name="ItemEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_ppg00")]
 layout_mode = 2
 
-[node name="NewResourceDialog" parent="." index="1"]
-size = Vector2i(1024, 175)
-
-[node name="OpenResourceDialog" parent="." index="2"]
-size = Vector2i(312, 175)
-
 [connection signal="item_popup_menu_requested" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_popup_menu_requested"]
 [connection signal="item_selected" from="HSplitContainer/InventoryItemList" to="." method="_on_inventory_item_list_item_selected"]
 [connection signal="id_pressed" from="HSplitContainer/InventoryItemList/ItemsPopupMenu" to="." method="_on_items_popup_menu_id_pressed"]

@@ -4,11 +4,14 @@
 [ext_resource type="PackedScene" uid="uid://bcs0kajdte05g" path="res://addons/inventory-system/editor/base/item_id_editor.tscn" id="2_sqn6h"]
 
 [node name="SlotSelector" type="HBoxContainer"]
+offset_right = 512.0
+offset_bottom = 32.0
 size_flags_horizontal = 3
 script = ExtResource("1_js21a")
 
 [node name="ItemIDEditor" parent="." instance=ExtResource("2_sqn6h")]
 layout_mode = 2
+size_flags_horizontal = 3
 ids_must_exist_in_database = true
 
 [node name="OptionButton" type="OptionButton" parent="."]

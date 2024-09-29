@@ -45,20 +45,6 @@ func remove_category(category : ItemCategory):
 	data_changed.emit()
 
 
-func _on_new_resource_dialog_file_selected(path):
-	var item : ItemCategory = ItemCategory.new()
-	var err = ResourceSaver.save(item, path)
-	if err == OK:
-		var res : ItemCategory = load(path)
-		res.name = get_name_of_resource_path(path)
-		database.add_new_category(res)
-		ResourceSaver.save(database, database.resource_path)
-		load_item_categories()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-	else:
-		print(err)
-
-
 func _on_item_category_popup_menu_id_pressed(id):
 	match id:
 		ITEM_COPY_RESOURCE_PATH:
@@ -66,9 +52,6 @@ func _on_item_category_popup_menu_id_pressed(id):
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Item Category \""+current_data.name+"\"?"
-		ITEM_REMOVE_AND_DELETE:
-			remove_and_delete_confirmation_dialog.popup_centered()
-			remove_and_delete_confirmation_dialog.dialog_text = "Remove Item Category \""+current_data.name+"\" And Delete Resource \""+current_data.resource_path+"\"?"
 
 
 func _on_item_categories_item_list_item_popup_menu_requested(at_position):
@@ -78,26 +61,10 @@ func _on_item_categories_item_list_item_popup_menu_requested(at_position):
 	item_category_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
 	item_category_popup_menu.add_separator()
 	item_category_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
-	item_category_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
-	item_category_popup_menu.set_item_disabled(3, true)
 	
 	var a = item_categories_item_list.get_global_mouse_position()
 	item_category_popup_menu.position = Vector2(get_viewport().position) + a
 	item_category_popup_menu.popup()
-
-
-func _on_open_resource_dialog_file_selected(path):
-	var res = load(path)
-	if res is ItemCategory:
-		var category : ItemCategory = res as ItemCategory
-		if database.item_categories.has(category):
-			push_warning("The item category type \""+ category.name +"\" already exists in the list of item categories in the database!")
-			return
-		database.add_new_category(category)
-		ResourceSaver.save(database, database.resource_path)
-		load_item_categories()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		data_changed.emit()
 
 
 func _on_item_categories_item_list_category_selected(category):

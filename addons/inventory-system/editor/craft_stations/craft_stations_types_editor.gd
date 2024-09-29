@@ -59,20 +59,6 @@ func _on_craft_station_type_editor_changed(station):
 		craft_station_types_list.update_item(index)
 
 
-func _on_new_resource_dialog_file_selected(path):
-	var item : CraftStationType = CraftStationType.new()
-	var err = ResourceSaver.save(item, path)
-	if err == OK:
-		var res : CraftStationType = load(path)
-		res.name = get_name_of_resource_path(path)
-		database.stations_type.append(res)
-		ResourceSaver.save(database, database.resource_path)
-		load_craft_station_types()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-	else:
-		print(err)
-
-
 func _on_craft_station_types_popup_menu_id_pressed(id):
 	match id:
 		ITEM_COPY_RESOURCE_PATH:
@@ -80,9 +66,6 @@ func _on_craft_station_types_popup_menu_id_pressed(id):
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\"?"
-		ITEM_REMOVE_AND_DELETE:
-			remove_and_delete_confirmation_dialog.popup_centered()
-			remove_and_delete_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\" And Delete Resource \""+current_data.resource_path+"\"?"
 
 
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
@@ -92,25 +75,9 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	craft_station_types_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
 	craft_station_types_popup_menu.add_separator()
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
-	craft_station_types_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
-	craft_station_types_popup_menu.set_item_disabled(3, true)
 
 
 	var a = craft_station_types_list.get_global_mouse_position()
 	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + a
 	craft_station_types_popup_menu.popup()
-
-
-func _on_open_resource_dialog_file_selected(path):
-	var res = load(path)
-	if res is CraftStationType:
-		var station : CraftStationType = res as CraftStationType
-		if database.stations_type.has(station):
-			push_warning("The craft station type \""+ station.name +"\" already exists in the list of craft stations types in the database!")
-			return
-		database.stations_type.append(station)
-		ResourceSaver.save(database, database.resource_path)
-		load_craft_station_types()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		data_changed.emit()
-			
+	

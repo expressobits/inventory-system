@@ -22,6 +22,7 @@ var editor_plugin: EditorPlugin
 
 
 var database : InventoryDatabase
+var database_path : String
 
 # Dialogs
 @onready var new_dialog: FileDialog = $NewDialog
@@ -34,10 +35,10 @@ var database : InventoryDatabase
 @onready var save_button: Button = %SaveButton
 @onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
-@onready var new_item_button : MenuButton = %NewItemButton
-@onready var new_recipe_button : MenuButton= %NewRecipeButton
-@onready var new_craft_station_type_button : MenuButton = %NewCraftStationTypeButton
-@onready var new_item_categories_button : MenuButton = %NewItemCategoryButton
+@onready var new_item_button : Button = %NewItemButton
+@onready var new_recipe_button : Button= %NewRecipeButton
+@onready var new_craft_station_type_button : Button = %NewCraftStationTypeButton
+@onready var new_item_categories_button : Button = %NewItemCategoryButton
 
 
 func _ready():
@@ -47,10 +48,10 @@ func _ready():
 	categories_editor.set_editor_plugin(editor_plugin)
 	apply_theme()
 	load_database(null)
-	build_new_item_menu()
-	build_new_recipe_menu()
-	build_new_craft_station_menu()
-	build_new_item_category_menu()
+	new_item_button.pressed.connect(_on_new_item_menu_id_pressed)
+	new_recipe_button.pressed.connect(_on_new_recipe_menu_id_pressed)
+	new_craft_station_type_button.pressed.connect(_on_new_craft_station_menu_id_pressed)
+	new_item_categories_button.pressed.connect(_on_new_item_category_menu_id_pressed)
 	save_button.pressed.connect(save_file)
 
 
@@ -93,9 +94,11 @@ func open_file(path: String) -> void:
 	if not res is InventoryDatabase:
 		push_warning("Resource " + path + " is not an InventoryDatabase!")
 		return
-	var database : InventoryDatabase = res as InventoryDatabase
+	var data : InventoryDatabase = res as InventoryDatabase
+	var database = data.duplicate()
 	load_database(database)
 	self.database = database
+	self.database_path = path
 	
 	title_label.text = path
 	
@@ -105,20 +108,20 @@ func open_file(path: String) -> void:
 
 func save_file() -> void:
 	
+	
+	#ResourceSaver.save(database, database_path)
+	
 	var json = database.export_to_invdata()
 	
-	var path = title_label.text
+	var path = database_path
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file == null:
+		print("ERROR TO SAVE")
 		return FileAccess.get_open_error()
 	file.store_string(json)
+	print(json)
+	file.close()
 	
-	ResourceSaver.save(database, database.resource_path)
-	
-#	files_list.files = open_buffers.keys()
-#	files_list.select_file(path)
-	
-#	self.current_file_path = path
 
 # Apply theme colors and icons to the UI
 func apply_theme() -> void:
@@ -164,45 +167,6 @@ func build_open_menu() -> void:
 		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
 	menu.id_pressed.connect(_on_open_menu_id_pressed)
 
-
-func build_new_item_menu() -> void:
-	var menu = new_item_button.get_popup()
-	menu.clear()
-	menu.add_item("New Item With New Resource", NEW_ITEM_NEW_RESOURCE)
-	menu.add_item("New Item With Existing Resource", NEW_ITEM_FROM_RESOURCE)
-	if menu.id_pressed.is_connected(_on_new_item_menu_id_pressed):
-		menu.id_pressed.disconnect(_on_new_item_menu_id_pressed)
-	menu.id_pressed.connect(_on_new_item_menu_id_pressed)
-
-
-func build_new_recipe_menu() -> void:
-	var menu = new_recipe_button.get_popup()
-	menu.clear()
-	menu.add_item("New Recipe With New Resource", NEW_ITEM_NEW_RESOURCE)
-	menu.add_item("New Recipe With Existing Resource", NEW_ITEM_FROM_RESOURCE)
-	if menu.id_pressed.is_connected(_on_new_recipe_menu_id_pressed):
-		menu.id_pressed.disconnect(_on_new_recipe_menu_id_pressed)
-	menu.id_pressed.connect(_on_new_recipe_menu_id_pressed)
-
-
-func build_new_craft_station_menu() -> void:
-	var menu = new_craft_station_type_button.get_popup()
-	menu.clear()
-	menu.add_item("New Craft Station Type With New Resource", NEW_ITEM_NEW_RESOURCE)
-	menu.add_item("New Craft Station Type With Existing Resource", NEW_ITEM_FROM_RESOURCE)
-	if menu.id_pressed.is_connected(_on_new_craft_station_menu_id_pressed):
-		menu.id_pressed.disconnect(_on_new_craft_station_menu_id_pressed)
-	menu.id_pressed.connect(_on_new_craft_station_menu_id_pressed)
-
-
-func build_new_item_category_menu() -> void:
-	var menu = new_item_categories_button.get_popup()
-	menu.clear()
-	menu.add_item("New Item Category With New Resource", NEW_ITEM_NEW_RESOURCE)
-	menu.add_item("New Item Category With Existing Resource", NEW_ITEM_FROM_RESOURCE)
-	if menu.id_pressed.is_connected(_on_new_item_category_menu_id_pressed):
-		menu.id_pressed.disconnect(_on_new_item_category_menu_id_pressed)
-	menu.id_pressed.connect(_on_new_item_category_menu_id_pressed)
 ### Signals
 
 func _on_open_menu_id_pressed(id: int) -> void:
@@ -218,36 +182,20 @@ func _on_open_menu_id_pressed(id: int) -> void:
 			open_file(item)
 
 
-func _on_new_item_menu_id_pressed(id: int) -> void:
-	match id:
-		NEW_ITEM_NEW_RESOURCE:
-			items_editor.new_data_pressed()
-		NEW_ITEM_FROM_RESOURCE:
-			items_editor.new_data_from_resource_pressed()
+func _on_new_item_menu_id_pressed() -> void:
+	database.add_item()
 
 
-func _on_new_recipe_menu_id_pressed(id: int) -> void:
-	match id:
-		NEW_ITEM_NEW_RESOURCE:
-			recipes_editor.new_data_pressed()
-		NEW_ITEM_FROM_RESOURCE:
-			recipes_editor.new_data_from_resource_pressed()
+func _on_new_recipe_menu_id_pressed() -> void:
+	database.add_recipe()
 
 
-func _on_new_craft_station_menu_id_pressed(id: int) -> void:
-	match id:
-		NEW_ITEM_NEW_RESOURCE:
-			craft_stations_editor.new_data_pressed()
-		NEW_ITEM_FROM_RESOURCE:
-			craft_stations_editor.new_data_from_resource_pressed()
+func _on_new_craft_station_menu_id_pressed() -> void:
+	database.add_craft_station_type()
 
 
-func _on_new_item_category_menu_id_pressed(id: int) -> void:
-	match id:
-		NEW_ITEM_NEW_RESOURCE:
-			categories_editor.new_data_pressed()
-		NEW_ITEM_FROM_RESOURCE:
-			categories_editor.new_data_from_resource_pressed()
+func _on_new_item_category_menu_id_pressed() -> void:
+	database.add_item_category()
 
 
 func _on_theme_changed():

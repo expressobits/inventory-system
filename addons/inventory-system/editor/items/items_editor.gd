@@ -69,8 +69,6 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 	items_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
 	items_popup_menu.add_separator()
 	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
-	items_popup_menu.add_icon_item(icon, "Remove and Delete Resource", ITEM_REMOVE_AND_DELETE)
-	items_popup_menu.set_item_disabled(3, true)
 	
 	var a = inventory_item_list.get_global_mouse_position()
 	items_popup_menu.position = Vector2(get_viewport().position) + a
@@ -88,48 +86,10 @@ func _on_items_popup_menu_id_pressed(id: int) -> void:
 				return
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Item \""+current_data.name+"\"?"
-		ITEM_REMOVE_AND_DELETE:
-			if current_data == null:
-				return
-			remove_and_delete_confirmation_dialog.popup_centered()
-			remove_and_delete_confirmation_dialog.dialog_text = "Remove Item \""+current_data.name+"\" And Delete Resource \""+current_data.resource_path+"\"?"
 
 
 func _on_item_editor_changed(id):
 	var index = inventory_item_list.get_index_of_item_id(id)
 	if index > -1:
 		inventory_item_list.update_item(index)
-		data_changed.emit()
-
-
-func _on_new_resource_dialog_file_selected(path):
-	var item : ItemDefinition = ItemDefinition.new()
-	var err = ResourceSaver.save(item, path)
-	if err == OK:
-		item = load(path)
-		item.name = get_name_of_resource_path(path)
-		item.id = database.get_new_valid_id()
-		database.add_new_item(item)
-		ResourceSaver.save(database, database.resource_path)
-		load_items()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-		data_changed.emit()
-	else:
-		print(err)
-
-
-func _on_open_resource_dialog_file_selected(path):
-	# TODO Check if resource exist
-	var res = load(path)
-	if res is ItemDefinition:
-		var item : ItemDefinition = res as ItemDefinition
-		if database.items.has(item):
-			push_warning("The item \""+item.name+"\"("+ item.resource_path +") already exists in the database!")
-			return
-		if database.has_item_id(item.id):
-			item.id = database.get_new_valid_id()
-		database.add_new_item(item)
-		ResourceSaver.save(database, database.resource_path)
-		load_items()
-		editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 		data_changed.emit()

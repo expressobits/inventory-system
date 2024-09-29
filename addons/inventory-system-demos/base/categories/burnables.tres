@@ -6,7 +6,6 @@
 name = "Burnables"
 color = Color(1, 0.917647, 0.466667, 1)
 icon = ExtResource("1_ld0ab")
-code = 1
 item_properties = {
 "fuel": 0.0
 }

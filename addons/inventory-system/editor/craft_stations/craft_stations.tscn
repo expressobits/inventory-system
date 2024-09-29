@@ -17,12 +17,6 @@ layout_mode = 2
 [node name="CraftStationTypesPopupMenu" type="PopupMenu" parent="." index="1"]
 size = Vector2i(28, 8)
 
-[node name="NewResourceDialog" parent="." index="2"]
-filters = PackedStringArray("*.tres ; CraftStationType")
-
-[node name="OpenResourceDialog" parent="." index="3"]
-filters = PackedStringArray("*.tres ; CraftStationType")
-
 [connection signal="item_popup_menu_requested" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_item_popup_menu_requested"]
 [connection signal="station_selected" from="HSplitContainer/CraftStationTypesItemList" to="." method="_on_craft_station_types_item_list_station_selected"]
 [connection signal="changed" from="HSplitContainer/CraftStationTypeEditor" to="." method="_on_craft_station_type_editor_changed"]

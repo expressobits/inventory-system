@@ -6,4 +6,3 @@
 name = "Food"
 color = Color(0.933333, 0.647059, 0.454902, 1)
 icon = ExtResource("1_eajbc")
-code = 4

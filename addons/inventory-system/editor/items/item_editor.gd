@@ -14,9 +14,6 @@ var editor_plugin : EditorPlugin
 @onready var item_icon_text_edit : LineEdit = %IconLineEdit
 @onready var item_icon_edit_button : Button = %IconEditButton
 @onready var icon_file_dialog : FileDialog = $IconFileDialog
-@onready var item_resource_text_edit : LineEdit = %ItemResourceLineEdit
-@onready var item_resource_edit_button : Button = %ItemResourceEditButton
-@onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
 @onready var custom_properties : CustomPropertiesItemEditor = $ScrollContainer/MarginContainer/VBoxContainer/CustomProperties
 @onready var weight_spin_box = $ScrollContainer/MarginContainer/VBoxContainer/Weight/WeightSpinBox
 @onready var categories_in_item : CategoriesInItem = $ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem
@@ -43,7 +40,6 @@ func load_item(item : ItemDefinition, database : InventoryDatabase):
 		return
 	item_id_editor.setup(database, item.id)
 	if is_instance_valid(item):
-		item_resource_text_edit.text = item.resource_path
 		item_name_text_edit.text = item.name
 		item_max_stack_spin_box.value = item.max_stack
 		weight_spin_box.value = item.weight
@@ -55,7 +51,6 @@ func load_item(item : ItemDefinition, database : InventoryDatabase):
 		max_stack.visible = item.can_stack
 		$ScrollContainer.visible = true
 	else:
-		item_resource_text_edit.text = "No resource path item!"
 		item_name_text_edit.text = "No resource item!"
 		$ScrollContainer.visible = false
 		
@@ -72,13 +67,9 @@ func apply_theme() -> void:
 	item_icon_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
 	item_icon_edit_button.tooltip_text = "Open Icon Texture2D"
 	
-	item_resource_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
-	item_resource_edit_button.tooltip_text = "Open Resource Inventory Item"
-	
 	#Dialogs
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
 	icon_file_dialog.min_size = Vector2(600, 500) * scale
-	item_resource_file_dialog.min_size = Vector2(600, 500) * scale
 
 
 func _on_max_stack_spin_box_value_changed(value):
@@ -112,10 +103,6 @@ func _on_icon_edit_button_pressed():
 	icon_file_dialog.popup_centered()
 
 
-func _on_item_resource_edit_button_pressed():
-	item_resource_file_dialog.popup_centered()
-
-
 func _on_item_resource_file_dialog_file_selected(path):
 	var file = load(path)
 	if file is ItemDefinition:
@@ -128,7 +115,6 @@ func _on_item_resource_file_dialog_file_selected(path):
 
 func _on_item_id_editor_changed(id : String):
 	item.id = id
-	database.update_items_cache()
 	changed.emit(item.id)
 
 
