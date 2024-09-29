@@ -64,9 +64,12 @@ func disconnect_signals():
 func setup_station():
 	craft_station_type_option_button.clear()
 	stations_list.clear()
+	var popup : PopupMenu = craft_station_type_option_button.get_popup()
 	for station in database.stations_type:
-		craft_station_type_option_button.add_icon_item(station.icon, station.resource_path)
+		craft_station_type_option_button.add_icon_item(station.icon, station.name)
 		stations_list.append(station)
+	for i in database.stations_type.size():
+		popup.set_item_icon_max_width(i, 24)
 	stations_list.append(null)
 	craft_station_type_option_button.add_icon_item(null, "No station")
 	

@@ -23,7 +23,7 @@ func _ready():
 	item_id_editor.changed.connect(_on_product_id_spin_box_value_changed)
 	option_button.item_selected.connect(_on_option_button_item_selected)
 	product_amount_spin_box.value_changed.connect(_on_product_amount_spin_box_value_changed)
-
+	
 
 func setup(slot : Slot, database : InventoryDatabase):
 	self.slot = slot
@@ -41,6 +41,9 @@ func setup(slot : Slot, database : InventoryDatabase):
 		ids_list.append(item)
 		if item == slot.item.definition:
 			option_button.select(i)
+	var popup : PopupMenu = option_button.get_popup()
+	for i in database.items.size():
+		popup.set_item_icon_max_width(i, 24)
 
 
 func _on_product_id_spin_box_value_changed(value):

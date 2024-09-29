@@ -4,16 +4,39 @@ extends HBoxContainer
 
 signal changed(id : int)
 
-@onready var id_line_edit : LineEdit = $IDInput
-@onready var button : Button = $Button
+var id_line_edit : LineEdit
+var button : Button
+var label : Label
 @export var ids_must_exist_in_database := false
 
 var database : InventoryDatabase
 var id : String
 
 func _ready():
-	id_line_edit.text_changed.connect(_on_id_value_changed)
+	offset_right = 241.0
+	offset_bottom = 32.0
+	
+	label = Label.new()
+	label.layout_mode = 2
+	label.text = "ID"
+	label.custom_minimum_size = Vector2(128, 0)
+	add_child(label)
+	
+	button = Button.new()
+	button.layout_mode = 2
+	button.tooltip_text = "Edit"
 	button.pressed.connect(_on_button_pressed)
+	add_child(button)
+	
+	id_line_edit = LineEdit.new()
+	id_line_edit.custom_minimum_size = Vector2(128, 0)
+	id_line_edit.layout_mode = 2
+	id_line_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	id_line_edit.placeholder_text = "Place ID here"
+	id_line_edit.text_changed.connect(_on_id_value_changed)
+	add_child(id_line_edit)
+	
+	
 	theme_changed.connect(_on_theme_changed)
 	_apply_theme()
 
@@ -55,10 +78,10 @@ func _check_valid_id():
 	var valid : bool
 	var warn_text : String 
 	if ids_must_exist_in_database:
-		valid = new_id == self.id or database.has_item_id(new_id)
+		valid = new_id == self.id or has_in_database(new_id)
 		warn_text = "Item id does not exist in database!"
 	else:
-		valid = new_id == self.id or not database.has_item_id(new_id)
+		valid = new_id == self.id or not has_in_database(new_id)
 		warn_text = "Item id already exists in database!"
 	if valid:
 		id_line_edit.tooltip_text = ""
@@ -69,6 +92,10 @@ func _check_valid_id():
 		button.tooltip_text = warn_text
 		id_line_edit.modulate = Color.INDIAN_RED
 	button.disabled = not valid
+
+
+func has_in_database(id : String) -> bool:
+	return database.has_item_id(id)
 
 
 func _on_theme_changed():
