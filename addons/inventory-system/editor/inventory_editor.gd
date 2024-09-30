@@ -46,6 +46,10 @@ func _ready():
 	recipes_editor.set_editor_plugin(editor_plugin)
 	craft_stations_editor.set_editor_plugin(editor_plugin)
 	categories_editor.set_editor_plugin(editor_plugin)
+	items_editor.removed.connect(remove_item_definition)
+	recipes_editor.removed.connect(remove_recipe)
+	craft_stations_editor.removed.connect(remove_craft_station)
+	categories_editor.removed.connect(remove_item_category)
 	apply_theme()
 	load_database(null)
 	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
@@ -185,23 +189,66 @@ func _on_open_menu_id_pressed(id: int) -> void:
 
 
 func _on_new_item_menu_id_pressed() -> void:
-	database.add_item()
+	var new_item_definition = ItemDefinition.new()
+	new_item_definition.name = "New Item Definition"
+	database.add_new_item(new_item_definition)
+	save_file()
 	load_database(database)
 
 
 func _on_new_recipe_menu_id_pressed() -> void:
 	database.add_recipe()
+	save_file()
 	load_database(database)
 
 
 func _on_new_craft_station_menu_id_pressed() -> void:
-	database.add_craft_station_type()
+	var new_craft_station_type = CraftStationType.new()
+	new_craft_station_type.name = "New Craft Station Type"
+	database.stations_type.append(new_craft_station_type)
+	save_file()
 	load_database(database)
 
 
 func _on_new_item_category_menu_id_pressed() -> void:
-	database.add_item_category()
+	var new_item_category = ItemCategory.new()
+	new_item_category.name = "New Item Category"
+	database.item_categories.append(new_item_category)
+	save_file()
 	load_database(database)
+
+
+func remove_item_definition(item : ItemDefinition):
+	if item == null:
+		return
+	database.remove_item(item)
+	save_file()
+
+
+func remove_item_category(category : ItemCategory):
+	database.remove_category(category)
+	categories_editor.load_item_categories()
+	categories_editor.data_changed.emit()
+	save_file()
+
+
+func remove_craft_station(craft_station_type : CraftStationType):
+	var index = database.stations_type.find(craft_station_type)
+	if index == -1:
+		return
+	database.stations_type.remove_at(index)
+	craft_stations_editor.load_craft_station_types()
+	craft_stations_editor.data_changed.emit()
+	save_file()
+
+
+func remove_recipe(recipe : Recipe):
+	if recipe == null:
+		return
+	var index = database.recipes.find(recipe)
+	database.recipes.remove_at(index)
+	recipes_editor.load_recipes()
+	save_file()
 
 
 func _on_theme_changed():

@@ -34,16 +34,6 @@ func load_item_categories():
 	item_categories_item_list.load_categories_types(database)
 
 
-func remove_current_data():
-	remove_category(current_data)
-
-
-func remove_category(category : ItemCategory):
-	database.remove_category(category)
-	load_item_categories()
-	data_changed.emit()
-
-
 func _on_item_category_popup_menu_id_pressed(id):
 	match id:
 		ITEM_REMOVE:

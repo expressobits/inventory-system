@@ -3,6 +3,7 @@ class_name InventoryTabEditor
 extends Control
 
 signal data_changed
+signal removed(data : Resource)
 
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
@@ -40,8 +41,11 @@ func _apply_theme():
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale() 	
 
 
-func remove_current_data():
-	pass
+func remove_current_data() -> bool:
+	if current_data != null:
+		removed.emit(current_data)
+		return true
+	return false
 
 
 func _on_remove_confirmation_dialog_confirmed():

@@ -34,19 +34,6 @@ func load_craft_station_types():
 	craft_station_types_list.load_craft_station_types(database)
 
 
-func remove_current_data():
-	remove_station(current_data)
-
-
-func remove_station(station : CraftStationType):
-	var index = database.stations_type.find(station)
-	if index == -1:
-		return
-	database.stations_type.remove_at(index)
-	load_craft_station_types()
-	data_changed.emit()
-
-
 func _on_craft_station_types_item_list_station_selected(station):
 	current_data = station
 	select(station)

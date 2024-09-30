@@ -29,18 +29,6 @@ func load_recipes() -> void:
 	recipes_list.load_recipes(database)
 
 
-func remove_current_data():
-	remove_recipe(current_data)
-
-
-func remove_recipe(recipe : Recipe):
-	if recipe == null:
-		return
-	var index = database.recipes.find(recipe)
-	database.recipes.remove_at(index)
-	load_recipes()
-
-
 func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	recipe_editor.load_recipe(recipe, database)
 	recipe_editor.visible = true

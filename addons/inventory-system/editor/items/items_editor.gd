@@ -28,16 +28,12 @@ func load_items() -> void:
 	inventory_item_list.load_items(database)
 
 
-func remove_current_data():
-	remove_item(current_data)
-
-
-func remove_item(item : ItemDefinition):
-	if item == null:
-		return
-	database.remove_item(item)
-	load_items()
-	data_changed.emit()
+func remove_current_data() -> bool:
+	var removed = super.remove_current_data()
+	if removed:
+		load_items()
+		data_changed.emit()
+	return removed
 
 
 func select(id : String):
