@@ -13,7 +13,7 @@ const NEW_ITEM_NEW_RESOURCE = 100
 const NEW_ITEM_FROM_RESOURCE = 101
 
 # The Inventory System plugin
-var editor_plugin: EditorPlugin
+var editor_plugin : InventorySystemEditorPlugin
 
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
 @onready var recipes_editor : RecipesEditor = %Recipes
@@ -99,6 +99,9 @@ func open_file(path: String) -> void:
 		return
 	var data : InventoryDatabase = res as InventoryDatabase
 	var database = data.duplicate()
+	
+	editor_plugin.import_from_inv_file(database, path)
+	
 	load_database(database)
 	self.database = database
 	self.database_path = path

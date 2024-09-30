@@ -1,5 +1,7 @@
 @tool
 extends EditorPlugin
+class_name InventorySystemEditorPlugin
+
 
 const icon_plugin = preload("res://addons/inventory-system/icons/inventory_main_screen.svg")
 const inventory_editor_scene = preload("res://addons/inventory-system/editor/inventory_editor.tscn")
@@ -17,6 +19,7 @@ func _enter_tree():
 		InventorySettings.prepare()
 		
 		import_plugin = preload("import_plugin.gd").new()
+		import_plugin.editor_plugin = self
 		add_import_plugin(import_plugin)
 		
 		_inventory_editor = inventory_editor_scene.instantiate()
@@ -54,6 +57,18 @@ func _get_plugin_name():
 
 func _get_plugin_icon():
 	return icon_plugin
+
+
+func import_from_inv_file(database : InventoryDatabase, path : String) -> Error:
+	var file = FileAccess.open(path, FileAccess.READ)
+	if file == null:
+		return FileAccess.get_open_error()
+	
+	var json = ""
+	while file.get_position() < file.get_length():
+		json += file.get_line() + "\n"
+	database.import_to_invdata(json)
+	return OK
 
 
 func _build() -> bool:

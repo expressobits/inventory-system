@@ -1,6 +1,8 @@
 @tool
 extends EditorImportPlugin
 
+var editor_plugin : InventorySystemEditorPlugin
+
 enum Presets { DEFAULT }
 
 func _get_import_order() -> int:
@@ -54,16 +56,8 @@ func _get_option_visibility(path, option_name, options):
 	
 	
 func _import(source_file, save_path, options, r_platform_variants, r_gen_files):
-	var file = FileAccess.open(source_file, FileAccess.READ)
-	if file == null:
-		return FileAccess.get_open_error()
-	
-	var json = ""
-	while file.get_position() < file.get_length():
-		json += file.get_line() + "\n"
-		
 	var database = InventoryDatabase.new()
-	
-	database.import_to_invdata(json)
-	
+	var error = editor_plugin.import_from_inv_file(database, save_path)
+	if error != OK:
+		return
 	return ResourceSaver.save(database, "%s.%s" % [save_path, _get_save_extension()])

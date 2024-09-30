@@ -43,7 +43,6 @@ func remove_station(station : CraftStationType):
 	if index == -1:
 		return
 	database.stations_type.remove_at(index)
-	ResourceSaver.save(database, database.resource_path)
 	load_craft_station_types()
 	data_changed.emit()
 

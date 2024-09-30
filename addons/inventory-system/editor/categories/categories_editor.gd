@@ -40,7 +40,6 @@ func remove_current_data():
 
 func remove_category(category : ItemCategory):
 	database.remove_category(category)
-	ResourceSaver.save(database, database.resource_path)
 	load_item_categories()
 	data_changed.emit()
 
