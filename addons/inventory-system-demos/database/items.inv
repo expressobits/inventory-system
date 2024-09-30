@@ -42,7 +42,7 @@
 		{
 			"color": "ffffffff",
 			"icon": "res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg",
-			"id": "",
+			"id": "helmet",
 			"name": "Helmet"
 		}
 	],
@@ -194,7 +194,7 @@
 		{
 			"can_stack": false,
 			"categories": [
-				""
+				"helmet"
 			],
 			"icon": "res://addons/inventory-system-demos/assets/icons/helmet_labor.png",
 			"id": "helmet_labor",

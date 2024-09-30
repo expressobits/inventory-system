@@ -8,6 +8,7 @@ var category_index : int
 var category : ItemCategory
 var editor_plugin : EditorPlugin
 
+@onready var id_editor : ItemCategoryIDEditor = %IDEditor
 @onready var name_text_edit : LineEdit = %NameTextEdit
 @onready var icon_text_edit : LineEdit = %IconLineEdit
 @onready var icon_edit_button : Button = %IconEditButton
@@ -19,6 +20,8 @@ var editor_plugin : EditorPlugin
 func _ready():
 	apply_theme()
 	$MarginContainer.visible = false
+	id_editor.changed.connect(_on_id_editor_changed)
+	
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -26,11 +29,12 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 	apply_theme()
 
 
-func load_category(category : ItemCategory):
+func load_category(database : InventoryDatabase, category : ItemCategory):
 	self.category = category
 	if not is_instance_valid(category):
 		$MarginContainer.visible = false
 		return
+	id_editor.setup(database, category.id)
 	$MarginContainer.visible = true
 	name_text_edit.text = category.name
 	color_picker.color = category.color
@@ -54,6 +58,11 @@ func apply_theme() -> void:
 
 func _on_theme_changed():
 	apply_theme()
+
+
+func _on_id_editor_changed(id : String):
+	category.id = id
+	changed.emit(category)
 
 
 func _on_name_text_edit_text_changed(new_text):

@@ -36,7 +36,6 @@ func remove_item(item : ItemDefinition):
 	if item == null:
 		return
 	database.remove_item(item)
-	ResourceSaver.save(database, database.resource_path)
 	load_items()
 	data_changed.emit()
 

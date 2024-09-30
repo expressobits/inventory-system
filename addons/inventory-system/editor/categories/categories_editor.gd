@@ -22,12 +22,12 @@ func _apply_theme():
 	search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 func on_load_database() -> void:
-	item_category_editor.load_category(null)
+	item_category_editor.load_category(database, null)
 	load_item_categories()
 	
 	
 func select(category : ItemCategory):
-	item_category_editor.load_category(category)
+	item_category_editor.load_category(database, category)
 
 
 func load_item_categories():
