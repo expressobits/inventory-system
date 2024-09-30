@@ -18,7 +18,7 @@ var filter: String:
 		return filter
 
 signal changed_products_in_recipe(recipe : Recipe)
-signal request_remove(recipe : Recipe, request_code : int)
+signal request_remove(recipe : Recipe)
 signal selected(recipe : Recipe)
 
 
@@ -103,8 +103,8 @@ func _on_recipe_item_selected(index):
 			recipes_ui[i].unselect()
 
 
-func _on_recipe_item_request_remove_menu(recipe : Recipe, request_code : int):
-	request_remove.emit(recipe, request_code)
+func _on_recipe_item_request_remove_menu(recipe : Recipe):
+	request_remove.emit(recipe)
 
 
 func _on_search_line_edit_text_changed(new_text : String):

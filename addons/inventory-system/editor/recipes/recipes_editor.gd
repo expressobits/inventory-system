@@ -38,7 +38,6 @@ func remove_recipe(recipe : Recipe):
 		return
 	var index = database.recipes.find(recipe)
 	database.recipes.remove_at(index)
-	ResourceSaver.save(database, database.resource_path)
 	load_recipes()
 
 
@@ -78,12 +77,10 @@ func _on_recipe_item_editor_recipe_removed():
 	load_recipes()
 
 
-func _on_recipe_item_editor_request_remove(recipe, request_code):
-	match request_code:
-		RecipeItemListEditor.REMOVE:
-			remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
-			remove_confirmation_dialog.popup_centered()
-			current_data = recipe
+func _on_recipe_item_editor_request_remove(recipe):
+	remove_confirmation_dialog.dialog_text = "Confirm Remove Recipe?"
+	remove_confirmation_dialog.popup_centered()
+	current_data = recipe
 
 
 func _on_data_changed():
