@@ -49,6 +49,7 @@ public:
 	void add_new_category(const Ref<ItemCategory> category);
 	void remove_category(const Ref<ItemCategory> category);
 	Ref<ItemDefinition> get_item(String id) const;
+	bool has_item_category_id(String id) const;
 	bool has_item_id(String id) const;
 	bool has_craft_station_type_id(String id) const;
 	String get_valid_id() const;

@@ -46,6 +46,7 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_new_category", "category"), &InventoryDatabase::add_new_category);
 	ClassDB::bind_method(D_METHOD("remove_category", "category"), &InventoryDatabase::remove_category);
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
+	ClassDB::bind_method(D_METHOD("has_item_category_id", "id"), &InventoryDatabase::has_item_category_id);
 	ClassDB::bind_method(D_METHOD("has_item_id", "id"), &InventoryDatabase::has_item_id);
 	ClassDB::bind_method(D_METHOD("has_craft_station_type_id", "id"), &InventoryDatabase::has_craft_station_type_id);
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
@@ -171,6 +172,15 @@ Ref<ItemDefinition> InventoryDatabase::get_item(String id) const {
 		return items_cache[id];
 	}
 	return nullptr;
+}
+
+bool InventoryDatabase::has_item_category_id(String id) const {
+	for (size_t i = 0; i < item_categories.size(); i++)
+	{
+		Ref<ItemCategory> category = item_categories[i];
+		if(category->get_id() == id) return true;
+	}
+	return false;
 }
 
 bool InventoryDatabase::has_item_id(String id) const {
