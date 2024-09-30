@@ -8,7 +8,6 @@ var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 var current_data : Resource
 
-const ITEM_COPY_RESOURCE_PATH = 100
 const ITEM_REMOVE = 105
 
 @onready var remove_confirmation_dialog = %RemoveConfirmationDialog

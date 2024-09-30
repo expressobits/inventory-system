@@ -46,8 +46,6 @@ func remove_category(category : ItemCategory):
 
 func _on_item_category_popup_menu_id_pressed(id):
 	match id:
-		ITEM_COPY_RESOURCE_PATH:
-			DisplayServer.clipboard_set(current_data.resource_path)
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Item Category \""+current_data.name+"\"?"
@@ -56,9 +54,6 @@ func _on_item_category_popup_menu_id_pressed(id):
 func _on_item_categories_item_list_item_popup_menu_requested(at_position):
 	item_category_popup_menu.clear()
 	var icon = get_theme_icon("Remove", "EditorIcons")
-	var copy = get_theme_icon("CopyNodePath", "EditorIcons")
-	item_category_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
-	item_category_popup_menu.add_separator()
 	item_category_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	
 	var a = item_categories_item_list.get_global_mouse_position()

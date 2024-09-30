@@ -60,8 +60,6 @@ func _on_craft_station_type_editor_changed(station):
 
 func _on_craft_station_types_popup_menu_id_pressed(id):
 	match id:
-		ITEM_COPY_RESOURCE_PATH:
-			DisplayServer.clipboard_set(current_data.resource_path)
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\"?"
@@ -70,9 +68,6 @@ func _on_craft_station_types_popup_menu_id_pressed(id):
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	craft_station_types_popup_menu.clear()
 	var icon = get_theme_icon("Remove", "EditorIcons")
-	var copy = get_theme_icon("CopyNodePath", "EditorIcons")
-	craft_station_types_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
-	craft_station_types_popup_menu.add_separator()
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 
 

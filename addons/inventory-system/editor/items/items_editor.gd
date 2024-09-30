@@ -64,9 +64,6 @@ func _on_inventory_item_list_item_selected(item, index):
 func _on_inventory_item_list_item_popup_menu_requested(at_position):
 	items_popup_menu.clear()
 	var icon = get_theme_icon("Remove", "EditorIcons")
-	var copy = get_theme_icon("CopyNodePath", "EditorIcons")
-	items_popup_menu.add_icon_item(copy, "Copy Resource Path", ITEM_COPY_RESOURCE_PATH)
-	items_popup_menu.add_separator()
 	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	
 	var a = inventory_item_list.get_global_mouse_position()
@@ -76,10 +73,6 @@ func _on_inventory_item_list_item_popup_menu_requested(at_position):
 
 func _on_items_popup_menu_id_pressed(id: int) -> void:
 	match id:
-		ITEM_COPY_RESOURCE_PATH:
-			if current_data == null:
-				return
-			DisplayServer.clipboard_set(current_data.resource_path)
 		ITEM_REMOVE:
 			if current_data == null:
 				return
