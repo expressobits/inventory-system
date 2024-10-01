@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://w6mkeioqln3k"]
+[gd_scene load_steps=16 format=3 uid="uid://w6mkeioqln3k"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
+[ext_resource type="Texture2D" uid="uid://3f53y2sfj1sb" path="res://addons/inventory-system/icons/inventory_database_editor.svg" id="2_0nqqt"]
 [ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
 [ext_resource type="Texture2D" uid="uid://7ueixntymdwg" path="res://addons/inventory-system/icons/new_inventory_item.svg" id="2_lu5r1"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
@@ -46,25 +47,13 @@ theme_override_constants/margin_right = 4
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-text = "New Database"
-flat = true
-
-[node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
+[node name="DatabaseButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
-text = "Open Database"
-
-[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-text = "Save Database"
-flat = true
+text = "Database"
+icon = ExtResource("2_0nqqt")
+flat = false
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
@@ -75,7 +64,7 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Inventory Item"
 disabled = true
-text = "New Item"
+text = "New Item Definition"
 icon = ExtResource("2_lu5r1")
 flat = true
 
@@ -101,7 +90,7 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Craft Station Type"
 disabled = true
-text = "New CraftStation"
+text = "New Craft Station Type"
 icon = ExtResource("4_jbtk0")
 flat = true
 
@@ -114,7 +103,7 @@ custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 tooltip_text = "New Item Category"
 disabled = true
-text = "New Category"
+text = "New Item Category"
 icon = ExtResource("5_4w1hd")
 flat = true
 
