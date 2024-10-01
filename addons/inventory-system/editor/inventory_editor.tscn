@@ -51,26 +51,14 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 text = "Database"
+flat = false
 
-[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-text = "New Database"
-flat = true
-
-[node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
-unique_name_in_owner = true
+[node name="HelpButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
+visible = false
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
-text = "Open Database"
-
-[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-text = "Save Database"
-flat = true
+text = "Help"
+flat = false
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
