@@ -133,7 +133,6 @@ func save_file() -> void:
 func apply_theme() -> void:
 	if not is_instance_valid(editor_plugin) or not is_instance_valid(database_button):
 		return
-	database_button.icon = get_theme_icon("File", "EditorIcons")
 	database_button.tooltip_text = "Database Menu"
 	
 	# Dialog sizes
