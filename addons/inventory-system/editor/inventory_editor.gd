@@ -154,9 +154,6 @@ func apply_theme() -> void:
 	new_dialog.min_size = Vector2(600, 500) * scale
 	save_dialog.min_size = Vector2(600, 500) * scale
 	open_dialog.min_size = Vector2(600, 500) * scale
-#	export_dialog.min_size = Vector2(600, 500) * scale
-#	export_dialog.min_size = Vector2(600, 500) * scale
-#	settings_dialog.min_size = Vector2(600, 600) * scale
 
 
 # Refresh the open menu with the latest files
