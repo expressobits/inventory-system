@@ -37,34 +37,45 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+
+[node name="Toolbar" type="HBoxContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="DatabaseButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+text = "Database"
+
+[node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "New Database"
 flat = true
 
-[node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="OpenButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(28, 28)
 layout_mode = 2
 text = "Open Database"
 
-[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="SaveButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 text = "Save Database"
 flat = true
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewItemButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewItemButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -74,10 +85,10 @@ text = "New Item"
 icon = ExtResource("2_lu5r1")
 flat = true
 
-[node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="VSeparator2" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewRecipeButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewRecipeButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -87,10 +98,10 @@ text = "New Recipe"
 icon = ExtResource("3_clewf")
 flat = true
 
-[node name="VSeparator3" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="VSeparator3" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewCraftStationTypeButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewCraftStationTypeButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -100,18 +111,10 @@ text = "New CraftStation"
 icon = ExtResource("4_jbtk0")
 flat = true
 
-[node name="SaveAllButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-flat = true
-icon_alignment = 1
-
-[node name="VSeparator4" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="VSeparator4" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
 
-[node name="NewItemCategoryButton" type="Button" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="NewItemCategoryButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
@@ -121,10 +124,10 @@ text = "New Category"
 icon = ExtResource("5_4w1hd")
 flat = true
 
-[node name="VSeparator5" type="VSeparator" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="VSeparator5" type="VSeparator" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -134,13 +137,13 @@ vertical_alignment = 2
 text_overrun_behavior = 1
 structured_text_bidi_override = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 visible = false
 layout_mode = 2
 text = "Database: "
 horizontal_alignment = 2
 
-[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="OptionButton" type="OptionButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 visible = false
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
@@ -149,7 +152,7 @@ popup/item_0/text = "dsadasdsa"
 popup/item_1/text = "dadsadsa"
 popup/item_1/id = 1
 
-[node name="MenuBar" type="MenuBar" parent="MarginContainer/VBoxContainer/Toolbar"]
+[node name="MenuBar" type="MenuBar" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
@@ -158,7 +161,10 @@ size_flags_horizontal = 3
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
 [node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
 layout_mode = 2

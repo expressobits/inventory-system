@@ -9,6 +9,11 @@ const InventorySettings = preload("res://addons/inventory-system/editor/inventor
 const OPEN_OPEN = 100
 const OPEN_CLEAR = 101
 
+const DATABASE_NEW = 100
+const DATABASE_OPEN = 200
+const DATABASE_OPEN_RECENT = 201
+const DATABASE_SAVE = 300
+
 const NEW_ITEM_NEW_RESOURCE = 100
 const NEW_ITEM_FROM_RESOURCE = 101
 
@@ -29,11 +34,12 @@ var database_path : String
 @onready var save_dialog: FileDialog = $SaveDialog
 @onready var open_dialog: FileDialog = $OpenDialog
 
+
 # Toolbar
+@onready var database_button : Button = %DatabaseButton
 @onready var new_button: Button = %NewButton
 @onready var open_button: MenuButton = %OpenButton
 @onready var save_button: Button = %SaveButton
-@onready var save_all_button: Button = %SaveAllButton
 @onready var title_label : Label = %TitleLabel
 @onready var new_item_button : Button = %NewItemButton
 @onready var new_recipe_button : Button= %NewRecipeButton
@@ -54,6 +60,7 @@ func _ready():
 	load_database(null)
 	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
 	open_dialog.file_selected.connect(_on_open_dialog_file_selected)
+	database_button.pressed.connect(_on_database_button_pressed)
 	new_button.pressed.connect(_on_new_button_pressed)
 	open_button.pressed.connect(_on_open_button_about_to_popup)
 	new_item_button.pressed.connect(_on_new_item_menu_id_pressed)
@@ -139,8 +146,8 @@ func apply_theme() -> void:
 	open_button.icon = get_theme_icon("Load", "EditorIcons")
 	open_button.tooltip_text = "Open a Database"
 	
-	save_all_button.icon = get_theme_icon("Save", "EditorIcons")
-	save_all_button.tooltip_text = "Save Database"
+	save_button.icon = get_theme_icon("Save", "EditorIcons")
+	save_button.tooltip_text = "Save Database"
 	
 	# Dialog sizes
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
@@ -172,6 +179,20 @@ func build_open_menu() -> void:
 	if menu.id_pressed.is_connected(_on_open_menu_id_pressed):
 		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
 	menu.id_pressed.connect(_on_open_menu_id_pressed)
+
+
+func build_database_menu() -> void:
+	var menu = database_button.get_popup()
+	menu.clear()
+	menu.add_icon_item(get_theme_icon("New", "EditorIcons"), "New Database", DATABASE_NEW)
+	menu.add_icon_item(get_theme_icon("Open", "EditorIcons"), "Open Database...", DATABASE_OPEN)
+	menu.add_icon_item(get_theme_icon("Open Recent", "EditorIcons"), "Open Recent", DATABASE_OPEN_RECENT)
+	menu.add_separator()
+	
+	if menu.id_pressed.is_connected(_on_open_menu_id_pressed):
+		menu.id_pressed.disconnect(_on_open_menu_id_pressed)
+	menu.id_pressed.connect(_on_open_menu_id_pressed)
+
 
 ### Signals
 
@@ -254,6 +275,9 @@ func remove_recipe(recipe : Recipe):
 func _on_theme_changed():
 	apply_theme()
 
+
+func _on_database_button_pressed():
+	build_database_menu()
 
 func _on_new_button_pressed():
 	new_dialog.popup_centered()
