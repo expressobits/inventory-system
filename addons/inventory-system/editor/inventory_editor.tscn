@@ -46,6 +46,12 @@ theme_override_constants/margin_right = 4
 layout_mode = 2
 theme_override_constants/separation = 0
 
+[node name="DatabaseButton" type="MenuButton" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+text = "Database"
+
 [node name="NewButton" type="Button" parent="MarginContainer/VBoxContainer/MarginContainer/Toolbar"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(32, 32)
