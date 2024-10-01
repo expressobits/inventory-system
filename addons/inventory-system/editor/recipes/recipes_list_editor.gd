@@ -88,9 +88,9 @@ func is_contains_product_name(recipe : Recipe, filter_name : String) -> bool:
 	if filter_name == "":
 		return true
 	for product in recipe.products:
-		if product.item == null:
+		if product.item == null or product.item.definition == null:
 			return true
-		if filter_name.to_lower() in product.item.name.to_lower():
+		if filter_name.to_lower() in product.item.definition.name.to_lower():
 			return true
 	return false
 
