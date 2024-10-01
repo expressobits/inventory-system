@@ -1,8 +1,6 @@
 @tool
 extends Control
 
-#var _option_database = $VBoxContainer/MarginContainer/HBoxContainer/OptionButton
-
 const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
 const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
 
