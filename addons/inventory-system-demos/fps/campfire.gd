@@ -97,6 +97,7 @@ func get_interact_actions(_interactor : Interactor) -> Array:
 func interact(character : Node, action_index : int = 0):
 	if action_index == 0 and !openable.is_open:
 		character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
+		craft_station.load_valid_recipes()
 		openable.open(character)
 	else:
 		active_fire = !active_fire

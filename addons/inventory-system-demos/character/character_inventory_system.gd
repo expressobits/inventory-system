@@ -98,6 +98,7 @@ func _update_opened_inventories(_inventory : Inventory):
 
 
 func _update_opened_stations(_craft_station : CraftStation):
+	_craft_station.load_valid_recipes()
 	_check_inputs()
 
 
