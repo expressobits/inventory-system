@@ -1,7 +1,0 @@
-[gd_resource type="CraftStationType" load_steps=2 format=3 uid="uid://dvvni8o3rpo4s"]
-
-[ext_resource type="Texture2D" uid="uid://m42ga264uiky" path="res://addons/inventory-system-demos/assets/icons/workbench.png" id="1_rcxbc"]
-
-[resource]
-icon = ExtResource("1_rcxbc")
-name = "Workbench"

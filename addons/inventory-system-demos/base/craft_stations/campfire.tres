@@ -1,7 +1,0 @@
-[gd_resource type="CraftStationType" load_steps=2 format=3 uid="uid://bnofwpkgx0twi"]
-
-[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system-demos/assets/icons/campfire.png" id="1_ff7ht"]
-
-[resource]
-icon = ExtResource("1_ff7ht")
-name = "Campfire"
