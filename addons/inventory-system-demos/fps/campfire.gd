@@ -7,6 +7,7 @@ signal changed_burning_state(is_burning : bool)
 @export var burnable_category : String = "burnable"
 @onready var gpu_particles_3d = $Node/GPUParticles3D
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
+@onready var craft_audio = $Node/CraftAudio
 @export var toggle_fire_action : InteractAction
 
 @export var decrease_fuel_multiplier = 1
@@ -38,6 +39,7 @@ var is_burning := false:
 
 func _ready():
 	_update_is_burning()
+	craft_station.on_crafted.connect(_on_crafted)
 	
 
 func _update_is_burning():
@@ -49,6 +51,10 @@ func _update_is_burning():
 
 func _on_input_inventory_item_added(_item, _amount):
 	check()
+
+
+func _on_crafted(recipe_index: int):
+	craft_audio.play(1.0)
 
 
 func check() -> bool:
