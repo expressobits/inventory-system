@@ -31,11 +31,6 @@ func loading_categories():
 		option_obj.toggled.connect(_on_toggled_category_option.bind(category))
 		objs.append(option_obj)
 		h_flow_container.add_child(option_obj)
-			
-
-#func setup_option_button(checkbox : CheckBox):
-#	for category in categories_option_buttons:
-#		option_button.add_icon_item()
 
 
 func make_array_unique(input_array) -> Array:

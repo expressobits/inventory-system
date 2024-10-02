@@ -125,7 +125,6 @@ func save_file() -> void:
 		print("ERROR TO SAVE")
 		return FileAccess.get_open_error()
 	file.store_string(json)
-	print(json)
 	file.close()
 	
 
@@ -177,7 +176,6 @@ func build_database_menu() -> void:
 ### Signals
 
 func _on_database_menu_id_pressed(id: int) -> void:
-	print(id)
 	match id:
 		DATABASE_NEW:
 			new_dialog.popup_centered()
