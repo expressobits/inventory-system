@@ -36,7 +36,7 @@ void ItemDefinition::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_categories", "categories"), &ItemDefinition::set_categories);
 	ClassDB::bind_method(D_METHOD("get_categories"), &ItemDefinition::get_categories);
 	ClassDB::bind_method(D_METHOD("is_of_category", "category"), &ItemDefinition::is_in_category);
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "id"), "set_id", "get_id");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_stack"), "set_can_stack", "get_can_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
