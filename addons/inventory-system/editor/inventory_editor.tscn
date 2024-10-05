@@ -186,7 +186,7 @@ metadata/_tab_index = 3
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
 access = 2
-filters = PackedStringArray("*.inv ; InventoryDatabase")
+filters = PackedStringArray("*.tres ; InventoryDatabase")
 
 [node name="SaveDialog" type="FileDialog" parent="."]
 size = Vector2i(312, 180)

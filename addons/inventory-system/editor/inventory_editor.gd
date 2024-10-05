@@ -96,8 +96,6 @@ func new_file(path: String, content: String = "") -> void:
 	self.database = database
 	self.database_path = path
 	save_file()
-	
-	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
 	load_database(database)
 
 
@@ -132,8 +130,11 @@ func open_file(path: String) -> void:
 	InventorySettings.add_recent_file(path)
 	build_database_menu()
 
+
 func save_file() -> void:
 	ResourceSaver.save(database, database_path)
+	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
+
 
 func export_inv_file() -> void:
 	var json = database.export_to_invdata()
