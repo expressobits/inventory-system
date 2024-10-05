@@ -18,10 +18,6 @@ func _enter_tree():
 	if Engine.is_editor_hint():
 		InventorySettings.prepare()
 		
-		import_plugin = preload("import_plugin.gd").new()
-		import_plugin.editor_plugin = self
-		add_import_plugin(import_plugin)
-		
 		_inventory_editor = inventory_editor_scene.instantiate()
 		_inventory_editor.name = "Inventory System"
 		_inventory_editor.set_editor_plugin(self)
@@ -38,7 +34,6 @@ func _exit_tree():
 		_inventory_editor.queue_free()
 	# Clean-up of the plugin goes here.
 #	remove_inspector_plugin()
-	remove_import_plugin(import_plugin)
 	import_plugin = null
 
 
