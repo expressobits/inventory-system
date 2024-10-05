@@ -199,7 +199,16 @@ size = Vector2i(312, 175)
 ok_button_text = "Open"
 dialog_hide_on_ok = true
 file_mode = 0
-filters = PackedStringArray("*.inv ; InventoryDatabase")
+filters = PackedStringArray("*.tres ; InventoryDatabase")
+
+[node name="OpenInvDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+title = "Open a File"
+size = Vector2i(312, 175)
+ok_button_text = "Open"
+dialog_hide_on_ok = true
+file_mode = 0
+filters = PackedStringArray("*.inv")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]

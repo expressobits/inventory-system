@@ -13,6 +13,9 @@ const DATABASE_OPEN_RECENT = 201
 const DATABASE_OPEN_RECENT_CLEAR = 202
 const DATABASE_SAVE = 300
 
+const DATABASE_IMPORT = 400
+const DATABASE_IMPORT_JSON = 401
+
 const NEW_ITEM_NEW_RESOURCE = 100
 const NEW_ITEM_FROM_RESOURCE = 101
 
@@ -32,6 +35,7 @@ var database_path : String
 @onready var new_dialog: FileDialog = $NewDialog
 @onready var save_dialog: FileDialog = $SaveDialog
 @onready var open_dialog: FileDialog = $OpenDialog
+@onready var open_inv_dialog: FileDialog = $OpenInvDialog
 
 
 # Toolbar
@@ -56,6 +60,7 @@ func _ready():
 	load_database(null)
 	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
 	open_dialog.file_selected.connect(_on_open_dialog_file_selected)
+	open_inv_dialog.file_selected.connect(_on_open_inv_dialog_file_selected)
 	database_button.pressed.connect(_on_database_button_pressed)
 	new_item_button.pressed.connect(_on_new_item_menu_id_pressed)
 	new_recipe_button.pressed.connect(_on_new_recipe_menu_id_pressed)
@@ -96,14 +101,9 @@ func new_file(path: String, content: String = "") -> void:
 	load_database(database)
 
 
-func open_file(path: String) -> void:
-	var res : Resource = load(path)
-	if not res is InventoryDatabase:
-		push_warning("Resource " + path + " is not an InventoryDatabase!")
+func import_inv_file(path: String) -> void:
+	if database == null:
 		return
-	var data : InventoryDatabase = res as InventoryDatabase
-	var database = data.duplicate()
-	
 	editor_plugin.import_from_inv_file(database, path)
 	
 	load_database(database)
@@ -114,9 +114,28 @@ func open_file(path: String) -> void:
 	
 	InventorySettings.add_recent_file(path)
 	build_database_menu()
+
+
+func open_file(path: String) -> void:
+	var res : Resource = load(path)
+	if not res is InventoryDatabase:
+		push_warning("Resource " + path + " is not an InventoryDatabase!")
+		return
+	var database : InventoryDatabase = res as InventoryDatabase
 	
+	load_database(database)
+	self.database = database
+	self.database_path = path
+	
+	title_label.text = path
+	
+	InventorySettings.add_recent_file(path)
+	build_database_menu()
 
 func save_file() -> void:
+	ResourceSaver.save(database, database_path)
+
+func export_inv_file() -> void:
 	var json = database.export_to_invdata()
 	
 	var path = database_path
@@ -139,6 +158,7 @@ func apply_theme() -> void:
 	new_dialog.min_size = Vector2(600, 500) * scale
 	save_dialog.min_size = Vector2(600, 500) * scale
 	open_dialog.min_size = Vector2(600, 500) * scale
+	open_inv_dialog.min_size = Vector2(600, 500) * scale
 
 
 func build_database_menu() -> void:
@@ -168,12 +188,22 @@ func build_database_menu() -> void:
 	menu.add_separator()
 	menu.add_icon_item(get_theme_icon("Save", "EditorIcons"), "Save Database", DATABASE_SAVE)
 	
+	menu.add_separator()
+	
+	var import_menu : PopupMenu = PopupMenu.new()
+	import_menu.add_item("Import Json File", DATABASE_IMPORT_JSON)
+	if import_menu.id_pressed.is_connected(_on_import_menu_id_pressed):
+		import_menu.id_pressed.disconnect(_on_import_menu_id_pressed)
+	import_menu.id_pressed.connect(_on_import_menu_id_pressed)
+	
+	menu.add_submenu_node_item("Import", import_menu)
+	menu.set_item_icon(6, get_theme_icon("Load", "EditorIcons"))
+	
+	
 	if menu.id_pressed.is_connected(_on_database_menu_id_pressed):
 		menu.id_pressed.disconnect(_on_database_menu_id_pressed)
 	menu.id_pressed.connect(_on_database_menu_id_pressed)
 
-
-### Signals
 
 func _on_database_menu_id_pressed(id: int) -> void:
 	match id:
@@ -195,6 +225,12 @@ func _on_open_menu_id_pressed(id: int) -> void:
 			var open_menu : PopupMenu = menu.get_item_submenu_node(2)
 			var item = open_menu.get_item_text(open_menu.get_item_index(id))
 			open_file(item)
+
+
+func _on_import_menu_id_pressed(id: int) -> void:
+	match id:
+		DATABASE_IMPORT_JSON:
+			open_inv_dialog.popup_centered()
 
 
 func _on_new_item_menu_id_pressed() -> void:
@@ -281,6 +317,10 @@ func _on_open_button_pressed():
 
 func _on_open_dialog_file_selected(path):
 	open_file(path)
+
+
+func _on_open_inv_dialog_file_selected(path):
+	import_inv_file(path)
 
 
 func _on_open_button_about_to_popup():
