@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_campfire.gd" id="2_hw73w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="2_wux35"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="3_jx6wv"]
-[ext_resource type="InventoryDatabase" uid="uid://42wuulgikujh" path="res://addons/inventory-system-demos/database/items.inv" id="3_p5hiq"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.inv" id="3_p5hiq"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="5_1yik4"]
 
 [node name="Campfire" instance=ExtResource("1_2iaw6")]

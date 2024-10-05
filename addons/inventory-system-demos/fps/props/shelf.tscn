@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://lwi2lvfj5ltx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/props/shelf.gd" id="1_0djpg"]
-[ext_resource type="InventoryDatabase" uid="uid://42wuulgikujh" path="res://addons/inventory-system-demos/database/items.inv" id="2_bmkoo"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.inv" id="2_bmkoo"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_l7ps3"]
 [ext_resource type="PackedScene" uid="uid://43yusxh6v15d" path="res://addons/inventory-system-demos/fps/props/visual_inventory_3d.tscn" id="4_mhihf"]
 [ext_resource type="PackedScene" uid="uid://dm2evx8m3spa5" path="res://addons/inventory-system-demos/fps/props/visual_slot_3d.tscn" id="5_r40cv"]

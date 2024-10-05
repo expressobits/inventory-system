@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="2_toyi4"]
 [ext_resource type="PackedScene" uid="uid://cw4rwxc3dyovc" path="res://addons/inventory-system-demos/character/character_inventory_system.tscn" id="3_hbu24"]
-[ext_resource type="InventoryDatabase" uid="uid://42wuulgikujh" path="res://addons/inventory-system-demos/database/items.inv" id="4_0qsek"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_0qsek"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_1ptxj"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="5_u6t8r"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_3rbsy"]

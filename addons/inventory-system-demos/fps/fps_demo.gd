@@ -7,7 +7,6 @@ var main_inventory : Inventory
 
 func _ready():
 	$"UI/Inventory System UI".setup($"Player/CharacterInventorySystem")
-	database.reimport()
 	
 #
 func _process(_delta):
