@@ -91,6 +91,7 @@ public:
 
 	String export_to_invdata() const;
 	void import_to_invdata(const String json);
+	Error import_from_inv_file(const String path);
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H

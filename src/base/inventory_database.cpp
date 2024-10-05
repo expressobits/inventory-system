@@ -1,6 +1,7 @@
 #include "inventory_database.h"
 
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/global_constants.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/core/class_db.hpp>
@@ -74,6 +75,7 @@ void InventoryDatabase::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_to_invdata", "json"), &InventoryDatabase::import_to_invdata);
+	ClassDB::bind_method(D_METHOD("import_from_inv_file", "path"), &InventoryDatabase::import_from_inv_file);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
@@ -168,17 +170,19 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 }
 
 Ref<ItemDefinition> InventoryDatabase::get_item(String id) const {
-	if (has_item_id(id)) {
-		return items_cache[id];
+	for (size_t i = 0; i < items.size(); i++) {
+		Ref<ItemDefinition> item = items[i];
+		if (item->get_id() == id)
+			return item;
 	}
 	return nullptr;
 }
 
 bool InventoryDatabase::has_item_category_id(String id) const {
-	for (size_t i = 0; i < item_categories.size(); i++)
-	{
+	for (size_t i = 0; i < item_categories.size(); i++) {
 		Ref<ItemCategory> category = item_categories[i];
-		if(category->get_id() == id) return true;
+		if (category->get_id() == id)
+			return true;
 	}
 	return false;
 }
@@ -188,10 +192,10 @@ bool InventoryDatabase::has_item_id(String id) const {
 }
 
 bool InventoryDatabase::has_craft_station_type_id(String id) const {
-	for (size_t i = 0; i < stations_type.size(); i++)
-	{
+	for (size_t i = 0; i < stations_type.size(); i++) {
 		Ref<CraftStationType> craft_station_type = stations_type[i];
-		if(craft_station_type->get_id() == id) return true;
+		if (craft_station_type->get_id() == id)
+			return true;
 	}
 	return false;
 }
@@ -610,4 +614,19 @@ String InventoryDatabase::export_to_invdata() const {
 void InventoryDatabase::import_to_invdata(const String json) {
 	Dictionary data = JSON::parse_string(json);
 	deserialize(data);
+}
+
+Error InventoryDatabase::import_from_inv_file(const String path) {
+	ERR_FAIL_COND_V_MSG(path.is_empty(), Error::ERR_INVALID_PARAMETER, "'path' is empty.");
+	Ref<FileAccess> file = FileAccess::open(path, FileAccess::READ);
+	if (file == nullptr) {
+		return FileAccess::get_open_error();
+	}
+
+	String json = "";
+	while(file->get_position() < file->get_length())
+		json += file->get_line() + "\n";
+
+	import_to_invdata(json);
+	return Error::OK;
 }
