@@ -1,0 +1,341 @@
+[gd_resource type="InventoryDatabase" load_steps=71 format=3 uid="uid://de5qy8ycey7yn"]
+
+[ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_pegli"]
+[ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system-demos/assets/icons/branch.png" id="1_wk1an"]
+[ext_resource type="Texture2D" uid="uid://hu23uplhyra5" path="res://addons/inventory-system-demos/assets/icons/tool-svgrepo-com.svg" id="2_1wxos"]
+[ext_resource type="Texture2D" uid="uid://nawk2ttd0thl" path="res://addons/inventory-system-demos/assets/icons/stone.png" id="2_wqubp"]
+[ext_resource type="Texture2D" uid="uid://d0lrl1mvjsw5u" path="res://addons/inventory-system-demos/assets/icons/food-restaurant-svgrepo-com.svg" id="3_0nsfg"]
+[ext_resource type="Texture2D" uid="uid://t3olj7qicyss" path="res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg" id="4_7goi1"]
+[ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system-demos/assets/icons/grass.png" id="7_64idt"]
+[ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://addons/inventory-system-demos/assets/icons/stone-axe.png" id="8_lxoic"]
+[ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system-demos/assets/icons/stone_pickaxe.png" id="9_p5frv"]
+[ext_resource type="Texture2D" uid="uid://cvf27dgaa2bv5" path="res://addons/inventory-system-demos/assets/icons/lashing.png" id="10_gmco0"]
+[ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system-demos/assets/icons/campfire.png" id="11_h04p3"]
+[ext_resource type="Texture2D" uid="uid://m42ga264uiky" path="res://addons/inventory-system-demos/assets/icons/workbench.png" id="12_ltu7p"]
+[ext_resource type="Texture2D" uid="uid://wfcb6icswom6" path="res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatRaw.png" id="13_obguy"]
+[ext_resource type="Texture2D" uid="uid://ctt1gph1bjta0" path="res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatCooked.png" id="14_ncapu"]
+[ext_resource type="Texture2D" uid="uid://c6rpas6jwthqy" path="res://addons/inventory-system-demos/assets/icons/helmet_labor.png" id="15_fmqqk"]
+
+[sub_resource type="ItemCategory" id="ItemCategory_w8bei"]
+id = "burnables"
+name = "Burnables"
+color = Color(1, 0.917647, 0.466667, 1)
+icon = ExtResource("1_pegli")
+item_properties = {
+"fuel": 0.0
+}
+
+[sub_resource type="ItemCategory" id="ItemCategory_ubgak"]
+id = "tools"
+name = "Tools"
+color = Color(0, 0.219608, 0.870588, 1)
+icon = ExtResource("2_1wxos")
+item_properties = {
+"durability": 0.0
+}
+item_dynamic_properties = Array[String](["durability"])
+
+[sub_resource type="ItemCategory" id="ItemCategory_mu46q"]
+id = "food"
+name = "Food"
+color = Color(0.933333, 0.647059, 0.454902, 1)
+icon = ExtResource("3_0nsfg")
+
+[sub_resource type="ItemCategory" id="ItemCategory_epmnv"]
+id = "helmet"
+name = "Helmet"
+color = Color(1, 1, 1, 1)
+icon = ExtResource("4_7goi1")
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_b5y1y"]
+id = "wood"
+max_stack = 16
+name = "Wood"
+icon = ExtResource("1_wk1an")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/wood.tscn",
+"fuel": 8.0,
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/wood.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_dxjj6"]
+id = "stone"
+max_stack = 8
+name = "Stone"
+icon = ExtResource("2_wqubp")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/rock.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/rock.tscn"
+}
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_hpt3t"]
+id = "grass"
+max_stack = 16
+name = "Grass"
+icon = ExtResource("7_64idt")
+weight = 0.1
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/grass.tscn",
+"fuel": 1.0,
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/grass.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_n86tn"]
+id = "stone_axe"
+can_stack = false
+max_stack = 1
+name = "Stone Axe"
+icon = ExtResource("8_lxoic")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
+"durability": 0.0,
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_axe.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_ubgak")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_uhr2s"]
+id = "stone_pickaxe"
+name = "Stone Pickaxe"
+icon = ExtResource("9_p5frv")
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
+"durability": 0.0,
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_pickaxe.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_ubgak")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_eupl1"]
+id = "lashing"
+max_stack = 16
+name = "Lashing"
+icon = ExtResource("10_gmco0")
+weight = 0.2
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/lashing.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/lashing.tscn"
+}
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_scf45"]
+id = "campfire"
+max_stack = 1
+name = "Campfire"
+icon = ExtResource("11_h04p3")
+weight = 4.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/campfire.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/campfire.tscn",
+"placeable": "res://addons/inventory-system-demos/fps/campfire.tscn"
+}
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_24066"]
+id = "workbench"
+max_stack = 1
+name = "Workbench"
+icon = ExtResource("12_ltu7p")
+weight = 5.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/workbench.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/workbench.tscn",
+"placeable": "res://addons/inventory-system-demos/fps/workbench.tscn"
+}
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_84tg3"]
+id = "raw_meat"
+max_stack = 5
+name = "Raw Meat"
+icon = ExtResource("13_obguy")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/raw_meat.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/raw_meat.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_mu46q")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_f2odo"]
+id = "cooked_meat"
+max_stack = 5
+name = "Cooked Meat"
+icon = ExtResource("14_ncapu")
+weight = 0.8
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/cooked_meat.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/cooked_meat.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_mu46q")])
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_6y8vb"]
+id = "helmet_labor"
+can_stack = false
+max_stack = 1
+name = "Helmet Labor"
+icon = ExtResource("15_fmqqk")
+weight = 1.0
+properties = {
+"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/helmet_labor.tscn",
+"hand_item": "res://addons/inventory-system-demos/fps/hand_items/helmet_labor.tscn"
+}
+categories = Array[ItemCategory]([SubResource("ItemCategory_epmnv")])
+
+[sub_resource type="Item" id="Item_2j4br"]
+definition = SubResource("ItemDefinition_dxjj6")
+
+[sub_resource type="Slot" id="Slot_sxay0"]
+item = SubResource("Item_2j4br")
+amount = 2
+
+[sub_resource type="Item" id="Item_s04h1"]
+definition = SubResource("ItemDefinition_b5y1y")
+
+[sub_resource type="Slot" id="Slot_pfxjp"]
+item = SubResource("Item_s04h1")
+amount = 2
+
+[sub_resource type="Item" id="Item_cpaie"]
+definition = SubResource("ItemDefinition_n86tn")
+
+[sub_resource type="Slot" id="Slot_opo25"]
+item = SubResource("Item_cpaie")
+amount = 1
+
+[sub_resource type="CraftStationType" id="CraftStationType_vsths"]
+id = "workbench"
+name = "Workbench"
+icon = ExtResource("12_ltu7p")
+
+[sub_resource type="Recipe" id="Recipe_fapod"]
+products = Array[Slot]([SubResource("Slot_opo25")])
+time_to_craft = 16.0
+station = SubResource("CraftStationType_vsths")
+ingredients = Array[Slot]([SubResource("Slot_sxay0"), SubResource("Slot_pfxjp")])
+
+[sub_resource type="Item" id="Item_v6th4"]
+definition = SubResource("ItemDefinition_dxjj6")
+
+[sub_resource type="Slot" id="Slot_38ob4"]
+item = SubResource("Item_v6th4")
+amount = 2
+
+[sub_resource type="Item" id="Item_plpnt"]
+definition = SubResource("ItemDefinition_b5y1y")
+
+[sub_resource type="Slot" id="Slot_vv0mn"]
+item = SubResource("Item_plpnt")
+amount = 2
+
+[sub_resource type="Item" id="Item_sagvb"]
+definition = SubResource("ItemDefinition_uhr2s")
+
+[sub_resource type="Slot" id="Slot_tk5wk"]
+item = SubResource("Item_sagvb")
+amount = 1
+
+[sub_resource type="Item" id="Item_wmx3w"]
+definition = SubResource("ItemDefinition_6y8vb")
+
+[sub_resource type="Slot" id="Slot_drd0x"]
+item = SubResource("Item_wmx3w")
+amount = 1
+
+[sub_resource type="Recipe" id="Recipe_0u4cu"]
+products = Array[Slot]([SubResource("Slot_tk5wk")])
+station = SubResource("CraftStationType_vsths")
+ingredients = Array[Slot]([SubResource("Slot_38ob4"), SubResource("Slot_vv0mn")])
+required_items = Array[Slot]([SubResource("Slot_drd0x")])
+
+[sub_resource type="Item" id="Item_3jum8"]
+definition = SubResource("ItemDefinition_hpt3t")
+
+[sub_resource type="Slot" id="Slot_h47lr"]
+item = SubResource("Item_3jum8")
+amount = 2
+
+[sub_resource type="Item" id="Item_g7ntt"]
+definition = SubResource("ItemDefinition_eupl1")
+
+[sub_resource type="Slot" id="Slot_3n38h"]
+item = SubResource("Item_g7ntt")
+amount = 1
+
+[sub_resource type="Recipe" id="Recipe_bl2yk"]
+products = Array[Slot]([SubResource("Slot_3n38h")])
+time_to_craft = 2.0
+ingredients = Array[Slot]([SubResource("Slot_h47lr")])
+
+[sub_resource type="Item" id="Item_gbs13"]
+definition = SubResource("ItemDefinition_dxjj6")
+
+[sub_resource type="Slot" id="Slot_30vlc"]
+item = SubResource("Item_gbs13")
+amount = 2
+
+[sub_resource type="Item" id="Item_3017u"]
+definition = SubResource("ItemDefinition_b5y1y")
+
+[sub_resource type="Slot" id="Slot_jtq7x"]
+item = SubResource("Item_3017u")
+amount = 1
+
+[sub_resource type="Item" id="Item_n5ulq"]
+definition = SubResource("ItemDefinition_scf45")
+
+[sub_resource type="Slot" id="Slot_vhgwd"]
+item = SubResource("Item_n5ulq")
+amount = 1
+
+[sub_resource type="Recipe" id="Recipe_e1irj"]
+products = Array[Slot]([SubResource("Slot_vhgwd")])
+ingredients = Array[Slot]([SubResource("Slot_30vlc"), SubResource("Slot_jtq7x")])
+
+[sub_resource type="Item" id="Item_ojaen"]
+definition = SubResource("ItemDefinition_b5y1y")
+
+[sub_resource type="Slot" id="Slot_8sh4h"]
+item = SubResource("Item_ojaen")
+amount = 1
+
+[sub_resource type="Item" id="Item_plnm8"]
+definition = SubResource("ItemDefinition_24066")
+
+[sub_resource type="Slot" id="Slot_e6yty"]
+item = SubResource("Item_plnm8")
+amount = 1
+
+[sub_resource type="Recipe" id="Recipe_bhgkx"]
+products = Array[Slot]([SubResource("Slot_e6yty")])
+ingredients = Array[Slot]([SubResource("Slot_8sh4h")])
+
+[sub_resource type="Item" id="Item_xda7c"]
+definition = SubResource("ItemDefinition_84tg3")
+
+[sub_resource type="Slot" id="Slot_as35l"]
+item = SubResource("Item_xda7c")
+amount = 1
+
+[sub_resource type="Item" id="Item_hyxqd"]
+definition = SubResource("ItemDefinition_f2odo")
+
+[sub_resource type="Slot" id="Slot_o1stb"]
+item = SubResource("Item_hyxqd")
+amount = 1
+
+[sub_resource type="CraftStationType" id="CraftStationType_fnhd3"]
+id = "campfire"
+name = "Campfire"
+icon = ExtResource("11_h04p3")
+
+[sub_resource type="Recipe" id="Recipe_7jg1y"]
+products = Array[Slot]([SubResource("Slot_o1stb")])
+time_to_craft = 8.0
+station = SubResource("CraftStationType_fnhd3")
+ingredients = Array[Slot]([SubResource("Slot_as35l")])
+
+[resource]
+items = Array[ItemDefinition]([SubResource("ItemDefinition_b5y1y"), SubResource("ItemDefinition_dxjj6"), SubResource("ItemDefinition_hpt3t"), SubResource("ItemDefinition_n86tn"), SubResource("ItemDefinition_uhr2s"), SubResource("ItemDefinition_eupl1"), SubResource("ItemDefinition_scf45"), SubResource("ItemDefinition_24066"), SubResource("ItemDefinition_84tg3"), SubResource("ItemDefinition_f2odo"), SubResource("ItemDefinition_6y8vb")])
+recipes = Array[Recipe]([SubResource("Recipe_fapod"), SubResource("Recipe_0u4cu"), SubResource("Recipe_bl2yk"), SubResource("Recipe_e1irj"), SubResource("Recipe_bhgkx"), SubResource("Recipe_7jg1y")])
+stations_type = Array[CraftStationType]([SubResource("CraftStationType_vsths"), SubResource("CraftStationType_fnhd3")])
+item_categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei"), SubResource("ItemCategory_ubgak"), SubResource("ItemCategory_mu46q"), SubResource("ItemCategory_epmnv")])
