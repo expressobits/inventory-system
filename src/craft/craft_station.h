@@ -79,6 +79,7 @@ public:
 	virtual void _process(float delta);
 	virtual void _physic_process(float delta);
 	void _setup_connections();
+	void load_valid_recipes();
 	void tick(float delta);
 	void add_crafting(int recipe_index, const Ref<Recipe> &recipe);
 	void remove_crafting(int crafting_index);

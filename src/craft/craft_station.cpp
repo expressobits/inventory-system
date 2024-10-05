@@ -57,6 +57,7 @@ CraftStation::~CraftStation() {
 }
 
 void CraftStation::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("load_valid_recipes"), &CraftStation::load_valid_recipes);
 	ClassDB::bind_method(D_METHOD("tick", "delta"), &CraftStation::tick);
 	ClassDB::bind_method(D_METHOD("is_crafting"), &CraftStation::is_crafting);
 	ClassDB::bind_method(D_METHOD("can_craft", "recipe"), &CraftStation::can_craft);
@@ -278,15 +279,7 @@ void CraftStation::_ready() {
 
 	ERR_FAIL_COND_MSG(get_database() == nullptr, "'InventoryDatabase' is null.");
 
-	type = get_database()->get_craft_station_from_id(type_id);
-
-	valid_recipes.clear();
-	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
-		Ref<Recipe> recipe = get_database()->get_recipes()[i];
-		if (recipe->get_station() == type) {
-			valid_recipes.append(i);
-		}
-	}
+	load_valid_recipes();
 	_setup_connections();
 	NodeInventories::_ready();
 }
@@ -300,6 +293,23 @@ void CraftStation::_setup_connections() {
 		}
 		inventory->connect("item_added", callable_mp(this, &CraftStation::_on_input_inventory_item_added));
 		inventory->connect("item_removed", callable_mp(this, &CraftStation::_on_input_inventory_item_removed));
+	}
+}
+
+void CraftStation::load_valid_recipes() {
+	type = get_database()->get_craft_station_from_id(type_id);
+
+	valid_recipes.clear();
+	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
+		Ref<Recipe> recipe = get_database()->get_recipes()[i];
+		String recipe_craft_id;
+		if(recipe->get_station() != nullptr)
+		{
+			recipe_craft_id = recipe->get_station()->get_id();
+		}
+		if (recipe_craft_id == type_id) {
+			valid_recipes.append(i);
+		}
 	}
 }
 
