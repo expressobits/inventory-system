@@ -19,7 +19,7 @@
 [sub_resource type="ItemCategory" id="ItemCategory_w8bei"]
 id = "burnables"
 name = "Burnables"
-color = Color(1, 0.917647, 0.466667, 1)
+color = Color(1, 0.501961, 0.501961, 1)
 icon = ExtResource("1_pegli")
 item_properties = {
 "fuel": 0.0
@@ -28,7 +28,7 @@ item_properties = {
 [sub_resource type="ItemCategory" id="ItemCategory_ubgak"]
 id = "tools"
 name = "Tools"
-color = Color(0, 0.219608, 0.870588, 1)
+color = Color(0.501961, 0.501961, 1, 1)
 icon = ExtResource("2_1wxos")
 item_properties = {
 "durability": 0.0
@@ -38,13 +38,13 @@ item_dynamic_properties = Array[String](["durability"])
 [sub_resource type="ItemCategory" id="ItemCategory_mu46q"]
 id = "food"
 name = "Food"
-color = Color(0.933333, 0.647059, 0.454902, 1)
+color = Color(1, 0.752941, 0.501961, 1)
 icon = ExtResource("3_0nsfg")
 
 [sub_resource type="ItemCategory" id="ItemCategory_epmnv"]
 id = "helmet"
 name = "Helmet"
-color = Color(1, 1, 1, 1)
+color = Color(1, 0.501961, 1, 1)
 icon = ExtResource("4_7goi1")
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_b5y1y"]
