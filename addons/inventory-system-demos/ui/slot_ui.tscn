@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dq1rob2nkb0cb"]
+[gd_scene load_steps=3 format=3 uid="uid://dq1rob2nkb0cb"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/slot_ui.gd" id="2_b6rwq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y5crb"]
+bg_color = Color(1, 1, 1, 0.501961)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [node name="SlotUI" type="Control"]
 texture_filter = 1
@@ -9,7 +16,6 @@ layout_mode = 3
 anchors_preset = 0
 focus_mode = 2
 script = ExtResource("2_b6rwq")
-highlight_color = Color(0, 0, 0, 1)
 
 [node name="Selected" type="Panel" parent="."]
 visible = false
@@ -18,8 +24,10 @@ offset_left = -1.0
 offset_top = -1.0
 offset_right = 53.0
 offset_bottom = 53.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y5crb")
 
 [node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0.501961)
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
 anchors_preset = 8
@@ -35,9 +43,10 @@ grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "A Slot"
 mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_y5crb")
 
 [node name="Category Icon" type="TextureRect" parent="."]
-modulate = Color(0.501961, 0.501961, 0.501961, 0.501961)
+modulate = Color(1, 1, 1, 0.25098)
 texture_filter = 1
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 1

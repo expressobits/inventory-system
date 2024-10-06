@@ -11,7 +11,7 @@ extends Control
 @onready var durability : ProgressBar = $Durability
 
 ## Color when mouse enter
-@export var highlight_color = Color.ORANGE
+@export var highlight_color = Color.WHITE
 
 
 ## Update information with [Dictionary] slot. 
@@ -96,4 +96,4 @@ func _on_focus_entered() -> void:
 
 
 func _on_focus_exited() -> void:
-	$Panel.self_modulate = Color.WHITE
+	$Panel.self_modulate = Color(Color.WHITE, 0.5)
