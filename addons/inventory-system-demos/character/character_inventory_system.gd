@@ -168,7 +168,7 @@ func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int 
 	else:
 		# Different items in slot and other_slot
 		# Check if slot_holder amount is equal of origin_slot amount
-		if slot.categorized and not slot.is_accept_any_categories_of_item(item.definition):
+		if slot.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(slot), item.definition.categories):
 			return
 		var temp_item : Item = Item.new()
 		temp_item.definition = slot.item.definition

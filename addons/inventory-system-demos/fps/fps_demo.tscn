@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=21 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
@@ -12,6 +12,38 @@
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="16_47qja"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://addons/inventory-system-demos/fps/props/shelf.tscn" id="17_k32gy"]
+
+[sub_resource type="Slot" id="Slot_xr6i0"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_7lo25"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_vwfwm"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_gdk8i"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_fiu10"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_vqiso"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_ia0t1"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
+
+[sub_resource type="Slot" id="Slot_v6cqt"]
+categorized = 1
+accepted_categories = Array[String](["tools"])
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
@@ -52,8 +84,10 @@ inventory_name = "Static Inventory"
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
+slots = Array[Slot]([SubResource("Slot_xr6i0"), SubResource("Slot_7lo25"), SubResource("Slot_vwfwm"), SubResource("Slot_gdk8i"), SubResource("Slot_fiu10"), SubResource("Slot_vqiso"), SubResource("Slot_ia0t1"), SubResource("Slot_v6cqt")])
 create_slot_if_needed = false
 remove_slot_if_empty = false
+slot_amount = 8
 inventory_name = "Tools Inventory"
 
 [node name="Workbench" parent="." instance=ExtResource("11_fkc5i")]

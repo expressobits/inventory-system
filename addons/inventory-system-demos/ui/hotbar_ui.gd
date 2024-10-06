@@ -38,7 +38,7 @@ func _on_changed_selection(selection_index):
 func _on_updated_slot(index):
 	if index < 0 or index >= slots.size():
 		return
-	slots[index].update_info_with_slot(hotbar.get_inventory().slots[index])
+	slots[index].update_info_with_slot(hotbar.database, hotbar.get_inventory().slots[index])
 
 
 func _update_slots():
@@ -52,4 +52,4 @@ func _update_slots():
 		var slot_obj = slot_ui_scene.instantiate()
 		slots_container.add_child(slot_obj)
 		slots.append(slot_obj)
-		slot_obj.update_info_with_slot(slot)
+		slot_obj.update_info_with_slot(hotbar.database, slot)

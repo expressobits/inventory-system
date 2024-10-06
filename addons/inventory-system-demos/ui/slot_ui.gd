@@ -17,16 +17,9 @@ extends Control
 ## Update information with [Dictionary] slot. 
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
-func update_info_with_slot(slot : Slot):
+func update_info_with_slot(database : InventoryDatabase, slot : Slot):
 	category_icon.visible = slot.amount == 0
-	
-	if is_categorized_slot_and_have_category(slot):
-		category_icon.texture = slot.accepted_categories[0].icon
-		panel.modulate = slot.accepted_categories[0].color
-	else:
-		category_icon.texture = null
-		panel.modulate = Color.WHITE
-		
+	setup_category(database, slot)
 	if slot != null and slot.has_valid():
 		update_info_with_item(slot)
 		return
@@ -34,6 +27,19 @@ func update_info_with_slot(slot : Slot):
 	amount_label.visible = false
 	durability.visible = false
 
+func setup_category(database : InventoryDatabase, slot : Slot):
+	if is_categorized_slot_and_have_category(slot):
+		var category_id = slot.accepted_categories[0]
+		var category = database.get_category_from_id(category_id)
+		if category != null:
+			category_icon.texture = category.icon
+			panel.modulate = category.color
+		else:
+			category_icon.texture = null
+			panel.modulate = Color.WHITE
+	else:
+		category_icon.texture = null
+		panel.modulate = Color.WHITE
 
 func is_categorized_slot_and_have_category(slot : Slot):
 	if slot.categorized:
