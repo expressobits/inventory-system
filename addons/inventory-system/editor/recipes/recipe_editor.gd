@@ -173,37 +173,31 @@ func _request_remove_product(index):
 
 
 func _on_new_ingredient_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
 	if not database.items.is_empty():
-		slot.item.definition = database.items[0]
-	recipe.ingredients.append(slot)
+		item_stack.item_id = database.items[0].id
+	recipe.ingredients.append(item_stack)
 	setup_ingredients(recipe, database)
 	changed.emit()
 
 
 func _on_new_required_item_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
 	if not database.items.is_empty():
-		slot.item.definition = database.items[0]
-	var required_items : Array[Slot] = []
-	required_items.append_array(recipe.required_items)
-	required_items.append(slot)
-	recipe.required_items = required_items
+		item_stack.item_id = database.items[0].id
+	recipe.required_items.append(item_stack)
 	setup_required_items(recipe, database)
 	changed.emit()
 
 
 func _on_new_product_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
 	if not database.items.is_empty():
-		slot.item.definition = database.items[0]
-	recipe.products.append(slot)
+		item_stack.item_id = database.items[0].id
+	recipe.products.append(item_stack)
 	setup_products(recipe, database)
 	changed.emit()
 	changed_products.emit(recipe)

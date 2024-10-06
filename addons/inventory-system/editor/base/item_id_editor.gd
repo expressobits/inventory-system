@@ -2,7 +2,7 @@
 class_name ItemIDEditor
 extends HBoxContainer
 
-signal changed(id : int)
+signal changed(id : String)
 
 var id_line_edit : LineEdit
 var button : Button

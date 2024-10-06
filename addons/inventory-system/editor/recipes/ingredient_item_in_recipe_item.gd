@@ -4,17 +4,20 @@ extends HBoxContainer
 @onready var texture_rect = $TextureRect
 @onready var label = $Label
 
-var slot : Slot
+var database : InventoryDatabase
+var item_stack : ItemStack
 
 func _ready():
-	if slot == null:
+	if item_stack == null:
 		return
-	if slot.item != null and slot.item.definition != null and slot.item.definition.icon != null:
-		texture_rect.texture = slot.item.definition.icon
+	var definition = database.get_item(item_stack.item_id)
+	if definition != null and definition.icon != null:
+		texture_rect.texture = definition.icon
 	else:
 		texture_rect.texture = null 
-	label.text = "X "+str(slot.amount)
+	label.text = "X "+str(item_stack.amount)
 
 
-func setup(slot : Slot):
-	self.slot = slot
+func setup(database : InventoryDatabase, item_stack : ItemStack):
+	self.database = database
+	self.item_stack = item_stack

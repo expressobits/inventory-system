@@ -2,18 +2,18 @@
 class_name SlotSelector
 extends HBoxContainer
 
-signal slot_changed(slot : Slot)
+signal changed(item_stack : ItemStack)
 
 @onready var item_id_editor : ItemIDEditor = $ItemIDEditor
 @onready var option_button = $OptionButton
 @onready var product_amount_spin_box = $ProductAmountSpinBox
 
 
-var slot : Slot:
-	set(new_slot):
-		slot = new_slot
+var item_stack : ItemStack:
+	set(new_item_stack):
+		item_stack = new_item_stack
 	get:
-		return slot
+		return item_stack
 
 var database : InventoryDatabase
 var ids_list : Array[ItemDefinition]
@@ -25,13 +25,13 @@ func _ready():
 	product_amount_spin_box.value_changed.connect(_on_product_amount_spin_box_value_changed)
 	
 
-func setup(slot : Slot, database : InventoryDatabase):
-	self.slot = slot
+func setup(item_stack : ItemStack, database : InventoryDatabase):
+	self.item_stack = item_stack
 	self.database = database
-	if slot.item.definition != null:
-		var id = slot.item.definition.id
+	if item_stack.item_id != "NONE":
+		var id = item_stack.item_id
 		item_id_editor.setup(database, id)
-		product_amount_spin_box.value = slot.amount
+		product_amount_spin_box.value = item_stack.amount
 		ids_list.clear()
 		option_button.clear()
 
@@ -39,14 +39,15 @@ func setup(slot : Slot, database : InventoryDatabase):
 		var item = database.items[i]
 		option_button.add_icon_item(item.icon ,item.name)
 		ids_list.append(item)
-		if item == slot.item.definition:
+		if item.id == item_stack.item_id:
 			option_button.select(i)
 	var popup : PopupMenu = option_button.get_popup()
 	for i in database.items.size():
 		popup.set_item_icon_max_width(i, 24)
 
 
-func _on_product_id_spin_box_value_changed(value):
+func _on_product_id_spin_box_value_changed(value : String):
+	print(value)
 	var item = database.get_item(value)
 	if item == null:
 		if option_button.selected == -1:
@@ -54,8 +55,8 @@ func _on_product_id_spin_box_value_changed(value):
 			option_button.selected = 0
 		item = ids_list[option_button.selected]
 		product_amount_spin_box.value = item.amount
-	slot.item.definition = item
-	var index = ids_list.find(slot.item.definition)
+	item_stack.item_id = item.id
+	var index = ids_list.find(database.get_item(item_stack.item_id))
 	if index != -1:
 		if option_button.selected != index:
 			_on_option_button_item_selected(index)
@@ -63,13 +64,13 @@ func _on_product_id_spin_box_value_changed(value):
 
 
 func _on_product_amount_spin_box_value_changed(value):
-	slot.amount = int(value)
-	slot_changed.emit(slot)
+	item_stack.amount = int(value)
+	changed.emit(item_stack)
 
 
 func _on_option_button_item_selected(index):
 	var item : ItemDefinition = ids_list[index]
-	slot.item.definition = item
+	item_stack.item_id = item.id
 	if item_id_editor.id != item.id:
 		item_id_editor.setup(database, item.id)
-	slot_changed.emit(slot)	
+	changed.emit(item_stack)	

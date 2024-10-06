@@ -45,21 +45,21 @@ func update_recipe():
 		i.queue_free()
 	for i in recipe.ingredients:
 		var i_editor = ingredient_item_scene.instantiate()
-		i_editor.setup(i)
+		i_editor.setup(database, i)
 		ingredients_list.add_child(i_editor)
 		
 	for i in products_list.get_children():
 		i.queue_free()	
 	for i in recipe.products:
 		var i_editor = ingredient_item_scene.instantiate()
-		i_editor.setup(i)
+		i_editor.setup(database, i)
 		products_list.add_child(i_editor)
 		
 	for i in required_item_list.get_children():
 		i.queue_free()
 	for i in recipe.required_items:
 		var i_editor = ingredient_item_scene.instantiate()
-		i_editor.setup(i)
+		i_editor.setup(database, i)
 		required_item_list.add_child(i_editor)
 
 
