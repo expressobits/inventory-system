@@ -171,7 +171,7 @@ void CraftStation::finish_crafting(int crafting_index) {
 		_use_items(recipe);
 	}
 	for (size_t i = 0; i < recipe->get_products().size(); i++) {
-		Ref<Slot> product = recipe->get_products()[i];
+		Ref<ItemStack> product = recipe->get_products()[i];
 		int amount_to_add = product->get_amount();
 		for (size_t i = 0; i < output_inventories.size(); i++) {
 			Inventory *inventory = get_output_inventory(i);
@@ -179,7 +179,9 @@ void CraftStation::finish_crafting(int crafting_index) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return;
 			}
-			Ref<Item> item = product->get_item();
+			Ref<ItemDefinition> definition = get_database()->get_item(product->get_item_id());
+			Ref<Item> item = memnew(Item());
+			item->set_definition(definition);
 			item->create_dynamic_properties();
 			amount_to_add = inventory->add(item, product->get_amount());
 		}
@@ -194,7 +196,7 @@ bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 	if (recipe->get_station() != type)
 		return false;
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
-		Ref<Slot> ingredient = recipe->get_ingredients()[i];
+		Ref<ItemStack> ingredient = recipe->get_ingredients()[i];
 		int amount_to_remove = ingredient->get_amount();
 		for (size_t j = 0; j < input_inventories.size(); j++) {
 			Inventory *inventory = get_input_inventory(j);
@@ -202,7 +204,10 @@ bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			amount_to_remove = inventory->remove(ingredient->get_item(), amount_to_remove);
+			Ref<ItemDefinition> definition = get_database()->get_item(ingredient->get_item_id());
+			Ref<Item> item = memnew(Item());
+			item->set_definition(definition);
+			amount_to_remove = inventory->remove(item, amount_to_remove);
 		}
 		if (amount_to_remove > 0) {
 			return false;
@@ -364,7 +369,7 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
 
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
-		Ref<Slot> slot = recipe->get_ingredients()[i];
+		Ref<ItemStack> item_stack = recipe->get_ingredients()[i];
 		int amount_total = 0;
 		for (size_t j = 0; j < input_inventories.size(); j++) {
 			Inventory *inventory = get_input_inventory(j);
@@ -372,14 +377,17 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			amount_total += inventory->amount_of_item(slot->get_item());
+			Ref<ItemDefinition> definition = get_database()->get_item(item_stack->get_item_id());
+			Ref<Item> item = memnew(Item());
+			item->set_definition(definition);
+			amount_total += inventory->amount_of_item(item);
 		}
-		if (amount_total < slot->get_amount()) {
+		if (amount_total < item_stack->get_amount()) {
 			return false;
 		}
 	}
 	for (size_t i = 0; i < recipe->get_required_items().size(); i++) {
-		Ref<Slot> slot = recipe->get_required_items()[i];
+		Ref<ItemStack> item_stack = recipe->get_required_items()[i];
 		int amount_total = 0;
 		for (size_t j = 0; j < input_inventories.size(); j++) {
 			Inventory *inventory = get_input_inventory(j);
@@ -387,9 +395,12 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			amount_total += inventory->amount_of_item(slot->get_item());
+			Ref<ItemDefinition> definition = get_database()->get_item(item_stack->get_item_id());
+			Ref<Item> item = memnew(Item());
+			item->set_definition(definition);
+			amount_total += inventory->amount_of_item(item);
 		}
-		if (amount_total < slot->get_amount()) {
+		if (amount_total < item_stack->get_amount()) {
 			return false;
 		}
 	}
@@ -417,13 +428,16 @@ void CraftStation::cancel_craft(int crafting_index) {
 	Ref<Recipe> recipe = get_database()->get_recipes()[crafting->get_recipe_index()];
 	if (!only_remove_ingredients_after_craft) {
 		for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
-			Ref<Slot> ingredient = recipe->get_ingredients()[i];
+			Ref<ItemStack> ingredient = recipe->get_ingredients()[i];
 			Inventory *inventory = get_input_inventory(i);
 			if (inventory == nullptr) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return;
 			}
-			inventory->add(ingredient->get_item(), ingredient->get_amount());
+			Ref<ItemDefinition> definition = get_database()->get_item(ingredient->get_item_id());
+			Ref<Item> item = memnew(Item());
+			item->set_definition(definition);
+			inventory->add(item, ingredient->get_amount());
 		}
 	}
 	remove_crafting(crafting_index);

@@ -12,11 +12,11 @@ void Recipe::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_required_items", "required_items"), &Recipe::set_required_items);
 	ClassDB::bind_method(D_METHOD("get_required_items"), &Recipe::get_required_items);
 
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "products", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_products", "get_products");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "products", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_products", "get_products");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "time_to_craft"), "set_time_to_craft", "get_time_to_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "station", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType"), "set_station", "get_station");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ingredients", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_ingredients", "get_ingredients");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "required_items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_required_items", "get_required_items");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "ingredients", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_ingredients", "get_ingredients");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "required_items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_required_items", "get_required_items");
 }
 
 Recipe::Recipe() {
@@ -25,11 +25,11 @@ Recipe::Recipe() {
 Recipe::~Recipe() {
 }
 
-void Recipe::set_products(const TypedArray<Slot> &new_products) {
+void Recipe::set_products(const TypedArray<ItemStack> &new_products) {
 	products = new_products;
 }
 
-TypedArray<Slot> Recipe::get_products() const {
+TypedArray<ItemStack> Recipe::get_products() const {
 	return products;
 }
 
@@ -49,18 +49,18 @@ Ref<CraftStationType> Recipe::get_station() const {
 	return station;
 }
 
-void Recipe::set_ingredients(const TypedArray<Slot> &new_ingredients) {
+void Recipe::set_ingredients(const TypedArray<ItemStack> &new_ingredients) {
 	ingredients = new_ingredients;
 }
 
-TypedArray<Slot> Recipe::get_ingredients() const {
+TypedArray<ItemStack> Recipe::get_ingredients() const {
 	return ingredients;
 }
 
-void Recipe::set_required_items(const TypedArray<Slot> &new_required_items) {
+void Recipe::set_required_items(const TypedArray<ItemStack> &new_required_items) {
 	required_items = new_required_items;
 }
 
-TypedArray<Slot> Recipe::get_required_items() const {
+TypedArray<ItemStack> Recipe::get_required_items() const {
 	return required_items;
 }

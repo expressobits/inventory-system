@@ -46,8 +46,6 @@ public:
 	bool contains(Ref<Item> item, int amount) const;
 	bool contains_category(Ref<ItemCategory> category) const;
 	int left_to_fill();
-	// Dictionary serialize() const;
-	// void deserialize(const Dictionary data);
 };
 
 #endif // SLOT_CLASS_H

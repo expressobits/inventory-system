@@ -10,6 +10,7 @@
 #include "base/item.h"
 #include "base/item_category.h"
 #include "base/item_definition.h"
+#include "base/item_stack.h"
 #include "base/node_inventories.h"
 #include "base/recipe.h"
 #include "base/slot.h"
@@ -28,6 +29,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Item);
 	GDREGISTER_CLASS(ItemCategory);
 	GDREGISTER_CLASS(ItemDefinition);
+	GDREGISTER_CLASS(ItemStack);
 	GDREGISTER_CLASS(NodeInventories);
 	GDREGISTER_CLASS(Recipe);
 	GDREGISTER_CLASS(Slot);
