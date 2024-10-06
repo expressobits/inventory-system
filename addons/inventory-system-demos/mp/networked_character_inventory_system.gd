@@ -251,7 +251,7 @@ func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_mov
 
 
 @rpc("any_peer")
-func slot_holder_updated_rpc(item_id : int, amount : int):
+func slot_holder_updated_rpc(item_id : String, amount : int):
 	var item = Item.new()
 	item.definition = database.get_item(item_id)
 	change_holder(item, amount)

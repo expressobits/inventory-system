@@ -89,7 +89,7 @@ func _slot_added_rpc(slot_index : int):
 
 
 @rpc
-func _updated_slot_rpc(slot_index : int, slot_data : Dictionary):
+func _updated_slot_rpc(slot_index : int, slot_data : String):
 	if multiplayer.is_server():
 		return
 	var slot : Slot = inventory.slots[slot_index]
@@ -104,7 +104,7 @@ func _slot_removed_rpc(slot_index : int):
 
 
 @rpc
-func _item_added_rpc(item_id : int, amount : int):
+func _item_added_rpc(item_id : String, amount : int):
 	if multiplayer.is_server():
 		return
 	var item = Item.new()
@@ -115,7 +115,7 @@ func _item_added_rpc(item_id : int, amount : int):
 
 
 @rpc
-func _item_removed_rpc(item_id : int, amount : int):
+func _item_removed_rpc(item_id : String, amount : int):
 	if multiplayer.is_server():
 		return
 	var definition : ItemDefinition = inventory.database.get_item(item_id)
