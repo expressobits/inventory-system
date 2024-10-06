@@ -47,7 +47,6 @@ func setup(item_stack : ItemStack, database : InventoryDatabase):
 
 
 func _on_product_id_spin_box_value_changed(value : String):
-	print(value)
 	var item = database.get_item(value)
 	if item == null:
 		if option_button.selected == -1:
