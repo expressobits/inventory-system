@@ -53,6 +53,10 @@ public:
 	void transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount);
 	virtual bool drop(const Ref<Item> &item, const int &amount = 1);
 	void drop_from_inventory(const int &slot_index, const int &amount = 1);
+	int add_to_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
+	int remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
+	int get_flag_categories_of_slot(const Ref<Slot> slot) const;
+	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;
 	void set_slots(const TypedArray<Slot> &new_slots);
 	TypedArray<Slot> get_slots() const;
 	void set_create_slot_if_needed(const bool &new_create_slot_if_needed);

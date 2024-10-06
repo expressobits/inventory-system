@@ -17,15 +17,12 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_accepted_categories", "accepted_categories"), &Slot::set_accepted_categories);
 	ClassDB::bind_method(D_METHOD("get_accepted_categories"), &Slot::get_accepted_categories);
 	ClassDB::bind_method(D_METHOD("get_item_id"), &Slot::get_item_id);
-	ClassDB::bind_method(D_METHOD("add", "item", "amount"), &Slot::add, DEFVAL(1));
-	ClassDB::bind_method(D_METHOD("remove", "item", "amount"), &Slot::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("get_max_stack_for_item", "item"), &Slot::get_max_stack_for_item);
 	ClassDB::bind_method(D_METHOD("is_full"), &Slot::is_full);
 	ClassDB::bind_method(D_METHOD("is_empty"), &Slot::is_empty);
 	ClassDB::bind_method(D_METHOD("has_valid"), &Slot::has_valid);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &Slot::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category"), &Slot::contains_category);
-	ClassDB::bind_method(D_METHOD("is_accept_any_categories_of_item", "item"), &Slot::is_accept_any_categories_of_item);
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
@@ -33,31 +30,7 @@ void Slot::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "categorized"), "set_categorized", "is_categorized");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "accepted_categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_accepted_categories", "get_accepted_categories");
-}
-
-void Slot::_update_categories_code() {
-	accepted_categories_code = 0;
-	if (!Engine::get_singleton()->is_editor_hint()) {
-		for (size_t i = 0; i < accepted_categories.size(); i++) {
-			Ref<ItemCategory> c = accepted_categories[i];
-			if (c == nullptr)
-				continue;
-			accepted_categories_code |= c->get_code();
-		}
-	}
-}
-
-bool Slot::_is_accept_any_categories(const TypedArray<ItemCategory> &other_list) const {
-	for (size_t i = 0; i < other_list.size(); i++) {
-		Ref<ItemCategory> c = other_list[i];
-		if (c == nullptr)
-			continue;
-		if ((accepted_categories_code & c->get_code()) > 0) {
-			return true;
-		}
-	}
-	return false;
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "accepted_categories", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_accepted_categories", "get_accepted_categories");
 }
 
 void Slot::_validate_property(PropertyInfo &p_property) const {
@@ -109,12 +82,19 @@ int Slot::is_categorized() const {
 	return categorized;
 }
 
-void Slot::set_accepted_categories(const TypedArray<ItemCategory> &new_accepted_categories) {
+void Slot::set_accepted_categories(const TypedArray<String> &new_accepted_categories) {
 	accepted_categories = new_accepted_categories;
-	_update_categories_code();
 }
 
-TypedArray<ItemCategory> Slot::get_accepted_categories() const {
+void Slot::set_accepted_categories_code(int new_code) {
+	accepted_categories_code = new_code;
+}
+
+int Slot::get_accepted_categories_code() const {
+	return accepted_categories_code;
+}
+
+TypedArray<String> Slot::get_accepted_categories() const {
 	return accepted_categories;
 }
 
@@ -149,10 +129,6 @@ bool Slot::contains_category(Ref<ItemCategory> category) const {
 	}
 }
 
-bool Slot::is_accept_any_categories_of_item(const Ref<ItemDefinition> &other_item) const {
-	return accepted_categories_code == 0 || _is_accept_any_categories(other_item->get_categories());
-}
-
 int Slot::left_to_fill() {
 	if (has_valid()) {
 		return get_max_stack() - amount;
@@ -160,65 +136,12 @@ int Slot::left_to_fill() {
 	return -1;
 }
 
-// Dictionary Slot::serialize() const {
-// 	Dictionary dict = Dictionary();
-// 	dict["item"] = item;
-// 	dict["amount"] = amount;
-// 	return dict;
-// }
-
-// void Slot::deserialize(const Dictionary data) {
-// }
-
 String Slot::get_item_id() const {
 	if (this->item == nullptr || this->item->get_definition() == nullptr) {
 		return "";
 	} else {
 		return this->item->get_definition()->get_id();
 	}
-}
-
-int Slot::add(const Ref<Item> item, const int &amount) {
-	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
-	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
-	if (categorized) {
-		_update_categories_code();
-		if (!is_accept_any_categories_of_item(item->get_definition())) {
-			return amount;
-		}
-	}
-
-	if (this->item == nullptr) {
-		return amount;
-	}
-	if (amount <= 0 || (has_valid() && this->item->get_definition() != item->get_definition())) {
-		return amount;
-	}
-	int max_stack = get_max_stack_for_item(item->get_definition());
-	int amount_to_add = MIN(amount, max_stack - this->amount);
-	this->amount = this->amount + amount_to_add;
-	if (amount_to_add > 0 && this->item->get_definition() == nullptr) {
-		this->item->set_definition(item->get_definition());
-		this->item->set_properties(item->get_properties());
-		emit_signal("updated");
-	}
-	return amount - amount_to_add;
-}
-
-int Slot::remove(const Ref<Item> item, const int &amount) {
-	if (this->item == nullptr) {
-		return amount;
-	}
-	if (amount <= 0 || (has_valid() && this->item->get_definition() != item->get_definition())) {
-		return amount;
-	}
-	int amount_to_remove = MIN(amount, this->amount);
-	this->amount = this->amount - amount_to_remove;
-	emit_signal("updated");
-	if (this->amount <= 0) {
-		this->item->set_definition(nullptr);
-	}
-	return amount - amount_to_remove;
 }
 
 int Slot::get_max_stack_for_item(Ref<ItemDefinition> item) const {

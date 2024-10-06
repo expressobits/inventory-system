@@ -398,6 +398,75 @@ void Inventory::drop_from_inventory(const int &slot_index, const int &amount) {
 	drop(item, removed);
 }
 
+int Inventory::add_to_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount) {
+	ERR_FAIL_NULL_V_MSG(item, 0, "The 'item' is null.");
+	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
+	if (slot->is_categorized()) {
+		int flag_category = get_flag_categories_of_slot(slot);
+		if (flag_category != 0 && !is_accept_any_categories(flag_category ,item->get_definition()->get_categories())) {
+			return amount;
+		}
+	}
+
+	if (slot->get_item() == nullptr) {
+		return amount;
+	}
+	if (amount <= 0 || (slot->has_valid() && slot->get_item()->get_definition() != item->get_definition())) {
+		return amount;
+	}
+	int max_stack = slot->get_max_stack_for_item(item->get_definition());
+	int amount_to_add = MIN(amount, max_stack - slot->get_amount());
+	slot->set_amount(slot->get_amount() + amount_to_add);
+	if (amount_to_add > 0 && slot->get_item()->get_definition() == nullptr) {
+		slot->get_item()->set_definition(item->get_definition());
+		slot->get_item()->set_properties(item->get_properties());
+		slot->emit_signal("updated");
+	}
+	return amount - amount_to_add;
+}
+
+int Inventory::remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount) {
+	if (slot->get_item() == nullptr) {
+		return amount;
+	}
+	if (amount <= 0 || (slot->has_valid() && slot->get_item()->get_definition() != item->get_definition())) {
+		return amount;
+	}
+	int amount_to_remove = MIN(amount, slot->get_amount());
+	slot->set_amount(slot->get_amount() - amount_to_remove);
+	slot->emit_signal("updated");
+	if (slot->get_amount() <= 0) {
+		slot->get_item()->set_definition(nullptr);
+	}
+	return amount - amount_to_remove;
+}
+
+int Inventory::get_flag_categories_of_slot(const Ref<Slot> slot) const{
+	int accepted_categories_code = 0;
+	if (!Engine::get_singleton()->is_editor_hint()) {
+		for (size_t i = 0; i < slot->get_accepted_categories().size(); i++) {
+			String category_id = slot->get_accepted_categories()[i];
+			Ref<ItemCategory> c = get_database()->get_category_from_id(category_id);
+			if (c == nullptr)
+				continue;
+			accepted_categories_code |= c->get_code();
+		}
+	}
+	return accepted_categories_code;
+}
+
+bool Inventory::is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &other_list) const {
+	for (size_t i = 0; i < other_list.size(); i++) {
+		Ref<ItemCategory> c = other_list[i];
+		if (c == nullptr)
+			continue;
+		if ((categories_flag & c->get_code()) > 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Inventory::_load_slots() {
 	Array slots = this->slots.duplicate(true);
 	for (size_t i = 0; i < slots.size(); i++) {
@@ -464,7 +533,7 @@ int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 	Ref<Slot> slot = slots[slot_index];
 	ERR_FAIL_NULL_V_MSG(slot, 0, "The 'slot' is null.");
 
-	int _remaining_amount = slot->add(item, amount);
+	int _remaining_amount = add_to_slot(slot, item, amount);
 
 	if (_remaining_amount == amount) {
 		return amount;
@@ -474,13 +543,14 @@ int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 	return _remaining_amount;
 }
 
+
 int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amount) {
 	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
 	ERR_FAIL_NULL_V_MSG(item, amount, "The 'item' is null.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	Ref<Slot> slot = slots[slot_index];
-	int _remaining_amount = slot->remove(item, amount);
+	int _remaining_amount = remove_from_slot(slot, item, amount);
 	if (_remaining_amount == amount) {
 		return amount;
 	}
@@ -513,6 +583,10 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("transfer", "slot_index", "destination", "destination_slot_index", "amount"), &Inventory::transfer, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("drop", "item", "amount"), &Inventory::drop, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount"), &Inventory::drop_from_inventory, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("add_to_slot", "slot", "item", "amount"), &Inventory::add_to_slot, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("remove_from_slot", "slot", "item", "amount"), &Inventory::remove_from_slot, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("get_flag_categories_of_slot", "slot"), &Inventory::get_flag_categories_of_slot);
+	ClassDB::bind_method(D_METHOD("is_accept_any_categories", "categories_flag", "slot"), &Inventory::is_accept_any_categories);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
 

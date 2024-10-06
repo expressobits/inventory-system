@@ -43,7 +43,7 @@ void ItemDefinition::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_weight", "get_weight");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "properties"), "set_properties", "get_properties");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::STRING, PROPERTY_HINT_TYPE_STRING, "String")), "set_dynamic_properties", "get_dynamic_properties");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_dynamic_properties", "get_dynamic_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_categories", "get_categories");
 }
 

@@ -25,7 +25,7 @@ void ItemCategory::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::COLOR, "color"), "set_color", "get_color");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "item_properties"), "set_item_properties", "get_item_properties");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "item_dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::STRING, PROPERTY_HINT_TYPE_STRING, "String")), "set_item_dynamic_properties", "get_item_dynamic_properties");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "item_dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_item_dynamic_properties", "get_item_dynamic_properties");
 }
 
 ItemCategory::ItemCategory() {
