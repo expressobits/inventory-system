@@ -28,7 +28,7 @@ func _ready():
 func setup(item_stack : ItemStack, database : InventoryDatabase):
 	self.item_stack = item_stack
 	self.database = database
-	if item_stack.item_id != "NONE":
+	if not item_stack.item_id.is_empty():
 		var id = item_stack.item_id
 		item_id_editor.setup(database, id)
 		product_amount_spin_box.value = item_stack.amount
