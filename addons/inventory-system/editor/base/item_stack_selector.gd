@@ -1,5 +1,5 @@
 @tool
-class_name SlotSelector
+class_name ItemStackSelector
 extends HBoxContainer
 
 signal changed(item_stack : ItemStack)

@@ -5,7 +5,7 @@ extends HBoxContainer
 signal changed_slot
 signal request_remove
 
-@onready var slot_selector = $SlotSelector
+@onready var item_stack_selector = $ItemStackSelector
 @onready var delete_button = $DeleteButton
 @onready var ingredient_remove_confirmation_dialog = $IngredientRemoveConfirmationDialog
 
@@ -15,7 +15,7 @@ var ids_list : Array[int]
 
 
 func _ready():
-	slot_selector.changed.connect(_on_slot_selector_slot_changed)
+	item_stack_selector.changed.connect(_on_item_stack_selector_slot_changed)
 	delete_button.icon = get_theme_icon("Remove", "EditorIcons")
 	delete_button.tooltip_text = "Delete"
 
@@ -23,12 +23,12 @@ func _ready():
 func setup(item_stack : ItemStack, database : InventoryDatabase, tooltip_text : String):
 	self.item_stack = item_stack
 	self.database = database
-	slot_selector.setup(item_stack, database)
+	item_stack_selector.setup(item_stack, database)
 	delete_button.tooltip_text = tooltip_text
 	ingredient_remove_confirmation_dialog.dialog_text = tooltip_text+"?"
 
 
-func _on_slot_selector_slot_changed(item_stack : ItemStack):
+func _on_item_stack_selector_slot_changed(item_stack : ItemStack):
 	changed_slot.emit()
 
 

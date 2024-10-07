@@ -1,18 +1,18 @@
 [gd_scene load_steps=3 format=3 uid="uid://28kwhb0vuwhx"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/slot_selector.gd" id="1_js21a"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_qjoyv"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_stack_selector.gd" id="1_q0x10"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_ml08r"]
 
-[node name="SlotSelector" type="HBoxContainer"]
+[node name="ItemStackSelector" type="HBoxContainer"]
 offset_right = 512.0
 offset_bottom = 32.0
 size_flags_horizontal = 3
-script = ExtResource("1_js21a")
+script = ExtResource("1_q0x10")
 
 [node name="ItemIDEditor" type="HBoxContainer" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-script = ExtResource("2_qjoyv")
+script = ExtResource("2_ml08r")
 ids_must_exist_in_database = true
 
 [node name="OptionButton" type="OptionButton" parent="."]
