@@ -4,9 +4,9 @@ extends HBoxContainer
 
 signal changed(item_stack : ItemStack)
 
-@onready var item_id_editor : ItemIDEditor = $ItemIDEditor
-@onready var option_button = $OptionButton
-@onready var product_amount_spin_box = $ProductAmountSpinBox
+var item_id_editor : ItemIDEditor
+var option_button : OptionButton
+var product_amount_spin_box : SpinBox
 
 
 var item_stack : ItemStack:
@@ -19,7 +19,37 @@ var database : InventoryDatabase
 var ids_list : Array[ItemDefinition]
 
 # Called when the node enters the scene tree for the first time.
-func _ready():		
+func _ready():
+	offset_right = 512.0
+	offset_bottom = 32.0
+	size_flags_horizontal = SIZE_EXPAND_FILL
+	
+	item_id_editor = ItemIDEditor.new()
+	item_id_editor.layout_mode = 2
+	item_id_editor.ids_must_exist_in_database = true
+	item_id_editor.size_flags_horizontal = SIZE_EXPAND_FILL
+	add_child(item_id_editor)
+	
+	option_button = OptionButton.new()
+	option_button.layout_mode = 2
+	option_button.size_flags_horizontal = SIZE_EXPAND_FILL
+	option_button.expand_icon = true
+	add_child(option_button)
+	
+	var label : Label = Label.new()
+	label.text = "Amount"
+	label.custom_minimum_size = Vector2(32, 0)
+	label.layout_mode = 2
+	add_child(label)
+	
+	product_amount_spin_box = SpinBox.new()
+	product_amount_spin_box.layout_mode = 2
+	product_amount_spin_box.min_value = 1
+	product_amount_spin_box.max_value = 100000000
+	product_amount_spin_box.value = 1
+	product_amount_spin_box.rounded = true
+	add_child(product_amount_spin_box)
+	
 	item_id_editor.changed.connect(_on_product_id_spin_box_value_changed)
 	option_button.item_selected.connect(_on_option_button_item_selected)
 	product_amount_spin_box.value_changed.connect(_on_product_amount_spin_box_value_changed)
