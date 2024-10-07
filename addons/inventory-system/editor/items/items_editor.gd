@@ -33,6 +33,7 @@ func remove_current_data() -> bool:
 	if removed:
 		load_items()
 		data_changed.emit()
+		item_editor.load_item(null, database)
 	return removed
 
 

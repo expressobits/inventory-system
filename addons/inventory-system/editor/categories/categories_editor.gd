@@ -26,6 +26,15 @@ func on_load_database() -> void:
 	load_item_categories()
 	
 	
+func remove_current_data() -> bool:
+	var removed = super.remove_current_data()
+	if removed:
+		load_item_categories()
+		data_changed.emit()
+		item_category_editor.load_category(database, null)
+	return removed
+	
+	
 func select(category : ItemCategory):
 	item_category_editor.load_category(database, category)
 

@@ -62,3 +62,10 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + a
 	craft_station_types_popup_menu.popup()
 	
+	
+func remove_current_data() -> bool:
+	var removed = super.remove_current_data()
+	if removed:
+		load_craft_station_types()
+		craft_station_type_editor.load_station(database, null)
+	return removed
