@@ -8,7 +8,6 @@ signal changed
 
 @onready var time_to_craft_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/TimeToCraft/TimeToCraftSpinBox
 @onready var craft_station_type_option_button = $MarginContainer/MarginContainer/VBoxContainer/CraftStationType/CraftStationTypeOptionButton
-@export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var ingredients_v_box_container = %IngredientsVBoxContainer
 @onready var products_v_box_container = %ProductsVBoxContainer
 @onready var required_items_v_box_container = %RequiredItemsVBoxContainer
@@ -87,7 +86,7 @@ func setup_ingredients(recipe : Recipe, database : InventoryDatabase):
 	ingredients.clear()
 	for index in recipe.ingredients.size():
 		var ingredient = recipe.ingredients[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		ingredients_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
@@ -102,7 +101,7 @@ func setup_required_items(recipe : Recipe, database : InventoryDatabase):
 	required_items.clear()
 	for index in recipe.required_items.size():
 		var ingredient = recipe.required_items[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		required_items_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
@@ -117,7 +116,7 @@ func setup_products(recipe : Recipe, database : InventoryDatabase):
 	products.clear()
 	for index in recipe.products.size():
 		var product = recipe.products[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		products_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(product, database, "Remove Product")

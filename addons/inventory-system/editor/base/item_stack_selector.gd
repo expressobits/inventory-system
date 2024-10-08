@@ -20,10 +20,6 @@ var ids_list : Array[ItemDefinition]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	offset_right = 512.0
-	offset_bottom = 32.0
-	size_flags_horizontal = SIZE_EXPAND_FILL
-	
 	item_id_editor = ItemIDEditor.new()
 	item_id_editor.layout_mode = 2
 	item_id_editor.ids_must_exist_in_database = true
