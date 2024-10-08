@@ -6,7 +6,7 @@ var item : ItemDefinition
 var database : InventoryDatabase
 var properties_obj : Array
 
-@export var property_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
+@export var property_scene : PackedScene
 @onready var v_box_container = $ScrollContainer/VBoxContainer
 @onready var add_button = $Panel/HBoxContainer/AddButton
 @onready var line_edit = $Panel/HBoxContainer/NewKeyLineEdit
