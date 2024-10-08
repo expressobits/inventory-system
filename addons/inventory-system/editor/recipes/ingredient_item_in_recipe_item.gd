@@ -1,4 +1,5 @@
 @tool
+class_name IngredientItemInRecipeItem
 extends HBoxContainer
 
 var texture_rect : TextureRect

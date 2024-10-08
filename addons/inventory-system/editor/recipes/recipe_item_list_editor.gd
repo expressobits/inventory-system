@@ -17,7 +17,6 @@ signal request_remove(recipe : Recipe)
 
 var recipe : Recipe
 var database : InventoryDatabase
-@export var ingredient_item_scene = preload("res://addons/inventory-system/editor/recipes/ingredient_item_in_recipe_item.tscn")
 var style_box : StyleBoxFlat
 
 
@@ -44,21 +43,21 @@ func update_recipe():
 	for i in ingredients_list.get_children():
 		i.queue_free()
 	for i in recipe.ingredients:
-		var i_editor = ingredient_item_scene.instantiate()
+		var i_editor = IngredientItemInRecipeItem.new()
 		i_editor.setup(database, i)
 		ingredients_list.add_child(i_editor)
 		
 	for i in products_list.get_children():
 		i.queue_free()	
 	for i in recipe.products:
-		var i_editor = ingredient_item_scene.instantiate()
+		var i_editor = IngredientItemInRecipeItem.new()
 		i_editor.setup(database, i)
 		products_list.add_child(i_editor)
 		
 	for i in required_item_list.get_children():
 		i.queue_free()
 	for i in recipe.required_items:
-		var i_editor = ingredient_item_scene.instantiate()
+		var i_editor = IngredientItemInRecipeItem.new()
 		i_editor.setup(database, i)
 		required_item_list.add_child(i_editor)
 
