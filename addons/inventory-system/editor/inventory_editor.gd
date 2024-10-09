@@ -78,6 +78,7 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 
 func load_database(database : InventoryDatabase):
+	var menu : Popup = database_button.get_popup()
 	if database != null:
 		items_editor.load_from_database(database)
 		recipes_editor.load_from_database(database)
@@ -199,10 +200,13 @@ func build_database_menu() -> void:
 	menu.add_submenu_node_item("Export As...", export_menu)
 	#menu.set_item_icon(7, get_theme_icon("Load", "EditorIcons"))
 	
-	
 	if menu.id_pressed.is_connected(_on_database_menu_id_pressed):
 		menu.id_pressed.disconnect(_on_database_menu_id_pressed)
 	menu.id_pressed.connect(_on_database_menu_id_pressed)
+	
+	menu.set_item_disabled(4, database == null)
+	menu.set_item_disabled(6, database == null)
+	menu.set_item_disabled(7, database == null)
 
 
 func _on_database_menu_id_pressed(id: int) -> void:
