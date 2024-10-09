@@ -37,7 +37,7 @@ String ItemStack::serialize() const {
 	if (!item_id.is_empty())
 		data += item_id;
 	else
-		data += "NONE";
+		data += "";
 	data += " ";
 	data += String::num_int64(get_amount());
 	return data;
@@ -46,7 +46,7 @@ String ItemStack::serialize() const {
 void ItemStack::deserialize(String data) {
 	PackedStringArray array = data.split(" ");
 	ERR_FAIL_COND_MSG(array.size() < 2, "Data to deserialize item_stack is invalid: Does not contain the 'amount' field");
-	if (!array[0].is_empty() && array[0] != "NONE")
+	if (!array[0].is_empty())
 		set_item_id(array[0]);
 	if (!array[1].is_empty())
 		set_amount(array[1].to_int());

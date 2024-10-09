@@ -75,7 +75,8 @@ void InventoryDatabase::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_to_invdata", "json"), &InventoryDatabase::import_to_invdata);
-	ClassDB::bind_method(D_METHOD("import_from_inv_file", "path"), &InventoryDatabase::import_from_inv_file);
+	ClassDB::bind_method(D_METHOD("import_json_file", "path"), &InventoryDatabase::import_json_file);
+	ClassDB::bind_method(D_METHOD("export_json_file", "path"), &InventoryDatabase::export_json_file);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
@@ -324,12 +325,12 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 	Dictionary data = Dictionary();
 	if (!recipe->get_products().is_empty())
-		data["products"] = serialize_slots(recipe->get_products());
+		data["products"] = serialize_item_stacks(recipe->get_products());
 	data["time_to_craft"] = recipe->get_time_to_craft();
 	if (!recipe->get_ingredients().is_empty())
-		data["ingredients"] = serialize_slots(recipe->get_ingredients());
+		data["ingredients"] = serialize_item_stacks(recipe->get_ingredients());
 	if (!recipe->get_required_items().is_empty())
-		data["required_items"] = serialize_slots(recipe->get_required_items());
+		data["required_items"] = serialize_item_stacks(recipe->get_required_items());
 	if (recipe->get_station() != nullptr)
 		data["craft_station_type"] = recipe->get_station()->get_id();
 
@@ -338,19 +339,19 @@ Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 
 void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const {
 	if (data.has("products")) {
-		TypedArray<Slot> slots = recipe->get_products();
-		deserialize_slots(slots, data["products"]);
+		TypedArray<ItemStack> item_stacks = recipe->get_products();
+		deserialize_item_stacks(item_stacks, data["products"]);
 	}
 	if (data.has("time_to_craft")) {
 		recipe->set_time_to_craft(data["time_to_craft"]);
 	}
 	if (data.has("ingredients")) {
-		TypedArray<Slot> slots = recipe->get_ingredients();
-		deserialize_slots(slots, data["ingredients"]);
+		TypedArray<ItemStack> item_stacks = recipe->get_ingredients();
+		deserialize_item_stacks(item_stacks, data["ingredients"]);
 	}
 	if (data.has("required_items")) {
-		TypedArray<Slot> slots = recipe->get_required_items();
-		deserialize_slots(slots, data["required_items"]);
+		TypedArray<ItemStack> item_stacks = recipe->get_required_items();
+		deserialize_item_stacks(item_stacks, data["required_items"]);
 	}
 	if (data.has("craft_station_type")) {
 		Ref<CraftStationType> craft_station_type = get_craft_station_from_id(data["craft_station_type"]);
@@ -387,7 +388,7 @@ String InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 	if (item != nullptr) {
 		Dictionary item_data = Dictionary();
 		if (item->get_definition() == nullptr) {
-			data += "NONE";
+			data += "";
 		} else {
 			data += item->get_definition()->get_id();
 		}
@@ -412,7 +413,7 @@ void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const String data) cons
 		if (item == nullptr) {
 			item.instantiate();
 		}
-		if (array[0] != "NONE") {
+		if (!array[0].is_empty()) {
 			item->set_definition(get_item(array[0]));
 		}
 		// item->set_properties(item_data["properties"]);
@@ -447,6 +448,33 @@ void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const Array da
 	int size = slots.size();
 	for (size_t slot_index = data.size(); slot_index < size; slot_index++) {
 		slots.remove_at(data.size());
+	}
+}
+
+Array InventoryDatabase::serialize_item_stacks(const TypedArray<ItemStack> item_stacks) const {
+	Array slots_data = Array();
+	for (size_t item_stack_index = 0; item_stack_index < item_stacks.size(); item_stack_index++) {
+		Ref<ItemStack> item_stack = item_stacks[item_stack_index];
+		String data = item_stack->serialize();
+		slots_data.append(data);
+	}
+	return slots_data;
+}
+
+void InventoryDatabase::deserialize_item_stacks(TypedArray<ItemStack> item_stacks, const Array data) const {
+	for (size_t item_stack_index = 0; item_stack_index < data.size(); item_stack_index++) {
+		if (item_stack_index >= item_stacks.size()) {
+			Ref<ItemStack> item_stack = memnew(ItemStack());
+			item_stack->deserialize(data[item_stack_index]);
+			item_stacks.append(item_stack);
+		} else {
+			Ref<ItemStack> item_stack = item_stacks[item_stack_index];
+			item_stack->deserialize(data[item_stack_index]);
+		}
+	}
+	int size = item_stacks.size();
+	for (size_t item_stack_index = data.size(); item_stack_index < size; item_stack_index++) {
+		item_stacks.remove_at(data.size());
 	}
 }
 
@@ -616,7 +644,7 @@ void InventoryDatabase::import_to_invdata(const String json) {
 	deserialize(data);
 }
 
-Error InventoryDatabase::import_from_inv_file(const String path) {
+Error InventoryDatabase::import_json_file(const String path) {
 	ERR_FAIL_COND_V_MSG(path.is_empty(), Error::ERR_INVALID_PARAMETER, "'path' is empty.");
 	Ref<FileAccess> file = FileAccess::open(path, FileAccess::READ);
 	if (file == nullptr) {
@@ -628,5 +656,17 @@ Error InventoryDatabase::import_from_inv_file(const String path) {
 		json += file->get_line() + "\n";
 
 	import_to_invdata(json);
+	return Error::OK;
+}
+
+Error InventoryDatabase::export_json_file(const String path) {
+	ERR_FAIL_COND_V_MSG(path.is_empty(), Error::ERR_INVALID_PARAMETER, "'path' is empty.");
+	Ref<FileAccess> file = FileAccess::open(path, FileAccess::WRITE);
+	if (file == nullptr) {
+		return FileAccess::get_open_error();
+	}
+	String json = export_to_invdata();
+	file->store_string(json);
+	file->close();
 	return Error::OK;
 }
