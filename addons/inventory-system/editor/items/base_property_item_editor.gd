@@ -30,6 +30,8 @@ var value
 
 func _ready():
 	dynamic_property.visible = not item.can_stack
+	if item == null:
+		return
 	var index = item.dynamic_properties.find(key)
 	check_box.button_pressed = index != -1
 	check_box.toggled.connect(_on_dynamic_property_checkbox_toggled)

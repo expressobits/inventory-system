@@ -1,7 +1,6 @@
 @tool
 extends Control
 
-const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
 const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
 
 const OPEN_OPEN = 100

@@ -6,7 +6,6 @@ class_name InventorySystemEditorPlugin
 const icon_plugin = preload("res://addons/inventory-system/icons/inventory_main_screen.svg")
 const inventory_editor_scene = preload("res://addons/inventory-system/editor/inventory_editor.tscn")
 const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
-const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
 
 var _inventory_editor : Control
 

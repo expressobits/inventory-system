@@ -30,6 +30,8 @@ var value
 
 func _ready():
 	dynamic_property.visible = true
+	if category == null:
+		return
 	var index = category.item_dynamic_properties.find(key)
 	check_box.button_pressed = index != -1
 	check_box.toggled.connect(_on_dynamic_property_checkbox_toggled)
