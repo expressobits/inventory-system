@@ -16,6 +16,9 @@ const DATABASE_SAVE = 300
 const DATABASE_IMPORT = 400
 const DATABASE_IMPORT_JSON = 401
 
+const DATABASE_EXPORT = 500
+const DATABASE_EXPORT_JSON = 501
+
 const NEW_ITEM_NEW_RESOURCE = 100
 const NEW_ITEM_FROM_RESOURCE = 101
 
@@ -36,6 +39,7 @@ var database_path : String
 @onready var save_dialog: FileDialog = $SaveDialog
 @onready var open_dialog: FileDialog = $OpenDialog
 @onready var open_inv_dialog: FileDialog = $OpenInvDialog
+@onready var save_inv_dialog: FileDialog = $SaveJsonDialog
 
 
 # Toolbar
@@ -59,6 +63,7 @@ func _ready():
 	apply_theme()
 	load_database(null)
 	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
+	save_inv_dialog.file_selected.connect(_on_save_inv_dialog_file_selected)
 	open_dialog.file_selected.connect(_on_open_dialog_file_selected)
 	open_inv_dialog.file_selected.connect(_on_open_inv_dialog_file_selected)
 	database_button.pressed.connect(_on_database_button_pressed)
@@ -102,15 +107,11 @@ func new_file(path: String, content: String = "") -> void:
 func import_inv_file(path: String) -> void:
 	if database == null:
 		return
-	editor_plugin.import_from_inv_file(database, path)
+	database.import_json_file(path)
 	
 	load_database(database)
 	self.database = database
-	self.database_path = path
 	
-	title_label.text = path
-	
-	InventorySettings.add_recent_file(path)
 	build_database_menu()
 
 
@@ -134,18 +135,6 @@ func open_file(path: String) -> void:
 func save_file() -> void:
 	ResourceSaver.save(database, database_path)
 	editor_plugin.get_editor_interface().get_resource_filesystem().scan()
-
-
-func export_inv_file() -> void:
-	var json = database.export_to_invdata()
-	
-	var path = database_path
-	var file = FileAccess.open(path, FileAccess.WRITE)
-	if file == null:
-		print("ERROR TO SAVE")
-		return FileAccess.get_open_error()
-	file.store_string(json)
-	file.close()
 	
 
 # Apply theme colors and icons to the UI
@@ -160,6 +149,7 @@ func apply_theme() -> void:
 	save_dialog.min_size = Vector2(600, 500) * scale
 	open_dialog.min_size = Vector2(600, 500) * scale
 	open_inv_dialog.min_size = Vector2(600, 500) * scale
+	save_inv_dialog.min_size = Vector2(600, 500) * scale
 
 
 func build_database_menu() -> void:
@@ -192,13 +182,22 @@ func build_database_menu() -> void:
 	menu.add_separator()
 	
 	var import_menu : PopupMenu = PopupMenu.new()
-	import_menu.add_item("Import Json File", DATABASE_IMPORT_JSON)
+	import_menu.add_item("Json File", DATABASE_IMPORT_JSON)
 	if import_menu.id_pressed.is_connected(_on_import_menu_id_pressed):
 		import_menu.id_pressed.disconnect(_on_import_menu_id_pressed)
 	import_menu.id_pressed.connect(_on_import_menu_id_pressed)
 	
-	menu.add_submenu_node_item("Import", import_menu)
-	menu.set_item_icon(6, get_theme_icon("Load", "EditorIcons"))
+	menu.add_submenu_node_item("Import With...", import_menu)
+	#menu.set_item_icon(6, get_theme_icon("Load", "EditorIcons"))
+	
+	var export_menu : PopupMenu = PopupMenu.new()
+	export_menu.add_item("Json File", DATABASE_EXPORT_JSON)
+	if export_menu.id_pressed.is_connected(_on_export_menu_id_pressed):
+		export_menu.id_pressed.disconnect(_on_export_menu_id_pressed)
+	export_menu.id_pressed.connect(_on_export_menu_id_pressed)
+	
+	menu.add_submenu_node_item("Export As...", export_menu)
+	#menu.set_item_icon(7, get_theme_icon("Load", "EditorIcons"))
 	
 	
 	if menu.id_pressed.is_connected(_on_database_menu_id_pressed):
@@ -232,6 +231,12 @@ func _on_import_menu_id_pressed(id: int) -> void:
 	match id:
 		DATABASE_IMPORT_JSON:
 			open_inv_dialog.popup_centered()
+
+
+func _on_export_menu_id_pressed(id: int) -> void:
+	match id:
+		DATABASE_EXPORT_JSON:
+			save_inv_dialog.popup_centered()
 
 
 func _on_new_item_menu_id_pressed() -> void:
@@ -311,6 +316,10 @@ func _on_new_button_pressed():
 func _on_new_dialog_file_selected(path):
 	new_file(path)
 
+
+func _on_save_inv_dialog_file_selected(path):
+	database.export_json_file(path)
+	
 
 func _on_open_button_pressed():
 	open_dialog.popup_centered()

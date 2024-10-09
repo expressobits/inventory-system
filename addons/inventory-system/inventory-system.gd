@@ -54,18 +54,6 @@ func _get_plugin_icon():
 	return icon_plugin
 
 
-func import_from_inv_file(database : InventoryDatabase, path : String) -> Error:
-	var file = FileAccess.open(path, FileAccess.READ)
-	if file == null:
-		return FileAccess.get_open_error()
-	
-	var json = ""
-	while file.get_position() < file.get_length():
-		json += file.get_line() + "\n"
-	database.import_to_invdata(json)
-	return OK
-
-
 func _build() -> bool:
 	# Ignore errors in other files if we are just running the test scene
 	if InventorySettings.get_user_value("is_running_test_scene", true): return true

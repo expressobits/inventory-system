@@ -210,5 +210,11 @@ dialog_hide_on_ok = true
 file_mode = 0
 filters = PackedStringArray("*.inv")
 
+[node name="SaveJsonDialog" type="FileDialog" parent="."]
+auto_translate_mode = 1
+size = Vector2i(312, 180)
+dialog_hide_on_ok = true
+filters = PackedStringArray("*.inv ; Inventory")
+
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]
