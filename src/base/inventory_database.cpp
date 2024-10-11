@@ -74,7 +74,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
-	ClassDB::bind_method(D_METHOD("import_to_invdata", "json"), &InventoryDatabase::import_to_invdata);
+	ClassDB::bind_method(D_METHOD("import_from_invdata", "json"), &InventoryDatabase::import_from_invdata);
+	ClassDB::bind_method(D_METHOD("clear_current_data"), &InventoryDatabase::clear_current_data);
 	ClassDB::bind_method(D_METHOD("import_json_file", "path"), &InventoryDatabase::import_json_file);
 	ClassDB::bind_method(D_METHOD("export_json_file", "path"), &InventoryDatabase::export_json_file);
 
@@ -562,7 +563,6 @@ Array InventoryDatabase::serialize_items() const {
 }
 
 void InventoryDatabase::deserialize_items(Array datas) {
-	items.clear();
 	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<ItemDefinition> definition = memnew(ItemDefinition());
 		deserialize_item_definition(definition, datas[i]);
@@ -583,7 +583,6 @@ Array InventoryDatabase::serialize_item_categories() const {
 }
 
 void InventoryDatabase::deserialize_item_categories(Array datas) {
-	item_categories.clear();
 	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<ItemCategory> category = memnew(ItemCategory());
 		deserialize_item_category(category, datas[i]);
@@ -604,7 +603,6 @@ Array InventoryDatabase::serialize_craft_station_types() const {
 }
 
 void InventoryDatabase::deserialize_craft_station_types(Array datas) {
-	stations_type.clear();
 	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<CraftStationType> station = memnew(CraftStationType());
 		deserialize_station_type(station, datas[i]);
@@ -625,12 +623,18 @@ Array InventoryDatabase::serialize_recipes() const {
 }
 
 void InventoryDatabase::deserialize_recipes(Array datas) {
-	recipes.clear();
 	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<Recipe> recipe = memnew(Recipe());
 		deserialize_recipe(recipe, datas[i]);
 		recipes.append(recipe);
 	}
+}
+
+void InventoryDatabase::clear_current_data() {
+	items.clear();
+	item_categories.clear();
+	stations_type.clear();
+	recipes.clear();
 }
 
 String InventoryDatabase::export_to_invdata() const {
@@ -639,7 +643,7 @@ String InventoryDatabase::export_to_invdata() const {
 	return json;
 }
 
-void InventoryDatabase::import_to_invdata(const String json) {
+void InventoryDatabase::import_from_invdata(const String json) {
 	Dictionary data = JSON::parse_string(json);
 	deserialize(data);
 }
@@ -652,10 +656,10 @@ Error InventoryDatabase::import_json_file(const String path) {
 	}
 
 	String json = "";
-	while(file->get_position() < file->get_length())
+	while (file->get_position() < file->get_length())
 		json += file->get_line() + "\n";
 
-	import_to_invdata(json);
+	import_from_invdata(json);
 	return Error::OK;
 }
 

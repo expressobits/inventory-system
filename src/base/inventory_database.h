@@ -91,8 +91,9 @@ public:
 	Array serialize_recipes() const;
 	void deserialize_recipes(Array datas);
 
+	void clear_current_data();
 	String export_to_invdata() const;
-	void import_to_invdata(const String json);
+	void import_from_invdata(const String path);
 	Error import_json_file(const String path);
 	Error export_json_file(const String path);
 };
