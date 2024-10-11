@@ -1,0 +1,33 @@
+{
+	"items": [
+		{
+			"id": "modding_test:test_item",
+			"name": "Test Item",
+			"icon": "res://addons/inventory-system-demos/assets/kenney_input-prompts-pixel-16/Tiles/tile_0041.png"
+		}
+	],
+	"recipes": [
+		{
+			"craft_station_type": "workbench",
+			"ingredients": [
+				"wood 1",
+				"stone 1"
+			],
+			"products": [
+				"modding_test:test_item 1"
+			],
+			"time_to_craft": 16
+		},
+		{
+			"craft_station_type": "workbench",
+			"ingredients": [
+				"wood 1",
+				"stone 2"
+			],
+			"products": [
+				"modding_test:test_item 1"
+			],
+			"time_to_craft": 4
+		}
+	]
+}
