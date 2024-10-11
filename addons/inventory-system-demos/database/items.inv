@@ -1,0 +1,275 @@
+{
+	"craft_station_types": [
+		{
+			"icon": "res://addons/inventory-system-demos/assets/icons/workbench.png",
+			"id": "workbench",
+			"name": "Workbench"
+		},
+		{
+			"icon": "res://addons/inventory-system-demos/assets/icons/campfire.png",
+			"id": "campfire",
+			"name": "Campfire"
+		}
+	],
+	"item_categories": [
+		{
+			"color": "ffea77ff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg",
+			"id": "burnables",
+			"item_properties": {
+				"fuel": 0
+			},
+			"name": "Burnables"
+		},
+		{
+			"color": "0038deff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/tool-svgrepo-com.svg",
+			"id": "tools",
+			"item_dynamic_properties": [
+				"durability"
+			],
+			"item_properties": {
+				"durability": 0
+			},
+			"name": "Tools"
+		},
+		{
+			"color": "eea574ff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/food-restaurant-svgrepo-com.svg",
+			"id": "food",
+			"name": "Food"
+		},
+		{
+			"color": "ffffffff",
+			"icon": "res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg",
+			"id": "helmet",
+			"name": "Helmet"
+		}
+	],
+	"items": [
+		{
+			"can_stack": true,
+			"categories": [
+				"burnables"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/branch.png",
+			"id": "wood",
+			"max_stack": 16,
+			"name": "Wood",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/wood.tscn",
+				"fuel": 8,
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/wood.tscn"
+			},
+			"weight": 1
+		},
+		{
+			"can_stack": true,
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone.png",
+			"id": "stone",
+			"max_stack": 8,
+			"name": "Stone",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/rock.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/rock.tscn"
+			},
+			"weight": 1
+		},
+		{
+			"can_stack": true,
+			"categories": [
+				"burnables"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/grass.png",
+			"id": "grass",
+			"max_stack": 16,
+			"name": "Grass",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/grass.tscn",
+				"fuel": 1,
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/grass.tscn"
+			},
+			"weight": 0.100000001490116
+		},
+		{
+			"can_stack": false,
+			"categories": [
+				"tools"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone-axe.png",
+			"id": "stone_axe",
+			"max_stack": 1,
+			"name": "Stone Axe",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
+				"durability": 0,
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_axe.tscn"
+			},
+			"weight": 1
+		},
+		{
+			"can_stack": true,
+			"categories": [
+				"tools"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/stone_pickaxe.png",
+			"id": "stone_pickaxe",
+			"max_stack": 0,
+			"name": "Stone Pickaxe",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
+				"durability": 0,
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_pickaxe.tscn"
+			},
+			"weight": 0
+		},
+		{
+			"can_stack": true,
+			"icon": "res://addons/inventory-system-demos/assets/icons/lashing.png",
+			"id": "lashing",
+			"max_stack": 16,
+			"name": "Lashing",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/lashing.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/lashing.tscn"
+			},
+			"weight": 0.200000002980232
+		},
+		{
+			"can_stack": true,
+			"icon": "res://addons/inventory-system-demos/assets/icons/campfire.png",
+			"id": "campfire",
+			"max_stack": 1,
+			"name": "Campfire",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/campfire.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/campfire.tscn",
+				"placeable": "res://addons/inventory-system-demos/fps/campfire.tscn"
+			},
+			"weight": 4
+		},
+		{
+			"can_stack": true,
+			"icon": "res://addons/inventory-system-demos/assets/icons/workbench.png",
+			"id": "workbench",
+			"max_stack": 1,
+			"name": "Workbench",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/workbench.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/workbench.tscn",
+				"placeable": "res://addons/inventory-system-demos/fps/workbench.tscn"
+			},
+			"weight": 5
+		},
+		{
+			"can_stack": true,
+			"categories": [
+				"food"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatRaw.png",
+			"id": "raw_meat",
+			"max_stack": 5,
+			"name": "Raw Meat",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/raw_meat.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/raw_meat.tscn"
+			},
+			"weight": 1
+		},
+		{
+			"can_stack": true,
+			"categories": [
+				"food"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/kenney_food-kit/Previews/meatCooked.png",
+			"id": "cooked_meat",
+			"max_stack": 5,
+			"name": "Cooked Meat",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/cooked_meat.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/cooked_meat.tscn"
+			},
+			"weight": 0.800000011920929
+		},
+		{
+			"can_stack": false,
+			"categories": [
+				"helmet"
+			],
+			"icon": "res://addons/inventory-system-demos/assets/icons/helmet_labor.png",
+			"id": "helmet_labor",
+			"max_stack": 1,
+			"name": "Helmet Labor",
+			"properties": {
+				"dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/helmet_labor.tscn",
+				"hand_item": "res://addons/inventory-system-demos/fps/hand_items/helmet_labor.tscn"
+			},
+			"weight": 1
+		}
+	],
+	"recipes": [
+		{
+			"craft_station_type": "workbench",
+			"ingredients": [
+				"stone 2",
+				"wood 2"
+			],
+			"products": [
+				"stone_axe 1"
+			],
+			"time_to_craft": 16
+		},
+		{
+			"craft_station_type": "workbench",
+			"ingredients": [
+				"stone 2",
+				"wood 2"
+			],
+			"products": [
+				"stone_pickaxe 1"
+			],
+			"required_items": [
+				"helmet_labor 1"
+			],
+			"time_to_craft": 4
+		},
+		{
+			"ingredients": [
+				"grass 2"
+			],
+			"products": [
+				"lashing 1"
+			],
+			"time_to_craft": 2
+		},
+		{
+			"ingredients": [
+				"stone 2",
+				"wood 1"
+			],
+			"products": [
+				"campfire 1"
+			],
+			"time_to_craft": 4
+		},
+		{
+			"ingredients": [
+				"wood 1"
+			],
+			"products": [
+				"workbench 1"
+			],
+			"time_to_craft": 4
+		},
+		{
+			"craft_station_type": "campfire",
+			"ingredients": [
+				"raw_meat 1"
+			],
+			"products": [
+				"cooked_meat 1"
+			],
+			"time_to_craft": 8
+		}
+	]
+}

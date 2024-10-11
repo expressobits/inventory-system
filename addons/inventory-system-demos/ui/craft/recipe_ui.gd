@@ -25,19 +25,20 @@ var _ingredients : Array[IngredientUI]
 func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
 	self.craft_station = craft_station
 	self.recipe_index = recipe_index
-	icon.texture = recipe.products[0].item.definition.icon
-	item_name.text = recipe.products[0].item.definition.name
+	var product_item : ItemDefinition = craft_station.database.get_item(recipe.products[0].item_id)
+	icon.texture = product_item.icon
+	item_name.text = product_item.name
 	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
 	_clear_ingredients()
 	for ingredient in recipe.ingredients:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
 		ingredients_container.add_child(ingredient_obj)
-		ingredient_obj.setup(ingredient)
+		ingredient_obj.setup(craft_station.database, ingredient)
 		_ingredients.append(ingredient_obj)
 	for ingredient in recipe.required_items:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
 		ingredients_container.add_child(ingredient_obj)
-		ingredient_obj.setup(ingredient)
+		ingredient_obj.setup(craft_station.database, ingredient)
 		_ingredients.append(ingredient_obj)
 	_check_if_has_ingredients()
 	for i in craft_station.input_inventories.size():

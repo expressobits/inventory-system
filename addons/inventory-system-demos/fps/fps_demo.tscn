@@ -1,133 +1,53 @@
-[gd_scene load_steps=44 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=21 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
-[ext_resource type="InventoryDatabase" uid="uid://x5huasdaljjl" path="res://addons/inventory-system-demos/base/database.tres" id="2_gcjwy"]
-[ext_resource type="ItemDefinition" uid="uid://mlfnrjl6taog" path="res://addons/inventory-system-demos/base/items/wood.tres" id="2_ig7ps"]
-[ext_resource type="ItemDefinition" uid="uid://cq41uaiw3k82b" path="res://addons/inventory-system-demos/base/items/stone.tres" id="3_drnqg"]
-[ext_resource type="ItemDefinition" uid="uid://c20jkkonitixx" path="res://addons/inventory-system-demos/base/items/grass.tres" id="4_u8ypt"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system-demos/fps/labels.tscn" id="6_5epcx"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system-demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="8_6rygg"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="11_fkc5i"]
-[ext_resource type="ItemDefinition" uid="uid://1g5wqbk7eo0d" path="res://addons/inventory-system-demos/base/items/helmet_labor.tres" id="12_5uvei"]
-[ext_resource type="ItemCategory" uid="uid://b5xbt36cc6cji" path="res://addons/inventory-system-demos/base/categories/tool.tres" id="13_ptimm"]
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="14_kqlku"]
-[ext_resource type="ItemDefinition" uid="uid://dbxx0l6t8pihv" path="res://addons/inventory-system-demos/base/items/stone_axe.tres" id="15_dwxtk"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="16_47qja"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://addons/inventory-system-demos/fps/props/shelf.tscn" id="17_k32gy"]
 
-[sub_resource type="Item" id="Resource_s5euc"]
-definition = ExtResource("2_ig7ps")
-
-[sub_resource type="Item" id="Resource_mcsja"]
-definition = ExtResource("3_drnqg")
-
-[sub_resource type="Item" id="Resource_5m303"]
-definition = ExtResource("4_u8ypt")
-
-[sub_resource type="Item" id="Resource_qht8t"]
-definition = ExtResource("12_5uvei")
-
-[sub_resource type="Slot" id="Resource_a5fwf"]
-item = SubResource("Resource_qht8t")
-amount = 1
+[sub_resource type="Slot" id="Slot_xr6i0"]
 categorized = 1
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Item" id="Resource_lkgg5"]
-definition = ExtResource("15_dwxtk")
-properties = {
-"durability": 52.0
-}
-
-[sub_resource type="Slot" id="Resource_jm1f7"]
-item = SubResource("Resource_lkgg5")
-amount = 1
+[sub_resource type="Slot" id="Slot_7lo25"]
 categorized = 1
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Item" id="Resource_p22tk"]
-definition = ExtResource("15_dwxtk")
-properties = {
-"durability": 32.0
-}
-
-[sub_resource type="Slot" id="Resource_afmqk"]
-item = SubResource("Resource_p22tk")
-amount = 1
+[sub_resource type="Slot" id="Slot_vwfwm"]
 categorized = 1
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Slot" id="Resource_86q2j"]
+[sub_resource type="Slot" id="Slot_gdk8i"]
 categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Slot" id="Resource_50c12"]
+[sub_resource type="Slot" id="Slot_fiu10"]
 categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Slot" id="Resource_2luqh"]
+[sub_resource type="Slot" id="Slot_vqiso"]
 categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Slot" id="Resource_6eb8p"]
+[sub_resource type="Slot" id="Slot_ia0t1"]
 categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
+accepted_categories = Array[String](["tools"])
 
-[sub_resource type="Slot" id="Resource_vg71i"]
+[sub_resource type="Slot" id="Slot_v6cqt"]
 categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_q4mae"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_mieis"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_vukda"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_4vfo6"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_wooe2"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_x3hnn"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_j6h4i"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_p0mwy"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_f10nw"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_3kekd"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
-
-[sub_resource type="Slot" id="Resource_h422t"]
-categorized = 1
-accepted_categories = Array[ItemCategory]([ExtResource("13_ptimm")])
+accepted_categories = Array[String](["tools"])
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
-item_wood = SubResource("Resource_s5euc")
-item_stone = SubResource("Resource_mcsja")
-item_grass = SubResource("Resource_5m303")
-database = ExtResource("2_gcjwy")
+database = ExtResource("5_3pgnb")
 
 [node name="Player" parent="." instance=ExtResource("14_kqlku")]
 
@@ -156,7 +76,6 @@ inventory_name = "Dynamic Inventory"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
-slots = Array[Slot]([SubResource("Resource_a5fwf"), SubResource("Resource_jm1f7"), SubResource("Resource_afmqk"), null, null, null, null, null, null, null, null, null, null, null, null, null])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"
@@ -165,15 +84,17 @@ inventory_name = "Static Inventory"
 transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
-slots = Array[Slot]([SubResource("Resource_86q2j"), SubResource("Resource_50c12"), SubResource("Resource_2luqh"), SubResource("Resource_6eb8p"), SubResource("Resource_vg71i"), SubResource("Resource_q4mae"), SubResource("Resource_mieis"), SubResource("Resource_vukda"), SubResource("Resource_4vfo6"), SubResource("Resource_wooe2"), SubResource("Resource_x3hnn"), SubResource("Resource_j6h4i"), SubResource("Resource_p0mwy"), SubResource("Resource_f10nw"), SubResource("Resource_3kekd"), SubResource("Resource_h422t")])
+slots = Array[Slot]([SubResource("Slot_xr6i0"), SubResource("Slot_7lo25"), SubResource("Slot_vwfwm"), SubResource("Slot_gdk8i"), SubResource("Slot_fiu10"), SubResource("Slot_vqiso"), SubResource("Slot_ia0t1"), SubResource("Slot_v6cqt")])
 create_slot_if_needed = false
 remove_slot_if_empty = false
+slot_amount = 8
 inventory_name = "Tools Inventory"
 
 [node name="Workbench" parent="." instance=ExtResource("11_fkc5i")]
 
 [node name="Campfire" parent="." instance=ExtResource("16_47qja")]
 transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612, -1.97455, 0, -3.89435)
+burnable_category = "burnables"
 
 [node name="Shelf" parent="." instance=ExtResource("17_k32gy")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.36572, 0.6775, 1.94776)

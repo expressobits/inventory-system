@@ -4,9 +4,10 @@ extends Workbench
 signal changed_burning_state(is_burning : bool)
 
 @onready var input_inventory : Inventory = $InputInventory
-@export var burnable_category : ItemCategory
+@export var burnable_category : String = "burnable"
 @onready var gpu_particles_3d = $Node/GPUParticles3D
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
+@onready var craft_audio = $Node/CraftAudio
 @export var toggle_fire_action : InteractAction
 
 @export var decrease_fuel_multiplier = 1
@@ -38,6 +39,7 @@ var is_burning := false:
 
 func _ready():
 	_update_is_burning()
+	craft_station.on_crafted.connect(_on_crafted)
 	
 
 func _update_is_burning():
@@ -51,14 +53,19 @@ func _on_input_inventory_item_added(_item, _amount):
 	check()
 
 
+func _on_crafted(recipe_index: int):
+	craft_audio.play(1.0)
+
+
 func check() -> bool:
 	if not active_fire:
 		return false
 	if is_burning:
 		return false
-	if not input_inventory.contains_category(burnable_category):
+	var category = input_inventory.database.get_category_from_id(burnable_category)
+	if not input_inventory.contains_category(category):
 		return false
-	var index = input_inventory.get_slot_index_with_an_item_of_category(burnable_category)
+	var index = input_inventory.get_slot_index_with_an_item_of_category(category)
 	if index == -1:
 		return false
 	var item = input_inventory.slots[index].item
@@ -96,6 +103,7 @@ func get_interact_actions(_interactor : Interactor) -> Array:
 func interact(character : Node, action_index : int = 0):
 	if action_index == 0 and !openable.is_open:
 		character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
+		craft_station.load_valid_recipes()
 		openable.open(character)
 	else:
 		active_fire = !active_fire

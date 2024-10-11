@@ -1,33 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://5wb5xuou85vf"]
+[gd_scene load_steps=6 format=3 uid="uid://5wb5xuou85vf"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/editor/items/item_editor.gd" id="1_smo60"]
-[ext_resource type="PackedScene" uid="uid://bcs0kajdte05g" path="res://addons/inventory-system/editor/base/item_id_editor.tscn" id="2_s4m1x"]
+[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_by1w4"]
 [ext_resource type="PackedScene" uid="uid://bl40ri4you0n5" path="res://addons/inventory-system/editor/items/categories_in_item.tscn" id="3_cy8bj"]
 [ext_resource type="PackedScene" uid="uid://c1am6gfdvbcgx" path="res://addons/inventory-system/editor/items/custom_properties.tscn" id="3_obam6"]
-
-[sub_resource type="Image" id="Image_7fa7g"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 131, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 128, 128, 4, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 93, 93, 55, 255, 97, 97, 58, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 97, 97, 42, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 98, 98, 47, 255, 97, 97, 42, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 93, 93, 233, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 94, 94, 46, 255, 93, 93, 236, 255, 93, 93, 233, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 93, 93, 252, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_uoasd"]
-image = SubResource("Image_7fa7g")
-
-[sub_resource type="Image" id="Image_iwsu6"]
-data = {
-"data": PackedByteArray(255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 94, 94, 127, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 231, 255, 94, 94, 54, 255, 94, 94, 57, 255, 93, 93, 233, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 93, 93, 41, 255, 255, 255, 0, 255, 255, 255, 0, 255, 97, 97, 42, 255, 93, 93, 233, 255, 93, 93, 232, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 44, 255, 255, 255, 0, 255, 97, 97, 42, 255, 97, 97, 42, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 96, 96, 45, 255, 93, 93, 235, 255, 94, 94, 234, 255, 95, 95, 43, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 93, 93, 235, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 233, 255, 95, 95, 59, 255, 96, 96, 61, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 93, 93, 255, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0, 255, 255, 255, 0),
-"format": "RGBA8",
-"height": 16,
-"mipmaps": false,
-"width": 16
-}
-
-[sub_resource type="ImageTexture" id="ImageTexture_s6dn4"]
-image = SubResource("Image_iwsu6")
+[ext_resource type="Script" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_p8qlp"]
 
 [node name="ItemEditor" type="Control"]
 custom_minimum_size = Vector2(256, 0)
@@ -49,50 +26,17 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="ItemResource" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
-unique_name_in_owner = true
+[node name="ItemIDEditor" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/ItemResource"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-text = "Item Resource"
-
-[node name="ItemResourceLineEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/ItemResource"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Place Item Resource Path Here"
-editable = false
-
-[node name="ItemResourceEditButton" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/ItemResource"]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-tooltip_text = "Open Icon Texture2D"
-icon = SubResource("ImageTexture_uoasd")
-flat = true
-icon_alignment = 1
-
-[node name="ItemIDEditor" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("2_s4m1x")]
-layout_mode = 2
-
-[node name="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor" index="0"]
-custom_minimum_size = Vector2(160, 0)
-
-[node name="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor" index="2"]
-tooltip_text = "Edit"
-icon = SubResource("ImageTexture_s6dn4")
+script = ExtResource("2_by1w4")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -154,28 +98,10 @@ value = 0.1
 allow_greater = true
 allow_lesser = true
 
-[node name="Icon" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Icon"]
-custom_minimum_size = Vector2(160, 0)
-layout_mode = 2
-text = "Icon"
-
-[node name="IconLineEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/Icon"]
+[node name="IconSelector" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
-editable = false
-
-[node name="IconEditButton" type="Button" parent="ScrollContainer/MarginContainer/VBoxContainer/Icon"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-tooltip_text = "Open Icon Texture2D"
-icon = SubResource("ImageTexture_uoasd")
-flat = true
-icon_alignment = 1
+script = ExtResource("3_p8qlp")
 
 [node name="HSeparator2" type="HSeparator" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -191,46 +117,9 @@ mouse_filter = 2
 [node name="CustomProperties" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_obam6")]
 layout_mode = 2
 
-[node name="ItemResourceFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(326, 162)
-ok_button_text = "Open"
-file_mode = 0
-filters = PackedStringArray("*.tres ; ItemDefinition")
-
-[node name="IconFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(326, 162)
-ok_button_text = "Open"
-file_mode = 0
-filters = PackedStringArray("*.png ; Texture2D")
-
-[node name="HandItemFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(326, 162)
-ok_button_text = "Open"
-file_mode = 0
-filters = PackedStringArray("*.tscn ; PackedScene")
-
-[node name="DroppedItemFileDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(326, 162)
-ok_button_text = "Open"
-file_mode = 0
-filters = PackedStringArray("*.tscn ; PackedScene")
-
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
-[connection signal="text_changed" from="ScrollContainer/MarginContainer/VBoxContainer/ItemResource/ItemResourceLineEdit" to="." method="_on_item_resource_line_edit_text_changed"]
-[connection signal="pressed" from="ScrollContainer/MarginContainer/VBoxContainer/ItemResource/ItemResourceEditButton" to="." method="_on_item_resource_edit_button_pressed"]
 [connection signal="changed" from="ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor" to="." method="_on_item_id_editor_changed"]
 [connection signal="text_changed" from="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer/ItemNameTextEdit" to="." method="_on_text_edit_text_changed"]
 [connection signal="value_changed" from="ScrollContainer/MarginContainer/VBoxContainer/MaxStack/MaxStackSpinBox" to="." method="_on_max_stack_spin_box_value_changed"]
 [connection signal="value_changed" from="ScrollContainer/MarginContainer/VBoxContainer/Weight/WeightSpinBox" to="." method="_on_weight_spin_box_value_changed"]
-[connection signal="pressed" from="ScrollContainer/MarginContainer/VBoxContainer/Icon/IconEditButton" to="." method="_on_icon_edit_button_pressed"]
 [connection signal="changed" from="ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem" to="." method="_on_categories_in_item_changed"]
-[connection signal="file_selected" from="ItemResourceFileDialog" to="." method="_on_item_resource_file_dialog_file_selected"]
-[connection signal="file_selected" from="IconFileDialog" to="." method="_on_icon_file_dialog_file_selected"]
-[connection signal="file_selected" from="HandItemFileDialog" to="." method="_on_hand_item_file_dialog_file_selected"]
-[connection signal="file_selected" from="DroppedItemFileDialog" to="." method="_on_dropped_item_file_dialog_file_selected"]
-
-[editable path="ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor"]

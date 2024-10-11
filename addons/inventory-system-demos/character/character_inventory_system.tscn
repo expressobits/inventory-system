@@ -1,16 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://cw4rwxc3dyovc"]
+[gd_scene load_steps=5 format=3 uid="uid://cw4rwxc3dyovc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/character_inventory_system.gd" id="1_mwfdb"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/inventory_interactor.gd" id="2_ja62h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/object_placer.gd" id="9_3ia0e"]
 
 [sub_resource type="Slot" id="Resource_rb0kk"]
-
-[sub_resource type="Slot" id="Resource_y52mx"]
-
-[sub_resource type="Slot" id="Resource_cijqa"]
-
-[sub_resource type="Slot" id="Resource_ndhf7"]
+categorized = 1
+accepted_categories = Array[String](["helmet"])
 
 [node name="CharacterInventorySystem" type="NodeInventories"]
 script = ExtResource("1_mwfdb")
@@ -23,7 +19,7 @@ slot_amount = 32
 inventory_name = "Player Inventory"
 
 [node name="EquipmentInventory" type="Inventory" parent="."]
-slots = Array[Slot]([SubResource("Resource_rb0kk"), SubResource("Resource_y52mx"), SubResource("Resource_cijqa"), SubResource("Resource_ndhf7")])
+slots = Array[Slot]([SubResource("Resource_rb0kk")])
 slot_amount = 4
 inventory_name = "Equipment"
 

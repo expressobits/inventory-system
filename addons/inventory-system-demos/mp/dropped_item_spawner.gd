@@ -4,6 +4,8 @@ extends MultiplayerSpawner
 ## Class that customizes the way the spawner generates objects on the network, 
 ## placing information on the [PackedScene] of the dropped item, position and rotation.
 
+@export var database : InventoryDatabase
+
 func _init():
 	spawn_function = _spawn_custom
 
@@ -19,9 +21,10 @@ func _spawn_custom(data : Array):
 	var obj = load(data[2]).instantiate()
 	obj.position = data[0]
 	obj.rotation = data[1]
+	var item_id : String = obj.item_id
 	var item = Item.new()
-	item.definition = obj.item.definition
+	item.definition = database.get_item(item_id)
 	if data.size() == 4 and typeof(data[3]) == TYPE_DICTIONARY:
 		item.properties = data[3]
-	obj.item = item
+	obj.item_id = item_id
 	return obj

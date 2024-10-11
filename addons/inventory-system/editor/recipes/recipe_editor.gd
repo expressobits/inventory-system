@@ -8,13 +8,9 @@ signal changed
 
 @onready var time_to_craft_spin_box : SpinBox = $MarginContainer/MarginContainer/VBoxContainer/TimeToCraft/TimeToCraftSpinBox
 @onready var craft_station_type_option_button = $MarginContainer/MarginContainer/VBoxContainer/CraftStationType/CraftStationTypeOptionButton
-@onready var item_resource_text_edit : LineEdit = %RecipeResourceLineEdit
-@onready var item_resource_edit_button : Button = %RecipeResourceEditButton
-@export var ingredient_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var ingredients_v_box_container = %IngredientsVBoxContainer
 @onready var products_v_box_container = %ProductsVBoxContainer
 @onready var required_items_v_box_container = %RequiredItemsVBoxContainer
-@onready var item_resource_file_dialog : FileDialog = $ItemResourceFileDialog
 @onready var new_required_item_button = $MarginContainer/MarginContainer/VBoxContainer/ExtraRequiredItems/RequiredItemsVBoxContainer/NewRequiredItemButton
 
 
@@ -34,15 +30,11 @@ func _ready():
 
 
 func apply_theme() -> void:
-	if not is_instance_valid(editor_plugin) or not is_instance_valid(item_resource_edit_button):
+	if not is_instance_valid(editor_plugin):
 		return
-	
-	item_resource_edit_button.icon = get_theme_icon("Edit", "EditorIcons")
-	item_resource_edit_button.tooltip_text = "Open Resource Inventory Item"
 	
 	#Dialogs
 	var scale: float = editor_plugin.get_editor_interface().get_editor_scale()
-	item_resource_file_dialog.min_size = Vector2(600, 500) * scale
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -53,8 +45,6 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 func connect_signals():
 	time_to_craft_spin_box.value_changed.connect(_on_time_to_craft_spin_box_value_changed)
 	craft_station_type_option_button.item_selected.connect(_on_craft_station_type_option_button_item_selected)
-	item_resource_edit_button.pressed.connect(_on_item_resource_edit_button_pressed)
-	item_resource_file_dialog.file_selected.connect(_on_recipe_resource_file_dialog_file_selected)
 	new_required_item_button.pressed.connect(_on_new_required_item_button_pressed)
 	connected = true
 
@@ -66,8 +56,6 @@ func disconnect_signals():
 #	product_selector.slot_changed.disconnect(_on_product_slot_spin_box_slot_changed)
 	time_to_craft_spin_box.value_changed.disconnect(_on_time_to_craft_spin_box_value_changed)
 	craft_station_type_option_button.item_selected.disconnect(_on_craft_station_type_option_button_item_selected)
-	item_resource_edit_button.pressed.disconnect(_on_item_resource_edit_button_pressed)
-	item_resource_file_dialog.file_selected.disconnect(_on_recipe_resource_file_dialog_file_selected)
 	new_required_item_button.pressed.disconnect(_on_new_required_item_button_pressed)
 	connected = false
 
@@ -75,9 +63,12 @@ func disconnect_signals():
 func setup_station():
 	craft_station_type_option_button.clear()
 	stations_list.clear()
+	var popup : PopupMenu = craft_station_type_option_button.get_popup()
 	for station in database.stations_type:
-		craft_station_type_option_button.add_icon_item(station.icon, station.resource_path)
+		craft_station_type_option_button.add_icon_item(station.icon, station.name)
 		stations_list.append(station)
+	for i in database.stations_type.size():
+		popup.set_item_icon_max_width(i, 24)
 	stations_list.append(null)
 	craft_station_type_option_button.add_icon_item(null, "No station")
 	
@@ -95,7 +86,7 @@ func setup_ingredients(recipe : Recipe, database : InventoryDatabase):
 	ingredients.clear()
 	for index in recipe.ingredients.size():
 		var ingredient = recipe.ingredients[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		ingredients_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
@@ -110,7 +101,7 @@ func setup_required_items(recipe : Recipe, database : InventoryDatabase):
 	required_items.clear()
 	for index in recipe.required_items.size():
 		var ingredient = recipe.required_items[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		required_items_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(ingredient, database, "Remove Ingredient")
@@ -125,7 +116,7 @@ func setup_products(recipe : Recipe, database : InventoryDatabase):
 	products.clear()
 	for index in recipe.products.size():
 		var product = recipe.products[index]
-		var ingredient_node = ingredient_scene.instantiate()
+		var ingredient_node = IngredientEditor.new()
 		products_v_box_container.add_child(ingredient_node)
 		var ingredient_editor : IngredientEditor = ingredient_node as IngredientEditor
 		ingredient_editor.setup(product, database, "Remove Product")
@@ -139,7 +130,6 @@ func load_recipe(recipe : Recipe, database : InventoryDatabase):
 	self.recipe = recipe
 	self.database = database
 	time_to_craft_spin_box.value = recipe.time_to_craft
-	item_resource_text_edit.text = recipe.resource_path
 	setup_station()
 	setup_ingredients(recipe, database)
 	setup_products(recipe, database)
@@ -182,34 +172,31 @@ func _request_remove_product(index):
 
 
 func _on_new_ingredient_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
-	recipe.ingredients.append(slot)
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
+	if not database.items.is_empty():
+		item_stack.item_id = database.items[0].id
+	recipe.ingredients.append(item_stack)
 	setup_ingredients(recipe, database)
 	changed.emit()
 
 
 func _on_new_required_item_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
-	var required_items : Array[Slot] = []
-	required_items.append_array(recipe.required_items)
-	required_items.append(slot)
-	recipe.required_items = required_items
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
+	if not database.items.is_empty():
+		item_stack.item_id = database.items[0].id
+	recipe.required_items.append(item_stack)
 	setup_required_items(recipe, database)
 	changed.emit()
 
 
 func _on_new_product_button_pressed():
-	var slot = Slot.new()
-	slot.amount = 1
-	slot.item = Item.new()
-	slot.item.definition = database.get_item(0)
-	recipe.products.append(slot)
+	var item_stack = ItemStack.new()
+	item_stack.amount = 1
+	if not database.items.is_empty():
+		item_stack.item_id = database.items[0].id
+	recipe.products.append(item_stack)
 	setup_products(recipe, database)
 	changed.emit()
 	changed_products.emit(recipe)
@@ -221,10 +208,6 @@ func _on_changed_slot_in_ingredient():
 
 func _on_changed_slot_required_item():
 	changed.emit()
-
-
-func _on_item_resource_edit_button_pressed():
-	item_resource_file_dialog.popup_centered()
 
 
 func _on_recipe_resource_file_dialog_file_selected(path):

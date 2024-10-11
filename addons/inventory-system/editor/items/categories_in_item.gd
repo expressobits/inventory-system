@@ -31,22 +31,17 @@ func loading_categories():
 		option_obj.toggled.connect(_on_toggled_category_option.bind(category))
 		objs.append(option_obj)
 		h_flow_container.add_child(option_obj)
-			
-
-#func setup_option_button(checkbox : CheckBox):
-#	for category in categories_option_buttons:
-#		option_button.add_icon_item()
 
 
 func make_array_unique(input_array) -> Array:
 	var unique_array := []
 	for value in input_array:
-		unique_array.append(value)
+		unique_array.append(value.name)
 	return unique_array
 
 
 func _on_toggled_category_option(toggled : bool, category : ItemCategory):
-	var new_categories = make_array_unique(item.categories)
+	var new_categories : Array = make_array_unique(item.categories)
 	if toggled:
 		new_categories.append(category)
 	else:

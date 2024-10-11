@@ -98,6 +98,7 @@ func _update_opened_inventories(_inventory : Inventory):
 
 
 func _update_opened_stations(_craft_station : CraftStation):
+	_craft_station.load_valid_recipes()
 	_check_inputs()
 
 
@@ -167,7 +168,7 @@ func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int 
 	else:
 		# Different items in slot and other_slot
 		# Check if slot_holder amount is equal of origin_slot amount
-		if slot.categorized and not slot.is_accept_any_categories_of_item(item.definition):
+		if slot.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(slot), item.definition.categories):
 			return
 		var temp_item : Item = Item.new()
 		temp_item.definition = slot.item.definition
@@ -185,10 +186,15 @@ func pick_to_inventory(node : Node):
 	if !node.get("is_pickable"):
 		return
 		
-	var item = node.item
+	var item_id = node.item_id
 	
-	if item == null:
+	var item_definition = database.get_item(item_id)
+	
+	if item_definition == null:
 		return
+		
+	var item = Item.new()
+	item.definition = item_definition
 
 	if main_inventory.add(item, 1, true) == 0:
 		emit_signal("picked", node)
