@@ -11,6 +11,7 @@ class Inventory : public NodeInventories {
 
 private:
 	TypedArray<Slot> slots;
+	TypedArray<ItemStack> stacks;
 	bool create_slot_if_needed = false;
 	bool remove_slot_if_empty = false;
 	int slot_amount = 16;
@@ -59,6 +60,8 @@ public:
 	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;
 	void set_slots(const TypedArray<Slot> &new_slots);
 	TypedArray<Slot> get_slots() const;
+	void set_stacks(const TypedArray<ItemStack> &new_stacks);
+	TypedArray<ItemStack> get_stacks() const;
 	void set_create_slot_if_needed(const bool &new_create_slot_if_needed);
 	bool get_create_slot_if_needed() const;
 	void set_remove_slot_if_empty(const bool &new_remove_slot_if_empty);

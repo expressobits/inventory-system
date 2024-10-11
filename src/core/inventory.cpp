@@ -324,6 +324,13 @@ TypedArray<Slot> Inventory::get_slots() const {
 	return slots;
 }
 
+void Inventory::set_stacks(const TypedArray<ItemStack> &new_stacks) {
+	stacks = new_stacks;
+}
+
+TypedArray<ItemStack> Inventory::get_stacks() const {
+	return stacks;
+}
 void Inventory::set_create_slot_if_needed(const bool &new_create_slot_if_needed) {
 	create_slot_if_needed = new_create_slot_if_needed;
 }
@@ -592,6 +599,8 @@ void Inventory::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_slots", "slots"), &Inventory::set_slots);
 	ClassDB::bind_method(D_METHOD("get_slots"), &Inventory::get_slots);
+	ClassDB::bind_method(D_METHOD("set_stacks", "stacks"), &Inventory::set_stacks);
+	ClassDB::bind_method(D_METHOD("get_stacks"), &Inventory::get_stacks);
 	ClassDB::bind_method(D_METHOD("set_create_slot_if_needed", "create_slot_if_needed"), &Inventory::set_create_slot_if_needed);
 	ClassDB::bind_method(D_METHOD("get_create_slot_if_needed"), &Inventory::get_create_slot_if_needed);
 	ClassDB::bind_method(D_METHOD("set_remove_slot_if_empty", "remove_slot_if_empty"), &Inventory::set_remove_slot_if_empty);
@@ -613,6 +622,7 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::OBJECT, "item")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "slots", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Slot")), "set_slots", "get_slots");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_stacks", "get_stacks");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "create_slot_if_needed"), "set_create_slot_if_needed", "get_create_slot_if_needed");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "remove_slot_if_empty"), "set_remove_slot_if_empty", "get_remove_slot_if_empty");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slot_amount"), "set_slot_amount", "get_slot_amount");
