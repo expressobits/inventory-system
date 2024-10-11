@@ -2,17 +2,18 @@
 class_name InventoryItemListEditor
 extends VBoxContainer
 
-signal item_selected(item : ItemDefinition, index : int)
+signal item_selected(item, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
 
-@onready var list : ItemList = %ItemList
-@onready var search_line_edit = $Control/SearchLineEdit
+var list : ItemList
+var search_icon : TextureRect
+var search_line_edit : LineEdit
+var control: Control
 
 var item_map : Dictionary = {}
-var database : InventoryDatabase
-var item_list_handler : Array[ItemDefinition]
+var item_list_handler : Array
 
-var items: Array[ItemDefinition] = []:
+var items: Array = []:
 	set(next_files):
 		items = next_files
 		items.sort()
@@ -27,18 +28,67 @@ var filter: String:
 		apply_filter()
 	get:
 		return filter
+		
+
+func _ready() -> void:
+	offset_right = 256.0
+	offset_bottom = 36.0
+	
+	control = Control.new()
+	control.custom_minimum_size = Vector2(0, 32)
+	control.layout_mode = 2
+	control.size_flags_vertical = 4
+	add_child(control)
+	
+	search_line_edit = LineEdit.new()
+	search_line_edit.custom_minimum_size = Vector2(0, 32)
+	search_line_edit.layout_mode = 1
+	search_line_edit.anchors_preset = 15
+	search_line_edit.anchor_right = 1.0
+	search_line_edit.anchor_bottom = 1.0
+	search_line_edit.grow_horizontal = 2
+	search_line_edit.grow_vertical = 2
+	search_line_edit.size_flags_horizontal = 3
+	search_line_edit.placeholder_text = "Search Items"
+	search_line_edit.draw_control_chars = true
+	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed)
+	control.add_child(search_line_edit)
+	
+	search_icon = TextureRect.new()
+	search_icon.custom_minimum_size = Vector2(16, 16)
+	search_icon.layout_mode = 1
+	search_icon.anchors_preset = 6
+	search_icon.anchor_left = 1.0
+	search_icon.anchor_top = 0.5
+	search_icon.anchor_right = 1.0
+	search_icon.anchor_bottom = 0.5
+	search_icon.offset_left = -24.0
+	search_icon.offset_top = -8.0
+	search_icon.offset_right = -8.0
+	search_icon.offset_bottom = 8.0
+	search_icon.grow_horizontal = 0
+	search_icon.grow_vertical = 2
+	search_icon.expand_mode = 1
+	control.add_child(search_icon)
+	
+	list = ItemList.new()
+	list.unique_name_in_owner = true
+	list.layout_mode = 2
+	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	list.fixed_icon_size = Vector2i(16, 16)
+	list.item_clicked.connect(_on_item_list_item_clicked)
+	add_child(list)
 
 
-func load_items(database : InventoryDatabase) -> void:
+func load_items(items : Array) -> void:
 	clear_items()
-	self.database = database
-	for item in database.items:
+	for item in items:
 		add_item(item)
 	update_item_map()
 	apply_filter()
 
 
-func add_item(item : ItemDefinition):
+func add_item(item):
 	items.append(item)
 	update_item_map()
 	apply_filter()
@@ -54,7 +104,7 @@ func update_item_map() -> void:
 		item_map[item.id] = item
 
 
-func update_item_list(items : Array[ItemDefinition]):
+func update_item_list(items : Array):
 	list.clear()
 	for i in items.size():
 		list.add_item("")

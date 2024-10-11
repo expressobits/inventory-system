@@ -5,7 +5,6 @@ extends InventoryTabEditor
 @onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
 @onready var inventory_item_list  = $HSplitContainer/InventoryItemList
 @onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
-@onready var search_icon = $HSplitContainer/InventoryItemList/Control/SearchIcon
 
 
 func _ready():
@@ -25,7 +24,7 @@ func on_load_database() -> void:
 
 
 func load_items() -> void:
-	inventory_item_list.load_items(database)
+	inventory_item_list.load_items(database.items)
 
 
 func remove_current_data() -> bool:
@@ -45,8 +44,8 @@ func select(id : String):
 
 func _apply_theme():
 	super._apply_theme()
-	if is_instance_valid(search_icon):
-		search_icon.texture = get_theme_icon("Search", "EditorIcons")
+	if is_instance_valid(inventory_item_list.search_icon):
+		inventory_item_list.search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
 func _on_theme_changed():
