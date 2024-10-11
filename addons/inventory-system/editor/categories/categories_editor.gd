@@ -4,7 +4,6 @@ extends InventoryTabEditor
 
 
 @onready var item_categories_item_list = $HSplitContainer/ItemCategoriesItemList
-@onready var search_icon = $HSplitContainer/ItemCategoriesItemList/Control/SearchIcon
 @onready var item_category_popup_menu = $ItemCategoryPopupMenu
 @onready var item_category_editor = $HSplitContainer/ItemCategoryEditor
 
@@ -17,9 +16,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 func _apply_theme():
 	super._apply_theme()
-	if not is_instance_valid(search_icon):
+	if not is_instance_valid(item_categories_item_list.search_icon):
 		return
-	search_icon.texture = get_theme_icon("Search", "EditorIcons")
+	item_categories_item_list.search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 func on_load_database() -> void:
 	item_category_editor.load_category(database, null)
@@ -40,7 +39,7 @@ func select(category : ItemCategory):
 
 
 func load_item_categories():
-	item_categories_item_list.load_categories_types(database)
+	item_categories_item_list.load_items(database.item_categories)
 
 
 func _on_item_category_popup_menu_id_pressed(id):
@@ -58,15 +57,15 @@ func _on_item_categories_item_list_item_popup_menu_requested(at_position):
 	var a = item_categories_item_list.get_global_mouse_position()
 	item_category_popup_menu.position = Vector2(get_viewport().position) + a
 	item_category_popup_menu.popup()
-
-
-func _on_item_categories_item_list_category_selected(category):
-	current_data = category
-	select(category)
-
+	
 
 func _on_item_category_editor_changed(category):
-	var index = item_categories_item_list.get_index_of_category(category)
+	var index = item_categories_item_list.get_index_of_item_id(category.id)
 	if index > -1:
 		item_categories_item_list.update_item(index)
 		data_changed.emit()
+
+
+func _on_item_categories_item_list_item_selected(item: Variant, index: int) -> void:
+	current_data = item
+	select(item)

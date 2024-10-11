@@ -142,7 +142,7 @@ func apply_filter() -> void:
 		if filter == "" or item == null or filter.to_lower() in item.name.to_lower(): # search by item name
 			item_list_handler.append(item)
 		
-		if item not in item_list_handler: # search by category name
+		if item is ItemDefinition and item not in item_list_handler: # search by category name
 			for item_category in item.categories:
 				if item not in item_list_handler and filter.to_lower() in item_category.name.to_lower():
 					item_list_handler.append(item)

@@ -3,9 +3,8 @@ class_name CraftStationTypesEditor
 extends InventoryTabEditor
 
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
-@onready var craft_station_types_list : CraftStationTypesItemList = $HSplitContainer/CraftStationTypesItemList
+@onready var craft_station_types_list : InventoryItemListEditor = $HSplitContainer/CraftStationTypesItemList
 @onready var craft_station_types_popup_menu : PopupMenu = $CraftStationTypesPopupMenu
-@onready var search_icon = $HSplitContainer/CraftStationTypesItemList/Control/SearchIcon
 
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
@@ -16,9 +15,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 func _apply_theme():
 	super._apply_theme()
-	if not is_instance_valid(search_icon):
+	if not is_instance_valid(craft_station_types_list.search_icon):
 		return
-	search_icon.texture = get_theme_icon("Search", "EditorIcons")
+	craft_station_types_list.search_icon.texture = get_theme_icon("Search", "EditorIcons")
 	
 
 func on_load_database() -> void:
@@ -31,12 +30,7 @@ func select(station : CraftStationType):
 
 
 func load_craft_station_types():
-	craft_station_types_list.load_craft_station_types(database)
-
-
-func _on_craft_station_types_item_list_station_selected(station):
-	current_data = station
-	select(station)
+	craft_station_types_list.load_items(database.stations_type)
 
 
 func _on_craft_station_type_editor_changed(station):
@@ -69,3 +63,8 @@ func remove_current_data() -> bool:
 		load_craft_station_types()
 		craft_station_type_editor.load_station(database, null)
 	return removed
+
+
+func _on_craft_station_types_item_list_item_selected(item: Variant, index: int) -> void:
+	current_data = item
+	select(item)
