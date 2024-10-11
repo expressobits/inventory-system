@@ -117,7 +117,7 @@ func update_item(index : int):
 	var icon : Texture2D = null
 	if item != null:
 		if item.name.is_empty():
-			name_to_show = "No name"
+			name_to_show = "(Unnamed Item)"
 		else:
 			name_to_show = item.name
 		icon = item.icon
