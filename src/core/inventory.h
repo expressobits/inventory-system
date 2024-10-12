@@ -21,6 +21,8 @@ private:
 	void _call_events(int old_amount);
 	int _add_to_slot(int slot_index, const Ref<Item> &item, int amount = 1);
 	int _remove_from_slot(int slot_index, const Ref<Item> &item, int amount = 1);
+	int _add_to_stack(int stack_index, const String item_id, int amount = 1);
+	int _remove_from_stack(int stack_index, const String item_id, int amount = 1);
 
 protected:
 	static void _bind_methods();
@@ -47,6 +49,7 @@ public:
 	int amount_of_item(const Ref<Item> &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
+	int add_stack(const String item_id, const int &amount, const bool &drop_excess = false);
 	int add(const Ref<Item> &item, const int &amount, const bool &drop_excess = false);
 	int add_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	int remove(const Ref<Item> &item, const int &amount = 1);
@@ -56,6 +59,8 @@ public:
 	void drop_from_inventory(const int &slot_index, const int &amount = 1);
 	int add_to_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
 	int remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
+	int add_to_stack(Ref<ItemStack> stack, const String item_id, const int &amount);
+	int remove_from_stack(Ref<ItemStack> stack, const String item_id, const int &amount);
 	int get_flag_categories_of_slot(const Ref<Slot> slot) const;
 	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;
 	void set_slots(const TypedArray<Slot> &new_slots);

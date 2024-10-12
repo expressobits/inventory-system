@@ -169,6 +169,25 @@ int Inventory::amount() const {
 	return amount_in_inventory;
 }
 
+int Inventory::add_stack(const String item_id, const int &amount, const bool &drop_excess) {
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
+	int amount_in_interact = amount;
+	int old_amount = this->amount();
+
+	for (size_t i = 0; i < stacks.size(); i++) {
+		int previous_amount = amount_in_interact;
+		amount_in_interact = _add_to_stack(i, item_id, amount_in_interact);
+
+		// Check for potential integer underflow
+		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_stack.");
+
+		if (amount_in_interact == 0) {
+			break;
+		}
+	}
+}
+
 int Inventory::add(const Ref<Item> &item, const int &amount, const bool &drop_excess) {
 	ERR_FAIL_NULL_V_MSG(item, amount, "The 'item' is null.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
@@ -448,6 +467,35 @@ int Inventory::remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int 
 	return amount - amount_to_remove;
 }
 
+int Inventory::add_to_stack(Ref<ItemStack> stack, const String item_id, const int &amount) {
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+	
+	if (amount <= 0 || stack->get_item_id() != item_id) {
+		return amount;
+	}
+
+	ERR_FAIL_NULL_V_MSG(get_database(), amount, "The 'database' is null.");
+	Ref<ItemDefinition> item_definition = get_database()->get_item(item_id);
+
+	ERR_FAIL_NULL_V_MSG(item_definition, amount, "The 'item_definition' is null.");
+	int max_stack = item_definition->get_max_stack();
+	int amount_to_add = MIN(amount, max_stack - stack->get_amount());
+	stack->set_amount(stack->get_amount() + amount_to_add);
+	return amount - amount_to_add;
+}
+
+int Inventory::remove_from_stack(Ref<ItemStack> stack, const String item_id, const int &amount) {
+	if (amount <= 0 || stack->get_item_id() != item_id) {
+		return amount;
+	}
+	int amount_to_remove = MIN(amount, stack->get_amount());
+	stack->set_amount(stack->get_amount() - amount_to_remove);
+	if (stack->get_amount() <= 0) {
+		stack->set_item_id("");
+	}
+	return amount - amount_to_remove;
+}
+
 int Inventory::get_flag_categories_of_slot(const Ref<Slot> slot) const{
 	int accepted_categories_code = 0;
 	if (!Engine::get_singleton()->is_editor_hint()) {
@@ -565,6 +613,36 @@ int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amou
 	return _remaining_amount;
 }
 
+int Inventory::_add_to_stack(int stack_index, const String item_id, int amount) {
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), 0, "The 'stack_index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
+
+	Ref<ItemStack> stack = stacks[stack_index];
+	ERR_FAIL_NULL_V_MSG(stack, 0, "The 'stack' is null.");
+
+	int _remaining_amount = add_to_stack(stack, item_id, amount);
+
+	if (_remaining_amount == amount) {
+		return amount;
+	}
+
+	emit_signal("updated_stack", stack_index);
+	return _remaining_amount;
+}
+
+int Inventory::_remove_from_stack(int stack_index, const String item_id, int amount) {
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), amount, "The 'stack_index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+
+	Ref<ItemStack> stack = stacks[stack_index];
+	int _remaining_amount = remove_from_stack(stack, item_id, amount);
+	if (_remaining_amount == amount) {
+		return amount;
+	}
+	emit_signal("updated_stack", stack_index);
+	return _remaining_amount;
+}
+
 void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_slot"), &Inventory::add_slot);
 	ClassDB::bind_method(D_METHOD("insert_slot", "slot_index"), &Inventory::insert_slot);
@@ -592,6 +670,8 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "slot_index", "amount"), &Inventory::drop_from_inventory, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("add_to_slot", "slot", "item", "amount"), &Inventory::add_to_slot, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_from_slot", "slot", "item", "amount"), &Inventory::remove_from_slot, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount"), &Inventory::add_to_stack, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("get_flag_categories_of_slot", "slot"), &Inventory::get_flag_categories_of_slot);
 	ClassDB::bind_method(D_METHOD("is_accept_any_categories", "categories_flag", "slot"), &Inventory::is_accept_any_categories);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
@@ -618,6 +698,7 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("filled"));
 	ADD_SIGNAL(MethodInfo("emptied"));
 	ADD_SIGNAL(MethodInfo("updated_slot", PropertyInfo(Variant::INT, "slot_index")));
+	ADD_SIGNAL(MethodInfo("updated_stack", PropertyInfo(Variant::INT, "stack_index")));
 
 	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::OBJECT, "item")));
 
