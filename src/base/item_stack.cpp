@@ -5,6 +5,8 @@ void ItemStack::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_item_id"), &ItemStack::get_item_id);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &ItemStack::set_amount);
 	ClassDB::bind_method(D_METHOD("get_amount"), &ItemStack::get_amount);
+	ClassDB::bind_method(D_METHOD("serialize"), &ItemStack::serialize);
+	ClassDB::bind_method(D_METHOD("deserialize", "data"), &ItemStack::deserialize);
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "item_id"), "set_item_id", "get_item_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");

@@ -34,6 +34,7 @@ public:
 	void update_slot(const int slot_index);
 	void add_slot();
 	void insert_slot(int slot_index);
+	void insert_stack(int slot_index);
 	void remove_slot_at(int slot_index);
 	void set_slot(const int &slot_index, const Ref<Item> &item, const int &amount);
 	void set_slot_content(const int slot_index, const Ref<ItemDefinition> &definition, const Dictionary &properties, const int &amount);
@@ -52,10 +53,11 @@ public:
 	int add_stack(const String item_id, const int &amount, const bool &drop_excess = false);
 	int add(const Ref<Item> &item, const int &amount, const bool &drop_excess = false);
 	int add_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
+	int remove_stack(const String &item_id, const int &amount = 1);
 	int remove(const Ref<Item> &item, const int &amount = 1);
 	int remove_at(const int &slot_index, const Ref<Item> &item, const int &amount = 1);
 	void transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount);
-	virtual bool drop(const Ref<Item> &item, const int &amount = 1);
+	virtual bool drop(const String item_id, const int &amount = 1);
 	void drop_from_inventory(const int &slot_index, const int &amount = 1);
 	int add_to_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
 	int remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int &amount);
