@@ -34,8 +34,9 @@ public:
 	void update_slot(const int slot_index);
 	void add_slot();
 	void insert_slot(int slot_index);
-	void insert_stack(int slot_index);
+	bool insert_stack(int stack_index);
 	void remove_slot_at(int slot_index);
+	void remove_stack_at(int stack_index);
 	void set_slot(const int &slot_index, const Ref<Item> &item, const int &amount);
 	void set_slot_content(const int slot_index, const Ref<ItemDefinition> &definition, const Dictionary &properties, const int &amount);
 	void set_slot_with_other_slot(const int slot_index, const Ref<Slot> &other_slot);

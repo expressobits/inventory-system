@@ -6,6 +6,8 @@
 #include <godot_cpp/core/class_db.hpp>
 
 void Slot::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_stack_index", "item"), &Slot::set_stack_index);
+	ClassDB::bind_method(D_METHOD("get_stack_index"), &Slot::get_stack_index);
 	ClassDB::bind_method(D_METHOD("set_item", "item"), &Slot::set_item);
 	ClassDB::bind_method(D_METHOD("get_item"), &Slot::get_item);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &Slot::set_amount);
@@ -26,6 +28,7 @@ void Slot::_bind_methods() {
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "stack_index"), "set_stack_index", "get_stack_index");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "item", PROPERTY_HINT_RESOURCE_TYPE, "Item"), "set_item", "get_item");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
@@ -45,6 +48,14 @@ Slot::Slot() {
 }
 
 Slot::~Slot() {
+}
+
+void Slot::set_stack_index(const int &new_index) {
+	stack_index = new_index;
+}
+
+int Slot::get_stack_index() const {
+	return stack_index;
 }
 
 void Slot::set_item(const Ref<Item> &new_item) {

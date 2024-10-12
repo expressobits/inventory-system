@@ -187,8 +187,7 @@ int Inventory::add_stack(const String item_id, const int &amount, const bool &dr
 		}
 	}
 
-	if (amount_in_interact > 0) {
-		insert_stack(stacks.size());
+	if (amount_in_interact > 0 && insert_stack(stacks.size())) {
 		int stack_index = stacks.size() - 1;
 		Ref<ItemStack> stack = stacks[stack_index];
 		stack->set_item_id(item_id);
@@ -295,7 +294,7 @@ int Inventory::remove_stack(const String &item_id, const int &amount) {
 		Ref<ItemStack> stack = stacks[i];
 		amount_in_interact = _remove_from_stack(i, item_id, amount_in_interact);
 		if (stack->get_amount() == 0) {
-			// remove_slot_at(i);
+			remove_stack_at(i);
 			_call_events(old_amount);
 		}
 		if (amount_in_interact == 0) {
@@ -439,7 +438,8 @@ String Inventory::get_inventory_name() const {
 
 Dictionary Inventory::serialize() const {
 	Dictionary data = Dictionary();
-	data["slots"] = get_database()->serialize_slots(slots);;
+	data["slots"] = get_database()->serialize_slots(slots);
+	;
 	return data;
 }
 
@@ -488,7 +488,7 @@ int Inventory::add_to_slot(Ref<Slot> slot, const Ref<Item> item, const int &amou
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 	if (slot->is_categorized()) {
 		int flag_category = get_flag_categories_of_slot(slot);
-		if (flag_category != 0 && !is_accept_any_categories(flag_category ,item->get_definition()->get_categories())) {
+		if (flag_category != 0 && !is_accept_any_categories(flag_category, item->get_definition()->get_categories())) {
 			return amount;
 		}
 	}
@@ -528,7 +528,7 @@ int Inventory::remove_from_slot(Ref<Slot> slot, const Ref<Item> item, const int 
 
 int Inventory::add_to_stack(Ref<ItemStack> stack, const String item_id, const int &amount) {
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
-	
+
 	if (amount == 0 || stack->get_item_id() != item_id) {
 		return amount;
 	}
@@ -555,7 +555,7 @@ int Inventory::remove_from_stack(Ref<ItemStack> stack, const String item_id, con
 	return amount - amount_to_remove;
 }
 
-int Inventory::get_flag_categories_of_slot(const Ref<Slot> slot) const{
+int Inventory::get_flag_categories_of_slot(const Ref<Slot> slot) const {
 	int accepted_categories_code = 0;
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		for (size_t i = 0; i < slot->get_accepted_categories().size(); i++) {
@@ -608,6 +608,21 @@ void Inventory::remove_slot_at(int slot_index) {
 	this->emit_signal("slot_removed", slot_index);
 }
 
+void Inventory::remove_stack_at(int stack_index) {
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'slot index' is out of bounds.");
+
+	stacks.remove_at(stack_index);
+	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++)
+	{
+		Ref<Slot> slot = slots[slot_index];
+		if(slot->get_stack_index() == stack_index)
+		{
+			slot->set_stack_index(-1);
+		}
+	}
+	this->emit_signal("stack_removed", stack_index);
+}
+
 void Inventory::add_slot() {
 	Ref<Slot> slot = memnew(Slot());
 	slot->set_item(memnew(Item()));
@@ -626,13 +641,20 @@ void Inventory::insert_slot(int slot_index) {
 	this->emit_signal("slot_added", slot_index);
 }
 
-void Inventory::insert_stack(int stack_index) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index > size(), "The 'stack_index' is out of bounds.");
-
-	Ref<ItemStack> stack = memnew(ItemStack());
-	stack->set_amount(0);
-	stacks.insert(stack_index, stack);
-	this->emit_signal("stack_added", stack_index);
+bool Inventory::insert_stack(int stack_index) {
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index > size(), false, "The 'stack_index' is out of bounds.");
+	for (size_t i = 0; i < slots.size(); i++) {
+		Ref<Slot> slot = slots[i];
+		if (slot->get_stack_index() == -1) {
+			Ref<ItemStack> stack = memnew(ItemStack());
+			stack->set_amount(0);
+			stacks.insert(stack_index, stack);
+			slot->set_stack_index(stack_index);
+			this->emit_signal("stack_added", stack_index);
+			return true;
+		}
+	}
+	return false;
 }
 
 void Inventory::_call_events(int old_amount) {
@@ -665,7 +687,6 @@ int Inventory::_add_to_slot(int slot_index, const Ref<Item> &item, int amount) {
 	emit_signal("updated_slot", slot_index);
 	return _remaining_amount;
 }
-
 
 int Inventory::_remove_from_slot(int slot_index, const Ref<Item> &item, int amount) {
 	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
@@ -764,6 +785,8 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("inventory_changed"));
 	ADD_SIGNAL(MethodInfo("slot_added", PropertyInfo(Variant::INT, "slot_index")));
 	ADD_SIGNAL(MethodInfo("slot_removed", PropertyInfo(Variant::INT, "slot_index")));
+	ADD_SIGNAL(MethodInfo("stack_added", PropertyInfo(Variant::INT, "stack_index")));
+	ADD_SIGNAL(MethodInfo("stack_removed", PropertyInfo(Variant::INT, "stack_index")));
 	ADD_SIGNAL(MethodInfo("item_added", PropertyInfo(Variant::OBJECT, "item", PROPERTY_HINT_RESOURCE_TYPE, "Item"), PropertyInfo(Variant::INT, "amount")));
 	ADD_SIGNAL(MethodInfo("item_removed", PropertyInfo(Variant::OBJECT, "item_definition", PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition"), PropertyInfo(Variant::INT, "amount")));
 	ADD_SIGNAL(MethodInfo("filled"));

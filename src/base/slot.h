@@ -10,6 +10,7 @@ class Slot : public Resource {
 	GDCLASS(Slot, Resource);
 
 private:
+	int stack_index = -1;
 	Ref<Item> item;
 	int amount = 0;
 	int max_stack = -1;
@@ -26,6 +27,8 @@ protected:
 public:
 	Slot();
 	~Slot();
+	void set_stack_index(const int &new_index);
+	int get_stack_index() const;
 	void set_item(const Ref<Item> &new_item);
 	Ref<Item> get_item() const;
 	void set_amount(const int &new_amount);
