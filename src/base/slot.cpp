@@ -8,6 +8,8 @@
 void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_stack_index", "item"), &Slot::set_stack_index);
 	ClassDB::bind_method(D_METHOD("get_stack_index"), &Slot::get_stack_index);
+	ClassDB::bind_method(D_METHOD("set_item_id", "item_id"), &Slot::set_item_id);
+	ClassDB::bind_method(D_METHOD("get_item_id"), &Slot::get_item_id);
 	ClassDB::bind_method(D_METHOD("set_item", "item"), &Slot::set_item);
 	ClassDB::bind_method(D_METHOD("get_item"), &Slot::get_item);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &Slot::set_amount);
@@ -18,7 +20,6 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_categorized"), &Slot::is_categorized);
 	ClassDB::bind_method(D_METHOD("set_accepted_categories", "accepted_categories"), &Slot::set_accepted_categories);
 	ClassDB::bind_method(D_METHOD("get_accepted_categories"), &Slot::get_accepted_categories);
-	ClassDB::bind_method(D_METHOD("get_item_id"), &Slot::get_item_id);
 	ClassDB::bind_method(D_METHOD("get_max_stack_for_item", "item"), &Slot::get_max_stack_for_item);
 	ClassDB::bind_method(D_METHOD("is_full"), &Slot::is_full);
 	ClassDB::bind_method(D_METHOD("is_empty"), &Slot::is_empty);
@@ -56,6 +57,14 @@ void Slot::set_stack_index(const int &new_index) {
 
 int Slot::get_stack_index() const {
 	return stack_index;
+}
+
+void Slot::set_item_id(const String &new_item_id) {
+	item_id = new_item_id;
+}
+
+String Slot::get_item_id() const {
+	return item_id;
 }
 
 void Slot::set_item(const Ref<Item> &new_item) {
@@ -145,14 +154,6 @@ int Slot::left_to_fill() {
 		return get_max_stack() - amount;
 	}
 	return -1;
-}
-
-String Slot::get_item_id() const {
-	if (this->item == nullptr || this->item->get_definition() == nullptr) {
-		return "";
-	} else {
-		return this->item->get_definition()->get_id();
-	}
 }
 
 int Slot::get_max_stack_for_item(Ref<ItemDefinition> item) const {

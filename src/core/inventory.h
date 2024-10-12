@@ -10,8 +10,8 @@ class Inventory : public NodeInventories {
 	GDCLASS(Inventory, NodeInventories);
 
 private:
-	TypedArray<Slot> slots;
-	TypedArray<ItemStack> stacks;
+	Vector2i size = Vector2i(4, 4);
+	TypedArray<TypedArray<Slot>> slots;
 	bool create_slot_if_needed = false;
 	bool remove_slot_if_empty = false;
 	int slot_amount = 16;
