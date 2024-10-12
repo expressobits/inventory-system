@@ -12,13 +12,25 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("interact"):
-		print("Inventory Slots:")
-		for slot in inventory.slots:
-			if slot.item != null:
-				print(slot.item.definition.name," x ", slot.amount)
-			else:
-				print("Empty")
+		print_inv()
 	if Input.is_action_just_pressed("add_item_a"):
-		var item = Item.new()
-		item.definition = inventory.database.get_item(item_id)
-		inventory.add(item, 1)
+		var amount = inventory.add_stack("wood")
+		print_inv()
+	if Input.is_action_just_pressed("remove_item_a"):
+		var amount = inventory.remove_stack("wood")
+		print_inv()
+	if Input.is_action_just_pressed("add_item_b"):
+		var amount = inventory.add_stack("stone")
+		print_inv()
+	if Input.is_action_just_pressed("remove_item_b"):
+		var amount = inventory.remove_stack("stone")
+		print_inv()
+
+func print_inv():
+	print("---- INV ---")
+	print("Slots:")
+	for slot in inventory.slots:
+		print(slot.stack_index)
+	print("Stacks:")
+	for stack in inventory.stacks:
+		print(stack.serialize())

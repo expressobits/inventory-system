@@ -1,12 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://csvypwppcls1l"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_nssfi"]
-[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.inv" id="4_okmux"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_okmux"]
 
 [node name="InventoryTutorial" type="Node3D"]
 script = ExtResource("1_nssfi")
 item_id = "wood"
 
 [node name="Inventory" type="Inventory" parent="."]
-create_slot_if_needed = true
+slots = Array[Slot]([null, null, null, null])
+slot_amount = 4
 database = ExtResource("4_okmux")
