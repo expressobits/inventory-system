@@ -7,7 +7,6 @@
 
 #include "base/craft_station_type.h"
 #include "base/inventory_database.h"
-#include "base/item.h"
 #include "base/item_category.h"
 #include "base/item_definition.h"
 #include "base/item_stack.h"
@@ -26,7 +25,6 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	}
 	GDREGISTER_CLASS(CraftStationType);
 	GDREGISTER_CLASS(InventoryDatabase);
-	GDREGISTER_CLASS(Item);
 	GDREGISTER_CLASS(ItemCategory);
 	GDREGISTER_CLASS(ItemDefinition);
 	GDREGISTER_CLASS(ItemStack);

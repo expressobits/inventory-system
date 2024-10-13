@@ -1,7 +1,6 @@
 #ifndef ITEM_STACK_CLASS_H
 #define ITEM_STACK_CLASS_H
 
-#include "item.h"
 #include <godot_cpp/classes/resource.hpp>
 
 using namespace godot;

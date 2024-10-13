@@ -35,7 +35,7 @@ public:
 	void previous_item();
 	bool has_valid_item_id() const;
 	bool has_item_on_selection() const;
-	Ref<Item> get_selected_item() const;
+	String get_selected_item() const;
 };
 
 #endif // HOTBAR_CLASS_H

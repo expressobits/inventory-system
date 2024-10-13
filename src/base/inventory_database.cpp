@@ -385,17 +385,7 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 
 String InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
 	String data = String();
-	Ref<Item> item = slot->get_item();
-	if (item != nullptr) {
-		Dictionary item_data = Dictionary();
-		if (item->get_definition() == nullptr) {
-			data += "";
-		} else {
-			data += item->get_definition()->get_id();
-		}
-		// item_data["properties"] = item->get_properties();
-		// data["item"] = item_data;
-	}
+	data += slot->get_item_id();
 	data += " ";
 	data += String::num_int64(slot->get_amount());
 	// data["categorized"] = slot->is_categorized();
@@ -407,18 +397,7 @@ void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const String data) cons
 	ERR_FAIL_COND_MSG(array.size() < 2, "Data to deserialize slot is invalid: Does not contain the 'amount' field");
 	// ERR_FAIL_COND_MSG(!data.has("categorized"), "Data to deserialize slot is invalid: Does not contain the 'categorized' field");
 	if (!array[0].is_empty()) {
-		// Dictionary item_data = data["item"];
-		// ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
-		// ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
-		Ref<Item> item = slot->get_item();
-		if (item == nullptr) {
-			item.instantiate();
-		}
-		if (!array[0].is_empty()) {
-			item->set_definition(get_item(array[0]));
-		}
-		// item->set_properties(item_data["properties"]);
-		slot->set_item(item);
+		slot->set_item_id(array[0]);
 	}
 	if (!array[1].is_empty()) {
 		slot->set_amount(array[1].to_int());

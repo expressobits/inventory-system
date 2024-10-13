@@ -101,13 +101,13 @@ bool Hotbar::has_item_on_selection() const {
 	return has_valid_item_id();
 }
 
-Ref<Item> Hotbar::get_selected_item() const {
+String Hotbar::get_selected_item() const {
 	Inventory *inventory = get_inventory();
 	if (!has_valid_item_id()) {
-		return nullptr;
+		return "";
 	}
 	Ref<Slot> slot = inventory->get_slots()[selection_index];
-	return slot->get_item();
+	return slot->get_item_id();
 }
 
 Hotbar::Hotbar() {
