@@ -6,7 +6,7 @@ extends Node3D
 @export var distance_for_stack : float = 0.05
 
 var property_name_of_visual : String
-var last_item : Item = null
+var last_item_id : String = ""
 var inventory : Inventory
 #var objects_per_id : Dictionary
 var slot_index : int
@@ -26,15 +26,16 @@ func _on_updated_slot(changed_slot_index : int):
 	if self.slot_index != changed_slot_index:
 		return
 	_clear_last_visual()
-	var item = inventory.slots[slot_index].item
+	var item_id = inventory.slots[slot_index].item_id
 	var amount = inventory.slots[slot_index].amount
-	if item == null or item.definition == null:
+	var definition = inventory.database.get_item(item_id)
+	if item_id == "" or definition == null:
 		return
 	var item_scene = null
-	if item.definition.properties.has(property_name_of_visual):
-		var path = item.definition.properties[property_name_of_visual]
+	if definition.properties.has(property_name_of_visual):
+		var path = definition.properties[property_name_of_visual]
 		item_scene = load(path)
-	last_item = item
+	last_item_id = item_id
 	
 	if item_scene == null:
 #		default_hand_item_object.visible = true

@@ -14,11 +14,9 @@ func _process(delta):
 	if Input.is_action_just_pressed("interact"):
 		print("Inventory Slots:")
 		for slot in inventory.slots:
-			if slot.item != null:
-				print(slot.item.definition.name," x ", slot.amount)
+			if slot.item_id != "":
+				print(slot.item_id," x ", slot.amount)
 			else:
 				print("Empty")
 	if Input.is_action_just_pressed("add_item_a"):
-		var item = Item.new()
-		item.definition = inventory.database.get_item(item_id)
-		inventory.add(item, 1)
+		inventory.add(item_id, 1)

@@ -68,11 +68,12 @@ func check() -> bool:
 	var index = input_inventory.get_slot_index_with_an_item_of_category(category)
 	if index == -1:
 		return false
-	var item = input_inventory.slots[index].item
-	if not item.definition.properties.has("fuel"):
+	var item_id = input_inventory.slots[index].item_id
+	var definition = input_inventory.database.get_item(item_id)
+	if not definition.properties.has("fuel"):
 		return false
-	fuel += item.definition.properties["fuel"]
-	input_inventory.remove(item, 1)
+	fuel += definition.properties["fuel"]
+	input_inventory.remove(item_id)
 	return true
 
 

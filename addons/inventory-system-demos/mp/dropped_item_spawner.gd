@@ -22,9 +22,8 @@ func _spawn_custom(data : Array):
 	obj.position = data[0]
 	obj.rotation = data[1]
 	var item_id : String = obj.item_id
-	var item = Item.new()
-	item.definition = database.get_item(item_id)
-	if data.size() == 4 and typeof(data[3]) == TYPE_DICTIONARY:
-		item.properties = data[3]
+	var definition = database.get_item(item_id)
+	#if data.size() == 4 and typeof(data[3]) == TYPE_DICTIONARY:
+		#item.properties = data[3]
 	obj.item_id = item_id
 	return obj

@@ -63,16 +63,16 @@ func _on_slot_removed(slot_index : int):
 	_slot_removed_rpc.rpc(slot_index)
 
 
-func _on_item_added(item : Item, amount : int):
+func _on_item_added(item_id : String, amount : int):
 	if not multiplayer.is_server():
 		return
-	_item_added_rpc.rpc(item.definition.id, amount)
+	_item_added_rpc.rpc(item_id, amount)
 
 
-func _on_item_removed(definition : ItemDefinition, amount : int):
+func _on_item_removed(item_id : String, amount : int):
 	if not multiplayer.is_server():
 		return
-	_item_removed_rpc.rpc(definition.id, amount)
+	_item_removed_rpc.rpc(item_id, amount)
 
 
 @rpc
@@ -107,18 +107,11 @@ func _slot_removed_rpc(slot_index : int):
 func _item_added_rpc(item_id : String, amount : int):
 	if multiplayer.is_server():
 		return
-	var item = Item.new()
-	item.definition = inventory.database.get_item(item_id)
-	if item.definition == null:
-		return
-	inventory.item_added.emit(item, amount)
+	inventory.item_added.emit(item_id, amount)
 
 
 @rpc
 func _item_removed_rpc(item_id : String, amount : int):
 	if multiplayer.is_server():
 		return
-	var definition : ItemDefinition = inventory.database.get_item(item_id)
-	if definition == null:
-		return
-	inventory.item_removed.emit(definition, amount)
+	inventory.item_removed.emit(item_id, amount)

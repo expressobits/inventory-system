@@ -3,6 +3,8 @@ extends Control
 
 ## Represents a [Slot] visually with item [Texture2D] and amount [Label]
 
+var database : InventoryDatabase
+
 @onready var item_icon : TextureRect = get_node(NodePath("Item Icon"))
 @onready var amount_label : Label = get_node(NodePath("Amount"))
 @onready var selection_background : Panel = get_node(NodePath("Selected"))
@@ -18,9 +20,10 @@ extends Control
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_slot(database : InventoryDatabase, slot : Slot):
+	self.database = database
 	category_icon.visible = slot.amount == 0
 	setup_category(database, slot)
-	if slot != null and slot.has_valid():
+	if slot != null and slot.item_id != "":
 		update_info_with_item(slot)
 		return
 	item_icon.texture = null
@@ -52,15 +55,17 @@ func is_categorized_slot_and_have_category(slot : Slot):
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
 func update_info_with_item(slot : Slot):
-	if slot.has_valid():
-		item_icon.texture = slot.item.definition.icon
-		tooltip_text = slot.item.definition.name
-		if slot.item.properties.has("durability") and slot.item.definition.properties.has("durability"):
-			durability.visible = true
-			durability.value = slot.item.properties.durability
-			durability.max_value = slot.item.definition.properties.durability
-		else:
-			durability.visible = false
+	if slot.item_id != "":
+		var item_id = slot.item_id
+		var definition = database.get_item(item_id)
+		item_icon.texture = definition.icon
+		tooltip_text = definition.name
+		#if slot.item.properties.has("durability") and definition.properties.has("durability"):
+			#durability.visible = true
+			#durability.value = slot.properties.durability
+			#durability.max_value = definition.properties.durability
+		#else:
+			#durability.visible = false
 	else:
 		category_icon.texture = null
 		tooltip_text = ""

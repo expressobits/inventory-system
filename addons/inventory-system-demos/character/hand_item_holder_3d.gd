@@ -31,8 +31,8 @@ func _on_change_selection(new_index : int):
 	if not hotbar.has_valid_item_id():
 		interactor.set_actual_hand_object(null)
 		return
-	var item = hotbar.get_selected_item()
-	var item_definition = item.definition
+	var item_id = hotbar.get_selected_item()
+	var item_definition = hotbar.database.get_item(item_id)
 	var hand_item_scene = null
 	if item_definition.properties.has("hand_item"):
 		var path = item_definition.properties["hand_item"]

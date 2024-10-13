@@ -163,7 +163,7 @@ func drop_holder():
 		drop_holder_rpc.rpc()
 
 
-func _on_request_drop_obj(dropped_item : String, item : Item):
+func _on_request_drop_obj(dropped_item : String, item_id : String):
 	if(drop_item_spawner == null):
 		printerr("Spawner is null!")
 		return
@@ -172,7 +172,7 @@ func _on_request_drop_obj(dropped_item : String, item : Item):
 	data.append(drop_parent_position.position)
 	data.append(drop_parent_position.rotation)
 	data.append(packed_scene.resource_path)
-	data.append(item.properties)
+	data.append(Dictionary())
 	var obj = drop_item_spawner.spawn(data)
 	dropped.emit(obj)
 
@@ -252,9 +252,7 @@ func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_mov
 
 @rpc("any_peer")
 func slot_holder_updated_rpc(item_id : String, amount : int):
-	var item = Item.new()
-	item.definition = database.get_item(item_id)
-	change_holder(item, amount)
+	change_holder(item_id, amount)
 
 
 @rpc

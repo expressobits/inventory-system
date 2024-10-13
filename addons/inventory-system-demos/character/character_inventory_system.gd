@@ -124,58 +124,55 @@ func inventory_inputs():
 
 
 #region Slot Holder
-func change_holder(item : Item, amount : int):
+func change_holder(item_id : String, amount : int):
 	slot_holder.amount = amount
-	if amount > 0 and item != null:
-		slot_holder.item = item
+	if slot_holder.amount > 0 and item_id != "":
+		slot_holder.item_id = item_id
 	else:
-		slot_holder.item = Item.new()
+		slot_holder.item_id = ""
 
 
 func to_holder(slot_index : int, inventory : Inventory, amount : int):
 	if slot_holder.has_valid():
 		return
 	var slot : Slot = inventory.slots[slot_index]
-	var item : Item = slot.item.duplicate()
+	var item_id : String = slot.item_id
 	if not slot.has_valid():
 		return
-	var amount_no_removed = inventory.remove_at(slot_index, item, amount)
-	change_holder(item, amount - amount_no_removed)
+	var amount_no_removed = inventory.remove_at(slot_index, item_id, amount)
+	change_holder(item_id, amount - amount_no_removed)
 
 
 func holder_to(inventory : Inventory):
 	if not slot_holder.has_valid():
 		return
-	if slot_holder.item == null:
+	if slot_holder.item_id == "":
 		return
-	var amount_no_add : int = inventory.add(slot_holder.item, slot_holder.amount)
-	change_holder(slot_holder.item, amount_no_add)
+	var amount_no_add : int = inventory.add(slot_holder.item_id, slot_holder.amount)
+	change_holder(slot_holder.item_id, amount_no_add)
 
 
 func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
 	if not slot_holder.has_valid():
 		return
 	var slot : Slot = inventory.slots[slot_index];
-	var item : Item = Item.new()
-	item.definition = slot_holder.item.definition
-	item.properties = slot_holder.item.properties.duplicate()
-	if inventory.is_empty_slot(slot_index) or item.is_stack_with(slot.item):
+	var item_id : String = slot_holder.item_id
+	var definition : ItemDefinition = inventory.database.get_item(item_id)
+	if inventory.is_empty_slot(slot_index) or item_id == slot.item_id:
 		var amount = slot_holder.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move
-		var amount_no_add = inventory.add_at(slot_index, item, amount)
-		change_holder(item, slot_holder.amount - amount + amount_no_add)
+		var amount_no_add = inventory.add_at(slot_index, item_id, amount)
+		change_holder(item_id, slot_holder.amount - amount + amount_no_add)
 	else:
 		# Different items in slot and other_slot
 		# Check if slot_holder amount is equal of origin_slot amount
-		if slot.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(slot), item.definition.categories):
+		if slot.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(slot), definition.categories):
 			return
-		var temp_item : Item = Item.new()
-		temp_item.definition = slot.item.definition
-		temp_item.properties = slot.item.properties.duplicate()
 		var new_amount = slot.amount
-		inventory.set_slot_content(slot_index, item.definition, item.properties, slot_holder.amount)
-		change_holder(temp_item, new_amount)
+		var new_item_id = slot.item_id
+		inventory.set_slot_content(slot_index, slot_holder.item_id, Dictionary(), slot_holder.amount)
+		change_holder(new_item_id, new_amount)
 		
 
 
@@ -188,15 +185,7 @@ func pick_to_inventory(node : Node):
 		
 	var item_id = node.item_id
 	
-	var item_definition = database.get_item(item_id)
-	
-	if item_definition == null:
-		return
-		
-	var item = Item.new()
-	item.definition = item_definition
-
-	if main_inventory.add(item, 1, true) == 0:
+	if main_inventory.add(item_id, 1, true) == 0:
 		emit_signal("picked", node)
 		node.queue_free();
 		return
@@ -207,15 +196,15 @@ func pick_to_inventory(node : Node):
 func drop_holder():
 	if not slot_holder.has_valid():
 		return
-	main_inventory.drop(slot_holder.item, slot_holder.amount)
-	change_holder(null, 0)
+	main_inventory.drop(slot_holder.item_id, slot_holder.amount)
+	change_holder("", 0)
 
 
-func _on_request_drop_obj(dropped_item : String, item : Item):
+func _on_request_drop_obj(dropped_item : String, item_id : String):
 	var packed_scene : PackedScene = load(dropped_item)
 	var node = packed_scene.instantiate()
 	drop_parent.add_child(node)
-	node.set("item", item)
+	node.set("item_id", item_id)
 	node.set("position", drop_parent_position.get("position"))
 	node.set("rotation", drop_parent_position.get("position"))
 	dropped.emit(node)

@@ -80,7 +80,7 @@ func setup(character : CharacterInventorySystem):
 	set_player_inventories(inventories)
 	character.opened_inventory.connect(_on_open_inventory)
 	character.closed_inventory.connect(_on_close_inventory)
-	character.slot_holder.updated.connect(_updated_transaction_slot)
+	character.slot_holder.updated.connect(_updated_transaction_slot.bind(character.main_inventory.database))
 	
 	# Stations
 	character.opened_station.connect(_on_open_craft_station)
@@ -194,8 +194,8 @@ func _inventory_point_down(event : InputEvent, inventory : Inventory):
 		$SlotDrop.play()
 
 
-func _updated_transaction_slot():
-	transaction_slot_ui.update_info_with_item(character.slot_holder)
+func _updated_transaction_slot(database : InventoryDatabase):
+	transaction_slot_ui.update_info_with_slot(database, character.slot_holder)
 
 func _on_craft(craft_station : CraftStation, recipe_index : int):
 	character.craft(craft_station, recipe_index)

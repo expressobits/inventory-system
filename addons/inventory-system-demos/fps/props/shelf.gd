@@ -32,18 +32,20 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 	if openable.is_open:
 		return
 	var interactor = character.character_inventory_system.interactor
-	var item = interactor.hotbar.get_selected_item()
+	var item_id = interactor.hotbar.get_selected_item()
+	var definition = interactor.hotbar.database.get_item(item_id)
 	var char_inventory = character.character_inventory_system.main_inventory
 	var char_slot_index = interactor.hotbar.selection_index
 	if action_index == 0:
 		super.interact(character, action_index)
 	if action_index == 1:
-		var shelf_item = get_actual_item(actual_slot_index)
-		if shelf_item != null and shelf_item.definition != null:
+		var shelf_item_id = get_actual_item(actual_slot_index)
+		var shelf_item_definition = interactor.hotbar.database.get_item(shelf_item_id)
+		if shelf_item_definition != null:
 			inventory.transfer(actual_slot_index, char_inventory, char_slot_index, 1)
 		return
 	if action_index == 2:
-		if item != null and item.definition != null:
+		if definition != null:
 			char_inventory.transfer(char_slot_index, inventory, actual_slot_index, 1)
 		return
 
@@ -53,7 +55,7 @@ func interact(character : Node, action_index : int = 0):
 
 func get_actual_item(actual_slot_index):
 	if actual_slot_index != -1:
-		return inventory.slots[actual_slot_index].item
+		return inventory.slots[actual_slot_index].item_id
 	return null
 
 
@@ -62,17 +64,19 @@ func get_interact_actions(interactor : Interactor) -> Array:
 	if openable.is_open:
 		return actions_shelf
 	actions_shelf.append_array(actions)
-	var shelf_item = get_actual_item(slot_index)
-	if shelf_item != null and shelf_item.definition != null:
+	var shelf_item_id = get_actual_item(slot_index)
+	var shelf_definition = inventory.database.get_item(shelf_item_id)
+	if shelf_item_id != null and shelf_definition != null:
 		var action = InteractAction.new()
-		action.description = "Get " + shelf_item.definition.name
+		action.description = "Get " + shelf_definition.name
 		action.input = "item_pickup"
 		action.code = 1
 		actions_shelf.append(action)
-	var item : Item = interactor.hotbar.get_selected_item()
-	if item != null and item.definition != null and (shelf_item.definition == null or shelf_item.definition == item.definition):
+	var item_id : String = interactor.hotbar.get_selected_item()
+	var definition = inventory.database.get_item(item_id)
+	if item_id != "" and definition != null and (shelf_definition == null or shelf_definition == definition):
 		var action = InteractAction.new()
-		action.description = "Place " + item.definition.name
+		action.description = "Place " + definition.name
 		action.input = "item_place"
 		action.code = 2
 		actions_shelf.append(action)

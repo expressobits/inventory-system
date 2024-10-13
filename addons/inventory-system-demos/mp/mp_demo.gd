@@ -52,12 +52,11 @@ func make_scene_objects_to_network():
 	for i in items.get_child_count():
 		var item_dropped = items.get_child(i) as DroppedItem3D
 		var item_id : String = item_dropped.item_id
-		var item : Item = Item.new()
-		item.definition = database.get_item(item_id)
+		var definition = database.get_item(item_id)
 		var position = item_dropped.position
 		var rotation = item_dropped.rotation
 		item_dropped.queue_free()
-		var dropped_item_path = item.definition.properties["dropped_item"]
+		var dropped_item_path = definition.properties["dropped_item"]
 		var _obj = spawner.spawn([position, rotation, dropped_item_path])
 
 
