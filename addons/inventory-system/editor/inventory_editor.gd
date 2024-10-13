@@ -107,6 +107,7 @@ func new_file(path: String, content: String = "") -> void:
 func import_inv_file(path: String) -> void:
 	if database == null:
 		return
+	database.clear_current_data()
 	database.import_json_file(path)
 	
 	load_database(database)
