@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dnlxnu6jpej17"]
+[gd_scene load_steps=15 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="8_227f4"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="9_c6j5p"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tipcy"]
@@ -83,5 +84,8 @@ inventory = NodePath("..")
 [node name="SyncCraftStation" type="Node" parent="CharacterInventorySystem/CraftStation" index="0" node_paths=PackedStringArray("craft_station")]
 script = ExtResource("9_c6j5p")
 craft_station = NodePath("..")
+
+[node name="UseItemsExample" parent="." index="6"]
+script = ExtResource("8_227f4")
 
 [editable path="CharacterInventorySystem"]

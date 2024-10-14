@@ -60,12 +60,12 @@ func update_info_with_item(slot : Slot):
 		var definition = database.get_item(item_id)
 		item_icon.texture = definition.icon
 		tooltip_text = definition.name
-		#if slot.item.properties.has("durability") and definition.properties.has("durability"):
-			#durability.visible = true
-			#durability.value = slot.properties.durability
-			#durability.max_value = definition.properties.durability
-		#else:
-			#durability.visible = false
+		if slot.properties.has("durability") and definition.properties.has("durability"):
+			durability.visible = true
+			durability.value = slot.properties.durability
+			durability.max_value = definition.properties.durability
+		else:
+			durability.visible = false
 	else:
 		category_icon.texture = null
 		tooltip_text = ""

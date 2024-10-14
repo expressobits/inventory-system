@@ -4,12 +4,11 @@ extends Node2D
 
 const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
-@export var item : ItemDefinition
+@export var item_id : String
+@export var item_properties : Dictionary
 @export var is_pickable := true
 @export var actions : Array
-
-func _ready():
-	actions[0].description = actions[0].description.replace("Item", item.name)
+@export var default_description : String = "Get Item"
 
 
 func get_interaction_position(interaction_point : Vector2) -> Vector2:
@@ -17,6 +16,7 @@ func get_interaction_position(interaction_point : Vector2) -> Vector2:
 
 
 func get_interact_actions(_interactor : Interactor) -> Array:
+	actions[0].description = default_description.replace("Item", item_id)
 	return actions
 
 

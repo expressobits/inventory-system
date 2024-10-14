@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=23 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
@@ -13,6 +13,13 @@
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="16_47qja"]
 [ext_resource type="PackedScene" uid="uid://lwi2lvfj5ltx" path="res://addons/inventory-system-demos/fps/props/shelf.tscn" id="17_k32gy"]
+
+[sub_resource type="Slot" id="Slot_ga3tg"]
+item_id = "stone_axe"
+amount = 1
+properties = {
+"durability": 49
+}
 
 [sub_resource type="Slot" id="Slot_xr6i0"]
 categorized = 1
@@ -82,6 +89,7 @@ inventory_name = "Dynamic Inventory"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
+slots = Array[Slot]([SubResource("Slot_ga3tg"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
 create_slot_if_needed = false
 remove_slot_if_empty = false
 inventory_name = "Static Inventory"

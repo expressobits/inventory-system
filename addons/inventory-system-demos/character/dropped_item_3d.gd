@@ -5,6 +5,7 @@ extends Node3D
 const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @export var item_id : String
+@export var item_properties : Dictionary
 @export var is_pickable := true
 @export var actions : Array
 @export var default_description : String = "Get Item"

@@ -163,7 +163,7 @@ func drop_holder():
 		drop_holder_rpc.rpc()
 
 
-func _on_request_drop_obj(dropped_item : String, item_id : String):
+func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
 	if(drop_item_spawner == null):
 		printerr("Spawner is null!")
 		return
@@ -172,7 +172,7 @@ func _on_request_drop_obj(dropped_item : String, item_id : String):
 	data.append(drop_parent_position.position)
 	data.append(drop_parent_position.rotation)
 	data.append(packed_scene.resource_path)
-	data.append(Dictionary())
+	data.append(properties)
 	var obj = drop_item_spawner.spawn(data)
 	dropped.emit(obj)
 

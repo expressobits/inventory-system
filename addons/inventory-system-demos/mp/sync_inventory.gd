@@ -89,7 +89,7 @@ func _slot_added_rpc(slot_index : int):
 
 
 @rpc
-func _updated_slot_rpc(slot_index : int, slot_data : String):
+func _updated_slot_rpc(slot_index : int, slot_data : Array):
 	if multiplayer.is_server():
 		return
 	var slot : Slot = inventory.slots[slot_index]

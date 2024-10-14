@@ -124,12 +124,13 @@ func inventory_inputs():
 
 
 #region Slot Holder
-func change_holder(item_id : String, amount : int):
+func change_holder(item_id : String, amount : int, properties : Dictionary = {}):
 	slot_holder.amount = amount
 	if slot_holder.amount > 0 and item_id != "":
 		slot_holder.item_id = item_id
 	else:
 		slot_holder.item_id = ""
+	slot_holder.properties = properties
 
 
 func to_holder(slot_index : int, inventory : Inventory, amount : int):
@@ -137,10 +138,11 @@ func to_holder(slot_index : int, inventory : Inventory, amount : int):
 		return
 	var slot : Slot = inventory.slots[slot_index]
 	var item_id : String = slot.item_id
+	var properties : Dictionary = slot.properties
 	if not slot.has_valid():
 		return
 	var amount_no_removed = inventory.remove_at(slot_index, item_id, amount)
-	change_holder(item_id, amount - amount_no_removed)
+	change_holder(item_id, amount - amount_no_removed, properties)
 
 
 func holder_to(inventory : Inventory):
@@ -148,8 +150,8 @@ func holder_to(inventory : Inventory):
 		return
 	if slot_holder.item_id == "":
 		return
-	var amount_no_add : int = inventory.add(slot_holder.item_id, slot_holder.amount)
-	change_holder(slot_holder.item_id, amount_no_add)
+	var amount_no_add : int = inventory.add(slot_holder.item_id, slot_holder.amount, slot_holder.properties)
+	change_holder(slot_holder.item_id, amount_no_add, slot_holder.properties)
 
 
 func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
@@ -157,13 +159,14 @@ func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int 
 		return
 	var slot : Slot = inventory.slots[slot_index];
 	var item_id : String = slot_holder.item_id
+	var slot_properties : Dictionary = slot.properties
 	var definition : ItemDefinition = inventory.database.get_item(item_id)
 	if inventory.is_empty_slot(slot_index) or item_id == slot.item_id:
 		var amount = slot_holder.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move
-		var amount_no_add = inventory.add_at(slot_index, item_id, amount)
-		change_holder(item_id, slot_holder.amount - amount + amount_no_add)
+		var amount_no_add = inventory.add_at(slot_index, item_id, amount, slot_holder.properties)
+		change_holder(item_id, slot_holder.amount - amount + amount_no_add, slot_properties)
 	else:
 		# Different items in slot and other_slot
 		# Check if slot_holder amount is equal of origin_slot amount
@@ -171,8 +174,9 @@ func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int 
 			return
 		var new_amount = slot.amount
 		var new_item_id = slot.item_id
-		inventory.set_slot_content(slot_index, slot_holder.item_id, Dictionary(), slot_holder.amount)
-		change_holder(new_item_id, new_amount)
+		var new_properties = slot.properties
+		inventory.set_slot_content(slot_index, slot_holder.item_id, slot_holder.amount, slot_holder.properties)
+		change_holder(new_item_id, new_amount, new_properties)
 		
 
 
@@ -184,8 +188,9 @@ func pick_to_inventory(node : Node):
 		return
 		
 	var item_id = node.item_id
+	var item_properties = node.item_properties
 	
-	if main_inventory.add(item_id, 1, true) == 0:
+	if main_inventory.add(item_id, 1, item_properties, true) == 0:
 		emit_signal("picked", node)
 		node.queue_free();
 		return
@@ -196,17 +201,18 @@ func pick_to_inventory(node : Node):
 func drop_holder():
 	if not slot_holder.has_valid():
 		return
-	main_inventory.drop(slot_holder.item_id, slot_holder.amount)
+	main_inventory.drop(slot_holder.item_id, slot_holder.amount, slot_holder.properties)
 	change_holder("", 0)
 
 
-func _on_request_drop_obj(dropped_item : String, item_id : String):
+func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
 	var packed_scene : PackedScene = load(dropped_item)
 	var node = packed_scene.instantiate()
 	drop_parent.add_child(node)
 	node.set("item_id", item_id)
 	node.set("position", drop_parent_position.get("position"))
 	node.set("rotation", drop_parent_position.get("position"))
+	node.set("item_properties", properties)
 	dropped.emit(node)
 #endregion
 

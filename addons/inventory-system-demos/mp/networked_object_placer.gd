@@ -6,8 +6,7 @@ class_name NetworkedObjectPlacer
 @onready var dropped_spawner : DropItemSpawner = get_node(dropped_spawner_path)
 
 
-func place_item(item : Item, position : Vector3, rotation : Vector3):
-	var item_id : String = item.definition.id
+func place_item(item_id : String, position : Vector3, rotation : Vector3):
 	if item_id.is_empty():
 		return
 	if not multiplayer.is_server():
