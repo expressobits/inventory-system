@@ -96,7 +96,7 @@ void Slot::set_accepted_categories(const TypedArray<String> &new_accepted_catego
 	accepted_categories = new_accepted_categories;
 }
 
-void Slot::set_accepted_categories_code(int new_code) {
+void Slot::set_accepted_categories_code(const int new_code) {
 	accepted_categories_code = new_code;
 }
 
@@ -123,7 +123,7 @@ bool Slot::has_valid() const {
 	return item_id != "" && amount > 0;
 }
 
-bool Slot::contains(String item_id, int amount) const {
+bool Slot::contains(const String &item_id, const int amount) const {
 	if (this->item_id != item_id) {
 		return false;
 	} else {

@@ -35,13 +35,13 @@ public:
 	void set_categorized(const bool &new_categorized);
 	int is_categorized() const;
 	void set_accepted_categories(const TypedArray<String> &new_accepted_categories);
-	void set_accepted_categories_code(int new_code);
+	void set_accepted_categories_code(const int new_code);
 	int get_accepted_categories_code() const;
 	TypedArray<String> get_accepted_categories() const;
 	bool is_full() const;
 	bool is_empty() const;
 	bool has_valid() const;
-	bool contains(String item_id, int amount) const;
+	bool contains(const String &item_id, const int amount) const;
 	int left_to_fill() const;
 	bool can_stack(const String &item_id, const Dictionary &properties) const;
 };
