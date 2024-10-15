@@ -67,8 +67,7 @@ void Hotbar::set_selection_index(const int &new_selection_index) {
 	if (selection_index < 0) {
 		selection_index += slots_in_hot_bar;
 	}
-	if(old_selection != selection_index && is_node_ready())
-	{
+	if (old_selection != selection_index && is_node_ready()) {
 		emit_signal("on_change_selection", selection_index);
 	}
 }

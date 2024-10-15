@@ -121,7 +121,6 @@ int Inventory::get_slot_index_with_an_item_of_category(const Ref<ItemCategory> &
 }
 
 int Inventory::amount_of_item(const String &item_id) const {
-
 	int amount_in_inventory = 0;
 	for (size_t i = 0; i < slots.size(); i++) {
 		Ref<Slot> slot = slots[i];
@@ -344,7 +343,8 @@ String Inventory::get_inventory_name() const {
 
 Dictionary Inventory::serialize() const {
 	Dictionary data = Dictionary();
-	data["slots"] = get_database()->serialize_slots(slots);;
+	data["slots"] = get_database()->serialize_slots(slots);
+	;
 	return data;
 }
 
@@ -357,7 +357,7 @@ void Inventory::deserialize(const Dictionary data) {
 bool Inventory::drop(const String &item_id, const int &amount, const Dictionary &properties) {
 	ERR_FAIL_NULL_V_MSG(get_database(), false, "'database' is null.");
 	Ref<ItemDefinition> _definition = get_database()->get_item(item_id);
-	ERR_FAIL_NULL_V_MSG(_definition, false,"'item_definition' is null.");
+	ERR_FAIL_NULL_V_MSG(_definition, false, "'item_definition' is null.");
 	if (_definition->get_properties().has("dropped_item")) {
 		String path = _definition->get_properties()["dropped_item"];
 		// We have i < 1000 to have some enforced upper limit preventing long loops
@@ -394,7 +394,7 @@ int Inventory::add_to_slot(Ref<Slot> slot, const String &item_id, const int &amo
 
 	if (slot->is_categorized()) {
 		int flag_category = get_flag_categories_of_slot(slot);
-		if (flag_category != 0 && !is_accept_any_categories(flag_category ,definition->get_categories())) {
+		if (flag_category != 0 && !is_accept_any_categories(flag_category, definition->get_categories())) {
 			return amount;
 		}
 	}
@@ -430,7 +430,7 @@ int Inventory::remove_from_slot(Ref<Slot> slot, const String &item_id, const int
 	return amount - amount_to_remove;
 }
 
-int Inventory::get_flag_categories_of_slot(const Ref<Slot> slot) const{
+int Inventory::get_flag_categories_of_slot(const Ref<Slot> &slot) const {
 	int accepted_categories_code = 0;
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		for (size_t i = 0; i < slot->get_accepted_categories().size(); i++) {
@@ -456,7 +456,7 @@ bool Inventory::is_accept_any_categories(const int categories_flag, const TypedA
 	return false;
 }
 
-int Inventory::get_max_stack_of_slot(const Ref<Slot> slot, Ref<ItemDefinition> item) const {
+int Inventory::get_max_stack_of_slot(const Ref<Slot> &slot, Ref<ItemDefinition> &item) const {
 	if (slot->get_max_stack() == -1 && item != nullptr) {
 		return item->get_max_stack();
 	} else {
@@ -464,7 +464,7 @@ int Inventory::get_max_stack_of_slot(const Ref<Slot> slot, Ref<ItemDefinition> i
 	}
 }
 
-bool Inventory::contains_category_in_slot(const Ref<Slot> slot, Ref<ItemCategory> category) const {
+bool Inventory::contains_category_in_slot(const Ref<Slot> &slot, const Ref<ItemCategory> &category) const {
 	Ref<ItemDefinition> definition = get_database()->get_item(slot->get_item_id());
 	if (definition == nullptr) {
 		return false;
@@ -540,7 +540,6 @@ int Inventory::_add_to_slot(int slot_index, const String &item_id, int amount, c
 	emit_signal("updated_slot", slot_index);
 	return _remaining_amount;
 }
-
 
 int Inventory::_remove_from_slot(int slot_index, const String &item_id, int amount) {
 	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");

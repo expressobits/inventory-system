@@ -1,11 +1,10 @@
 #ifndef RECIPE_CLASS_H
 #define RECIPE_CLASS_H
 
-#include "slot.h"
-#include "item_stack.h"
 #include "craft_station_type.h"
+#include "item_stack.h"
+#include "slot.h"
 #include <godot_cpp/classes/resource.hpp>
-
 
 using namespace godot;
 

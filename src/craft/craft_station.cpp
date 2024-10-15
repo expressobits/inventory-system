@@ -228,14 +228,14 @@ void CraftStation::remove_crafting(int crafting_index) {
 	emit_signal("crafting_removed", crafting_index);
 }
 
-void CraftStation::_on_input_inventory_item_added(String item_id, int amount) {
+void CraftStation::_on_input_inventory_item_added(const String &item_id, int amount) {
 	if (Engine::get_singleton()->is_editor_hint())
 		return;
 	if (auto_craft)
 		_check_auto_crafts();
 }
 
-void CraftStation::_on_input_inventory_item_removed(String item_id, int amount) {
+void CraftStation::_on_input_inventory_item_removed(const String &item_id, int amount) {
 	if (Engine::get_singleton()->is_editor_hint())
 		return;
 
@@ -303,8 +303,7 @@ void CraftStation::load_valid_recipes() {
 	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
 		Ref<Recipe> recipe = get_database()->get_recipes()[i];
 		String recipe_craft_id;
-		if(recipe->get_station() != nullptr)
-		{
+		if (recipe->get_station() != nullptr) {
 			recipe_craft_id = recipe->get_station()->get_id();
 		}
 		if (recipe_craft_id == type_id) {

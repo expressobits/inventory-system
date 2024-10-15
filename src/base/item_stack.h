@@ -9,8 +9,8 @@ class ItemStack : public Resource {
 	GDCLASS(ItemStack, Resource);
 
 private:
-    String item_id = "";
-    int amount = 0;
+	String item_id = "";
+	int amount = 0;
 	Dictionary properties;
 
 protected:
@@ -19,14 +19,14 @@ protected:
 public:
 	ItemStack();
 	~ItemStack();
-    void set_item_id(const String &new_item_id);
+	void set_item_id(const String &new_item_id);
 	String get_item_id() const;
 	void set_amount(const int &new_amount);
 	int get_amount() const;
 	void set_properties(const Dictionary &new_properties);
 	Dictionary get_properties() const;
-    Array serialize() const;
-    void deserialize(Array data);
+	Array serialize() const;
+	void deserialize(Array data);
 
 	static String serialize_properties(const Dictionary properties);
 	static Dictionary deserialize_properties(const String properties_data);

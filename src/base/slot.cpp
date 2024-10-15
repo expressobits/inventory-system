@@ -139,7 +139,7 @@ int Slot::left_to_fill() const {
 }
 
 bool Slot::can_stack(const String &item_id, const Dictionary &properties) const {
-	if (get_item_id() == ""  || get_item_id() == item_id) {
+	if (get_item_id() == "" || get_item_id() == item_id) {
 		return get_properties().is_empty() && properties.is_empty();
 	}
 	return false;

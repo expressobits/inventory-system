@@ -5,7 +5,6 @@
 #include "base/slot.h"
 #include "inventory.h"
 
-
 using namespace godot;
 
 class Hotbar : public NodeInventories {

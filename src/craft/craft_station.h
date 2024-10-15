@@ -9,7 +9,6 @@
 
 using namespace godot;
 
-
 class Crafting : public Resource {
 	GDCLASS(Crafting, Resource);
 
@@ -52,8 +51,8 @@ private:
 	void _validate_property(PropertyInfo &p_property) const;
 	void _process_crafts(float delta);
 	bool _use_items(const Ref<Recipe> &recipe);
-	void _on_input_inventory_item_added(String item, int amount);
-	void _on_input_inventory_item_removed(String item, int amount);
+	void _on_input_inventory_item_added(const String &item_id, int amount);
+	void _on_input_inventory_item_removed(const String &item_id, int amount);
 	void _check_auto_crafts();
 
 protected:
@@ -66,12 +65,11 @@ public:
 		SEQUENTIAL,
 	};
 
-	enum TickUpdateMethod{
-		PROCESS = 0, 
+	enum TickUpdateMethod {
+		PROCESS = 0,
 		PHYSIC_PROCESS = 1,
-		CUSTOM  = 2
+		CUSTOM = 2
 	};
-	
 
 	CraftStation();
 	~CraftStation();
@@ -119,8 +117,8 @@ public:
 	TypedArray<Crafting> get_craftings() const;
 	void set_valid_recipes(const TypedArray<int> &new_valid_recipes);
 	TypedArray<int> get_valid_recipes() const;
-	void add_input_inventory(Inventory* input_inventory);
-	void remove_input_inventory(Inventory* input_inventory);
+	void add_input_inventory(Inventory *input_inventory);
+	void remove_input_inventory(Inventory *input_inventory);
 	Dictionary serialize() const;
 	void deserialize(const Dictionary data);
 };
