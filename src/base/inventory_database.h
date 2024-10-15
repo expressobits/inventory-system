@@ -64,8 +64,8 @@ public:
 	void deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const;
 	Dictionary serialize_station_type(const Ref<CraftStationType> craft_station_type) const;
 	void deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const;
-	String serialize_slot(const Ref<Slot> slot) const;
-	void deserialize_slot(Ref<Slot> slot, const String data) const;
+	Array serialize_slot(const Ref<Slot> slot) const;
+	void deserialize_slot(Ref<Slot> slot, const Array data) const;
 	Array serialize_slots(const TypedArray<Slot> slots) const;
 	void deserialize_slots(TypedArray<Slot> slots, const Array data) const;
 	Array serialize_item_stacks(const TypedArray<ItemStack> slots) const;
@@ -96,6 +96,8 @@ public:
 	void import_from_invdata(const String path);
 	Error import_json_file(const String path);
 	Error export_json_file(const String path);
+
+	Dictionary create_dynamic_properties(const String &item_id);
 };
 
 #endif // INVENTORY_DATABASE_CLASS_H

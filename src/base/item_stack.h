@@ -25,8 +25,8 @@ public:
 	int get_amount() const;
 	void set_properties(const Dictionary &new_properties);
 	Dictionary get_properties() const;
-    String serialize() const;
-    void deserialize(String data);
+    Array serialize() const;
+    void deserialize(Array data);
 
 	static String serialize_properties(const Dictionary properties);
 	static Dictionary deserialize_properties(const String properties_data);

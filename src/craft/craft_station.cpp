@@ -179,12 +179,8 @@ void CraftStation::finish_crafting(int crafting_index) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return;
 			}
-			// TODO item properties
-			// Ref<ItemDefinition> definition = get_database()->get_item(product->get_item_id());
-			// Ref<Item> item = memnew(Item());
-			// item->set_definition(definition);
-			// item->create_dynamic_properties();
-			amount_to_add = inventory->add(product->get_item_id(), product->get_amount());
+			Dictionary properties = get_database()->create_dynamic_properties(product->get_item_id());
+			amount_to_add = inventory->add(product->get_item_id(), product->get_amount(), properties);
 		}
 	}
 	emit_signal("on_crafted", crafting->get_recipe_index());
@@ -205,10 +201,7 @@ bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			// TODO item properties
-			// Ref<ItemDefinition> definition = get_database()->get_item(ingredient->get_item_id());
-			// Ref<Item> item = memnew(Item());
-			// item->set_definition(definition);
+			Dictionary properties = get_database()->create_dynamic_properties(ingredient->get_item_id());
 			amount_to_remove = inventory->remove(ingredient->get_item_id(), amount_to_remove);
 		}
 		if (amount_to_remove > 0) {
@@ -379,10 +372,6 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			// TODO item properties
-			// Ref<ItemDefinition> definition = get_database()->get_item(item_stack->get_item_id());
-			// Ref<Item> item = memnew(Item());
-			// item->set_definition(definition);
 			amount_total += inventory->amount_of_item(item_stack->get_item_id());
 		}
 		if (amount_total < item_stack->get_amount()) {
@@ -398,10 +387,6 @@ bool CraftStation::contains_ingredients(const Ref<Recipe> &recipe) const {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return false;
 			}
-			// TODO item properties
-			// Ref<ItemDefinition> definition = get_database()->get_item(item_stack->get_item_id());
-			// Ref<Item> item = memnew(Item());
-			// item->set_definition(definition);
 			amount_total += inventory->amount_of_item(item_stack->get_item_id());
 		}
 		if (amount_total < item_stack->get_amount()) {
@@ -438,10 +423,6 @@ void CraftStation::cancel_craft(int crafting_index) {
 				ERR_PRINT("Passed object is not a Inventory!");
 				return;
 			}
-			// TODO item properties
-			// Ref<ItemDefinition> definition = get_database()->get_item(ingredient->get_item_id());
-			// Ref<Item> item = memnew(Item());
-			// item->set_definition(definition);
 			inventory->add(ingredient->get_item_id(), ingredient->get_amount());
 		}
 	}

@@ -10,6 +10,8 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_item_id"), &Slot::get_item_id);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &Slot::set_amount);
 	ClassDB::bind_method(D_METHOD("get_amount"), &Slot::get_amount);
+	ClassDB::bind_method(D_METHOD("set_properties", "properties"), &Slot::set_properties);
+	ClassDB::bind_method(D_METHOD("get_properties"), &Slot::get_properties);
 	ClassDB::bind_method(D_METHOD("set_max_stack", "max_stack"), &Slot::set_max_stack);
 	ClassDB::bind_method(D_METHOD("get_max_stack"), &Slot::get_max_stack);
 	ClassDB::bind_method(D_METHOD("set_categorized", "categorized"), &Slot::set_categorized);
@@ -20,11 +22,13 @@ void Slot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("is_empty"), &Slot::is_empty);
 	ClassDB::bind_method(D_METHOD("has_valid"), &Slot::has_valid);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &Slot::contains, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("can_stack", "item_id", "properties"), &Slot::can_stack);
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "item_id"), "set_item_id", "get_item_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "properties"), "set_properties", "get_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "categorized"), "set_categorized", "is_categorized");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "accepted_categories", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_accepted_categories", "get_accepted_categories");
@@ -60,6 +64,15 @@ void Slot::set_amount(const int &new_amount) {
 
 int Slot::get_amount() const {
 	return amount;
+}
+
+void Slot::set_properties(const Dictionary &new_properties) {
+	properties = new_properties;
+	emit_signal("updated");
+}
+
+Dictionary Slot::get_properties() const {
+	return properties;
 }
 
 void Slot::set_max_stack(const int &new_max_stack) {
@@ -118,9 +131,16 @@ bool Slot::contains(String item_id, int amount) const {
 	}
 }
 
-int Slot::left_to_fill() {
+int Slot::left_to_fill() const {
 	if (has_valid()) {
 		return get_max_stack() - amount;
 	}
 	return -1;
+}
+
+bool Slot::can_stack(const String &item_id, const Dictionary &properties) const {
+	if (get_item_id() == ""  || get_item_id() == item_id) {
+		return get_properties().is_empty() && properties.is_empty();
+	}
+	return false;
 }

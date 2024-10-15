@@ -18,7 +18,7 @@ private:
 	String inventory_name = "Inventory";
 	void _load_slots();
 	void _call_events(int old_amount);
-	int _add_to_slot(int slot_index, const String &item_id, int amount = 1);
+	int _add_to_slot(int slot_index, const String &item_id, int amount = 1, const Dictionary &properties = Dictionary());
 	int _remove_from_slot(int slot_index, const String &item_id, int amount = 1);
 
 protected:
@@ -32,8 +32,7 @@ public:
 	void add_slot();
 	void insert_slot(int slot_index);
 	void remove_slot_at(int slot_index);
-	void set_slot(const int &slot_index, const String &item_id, const int &amount);
-	void set_slot_content(const int slot_index, const String &item_id, const Dictionary &properties, const int &amount);
+	void set_slot_content(const int slot_index, const String &item_id, const int &amount, const Dictionary &properties);
 	void set_slot_with_other_slot(const int slot_index, const Ref<Slot> &other_slot);
 	bool is_empty_slot(const int &slot_index) const;
 	bool is_empty() const;
@@ -46,14 +45,14 @@ public:
 	int amount_of_item(const String &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
-	int add(const String &item_id, const int &amount, const bool &drop_excess = false);
-	int add_at(const int &slot_index, const String &item_id, const int &amount = 1);
+	int add(const String &item_id, const int &amount, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
+	int add_at(const int &slot_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &slot_index, const String &item_id, const int &amount = 1);
 	void transfer(const int &slot_index, Inventory *destination, const int &destination_slot_index, const int &amount);
-	virtual bool drop(const String &item_id, const int &amount = 1);
-	void drop_from_inventory(const int &slot_index, const int &amount = 1);
-	int add_to_slot(Ref<Slot> slot, const String &item_id, const int &amount);
+	virtual bool drop(const String &item_id, const int &amount, const Dictionary &properties);
+	void drop_from_inventory(const int &slot_index, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int add_to_slot(Ref<Slot> slot, const String &item_id, const int &amount, const Dictionary &properties);
 	int remove_from_slot(Ref<Slot> slot, const String &item_id, const int &amount);
 	int get_flag_categories_of_slot(const Ref<Slot> slot) const;
 	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;

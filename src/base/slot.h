@@ -11,6 +11,7 @@ class Slot : public Resource {
 private:
 	String item_id = "";
 	int amount = 0;
+	Dictionary properties;
 	int max_stack = -1;
 	bool categorized = false;
 	TypedArray<String> accepted_categories;
@@ -27,6 +28,8 @@ public:
 	String get_item_id() const;
 	void set_amount(const int &new_amount);
 	int get_amount() const;
+	void set_properties(const Dictionary &new_properties);
+	Dictionary get_properties() const;
 	void set_max_stack(const int &new_max_stack);
 	int get_max_stack() const;
 	void set_categorized(const bool &new_categorized);
@@ -39,7 +42,8 @@ public:
 	bool is_empty() const;
 	bool has_valid() const;
 	bool contains(String item_id, int amount) const;
-	int left_to_fill();
+	int left_to_fill() const;
+	bool can_stack(const String &item_id, const Dictionary &properties) const;
 };
 
 #endif // SLOT_CLASS_H
