@@ -102,9 +102,6 @@ bool Hotbar::has_item_on_selection() const {
 
 String Hotbar::get_selected_item() const {
 	Inventory *inventory = get_inventory();
-	if (!has_valid_item_id()) {
-		return "";
-	}
 	Ref<Slot> slot = inventory->get_slots()[selection_index];
 	return slot->get_item_id();
 }
