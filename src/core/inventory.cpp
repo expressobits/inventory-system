@@ -525,11 +525,11 @@ void Inventory::_call_events(int old_amount) {
 }
 
 int Inventory::_add_to_slot(int slot_index, const String &item_id, int amount, const Dictionary &properties) {
-	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), 0, "The 'slot index' is out of bounds.");
-	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= size(), amount, "The 'slot index' is out of bounds.");
 
 	Ref<Slot> slot = slots[slot_index];
-	ERR_FAIL_NULL_V_MSG(slot, 0, "The 'slot' is null.");
+	ERR_FAIL_NULL_V_MSG(slot, amount, "The 'slot' is null.");
 
 	int _remaining_amount = add_to_slot(slot, item_id, amount, properties);
 
