@@ -79,6 +79,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("import_json_file", "path"), &InventoryDatabase::import_json_file);
 	ClassDB::bind_method(D_METHOD("export_json_file", "path"), &InventoryDatabase::export_json_file);
 
+	ClassDB::bind_method(D_METHOD("create_dynamic_properties", "item_id"), &InventoryDatabase::create_dynamic_properties);
+
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stations_type", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")), "set_stations_type", "get_stations_type");
@@ -383,53 +385,29 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 	}
 }
 
-String InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
-	String data = String();
-	Ref<Item> item = slot->get_item();
-	if (item != nullptr) {
-		Dictionary item_data = Dictionary();
-		if (item->get_definition() == nullptr) {
-			data += "";
-		} else {
-			data += item->get_definition()->get_id();
-		}
-		// item_data["properties"] = item->get_properties();
-		// data["item"] = item_data;
+Array InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
+	Array data = Array();
+	data.append(slot->get_item_id());
+	data.append(slot->get_amount());
+	if (!slot->get_properties().is_empty()) {
+		data.append(slot->get_properties());
 	}
-	data += " ";
-	data += String::num_int64(slot->get_amount());
-	// data["categorized"] = slot->is_categorized();
 	return data;
 }
 
-void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const String data) const {
-	PackedStringArray array = data.split(" ");
-	ERR_FAIL_COND_MSG(array.size() < 2, "Data to deserialize slot is invalid: Does not contain the 'amount' field");
-	// ERR_FAIL_COND_MSG(!data.has("categorized"), "Data to deserialize slot is invalid: Does not contain the 'categorized' field");
-	if (!array[0].is_empty()) {
-		// Dictionary item_data = data["item"];
-		// ERR_FAIL_COND_MSG(!item_data.has("id"), "Data to deserialize slot is invalid: Does not contain the 'id' field");
-		// ERR_FAIL_COND_MSG(!item_data.has("properties"), "Data to deserialize slot is invalid: Does not contain the 'properties' field");
-		Ref<Item> item = slot->get_item();
-		if (item == nullptr) {
-			item.instantiate();
-		}
-		if (!array[0].is_empty()) {
-			item->set_definition(get_item(array[0]));
-		}
-		// item->set_properties(item_data["properties"]);
-		slot->set_item(item);
+void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Array data) const {
+	ERR_FAIL_COND_MSG(data.size() < 2, "Data to deserialize item_stack is invalid: Does not contain the 'amount' field");
+	slot->set_item_id(data[0]);
+	slot->set_amount(data[1]);
+	if (data.size() > 2) {
+		slot->set_properties(data[2]);
 	}
-	if (!array[1].is_empty()) {
-		slot->set_amount(array[1].to_int());
-	}
-	// slot->set_categorized(data["categorized"]);
 }
 
 Array InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
 	Array slots_data = Array();
 	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
-		String data = serialize_slot(slots[slot_index]);
+		Array data = serialize_slot(slots[slot_index]);
 		slots_data.append(data);
 	}
 	return slots_data;
@@ -456,7 +434,7 @@ Array InventoryDatabase::serialize_item_stacks(const TypedArray<ItemStack> item_
 	Array slots_data = Array();
 	for (size_t item_stack_index = 0; item_stack_index < item_stacks.size(); item_stack_index++) {
 		Ref<ItemStack> item_stack = item_stacks[item_stack_index];
-		String data = item_stack->serialize();
+		Array data = item_stack->serialize();
 		slots_data.append(data);
 	}
 	return slots_data;
@@ -673,4 +651,19 @@ Error InventoryDatabase::export_json_file(const String path) {
 	file->store_string(json);
 	file->close();
 	return Error::OK;
+}
+
+Dictionary InventoryDatabase::create_dynamic_properties(const String &item_id) {
+	Dictionary dynamic_properties = Dictionary();
+	Ref<ItemDefinition> item_definition = get_item(item_id);
+	ERR_FAIL_NULL_V_MSG(item_definition, dynamic_properties, "'item_definition' is null.");
+
+	Dictionary definition_properties = item_definition->get_properties();
+	TypedArray<String> keys = item_definition->get_dynamic_properties();
+	for (size_t i = 0; i < keys.size(); i++) {
+		String key = keys[i];
+		Variant value = definition_properties[key];
+		dynamic_properties[key] = value;
+	}
+	return dynamic_properties;
 }

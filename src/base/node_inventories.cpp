@@ -36,7 +36,7 @@ Ref<ItemDefinition> NodeInventories::get_item_from_id(const String id) const {
 }
 
 String NodeInventories::get_id_from_item(const Ref<ItemDefinition> item) const {
-	if(item.is_null()){
+	if (item.is_null()) {
 		return "";
 	}
 	return item->get_id();

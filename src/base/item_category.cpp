@@ -3,7 +3,6 @@
 #include <godot_cpp/classes/global_constants.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
-
 using namespace godot;
 
 void ItemCategory::_bind_methods() {

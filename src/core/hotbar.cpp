@@ -67,8 +67,7 @@ void Hotbar::set_selection_index(const int &new_selection_index) {
 	if (selection_index < 0) {
 		selection_index += slots_in_hot_bar;
 	}
-	if(old_selection != selection_index && is_node_ready())
-	{
+	if (old_selection != selection_index && is_node_ready()) {
 		emit_signal("on_change_selection", selection_index);
 	}
 }
@@ -101,13 +100,10 @@ bool Hotbar::has_item_on_selection() const {
 	return has_valid_item_id();
 }
 
-Ref<Item> Hotbar::get_selected_item() const {
+String Hotbar::get_selected_item() const {
 	Inventory *inventory = get_inventory();
-	if (!has_valid_item_id()) {
-		return nullptr;
-	}
 	Ref<Slot> slot = inventory->get_slots()[selection_index];
-	return slot->get_item();
+	return slot->get_item_id();
 }
 
 Hotbar::Hotbar() {

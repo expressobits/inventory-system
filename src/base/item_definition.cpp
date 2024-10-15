@@ -7,8 +7,7 @@ using namespace godot;
 
 void ItemDefinition::_check_invalid_dynamic_properties() {
 	// Checking if dynamic property is a reference to a property that does not exist
-	for (size_t i = 0; i < dynamic_properties.size(); i++)
-	{
+	for (size_t i = 0; i < dynamic_properties.size(); i++) {
 		if (properties.keys().find(dynamic_properties[i]) == -1) {
 			dynamic_properties.remove_at(i);
 			i--;
@@ -136,7 +135,7 @@ void ItemDefinition::set_categories(const TypedArray<ItemCategory> &new_categori
 			if (properties.keys().find(property_key) == -1) {
 				// The item does not have the key in its properties, which is found in the category properties template.
 				properties[property_key] = category->get_item_properties()[property_key];
-				if(category->get_item_dynamic_properties().find(property_key) != -1){
+				if (category->get_item_dynamic_properties().find(property_key) != -1) {
 					dynamic_properties.append(property_key);
 				}
 			}

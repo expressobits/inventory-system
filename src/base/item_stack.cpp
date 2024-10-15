@@ -1,13 +1,17 @@
 #include "item_stack.h"
+#include <godot_cpp/classes/json.hpp>
 
 void ItemStack::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_item_id", "item_id"), &ItemStack::set_item_id);
 	ClassDB::bind_method(D_METHOD("get_item_id"), &ItemStack::get_item_id);
 	ClassDB::bind_method(D_METHOD("set_amount", "amount"), &ItemStack::set_amount);
 	ClassDB::bind_method(D_METHOD("get_amount"), &ItemStack::get_amount);
+	ClassDB::bind_method(D_METHOD("set_properties", "properties"), &ItemStack::set_properties);
+	ClassDB::bind_method(D_METHOD("get_properties"), &ItemStack::get_properties);
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "item_id"), "set_item_id", "get_item_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "properties"), "set_properties", "get_properties");
 }
 
 ItemStack::ItemStack() {
@@ -32,22 +36,37 @@ int ItemStack::get_amount() const {
 	return amount;
 }
 
-String ItemStack::serialize() const {
-	String data = String();
-	if (!item_id.is_empty())
-		data += item_id;
-	else
-		data += "";
-	data += " ";
-	data += String::num_int64(get_amount());
+void ItemStack::set_properties(const Dictionary &new_properties) {
+	properties = new_properties;
+}
+
+Dictionary ItemStack::get_properties() const {
+	return properties;
+}
+
+Array ItemStack::serialize() const {
+	Array data = Array();
+	data.append(item_id);
+	data.append(amount);
+	if (!properties.is_empty()) {
+		data.append(properties);
+	}
 	return data;
 }
 
-void ItemStack::deserialize(String data) {
-	PackedStringArray array = data.split(" ");
-	ERR_FAIL_COND_MSG(array.size() < 2, "Data to deserialize item_stack is invalid: Does not contain the 'amount' field");
-	if (!array[0].is_empty())
-		set_item_id(array[0]);
-	if (!array[1].is_empty())
-		set_amount(array[1].to_int());
+void ItemStack::deserialize(Array data) {
+	ERR_FAIL_COND_MSG(data.size() < 2, "Data to deserialize item_stack is invalid: Does not contain the 'amount' field");
+	set_item_id(data[0]);
+	set_amount(data[1]);
+	if (data.size() > 2) {
+		set_properties(data[2]);
+	}
+}
+
+String ItemStack::serialize_properties(const Dictionary properties) {
+	return JSON::stringify(properties);
+}
+
+Dictionary ItemStack::deserialize_properties(const String data) {
+	return JSON::parse_string(data);
 }
