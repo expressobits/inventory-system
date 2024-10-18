@@ -68,8 +68,8 @@ public:
 	void deserialize_slot(Ref<Slot> slot, const Array data) const;
 	Array serialize_slots(const TypedArray<Slot> slots) const;
 	void deserialize_slots(TypedArray<Slot> slots, const Array data) const;
-	Array serialize_item_stacks(const TypedArray<ItemStack> slots) const;
-	void deserialize_item_stacks(TypedArray<ItemStack> slots, const Array data) const;
+	Array serialize_item_stacks(const TypedArray<ItemStack> stacks) const;
+	void deserialize_item_stacks(TypedArray<ItemStack> stacks, const Array data) const;
 
 	void add_item();
 	void add_item_category();

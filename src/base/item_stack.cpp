@@ -8,6 +8,10 @@ void ItemStack::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_amount"), &ItemStack::get_amount);
 	ClassDB::bind_method(D_METHOD("set_properties", "properties"), &ItemStack::set_properties);
 	ClassDB::bind_method(D_METHOD("get_properties"), &ItemStack::get_properties);
+	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &ItemStack::contains, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("has_valid"), &ItemStack::has_valid);
+
+	ADD_SIGNAL(MethodInfo("updated"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "item_id"), "set_item_id", "get_item_id");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "amount"), "set_amount", "get_amount");
@@ -22,6 +26,7 @@ ItemStack::~ItemStack() {
 
 void ItemStack::set_item_id(const String &new_item_id) {
 	item_id = new_item_id;
+	emit_signal("updated");
 }
 
 String ItemStack::get_item_id() const {
@@ -30,6 +35,7 @@ String ItemStack::get_item_id() const {
 
 void ItemStack::set_amount(const int &new_amount) {
 	amount = new_amount;
+	emit_signal("updated");
 }
 
 int ItemStack::get_amount() const {
@@ -38,6 +44,7 @@ int ItemStack::get_amount() const {
 
 void ItemStack::set_properties(const Dictionary &new_properties) {
 	properties = new_properties;
+	emit_signal("updated");
 }
 
 Dictionary ItemStack::get_properties() const {
@@ -61,6 +68,18 @@ void ItemStack::deserialize(Array data) {
 	if (data.size() > 2) {
 		set_properties(data[2]);
 	}
+}
+
+bool ItemStack::contains(const String &item_id, const int amount) const {
+	if (this->item_id != item_id) {
+		return false;
+	} else {
+		return this->amount >= amount;
+	}
+}
+
+bool ItemStack::has_valid() const {
+	return item_id != "" && amount > 0;
 }
 
 String ItemStack::serialize_properties(const Dictionary properties) {

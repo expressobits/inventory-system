@@ -27,6 +27,8 @@ public:
 	Dictionary get_properties() const;
 	Array serialize() const;
 	void deserialize(Array data);
+	bool contains(const String &item_id, const int amount = 1) const;
+	bool has_valid() const;
 
 	static String serialize_properties(const Dictionary properties);
 	static Dictionary deserialize_properties(const String properties_data);

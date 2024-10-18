@@ -1,8 +1,8 @@
 #include "hotbar.h"
 
-void Hotbar::_on_updated_slot(const int slot_index) {
-	if (slot_index == selection_index) {
-		emit_signal("on_update_selection_slot");
+void Hotbar::_on_updated_stack(const int stack_index) {
+	if (stack_index == selection_index) {
+		emit_signal("on_update_selection_stack");
 	}
 }
 
@@ -21,7 +21,7 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_selected_item"), &Hotbar::get_selected_item);
 
 	ADD_SIGNAL(MethodInfo("on_change_selection", PropertyInfo(Variant::INT, "selection_index")));
-	ADD_SIGNAL(MethodInfo("on_update_selection_slot"));
+	ADD_SIGNAL(MethodInfo("on_update_selection_stack"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory"), "set_inventory_path", "get_inventory_path");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slots_in_hot_bar"), "set_slots_in_hot_bar", "get_slots_in_hot_bar");
@@ -86,14 +86,14 @@ void Hotbar::previous_item() {
 
 bool Hotbar::has_valid_item_id() const {
 	Inventory *inventory = get_inventory();
-	if (selection_index >= inventory->get_slots().size()) {
+	if (selection_index >= inventory->get_items().size()) {
 		return false;
 	}
-	Ref<Slot> slot = inventory->get_slots()[selection_index];
-	if (slot == nullptr) {
+	Ref<ItemStack> stack = inventory->get_items()[selection_index];
+	if (stack == nullptr) {
 		return false;
 	}
-	return slot->has_valid();
+	return stack->has_valid();
 }
 
 bool Hotbar::has_item_on_selection() const {
@@ -102,8 +102,8 @@ bool Hotbar::has_item_on_selection() const {
 
 String Hotbar::get_selected_item() const {
 	Inventory *inventory = get_inventory();
-	Ref<Slot> slot = inventory->get_slots()[selection_index];
-	return slot->get_item_id();
+	Ref<ItemStack> stack = inventory->get_items()[selection_index];
+	return stack->get_item_id();
 }
 
 Hotbar::Hotbar() {
@@ -124,7 +124,7 @@ void Hotbar::_ready() {
 		return;
 	}
 	if (inventory != nullptr) {
-		inventory->connect("updated_slot", callable_mp(this, &Hotbar::_on_updated_slot));
+		inventory->connect("updated_stack", callable_mp(this, &Hotbar::_on_updated_stack));
 	}
 	NodeInventories::_ready();
 }

@@ -14,7 +14,7 @@ private:
 	NodePath inventory_path;
 	int slots_in_hot_bar = 8;
 	int selection_index = 0;
-	void _on_updated_slot(const int slot_index);
+	void _on_updated_stack(const int slot_index);
 
 protected:
 	static void _bind_methods();
