@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=17 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -16,13 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://d2tpdnjwuur2j" path="res://addons/inventory-system-demos/mp/mp_shelf.tscn" id="15_lou51"]
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
-
-[sub_resource type="Slot" id="Slot_nri7e"]
-item_id = "stone_axe"
-amount = 1
-properties = {
-"durability": 40
-}
 
 [node name="MPDemo" type="Node"]
 script = ExtResource("1_fcmcx")
@@ -78,7 +71,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory" index="1"]
-slots = Array[Slot]([])
 inventory_name = "Dynamic Inventory"
 
 [node name="Openable" parent="Box Inventory" index="7"]
@@ -89,9 +81,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory2" index="1"]
-slots = Array[Slot]([SubResource("Slot_nri7e"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null])
-create_slot_if_needed = false
-remove_slot_if_empty = false
 inventory_name = "Static Inventory"
 
 [node name="Openable" parent="Box Inventory2" index="7"]
@@ -102,9 +91,6 @@ transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.05268
 script = ExtResource("10_4488h")
 
 [node name="Inventory" parent="Box Inventory3" index="1"]
-slots = Array[Slot]([])
-create_slot_if_needed = false
-remove_slot_if_empty = false
 inventory_name = "Tools Inventory"
 
 [node name="Openable" parent="Box Inventory3" index="7"]
@@ -117,7 +103,7 @@ burnable_category = "burnables"
 
 [node name="Shelf" parent="." instance=ExtResource("15_lou51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36572, 0.6775, 1.94776)
-actions = Array[Slot]([])
+actions = []
 
 [node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=17 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
@@ -22,26 +22,6 @@ code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
-
-[sub_resource type="Slot" id="Resource_pueei"]
-max_stack = 8
-categorized = 1
-accepted_categories = Array[String](["burnables"])
-
-[sub_resource type="Slot" id="Resource_qil68"]
-max_stack = 1
-categorized = 1
-accepted_categories = Array[String](["food"])
-
-[sub_resource type="Slot" id="Resource_ahb6e"]
-max_stack = 1
-categorized = 1
-accepted_categories = Array[String](["food"])
-
-[sub_resource type="Slot" id="Resource_8f0qi"]
-max_stack = 1
-categorized = 1
-accepted_categories = Array[String](["food"])
 
 [sub_resource type="Curve" id="Curve_gbe35"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -96,7 +76,6 @@ auto_craft = true
 database = ExtResource("5_72vu1")
 
 [node name="InputInventory" type="Inventory" parent="."]
-slots = Array[Slot]([SubResource("Resource_pueei"), SubResource("Resource_qil68"), SubResource("Resource_ahb6e"), SubResource("Resource_8f0qi")])
 slot_amount = 4
 inventory_name = "Campfire"
 database = ExtResource("5_72vu1")

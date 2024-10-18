@@ -16,7 +16,7 @@ var objects : Array
 func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
 	self.property_name_of_visual = property
 	self.inventory = inv
-	self.inventory.updated_slot.connect(_on_updated_slot)
+	self.inventory.updated_stack.connect(_on_updated_slot)
 	self.slot_index = new_slot_index
 	_on_updated_slot(slot_index)
 #	objects_per_id = {}
@@ -25,9 +25,11 @@ func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
 func _on_updated_slot(changed_slot_index : int):
 	if self.slot_index != changed_slot_index:
 		return
+	if changed_slot_index >= inventory.items.size():
+		return
 	_clear_last_visual()
-	var item_id = inventory.slots[slot_index].item_id
-	var amount = inventory.slots[slot_index].amount
+	var item_id = inventory.items[slot_index].item_id
+	var amount = inventory.items[slot_index].amount
 	var definition = inventory.database.get_item(item_id)
 	if item_id == "" or definition == null:
 		return

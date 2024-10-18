@@ -80,7 +80,7 @@ func setup(character : CharacterInventorySystem):
 	set_player_inventories(inventories)
 	character.opened_inventory.connect(_on_open_inventory)
 	character.closed_inventory.connect(_on_close_inventory)
-	character.slot_holder.updated.connect(_updated_transaction_slot.bind(character.main_inventory.database))
+	character.stack_holder.updated.connect(_updated_transaction_stack.bind(character.main_inventory.database))
 	
 	# Stations
 	character.opened_station.connect(_on_open_craft_station)
@@ -112,8 +112,8 @@ func _open_player_inventory():
 	hotbar_ui.visible = false
 	drop_area.visible = true
 	if console_mode and not player_inventories_ui.is_empty():
-		if player_inventories_ui[0].slots.is_empty():
-			player_inventories_ui[0].slots[0].grab_focus()
+		if player_inventories_ui[0].items.is_empty():
+			player_inventories_ui[0].items[0].grab_focus()
 
 
 # Open Inventory of player	
@@ -159,20 +159,18 @@ func _close_player_inventory():
 	hotbar_ui.visible = true
 
 
-func _slot_point_down(event : InputEvent, slot_index : int, inventory : Inventory):
+func _slot_point_down(event : InputEvent, stack_index : int, inventory : Inventory):
 	if not event is InputEventMouseButton:
 		return
 	var mouse_event : InputEventMouseButton = event as InputEventMouseButton
-	if character.slot_holder.has_valid():
-		var amount = _get_amount_per_mouse_event(mouse_event, character.slot_holder.amount)
-		character.holder_to_at(slot_index, inventory, amount)
+	if character.stack_holder.has_valid():
+		var amount = _get_amount_per_mouse_event(mouse_event, character.stack_holder.amount)
+		character.holder_to_at(stack_index, inventory, amount)
 		$SlotDrop.play()
 	else:
-		if inventory.is_empty_slot(slot_index):
-			return
-		var slot = inventory.slots[slot_index]
-		var amount = _get_amount_per_mouse_event(mouse_event, slot.amount)
-		character.to_holder(slot_index, inventory, amount)	
+		var stack = inventory.items[stack_index]
+		var amount = _get_amount_per_mouse_event(mouse_event, stack.amount)
+		character.to_holder(stack_index, inventory, amount)	
 		$SlotClick.play()
 
 
@@ -189,13 +187,13 @@ func _get_amount_per_mouse_event(mouse_event : InputEventMouseButton, amount : i
 func _inventory_point_down(event : InputEvent, inventory : Inventory):
 	if event.button_index == 3:
 		return
-	if character.slot_holder.has_valid():
+	if character.stack_holder.has_valid():
 		character.holder_to(inventory)
 		$SlotDrop.play()
 
 
-func _updated_transaction_slot(database : InventoryDatabase):
-	transaction_slot_ui.update_info_with_slot(database, character.slot_holder)
+func _updated_transaction_stack(database : InventoryDatabase):
+	transaction_slot_ui.update_info_with_stack(database, character.stack_holder)
 
 func _on_craft(craft_station : CraftStation, recipe_index : int):
 	character.craft(craft_station, recipe_index)

@@ -53,9 +53,9 @@ func interact(character : Node, action_index : int = 0):
 	interact_with_slot(character, action_index, slot_index)
 
 
-func get_actual_item(actual_slot_index):
-	if actual_slot_index != -1:
-		return inventory.slots[actual_slot_index].item_id
+func get_actual_item(actual_stack_index):
+	if actual_stack_index != -1:
+		return inventory.items[actual_stack_index].item_id
 	return null
 
 

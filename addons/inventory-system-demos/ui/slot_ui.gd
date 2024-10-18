@@ -19,30 +19,30 @@ var database : InventoryDatabase
 ## Update information with [Dictionary] slot. 
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
-func update_info_with_slot(database : InventoryDatabase, slot : Slot):
+func update_info_with_stack(database : InventoryDatabase, stack : ItemStack):
 	self.database = database
-	category_icon.visible = slot.amount == 0
-	setup_category(database, slot)
-	if slot != null and slot.item_id != "":
-		update_info_with_item(slot)
+	category_icon.visible = stack.amount == 0
+	#setup_category(database, stack)
+	if stack != null and stack.item_id != "":
+		update_info_with_item(stack)
 		return
 	item_icon.texture = null
 	amount_label.visible = false
 	durability.visible = false
 
-func setup_category(database : InventoryDatabase, slot : Slot):
-	if is_categorized_slot_and_have_category(slot):
-		var category_id = slot.accepted_categories[0]
-		var category = database.get_category_from_id(category_id)
-		if category != null:
-			category_icon.texture = category.icon
-			panel.modulate = category.color
-		else:
-			category_icon.texture = null
-			panel.modulate = Color.WHITE
-	else:
-		category_icon.texture = null
-		panel.modulate = Color.WHITE
+#func setup_category(database : InventoryDatabase, stack : ItemStack):
+	#if is_categorized_slot_and_have_category(slot):
+		#var category_id = slot.accepted_categories[0]
+		#var category = database.get_category_from_id(category_id)
+		#if category != null:
+			#category_icon.texture = category.icon
+			#panel.modulate = category.color
+		#else:
+			#category_icon.texture = null
+			#panel.modulate = Color.WHITE
+	#else:
+		#category_icon.texture = null
+		#panel.modulate = Color.WHITE
 
 func is_categorized_slot_and_have_category(slot : Slot):
 	if slot.categorized:
@@ -54,15 +54,15 @@ func is_categorized_slot_and_have_category(slot : Slot):
 ## Update information with [ItemDefinition] and amount.
 ## If the item is null, the slot does not display its information, useful for fixed [Inventory].
 ## The amount label is only displayed if amount is greater than 1
-func update_info_with_item(slot : Slot):
-	if slot.item_id != "":
-		var item_id = slot.item_id
+func update_info_with_item(stack : ItemStack):
+	if stack.item_id != "":
+		var item_id = stack.item_id
 		var definition = database.get_item(item_id)
 		item_icon.texture = definition.icon
 		tooltip_text = definition.name
-		if slot.properties.has("durability") and definition.properties.has("durability"):
+		if stack.properties.has("durability") and definition.properties.has("durability"):
 			durability.visible = true
-			durability.value = slot.properties.durability
+			durability.value = stack.properties.durability
 			durability.max_value = definition.properties.durability
 		else:
 			durability.visible = false
@@ -70,8 +70,8 @@ func update_info_with_item(slot : Slot):
 		category_icon.texture = null
 		tooltip_text = ""
 		durability.visible = false
-	amount_label.text = str(slot.amount)
-	amount_label.visible = slot.amount > 1
+	amount_label.text = str(stack.amount)
+	amount_label.visible = stack.amount > 1
 
 
 ## Clear info slot information

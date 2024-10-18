@@ -42,7 +42,7 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 		_ingredients.append(ingredient_obj)
 	_check_if_has_ingredients()
 	for i in craft_station.input_inventories.size():
-		craft_station.get_input_inventory(i).updated_slot.connect(_on_updated_slot)
+		craft_station.get_input_inventory(i).updated_stack.connect(_on_updated_slot)
 
 
 func _clear_ingredients():

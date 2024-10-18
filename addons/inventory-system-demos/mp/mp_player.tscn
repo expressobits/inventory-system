@@ -71,7 +71,18 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." index="5"]
 script = ExtResource("3_lbhsf")
-drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
+hotbar_path = null
+main_station_path = null
+interactor_path = null
+drop_parent_path = null
+drop_parent_position_path = null
+change_mouse_state = null
+check_inputs = null
+toggle_inventory_input = null
+exit_inventory_and_craft_panel_input = null
+toggle_craft_panel_input = null
+can_interact = null
+drop_item_spawner_path = null
 
 [node name="SyncInventory" type="Node" parent="CharacterInventorySystem/Inventory" index="1" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_2ppxc")

@@ -8,5 +8,4 @@ script = ExtResource("1_nssfi")
 item_id = "wood"
 
 [node name="Inventory" type="Inventory" parent="."]
-create_slot_if_needed = true
 database = ExtResource("4_okmux")

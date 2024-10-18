@@ -30,7 +30,7 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 var opened_stations : Array[CraftStation]
 var opened_inventories : Array[Inventory]
-var slot_holder : Slot
+var stack_holder : ItemStack
 
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
@@ -60,7 +60,7 @@ var slot_holder : Slot
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	slot_holder = Slot.new()
+	stack_holder = ItemStack.new()
 	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	
@@ -125,57 +125,57 @@ func inventory_inputs():
 
 #region Slot Holder
 func change_holder(item_id : String, amount : int, properties : Dictionary = {}):
-	slot_holder.amount = amount
-	if slot_holder.amount > 0 and item_id != "":
-		slot_holder.item_id = item_id
+	stack_holder.amount = amount
+	if stack_holder.amount > 0 and item_id != "":
+		stack_holder.item_id = item_id
 	else:
-		slot_holder.item_id = ""
-	slot_holder.properties = properties
+		stack_holder.item_id = ""
+	stack_holder.properties = properties
 
 
-func to_holder(slot_index : int, inventory : Inventory, amount : int):
-	if slot_holder.has_valid():
+func to_holder(stack_index : int, inventory : Inventory, amount : int):
+	if stack_holder.has_valid():
 		return
-	var slot : Slot = inventory.slots[slot_index]
-	var item_id : String = slot.item_id
-	var properties : Dictionary = slot.properties
-	if not slot.has_valid():
+	var stack : ItemStack = inventory.items[stack_index]
+	var item_id : String = stack.item_id
+	var properties : Dictionary = stack.properties
+	if not stack.has_valid():
 		return
-	var amount_no_removed = inventory.remove_at(slot_index, item_id, amount)
+	var amount_no_removed = inventory.remove_at(stack_index, item_id, amount)
 	change_holder(item_id, amount - amount_no_removed, properties)
 
 
 func holder_to(inventory : Inventory):
-	if not slot_holder.has_valid():
+	if not stack_holder.has_valid():
 		return
-	if slot_holder.item_id == "":
+	if stack_holder.item_id == "":
 		return
-	var amount_no_add : int = inventory.add(slot_holder.item_id, slot_holder.amount, slot_holder.properties)
-	change_holder(slot_holder.item_id, amount_no_add, slot_holder.properties)
+	var amount_no_add : int = inventory.add(stack_holder.item_id, stack_holder.amount, stack_holder.properties)
+	change_holder(stack_holder.item_id, amount_no_add, stack_holder.properties)
 
 
-func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
-	if not slot_holder.has_valid():
+func holder_to_at(stack_index : int, inventory : Inventory, amount_to_move : int = -1):
+	if not stack_holder.has_valid():
 		return
-	var slot : Slot = inventory.slots[slot_index];
-	var item_id : String = slot_holder.item_id
-	var slot_properties : Dictionary = slot.properties
+	var stack : ItemStack = inventory.items[stack_index];
+	var item_id : String = stack_holder.item_id
+	var slot_properties : Dictionary = stack.properties
 	var definition : ItemDefinition = inventory.database.get_item(item_id)
-	if inventory.is_empty_slot(slot_index) or item_id == slot.item_id:
-		var amount = slot_holder.amount
+	if item_id == stack.item_id:
+		var amount = stack_holder.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move
-		var amount_no_add = inventory.add_at(slot_index, item_id, amount, slot_holder.properties)
-		change_holder(item_id, slot_holder.amount - amount + amount_no_add, slot_properties)
+		var amount_no_add = inventory.add_at(stack_index, item_id, amount, stack_holder.properties)
+		change_holder(item_id, stack_holder.amount - amount + amount_no_add, slot_properties)
 	else:
 		# Different items in slot and other_slot
 		# Check if slot_holder amount is equal of origin_slot amount
-		if slot.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(slot), definition.categories):
-			return
-		var new_amount = slot.amount
-		var new_item_id = slot.item_id
-		var new_properties = slot.properties
-		inventory.set_slot_content(slot_index, slot_holder.item_id, slot_holder.amount, slot_holder.properties)
+		#if stack.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(stack), definition.categories):
+			#return
+		var new_amount = stack.amount
+		var new_item_id = stack.item_id
+		var new_properties = stack.properties
+		inventory.set_stack_content(stack_index, stack_holder.item_id, stack_holder.amount, stack_holder.properties)
 		change_holder(new_item_id, new_amount, new_properties)
 		
 
@@ -199,9 +199,9 @@ func pick_to_inventory(node : Node):
 
 
 func drop_holder():
-	if not slot_holder.has_valid():
+	if not stack_holder.has_valid():
 		return
-	main_inventory.drop(slot_holder.item_id, slot_holder.amount, slot_holder.properties)
+	main_inventory.drop(stack_holder.item_id, stack_holder.amount, stack_holder.properties)
 	change_holder("", 0)
 
 
@@ -274,7 +274,7 @@ func close_inventory(inventory : Inventory):
 	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
 	remove_open_inventory(inventory)
-	if slot_holder.has_valid():
+	if stack_holder.has_valid():
 		drop_holder()
 
 

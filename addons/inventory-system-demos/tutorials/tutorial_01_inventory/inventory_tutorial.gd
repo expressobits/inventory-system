@@ -12,11 +12,18 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("interact"):
-		print("Inventory Slots:")
-		for slot in inventory.slots:
-			if slot.item_id != "":
-				print(slot.item_id," x ", slot.amount)
-			else:
-				print("Empty")
+		print_inventory()
 	if Input.is_action_just_pressed("add_item_a"):
 		inventory.add(item_id, 1)
+		print_inventory()
+	if Input.is_action_just_pressed("remove_item_a"):
+		inventory.remove(item_id, 1)
+		print_inventory()
+
+func print_inventory():
+	print("Inventory Items:")
+	for item in inventory.items:
+		if item.item_id != "":
+			print(item.item_id," x ", item.amount)
+		else:
+			print("Empty")

@@ -63,12 +63,12 @@ func check() -> bool:
 	if is_burning:
 		return false
 	var category = input_inventory.database.get_category_from_id(burnable_category)
-	if not input_inventory.contains_category(category):
-		return false
-	var index = input_inventory.get_slot_index_with_an_item_of_category(category)
+	#if not input_inventory.contains_category(category):
+		#return false
+	var index = input_inventory.get_stack_index_with_an_item_of_category(category)
 	if index == -1:
 		return false
-	var item_id = input_inventory.slots[index].item_id
+	var item_id = input_inventory.items[index].item_id
 	var definition = input_inventory.database.get_item(item_id)
 	if not definition.properties.has("fuel"):
 		return false
