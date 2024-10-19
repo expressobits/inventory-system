@@ -251,7 +251,7 @@ int Inventory::remove_at(const int &stack_index, const String &item_id, const in
 	return amount_in_interact;
 }
 
-void Inventory::transfer(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount) {
+void Inventory::transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount) {
 	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack index' is out of bounds.");
 	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
 	ERR_FAIL_NULL_MSG(get_database(), "InventoryDatabase is null.");
@@ -264,10 +264,6 @@ void Inventory::transfer(const int &stack_index, Inventory *destination, const i
 	String item_id = stack->get_item_id();
 	Dictionary properties = stack->get_properties();
 	int amount_to_interact = amount;
-
-	if (amount_to_interact == -1) {
-		amount_to_interact = stack->get_amount();
-	}
 	Ref<ItemStack> destination_stack = destination->get_items()[destination_stack_index];
 	Ref<ItemDefinition> destination_definition = get_database()->get_item(destination_stack->get_item_id());
 	ERR_FAIL_NULL_MSG(destination_definition, "Destination item_definition is null on transfer.");
@@ -282,6 +278,30 @@ void Inventory::transfer(const int &stack_index, Inventory *destination, const i
 	if (amount_to_transfer == 0)
 		return;
 	int amount_not_transferred = destination->add_at(destination_stack_index, item_id, amount_to_transfer, properties);
+	if (amount_not_transferred == 0)
+		return;
+	add_at(stack_index, item_id, amount_not_transferred, properties);
+}
+
+void Inventory::transfer(const int &stack_index, Inventory *destination, const int &amount) {
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack index' is out of bounds.");
+	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
+	ERR_FAIL_NULL_MSG(get_database(), "InventoryDatabase is null.");
+	ERR_FAIL_NULL_MSG(destination->get_database(), "InventoryDatabase is null.");
+	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
+	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");
+
+	Ref<ItemStack> stack = items[stack_index];
+	String item_id = stack->get_item_id();
+	Dictionary properties = stack->get_properties();
+	int amount_to_interact = amount;
+	if (amount_to_interact == 0)
+		return;
+	int amount_not_removed = remove_at(stack_index, item_id, amount_to_interact);
+	int amount_to_transfer = amount_to_interact - amount_not_removed;
+	if (amount_to_transfer == 0)
+		return;
+	int amount_not_transferred = destination->add(item_id, amount_to_transfer, properties);
 	if (amount_not_transferred == 0)
 		return;
 	add_at(stack_index, item_id, amount_not_transferred, properties);
@@ -441,7 +461,7 @@ void Inventory::_remove_stack_at(int stack_index) {
 void Inventory::_call_events(int old_amount) {
 	int actual_amount = amount();
 	if (old_amount != actual_amount) {
-		emit_signal("inventory_changed");
+		emit_signal("contents_changed");
 		if (is_empty()) {
 			emit_signal("emptied");
 		}
@@ -497,7 +517,8 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_at", "stack_index", "item_id", "amount", "properties"), &Inventory::add_at, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove", "item_id", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "stack_index", "item_id", "amount"), &Inventory::remove_at, DEFVAL(1));
-	ClassDB::bind_method(D_METHOD("transfer", "stack_index", "destination", "destination_stack_index", "amount"), &Inventory::transfer, DEFVAL(-1));
+	ClassDB::bind_method(D_METHOD("transfer_at", "stack_index", "destination", "destination_stack_index", "amount"), &Inventory::transfer_at, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("transfer", "stack_index", "destination", "amount"), &Inventory::transfer, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("drop", "item_id", "amount", "properties"), &Inventory::drop, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "stack_index", "amount", "properties"), &Inventory::drop_from_inventory, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
@@ -514,7 +535,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_inventory_name", "inventory_name"), &Inventory::set_inventory_name);
 	ClassDB::bind_method(D_METHOD("get_inventory_name"), &Inventory::get_inventory_name);
 	ClassDB::bind_method(D_METHOD("update_stack", "stack_index"), &Inventory::update_stack);
-	ADD_SIGNAL(MethodInfo("inventory_changed"));
+	ADD_SIGNAL(MethodInfo("contents_changed"));
 	ADD_SIGNAL(MethodInfo("stack_added", PropertyInfo(Variant::INT, "stack_index")));
 	ADD_SIGNAL(MethodInfo("stack_removed", PropertyInfo(Variant::INT, "stack_index")));
 	ADD_SIGNAL(MethodInfo("item_added", PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::INT, "amount")));
