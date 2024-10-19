@@ -42,11 +42,11 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 		var shelf_item_id = get_actual_item(actual_slot_index)
 		var shelf_item_definition = interactor.hotbar.database.get_item(shelf_item_id)
 		if shelf_item_definition != null:
-			inventory.transfer(actual_slot_index, char_inventory, char_slot_index, 1)
+			inventory.transfer_at(actual_slot_index, char_inventory, char_slot_index)
 		return
 	if action_index == 2:
 		if definition != null:
-			char_inventory.transfer(char_slot_index, inventory, actual_slot_index, 1)
+			char_inventory.transfer_at(char_slot_index, inventory, actual_slot_index)
 		return
 
 func interact(character : Node, action_index : int = 0):

@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfglgpxfj5775"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_uoafe"]
+
+[node name="SimpleTransferMode" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_uoafe")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="InventoryUILeft" type="Control" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="InventoryUIRight" type="Control" parent="HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2

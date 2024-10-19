@@ -1,0 +1,81 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbrirgr4jkgip"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_5t3gu"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd" id="2_4uswq"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="2_ueq65"]
+
+[sub_resource type="ItemStack" id="ItemStack_axsqq"]
+item_id = "wood"
+amount = 1
+
+[sub_resource type="ItemStack" id="ItemStack_k2v4d"]
+item_id = "stone"
+amount = 2
+
+[sub_resource type="ItemStack" id="ItemStack_m5604"]
+item_id = "stone_axe"
+amount = 3
+
+[sub_resource type="ItemStack" id="ItemStack_2vdaa"]
+item_id = "grass"
+amount = 5
+
+[node name="SimpleTransferDemo" type="Node3D" node_paths=PackedStringArray("inventory_left", "inventory_right")]
+script = ExtResource("1_5t3gu")
+inventory_left = NodePath("InventoryLeft")
+inventory_right = NodePath("InventoryRight")
+
+[node name="SimpleTransferUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1146.0
+offset_bottom = 644.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SimpleTransferUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SimpleTransferUI/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryUILeft" type="Control" parent="SimpleTransferUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_4uswq")
+inventory_path = NodePath("../../../../InventoryLeft")
+
+[node name="MoveToRight" type="Button" parent="SimpleTransferUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = ">>"
+
+[node name="MoveToLeft" type="Button" parent="SimpleTransferUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "<<"
+
+[node name="InventoryUIRight" type="Control" parent="SimpleTransferUI/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("2_4uswq")
+inventory_path = NodePath("../../../../InventoryRight")
+
+[node name="Label" type="Label" parent="SimpleTransferUI/VBoxContainer"]
+layout_mode = 2
+text = "Transfer demonstration of basic inventories"
+
+[node name="InventoryLeft" type="Inventory" parent="."]
+items = Array[ItemStack]([SubResource("ItemStack_axsqq"), SubResource("ItemStack_k2v4d"), SubResource("ItemStack_m5604"), SubResource("ItemStack_2vdaa")])
+database = ExtResource("2_ueq65")
+
+[node name="InventoryRight" type="Inventory" parent="."]
+database = ExtResource("2_ueq65")
