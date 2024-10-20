@@ -33,7 +33,6 @@ public:
 	void update_stack(const int stack_index);
 	bool is_empty() const;
 	bool is_full() const;
-	int size() const;
 	bool contains(const String &item, const int &amount = 1) const;
 	bool contains_at(const int &stack_index, const String &item_id, const int &amount = 1) const;
 	bool contains_category(const Ref<ItemCategory> &category, const int &amount = 1) const;

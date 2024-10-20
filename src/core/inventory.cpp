@@ -14,7 +14,7 @@ void Inventory::_enter_tree() {
 }
 
 void Inventory::set_stack_content(const int stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack_index' is out of bounds.");
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= items.size(), "The 'stack_index' is out of bounds.");
 	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");
 
 	int old_amount = this->amount();
@@ -41,10 +41,6 @@ bool Inventory::is_full() const {
 	return true;
 }
 
-int Inventory::size() const {
-	return items.size();
-}
-
 bool Inventory::contains(const String &item_id, const int &amount) const {
 	ERR_FAIL_COND_V_MSG(amount < 0, false, "'amount' is negative.");
 
@@ -62,7 +58,7 @@ bool Inventory::contains(const String &item_id, const int &amount) const {
 }
 
 bool Inventory::contains_at(const int &stack_index, const String &item_id, const int &amount) const {
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), false, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), false, "The 'slot index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, false, "The 'amount' is negative.");
 
 	if (stack_index < items.size()) {
@@ -191,7 +187,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 }
 
 int Inventory::add_at(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
@@ -231,7 +227,7 @@ int Inventory::remove(const String &item_id, const int &amount) {
 }
 
 int Inventory::remove_at(const int &stack_index, const String &item_id, const int &amount) {
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
@@ -252,12 +248,12 @@ int Inventory::remove_at(const int &stack_index, const String &item_id, const in
 }
 
 void Inventory::transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack index' is out of bounds.");
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= items.size(), "The 'stack index' is out of bounds.");
 	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
 	ERR_FAIL_NULL_MSG(get_database(), "InventoryDatabase is null.");
 	ERR_FAIL_NULL_MSG(destination->get_database(), "InventoryDatabase is null.");
 	ERR_FAIL_COND_MSG(get_database() != destination->get_database(), "Operation between inventories that do not have the same database is invalid.");
-	ERR_FAIL_COND_MSG(destination_stack_index >= destination->size() || destination_stack_index < 0, "The 'destination stack index' exceeds the destination inventory size or negative value.");
+	ERR_FAIL_COND_MSG(destination_stack_index >= destination->get_items().size() || destination_stack_index < 0, "The 'destination stack index' exceeds the destination inventory size or negative value.");
 	ERR_FAIL_COND_MSG(amount < 0, "The 'amount' is negative.");
 
 	Ref<ItemStack> stack = items[stack_index];
@@ -284,7 +280,7 @@ void Inventory::transfer_at(const int &stack_index, Inventory *destination, cons
 }
 
 void Inventory::transfer(const int &stack_index, Inventory *destination, const int &amount) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack index' is out of bounds.");
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= items.size(), "The 'stack index' is out of bounds.");
 	ERR_FAIL_NULL_MSG(destination, "Destination inventory is null on transfer.");
 	ERR_FAIL_NULL_MSG(get_database(), "InventoryDatabase is null.");
 	ERR_FAIL_NULL_MSG(destination->get_database(), "InventoryDatabase is null.");
@@ -442,7 +438,7 @@ bool Inventory::contains_category_in_stack(const Ref<ItemStack> &stack, const Re
 }
 
 void Inventory::_insert_stack(int stack_index) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index > size(), "The 'stack index' is out of bounds.");
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index > items.size(), "The 'stack index' is out of bounds.");
 
 	Ref<ItemStack> stack = memnew(ItemStack());
 	stack->set_item_id("");
@@ -452,7 +448,7 @@ void Inventory::_insert_stack(int stack_index) {
 }
 
 void Inventory::_remove_stack_at(int stack_index) {
-	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= size(), "The 'stack index' is out of bounds.");
+	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index >= items.size(), "The 'stack index' is out of bounds.");
 
 	items.remove_at(stack_index);
 	this->emit_signal("stack_removed", stack_index);
@@ -473,7 +469,7 @@ void Inventory::_call_events(int old_amount) {
 
 int Inventory::_add_to_stack(int stack_index, const String &item_id, int amount, const Dictionary &properties) {
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
 
 	Ref<ItemStack> stack = items[stack_index];
 	ERR_FAIL_NULL_V_MSG(stack, amount, "The 'stack' is null.");
@@ -489,7 +485,7 @@ int Inventory::_add_to_stack(int stack_index, const String &item_id, int amount,
 }
 
 int Inventory::_remove_from_stack(int stack_index, const String &item_id, int amount) {
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	Ref<ItemStack> stack = items[stack_index];
@@ -505,7 +501,6 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_stack_content", "stack_index", "item_id", "amount", "properties"), &Inventory::set_stack_content, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("is_empty"), &Inventory::is_empty);
 	ClassDB::bind_method(D_METHOD("is_full"), &Inventory::is_full);
-	ClassDB::bind_method(D_METHOD("size"), &Inventory::size);
 	ClassDB::bind_method(D_METHOD("contains", "item_id", "amount"), &Inventory::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_at", "stack_index", "item_id", "amount"), &Inventory::contains_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category", "amount"), &Inventory::contains_category, DEFVAL(1));
