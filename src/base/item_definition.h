@@ -18,6 +18,7 @@ private:
 	String name = "";
 	Ref<Texture2D> icon;
 	float weight = 0.0;
+	Vector2i size;
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
@@ -41,6 +42,8 @@ public:
 	Ref<Texture2D> get_icon() const;
 	void set_weight(const float &new_weight);
 	float get_weight() const;
+	void set_size(const Vector2i &new_size);
+	Vector2i get_size() const;
 	void set_properties(const Dictionary &new_properties);
 	Dictionary get_properties() const;
 	void set_dynamic_properties(const TypedArray<String> &new_dynamic_properties);

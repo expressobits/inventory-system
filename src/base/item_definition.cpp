@@ -28,6 +28,8 @@ void ItemDefinition::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_icon"), &ItemDefinition::get_icon);
 	ClassDB::bind_method(D_METHOD("set_weight", "weight"), &ItemDefinition::set_weight);
 	ClassDB::bind_method(D_METHOD("get_weight"), &ItemDefinition::get_weight);
+	ClassDB::bind_method(D_METHOD("set_size", "size"), &ItemDefinition::set_size);
+	ClassDB::bind_method(D_METHOD("get_size"), &ItemDefinition::get_size);
 	ClassDB::bind_method(D_METHOD("set_properties", "properties"), &ItemDefinition::set_properties);
 	ClassDB::bind_method(D_METHOD("get_properties"), &ItemDefinition::get_properties);
 	ClassDB::bind_method(D_METHOD("set_dynamic_properties", "dynamic_properties"), &ItemDefinition::set_dynamic_properties);
@@ -41,6 +43,7 @@ void ItemDefinition::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "icon", PROPERTY_HINT_RESOURCE_TYPE, "Texture2D"), "set_icon", "get_icon");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_weight", "get_weight");
+	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "properties"), "set_properties", "get_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_dynamic_properties", "get_dynamic_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_categories", "get_categories");
@@ -104,6 +107,14 @@ void ItemDefinition::set_weight(const float &new_weight) {
 
 float ItemDefinition::get_weight() const {
 	return weight;
+}
+
+void ItemDefinition::set_size(const Vector2i &new_size) {
+	size = new_size;
+}
+
+Vector2i ItemDefinition::get_size() const {
+	return size;
 }
 
 void ItemDefinition::set_properties(const Dictionary &new_properties) {
