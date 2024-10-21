@@ -76,8 +76,6 @@ auto_craft = true
 database = ExtResource("5_72vu1")
 
 [node name="InputInventory" type="Inventory" parent="."]
-slot_amount = 4
-inventory_name = "Campfire"
 database = ExtResource("5_72vu1")
 
 [node name="Node" type="Node3D" parent="."]
@@ -101,5 +99,3 @@ stream = ExtResource("11_dck0x")
 
 [node name="Openable" type="Node" parent="."]
 script = ExtResource("8_g2guq")
-
-[connection signal="item_added" from="InputInventory" to="." method="_on_input_inventory_item_added"]

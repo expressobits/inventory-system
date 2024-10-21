@@ -165,7 +165,7 @@ func holder_to_at(stack_index : int, inventory : Inventory, amount_to_move : int
 		var amount = stack_holder.amount
 		if amount_to_move >= 0:
 			amount = amount_to_move
-		var amount_no_add = inventory.add_at(stack_index, item_id, amount, stack_holder.properties)
+		var amount_no_add = inventory.add(item_id, amount, stack_holder.properties)
 		change_holder(item_id, stack_holder.amount - amount + amount_no_add, slot_properties)
 	else:
 		# Different items in slot and other_slot
