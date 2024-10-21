@@ -15,6 +15,7 @@
 #include "base/slot.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
+#include "core/grid_inventory.h"
 #include "craft/craft_station.h"
 
 using namespace godot;
@@ -33,6 +34,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Slot);
 	GDREGISTER_CLASS(Hotbar);
 	GDREGISTER_CLASS(Inventory);
+	GDREGISTER_CLASS(GridInventory);
 	GDREGISTER_CLASS(CraftStation);
 	GDREGISTER_CLASS(Crafting);
 }

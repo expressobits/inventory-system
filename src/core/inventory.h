@@ -11,7 +11,6 @@ class Inventory : public NodeInventories {
 	GDCLASS(Inventory, NodeInventories);
 
 private:
-	TypedArray<ItemStack> items;
 	int slot_amount = 16;
 	int max_size = 16;
 	String inventory_name = "Inventory";
@@ -23,6 +22,7 @@ private:
 	int _remove_from_stack(int stack_index, const String &item_id, int amount = 1);
 
 protected:
+	TypedArray<ItemStack> items;
 	static void _bind_methods();
 
 public:
@@ -36,12 +36,14 @@ public:
 	bool contains(const String &item, const int &amount = 1) const;
 	bool contains_at(const int &stack_index, const String &item_id, const int &amount = 1) const;
 	bool contains_category(const Ref<ItemCategory> &category, const int &amount = 1) const;
+	bool has_stack(const Ref<ItemStack> &stack) const;
 	int get_stack_index_with_an_item_of_category(const Ref<ItemCategory> &category) const;
 	int amount_of_item(const String &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
-	int add(const String &item_id, const int &amount, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
-	int add_at(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
+	int add_stack(const Ref<ItemStack> &stack, const bool &drop_excess = false);
+	// int add_at(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &stack_index, const String &item_id, const int &amount = 1);
 	void transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount = 1);
@@ -61,6 +63,8 @@ public:
 	String get_inventory_name() const;
 	Dictionary serialize() const;
 	void deserialize(const Dictionary data);
+	virtual void on_insert_stack(const int stack_index);
+	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index);
 };
 
 #endif // INVENTORY_CLASS_H
