@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bks3lecuf50li"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/quad_tree_tests.gd" id="1_4xn8l"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/tests.gd" id="1_lc6xh"]
+
+[node name="Tests" type="Node"]
+script = ExtResource("1_lc6xh")
+
+[node name="QuadTreeTests" type="Node" parent="."]
+script = ExtResource("1_4xn8l")
