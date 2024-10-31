@@ -13,6 +13,7 @@
 #include "base/node_inventories.h"
 #include "base/recipe.h"
 #include "base/slot.h"
+#include "core/quad_tree.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
 #include "core/grid_inventory.h"
@@ -32,6 +33,9 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(NodeInventories);
 	GDREGISTER_CLASS(Recipe);
 	GDREGISTER_CLASS(Slot);
+	GDREGISTER_CLASS(QuadTree);
+	GDREGISTER_CLASS(QuadTree::QuadNode);
+	GDREGISTER_CLASS(QuadTree::QuadRect);
 	GDREGISTER_CLASS(Hotbar);
 	GDREGISTER_CLASS(Inventory);
 	GDREGISTER_CLASS(GridInventory);

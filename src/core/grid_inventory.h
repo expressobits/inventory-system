@@ -3,61 +3,17 @@
 
 // #include "base/node_inventories.h"
 #include "core/inventory.h"
+#include "core/quad_tree.h"
 
 using namespace godot;
 
-class QuadTree : public RefCounted {
-public:
-	class QuadRect : public RefCounted {
-	public:
-		Rect2i rect;
-		Variant metadata;
-		void _init(const Rect2i &rect, const Variant &metadata);
-		String to_string() const;
-	};
-
-	class QuadNode : public RefCounted {
-	private:
-		static bool _can_subdivide(const Vector2i &size) {
-			return size.x > 1 && size.y > 1;
-		}
-		static TypedArray<Rect2i> _get_quadrant_rects(const Rect2i &rect);
-
-	public:
-		QuadNode();
-		~QuadNode();
-		TypedArray<QuadNode> quadrants = TypedArray<QuadNode>();
-		int quadrant_count = 0;
-		TypedArray<QuadRect> quad_rects;
-		Rect2i rect;
-		void _init(const Rect2i &rect);
-		String to_string() const;
-		bool is_empty() const;
-		Ref<QuadRect> get_first_under_rect(const Rect2i &test_rect, const Variant &exception_metadata = nullptr) const;
-		Ref<QuadRect> get_first_containing_point(const Vector2i &point, const Variant &exception_metadata = nullptr) const;
-		TypedArray<QuadRect> get_all_under_rect(const Rect2i &test_rect, const Variant &exception_metadata = nullptr) const;
-		TypedArray<QuadRect> get_all_containing_point(const Vector2i &point, const Variant &exception_metadata = nullptr) const;
-		void add(const Ref<QuadRect> &quad_rect);
-		bool remove(const Variant &metadata);
-		void _collapse();
-	};
-
-	Ref<QuadNode> _root;
-	Vector2i size;
-	void _init(const Vector2i &size);
-	Ref<QuadTree::QuadRect> get_first(const Variant &at, const Variant &exception_metadata = nullptr) const;
-	TypedArray<QuadRect> get_all(const Variant &at, const Variant &exception_metadata = nullptr) const;
-	void add(const Rect2i &rect, const Variant &metadata);
-	bool remove(const Variant &metadata);
-	bool is_empty() const;
-};
 
 class GridInventory : public Inventory {
 	GDCLASS(GridInventory, Inventory);
 
 private:
 	Vector2i _swap_position = Vector2i(0, 0);
-	Ref<QuadTree> _quad_tree = memnew(Ref<QuadTree>((size)));
+	Ref<QuadTree> quad_tree = nullptr;
 	Vector2i size = DEFAULT_SIZE;
 	TypedArray<Vector2i> stack_positions = new TypedArray<Vector2i>();
 	bool _bounds_broken() const;
@@ -80,6 +36,9 @@ public:
 	~GridInventory();
 	void set_size(const Vector2i &new_size);
 	Vector2i get_size() const;
+	void set_quad_tree(const Ref<QuadTree> &new_quad_tree);
+	Ref<QuadTree> get_quad_tree() const;
+
 	Vector2i get_item_position(const Ref<ItemStack> &stack) const;
 	bool set_item_position(const Ref<ItemStack> &stack, const Vector2i new_position);
 	Vector2i get_stack_size(const Ref<ItemStack> &stack) const;

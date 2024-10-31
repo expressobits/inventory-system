@@ -194,7 +194,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 	return amount_in_interact;
 }
 
-int Inventory::add_stack(const Ref<ItemStack> &stack, const bool &drop_excess = false) {
+int Inventory::add_stack(const Ref<ItemStack> &stack, const bool &drop_excess) {
 	return 0;
 }
 

@@ -12,23 +12,29 @@ bool GridInventory::_bounds_broken() const {
 }
 
 void GridInventory::_refresh_quad_tree() {
-	_quad_tree = memnew(Ref<QuadTree>(size));
+	set_quad_tree(memnew(QuadTree()));
+	get_quad_tree()->set_size(size);
 	for (size_t i = 0; i < get_items().size(); i++) {
 		Ref<ItemStack> stack = get_items()[i];
-		_quad_tree->add(get_stack_rect(stack), stack);
+		quad_tree->add(get_stack_rect(stack), stack);
 	}
 }
 
 void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_size", "size"), &GridInventory::set_size);
 	ClassDB::bind_method(D_METHOD("get_size"), &GridInventory::get_size);
+	ClassDB::bind_method(D_METHOD("set_quad_tree", "quad_tree"), &GridInventory::set_quad_tree);
+	ClassDB::bind_method(D_METHOD("get_quad_tree"), &GridInventory::get_quad_tree);
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "size"), "set_size", "get_size");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "quad_tree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_quad_tree", "get_quad_tree");
 }
 
 GridInventory::GridInventory() {
+	set_quad_tree(memnew(QuadTree()));
+	get_quad_tree()->set_size(size);
 }
 
 GridInventory::~GridInventory() {
@@ -55,6 +61,14 @@ void GridInventory::set_size(const Vector2i &new_size) {
 
 Vector2i GridInventory::get_size() const {
 	return size;
+}
+
+void GridInventory::set_quad_tree(const Ref<QuadTree> &new_quad_tree) {
+	quad_tree = new_quad_tree;
+}
+
+Ref<QuadTree> GridInventory::get_quad_tree() const {
+	return quad_tree;
 }
 
 Vector2i GridInventory::get_item_position(const Ref<ItemStack> &stack) const {
@@ -152,18 +166,18 @@ bool GridInventory::can_rotate_item(const Ref<ItemStack> &stack) const {
 }
 
 Ref<ItemStack> GridInventory::get_stack_at(const Vector2i position) const {
-	Ref<QuadTree::QuadRect> first = _quad_tree->get_first(position);
+	Ref<QuadTree::QuadRect> first = quad_tree->get_first(position);
 	if (first == nullptr)
 		return nullptr;
-	return first->metadata;
+	return first->get_metadata();
 }
 
 TypedArray<ItemStack> GridInventory::get_stacks_under(const Rect2i rect) const {
 	TypedArray<ItemStack> result = TypedArray<ItemStack>();
 	for (size_t i = 0; i < items.size(); i++) {
 		Ref<ItemStack> stack = items[i];
-		Ref<Rect2i> stack_rect = get_stack_rect(stack);
-		if (stack_rect->intersects(rect))
+		Rect2i stack_rect = get_stack_rect(stack);
+		if (stack_rect.intersects(rect))
 			result.append(stack);
 	}
 	return result;
@@ -224,6 +238,7 @@ bool GridInventory::transfer_to(const Vector2i from_position, const GridInventor
 	// Ref<ItemStack> item_dst = destination->get_item_at(destination_position);
 	// if (item_dst != nullptr && !StacksConstraint.items_mergable(item_dst, item))
 	// 	return InventoryItem.swap(item, item_dst) return false;
+	return false;
 }
 
 bool GridInventory::rect_free(const Rect2i &rect, const Ref<ItemStack> &exception) const {
@@ -234,7 +249,7 @@ bool GridInventory::rect_free(const Rect2i &rect, const Ref<ItemStack> &exceptio
 	if (rect.position.y + rect.size.y > size.y)
 		return false;
 
-	return _quad_tree->get_first(rect, exception) == nullptr;
+	return quad_tree->get_first(rect, exception) == nullptr;
 }
 
 Vector2i GridInventory::find_free_place(const Ref<ItemStack> &stack, const Ref<ItemStack> &exception) const {
@@ -278,20 +293,20 @@ void GridInventory::on_insert_stack(const int stack_index) {
 	Ref<ItemStack> stack = items[stack_index];
 	if (stack == nullptr)
 		return;
-	_quad_tree->add(get_stack_rect(stack), stack);
+	quad_tree->add(get_stack_rect(stack), stack);
 }
 
 void GridInventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_index) {
 	if (stack == nullptr)
 		return;
-	_quad_tree->remove(stack);
+	quad_tree->remove(stack);
 }
 
 void GridInventory::_on_item_grid_info_changed(const Ref<ItemStack> stack) {
 	if (stack == nullptr)
 		return;
-	_quad_tree->remove(stack);
-	_quad_tree->add(get_stack_rect(stack), stack);
+	quad_tree->remove(stack);
+	quad_tree->add(get_stack_rect(stack), stack);
 }
 
 bool GridInventory::_on_pre_item_swap(const Ref<ItemStack> stack1, const Ref<ItemStack> stack2) {
@@ -354,250 +369,4 @@ bool GridInventory::_compare_stacks(const Ref<ItemStack> &stack1, const Ref<Item
 void GridInventory::_sort_if_needed() {
 	if (!_is_sorted() || _bounds_broken())
 		sort();
-}
-
-void QuadTree::QuadRect::_init(const Rect2i &rect, const Variant &metadata) {
-	this->rect = rect;
-	this->metadata = metadata;
-}
-
-String QuadTree::QuadRect::to_string() const {
-	return "[R: " + UtilityFunctions::str(rect) + ", M: " + UtilityFunctions::str(metadata) + "]";
-}
-
-TypedArray<Rect2i> QuadTree::QuadNode::_get_quadrant_rects(const Rect2i &rect) {
-	TypedArray<Rect2i> result = TypedArray<Rect2i>();
-	int64_t q0w = UtilityFunctions::roundi(float(rect.size.x) / 2.0);
-	int64_t q0h = UtilityFunctions::roundi(float(rect.size.y) / 2.0);
-	Rect2i q0 = Rect2i(rect.position, Vector2i(q0w, q0h));
-	Rect2i q3 = Rect2i(rect.position + q0.size, rect.size - q0.size);
-	Rect2i q1 = Rect2i(Vector2i(q3.position.x, q0.position.y), Vector2i(q3.size.x, q0.size.y));
-	Rect2i q2 = Rect2i(Vector2i(q0.position.x, q3.position.y), Vector2i(q0.size.x, q3.size.y));
-	result.append(q0);
-	result.append(q1);
-	result.append(q2);
-	result.append(q3);
-	return result;
-}
-
-QuadTree::QuadNode::QuadNode() {
-	quadrants.push_back(nullptr);
-	quadrants.push_back(nullptr);
-	quadrants.push_back(nullptr);
-	quadrants.push_back(nullptr);
-}
-
-QuadTree::QuadNode::~QuadNode() {
-}
-
-void QuadTree::QuadNode::_init(const Rect2i &rect) {
-	this->rect = rect;
-}
-
-String QuadTree::QuadNode::to_string() const {
-	return "[R: " + UtilityFunctions::str(rect) + "]";
-}
-
-bool QuadTree::QuadNode::is_empty() const {
-	return quadrant_count == 0 && quad_rects.is_empty();
-}
-
-Ref<QuadTree::QuadRect> QuadTree::QuadNode::get_first_under_rect(const Rect2i &test_rect, const Variant &exception_metadata) const {
-	for (size_t i = 0; i < quad_rects.size(); i++) {
-		Ref<QuadRect> quad_rect = quad_rects[i];
-		if (UtilityFunctions::type_of(exception_metadata) != GDEXTENSION_VARIANT_TYPE_NIL && quad_rect->metadata == exception_metadata)
-			continue;
-		if (quad_rect->rect.intersects(test_rect))
-			return quad_rect;
-	}
-	for (size_t quadrant_index = 0; quadrant_index < quadrants.size(); quadrant_index++) {
-		Ref<QuadNode> quadrant = quadrants[quadrant_index];
-		if (quadrant == nullptr)
-			continue;
-		if (!quadrant->rect.intersects(test_rect))
-			continue;
-		Ref<QuadRect> first = quadrant->get_first_under_rect(test_rect, exception_metadata);
-		if (first != nullptr)
-			return first;
-	}
-	return nullptr;
-}
-
-Ref<QuadTree::QuadRect> QuadTree::QuadNode::get_first_containing_point(const Vector2i &point, const Variant &exception_metadata) const {
-	for (size_t quad_rect_index = 0; quad_rect_index < quad_rects.size(); quad_rect_index++) {
-		Ref<QuadRect> quad_rect = quad_rects[quad_rect_index];
-		if (UtilityFunctions::type_of(exception_metadata) != GDEXTENSION_VARIANT_TYPE_NIL && quad_rect->metadata == exception_metadata)
-			continue;
-		if (quad_rect->rect.has_point(point))
-			return quad_rect;
-	}
-
-	for (size_t quadrant_index = 0; quadrant_index < quadrants.size(); quadrant_index++) {
-		Ref<QuadNode> quadrant = quadrants[quadrant_index];
-		if (quadrant == nullptr)
-			continue;
-		if (!quadrant->rect.has_point(point))
-			continue;
-		Ref<QuadRect> first = quadrant->get_first_containing_point(point, exception_metadata);
-		if (first != nullptr)
-			return first;
-	}
-
-	return nullptr;
-}
-
-TypedArray<QuadTree::QuadRect> QuadTree::QuadNode::get_all_under_rect(const Rect2i &test_rect, const Variant &exception_metadata) const {
-	TypedArray<QuadRect> result = TypedArray<QuadRect>();
-	for (size_t quad_rect_index = 0; quad_rect_index < quad_rects.size(); quad_rect_index++) {
-		Ref<QuadRect> quad_rect = quad_rects[quad_rect_index];
-		if (UtilityFunctions::type_of(exception_metadata) != GDEXTENSION_VARIANT_TYPE_NIL && quad_rect->metadata == exception_metadata)
-			continue;
-		if (quad_rect->rect.intersects(test_rect))
-			result.append(result);
-	}
-	for (size_t quadrant_index = 0; quadrant_index < quadrants.size(); quadrant_index++) {
-		Ref<QuadNode> quadrant = quadrants[quadrant_index];
-		if (quadrant == nullptr)
-			continue;
-		if (!quadrant->rect.intersects(test_rect))
-			continue;
-		result.append_array(quadrant->get_all_under_rect(test_rect, exception_metadata));
-	}
-	return result;
-}
-
-TypedArray<QuadTree::QuadRect> QuadTree::QuadNode::get_all_containing_point(const Vector2i &point, const Variant &exception_metadata) const {
-	TypedArray<QuadRect> result = TypedArray<QuadRect>();
-	for (size_t quad_rect_index = 0; quad_rect_index < quad_rects.size(); quad_rect_index++) {
-		Ref<QuadRect> quad_rect = quad_rects[quad_rect_index];
-		if (UtilityFunctions::type_of(exception_metadata) != GDEXTENSION_VARIANT_TYPE_NIL && quad_rect->metadata == exception_metadata)
-			continue;
-		if (quad_rect->rect.has_point(point))
-			result.append(result);
-	}
-	for (size_t quadrant_index = 0; quadrant_index < quadrants.size(); quadrant_index++) {
-		Ref<QuadNode> quadrant = quadrants[quadrant_index];
-		if (quadrant == nullptr)
-			continue;
-		if (!quadrant->rect.has_point(point))
-			continue;
-		result.append_array(quadrant->get_all_containing_point(point, exception_metadata));
-	}
-	return result;
-}
-
-void QuadTree::QuadNode::add(const Ref<QuadTree::QuadRect> &quad_rect) {
-	if (!_can_subdivide(rect.size)) {
-		quad_rects.append(quad_rect);
-		return;
-	}
-	if (is_empty()) {
-		quad_rects.append(quad_rect);
-		return;
-	}
-
-	TypedArray<Rect2i> quadrant_rects = _get_quadrant_rects(rect);
-	for (size_t i = 0; i < quadrant_rects.size(); i++) {
-		Rect2i quadrant_rect = quadrant_rects[i];
-		if (!quadrant_rect.intersects(quad_rect->rect))
-			continue;
-		Ref<QuadNode> quadrant = quadrants[i];
-		if (quadrant == nullptr) {
-			quadrants[i] = memnew(QuadNode());
-			quadrant_count += 1;
-			while (!quad_rects.is_empty()) {
-				Ref<QuadTree::QuadRect> new_quad_rect = quad_rects.pop_back();
-				add(new_quad_rect);
-			}
-		}
-		quadrant->add(quad_rect);
-	}
-}
-
-bool QuadTree::QuadNode::remove(const Variant &metadata) {
-	bool result = false;
-	for (size_t i = quad_rects.size() - 1; i >= 0; i--) {
-		Ref<QuadRect> quad_rect = quad_rects[i];
-		if (quad_rect->metadata == metadata) {
-			quad_rects.remove_at(i);
-			result = true;
-		}
-	}
-
-	for (size_t i = 0; i < quadrants.size(); i++) {
-		Ref<QuadNode> quad_node = quadrants[i];
-		if (quad_node == nullptr)
-			continue;
-		if (quad_node->remove(metadata))
-			result = true;
-		if (quad_node->is_empty()) {
-			quadrants[i] = nullptr;
-			quadrant_count -= 1;
-		}
-	}
-
-	_collapse();
-
-	return result;
-}
-
-void QuadTree::QuadNode::_collapse() {
-	if (quadrant_count == 0)
-		return;
-	Ref<QuadRect> collapsing_into = nullptr;
-	for (size_t node_index = 0; node_index < quadrants.size(); node_index++) {
-		Ref<QuadNode> quad_node = quadrants[node_index];
-		if (quad_node == nullptr)
-			continue;
-		if (quad_node->quadrant_count != 0)
-			return;
-		for (size_t quad_rect_index = 0; quad_rect_index < quad_node->quad_rects.size(); quad_rect_index++) {
-			Ref<QuadRect> qtr = quad_node->quad_rects[quad_rect_index];
-			if (collapsing_into != nullptr && collapsing_into != qtr)
-				return;
-			collapsing_into = qtr;
-		}
-	}
-	for (size_t node_index = 0; node_index < quadrants.size(); node_index++) {
-		quadrants[node_index] = nullptr;
-	}
-	quadrant_count = 0;
-	quad_rects.append(collapsing_into);
-}
-
-void QuadTree::_init(const Vector2i &size) {
-	this->size = size;
-	Ref<QuadTree::QuadNode> new_node = memnew(Ref<QuadTree::QuadNode>());
-	new_node->_init(Rect2i(Vector2i(0, 0), this->size));
-	this->_root = new_node;
-}
-
-Ref<QuadTree::QuadRect> QuadTree::get_first(const Variant &at, const Variant &exception_metadata) const {
-	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_RECT2I)
-		return this->_root->get_first_under_rect(at, exception_metadata);
-	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_VECTOR2I)
-		return this->_root->get_first_containing_point(at, exception_metadata);
-	return nullptr;
-}
-
-TypedArray<QuadTree::QuadRect> QuadTree::get_all(const Variant &at, const Variant &exception_metadata) const {
-	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_RECT2I)
-		return this->_root->get_all_under_rect(at, exception_metadata);
-	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_VECTOR2I)
-		return this->_root->get_all_containing_point(at, exception_metadata);
-	return TypedArray<QuadTree::QuadRect>();
-}
-
-void QuadTree::add(const Rect2i &rect, const Variant &metadata) {
-	Ref<QuadTree::QuadRect> new_quad_rect = memnew(Ref<QuadTree::QuadRect>());
-	new_quad_rect->_init(rect, metadata);
-	_root->add(new_quad_rect);
-}
-
-bool QuadTree::remove(const Variant &metadata) {
-	return _root->remove(metadata);
-}
-
-bool QuadTree::is_empty() const {
-	return _root->is_empty();
 }
