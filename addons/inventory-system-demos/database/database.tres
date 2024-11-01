@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=55 format=3 uid="uid://de5qy8ycey7yn"]
+[gd_resource type="InventoryDatabase" load_steps=39 format=3 uid="uid://de5qy8ycey7yn"]
 
 [ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_pegli"]
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system-demos/assets/icons/branch.png" id="1_wk1an"]
@@ -91,6 +91,7 @@ max_stack = 1
 name = "Stone Axe"
 icon = ExtResource("8_lxoic")
 weight = 1.0
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
 "durability": 100.0,
@@ -105,6 +106,7 @@ can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("9_p5frv")
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
 "durability": 100.0,
@@ -185,110 +187,31 @@ properties = {
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_epmnv")])
 
-[sub_resource type="ItemStack" id="ItemStack_cxcs3"]
-item_id = "wood"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_i5gk4"]
-item_id = "stone"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_ojih7"]
-item_id = "stone_axe"
-amount = 1
-
 [sub_resource type="CraftStationType" id="CraftStationType_vsths"]
-id = "workbench"
 name = "Workbench"
 icon = ExtResource("12_ltu7p")
 
 [sub_resource type="Recipe" id="Recipe_fapod"]
-products = Array[ItemStack]([SubResource("ItemStack_ojih7")])
 time_to_craft = 16.0
 station = SubResource("CraftStationType_vsths")
-ingredients = Array[ItemStack]([SubResource("ItemStack_cxcs3"), SubResource("ItemStack_i5gk4")])
-
-[sub_resource type="ItemStack" id="ItemStack_la0lf"]
-item_id = "wood"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_20ywr"]
-item_id = "stone"
-amount = 2
-
-[sub_resource type="ItemStack" id="ItemStack_beifo"]
-item_id = "stone_pickaxe"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_ml8wm"]
-item_id = "helmet_labor"
-amount = 1
 
 [sub_resource type="Recipe" id="Recipe_0u4cu"]
-products = Array[ItemStack]([SubResource("ItemStack_beifo")])
 station = SubResource("CraftStationType_vsths")
-ingredients = Array[ItemStack]([SubResource("ItemStack_la0lf"), SubResource("ItemStack_20ywr")])
-required_items = Array[ItemStack]([SubResource("ItemStack_ml8wm")])
-
-[sub_resource type="ItemStack" id="ItemStack_xuepk"]
-item_id = "grass"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_nyrm5"]
-item_id = "lashing"
-amount = 1
 
 [sub_resource type="Recipe" id="Recipe_bl2yk"]
-products = Array[ItemStack]([SubResource("ItemStack_nyrm5")])
 time_to_craft = 2.0
-ingredients = Array[ItemStack]([SubResource("ItemStack_xuepk")])
-
-[sub_resource type="ItemStack" id="ItemStack_pi6g3"]
-item_id = "wood"
-amount = 4
-
-[sub_resource type="ItemStack" id="ItemStack_8upfj"]
-item_id = "workbench"
-amount = 1
 
 [sub_resource type="Recipe" id="Recipe_e1irj"]
-products = Array[ItemStack]([SubResource("ItemStack_8upfj")])
-ingredients = Array[ItemStack]([SubResource("ItemStack_pi6g3")])
-
-[sub_resource type="ItemStack" id="ItemStack_am36t"]
-item_id = "wood"
-amount = 2
-
-[sub_resource type="ItemStack" id="ItemStack_amqdi"]
-item_id = "stone"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_21v4l"]
-item_id = "campfire"
-amount = 1
 
 [sub_resource type="Recipe" id="Recipe_bhgkx"]
-products = Array[ItemStack]([SubResource("ItemStack_21v4l")])
-ingredients = Array[ItemStack]([SubResource("ItemStack_am36t"), SubResource("ItemStack_amqdi")])
-
-[sub_resource type="ItemStack" id="ItemStack_k37se"]
-item_id = "raw_meat"
-amount = 1
-
-[sub_resource type="ItemStack" id="ItemStack_ot4mu"]
-item_id = "cooked_meat"
-amount = 1
 
 [sub_resource type="CraftStationType" id="CraftStationType_fnhd3"]
-id = "campfire"
 name = "Campfire"
 icon = ExtResource("11_h04p3")
 
 [sub_resource type="Recipe" id="Recipe_7jg1y"]
-products = Array[ItemStack]([SubResource("ItemStack_ot4mu")])
 time_to_craft = 8.0
 station = SubResource("CraftStationType_fnhd3")
-ingredients = Array[ItemStack]([SubResource("ItemStack_k37se")])
 
 [resource]
 items = Array[ItemDefinition]([SubResource("ItemDefinition_b5y1y"), SubResource("ItemDefinition_dxjj6"), SubResource("ItemDefinition_hpt3t"), SubResource("ItemDefinition_n86tn"), SubResource("ItemDefinition_uhr2s"), SubResource("ItemDefinition_eupl1"), SubResource("ItemDefinition_scf45"), SubResource("ItemDefinition_24066"), SubResource("ItemDefinition_84tg3"), SubResource("ItemDefinition_f2odo"), SubResource("ItemDefinition_6y8vb")])
