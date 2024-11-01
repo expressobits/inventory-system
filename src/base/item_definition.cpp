@@ -111,6 +111,10 @@ float ItemDefinition::get_weight() const {
 
 void ItemDefinition::set_size(const Vector2i &new_size) {
 	size = new_size;
+	if(size.x <= 0)
+		size = Vector2i(1, size.y);
+	if(size.y <= 0)
+		size = Vector2i(size.x, 1);
 }
 
 Vector2i ItemDefinition::get_size() const {

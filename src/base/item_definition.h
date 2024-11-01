@@ -18,7 +18,7 @@ private:
 	String name = "";
 	Ref<Texture2D> icon;
 	float weight = 0.0;
-	Vector2i size;
+	Vector2i size = Vector2i(1, 1);
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
