@@ -28,7 +28,6 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_quad_tree"), &GridInventory::get_quad_tree);
 
 	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
-	ClassDB::bind_method(D_METHOD("init"), &GridInventory::init);
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
