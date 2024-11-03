@@ -13,8 +13,8 @@ class GridInventory : public Inventory {
 
 private:
 	Vector2i _swap_position = Vector2i(0, 0);
-	Ref<QuadTree> quad_tree = nullptr;
-	Vector2i size = DEFAULT_SIZE;
+	Ref<QuadTree> quad_tree;
+	Vector2i size = Vector2i(8, 8);
 	TypedArray<Vector2i> stack_positions = new TypedArray<Vector2i>();
 	bool _bounds_broken() const;
 	void _refresh_quad_tree();
@@ -52,15 +52,16 @@ public:
 	bool is_rotate_item(const Ref<ItemStack> &stack) const;
 	bool can_rotate_item(const Ref<ItemStack> &stack) const;
 	int add_at(const Vector2i position, const String item_id, const int amount = 1, const Dictionary &properties = Dictionary());
-	int add_stack_at(const Ref<ItemStack> &stack, const Vector2i &position);
 	Ref<ItemStack> get_stack_at(const Vector2i position) const;
+	int get_stack_index_at(const Vector2i position) const;
 	TypedArray<ItemStack> get_stacks_under(const Rect2i rect) const;
 	bool move_stack_to(const Ref<ItemStack> stack, const Vector2i position);
 	bool move_item_to_free_spot(const Ref<ItemStack> stack);
 	bool transfer_to(const Vector2i from_position, const GridInventory *destination, const Vector2i destination_position);
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
-	Vector2i find_free_place(const Ref<ItemStack> &stack, const Ref<ItemStack> &exception = nullptr) const;
+	Vector2i find_free_place(const Vector2i item_size, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
+	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary()) const;
 	virtual void on_insert_stack(const int stack_index) override;
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index) override;
 };

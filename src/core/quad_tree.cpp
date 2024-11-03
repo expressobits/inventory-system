@@ -339,6 +339,7 @@ void QuadTree::init(const Vector2i &size) {
 }
 
 Ref<QuadTree::QuadRect> QuadTree::get_first(const Variant &at, const Variant &exception_metadata) const {
+	ERR_FAIL_NULL_V_MSG(this->root, false, "'root' is null.");
 	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_RECT2I)
 		return this->root->get_first_under_rect(at, exception_metadata);
 	if (UtilityFunctions::type_of(at) == GDEXTENSION_VARIANT_TYPE_VECTOR2I)

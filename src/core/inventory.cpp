@@ -87,6 +87,10 @@ bool Inventory::contains_category(const Ref<ItemCategory> &category, const int &
 	return false;
 }
 
+bool Inventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {
+	return true;
+}
+
 bool Inventory::has_stack(const Ref<ItemStack> &stack) const {
 	for (size_t i = 0; i < items.size(); i++) {
 		if (items[i] == stack)
@@ -166,9 +170,8 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 	}
 
 	if (amount_in_interact > 0) {
-		_insert_stack(items.size());
 		int previous_amount = amount_in_interact;
-		amount_in_interact = _add_to_stack(items.size() - 1, item_id, amount_in_interact, properties);
+		amount_in_interact = add_on_new_stack(item_id, amount_in_interact, properties);
 
 		// Check for potential integer underflow
 		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot after creating new slot.");
@@ -198,22 +201,34 @@ int Inventory::add_stack(const Ref<ItemStack> &stack, const bool &drop_excess) {
 	return 0;
 }
 
-// int Inventory::add_at(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
-// 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
-// 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
+int Inventory::add_at_index(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
-// 	int amount_in_interact = amount;
-// 	int old_amount = this->amount();
-// 	if (stack_index < items.size()) {
-// 		amount_in_interact = _add_to_stack(stack_index, item_id, amount_in_interact, properties);
-// 		_call_events(old_amount);
-// 	}
-// 	int _added = amount - amount_in_interact;
-// 	if (_added > 0) {
-// 		emit_signal("item_added", item_id, _added);
-// 	}
-// 	return amount_in_interact;
-// }
+	int amount_in_interact = amount;
+	int old_amount = this->amount();
+	if (stack_index < items.size()) {
+		amount_in_interact = _add_to_stack(stack_index, item_id, amount_in_interact, properties);
+		_call_events(old_amount);
+	}
+	int _added = amount - amount_in_interact;
+	if (_added > 0) {
+		emit_signal("item_added", item_id, _added);
+	}
+	return amount_in_interact;
+}
+
+int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties) {
+	Ref<ItemStack> stack = memnew(ItemStack());
+	stack->set_item_id(item_id);
+	stack->set_amount(amount);
+	stack->set_properties(properties);
+	items.append(stack);
+	on_insert_stack(items.size() - 1);
+
+	this->emit_signal("stack_added", items.size() - 1);
+	return 0;
+}
 
 int Inventory::remove(const String &item_id, const int &amount) {
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
@@ -525,13 +540,14 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("contains", "item_id", "amount"), &Inventory::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_at", "stack_index", "item_id", "amount"), &Inventory::contains_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category", "category", "amount"), &Inventory::contains_category, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("has_space_for", "item", "amount", "properties"), &Inventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("has_stack", "stack"), &Inventory::has_stack);
 	ClassDB::bind_method(D_METHOD("get_stack_index_with_an_item_of_category", "category"), &Inventory::get_stack_index_with_an_item_of_category);
 	ClassDB::bind_method(D_METHOD("amount_of_item", "item_id"), &Inventory::amount_of_item);
 	ClassDB::bind_method(D_METHOD("get_amount_of_category", "category"), &Inventory::amount_of_category);
 	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::amount);
 	ClassDB::bind_method(D_METHOD("add", "item_id", "amount", "properties", "drop_excess"), &Inventory::add, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(false));
-	// ClassDB::bind_method(D_METHOD("add_at", "stack_index", "item_id", "amount", "properties"), &Inventory::add_at, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("add_at_index", "stack_index", "item_id", "amount", "properties"), &Inventory::add_at_index, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove", "item_id", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "stack_index", "item_id", "amount"), &Inventory::remove_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer_at", "stack_index", "destination", "destination_stack_index", "amount"), &Inventory::transfer_at, DEFVAL(1));

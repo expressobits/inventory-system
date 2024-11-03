@@ -36,14 +36,16 @@ public:
 	bool contains(const String &item, const int &amount = 1) const;
 	bool contains_at(const int &stack_index, const String &item_id, const int &amount = 1) const;
 	bool contains_category(const Ref<ItemCategory> &category, const int &amount = 1) const;
+	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary()) const;
 	bool has_stack(const Ref<ItemStack> &stack) const;
 	int get_stack_index_with_an_item_of_category(const Ref<ItemCategory> &category) const;
 	int amount_of_item(const String &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
-	int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
+	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
 	int add_stack(const Ref<ItemStack> &stack, const bool &drop_excess = false);
-	// int add_at(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &stack_index, const String &item_id, const int &amount = 1);
 	void transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount = 1);

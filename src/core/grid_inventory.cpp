@@ -12,8 +12,9 @@ bool GridInventory::_bounds_broken() const {
 }
 
 void GridInventory::_refresh_quad_tree() {
-	set_quad_tree(memnew(QuadTree()));
-	get_quad_tree()->set_size(size);
+	Ref<QuadTree> new_quad_tree = memnew(QuadTree());
+	new_quad_tree->init(size);
+	set_quad_tree(new_quad_tree);
 	for (size_t i = 0; i < get_items().size(); i++) {
 		Ref<ItemStack> stack = get_items()[i];
 		quad_tree->add(get_stack_rect(stack), stack);
@@ -26,15 +27,20 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_quad_tree", "quad_tree"), &GridInventory::set_quad_tree);
 	ClassDB::bind_method(D_METHOD("get_quad_tree"), &GridInventory::get_quad_tree);
 
+	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("init"), &GridInventory::init);
+
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "size"), "set_size", "get_size");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "quad_tree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NO_EDITOR), "set_quad_tree", "get_quad_tree");
+	// ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "quad_tree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_quad_tree", "get_quad_tree");
 }
 
 GridInventory::GridInventory() {
-	set_quad_tree(memnew(QuadTree()));
-	get_quad_tree()->set_size(size);
+	// UtilityFunctions::print("acontece?");
+	// Ref<QuadTree> new_quad_tree = memnew(QuadTree());
+	// new_quad_tree->init(size);
+	// set_quad_tree(new_quad_tree);
 }
 
 GridInventory::~GridInventory() {
@@ -172,6 +178,14 @@ Ref<ItemStack> GridInventory::get_stack_at(const Vector2i position) const {
 	return first->get_metadata();
 }
 
+int GridInventory::get_stack_index_at(const Vector2i position) const {
+	Ref<QuadTree::QuadRect> first = quad_tree->get_first(position);
+	if (first == nullptr)
+		return -1;
+	int stack_index = items.find(first->get_metadata());
+	return stack_index;
+}
+
 TypedArray<ItemStack> GridInventory::get_stacks_under(const Rect2i rect) const {
 	TypedArray<ItemStack> result = TypedArray<ItemStack>();
 	for (size_t i = 0; i < items.size(); i++) {
@@ -187,18 +201,25 @@ int GridInventory::add_at(const Vector2i position, const String item_id, const i
 	// _insert_new_stack(item_id, amount, properties);
 
 	// TODO fix link here
-	Ref<ItemStack> stack = items[0];
-	Vector2i item_size = get_stack_size(stack);
-	Rect2i rect = Rect2i(position, item_size);
-	if (rect_free(rect)) {
-		if (!add(item_id, amount, properties))
-			return false;
-		bool move_success = move_stack_to(stack, position);
-		UtilityFunctions::printerr(move_success, "Can't move the item to the given place!");
-		return true;
+
+	int stack_index = get_stack_index_at(position);
+	if (stack_index == -1) {
+		Ref<ItemDefinition> definition = get_database()->get_item(item_id);
+		Rect2i rect = Rect2i(position, definition->get_size());
+		// TODO case 1 Nao tem o item
+		// Verificar se o rect está livre para adicao e adicionar
+		if (rect_free(rect)) {
+			int no_added = add_on_new_stack(item_id, amount, properties);
+			Ref<ItemStack> stack = items[items.size()];
+			bool move_success = move_stack_to(stack, position);
+			UtilityFunctions::printerr(move_success, "Can't move the item to the given place!");
+			return no_added;
+		}
+	} else {
+		int no_added = add_at_index(stack_index, item_id, amount, properties);
+		return no_added;
 	}
-	// return false;
-	return 0;
+	return amount;
 }
 
 bool GridInventory::move_stack_to(const Ref<ItemStack> stack, const Vector2i position) {
@@ -216,7 +237,7 @@ bool GridInventory::move_item_to_free_spot(const Ref<ItemStack> stack) {
 	if (rect_free(get_stack_rect(stack), stack))
 		return true;
 
-	Vector2i free_place = find_free_place(stack, stack);
+	Vector2i free_place = find_free_place(get_stack_size(stack), stack);
 	if (free_place == Vector2i(-1, -1))
 		return false;
 
@@ -249,18 +270,19 @@ bool GridInventory::rect_free(const Rect2i &rect, const Ref<ItemStack> &exceptio
 	if (rect.position.y + rect.size.y > size.y)
 		return false;
 
+	ERR_FAIL_NULL_V_MSG(quad_tree, 0, "'quad_tree' is null.");
 	return quad_tree->get_first(rect, exception) == nullptr;
+	// return true;
 }
 
-Vector2i GridInventory::find_free_place(const Ref<ItemStack> &stack, const Ref<ItemStack> &exception) const {
+Vector2i GridInventory::find_free_place(const Vector2i item_size, const Ref<ItemStack> &exception) const {
 	Vector2i result = Vector2i(-1, -1);
-	Vector2i item_size = get_stack_size(stack);
 	for (size_t x = 0; x < (size.x - (item_size.x - 1)); x++) {
 		for (size_t y = 0; y < (size.y - (item_size.y - 1)); y++) {
 			Rect2i rect = Rect2i(Vector2i(x, y), item_size);
-			if (rect_free(rect, exception))
-				result = Vector2i(x, y);
-			return result;
+			if (rect_free(rect, exception)) {
+				return Vector2i(x, y);
+			}
 		}
 	}
 	return result;
@@ -281,12 +303,21 @@ bool GridInventory::sort() {
 
 	for (size_t i = 0; i < stack_array.size(); i++) {
 		Ref<ItemStack> stack = stack_array[i];
-		Vector2i free_place = find_free_place(stack);
+		Vector2i free_place = find_free_place(get_stack_size(stack));
 		if (free_place == Vector2i(-1, -1))
 			return false;
 		move_stack_to(stack, free_place);
 	}
 	return true;
+}
+
+bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {
+	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
+	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
+
+	Vector2i item_size = definition->get_size();
+	Vector2i result = find_free_place(item_size);
+	return result != Vector2i(-1, -1);
 }
 
 void GridInventory::on_insert_stack(const int stack_index) {
