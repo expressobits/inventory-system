@@ -38,6 +38,8 @@ public:
 	Vector2i get_size() const;
 	void set_quad_tree(const Ref<QuadTree> &new_quad_tree);
 	Ref<QuadTree> get_quad_tree() const;
+	void set_stack_positions(const TypedArray<Vector2i> &new_quad_tree);
+	TypedArray<Vector2i> get_stack_positions() const;
 
 	Vector2i get_item_position(const Ref<ItemStack> &stack) const;
 	bool set_item_position(const Ref<ItemStack> &stack, const Vector2i new_position);
@@ -61,6 +63,7 @@ public:
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
 	Vector2i find_free_place(const Vector2i item_size, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
+	virtual bool can_add_new_stack(const Ref<ItemStack> &stack) const;
 	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary()) const;
 	virtual void on_insert_stack(const int stack_index) override;
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index) override;

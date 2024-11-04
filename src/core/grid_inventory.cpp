@@ -26,12 +26,15 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_size"), &GridInventory::get_size);
 	ClassDB::bind_method(D_METHOD("set_quad_tree", "quad_tree"), &GridInventory::set_quad_tree);
 	ClassDB::bind_method(D_METHOD("get_quad_tree"), &GridInventory::get_quad_tree);
+	ClassDB::bind_method(D_METHOD("set_stack_positions", "stack_positions"), &GridInventory::set_stack_positions);
+	ClassDB::bind_method(D_METHOD("get_stack_positions"), &GridInventory::get_stack_positions);
 
 	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "size"), "set_size", "get_size");
+	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "stack_positions"), "set_stack_positions", "get_stack_positions");
 	// ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "quad_tree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_quad_tree", "get_quad_tree");
 }
 
@@ -76,10 +79,18 @@ Ref<QuadTree> GridInventory::get_quad_tree() const {
 	return quad_tree;
 }
 
+void GridInventory::set_stack_positions(const TypedArray<Vector2i> &new_stack_positions) {
+	stack_positions = new_stack_positions;
+}
+
+TypedArray<Vector2i> GridInventory::get_stack_positions() const {
+	return stack_positions;
+}
+
 Vector2i GridInventory::get_item_position(const Ref<ItemStack> &stack) const {
 	int stack_index = items.find(stack);
 	if (stack_index == -1)
-		return Vector2i();
+		return Vector2i(0, 0);
 	return stack_positions[stack_index];
 }
 
@@ -310,9 +321,16 @@ bool GridInventory::sort() {
 	return true;
 }
 
+bool GridInventory::can_add_new_stack(const Ref<ItemStack> &stack) const {
+	return has_space_for(stack->get_item_id(), stack->get_amount(), stack->get_properties()) && Inventory::can_add_new_stack(stack);
+}
+
 bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
+
+	if(Inventory::can_stack_with_actual_slots(item_id, amount, properties))
+		return true;
 
 	Vector2i item_size = definition->get_size();
 	Vector2i result = find_free_place(item_size);
@@ -323,7 +341,13 @@ void GridInventory::on_insert_stack(const int stack_index) {
 	Ref<ItemStack> stack = items[stack_index];
 	if (stack == nullptr)
 		return;
-	quad_tree->add(get_stack_rect(stack), stack);
+	ERR_FAIL_NULL_MSG(quad_tree, "'quad_tree' is null.");
+	ERR_FAIL_NULL_MSG(get_database(), "'database' is null.");
+	Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
+	ERR_FAIL_NULL_MSG(definition, "'definition' is null.");
+	Vector2i position = find_free_place(definition->get_size());
+	stack_positions.insert(stack_index, position);
+	quad_tree->add(Rect2i(position, definition->get_size()), stack);
 }
 
 void GridInventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_index) {
