@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://bks3lecuf50li"]
+[gd_scene load_steps=4 format=3 uid="uid://bks3lecuf50li"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/quad_tree_tests.gd" id="1_4xn8l"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/tests.gd" id="1_lc6xh"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/tests.gd" id="1_l7dn5"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/grid_inventory_test.gd" id="3_k7xlo"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_1lhre"]
 
 [node name="Tests" type="Node"]
-script = ExtResource("1_lc6xh")
+script = ExtResource("1_l7dn5")
 
-[node name="QuadTreeTests" type="Node" parent="."]
-script = ExtResource("1_4xn8l")
+[node name="GridInventoryTest" type="Node" parent="." node_paths=PackedStringArray("inventory_3x3", "inventory_3x3_2")]
+script = ExtResource("3_k7xlo")
+inventory_3x3 = NodePath("GridInventory")
+inventory_3x3_2 = NodePath("GridInventory2")
+
+[node name="GridInventory" type="GridInventory" parent="GridInventoryTest"]
+size = Vector2i(3, 3)
+database = ExtResource("4_1lhre")
+
+[node name="GridInventory2" type="GridInventory" parent="GridInventoryTest"]
+size = Vector2i(3, 3)
+database = ExtResource("4_1lhre")

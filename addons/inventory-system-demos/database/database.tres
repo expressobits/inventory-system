@@ -128,10 +128,11 @@ properties = {
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_scf45"]
 id = "campfire"
-max_stack = 1
+max_stack = 8
 name = "Campfire"
 icon = ExtResource("11_h04p3")
 weight = 4.0
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/campfire.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/campfire.tscn",
@@ -140,10 +141,11 @@ properties = {
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_24066"]
 id = "workbench"
-max_stack = 1
+max_stack = 8
 name = "Workbench"
 icon = ExtResource("12_ltu7p")
 weight = 5.0
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/workbench.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/workbench.tscn",
