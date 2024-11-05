@@ -1,0 +1,134 @@
+[gd_scene load_steps=9 format=3 uid="uid://bx8fjivywcot3"]
+
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="1_v2flv"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/grid_example/grid_example.gd" id="1_vkfix"]
+[ext_resource type="Texture2D" uid="uid://ckyqtuvfg52qu" path="res://icon.png" id="3_yakj1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04mmu"]
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbd1d"]
+bg_color = Color(0.68913, 0.598986, 0.13665, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hm76b"]
+bg_color = Color(0.248803, 0.698963, 0.441711, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8g6r"]
+bg_color = Color(0.94305, 0.366088, 0.572998, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[node name="GridExample" type="Node"]
+script = ExtResource("1_vkfix")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 545.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="GridInventoryUILeft" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("1_v2flv")
+inventory_path = NodePath("../../../../../../GridInventoryLeft")
+item_spacing = 1
+field_style = SubResource("StyleBoxFlat_04mmu")
+field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
+field_selected_style = SubResource("StyleBoxFlat_hm76b")
+selection_style = SubResource("StyleBoxFlat_c8g6r")
+
+[node name="ButtonSortLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sort"
+
+[node name="ButtonSplitLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Split"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+
+[node name="GridInventoryUIRight" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+script = ExtResource("1_v2flv")
+inventory_path = NodePath("../../../../../../GridInventoryRight")
+default_item_texture = ExtResource("3_yakj1")
+item_spacing = 1
+
+[node name="ButtonSortRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sort"
+
+[node name="ButtonSplitRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Split"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Drag and drop items to transfer them from one inventory to the other.
+Press the 'Sort' buttons to sort the inventories.
+Press the 'Split' buttons to split the selected stack in half.
+Drag items from the right inventory onto the item slot to equip it.
+Use the 'Unequip' button to unequip it."
+
+[node name="LblInfo" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 131.0
+offset_right = 40.0
+offset_bottom = 154.0
+
+[node name="GridInventoryLeft" type="GridInventory" parent="."]
+size = Vector2i(5, 5)
+database = ExtResource("1_i0aw7")
+
+[node name="GridInventoryRight" type="GridInventory" parent="."]
+size = Vector2i(5, 5)
+database = ExtResource("1_i0aw7")
