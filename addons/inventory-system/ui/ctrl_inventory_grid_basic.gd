@@ -252,7 +252,7 @@ func _on_item_drop(zone: CtrlDropZone, drop_position: Vector2, ctrl_inventory_it
 	var item: ItemStack = ctrl_inventory_item.item
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
-	if is_instance_valid(item) and inventory.has_item(item):
+	if is_instance_valid(item) and inventory.has_stack(item):
 		if zone == null:
 			item_dropped.emit(item, drop_position + ctrl_inventory_item.position)
 
@@ -415,10 +415,10 @@ func _move_item(item: ItemStack, move_position: Vector2i) -> bool:
 		
 func _merge_item(item_src: ItemStack, position: Vector2i) -> bool:
 	var origin_stack_index = inventory.items.find(item_src)
-	if origin_stack_index == -1:
+	if origin_stack_index == -1 and origin_stack_index >= inventory.items.size():
 		return false
 	var destination_stack_index = inventory.get_stack_index_at(position)
-	if destination_stack_index == -1:
+	if destination_stack_index == -1 and destination_stack_index >= inventory.items.size():
 		return false
 
 	inventory.transfer_at(origin_stack_index, inventory, destination_stack_index, item_src.amount)
