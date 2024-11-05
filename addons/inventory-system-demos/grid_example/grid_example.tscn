@@ -6,35 +6,52 @@
 [ext_resource type="Texture2D" uid="uid://ckyqtuvfg52qu" path="res://icon.png" id="3_yakj1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04mmu"]
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
+bg_color = Color(0.12549, 0.12549, 0.12549, 0.752941)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25098, 0.25098, 0.25098, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbd1d"]
-bg_color = Color(0.68913, 0.598986, 0.13665, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
+bg_color = Color(1, 1, 0.137255, 0.752941)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hm76b"]
-bg_color = Color(0.248803, 0.698963, 0.441711, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
+bg_color = Color(0.501961, 0.501961, 0.501961, 0.752941)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
 border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8g6r"]
-bg_color = Color(0.94305, 0.366088, 0.572998, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0, 0, 0, 1)
+bg_color = Color(0.941176, 0.364706, 0.572549, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")
@@ -66,7 +83,7 @@ unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../GridInventoryLeft")
-item_spacing = 1
+field_dimensions = Vector2(48, 48)
 field_style = SubResource("StyleBoxFlat_04mmu")
 field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
 field_selected_style = SubResource("StyleBoxFlat_hm76b")
@@ -95,7 +112,11 @@ layout_mode = 2
 script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../GridInventoryRight")
 default_item_texture = ExtResource("3_yakj1")
-item_spacing = 1
+field_dimensions = Vector2(48, 48)
+field_style = SubResource("StyleBoxFlat_04mmu")
+field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
+field_selected_style = SubResource("StyleBoxFlat_hm76b")
+selection_style = SubResource("StyleBoxFlat_c8g6r")
 
 [node name="ButtonSortRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true

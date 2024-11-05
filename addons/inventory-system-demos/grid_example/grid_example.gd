@@ -34,10 +34,13 @@ func _ready() -> void:
 	await get_tree().create_timer(1).timeout
 	ctrl_inventory_left.inventory.add("stone_axe")
 	await get_tree().create_timer(1).timeout
-	ctrl_inventory_left.inventory.add("campfire")
-	await get_tree().create_timer(1).timeout
-	ctrl_inventory_left.inventory.add("workbench")
+	ctrl_inventory_left.inventory.add("campfire", 2)
+	#await get_tree().create_timer(1).timeout
+	#ctrl_inventory_left.inventory.add("workbench")
 
+#func _process(delta):
+	#print(ctrl_inventory_left.inventory.items.size())
+	#print(ctrl_inventory_left.inventory.stack_positions)
 
 func _on_item_mouse_entered(item: ItemStack) -> void:
 	lbl_info.show()

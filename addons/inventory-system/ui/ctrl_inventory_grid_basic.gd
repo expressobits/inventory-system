@@ -134,6 +134,10 @@ func _connect_inventory_signals() -> void:
 
 	if !inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.connect(_queue_refresh)
+	#if !inventory.item_added.is_connected(_on_item_added):
+		#inventory.item_added.connect(_on_item_added)
+	if !inventory.stack_added.is_connected(_on_stack_added):
+		inventory.stack_added.connect(_on_stack_added)
 	#if !inventory.item_property_changed.is_connected(_on_item_property_changed):
 		#inventory.item_property_changed.connect(_on_item_property_changed)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
@@ -148,6 +152,10 @@ func _disconnect_inventory_signals() -> void:
 
 	if inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.disconnect(_queue_refresh)
+	#if inventory.item_added.is_connected(_on_item_added):
+		#inventory.item_added.disconnect(_on_item_added)
+	if inventory.stack_added.is_connected(_on_stack_added):
+		inventory.stack_added.disconnect(_on_stack_added)
 	#if inventory.item_property_changed.is_connected(_on_item_property_changed):
 		#inventory.item_property_changed.disconnect(_on_item_property_changed)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
@@ -170,6 +178,14 @@ func _disconnect_inventory_signals() -> void:
 
 
 func _on_inventory_resized() -> void:
+	_queue_refresh()
+
+
+func _on_item_added(item_id: String, amount : int) -> void:
+	_queue_refresh()
+
+
+func _on_stack_added(stack_index: int) -> void:
 	_queue_refresh()
 
 
@@ -352,7 +368,7 @@ func _on_dragable_dropped(dragable: CtrlDragable, drop_position: Vector2) -> voi
 	if inventory.has_stack(item):
 		_handle_item_move(item, drop_position)
 	else:
-		_handle_item_transfer(item, drop_position)
+		_handle_item_transfer(item, drop_position, dragable.inventory)
 
 
 func _handle_item_move(item: ItemStack, drop_position: Vector2) -> void:
@@ -364,16 +380,16 @@ func _handle_item_move(item: ItemStack, drop_position: Vector2) -> void:
 	_swap_items(item, field_coords)
 
 
-func _handle_item_transfer(item: ItemStack, drop_position: Vector2) -> void:
-	# TODO source inventory
-	var source_inventory: GridInventory = item.get_inventory()
+func _handle_item_transfer(item: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
 	
 	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
 	if source_inventory != null:
-		if source_inventory.item_protoset != inventory.item_protoset:
+		if source_inventory.database != inventory.database:
 			return
-		source_inventory.transfer_to(item, inventory, field_coords)
-	elif !inventory.add_item_at(item, field_coords):
+		var stack_position = source_inventory.get_stack_position(item)
+		var stack_index = source_inventory.items.find(item)
+		source_inventory.transfer(stack_index, inventory, item.amount)
+	elif !inventory.add_at(item, field_coords):
 		_swap_items(item, field_coords)
 
 

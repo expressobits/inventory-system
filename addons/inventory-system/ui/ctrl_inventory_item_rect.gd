@@ -55,7 +55,9 @@ static var _stored_preview_offset: Vector2
 func _connect_item_signals(new_item: ItemStack) -> void:
 	if new_item == null:
 		return
-
+	
+	if !new_item.updated.is_connected(_refresh):
+		new_item.updated.connect(_refresh)
 	#if !new_item.protoset_changed.is_connected(_refresh):
 		#new_item.protoset_changed.connect(_refresh)
 	#if !new_item.prototype_id_changed.is_connected(_refresh):
@@ -67,11 +69,9 @@ func _connect_item_signals(new_item: ItemStack) -> void:
 func _disconnect_item_signals() -> void:
 	if !is_instance_valid(item):
 		return
-
-	if item.protoset_changed.is_connected(_refresh):
-		item.protoset_changed.disconnect(_refresh)
-	if item.prototype_id_changed.is_connected(_refresh):
-		item.prototype_id_changed.disconnect(_refresh)
+	
+	if item.updated.is_connected(_refresh):
+		item.updated.disconnect(_refresh)
 	#if item.property_changed.is_connected(_on_item_property_changed):
 		#item.property_changed.disconnect(_on_item_property_changed)
 

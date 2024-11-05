@@ -187,6 +187,12 @@ func _connect_inventory_signals() -> void:
 		return
 	if !inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.connect(_queue_refresh)
+	#if !inventory.item_added.is_connected(_queue_refresh):
+		#inventory.item_added.connect(_queue_refresh)
+	#if !inventory.stack_added.is_connected(_on_stack_added):
+		#inventory.stack_added.connect(_on_stack_added)
+	#if !inventory.item_removed.is_connected(_queue_refresh):
+		#inventory.item_removed.connect(_queue_refresh)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.connect(_on_inventory_resized)
 
@@ -196,8 +202,18 @@ func _disconnect_inventory_signals() -> void:
 		return
 	if inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.disconnect(_queue_refresh)
+	#if inventory.item_added.is_connected(_queue_refresh):
+		#inventory.item_added.disconnect(_queue_refresh)
+	#if inventory.stack_added.is_connected(_on_stack_added):
+		#inventory.stack_added.disconnect(_on_stack_added)
+	#if inventory.item_removed.is_connected(_queue_refresh):
+		#inventory.item_removed.disconnect(_queue_refresh)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.disconnect(_on_inventory_resized)
+
+
+func _on_stack_added(stack_index : int):
+	_queue_refresh()
 
 
 func _process(_delta) -> void:
