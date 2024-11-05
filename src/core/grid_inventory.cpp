@@ -30,6 +30,12 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stack_positions"), &GridInventory::get_stack_positions);
 
 	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("move_stack_to", "stack", "position"), &GridInventory::move_stack_to);
+	ClassDB::bind_method(D_METHOD("get_stack_index_at", "position"), &GridInventory::get_stack_index_at);
+	ClassDB::bind_method(D_METHOD("get_stack_position", "stack"), &GridInventory::get_stack_position);
+	ClassDB::bind_method(D_METHOD("get_stack_rect", "stack"), &GridInventory::get_stack_rect);
+	ClassDB::bind_method(D_METHOD("is_stack_rotation_positive", "stack"), &GridInventory::is_stack_rotation_positive);
+	ClassDB::bind_method(D_METHOD("rect_free", "rect", "exception"), &GridInventory::rect_free, DEFVAL(nullptr));
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
@@ -87,7 +93,7 @@ TypedArray<Vector2i> GridInventory::get_stack_positions() const {
 	return stack_positions;
 }
 
-Vector2i GridInventory::get_item_position(const Ref<ItemStack> &stack) const {
+Vector2i GridInventory::get_stack_position(const Ref<ItemStack> &stack) const {
 	int stack_index = items.find(stack);
 	if (stack_index == -1)
 		return Vector2i(0, 0);
@@ -115,7 +121,7 @@ Vector2i GridInventory::get_stack_size(const Ref<ItemStack> &stack) const {
 }
 
 Rect2i GridInventory::get_stack_rect(const Ref<ItemStack> &stack) const {
-	Vector2i item_pos = get_item_position(stack);
+	Vector2i item_pos = get_stack_position(stack);
 	Vector2i item_size = get_stack_size(stack);
 	return Rect2i(item_pos, item_size);
 }
@@ -368,9 +374,9 @@ bool GridInventory::_on_pre_item_swap(const Ref<ItemStack> stack1, const Ref<Ite
 		return false;
 
 	if (has_stack(stack1))
-		_swap_position = get_item_position(stack1);
+		_swap_position = get_stack_position(stack1);
 	else if (has_stack(stack2))
-		_swap_position = get_item_position(stack2);
+		_swap_position = get_stack_position(stack2);
 	return true;
 }
 
@@ -382,8 +388,8 @@ void GridInventory::_on_post_item_swap(const Ref<ItemStack> stack1, const Ref<It
 	bool has1 = has_stack(stack1);
 	bool has2 = has_stack(stack2);
 	if (has1 && has2) {
-		Vector2i temp_pos = get_item_position(stack1);
-		_move_item_to_unsafe(stack1, get_item_position(stack2));
+		Vector2i temp_pos = get_stack_position(stack1);
+		_move_item_to_unsafe(stack1, get_stack_position(stack2));
 		_move_item_to_unsafe(stack2, temp_pos);
 	} else if (has1)
 		move_stack_to(stack1, _swap_position);
@@ -415,8 +421,8 @@ void GridInventory::_move_item_to_unsafe(const Ref<ItemStack> &stack, const Vect
 }
 
 bool GridInventory::_compare_stacks(const Ref<ItemStack> &stack1, const Ref<ItemStack> &stack2) const {
-	Rect2i rect1 = Rect2i(get_item_position(stack1), get_stack_size(stack1));
-	Rect2i rect2 = Rect2i(get_item_position(stack2), get_stack_size(stack2));
+	Rect2i rect1 = Rect2i(get_stack_position(stack1), get_stack_size(stack1));
+	Rect2i rect2 = Rect2i(get_stack_position(stack2), get_stack_size(stack2));
 	return rect1.get_area() > rect2.get_area();
 }
 

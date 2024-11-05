@@ -41,7 +41,7 @@ public:
 	void set_stack_positions(const TypedArray<Vector2i> &new_quad_tree);
 	TypedArray<Vector2i> get_stack_positions() const;
 
-	Vector2i get_item_position(const Ref<ItemStack> &stack) const;
+	Vector2i get_stack_position(const Ref<ItemStack> &stack) const;
 	bool set_item_position(const Ref<ItemStack> &stack, const Vector2i new_position);
 	Vector2i get_stack_size(const Ref<ItemStack> &stack) const;
 	Rect2i get_stack_rect(const Ref<ItemStack> &stack) const;
