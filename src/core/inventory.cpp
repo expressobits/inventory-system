@@ -343,7 +343,9 @@ int Inventory::transfer_at(const int &stack_index, Inventory *destination, const
 	int amount_to_transfer = amount_to_interact - amount_not_removed;
 	if (amount_to_transfer == 0)
 		return amount;
-	int amount_not_transferred = destination->add_at_index(destination_stack_index, item_id, amount_to_transfer, properties);
+	// HACK call on remove_at before this broken index
+	int new_destination_secure = destination->get_items().find(destination_stack);
+	int amount_not_transferred = destination->add_at_index(new_destination_secure, item_id, amount_to_transfer, properties);
 	add(item_id, amount_not_transferred);
 	return amount_not_transferred;
 }

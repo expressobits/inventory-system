@@ -357,6 +357,7 @@ void GridInventory::on_insert_stack(const int stack_index) {
 }
 
 void GridInventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_index) {
+	stack_positions.remove_at(stack_index);
 	if (stack == nullptr)
 		return;
 	quad_tree->remove(stack);
@@ -418,6 +419,8 @@ void GridInventory::_move_item_to_unsafe(const Ref<ItemStack> &stack, const Vect
 	if (stack_index == -1)
 		return;
 	stack_positions[stack_index] = position;
+	quad_tree->remove(stack);
+	quad_tree->add(get_stack_rect(stack), stack);
 }
 
 bool GridInventory::_compare_stacks(const Ref<ItemStack> &stack1, const Ref<ItemStack> &stack2) const {
