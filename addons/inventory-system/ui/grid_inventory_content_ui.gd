@@ -74,7 +74,7 @@ var inventory: GridInventory = null:
 		_queue_refresh()
 
 var _ctrl_item_container: Control = null
-var _ctrl_drop_zone: GridDropZoneUI = null
+var _grid_drop_zone_ui: GridDropZoneUI = null
 var _selected_items: Array[ItemStack] = []
 var _refresh_queued: bool = false
 
@@ -96,17 +96,17 @@ func _ready() -> void:
 	resized.connect(func(): _ctrl_item_container.size = size)
 	add_child(_ctrl_item_container)
 
-	_ctrl_drop_zone = GridDropZoneUI.new()
-	_ctrl_drop_zone.dragable_dropped.connect(_on_dragable_dropped)
-	_ctrl_drop_zone.size = size
-	resized.connect(func(): _ctrl_drop_zone.size = size)
-	GridItemStackDraggableUI.dragable_grabbed.connect(func(dragable: GridItemStackDraggableUI, grab_position: Vector2):
-		_ctrl_drop_zone.activate()
+	_grid_drop_zone_ui = GridDropZoneUI.new()
+	_grid_drop_zone_ui.dragable_dropped.connect(_on_dragable_dropped)
+	_grid_drop_zone_ui.size = size
+	resized.connect(func(): _grid_drop_zone_ui.size = size)
+	GridDraggableElementUI.dragable_grabbed.connect(func(dragable: GridDraggableElementUI, grab_position: Vector2):
+		_grid_drop_zone_ui.activate()
 	)
-	GridItemStackDraggableUI.dragable_dropped.connect(func(dragable: GridItemStackDraggableUI, zone: GridDropZoneUI, drop_position: Vector2):
-		_ctrl_drop_zone.deactivate()
+	GridDraggableElementUI.dragable_dropped.connect(func(dragable: GridDraggableElementUI, zone: GridDropZoneUI, drop_position: Vector2):
+		_grid_drop_zone_ui.deactivate()
 	)
-	add_child(_ctrl_drop_zone)
+	add_child(_grid_drop_zone_ui)
 
 	if has_node(inventory_path):
 		inventory = get_node_or_null(inventory_path)
@@ -116,7 +116,7 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
-		_ctrl_drop_zone.deactivate()
+		_grid_drop_zone_ui.deactivate()
 
 
 func _connect_inventory_signals() -> void:
@@ -166,7 +166,7 @@ func _queue_refresh() -> void:
 
 
 func _refresh() -> void:
-	_ctrl_drop_zone.deactivate()
+	_grid_drop_zone_ui.deactivate()
 	custom_minimum_size = _get_inventory_size_px()
 	size = custom_minimum_size
 
@@ -201,38 +201,38 @@ func _populate_list() -> void:
 		return
 		
 	for item in inventory.get_items():
-		var ctrl_inventory_item = GridItemStackUI.new(inventory)
-		ctrl_inventory_item.texture = default_item_texture
-		ctrl_inventory_item.item = item
-		ctrl_inventory_item.grabbed.connect(_on_item_grab.bind(ctrl_inventory_item))
-		ctrl_inventory_item.dropped.connect(_on_item_drop.bind(ctrl_inventory_item))
-		ctrl_inventory_item.activated.connect(_on_item_activated.bind(ctrl_inventory_item))
-		ctrl_inventory_item.context_activated.connect(_on_item_context_activated.bind(ctrl_inventory_item))
-		ctrl_inventory_item.mouse_entered.connect(_on_item_mouse_entered.bind(ctrl_inventory_item))
-		ctrl_inventory_item.mouse_exited.connect(_on_item_mouse_exited.bind(ctrl_inventory_item))
-		ctrl_inventory_item.clicked.connect(_on_item_clicked.bind(ctrl_inventory_item))
-		ctrl_inventory_item.middle_clicked.connect(_on_item_middle_clicked.bind(ctrl_inventory_item))
-		ctrl_inventory_item.size = _get_item_sprite_size(item)
+		var grid_item_stack_ui = GridItemStackUI.new(inventory)
+		grid_item_stack_ui.texture = default_item_texture
+		grid_item_stack_ui.item = item
+		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
+		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
+		grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
+		grid_item_stack_ui.context_activated.connect(_on_item_context_activated.bind(grid_item_stack_ui))
+		grid_item_stack_ui.mouse_entered.connect(_on_item_mouse_entered.bind(grid_item_stack_ui))
+		grid_item_stack_ui.mouse_exited.connect(_on_item_mouse_exited.bind(grid_item_stack_ui))
+		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
+		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
+		grid_item_stack_ui.size = _get_item_sprite_size(item)
 
-		ctrl_inventory_item.position = _get_field_position(inventory.get_stack_position(item))
-		ctrl_inventory_item.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(item))
+		grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 		if stretch_item_sprites:
-			ctrl_inventory_item.stretch_mode = TextureRect.STRETCH_SCALE
+			grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_SCALE
 
-		_ctrl_item_container.add_child(ctrl_inventory_item)
+		_ctrl_item_container.add_child(grid_item_stack_ui)
 
 
-func _on_item_grab(offset: Vector2, ctrl_inventory_item: GridItemStackUI) -> void:
+func _on_item_grab(offset: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
 	_clear_selection()
 
 
-func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, ctrl_inventory_item: GridItemStackUI) -> void:
-	var item: ItemStack = ctrl_inventory_item.item
+func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
+	var item: ItemStack = grid_item_stack_ui.item
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
 	if is_instance_valid(item) and inventory.has_stack(item):
 		if zone == null:
-			item_dropped.emit(item, drop_position + ctrl_inventory_item.position)
+			item_dropped.emit(item, drop_position + grid_item_stack_ui.position)
 
 
 func _get_item_sprite_size(item: ItemStack) -> Vector2:
@@ -248,32 +248,32 @@ func _get_item_sprite_size(item: ItemStack) -> Vector2:
 	return sprite_size
 
 
-func _on_item_activated(ctrl_inventory_item: GridItemStackUI) -> void:
-	var item = ctrl_inventory_item.item
+func _on_item_activated(grid_item_stack_ui: GridItemStackUI) -> void:
+	var item = grid_item_stack_ui.item
 	if !item:
 		return
 
 	inventory_item_activated.emit(item)
 
 
-func _on_item_context_activated(ctrl_inventory_item: GridItemStackUI) -> void:
-	var item = ctrl_inventory_item.item
+func _on_item_context_activated(grid_item_stack_ui: GridItemStackUI) -> void:
+	var item = grid_item_stack_ui.item
 	if !item:
 		return
 
 	inventory_item_context_activated.emit(item)
 
 
-func _on_item_mouse_entered(ctrl_inventory_item) -> void:
-	item_mouse_entered.emit(ctrl_inventory_item.item)
+func _on_item_mouse_entered(grid_item_stack_ui) -> void:
+	item_mouse_entered.emit(grid_item_stack_ui.item)
 
 
-func _on_item_mouse_exited(ctrl_inventory_item) -> void:
-	item_mouse_exited.emit(ctrl_inventory_item.item)
+func _on_item_mouse_exited(grid_item_stack_ui) -> void:
+	item_mouse_exited.emit(grid_item_stack_ui.item)
 
 
-func _on_item_clicked(ctrl_inventory_item) -> void:
-	var item = ctrl_inventory_item.item
+func _on_item_clicked(grid_item_stack_ui) -> void:
+	var item = grid_item_stack_ui.item
 	if !is_instance_valid(item):
 		return
 
@@ -287,8 +287,8 @@ func _on_item_clicked(ctrl_inventory_item) -> void:
 		_select(item)
 
 
-func _on_item_middle_clicked(ctrl_inventory_item) -> void:
-	var item = ctrl_inventory_item.item
+func _on_item_middle_clicked(grid_item_stack_ui) -> void:
+	var item = grid_item_stack_ui.item
 	if !is_instance_valid(item):
 		return
 	
@@ -300,25 +300,25 @@ func _on_item_middle_clicked(ctrl_inventory_item) -> void:
 	inventory.split(stack_index, new_stack_size)
 
 
-func _select(item: ItemStack) -> void:
-	if item in _selected_items:
+func _select(stack: ItemStack) -> void:
+	if stack in _selected_items:
 		return
 
-	if (item != null) && !inventory.has_stack(item):
+	if (stack != null) && !inventory.has_stack(stack):
 		return
 
-	_selected_items.append(item)
+	_selected_items.append(stack)
 	selection_changed.emit()
 
 
-func _is_item_selected(item: ItemStack) -> bool:
-	return item in _selected_items
+func _is_item_selected(stack: ItemStack) -> bool:
+	return stack in _selected_items
 
 
-func _deselect(item: ItemStack) -> void:
-	if !(item in _selected_items):
+func _deselect(stack: ItemStack) -> void:
+	if !(stack in _selected_items):
 		return
-	var idx := _selected_items.find(item)
+	var idx := _selected_items.find(stack)
 	if idx < 0:
 		return
 	_selected_items.remove_at(idx)
@@ -332,7 +332,7 @@ func _clear_selection() -> void:
 	selection_changed.emit()
 
 
-func _on_dragable_dropped(dragable: GridItemStackDraggableUI, drop_position: Vector2) -> void:
+func _on_dragable_dropped(dragable: GridDraggableElementUI, drop_position: Vector2) -> void:
 	var item: ItemStack = dragable.item
 	if item == null:
 		return
@@ -393,14 +393,14 @@ func deselect_inventory_item() -> void:
 	_clear_selection()
 
 
-func select_inventory_item(item: ItemStack) -> void:
-	_select(item)
+func select_inventory_item(stack: ItemStack) -> void:
+	_select(stack)
 
 
-func get_item_rect(item: ItemStack) -> Rect2:
-	if !is_instance_valid(item):
+func get_item_rect(stack: ItemStack) -> Rect2:
+	if !is_instance_valid(stack):
 		return Rect2()
 	return Rect2(
-		_get_field_position(inventory.get_stack_position(item)),
-		_get_item_sprite_size(item)
+		_get_field_position(inventory.get_stack_position(stack)),
+		_get_item_sprite_size(stack)
 	)

@@ -1,4 +1,4 @@
-extends GridItemStackDraggableUI
+extends GridDraggableElementUI
 class_name GridItemStackUI
 
 signal activated

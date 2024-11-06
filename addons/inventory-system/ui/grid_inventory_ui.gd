@@ -88,8 +88,8 @@ class SelectionPanel extends Panel:
 ## property.
 @export var default_item_texture: Texture2D:
 	set(new_default_item_texture):
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.default_item_texture = new_default_item_texture
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.default_item_texture = new_default_item_texture
 		default_item_texture = new_default_item_texture
 
 
@@ -97,24 +97,24 @@ class SelectionPanel extends Panel:
 ## fields they are positioned on.
 @export var stretch_item_sprites: bool = true:
 	set(new_stretch_item_sprites):
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.stretch_item_sprites = new_stretch_item_sprites
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.stretch_item_sprites = new_stretch_item_sprites
 		stretch_item_sprites = new_stretch_item_sprites
 		
 		
 ## The size of each inventory field in pixels.
 @export var field_dimensions: Vector2 = Vector2(32, 32):
 	set(new_field_dimensions):
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.field_dimensions = new_field_dimensions
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.field_dimensions = new_field_dimensions
 		field_dimensions = new_field_dimensions
 
 
 ## The spacing between items in pixels.
 @export var item_spacing: int = 0:
 	set(new_item_spacing):
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.item_spacing = new_item_spacing
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.item_spacing = new_item_spacing
 		item_spacing = new_item_spacing
 
 
@@ -124,8 +124,8 @@ class SelectionPanel extends Panel:
 		if select_mode == new_select_mode:
 			return
 		select_mode = new_select_mode
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.select_mode = select_mode
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.select_mode = select_mode
 
 
 @export_group("Custom Styles")
@@ -167,11 +167,11 @@ var inventory: GridInventory = null:
 		inventory = new_inventory
 		_connect_inventory_signals()
 
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.inventory = inventory
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.inventory = inventory
 		_queue_refresh()
 
-var _ctrl_inventory_grid_basic: GridInventoryContentUI = null
+var _grid_inventory_content_ui: GridInventoryContentUI = null
 var _field_background_grid: Control = null
 var _field_backgrounds: Array = []
 var _selection_panels: Control = null
@@ -234,14 +234,14 @@ func _refresh_selection_panel() -> void:
 	for child in _selection_panels.get_children():
 		child.queue_free()
 
-	var selected_items := _ctrl_inventory_grid_basic.get_selected_inventory_items()
+	var selected_items := _grid_inventory_content_ui.get_selected_inventory_items()
 	_selection_panels.visible = (!selected_items.is_empty()) && (selection_style != null)
 	if selected_items.is_empty():
 		return
 
 	for selected_item in selected_items:
 		var selection_panel := SelectionPanel.new()
-		var rect := _ctrl_inventory_grid_basic.get_item_rect(selected_item)
+		var rect := _grid_inventory_content_ui.get_item_rect(selected_item)
 		selection_panel.position = rect.position
 		selection_panel.size = rect.size
 		selection_panel.set_style(selection_style)
@@ -265,7 +265,7 @@ func _refresh_field_background_grid() -> void:
 			var field_panel: PriorityPanel = PriorityPanel.new(field_style, field_highlighted_style)
 			field_panel.visible = (field_style != null)
 			field_panel.size = field_dimensions
-			field_panel.position = _ctrl_inventory_grid_basic._get_field_position(Vector2i(i, j))
+			field_panel.position = _grid_inventory_content_ui._get_field_position(Vector2i(i, j))
 			_field_background_grid.add_child(field_panel)
 			_field_backgrounds[i].append(field_panel)
 
@@ -273,8 +273,8 @@ func _refresh_field_background_grid() -> void:
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		# Clean up, in case it is duplicated in the editor
-		if is_instance_valid(_ctrl_inventory_grid_basic):
-			_ctrl_inventory_grid_basic.queue_free()
+		if is_instance_valid(_grid_inventory_content_ui):
+			_grid_inventory_content_ui.queue_free()
 			_field_background_grid.queue_free()
 
 	if has_node(inventory_path):
@@ -284,35 +284,35 @@ func _ready() -> void:
 	_field_background_grid.name = "FieldBackgrounds"
 	add_child(_field_background_grid)
 
-	_ctrl_inventory_grid_basic = GridInventoryContentUI.new()
-	_ctrl_inventory_grid_basic.inventory = inventory
-	_ctrl_inventory_grid_basic.field_dimensions = field_dimensions
-	_ctrl_inventory_grid_basic.item_spacing = item_spacing
-	_ctrl_inventory_grid_basic.default_item_texture = default_item_texture
-	_ctrl_inventory_grid_basic.stretch_item_sprites = stretch_item_sprites
-	_ctrl_inventory_grid_basic.name = "GridInventoryContentUI"
-	_ctrl_inventory_grid_basic.resized.connect(_update_size)
-	_ctrl_inventory_grid_basic.item_dropped.connect(func(item: ItemStack, drop_position: Vector2):
+	_grid_inventory_content_ui = GridInventoryContentUI.new()
+	_grid_inventory_content_ui.inventory = inventory
+	_grid_inventory_content_ui.field_dimensions = field_dimensions
+	_grid_inventory_content_ui.item_spacing = item_spacing
+	_grid_inventory_content_ui.default_item_texture = default_item_texture
+	_grid_inventory_content_ui.stretch_item_sprites = stretch_item_sprites
+	_grid_inventory_content_ui.name = "GridInventoryContentUI"
+	_grid_inventory_content_ui.resized.connect(_update_size)
+	_grid_inventory_content_ui.item_dropped.connect(func(item: ItemStack, drop_position: Vector2):
 		item_dropped.emit(item, drop_position)
 	)
-	_ctrl_inventory_grid_basic.inventory_item_activated.connect(func(item: ItemStack):
+	_grid_inventory_content_ui.inventory_item_activated.connect(func(item: ItemStack):
 		inventory_item_activated.emit(item)
 	)
-	_ctrl_inventory_grid_basic.inventory_item_context_activated.connect(func(item: ItemStack):
+	_grid_inventory_content_ui.inventory_item_context_activated.connect(func(item: ItemStack):
 		inventory_item_context_activated.emit(item)
 	)
-	_ctrl_inventory_grid_basic.item_mouse_entered.connect(_on_item_mouse_entered)
-	_ctrl_inventory_grid_basic.item_mouse_exited.connect(_on_item_mouse_exited)
-	_ctrl_inventory_grid_basic.selection_changed.connect(_on_selection_changed)
-	_ctrl_inventory_grid_basic.select_mode = select_mode
-	add_child(_ctrl_inventory_grid_basic)
+	_grid_inventory_content_ui.item_mouse_entered.connect(_on_item_mouse_entered)
+	_grid_inventory_content_ui.item_mouse_exited.connect(_on_item_mouse_exited)
+	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
+	_grid_inventory_content_ui.select_mode = select_mode
+	add_child(_grid_inventory_content_ui)
 
 	_selection_panels = Control.new()
 	_selection_panels.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_selection_panels.name = "SelectionPanels"
 	add_child(_selection_panels)
 
-	GridItemStackDraggableUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
+	GridDraggableElementUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
 		_fill_background(field_style, PriorityPanel.StylePriority.LOW)
 	)
 
@@ -326,8 +326,8 @@ func _notification(what: int) -> void:
 
 
 func _update_size() -> void:
-	custom_minimum_size = _ctrl_inventory_grid_basic.size
-	size = _ctrl_inventory_grid_basic.size
+	custom_minimum_size = _grid_inventory_content_ui.size
+	size = _grid_inventory_content_ui.size
 
 
 func _on_item_mouse_entered(item: ItemStack) -> void:
@@ -353,7 +353,7 @@ func _handle_selection_change() -> void:
 	if !field_selected_style:
 		return
 	for item in inventory.get_items():
-		if item in _ctrl_inventory_grid_basic.get_selected_inventory_items():
+		if item in _grid_inventory_content_ui.get_selected_inventory_items():
 			_set_item_background(item, field_selected_style, PriorityPanel.StylePriority.HIGH)
 		else:
 			_set_item_background(item, null, PriorityPanel.StylePriority.HIGH)
@@ -386,7 +386,7 @@ func _highlight_grabbed_item(style: StyleBox):
 
 	_fill_background(field_style, PriorityPanel.StylePriority.LOW)
 
-	var grabbed_item_coords := _ctrl_inventory_grid_basic.get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
+	var grabbed_item_coords := _grid_inventory_content_ui.get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
 	var definition : ItemDefinition = inventory.database.get_item(grabbed_item.item_id)
 	var item_size := definition.size
 	var rect := Rect2i(grabbed_item_coords, item_size)
@@ -421,41 +421,41 @@ func _fill_background(style: StyleBox, priority: int) -> void:
 
 
 func _get_global_grabbed_item() -> ItemStack:
-	if GridItemStackDraggableUI.get_grabbed_dragable() == null:
+	if GridDraggableElementUI.get_grabbed_dragable() == null:
 		return null
-	return (GridItemStackDraggableUI.get_grabbed_dragable() as GridItemStackUI).item
+	return (GridDraggableElementUI.get_grabbed_dragable() as GridItemStackUI).item
 
 
 func _get_global_grabbed_item_local_pos() -> Vector2:
-	if GridItemStackDraggableUI.get_grabbed_dragable():
-		return get_local_mouse_position() - GridItemStackDraggableUI.get_grab_offset_local_to(self)
+	if GridDraggableElementUI.get_grabbed_dragable():
+		return get_local_mouse_position() - GridDraggableElementUI.get_grab_offset_local_to(self)
 	return Vector2(-1, -1)
 
 
 ## Deselects the selected item.
 func deselect_inventory_item() -> void:
-	if !is_instance_valid(_ctrl_inventory_grid_basic):
+	if !is_instance_valid(_grid_inventory_content_ui):
 		return
-	_ctrl_inventory_grid_basic.deselect_inventory_item()
+	_grid_inventory_content_ui.deselect_inventory_item()
 
 
 ## Selects the given item.
 func select_inventory_item(item: ItemStack) -> void:
-	if !is_instance_valid(_ctrl_inventory_grid_basic):
+	if !is_instance_valid(_grid_inventory_content_ui):
 		return
-	_ctrl_inventory_grid_basic.select_inventory_item(item)
+	_grid_inventory_content_ui.select_inventory_item(item)
 
 
 ## Returns the currently selected item. In case multiple items are selected,
 ## the first one is returned.
 func get_selected_inventory_item() -> ItemStack:
-	if !is_instance_valid(_ctrl_inventory_grid_basic):
+	if !is_instance_valid(_grid_inventory_content_ui):
 		return null
-	return _ctrl_inventory_grid_basic.get_selected_inventory_item()
+	return _grid_inventory_content_ui.get_selected_inventory_item()
 
 
 ## Returns all the currently selected items.
 func get_selected_inventory_items() -> Array[ItemStack]:
-	if !is_instance_valid(_ctrl_inventory_grid_basic):
+	if !is_instance_valid(_grid_inventory_content_ui):
 		return []
-	return _ctrl_inventory_grid_basic.get_selected_inventory_items()
+	return _grid_inventory_content_ui.get_selected_inventory_items()
