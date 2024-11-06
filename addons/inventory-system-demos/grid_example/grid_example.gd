@@ -6,8 +6,6 @@ const info_offset: Vector2 = Vector2(20, 0)
 @onready var ctrl_inventory_right := %GridInventoryUIRight
 @onready var btn_sort_left: Button = %ButtonSortLeft
 @onready var btn_sort_right: Button = %ButtonSortRight
-@onready var btn_split_left: Button = %ButtonSplitLeft
-@onready var btn_split_right: Button = %ButtonSplitRight
 #@onready var ctrl_slot: CtrlItemSlot = $"%CtrlItemSlot"
 #@onready var btn_unequip: Button = $"%BtnUnequip"
 @onready var lbl_info: Label = %LblInfo
@@ -22,18 +20,16 @@ func _ready() -> void:
 	ctrl_inventory_right.item_mouse_exited.connect(_on_item_mouse_exited)
 	btn_sort_left.pressed.connect(_on_btn_sort.bind(ctrl_inventory_left))
 	btn_sort_right.pressed.connect(_on_btn_sort.bind(ctrl_inventory_right))
-	btn_split_left.pressed.connect(_on_btn_split.bind(ctrl_inventory_left))
-	btn_split_right.pressed.connect(_on_btn_split.bind(ctrl_inventory_right))
 	#btn_unequip.pressed.connect(_on_btn_unequip)
 	
 	await get_tree().create_timer(0.2).timeout
 	
-	#ctrl_inventory_left.inventory.add("wood", 16)
-	#await get_tree().create_timer(0.2).timeout
-	#ctrl_inventory_left.inventory.add("stone_axe")
-	#await get_tree().create_timer(0.2).timeout
-	#ctrl_inventory_left.inventory.add("stone_axe")
-	#await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_left.inventory.add("wood", 16)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_left.inventory.add("stone_axe")
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_left.inventory.add("stone_pickaxe")
+	await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_left.inventory.add("campfire", 2)
 	await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_right.inventory.add("workbench")
@@ -84,24 +80,3 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 func _on_btn_sort(ctrl_inventory) -> void:
 	if !ctrl_inventory.inventory.sort():
 		print("Warning: InventoryGrid.sort() returned false!")
-
-
-func _on_btn_split(ctrl_inventory) -> void:
-	var selected_items = ctrl_inventory.get_selected_inventory_items()
-	if selected_items.is_empty():
-		return
-
-	for selected_item in selected_items:
-		var stack_size : int = selected_item.amount
-		if stack_size < 2:
-			return
-		
-		var stack_index = ctrl_inventory.inventory.items.find(selected_item)
-		
-		# All this floor/float jazz just to do integer division without warnings
-		var new_stack_size: int = floor(float(stack_size) / 2)
-		ctrl_inventory.inventory.split(stack_index, new_stack_size)
-
-
-#func _on_btn_unequip() -> void:
-	#ctrl_slot.item_slot.clear()

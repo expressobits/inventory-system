@@ -18,7 +18,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbd1d"]
-bg_color = Color(1, 1, 0.137255, 0.752941)
+bg_color = Color(0.752941, 0.752941, 0.137255, 0.752941)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -30,7 +30,7 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hm76b"]
-bg_color = Color(0.501961, 0.501961, 0.501961, 0.752941)
+bg_color = Color(0.501961, 0.501961, 0.501961, 0)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
@@ -94,11 +94,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Sort"
 
-[node name="ButtonSplitLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Split"
-
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
@@ -123,11 +118,6 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Sort"
 
-[node name="ButtonSplitRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Split"
-
 [node name="VBoxContainer3" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 
@@ -135,9 +125,7 @@ layout_mode = 2
 layout_mode = 2
 text = "Drag and drop items to transfer them from one inventory to the other.
 Press the 'Sort' buttons to sort the inventories.
-Press the 'Split' buttons to split the selected stack in half.
-Drag items from the right inventory onto the item slot to equip it.
-Use the 'Unequip' button to unequip it."
+Press the 'Middle Mouse Button' to split the selected stack in half."
 
 [node name="LblInfo" type="Label" parent="Control"]
 unique_name_in_owner = true

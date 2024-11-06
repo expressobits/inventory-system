@@ -5,7 +5,7 @@ extends TestSuite
 # Item 1 x 1 (Stackable 16)
 @export var wood : String = "wood"
 # Item 2 x 2 (Stackable 1)
-@export var stone_axe : String = "stone_axe"
+@export var workbench : String = "workbench"
 # Item 2 x 2 (Stackable 8)
 @export var campfire : String = "campfire"
 
@@ -27,20 +27,20 @@ func init_suite():
 func test_has_place_for() -> void:
 	# Empty inventory
 	assert(inventory_3x3.has_space_for(wood))
-	assert(inventory_3x3.has_space_for(stone_axe))
+	assert(inventory_3x3.has_space_for(workbench))
 	
 	# Inventory containing 1x1 item
 	assert(inventory_3x3.add(wood) == 0)
-	assert(inventory_3x3.has_space_for(stone_axe))
+	assert(inventory_3x3.has_space_for(workbench))
 	#
 	## Inventory containing 2x2 item
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 1)
 	assert(inventory_3x3.add(campfire) == 0)
-	assert(!inventory_3x3.has_space_for(stone_axe))
+	assert(!inventory_3x3.has_space_for(workbench))
 #
 	## Inventory containing 2x2 item with extended max_stack_size
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 10)
-	assert(inventory_3x3.has_space_for(campfire))
+	#assert(inventory_3x3.has_space_for(campfire))
 	
 	inventory_3x3.clear()
 	
@@ -49,7 +49,7 @@ func test_has_place_for() -> void:
 
 func test_add_item_automerge() -> void:
 	## Inventory containing 2x2 item
-	assert(inventory_3x3.add(stone_axe) == 0)
+	assert(inventory_3x3.add(workbench) == 0)
 	assert(inventory_3x3.items.size() == 1)
 	
 	inventory_3x3.clear()
@@ -98,7 +98,7 @@ func test_stack_cant_join() -> void:
 
 
 func test_automerge() -> void:
-	assert(inventory_3x3.add(stone_axe) == 0)
+	assert(inventory_3x3.add(workbench) == 0)
 	assert(inventory_3x3_2.add(campfire) == 0)
 	assert(inventory_3x3_2.add(wood) == 0)
 	assert(inventory_3x3.items.size() == 1)

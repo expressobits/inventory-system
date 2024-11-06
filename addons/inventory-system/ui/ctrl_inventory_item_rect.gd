@@ -4,6 +4,7 @@ const CtrlInventoryItemRect = preload("res://addons/inventory-system/ui/ctrl_inv
 
 signal activated
 signal clicked
+signal middle_clicked
 signal context_activated
 
 var inventory : GridInventory
@@ -185,5 +186,7 @@ func _gui_input(event: InputEvent) -> void:
 			activated.emit()
 		else:
 			clicked.emit()
+	if mb_event.button_index == MOUSE_BUTTON_MIDDLE:
+		middle_clicked.emit()
 	elif mb_event.button_index == MOUSE_BUTTON_MASK_RIGHT:
 		context_activated.emit()

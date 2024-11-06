@@ -8,11 +8,9 @@ signal inventory_item_context_activated(item)
 signal item_mouse_entered(item)
 signal item_mouse_exited(item)
 
-#const GlootUndoRedo = preload("res://addons/gloot/editor/gloot_undo_redo.gd")
 const CtrlInventoryItemRect = preload("res://addons/inventory-system/ui/ctrl_inventory_item_rect.gd")
 const CtrlDropZone = preload("res://addons/inventory-system/ui/ctrl_drop_zone.gd")
 const CtrlDragable = preload("res://addons/inventory-system/ui/ctrl_dragable.gd")
-#const GridConstraint = preload("res://addons/gloot/core/constraints/grid_constraint.gd")
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
@@ -77,6 +75,7 @@ var inventory: GridInventory = null:
 		_connect_inventory_signals()
 
 		_queue_refresh()
+
 var _ctrl_item_container: Control = null
 var _ctrl_drop_zone: CtrlDropZone = null
 var _selected_items: Array[ItemStack] = []
@@ -92,11 +91,6 @@ func _get_configuration_warnings() -> PackedStringArray:
 
 
 func _ready() -> void:
-	if Engine.is_editor_hint():
-		# Clean up, in case it is duplicated in the editor
-		if is_instance_valid(_ctrl_item_container):
-			_ctrl_item_container.queue_free()
-
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	_ctrl_item_container = Control.new()
@@ -134,16 +128,10 @@ func _connect_inventory_signals() -> void:
 
 	if !inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.connect(_queue_refresh)
-	#if !inventory.item_added.is_connected(_on_item_added):
-		#inventory.item_added.connect(_on_item_added)
 	if !inventory.stack_added.is_connected(_on_stack_added):
 		inventory.stack_added.connect(_on_stack_added)
-	#if !inventory.item_property_changed.is_connected(_on_item_property_changed):
-		#inventory.item_property_changed.connect(_on_item_property_changed)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.connect(_on_inventory_resized)
-	if !inventory.item_removed.is_connected(_on_item_removed):
-		inventory.item_removed.connect(_on_item_removed)
 
 
 func _disconnect_inventory_signals() -> void:
@@ -152,16 +140,10 @@ func _disconnect_inventory_signals() -> void:
 
 	if inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.disconnect(_queue_refresh)
-	#if inventory.item_added.is_connected(_on_item_added):
-		#inventory.item_added.disconnect(_on_item_added)
 	if inventory.stack_added.is_connected(_on_stack_added):
 		inventory.stack_added.disconnect(_on_stack_added)
-	#if inventory.item_property_changed.is_connected(_on_item_property_changed):
-		#inventory.item_property_changed.disconnect(_on_item_property_changed)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.disconnect(_on_inventory_resized)
-	if inventory.item_removed.is_connected(_on_item_removed):
-		inventory.item_removed.disconnect(_on_item_removed)
 
 
 func _on_inventory_resized() -> void:
@@ -174,11 +156,6 @@ func _on_item_added(item_id: String, amount : int) -> void:
 
 func _on_stack_added(stack_index: int) -> void:
 	_queue_refresh()
-
-
-func _on_item_removed(item_id: String, amount : int) -> void:
-	pass
-	# _deselect(item)
 
 
 func _process(_delta) -> void:
@@ -237,6 +214,7 @@ func _populate_list() -> void:
 		ctrl_inventory_item.mouse_entered.connect(_on_item_mouse_entered.bind(ctrl_inventory_item))
 		ctrl_inventory_item.mouse_exited.connect(_on_item_mouse_exited.bind(ctrl_inventory_item))
 		ctrl_inventory_item.clicked.connect(_on_item_clicked.bind(ctrl_inventory_item))
+		ctrl_inventory_item.middle_clicked.connect(_on_item_middle_clicked.bind(ctrl_inventory_item))
 		ctrl_inventory_item.size = _get_item_sprite_size(item)
 
 		ctrl_inventory_item.position = _get_field_position(inventory.get_stack_position(item))
@@ -312,6 +290,19 @@ func _on_item_clicked(ctrl_inventory_item) -> void:
 		_select(item)
 
 
+func _on_item_middle_clicked(ctrl_inventory_item) -> void:
+	var item = ctrl_inventory_item.item
+	if !is_instance_valid(item):
+		return
+	
+	var stack_size : int = item.amount
+	var stack_index = inventory.items.find(item)
+
+	# All this floor/float jazz just to do integer division without warnings
+	var new_stack_size: int = floor(float(stack_size) / 2)
+	inventory.split(stack_index, new_stack_size)
+
+
 func _select(item: ItemStack) -> void:
 	if item in _selected_items:
 		return
@@ -355,20 +346,19 @@ func _on_dragable_dropped(dragable: CtrlDragable, drop_position: Vector2) -> voi
 	_handle_item_transfer(item, drop_position, dragable.inventory)
 
 
-func _handle_item_transfer(item: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
+func _handle_item_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
 	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
 	
 	if source_inventory == null:
-		inventory.add_at(item, field_coords)
+		inventory.add_at(stack, field_coords)
 		return
 	
 	if source_inventory.database != inventory.database:
 		return
 		
-	var stack_position : Vector2i = source_inventory.get_stack_position(item)
-	if source_inventory.transfer_to(stack_position, inventory, field_coords, item.amount) == 0:
+	var stack_position : Vector2i = source_inventory.get_stack_position(stack)
+	if source_inventory.transfer_to(stack_position, inventory, field_coords, stack.amount) == 0:
 		return
-	source_inventory.swap_stacks(stack_position, inventory, field_coords)
 
 
 func get_field_coords(local_pos: Vector2) -> Vector2i:
