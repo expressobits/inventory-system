@@ -26,17 +26,29 @@ func _ready() -> void:
 	btn_split_right.pressed.connect(_on_btn_split.bind(ctrl_inventory_right))
 	#btn_unequip.pressed.connect(_on_btn_unequip)
 	
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.2).timeout
 	
-	ctrl_inventory_left.inventory.add("wood", 16)
-	await get_tree().create_timer(1).timeout
-	ctrl_inventory_left.inventory.add("stone_axe")
-	await get_tree().create_timer(1).timeout
-	ctrl_inventory_left.inventory.add("stone_axe")
-	await get_tree().create_timer(1).timeout
+	#ctrl_inventory_left.inventory.add("wood", 16)
+	#await get_tree().create_timer(0.2).timeout
+	#ctrl_inventory_left.inventory.add("stone_axe")
+	#await get_tree().create_timer(0.2).timeout
+	#ctrl_inventory_left.inventory.add("stone_axe")
+	#await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_left.inventory.add("campfire", 2)
-	#await get_tree().create_timer(1).timeout
-	#ctrl_inventory_left.inventory.add("workbench")
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("workbench")
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("stone", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("stone", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("stone", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("grass", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("raw_meat", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("cooked_meat", 8)
 
 #func _process(delta):
 	#print(ctrl_inventory_left.inventory.items.size())

@@ -91,7 +91,7 @@ max_stack = 1
 name = "Stone Axe"
 icon = ExtResource("8_lxoic")
 weight = 1.0
-size = Vector2i(2, 2)
+size = Vector2i(1, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
 "durability": 100.0,
@@ -106,7 +106,7 @@ can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("9_p5frv")
-size = Vector2i(2, 2)
+size = Vector2i(1, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
 "durability": 100.0,

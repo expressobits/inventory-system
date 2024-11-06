@@ -164,19 +164,6 @@ func _disconnect_inventory_signals() -> void:
 		inventory.item_removed.disconnect(_on_item_removed)
 
 
-#func _on_item_property_changed(_item: InventoryItem, property_name: String) -> void:
-	#var relevant_properties = [
-		#GridConstraint.KEY_WIDTH,
-		#GridConstraint.KEY_HEIGHT,
-		#GridConstraint.KEY_SIZE,
-		#GridConstraint.KEY_ROTATED,
-		#GridConstraint.KEY_GRID_POSITION,
-		#InventoryItem.KEY_IMAGE,
-	#]
-	#if property_name in relevant_properties:
-		#_queue_refresh()
-
-
 func _on_inventory_resized() -> void:
 	_queue_refresh()
 
@@ -365,32 +352,23 @@ func _on_dragable_dropped(dragable: CtrlDragable, drop_position: Vector2) -> voi
 	if !is_instance_valid(inventory):
 		return
 
-	if inventory.has_stack(item):
-		_handle_item_move(item, drop_position)
-	else:
-		_handle_item_transfer(item, drop_position, dragable.inventory)
-
-
-func _handle_item_move(item: ItemStack, drop_position: Vector2) -> void:
-	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
-	if _move_item(item, field_coords):
-		return
-	if _merge_item(item, field_coords):
-		return
-	_swap_items(item, field_coords)
+	_handle_item_transfer(item, drop_position, dragable.inventory)
 
 
 func _handle_item_transfer(item: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
-	
 	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
-	if source_inventory != null:
-		if source_inventory.database != inventory.database:
-			return
-		var stack_position = source_inventory.get_stack_position(item)
-		var stack_index = source_inventory.items.find(item)
-		source_inventory.transfer(stack_index, inventory, item.amount)
-	elif !inventory.add_at(item, field_coords):
-		_swap_items(item, field_coords)
+	
+	if source_inventory == null:
+		inventory.add_at(item, field_coords)
+		return
+	
+	if source_inventory.database != inventory.database:
+		return
+		
+	var stack_position : Vector2i = source_inventory.get_stack_position(item)
+	if source_inventory.transfer_to(stack_position, inventory, field_coords, item.amount) == 0:
+		return
+	source_inventory.swap_stacks(stack_position, inventory, field_coords)
 
 
 func get_field_coords(local_pos: Vector2) -> Vector2i:
@@ -415,40 +393,6 @@ func get_selected_inventory_item() -> ItemStack:
 
 func get_selected_inventory_items() -> Array[ItemStack]:
 	return _selected_items.duplicate()
-
-
-func _move_item(item: ItemStack, move_position: Vector2i) -> bool:
-	var definition = inventory.database.get_item(item.item_id)
-	var size = definition.size
-	if !inventory.rect_free(Rect2i(move_position, size), item):
-		return false
-	#if Engine.is_editor_hint():
-		#GlootUndoRedo.move_inventory_item(inventory, item, move_position)
-		#return true
-	inventory.move_stack_to(item, move_position)
-	return true
-
-		
-func _merge_item(item_src: ItemStack, position: Vector2i) -> bool:
-	var origin_stack_index = inventory.items.find(item_src)
-	if origin_stack_index == -1 and origin_stack_index >= inventory.items.size():
-		return false
-	var destination_stack_index = inventory.get_stack_index_at(position)
-	if destination_stack_index == -1 and destination_stack_index >= inventory.items.size():
-		return false
-
-	inventory.transfer_at(origin_stack_index, inventory, destination_stack_index, item_src.amount)
-	return true
-
-
-func _swap_items(item: ItemStack, position: Vector2i) -> bool:
-	# TODO swap?
-	#var item2 = inventory.get_item_at(position)
-	#if item2 == null:
-	return false
-
-	#InventoryItem.swap(item, item2)
-	#return true
 
 
 func _get_field_position(field_coords: Vector2i) -> Vector2:

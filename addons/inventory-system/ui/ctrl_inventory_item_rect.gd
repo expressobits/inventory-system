@@ -132,7 +132,7 @@ func _update_texture() -> void:
 	_texture_rect.texture = texture
 	#TODO rotation
 	if is_instance_valid(item):
-		_texture_rect.size = Vector2(size.y, size.x)
+		_texture_rect.size = Vector2(size.x, size.y)
 		if inventory.is_stack_rotation_positive(item):
 			_texture_rect.position = Vector2(_texture_rect.size.y, 0)
 			_texture_rect.rotation = 0
