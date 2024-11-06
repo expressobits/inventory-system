@@ -1,5 +1,6 @@
 #include "inventory.h"
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 Inventory::Inventory() {
 }
@@ -42,8 +43,7 @@ bool Inventory::is_full() const {
 }
 
 void Inventory::clear() {
-	for (int i = items.size() - 1; i >= 0; i--)
-	{
+	for (int i = items.size() - 1; i >= 0; i--) {
 		Ref<ItemStack> stack = items[i];
 		remove_at(i, stack->get_item_id(), stack->get_amount());
 	}
@@ -249,7 +249,7 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	stack->set_item_id(item_id);
 	stack->set_amount(amount);
 	stack->set_properties(properties);
-	if(!can_add_new_stack(stack))
+	if (!can_add_new_stack(stack))
 		return amount;
 	items.append(stack);
 	on_insert_stack(items.size() - 1);
@@ -307,14 +307,20 @@ bool Inventory::split(const int &stack_index, const int &amount) {
 
 	int amount_in_interaction = amount;
 	Ref<ItemStack> current_stack = items[stack_index];
-	if(current_stack->get_amount() <= amount)
+	if (current_stack->get_amount() <= amount)
 		return false;
-	int amount_no_removed = remove_at(stack_index, current_stack->get_item_id(), amount);
-	amount_in_interaction = add_on_new_stack(current_stack->get_item_id(), amount_in_interaction - amount_no_removed, current_stack->get_properties());
-	if(amount_in_interaction == 0)
+
+	const String item_id = current_stack->get_item_id();
+	const Dictionary properties = current_stack->get_properties();
+	int amount_no_removed = remove_at(stack_index, item_id, amount);
+	int to_add = amount_in_interaction - amount_no_removed;
+	if (to_add <= 0)
+		return false;
+	amount_in_interaction = add_on_new_stack(item_id, to_add, properties);
+	if (amount_in_interaction == 0)
 		return true;
-	add_at_index(stack_index, current_stack->get_item_id(), amount_in_interaction);
-	return true;
+	add_at_index(stack_index, item_id, amount_in_interaction);
+	return false;
 }
 
 int Inventory::transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount) {

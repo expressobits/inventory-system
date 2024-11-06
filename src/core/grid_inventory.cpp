@@ -38,6 +38,7 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("transfer_to", "from_position", "destination", "destination_position", "amount"), &GridInventory::transfer_to, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("swap_stacks", "position", "other_inventory", "other_position"), &GridInventory::swap_stacks);
 	ClassDB::bind_method(D_METHOD("rect_free", "rect", "exception"), &GridInventory::rect_free, DEFVAL(nullptr));
+	ClassDB::bind_method(D_METHOD("sort"), &GridInventory::sort);
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
 
@@ -47,7 +48,6 @@ void GridInventory::_bind_methods() {
 }
 
 GridInventory::GridInventory() {
-	// UtilityFunctions::print("acontece?");
 	// Ref<QuadTree> new_quad_tree = memnew(QuadTree());
 	// new_quad_tree->init(size);
 	// set_quad_tree(new_quad_tree);
@@ -274,6 +274,8 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	Ref<ItemStack> stack = get_stack_at(from_position);
 	if (stack == nullptr)
 		return amount;
+	
+	int amount_of_stack = stack->get_amount();
 	int stack_index = items.find(stack);
 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'stack index' is out of bounds.");
 	String item_id = stack->get_item_id();
@@ -281,6 +283,14 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	int amount_to_interact = amount;
 	if (amount_to_interact == 0)
 		return amount;
+
+	// TODO implement left on destination for swap amount only
+	// Ref<ItemDefinition> destination_definition = get_database()->get_item(destination_stack->get_item_id());
+	// ERR_FAIL_NULL_V_MSG(destination_definition, amount, "Destination item_definition is null on transfer.");
+	// int amount_to_left = destination_definition->get_max_stack() - destination_stack->get_amount();
+	// if (amount_to_left > -1) {
+	// 	amount_to_interact = MIN(amount_to_interact, amount_to_left);
+	// }
 
 	int amount_not_removed = remove_at(stack_index, item_id, amount_to_interact);
 	int amount_to_transfer = amount_to_interact - amount_not_removed;
@@ -290,6 +300,12 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	if (amount_not_transferred == 0)
 		return 0;
 	add_at(from_position, item_id, amount_not_transferred);
+
+	if (amount == amount_of_stack) {
+		if (swap_stacks(from_position, destination, destination_position))
+			return 0;
+	}
+
 	return amount_not_transferred;
 }
 
@@ -382,8 +398,8 @@ bool GridInventory::has_space_for(const String &item_id, const int amount, const
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
 
-	if (Inventory::can_stack_with_actual_slots(item_id, amount, properties))
-		return true;
+	// if (Inventory::can_stack_with_actual_slots(item_id, amount, properties))
+	// 	return true;
 
 	Vector2i item_size = definition->get_size();
 	Vector2i result = find_free_place(item_size);
