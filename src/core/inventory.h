@@ -22,7 +22,7 @@ private:
 	int _remove_from_stack(int stack_index, const String &item_id, int amount = 1);
 
 protected:
-	TypedArray<ItemStack> items;
+	TypedArray<ItemStack> stacks;
 	static void _bind_methods();
 
 public:
@@ -60,8 +60,8 @@ public:
 	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;
 	int get_max_stack_of_stack(const Ref<ItemStack> &stack, Ref<ItemDefinition> &item) const;
 	bool contains_category_in_stack(const Ref<ItemStack> &slot, const Ref<ItemCategory> &category) const;
-	void set_items(const TypedArray<ItemStack> &new_items);
-	TypedArray<ItemStack> get_items() const;
+	void set_stacks(const TypedArray<ItemStack> &new_items);
+	TypedArray<ItemStack> get_stacks() const;
 	void set_slot_amount(const int &new_slot_amount);
 	int get_slot_amount() const;
 	void set_inventory_name(const String &new_inventory_name);

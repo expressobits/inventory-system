@@ -86,10 +86,10 @@ void Hotbar::previous_item() {
 
 bool Hotbar::has_valid_item_id() const {
 	Inventory *inventory = get_inventory();
-	if (selection_index >= inventory->get_items().size()) {
+	if (selection_index >= inventory->get_stacks().size()) {
 		return false;
 	}
-	Ref<ItemStack> stack = inventory->get_items()[selection_index];
+	Ref<ItemStack> stack = inventory->get_stacks()[selection_index];
 	if (stack == nullptr) {
 		return false;
 	}
@@ -102,7 +102,7 @@ bool Hotbar::has_item_on_selection() const {
 
 String Hotbar::get_selected_item() const {
 	Inventory *inventory = get_inventory();
-	Ref<ItemStack> stack = inventory->get_items()[selection_index];
+	Ref<ItemStack> stack = inventory->get_stacks()[selection_index];
 	return stack->get_item_id();
 }
 

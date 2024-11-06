@@ -3,8 +3,8 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 bool GridInventory::_bounds_broken() const {
-	for (size_t i = 0; i < get_items().size(); i++) {
-		Ref<ItemStack> stack = get_items()[i];
+	for (size_t i = 0; i < get_stacks().size(); i++) {
+		Ref<ItemStack> stack = get_stacks()[i];
 		if (!rect_free(get_stack_rect(stack), stack))
 			return true;
 	}
@@ -15,8 +15,8 @@ void GridInventory::_refresh_quad_tree() {
 	Ref<QuadTree> new_quad_tree = memnew(QuadTree());
 	new_quad_tree->init(size);
 	set_quad_tree(new_quad_tree);
-	for (size_t i = 0; i < get_items().size(); i++) {
-		Ref<ItemStack> stack = get_items()[i];
+	for (size_t i = 0; i < get_stacks().size(); i++) {
+		Ref<ItemStack> stack = get_stacks()[i];
 		quad_tree->add(get_stack_rect(stack), stack);
 	}
 }
@@ -96,7 +96,7 @@ TypedArray<Vector2i> GridInventory::get_stack_positions() const {
 }
 
 Vector2i GridInventory::get_stack_position(const Ref<ItemStack> &stack) const {
-	int stack_index = items.find(stack);
+	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return Vector2i(0, 0);
 	return stack_positions[stack_index];
@@ -107,7 +107,7 @@ bool GridInventory::set_item_position(const Ref<ItemStack> &stack, const Vector2
 	if (has_stack(stack) && !rect_free(new_rect, stack))
 		return false;
 
-	int stack_index = items.find(stack);
+	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return false;
 	stack_positions[stack_index] = new_position;
@@ -200,14 +200,14 @@ int GridInventory::get_stack_index_at(const Vector2i position) const {
 	Ref<QuadTree::QuadRect> first = quad_tree->get_first(position);
 	if (first == nullptr)
 		return -1;
-	int stack_index = items.find(first->get_metadata());
+	int stack_index = stacks.find(first->get_metadata());
 	return stack_index;
 }
 
 TypedArray<ItemStack> GridInventory::get_stacks_under(const Rect2i rect) const {
 	TypedArray<ItemStack> result = TypedArray<ItemStack>();
-	for (size_t i = 0; i < items.size(); i++) {
-		Ref<ItemStack> stack = items[i];
+	for (size_t i = 0; i < stacks.size(); i++) {
+		Ref<ItemStack> stack = stacks[i];
 		Rect2i stack_rect = get_stack_rect(stack);
 		if (stack_rect.intersects(rect))
 			result.append(stack);
@@ -224,7 +224,7 @@ int GridInventory::add_at(const Vector2i position, const String item_id, const i
 		// Verificar se o rect está livre para adicao e adicionar
 		if (rect_free(rect)) {
 			int no_added = add_on_new_stack(item_id, amount, properties);
-			Ref<ItemStack> stack = items[items.size() - 1];
+			Ref<ItemStack> stack = stacks[stacks.size() - 1];
 			bool move_success = move_stack_to(stack, position);
 			if (!move_success)
 				UtilityFunctions::printerr("Can't move the item to the given place!");
@@ -276,8 +276,8 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 		return amount;
 	
 	int amount_of_stack = stack->get_amount();
-	int stack_index = items.find(stack);
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= items.size(), amount, "The 'stack index' is out of bounds.");
+	int stack_index = stacks.find(stack);
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'stack index' is out of bounds.");
 	String item_id = stack->get_item_id();
 	Dictionary properties = stack->get_properties();
 	int amount_to_interact = amount;
@@ -319,10 +319,10 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	Vector2i real_other_position = other_inventory->get_stack_position(other_stack);
 	if (!_size_check(stack, other_stack))
 		return false;
-	int stack_index = items.find(stack);
+	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return false;
-	int other_stack_index = other_inventory->items.find(other_stack);
+	int other_stack_index = other_inventory->stacks.find(other_stack);
 	if (other_stack_index == -1)
 		return false;
 
@@ -369,8 +369,8 @@ Vector2i GridInventory::find_free_place(const Vector2i item_size, const Ref<Item
 
 bool GridInventory::sort() {
 	TypedArray<ItemStack> stack_array;
-	for (size_t i = 0; i < items.size(); i++) {
-		Ref<ItemStack> stack = items[i];
+	for (size_t i = 0; i < stacks.size(); i++) {
+		Ref<ItemStack> stack = stacks[i];
 		stack_array.append(stack);
 		stack_array.sort_custom(callable_mp(this, &GridInventory::_compare_stacks));
 	}
@@ -407,7 +407,7 @@ bool GridInventory::has_space_for(const String &item_id, const int amount, const
 }
 
 void GridInventory::on_insert_stack(const int stack_index) {
-	Ref<ItemStack> stack = items[stack_index];
+	Ref<ItemStack> stack = stacks[stack_index];
 	if (stack == nullptr)
 		return;
 	ERR_FAIL_NULL_MSG(quad_tree, "'quad_tree' is null.");
@@ -462,10 +462,10 @@ void GridInventory::_on_post_item_swap(const Ref<ItemStack> stack1, const Ref<It
 }
 
 bool GridInventory::_is_sorted() {
-	for (size_t x = 0; x < items.size(); x++) {
-		Ref<ItemStack> stack1 = items[x];
-		for (size_t y = 0; y < items.size(); y++) {
-			Ref<ItemStack> stack2 = items[y];
+	for (size_t x = 0; x < stacks.size(); x++) {
+		Ref<ItemStack> stack1 = stacks[x];
+		for (size_t y = 0; y < stacks.size(); y++) {
+			Ref<ItemStack> stack2 = stacks[y];
 			if (stack1 == stack2)
 				continue;
 			Rect2i rect1 = get_stack_rect(stack1);
@@ -478,7 +478,7 @@ bool GridInventory::_is_sorted() {
 }
 
 void GridInventory::_move_item_to_unsafe(const Ref<ItemStack> &stack, const Vector2i &position) {
-	int stack_index = items.find(stack);
+	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return;
 	stack_positions[stack_index] = position;
