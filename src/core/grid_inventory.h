@@ -59,7 +59,8 @@ public:
 	TypedArray<ItemStack> get_stacks_under(const Rect2i rect) const;
 	bool move_stack_to(const Ref<ItemStack> stack, const Vector2i position);
 	bool move_item_to_free_spot(const Ref<ItemStack> stack);
-	bool transfer_to(const Vector2i from_position, const GridInventory *destination, const Vector2i destination_position);
+	int transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount = 1);
+	bool swap_stacks(const Vector2i position, GridInventory *other_inventory, const Vector2i other_position);
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
 	Vector2i find_free_place(const Vector2i item_size, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
