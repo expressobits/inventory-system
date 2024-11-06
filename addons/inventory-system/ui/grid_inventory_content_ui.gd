@@ -1,5 +1,6 @@
 @tool
 extends Control
+class_name GridInventoryContentUI
 
 signal item_dropped(item, offset)
 signal selection_changed
@@ -7,10 +8,6 @@ signal inventory_item_activated(item)
 signal inventory_item_context_activated(item)
 signal item_mouse_entered(item)
 signal item_mouse_exited(item)
-
-const CtrlInventoryItemRect = preload("res://addons/inventory-system/ui/ctrl_inventory_item_rect.gd")
-const CtrlDropZone = preload("res://addons/inventory-system/ui/ctrl_drop_zone.gd")
-const CtrlDragable = preload("res://addons/inventory-system/ui/ctrl_dragable.gd")
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
@@ -77,7 +74,7 @@ var inventory: GridInventory = null:
 		_queue_refresh()
 
 var _ctrl_item_container: Control = null
-var _ctrl_drop_zone: CtrlDropZone = null
+var _ctrl_drop_zone: GridDropZoneUI = null
 var _selected_items: Array[ItemStack] = []
 var _refresh_queued: bool = false
 
@@ -99,14 +96,14 @@ func _ready() -> void:
 	resized.connect(func(): _ctrl_item_container.size = size)
 	add_child(_ctrl_item_container)
 
-	_ctrl_drop_zone = CtrlDropZone.new()
+	_ctrl_drop_zone = GridDropZoneUI.new()
 	_ctrl_drop_zone.dragable_dropped.connect(_on_dragable_dropped)
 	_ctrl_drop_zone.size = size
 	resized.connect(func(): _ctrl_drop_zone.size = size)
-	CtrlDragable.dragable_grabbed.connect(func(dragable: CtrlDragable, grab_position: Vector2):
+	GridItemStackDraggableUI.dragable_grabbed.connect(func(dragable: GridItemStackDraggableUI, grab_position: Vector2):
 		_ctrl_drop_zone.activate()
 	)
-	CtrlDragable.dragable_dropped.connect(func(dragable: CtrlDragable, zone: CtrlDropZone, drop_position: Vector2):
+	GridItemStackDraggableUI.dragable_dropped.connect(func(dragable: GridItemStackDraggableUI, zone: GridDropZoneUI, drop_position: Vector2):
 		_ctrl_drop_zone.deactivate()
 	)
 	add_child(_ctrl_drop_zone)
@@ -204,7 +201,7 @@ func _populate_list() -> void:
 		return
 		
 	for item in inventory.get_items():
-		var ctrl_inventory_item = CtrlInventoryItemRect.new(inventory)
+		var ctrl_inventory_item = GridItemStackUI.new(inventory)
 		ctrl_inventory_item.texture = default_item_texture
 		ctrl_inventory_item.item = item
 		ctrl_inventory_item.grabbed.connect(_on_item_grab.bind(ctrl_inventory_item))
@@ -225,11 +222,11 @@ func _populate_list() -> void:
 		_ctrl_item_container.add_child(ctrl_inventory_item)
 
 
-func _on_item_grab(offset: Vector2, ctrl_inventory_item: CtrlInventoryItemRect) -> void:
+func _on_item_grab(offset: Vector2, ctrl_inventory_item: GridItemStackUI) -> void:
 	_clear_selection()
 
 
-func _on_item_drop(zone: CtrlDropZone, drop_position: Vector2, ctrl_inventory_item: CtrlInventoryItemRect) -> void:
+func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, ctrl_inventory_item: GridItemStackUI) -> void:
 	var item: ItemStack = ctrl_inventory_item.item
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
@@ -251,7 +248,7 @@ func _get_item_sprite_size(item: ItemStack) -> Vector2:
 	return sprite_size
 
 
-func _on_item_activated(ctrl_inventory_item: CtrlInventoryItemRect) -> void:
+func _on_item_activated(ctrl_inventory_item: GridItemStackUI) -> void:
 	var item = ctrl_inventory_item.item
 	if !item:
 		return
@@ -259,7 +256,7 @@ func _on_item_activated(ctrl_inventory_item: CtrlInventoryItemRect) -> void:
 	inventory_item_activated.emit(item)
 
 
-func _on_item_context_activated(ctrl_inventory_item: CtrlInventoryItemRect) -> void:
+func _on_item_context_activated(ctrl_inventory_item: GridItemStackUI) -> void:
 	var item = ctrl_inventory_item.item
 	if !item:
 		return
@@ -335,7 +332,7 @@ func _clear_selection() -> void:
 	selection_changed.emit()
 
 
-func _on_dragable_dropped(dragable: CtrlDragable, drop_position: Vector2) -> void:
+func _on_dragable_dropped(dragable: GridItemStackDraggableUI, drop_position: Vector2) -> void:
 	var item: ItemStack = dragable.item
 	if item == null:
 		return

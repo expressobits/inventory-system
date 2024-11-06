@@ -20,10 +20,6 @@ signal item_mouse_exited(item)
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
-const CtrlInventoryGridBasic = preload("res://addons/inventory-system/ui/ctrl_inventory_grid_basic.gd")
-const CtrlInventoryItemRect = preload("res://addons/inventory-system/ui/ctrl_inventory_item_rect.gd")
-const CtrlDragable = preload("res://addons/inventory-system/ui/ctrl_dragable.gd")
-
 class PriorityPanel extends Panel:
 	enum StylePriority {HIGH = 0, MEDIUM = 1, LOW = 2}
 
@@ -123,7 +119,7 @@ class SelectionPanel extends Panel:
 
 
 ## Single or multi select mode (hold CTRL to select multiple items).
-@export_enum("Single", "Multi") var select_mode: int = CtrlInventoryGridBasic.SelectMode.SELECT_SINGLE:
+@export_enum("Single", "Multi") var select_mode: int = GridInventoryContentUI.SelectMode.SELECT_SINGLE:
 	set(new_select_mode):
 		if select_mode == new_select_mode:
 			return
@@ -175,7 +171,7 @@ var inventory: GridInventory = null:
 			_ctrl_inventory_grid_basic.inventory = inventory
 		_queue_refresh()
 
-var _ctrl_inventory_grid_basic: CtrlInventoryGridBasic = null
+var _ctrl_inventory_grid_basic: GridInventoryContentUI = null
 var _field_background_grid: Control = null
 var _field_backgrounds: Array = []
 var _selection_panels: Control = null
@@ -288,13 +284,13 @@ func _ready() -> void:
 	_field_background_grid.name = "FieldBackgrounds"
 	add_child(_field_background_grid)
 
-	_ctrl_inventory_grid_basic = CtrlInventoryGridBasic.new()
+	_ctrl_inventory_grid_basic = GridInventoryContentUI.new()
 	_ctrl_inventory_grid_basic.inventory = inventory
 	_ctrl_inventory_grid_basic.field_dimensions = field_dimensions
 	_ctrl_inventory_grid_basic.item_spacing = item_spacing
 	_ctrl_inventory_grid_basic.default_item_texture = default_item_texture
 	_ctrl_inventory_grid_basic.stretch_item_sprites = stretch_item_sprites
-	_ctrl_inventory_grid_basic.name = "CtrlInventoryGridBasic"
+	_ctrl_inventory_grid_basic.name = "GridInventoryContentUI"
 	_ctrl_inventory_grid_basic.resized.connect(_update_size)
 	_ctrl_inventory_grid_basic.item_dropped.connect(func(item: ItemStack, drop_position: Vector2):
 		item_dropped.emit(item, drop_position)
@@ -316,7 +312,7 @@ func _ready() -> void:
 	_selection_panels.name = "SelectionPanels"
 	add_child(_selection_panels)
 
-	CtrlDragable.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
+	GridItemStackDraggableUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
 		_fill_background(field_style, PriorityPanel.StylePriority.LOW)
 	)
 
@@ -425,14 +421,14 @@ func _fill_background(style: StyleBox, priority: int) -> void:
 
 
 func _get_global_grabbed_item() -> ItemStack:
-	if CtrlDragable.get_grabbed_dragable() == null:
+	if GridItemStackDraggableUI.get_grabbed_dragable() == null:
 		return null
-	return (CtrlDragable.get_grabbed_dragable() as CtrlInventoryItemRect).item
+	return (GridItemStackDraggableUI.get_grabbed_dragable() as GridItemStackUI).item
 
 
 func _get_global_grabbed_item_local_pos() -> Vector2:
-	if CtrlDragable.get_grabbed_dragable():
-		return get_local_mouse_position() - CtrlDragable.get_grab_offset_local_to(self)
+	if GridItemStackDraggableUI.get_grabbed_dragable():
+		return get_local_mouse_position() - GridItemStackDraggableUI.get_grab_offset_local_to(self)
 	return Vector2(-1, -1)
 
 

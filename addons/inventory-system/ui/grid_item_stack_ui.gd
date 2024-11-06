@@ -1,6 +1,5 @@
-extends "res://addons/inventory-system/ui/ctrl_dragable.gd"
-
-const CtrlInventoryItemRect = preload("res://addons/inventory-system/ui/ctrl_inventory_item_rect.gd")
+extends GridItemStackDraggableUI
+class_name GridItemStackUI
 
 signal activated
 signal clicked
@@ -166,7 +165,7 @@ func _refresh() -> void:
 
 
 func create_preview() -> Control:
-	var preview = CtrlInventoryItemRect.new(inventory)
+	var preview = GridItemStackUI.new(inventory)
 	preview.item = item
 	preview.texture = texture
 	preview.size = size

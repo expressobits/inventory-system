@@ -1,9 +1,8 @@
 @tool
 extends Control
+class_name GridDropZoneUI
 
 signal dragable_dropped(dragable, position)
-
-const CtrlDragable = preload("res://addons/inventory-system/ui/ctrl_dragable.gd")
 
 
 func activate() -> void:
@@ -19,10 +18,10 @@ func is_active() -> bool:
 
 
 func _can_drop_data(at_position: Vector2, data) -> bool:
-	return data is CtrlDragable
+	return data is GridItemStackDraggableUI
 
 
 func _drop_data(at_position: Vector2, data) -> void:
-	var local_offset := CtrlDragable.get_grab_offset_local_to(self)
+	var local_offset := GridItemStackDraggableUI.get_grab_offset_local_to(self)
 	dragable_dropped.emit(data, at_position - local_offset)
-	CtrlDragable.dragable_dropped.emit(data, self, at_position - local_offset)
+	GridItemStackDraggableUI.dragable_dropped.emit(data, self, at_position - local_offset)
