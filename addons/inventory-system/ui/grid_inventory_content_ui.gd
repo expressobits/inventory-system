@@ -9,6 +9,9 @@ signal inventory_item_context_activated(item)
 signal item_mouse_entered(item)
 signal item_mouse_exited(item)
 
+signal request_split(inventory: GridInventory, stack_index : int, amount : int)
+signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position : Vector2i, amount : int)
+
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 @export var field_dimensions: Vector2 = Vector2(32, 32):
@@ -59,6 +62,8 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 			return
 		select_mode = new_select_mode
 		_clear_selection()
+		
+@export var stack_style: StyleBox
 
 var inventory: GridInventory = null:
 	set(new_inventory):
@@ -167,14 +172,14 @@ func _queue_refresh() -> void:
 
 func _refresh() -> void:
 	_grid_drop_zone_ui.deactivate()
-	custom_minimum_size = _get_inventory_size_px()
+	custom_minimum_size = _get_inventory_size_pixels()
 	size = custom_minimum_size
 
 	_clear_list()
 	_populate_list()
 
 
-func _get_inventory_size_px() -> Vector2:
+func _get_inventory_size_pixels() -> Vector2:
 	if !is_instance_valid(inventory):
 		return Vector2.ZERO
 
@@ -200,10 +205,10 @@ func _populate_list() -> void:
 	if !is_instance_valid(inventory) || !is_instance_valid(_ctrl_item_container):
 		return
 		
-	for item in inventory.get_items():
+	for stack in inventory.stacks:
 		var grid_item_stack_ui = GridItemStackUI.new(inventory)
 		grid_item_stack_ui.texture = default_item_texture
-		grid_item_stack_ui.item = item
+		grid_item_stack_ui.stack = stack
 		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
 		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
 		grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
@@ -212,9 +217,10 @@ func _populate_list() -> void:
 		grid_item_stack_ui.mouse_exited.connect(_on_item_mouse_exited.bind(grid_item_stack_ui))
 		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
-		grid_item_stack_ui.size = _get_item_sprite_size(item)
+		grid_item_stack_ui.size = _get_item_sprite_size(stack)
+		grid_item_stack_ui.stack_style = stack_style
 
-		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(item))
+		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 		grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
 		if stretch_item_sprites:
 			grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_SCALE
@@ -227,12 +233,12 @@ func _on_item_grab(offset: Vector2, grid_item_stack_ui: GridItemStackUI) -> void
 
 
 func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
-	var item: ItemStack = grid_item_stack_ui.item
+	var stack: ItemStack = grid_item_stack_ui.item
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
-	if is_instance_valid(item) and inventory.has_stack(item):
+	if is_instance_valid(stack) and inventory.has_stack(stack):
 		if zone == null:
-			item_dropped.emit(item, drop_position + grid_item_stack_ui.position)
+			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
 
 
 func _get_item_sprite_size(item: ItemStack) -> Vector2:
@@ -257,47 +263,47 @@ func _on_item_activated(grid_item_stack_ui: GridItemStackUI) -> void:
 
 
 func _on_item_context_activated(grid_item_stack_ui: GridItemStackUI) -> void:
-	var item = grid_item_stack_ui.item
-	if !item:
+	var stack = grid_item_stack_ui.stack
+	if !stack:
 		return
 
-	inventory_item_context_activated.emit(item)
+	inventory_item_context_activated.emit(stack)
 
 
 func _on_item_mouse_entered(grid_item_stack_ui) -> void:
-	item_mouse_entered.emit(grid_item_stack_ui.item)
+	item_mouse_entered.emit(grid_item_stack_ui.stack)
 
 
 func _on_item_mouse_exited(grid_item_stack_ui) -> void:
-	item_mouse_exited.emit(grid_item_stack_ui.item)
+	item_mouse_exited.emit(grid_item_stack_ui.stack)
 
 
 func _on_item_clicked(grid_item_stack_ui) -> void:
-	var item = grid_item_stack_ui.item
-	if !is_instance_valid(item):
+	var stack = grid_item_stack_ui.stack
+	if !is_instance_valid(stack):
 		return
 
 	if select_mode == SelectMode.SELECT_MULTI && Input.is_key_pressed(KEY_CTRL):
-		if !_is_item_selected(item):
-			_select(item)
+		if !_is_item_selected(stack):
+			_select(stack)
 		else:
-			_deselect(item)
+			_deselect(stack)
 	else:
 		_clear_selection()
-		_select(item)
+		_select(stack)
 
 
 func _on_item_middle_clicked(grid_item_stack_ui) -> void:
-	var item = grid_item_stack_ui.item
-	if !is_instance_valid(item):
+	var stack = grid_item_stack_ui.stack
+	if !is_instance_valid(stack):
 		return
 	
-	var stack_size : int = item.amount
-	var stack_index = inventory.items.find(item)
+	var stack_size : int = stack.amount
+	var stack_index = inventory.stacks.find(stack)
 
 	# All this floor/float jazz just to do integer division without warnings
 	var new_stack_size: int = floor(float(stack_size) / 2)
-	inventory.split(stack_index, new_stack_size)
+	request_split.emit(inventory, stack_index, new_stack_size)
 
 
 func _select(stack: ItemStack) -> void:
@@ -333,29 +339,29 @@ func _clear_selection() -> void:
 
 
 func _on_dragable_dropped(dragable: GridDraggableElementUI, drop_position: Vector2) -> void:
-	var item: ItemStack = dragable.item
-	if item == null:
+	var stack: ItemStack = dragable.stack
+	if stack == null:
 		return
 
 	if !is_instance_valid(inventory):
 		return
 
-	_handle_item_transfer(item, drop_position, dragable.inventory)
+	_handle_item_transfer(stack, drop_position, dragable.inventory)
 
 
 func _handle_item_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
 	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
 	
 	if source_inventory == null:
-		inventory.add_at(stack, field_coords)
+		printerr("source_inventory is null?")
+		#inventory.add_at(stack, field_coords)
 		return
 	
 	if source_inventory.database != inventory.database:
 		return
 		
 	var stack_position : Vector2i = source_inventory.get_stack_position(stack)
-	if source_inventory.transfer_to(stack_position, inventory, field_coords, stack.amount) == 0:
-		return
+	request_transfer_to.emit(source_inventory, stack_position, inventory, field_coords, stack.amount)
 
 
 func get_field_coords(local_pos: Vector2) -> Vector2i:

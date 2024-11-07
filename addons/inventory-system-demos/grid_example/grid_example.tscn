@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bx8fjivywcot3"]
+[gd_scene load_steps=10 format=3 uid="uid://bx8fjivywcot3"]
 
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="1_v2flv"]
@@ -53,6 +53,18 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jq31k"]
+bg_color = Color(0, 0, 0, 0.25098)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.25098, 0.25098, 0.25098, 0)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")
 
@@ -84,10 +96,12 @@ layout_mode = 2
 script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../GridInventoryLeft")
 field_dimensions = Vector2(48, 48)
+item_spacing = 2
 field_style = SubResource("StyleBoxFlat_04mmu")
 field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
 field_selected_style = SubResource("StyleBoxFlat_hm76b")
 selection_style = SubResource("StyleBoxFlat_c8g6r")
+stack_style = SubResource("StyleBoxFlat_jq31k")
 
 [node name="ButtonSortLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -108,10 +122,12 @@ script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../GridInventoryRight")
 default_item_texture = ExtResource("3_yakj1")
 field_dimensions = Vector2(48, 48)
+item_spacing = 2
 field_style = SubResource("StyleBoxFlat_04mmu")
 field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
 field_selected_style = SubResource("StyleBoxFlat_hm76b")
 selection_style = SubResource("StyleBoxFlat_c8g6r")
+stack_style = SubResource("StyleBoxFlat_jq31k")
 
 [node name="ButtonSortRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
 unique_name_in_owner = true

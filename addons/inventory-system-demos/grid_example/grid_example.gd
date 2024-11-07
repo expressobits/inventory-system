@@ -2,8 +2,8 @@ extends Node
 
 const info_offset: Vector2 = Vector2(20, 0)
 
-@onready var ctrl_inventory_left := %GridInventoryUILeft
-@onready var ctrl_inventory_right := %GridInventoryUIRight
+@onready var ctrl_inventory_left : GridInventoryUI = %GridInventoryUILeft
+@onready var ctrl_inventory_right : GridInventoryUI = %GridInventoryUIRight
 @onready var btn_sort_left: Button = %ButtonSortLeft
 @onready var btn_sort_right: Button = %ButtonSortRight
 #@onready var ctrl_slot: CtrlItemSlot = $"%CtrlItemSlot"
@@ -20,6 +20,11 @@ func _ready() -> void:
 	ctrl_inventory_right.item_mouse_exited.connect(_on_item_mouse_exited)
 	btn_sort_left.pressed.connect(_on_btn_sort.bind(ctrl_inventory_left))
 	btn_sort_right.pressed.connect(_on_btn_sort.bind(ctrl_inventory_right))
+	
+	ctrl_inventory_left.request_split.connect(_request_split)
+	ctrl_inventory_right.request_split.connect(_request_split)
+	ctrl_inventory_left.request_transfer_to.connect(_request_transfer_to)
+	ctrl_inventory_right.request_transfer_to.connect(_request_transfer_to)
 	
 	await get_tree().create_timer(0.2).timeout
 	
@@ -48,6 +53,15 @@ func _ready() -> void:
 #func _process(delta):
 	#print(ctrl_inventory_left.inventory.items.size())
 	#print(ctrl_inventory_left.inventory.stack_positions)
+	
+
+func _request_split(inventory: GridInventory, stack_index: int, amount: int):
+	inventory.split(stack_index, amount)
+
+
+func _request_transfer_to(origin_inv: GridInventory, origin_pos: Vector2i, dest_inv: GridInventory, dest_pos: Vector2i, amount: int):
+	origin_inv.transfer_to(origin_pos, dest_inv, dest_pos, amount)
+
 
 func _on_item_mouse_entered(item: ItemStack) -> void:
 	lbl_info.show()

@@ -150,8 +150,8 @@ func _populate_list() -> void:
 	if !is_instance_valid(inventory):
 		return
 
-	for i in inventory.items.size():
-		var item = inventory.items[i]
+	for i in inventory.stacks.size():
+		var item = inventory.stacks[i]
 		var definition : ItemDefinition = inventory.database.get_item(item.item_id)
 		var texture := definition.icon
 		if !texture:

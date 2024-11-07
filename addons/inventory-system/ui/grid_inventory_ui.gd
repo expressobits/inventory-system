@@ -18,53 +18,10 @@ signal item_mouse_entered(item)
 ## the given [InventoryItem].
 signal item_mouse_exited(item)
 
+signal request_split(inventory : Inventory, stack_index : int, amount : int)
+signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position : Vector2i, amount : int)
+
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
-
-class PriorityPanel extends Panel:
-	enum StylePriority {HIGH = 0, MEDIUM = 1, LOW = 2}
-
-	var regular_style: StyleBox
-	var hover_style: StyleBox
-	var _styles: Array[StyleBox] = [null, null, null]
-	
-	func _init(regular_style_: StyleBox, hover_style_: StyleBox) -> void:
-		regular_style = regular_style_
-		hover_style = hover_style_
-		
-	func _ready() -> void:
-		set_style(regular_style)
-		mouse_entered.connect(func():
-			set_style(hover_style)
-		)
-		mouse_exited.connect(func():
-			set_style(regular_style)
-		)
-
-
-	func set_style(style: StyleBox, priority: int = StylePriority.LOW) -> void:
-		if priority > 2 || priority < 0:
-			return
-		if _styles[priority] == style:
-			return
-
-		_styles[priority] = style
-
-		for i in range(0, 3):
-			if _styles[i] != null:
-				_set_panel_style(_styles[i])
-				return
-
-
-	func _set_panel_style(style: StyleBox) -> void:
-		remove_theme_stylebox_override("panel")
-		if style != null:
-			add_theme_stylebox_override("panel", style)
-
-class SelectionPanel extends Panel:
-	func set_style(style: StyleBox) -> void:
-		remove_theme_stylebox_override("panel")
-		if style != null:
-			add_theme_stylebox_override("panel", style)
 
 ## Path to an [Inventory] node.
 @export var inventory_path: NodePath:
@@ -157,6 +114,13 @@ class SelectionPanel extends Panel:
 		_queue_refresh()
 
 
+## Style of item stack slot on grid
+@export var stack_style: StyleBox:
+	set(new_selection_style):
+		stack_style = new_selection_style
+		_queue_refresh()
+
+
 ## The [Inventory] node linked to this control.
 var inventory: GridInventory = null:
 	set(new_inventory):
@@ -240,7 +204,7 @@ func _refresh_selection_panel() -> void:
 		return
 
 	for selected_item in selected_items:
-		var selection_panel := SelectionPanel.new()
+		var selection_panel := GridSelectionPanel.new()
 		var rect := _grid_inventory_content_ui.get_item_rect(selected_item)
 		selection_panel.position = rect.position
 		selection_panel.size = rect.size
@@ -262,7 +226,7 @@ func _refresh_field_background_grid() -> void:
 	for i in range(inventory.size.x):
 		_field_backgrounds.append([])
 		for j in range(inventory.size.y):
-			var field_panel: PriorityPanel = PriorityPanel.new(field_style, field_highlighted_style)
+			var field_panel: GridPriorityPanel = GridPriorityPanel.new(field_style, field_highlighted_style)
 			field_panel.visible = (field_style != null)
 			field_panel.size = field_dimensions
 			field_panel.position = _grid_inventory_content_ui._get_field_position(Vector2i(i, j))
@@ -301,10 +265,17 @@ func _ready() -> void:
 	_grid_inventory_content_ui.inventory_item_context_activated.connect(func(item: ItemStack):
 		inventory_item_context_activated.emit(item)
 	)
+	_grid_inventory_content_ui.request_split.connect(func(inventory: GridInventory, stack_index: int, amount : int):
+		request_split.emit(inventory, stack_index, amount)
+	)
+	_grid_inventory_content_ui.request_transfer_to.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, destination_inventory : GridInventory, destination_position: Vector2i, amount : int):
+		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount)
+	)
 	_grid_inventory_content_ui.item_mouse_entered.connect(_on_item_mouse_entered)
 	_grid_inventory_content_ui.item_mouse_exited.connect(_on_item_mouse_exited)
 	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
 	_grid_inventory_content_ui.select_mode = select_mode
+	_grid_inventory_content_ui.stack_style = stack_style
 	add_child(_grid_inventory_content_ui)
 
 	_selection_panels = Control.new()
@@ -313,7 +284,7 @@ func _ready() -> void:
 	add_child(_selection_panels)
 
 	GridDraggableElementUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
-		_fill_background(field_style, PriorityPanel.StylePriority.LOW)
+		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
 	)
 
 	_update_size()
@@ -322,7 +293,7 @@ func _ready() -> void:
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
-		_fill_background(field_style, PriorityPanel.StylePriority.LOW)
+		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
 
 
 func _update_size() -> void:
@@ -331,12 +302,12 @@ func _update_size() -> void:
 
 
 func _on_item_mouse_entered(item: ItemStack) -> void:
-	_set_item_background(item, field_highlighted_style, PriorityPanel.StylePriority.MEDIUM)
+	_set_item_background(item, field_highlighted_style, GridPriorityPanel.StylePriority.MEDIUM)
 	item_mouse_entered.emit(item)
 
 
 func _on_item_mouse_exited(item: ItemStack) -> void:
-	_set_item_background(item, null, PriorityPanel.StylePriority.MEDIUM)
+	_set_item_background(item, null, GridPriorityPanel.StylePriority.MEDIUM)
 	item_mouse_exited.emit(item)
 
 
@@ -352,11 +323,11 @@ func _handle_selection_change() -> void:
 
 	if !field_selected_style:
 		return
-	for item in inventory.get_items():
+	for item in inventory.stacks:
 		if item in _grid_inventory_content_ui.get_selected_inventory_items():
-			_set_item_background(item, field_selected_style, PriorityPanel.StylePriority.HIGH)
+			_set_item_background(item, field_selected_style, GridPriorityPanel.StylePriority.HIGH)
 		else:
-			_set_item_background(item, null, PriorityPanel.StylePriority.HIGH)
+			_set_item_background(item, null, GridPriorityPanel.StylePriority.HIGH)
 
 
 func _on_inventory_resized() -> void:
@@ -381,10 +352,10 @@ func _highlight_grabbed_item(style: StyleBox):
 
 	var global_grabbed_item_pos: Vector2 = _get_global_grabbed_item_local_pos()
 	if !_is_hovering(global_grabbed_item_pos):
-		_fill_background(field_style, PriorityPanel.StylePriority.LOW)
+		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
 		return
 
-	_fill_background(field_style, PriorityPanel.StylePriority.LOW)
+	_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
 
 	var grabbed_item_coords := _grid_inventory_content_ui.get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
 	var definition : ItemDefinition = inventory.database.get_item(grabbed_item.item_id)
@@ -392,7 +363,7 @@ func _highlight_grabbed_item(style: StyleBox):
 	var rect := Rect2i(grabbed_item_coords, item_size)
 	if !Rect2i(Vector2i.ZERO, inventory.size).encloses(rect):
 		return
-	_set_rect_background(rect, style, PriorityPanel.StylePriority.LOW)
+	_set_rect_background(rect, style, GridPriorityPanel.StylePriority.LOW)
 
 
 func _is_hovering(local_pos: Vector2) -> bool:
@@ -423,7 +394,7 @@ func _fill_background(style: StyleBox, priority: int) -> void:
 func _get_global_grabbed_item() -> ItemStack:
 	if GridDraggableElementUI.get_grabbed_dragable() == null:
 		return null
-	return (GridDraggableElementUI.get_grabbed_dragable() as GridItemStackUI).item
+	return (GridDraggableElementUI.get_grabbed_dragable() as GridItemStackUI).stack
 
 
 func _get_global_grabbed_item_local_pos() -> Vector2:

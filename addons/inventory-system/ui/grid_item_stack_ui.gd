@@ -6,22 +6,24 @@ signal clicked
 signal middle_clicked
 signal context_activated
 
+@export var stack_style : StyleBox
+
 var inventory : GridInventory
 
 func _init(inventory : GridInventory):
 	self.inventory = inventory
 
-var item: ItemStack:
-	set(new_item):
-		if item == new_item:
+var stack: ItemStack:
+	set(new_stack):
+		if stack == new_stack:
 			return
 
 		_disconnect_item_signals()
-		_connect_item_signals(new_item)
+		_connect_item_signals(new_stack)
 
-		item = new_item
-		if item and inventory != null:
-			var definition: ItemDefinition = inventory.database.get_item(item.item_id)
+		stack = new_stack
+		if stack and inventory != null:
+			var definition: ItemDefinition = inventory.database.get_item(stack.item_id)
 			texture = definition.icon
 			activate()
 		else:
@@ -45,7 +47,7 @@ var stretch_mode: TextureRect.StretchMode = TextureRect.StretchMode.STRETCH_SCAL
 		if is_instance_valid(_texture_rect):
 			_texture_rect.stretch_mode = stretch_mode
 
-#var item_slot: ItemSlotBase
+var _texture_bg: Panel
 var _texture_rect: TextureRect
 var _stack_size_label: Label
 static var _stored_preview_size: Vector2
@@ -58,50 +60,42 @@ func _connect_item_signals(new_item: ItemStack) -> void:
 	
 	if !new_item.updated.is_connected(_refresh):
 		new_item.updated.connect(_refresh)
-	#if !new_item.protoset_changed.is_connected(_refresh):
-		#new_item.protoset_changed.connect(_refresh)
-	#if !new_item.prototype_id_changed.is_connected(_refresh):
-		#new_item.prototype_id_changed.connect(_refresh)
-	#if !new_item.property_changed.is_connected(_on_item_property_changed):
-		#new_item.property_changed.connect(_on_item_property_changed)
 
 
 func _disconnect_item_signals() -> void:
-	if !is_instance_valid(item):
+	if !is_instance_valid(stack):
 		return
 	
-	if item.updated.is_connected(_refresh):
-		item.updated.disconnect(_refresh)
-	#if item.property_changed.is_connected(_on_item_property_changed):
-		#item.property_changed.disconnect(_on_item_property_changed)
-
-
-#func _on_item_property_changed(property_name: String) -> void:
-	#var relevant_properties = [
-		#StacksConstraint.KEY_STACK_SIZE,
-		#GridConstraint.KEY_WIDTH,
-		#GridConstraint.KEY_HEIGHT,
-		#GridConstraint.KEY_SIZE,
-		#GridConstraint.KEY_ROTATED,
-		#GridConstraint.KEY_GRID_POSITION,
-	#]
-	#if property_name in relevant_properties:
-		#_refresh()
+	if stack.updated.is_connected(_refresh):
+		stack.updated.disconnect(_refresh)
 
 
 func _ready() -> void:
+	_texture_bg = Panel.new()
+	_texture_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_texture_bg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_texture_bg.size = size
+	remove_theme_stylebox_override("panel")
+	if stack_style != null:
+		_texture_bg.add_theme_stylebox_override("panel", stack_style)
+	
 	_texture_rect = TextureRect.new()
 	_texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_texture_rect.stretch_mode = stretch_mode
+	
 	_stack_size_label = Label.new()
 	_stack_size_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_stack_size_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_stack_size_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	
+	add_child(_texture_bg)
 	add_child(_texture_rect)
 	add_child(_stack_size_label)
+	
 
 	resized.connect(func():
+		_texture_bg.size = size
 		_texture_rect.size = size
 		_stack_size_label.size = size
 	)
@@ -112,7 +106,7 @@ func _ready() -> void:
 			_stack_size_label.hide()
 	)
 
-	if item == null:
+	if stack == null:
 		deactivate()
 
 	_refresh()
@@ -131,9 +125,9 @@ func _update_texture() -> void:
 		return
 	_texture_rect.texture = texture
 	#TODO rotation
-	if is_instance_valid(item):
+	if is_instance_valid(stack):
 		_texture_rect.size = Vector2(size.x, size.y)
-		if inventory.is_stack_rotation_positive(item):
+		if inventory.is_stack_rotation_positive(stack):
 			_texture_rect.position = Vector2(_texture_rect.size.y, 0)
 			_texture_rect.rotation = 0
 		else:
@@ -148,10 +142,10 @@ func _update_texture() -> void:
 func _update_stack_size() -> void:
 	if !is_instance_valid(_stack_size_label):
 		return
-	if !is_instance_valid(item):
+	if !is_instance_valid(stack):
 		_stack_size_label.text = ""
 		return
-	var stack_size: int = item.amount
+	var stack_size: int = stack.amount
 	if stack_size <= 1:
 		_stack_size_label.text = ""
 	else:
@@ -166,7 +160,7 @@ func _refresh() -> void:
 
 func create_preview() -> Control:
 	var preview = GridItemStackUI.new(inventory)
-	preview.item = item
+	preview.stack = stack
 	preview.texture = texture
 	preview.size = size
 	preview.stretch_mode = stretch_mode

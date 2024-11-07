@@ -24,9 +24,9 @@ func cleanup_test() -> void:
 
 func test_size() -> void:
 	assert(inventory1.add(item) == 0)
-	assert(inventory1.items.size() == 1)
+	assert(inventory1.stacks.size() == 1)
 	assert(inventory1.remove(item) == 0)
-	assert(inventory1.items.size() == 0)
+	assert(inventory1.stacks.size() == 0)
 	
 	
 
@@ -34,11 +34,11 @@ func test_size() -> void:
 func test_add_remove() -> void:
 	assert(inventory1.add(item) == 0)
 	assert(inventory1.remove(item) == 0)
-	assert(inventory1.items.size() == 0)
+	assert(inventory1.stacks.size() == 0)
 	assert(inventory1.remove(item) == 1)
 
 	assert(inventory1.add(item) == 0)
-	assert(inventory1.items.size() == 1)
+	assert(inventory1.stacks.size() == 1)
 	assert(inventory1.add(item) == 0)
 
 
@@ -71,9 +71,9 @@ func test_serialize() -> void:
 	inventory1.clear()
 	assert(inventory1.is_empty())
 	inventory1.deserialize(inventory_data)
-	assert(inventory1.items.size() == 1)
-	assert(inventory1.items[0].item_id == item)
-	assert(inventory1.items[0].amount == 1)
+	assert(inventory1.stacks.size() == 1)
+	assert(inventory1.stacks[0].item_id == item)
+	assert(inventory1.stacks[0].amount == 1)
 
 
 func test_serialize_json() -> void:

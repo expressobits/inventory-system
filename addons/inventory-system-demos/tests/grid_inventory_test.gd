@@ -44,13 +44,13 @@ func test_has_place_for() -> void:
 	
 	inventory_3x3.clear()
 	
-	assert(inventory_3x3.items.size() == 0)
+	assert(inventory_3x3.stacks.size() == 0)
 
 
 func test_add_item_automerge() -> void:
 	## Inventory containing 2x2 item
 	assert(inventory_3x3.add(workbench) == 0)
-	assert(inventory_3x3.items.size() == 1)
+	assert(inventory_3x3.stacks.size() == 1)
 	
 	inventory_3x3.clear()
 	## No stack space, no grid space
@@ -66,7 +66,7 @@ func test_add_item_automerge() -> void:
 func test_stack_split() -> void:
 	assert(inventory_3x3.add(wood, 2) == 0)
 	assert(inventory_3x3.split(0, 1))
-	assert(inventory_3x3.items.size() == 2)
+	assert(inventory_3x3.stacks.size() == 2)
 	assert(inventory_3x3.contains(wood, 2))
 	inventory_3x3.clear()
 
@@ -74,26 +74,26 @@ func test_stack_split() -> void:
 func test_stack_cant_split() -> void:
 	assert(inventory_3x3.add(campfire) == 0)
 	assert(!inventory_3x3.split(0, 1))
-	assert(inventory_3x3.items.size() == 1)
+	assert(inventory_3x3.stacks.size() == 1)
 	inventory_3x3.clear()
 
 
 func test_stack_join() -> void:
 	assert(inventory_3x3.add_on_new_stack(wood) == 0)
 	assert(inventory_3x3.add_on_new_stack(wood) == 0)
-	assert(inventory_3x3.items.size() == 2)
+	assert(inventory_3x3.stacks.size() == 2)
 	assert(inventory_3x3.transfer_at(1, inventory_3x3, 0, 1) == 0)
-	assert(inventory_3x3.items.size() == 1)
-	assert(inventory_3x3.items[0].amount == 2)
+	assert(inventory_3x3.stacks.size() == 1)
+	assert(inventory_3x3.stacks[0].amount == 2)
 	inventory_3x3.clear()
 
 
 func test_stack_cant_join() -> void:
 	assert(inventory_3x3.add(wood, 16) == 0)
 	assert(inventory_3x3.add(wood, 1) == 0)
-	assert(inventory_3x3.items.size() == 2)
+	assert(inventory_3x3.stacks.size() == 2)
 	assert(inventory_3x3.transfer_at(1, inventory_3x3, 0, 1) == 1)
-	assert(inventory_3x3.items.size() == 2)
+	assert(inventory_3x3.stacks.size() == 2)
 	inventory_3x3.clear()
 
 
@@ -101,18 +101,18 @@ func test_automerge() -> void:
 	assert(inventory_3x3.add(workbench) == 0)
 	assert(inventory_3x3_2.add(campfire) == 0)
 	assert(inventory_3x3_2.add(wood) == 0)
-	assert(inventory_3x3.items.size() == 1)
-	assert(inventory_3x3_2.items.size() == 2)
+	assert(inventory_3x3.stacks.size() == 1)
+	assert(inventory_3x3_2.stacks.size() == 2)
 	
 	# Not enough space
 	assert(inventory_3x3_2.transfer(0, inventory_3x3, 1) == 1)
-	assert(inventory_3x3_2.items.size() == 2)
-	assert(inventory_3x3.items.size() == 1)
+	assert(inventory_3x3_2.stacks.size() == 2)
+	assert(inventory_3x3.stacks.size() == 1)
 
 	# Enough space
 	assert(inventory_3x3_2.transfer(0, inventory_3x3, 1) == 0)
-	assert(inventory_3x3.items.size() == 2)
-	assert(inventory_3x3_2.items.size() == 1)
+	assert(inventory_3x3.stacks.size() == 2)
+	assert(inventory_3x3_2.stacks.size() == 1)
 	
 	inventory_3x3.clear()
 	inventory_3x3_2.clear()
@@ -121,12 +121,12 @@ func test_automerge() -> void:
 func test_autosplitmerge() -> void:
 	assert(inventory_3x3.add(campfire, 6) == 0)
 	assert(inventory_3x3_2.add(campfire, 4) == 0)
-	assert(inventory_3x3_2.items[0].amount == 4)
+	assert(inventory_3x3_2.stacks[0].amount == 4)
 	assert(inventory_3x3_2.transfer(0, inventory_3x3, 4) == 2)
-	assert(inventory_3x3.items.size() == 1)
-	assert(inventory_3x3_2.items.size() == 1)
-	assert(inventory_3x3.items[0].amount == 8)
-	assert(inventory_3x3_2.items[0].amount == 2)
+	assert(inventory_3x3.stacks.size() == 1)
+	assert(inventory_3x3_2.stacks.size() == 1)
+	assert(inventory_3x3.stacks[0].amount == 8)
+	assert(inventory_3x3_2.stacks[0].amount == 2)
 	
 	inventory_3x3.clear()
 	inventory_3x3_2.clear()
@@ -135,8 +135,8 @@ func test_autosplitmerge() -> void:
 func test_wrong_stack_type() -> void:
 	assert(inventory_3x3.add(wood, 1, { "ok" = "2" }) == 0)
 	assert(inventory_3x3_2.add(wood, 1, { "teste" = "3" }) == 0)
-	assert(inventory_3x3.items.size() == 1)
-	assert(inventory_3x3_2.items.size() == 1)
+	assert(inventory_3x3.stacks.size() == 1)
+	assert(inventory_3x3_2.stacks.size() == 1)
 	assert(inventory_3x3_2.transfer(0, inventory_3x3, 1) == 0)
-	assert(inventory_3x3.items.size() == 2)
-	assert(inventory_3x3_2.items.size() == 0)
+	assert(inventory_3x3.stacks.size() == 2)
+	assert(inventory_3x3_2.stacks.size() == 0)
