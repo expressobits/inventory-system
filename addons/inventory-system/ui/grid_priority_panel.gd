@@ -30,7 +30,7 @@ func set_style(style: StyleBox, priority: int = StylePriority.LOW) -> void:
 	_styles[priority] = style
 
 	for i in range(0, 3):
-		if _styles[i] != null:
+		if _styles[i] != null or i == 2:
 			_set_panel_style(_styles[i])
 			return
 

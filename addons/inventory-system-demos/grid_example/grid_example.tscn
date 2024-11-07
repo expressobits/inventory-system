@@ -1,45 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bx8fjivywcot3"]
+[gd_scene load_steps=6 format=3 uid="uid://bx8fjivywcot3"]
 
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="1_v2flv"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/grid_example/grid_example.gd" id="1_vkfix"]
-[ext_resource type="StyleBox" uid="uid://ck6col3guqqci" path="res://addons/inventory-system-demos/grid_example/field_style.tres" id="3_ov7av"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbd1d"]
-bg_color = Color(0.752941, 0.752941, 0.137255, 0.752941)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hm76b"]
-bg_color = Color(0.501961, 0.501961, 0.501961, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8g6r"]
-bg_color = Color(0.941176, 0.364706, 0.572549, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 1, 0, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="3_8wovm"]
+[ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="4_437qp"]
 
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")
@@ -101,11 +66,9 @@ layout_mode = 2
 script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../../../GridInventoryLeft")
 field_dimensions = Vector2(48, 48)
-item_spacing = 2
-field_style = ExtResource("3_ov7av")
-field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
-field_selected_style = SubResource("StyleBoxFlat_hm76b")
-selection_style = SubResource("StyleBoxFlat_c8g6r")
+item_spacing = 4
+field_highlighted_style = ExtResource("3_8wovm")
+selection_style = ExtResource("4_437qp")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -145,11 +108,9 @@ layout_mode = 2
 script = ExtResource("1_v2flv")
 inventory_path = NodePath("../../../../../../../../GridInventoryRight")
 field_dimensions = Vector2(48, 48)
-item_spacing = 2
-field_style = ExtResource("3_ov7av")
-field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
-field_selected_style = SubResource("StyleBoxFlat_hm76b")
-selection_style = SubResource("StyleBoxFlat_c8g6r")
+item_spacing = 4
+field_highlighted_style = ExtResource("3_8wovm")
+selection_style = ExtResource("4_437qp")
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2

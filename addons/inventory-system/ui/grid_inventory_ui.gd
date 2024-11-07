@@ -227,7 +227,6 @@ func _refresh_field_background_grid() -> void:
 		_field_backgrounds.append([])
 		for j in range(inventory.size.y):
 			var field_panel: GridPriorityPanel = GridPriorityPanel.new(field_style, field_highlighted_style)
-			field_panel.visible = (field_style != null)
 			field_panel.size = field_dimensions
 			field_panel.position = _grid_inventory_content_ui._get_field_position(Vector2i(i, j))
 			_field_background_grid.add_child(field_panel)
