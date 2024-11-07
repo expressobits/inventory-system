@@ -49,6 +49,10 @@ func _ready() -> void:
 	ctrl_inventory_right.inventory.add("raw_meat", 8)
 	await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_right.inventory.add("cooked_meat", 8)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("lashing", 3)
+	await get_tree().create_timer(0.2).timeout
+	ctrl_inventory_right.inventory.add("helmet_labor", 2)
 
 #func _process(delta):
 	#print(ctrl_inventory_left.inventory.items.size())

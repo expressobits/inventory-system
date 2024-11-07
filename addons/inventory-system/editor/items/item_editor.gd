@@ -17,6 +17,8 @@ var editor_plugin : EditorPlugin
 @onready var categories_in_item : CategoriesInItem = $ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem
 @onready var can_stack_check_box : CheckBox = %CanStackCheckBox
 @onready var max_stack = %MaxStack
+@onready var size_x_spin_box: SpinBox = %SizeXSpinBox
+@onready var size_y_spin_box: SpinBox = %SizeYSpinBox
 
 
 func _ready():
@@ -31,6 +33,14 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 
 
 func load_item(item : ItemDefinition, database : InventoryDatabase):
+	if size_x_spin_box.value_changed.is_connected(_on_size_x_spin_box_value_changed):
+		size_x_spin_box.value_changed.disconnect(_on_size_x_spin_box_value_changed)
+	if size_y_spin_box.value_changed.is_connected(_on_size_y_spin_box_value_changed):
+		size_y_spin_box.value_changed.disconnect(_on_size_y_spin_box_value_changed)
+	
+	$ScrollContainer.visible = false
+	await get_tree().create_timer(0.2).timeout
+	
 	self.item = item
 	self.database = database
 	if not is_instance_valid(item):
@@ -44,6 +54,10 @@ func load_item(item : ItemDefinition, database : InventoryDatabase):
 		can_stack_check_box.button_pressed = item.can_stack
 		icon_selector.load_icon(item.icon)
 		max_stack.visible = item.can_stack
+		size_x_spin_box.value = item.size.x
+		size_y_spin_box.value = item.size.y
+		size_x_spin_box.value_changed.connect(_on_size_x_spin_box_value_changed.bind(item))
+		size_y_spin_box.value_changed.connect(_on_size_y_spin_box_value_changed.bind(item))
 		$ScrollContainer.visible = true
 	else:
 		item_name_text_edit.text = "No resource item!"
@@ -51,6 +65,8 @@ func load_item(item : ItemDefinition, database : InventoryDatabase):
 		
 	custom_properties.load_item(database, item)
 	categories_in_item.load_item(database, item)
+	
+	size_x_spin_box.editable = true
 
 func reload_item():
 	load_item(item, database)
@@ -101,3 +117,13 @@ func _can_stack_check_box_toggled(value):
 func _on_categories_in_item_changed():
 	changed.emit(item.id)
 	reload_item()
+
+
+func _on_size_x_spin_box_value_changed(value: float, item : ItemDefinition) -> void:
+	item.size = Vector2i(value, item.size.y)
+	changed.emit(item.id)
+
+
+func _on_size_y_spin_box_value_changed(value: float, item : ItemDefinition) -> void:
+	item.size = Vector2i(item.size.x, value)
+	changed.emit(item.id)

@@ -106,6 +106,7 @@ can_stack = false
 max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("9_p5frv")
+weight = 1.0
 size = Vector2i(1, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
@@ -121,6 +122,7 @@ max_stack = 16
 name = "Lashing"
 icon = ExtResource("10_gmco0")
 weight = 0.2
+size = Vector2i(2, 1)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/lashing.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/lashing.tscn"
@@ -145,7 +147,7 @@ max_stack = 8
 name = "Workbench"
 icon = ExtResource("12_ltu7p")
 weight = 5.0
-size = Vector2i(2, 2)
+size = Vector2i(3, 3)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/workbench.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/workbench.tscn",
@@ -183,6 +185,7 @@ max_stack = 1
 name = "Helmet Labor"
 icon = ExtResource("15_fmqqk")
 weight = 1.0
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/helmet_labor.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/helmet_labor.tscn"

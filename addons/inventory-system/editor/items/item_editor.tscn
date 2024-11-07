@@ -98,6 +98,43 @@ value = 0.1
 allow_greater = true
 allow_lesser = true
 
+[node name="Size" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Size"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Item Grid Size"
+
+[node name="LabelX" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Size"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "X"
+
+[node name="SizeXSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/Size"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 1.0
+allow_greater = true
+update_on_text_changed = true
+
+[node name="LabelX2" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/Size"]
+custom_minimum_size = Vector2(32, 0)
+layout_mode = 2
+text = "Y"
+
+[node name="SizeYSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/Size"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 32)
+layout_mode = 2
+min_value = 1.0
+max_value = 100000.0
+value = 1.0
+allow_greater = true
+
 [node name="IconSelector" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
