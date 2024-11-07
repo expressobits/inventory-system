@@ -100,6 +100,8 @@ func _ready() -> void:
 		_stack_size_label.size = size
 	)
 	grabbed.connect(func(_offset):
+		if _texture_bg:
+			_texture_bg.hide()
 		if _texture_rect:
 			_texture_rect.hide()
 		if _stack_size_label:
@@ -114,6 +116,8 @@ func _ready() -> void:
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_DRAG_END:
+		if _texture_bg:
+			_texture_bg.show()
 		if _texture_rect:
 			_texture_rect.show()
 		if _stack_size_label:
@@ -164,6 +168,7 @@ func create_preview() -> Control:
 	preview.texture = texture
 	preview.size = size
 	preview.stretch_mode = stretch_mode
+	preview.stack_style = stack_style
 	return preview
 
 

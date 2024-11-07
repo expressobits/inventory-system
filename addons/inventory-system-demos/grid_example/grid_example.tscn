@@ -1,21 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bx8fjivywcot3"]
+[gd_scene load_steps=8 format=3 uid="uid://bx8fjivywcot3"]
 
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="1_v2flv"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/grid_example/grid_example.gd" id="1_vkfix"]
-[ext_resource type="Texture2D" uid="uid://ckyqtuvfg52qu" path="res://icon.png" id="3_yakj1"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_04mmu"]
-bg_color = Color(0.12549, 0.12549, 0.12549, 0.752941)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.25098, 0.25098, 0.25098, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[ext_resource type="StyleBox" uid="uid://ck6col3guqqci" path="res://addons/inventory-system-demos/grid_example/field_style.tres" id="3_ov7av"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rbd1d"]
 bg_color = Color(0.752941, 0.752941, 0.137255, 0.752941)
@@ -53,18 +41,6 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jq31k"]
-bg_color = Color(0, 0, 0, 0.25098)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.25098, 0.25098, 0.25098, 0)
-corner_radius_top_left = 2
-corner_radius_top_right = 2
-corner_radius_bottom_right = 2
-corner_radius_bottom_left = 2
-
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")
 
@@ -78,11 +54,14 @@ grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control"]
 layout_mode = 0
-offset_right = 545.0
-offset_bottom = 40.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 928.0
+offset_bottom = 227.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -90,23 +69,43 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="GridInventoryUILeft" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
-unique_name_in_owner = true
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
-script = ExtResource("1_v2flv")
-inventory_path = NodePath("../../../../../../GridInventoryLeft")
-field_dimensions = Vector2(48, 48)
-item_spacing = 2
-field_style = SubResource("StyleBoxFlat_04mmu")
-field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
-field_selected_style = SubResource("StyleBoxFlat_hm76b")
-selection_style = SubResource("StyleBoxFlat_c8g6r")
-stack_style = SubResource("StyleBoxFlat_jq31k")
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="ButtonSortLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Inventory Left"
+
+[node name="ButtonSortLeft" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Sort"
+
+[node name="GridInventoryUILeft" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 160)
+layout_mode = 2
+script = ExtResource("1_v2flv")
+inventory_path = NodePath("../../../../../../../../GridInventoryLeft")
+field_dimensions = Vector2(48, 48)
+item_spacing = 2
+field_style = ExtResource("3_ov7av")
+field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
+field_selected_style = SubResource("StyleBoxFlat_hm76b")
+selection_style = SubResource("StyleBoxFlat_c8g6r")
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -114,25 +113,43 @@ layout_mode = 2
 [node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
 layout_mode = 2
 
-[node name="GridInventoryUIRight" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Inventory Right"
+
+[node name="ButtonSortRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Sort"
+
+[node name="GridInventoryUIRight" type="Control" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 160)
 layout_mode = 2
 script = ExtResource("1_v2flv")
-inventory_path = NodePath("../../../../../../GridInventoryRight")
-default_item_texture = ExtResource("3_yakj1")
+inventory_path = NodePath("../../../../../../../../GridInventoryRight")
 field_dimensions = Vector2(48, 48)
 item_spacing = 2
-field_style = SubResource("StyleBoxFlat_04mmu")
+field_style = ExtResource("3_ov7av")
 field_highlighted_style = SubResource("StyleBoxFlat_rbd1d")
 field_selected_style = SubResource("StyleBoxFlat_hm76b")
 selection_style = SubResource("StyleBoxFlat_c8g6r")
-stack_style = SubResource("StyleBoxFlat_jq31k")
-
-[node name="ButtonSortRight" type="Button" parent="Control/VBoxContainer/HBoxContainer/VBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Sort"
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
