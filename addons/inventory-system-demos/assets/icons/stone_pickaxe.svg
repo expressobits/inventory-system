@@ -2,14 +2,14 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="16"
-   height="16"
-   viewBox="0 0 4.2333333 4.2333332"
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666666 8.4666664"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    sodipodi:docname="stone_pickaxe.svg"
-   inkscape:export-filename="stone-axe.png"
+   inkscape:export-filename="stone_pickaxe.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,19 +28,25 @@
      inkscape:document-units="px"
      showgrid="true"
      showguides="true"
-     inkscape:zoom="46.409876"
-     inkscape:cx="9.3837786"
-     inkscape:cy="6.5180092"
+     inkscape:zoom="16.408369"
+     inkscape:cx="0.48755607"
+     inkscape:cy="17.795797"
      inkscape:window-width="2560"
-     inkscape:window-height="1001"
+     inkscape:window-height="991"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1"
      inkscape:lockguides="true">
     <inkscape:grid
        type="xygrid"
-       id="grid9001" />
+       id="grid9001"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs2" />
@@ -61,29 +67,35 @@
        style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect6022"
        x="1.3544916"
-       y="1.4189913" />
-    <rect
-       style="fill:#784421;stroke-width:0.324047;stroke-linecap:round"
-       id="rect362"
-       width="1.0583333"
-       height="3.175"
-       x="1.5874997"
-       y="0.79374987"
-       rx="0.26458335"
-       ry="0.39687505" />
-    <rect
-       style="fill:#a05a2c;stroke-width:0.324047;stroke-linecap:round"
-       id="rect579"
-       width="1.0583333"
-       height="3.175"
-       x="1.3229165"
-       y="0.79374987"
-       rx="0.26458335"
-       ry="0.39687505" />
-    <path
-       id="rect486"
-       style="fill:#808080;stroke-width:0.350011;stroke-linecap:round"
-       d="m 1.3668416,0.52916666 c -0.1517428,0 -0.54674102,0.0795662 -0.57309162,0.26458332 L 0.48782551,1.0076904 C 0.34622834,1.0455807 0.2628666,1.1901045 0.30075683,1.3317016 0.33864706,1.4732987 0.48317088,1.5571773 0.62476805,1.5192871 L 1.3596069,1.3229166 c 0.00248,7.47e-5 0.00474,0 0.00723,0 h 1.2350667 c 0.029861,0 0.058511,-0.00542 0.085783,-0.015503 L 3.3362304,1.5006836 C 3.4766993,1.5425633 3.6235296,1.4633855 3.6654093,1.3229166 3.707289,1.1824478 3.6281113,1.0356175 3.4876423,0.99373777 L 3.1749999,0.79374998 C 3.1385486,0.62677893 2.7437321,0.52916666 2.6019083,0.52916666 Z"
-       sodipodi:nodetypes="sccsccssccsccss" />
+       y="1.4189913"
+       width="0"
+       height="0" />
+    <g
+       id="g1"
+       transform="translate(0.10130325)">
+      <rect
+         style="fill:#784421;stroke-width:0.458272;stroke-linecap:round"
+         id="rect362"
+         width="1.0583333"
+         height="6.3499999"
+         x="3.7354164"
+         y="1.2653629"
+         rx="0.26458335"
+         ry="0.26458332" />
+      <rect
+         style="fill:#a05a2c;stroke-width:0.458272;stroke-linecap:round"
+         id="rect579"
+         width="1.0583333"
+         height="6.3499999"
+         x="3.4708333"
+         y="1.2653629"
+         rx="0.26458335"
+         ry="0.26458332" />
+      <path
+         id="rect486"
+         style="fill:#808080;stroke-width:0.70007;stroke-linecap:round"
+         d="m 2.8974526,1.0007796 c -0.3034939,0 -1.093512,0.1591496 -1.1462146,0.5292253 L 1.1393722,1.9579333 C 0.8561701,2.0337217 0.6894421,2.322802 0.7652246,2.6060276 0.8410067,2.8892532 1.1300628,3.057029 1.4132647,2.9812402 L 2.8829828,2.5884556 c 0.00496,1.494e-4 0.00948,0 0.01446,0 h 2.470201 c 0.059724,0 0.1170252,-0.010841 0.1715707,-0.031009 L 6.8363377,2.944029 C 7.1172835,3.0277983 7.4109522,2.8694248 7.4947139,2.5884556 7.5784762,2.3074869 7.4201158,2.0137937 7.1391701,1.9300248 L 6.5138682,1.5300049 C 6.4409636,1.1960258 5.651309,1.0007796 5.3676536,1.0007796 Z"
+         sodipodi:nodetypes="sccsccssccsccss" />
+    </g>
   </g>
 </svg>

@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=39 format=3 uid="uid://de5qy8ycey7yn"]
+[gd_resource type="InventoryDatabase" load_steps=42 format=3 uid="uid://de5qy8ycey7yn"]
 
 [ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_pegli"]
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system-demos/assets/icons/branch.png" id="1_wk1an"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d0lrl1mvjsw5u" path="res://addons/inventory-system-demos/assets/icons/food-restaurant-svgrepo-com.svg" id="3_0nsfg"]
 [ext_resource type="Texture2D" uid="uid://t3olj7qicyss" path="res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg" id="4_7goi1"]
 [ext_resource type="Texture2D" uid="uid://dtw6obga7wpk3" path="res://addons/inventory-system-demos/assets/icons/grass.png" id="7_64idt"]
-[ext_resource type="Texture2D" uid="uid://bnbu1hxcha7sp" path="res://addons/inventory-system-demos/assets/icons/stone-axe.png" id="8_lxoic"]
+[ext_resource type="Texture2D" uid="uid://bp4k6gmkgd0n8" path="res://addons/inventory-system-demos/assets/icons/stone_axe.png" id="8_4reck"]
 [ext_resource type="Texture2D" uid="uid://mc2duy58yl4s" path="res://addons/inventory-system-demos/assets/icons/stone_pickaxe.png" id="9_p5frv"]
 [ext_resource type="Texture2D" uid="uid://cvf27dgaa2bv5" path="res://addons/inventory-system-demos/assets/icons/lashing.png" id="10_gmco0"]
 [ext_resource type="Texture2D" uid="uid://bxej4lauv36dd" path="res://addons/inventory-system-demos/assets/icons/campfire.png" id="11_h04p3"]
@@ -89,7 +89,7 @@ id = "stone_axe"
 can_stack = false
 max_stack = 1
 name = "Stone Axe"
-icon = ExtResource("8_lxoic")
+icon = ExtResource("8_4reck")
 weight = 1.0
 size = Vector2i(1, 2)
 properties = {
@@ -107,7 +107,7 @@ max_stack = 1
 name = "Stone Pickaxe"
 icon = ExtResource("9_p5frv")
 weight = 1.0
-size = Vector2i(1, 2)
+size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
 "durability": 100.0,
@@ -192,13 +192,27 @@ properties = {
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_epmnv")])
 
+[sub_resource type="ItemStack" id="ItemStack_dbkim"]
+item_id = "wood"
+amount = 2
+
+[sub_resource type="ItemStack" id="ItemStack_j0uhl"]
+item_id = "stone"
+amount = 1
+
+[sub_resource type="ItemStack" id="ItemStack_h7ygg"]
+item_id = "stone_axe"
+amount = 1
+
 [sub_resource type="CraftStationType" id="CraftStationType_vsths"]
 name = "Workbench"
 icon = ExtResource("12_ltu7p")
 
 [sub_resource type="Recipe" id="Recipe_fapod"]
+products = Array[ItemStack]([SubResource("ItemStack_h7ygg")])
 time_to_craft = 16.0
 station = SubResource("CraftStationType_vsths")
+ingredients = Array[ItemStack]([SubResource("ItemStack_dbkim"), SubResource("ItemStack_j0uhl")])
 
 [sub_resource type="Recipe" id="Recipe_0u4cu"]
 station = SubResource("CraftStationType_vsths")

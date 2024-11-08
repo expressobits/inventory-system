@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnbu1hxcha7sp"
-path="res://.godot/imported/stone-axe.png-3c2b853543e47a2a3459f5057b41a0ba.ctex"
+uid="uid://bp4k6gmkgd0n8"
+path="res://.godot/imported/stone_axe.png-159dcf24f52934405a8d86d10850f155.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system-demos/assets/icons/stone-axe.png"
-dest_files=["res://.godot/imported/stone-axe.png-3c2b853543e47a2a3459f5057b41a0ba.ctex"]
+source_file="res://addons/inventory-system-demos/assets/icons/stone_axe.png"
+dest_files=["res://.godot/imported/stone_axe.png-159dcf24f52934405a8d86d10850f155.ctex"]
 
 [params]
 

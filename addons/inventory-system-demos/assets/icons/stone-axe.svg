@@ -3,13 +3,13 @@
 
 <svg
    width="16"
-   height="16"
-   viewBox="0 0 4.2333333 4.2333332"
+   height="32"
+   viewBox="0 0 4.2333333 8.4666664"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    sodipodi:docname="stone-axe.svg"
-   inkscape:export-filename="stone-axe.png"
+   inkscape:export-filename="stone_axe.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,11 +28,11 @@
      inkscape:document-units="px"
      showgrid="true"
      showguides="true"
-     inkscape:zoom="46.409876"
-     inkscape:cx="8.9528358"
-     inkscape:cy="8.7373644"
+     inkscape:zoom="11.602469"
+     inkscape:cx="0.43094276"
+     inkscape:cy="9.1359865"
      inkscape:window-width="2560"
-     inkscape:window-height="1001"
+     inkscape:window-height="991"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -40,7 +40,13 @@
      inkscape:lockguides="true">
     <inkscape:grid
        type="xygrid"
-       id="grid9001" />
+       id="grid9001"
+       originx="0"
+       originy="0"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs2" />
@@ -61,29 +67,31 @@
        style="fill:none;stroke:#ffffff;stroke-width:0.529167;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect6022"
        x="1.3544916"
-       y="1.4189913" />
+       y="1.4189913"
+       width="0"
+       height="0" />
     <rect
-       style="fill:#784421;stroke-width:0.264583;stroke-linecap:round"
+       style="fill:#784421;stroke-width:0.43545;stroke-linecap:round"
        id="rect362"
        width="1.0583333"
-       height="2.1166666"
-       x="1.5874997"
-       y="1.8520833"
+       height="5.7333045"
+       x="1.5875"
+       y="2.1277874"
        rx="0.26458335"
-       ry="0.26458335" />
+       ry="0.26458332" />
     <rect
-       style="fill:#a05a2c;stroke-width:0.264583;stroke-linecap:round"
+       style="fill:#a05a2c;stroke-width:0.435872;stroke-linecap:round"
        id="rect579"
        width="1.0583333"
-       height="2.1166666"
-       x="1.3229165"
-       y="1.8520833"
+       height="5.7444253"
+       x="1.3229169"
+       y="2.1166666"
        rx="0.26458335"
-       ry="0.26458335" />
+       ry="0.26458332" />
     <path
        id="rect567"
        style="fill:#808080;stroke-width:0.264583;stroke-linecap:round"
-       d="m 0.79374999,0.52916664 1.85208331,2e-8 c 0.1465792,0 1.0583333,0.38258755 1.0583333,0.52916664 v 0.79375 c 0,0.1465792 -0.9117541,0.5291666 -1.0583333,0.5291667 H 0.79374999 c -0.14657918,0 -0.26458335,-0.1180042 -0.26458335,-0.2645834 V 0.79374999 c 0,-0.14657918 0.11800417,-0.26458335 0.26458335,-0.26458335 z"
+       d="m 0.79375028,0.80487049 1.85208332,2e-8 c 0.1465792,0 1.0583333,0.38258759 1.0583333,0.52916659 v 0.79375 c 0,0.1465792 -0.9117541,0.5291666 -1.0583333,0.5291667 H 0.79375028 c -0.1465792,0 -0.2645834,-0.1180042 -0.2645834,-0.2645834 V 1.0694538 c 0,-0.14657914 0.1180042,-0.26458331 0.2645834,-0.26458331 z"
        sodipodi:nodetypes="sssssssss" />
   </g>
 </svg>
