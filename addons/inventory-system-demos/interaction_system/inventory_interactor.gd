@@ -6,8 +6,6 @@ signal preview_interacted(actions : Array, position_screen : Vector2)
 signal interacted(object : Node)
 
 @export var node_base_to_interactions := NodePath(".");
-@export_node_path("Hotbar") var hotbar_path := NodePath("../Hotbar")
-@onready var hotbar : Hotbar = get_node(hotbar_path)
 @export var raycast : RayCast3D
 @export var camera : Node
 

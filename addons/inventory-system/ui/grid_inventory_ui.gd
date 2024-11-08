@@ -124,9 +124,10 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 ## The [Inventory] node linked to this control.
 var inventory: GridInventory = null:
 	set(new_inventory):
+		
 		if inventory == new_inventory:
 			return
-
+		
 		_disconnect_inventory_signals()
 		inventory = new_inventory
 		_connect_inventory_signals()
@@ -222,7 +223,7 @@ func _refresh_field_background_grid() -> void:
 
 	if !is_instance_valid(inventory):
 		return
-
+	
 	for i in range(inventory.size.x):
 		_field_backgrounds.append([])
 		for j in range(inventory.size.y):

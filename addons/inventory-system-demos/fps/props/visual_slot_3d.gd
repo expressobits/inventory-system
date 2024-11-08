@@ -25,7 +25,7 @@ func setup(inv : Inventory, new_slot_index : int, property := "visual_3d"):
 func _on_updated_slot(changed_slot_index : int):
 	if self.slot_index != changed_slot_index:
 		return
-	if changed_slot_index >= inventory.items.size():
+	if changed_slot_index >= inventory.stacks.size():
 		return
 	_clear_last_visual()
 	var item_id = inventory.items[slot_index].item_id

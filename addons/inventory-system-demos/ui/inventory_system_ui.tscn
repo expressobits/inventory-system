@@ -1,14 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://da2b73383isem"]
+[gd_scene load_steps=9 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/inventory_ui.tscn" id="3_sohfg"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/transaction_slot.gd" id="3_ugeom"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="3_b24hb"]
 [ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system-demos/ui/slot_ui.tscn" id="4_5h6ud"]
+[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="4_pkug6"]
+[ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="5_vwkkt"]
+[ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="6_eoecr"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
-[ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="10_qjsje"]
 
-[node name="Inventory System UI" type="Control" node_paths=PackedStringArray("player_inventories_ui")]
+[node name="Inventory System UI" type="Control"]
 texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
@@ -17,7 +18,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ci0ph")
-player_inventories_ui = [NodePath("PlayerInventoryUI"), NodePath("EquipmentInventoryUI")]
 
 [node name="InteractorUI" parent="." instance=ExtResource("7_vn7uk")]
 layout_mode = 1
@@ -32,25 +32,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 mouse_filter = 2
 
-[node name="TransactionSlotUI" parent="." instance=ExtResource("4_5h6ud")]
-modulate = Color(1, 1, 1, 0.752941)
-z_index = 1
-layout_mode = 0
-offset_right = 16.0
-offset_bottom = 16.0
-mouse_filter = 1
-script = ExtResource("3_ugeom")
-
-[node name="Panel" parent="TransactionSlotUI" index="1"]
-self_modulate = Color(1, 1, 0.541176, 1)
-
-[node name="DropIcon" type="TextureRect" parent="TransactionSlotUI"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 48.0
-offset_right = 66.0
-offset_bottom = 66.0
-
 [node name="DropArea" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -59,28 +40,50 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerInventoryUI" parent="." instance=ExtResource("3_sohfg")]
+[node name="PlayerGridInventoryUI" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
-offset_left = 52.0
-offset_top = 11.0
-offset_right = 488.0
-offset_bottom = 255.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 608.0
+offset_top = 341.0
+offset_right = 608.0
+offset_bottom = 341.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_b24hb")
+stretch_item_sprites = false
+field_dimensions = Vector2(48, 48)
+item_spacing = 2
+field_highlighted_style = ExtResource("4_pkug6")
+selection_style = ExtResource("5_vwkkt")
 
-[node name="LootInventoryUI" parent="." instance=ExtResource("3_sohfg")]
-custom_minimum_size = Vector2(436, 140)
+[node name="LootGridInventoryUI" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 offset_left = -429.0
 offset_top = 11.0
-offset_right = 7.0
-offset_bottom = 151.0
+offset_right = -46.0
+offset_bottom = 168.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_b24hb")
+field_dimensions = Vector2(48, 48)
+item_spacing = 2
+field_highlighted_style = ExtResource("4_pkug6")
+selection_style = ExtResource("5_vwkkt")
 
-[node name="EquipmentInventoryUI" parent="." instance=ExtResource("3_sohfg")]
-custom_minimum_size = Vector2(64, 64)
+[node name="PlayerCraftStationUI" parent="." instance=ExtResource("6_eoecr")]
 layout_mode = 1
-offset_left = 52.0
-offset_top = -90.0
-offset_right = 280.0
-offset_bottom = 6.0
+
+[node name="OtherCraftStationUI" parent="." instance=ExtResource("6_eoecr")]
+layout_mode = 1
 
 [node name="HotbarUI" type="Control" parent="." node_paths=PackedStringArray("slots_container")]
 texture_filter = 1
@@ -118,23 +121,8 @@ theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 8
 
-[node name="PlayerCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
-layout_mode = 1
-view_input_inventory = false
-view_output_inventory = false
-
-[node name="OtherCraftStationUI" parent="." instance=ExtResource("10_qjsje")]
-layout_mode = 1
-view_output_inventory = false
-
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 volume_db = -12.0
 
 [node name="SlotDrop" type="AudioStreamPlayer" parent="."]
 volume_db = -12.0
-
-[connection signal="mouse_entered" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_entered"]
-[connection signal="mouse_exited" from="DropArea" to="TransactionSlotUI" method="_on_drop_area_mouse_exited"]
-
-[editable path="TransactionSlotUI"]
-[editable path="PlayerInventoryUI"]

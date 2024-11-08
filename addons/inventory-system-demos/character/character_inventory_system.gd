@@ -14,13 +14,13 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @export_group("🗃️ Inventory Nodes")
 @export_node_path var main_inventory_path := NodePath("InventoryHandler/Inventory")
-@onready var main_inventory : Inventory = get_node(main_inventory_path)
+@onready var main_inventory : GridInventory = get_node(main_inventory_path)
 @export_node_path var equipment_inventory_path := NodePath("InventoryHandler/EquipmentInventory")
-@onready var equipment_inventory : Inventory = get_node(equipment_inventory_path)
-@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
-@onready var hotbar : Hotbar = get_node(hotbar_path)
-@export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
-@onready var main_station : CraftStation = get_node(main_station_path)
+@onready var equipment_inventory : GridInventory = get_node(equipment_inventory_path)
+#@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
+#@onready var hotbar : Hotbar = get_node(hotbar_path)
+#@export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
+#@onready var main_station : CraftStation = get_node(main_station_path)
 @export_node_path var interactor_path := NodePath("Interactor")
 @onready var interactor : Interactor = get_node(interactor_path)
 @export_node_path var drop_parent_path := NodePath("../..");
@@ -30,7 +30,6 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 var opened_stations : Array[CraftStation]
 var opened_inventories : Array[Inventory]
-var stack_holder : ItemStack
 
 @export_group("⌨️ Inputs")
 ## Change mouse state based on inventory status
@@ -60,11 +59,10 @@ var stack_holder : ItemStack
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	stack_holder = ItemStack.new()
-	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	
-	# Setup for enabled/disabled mouse 🖱️😀
+	#main_inventory.request_drop_obj.connect(_on_request_drop_obj)
+	#equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
+	#
+	## Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
 		opened_inventory.connect(_update_opened_inventories)
 		closed_inventory.connect(_update_opened_inventories)
@@ -122,64 +120,6 @@ func inventory_inputs():
 		if not is_any_station_or_inventory_opened():
 			open_main_craft_station()
 
-
-#region Slot Holder
-func change_holder(item_id : String, amount : int, properties : Dictionary = {}):
-	stack_holder.amount = amount
-	if stack_holder.amount > 0 and item_id != "":
-		stack_holder.item_id = item_id
-	else:
-		stack_holder.item_id = ""
-	stack_holder.properties = properties
-
-
-func to_holder(stack_index : int, inventory : Inventory, amount : int):
-	if stack_holder.has_valid():
-		return
-	var stack : ItemStack = inventory.items[stack_index]
-	var item_id : String = stack.item_id
-	var properties : Dictionary = stack.properties
-	if not stack.has_valid():
-		return
-	var amount_no_removed = inventory.remove_at(stack_index, item_id, amount)
-	change_holder(item_id, amount - amount_no_removed, properties)
-
-
-func holder_to(inventory : Inventory):
-	if not stack_holder.has_valid():
-		return
-	if stack_holder.item_id == "":
-		return
-	var amount_no_add : int = inventory.add(stack_holder.item_id, stack_holder.amount, stack_holder.properties)
-	change_holder(stack_holder.item_id, amount_no_add, stack_holder.properties)
-
-
-func holder_to_at(stack_index : int, inventory : Inventory, amount_to_move : int = -1):
-	if not stack_holder.has_valid():
-		return
-	var stack : ItemStack = inventory.items[stack_index];
-	var item_id : String = stack_holder.item_id
-	var slot_properties : Dictionary = stack.properties
-	var definition : ItemDefinition = inventory.database.get_item(item_id)
-	if item_id == stack.item_id:
-		var amount = stack_holder.amount
-		if amount_to_move >= 0:
-			amount = amount_to_move
-		var amount_no_add = inventory.add(item_id, amount, stack_holder.properties)
-		change_holder(item_id, stack_holder.amount - amount + amount_no_add, slot_properties)
-	else:
-		# Different items in slot and other_slot
-		# Check if slot_holder amount is equal of origin_slot amount
-		#if stack.categorized and not inventory.is_accept_any_categories(inventory.get_flag_categories_of_slot(stack), definition.categories):
-			#return
-		var new_amount = stack.amount
-		var new_item_id = stack.item_id
-		var new_properties = stack.properties
-		inventory.set_stack_content(stack_index, stack_holder.item_id, stack_holder.amount, stack_holder.properties)
-		change_holder(new_item_id, new_amount, new_properties)
-		
-
-
 func pick_to_inventory(node : Node):
 	if main_inventory == null:
 		return
@@ -198,11 +138,12 @@ func pick_to_inventory(node : Node):
 	printerr("pick_to_inventory return false");
 
 
-func drop_holder():
-	if not stack_holder.has_valid():
-		return
-	main_inventory.drop(stack_holder.item_id, stack_holder.amount, stack_holder.properties)
-	change_holder("", 0)
+func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
+	inventory.transfer_to(origin_pos, destination, destination_pos, amount)
+
+
+func split(inventory : Inventory, stack_index : int, amount : int):
+	inventory.split(stack_index, amount)
 
 
 func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
@@ -238,15 +179,18 @@ func hot_bar_inputs(event : InputEvent):
 
 
 func hotbar_change_selection(index : int):
-	hotbar.selection_index = index
+	pass
+	#hotbar.selection_index = index
 
 
 func hotbar_previous_item():
-	hotbar.previous_item()
+	pass
+	#hotbar.previous_item()
 	
 
 func hotbar_next_item():
-	hotbar.next_item()
+	pass
+	#hotbar.next_item()
 
 #endregion
 
@@ -274,8 +218,6 @@ func close_inventory(inventory : Inventory):
 	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
 	remove_open_inventory(inventory)
-	if stack_holder.has_valid():
-		drop_holder()
 
 
 func remove_open_inventory(inventory : Inventory):
@@ -322,12 +264,13 @@ func remove_open_station(station : CraftStation):
 	var index = opened_stations.find(station)
 	opened_stations.remove_at(index)
 	closed_station.emit(station)
-	if main_station != station:
-		station.get_parent().close(get_parent())
+	#if main_station != station:
+		#station.get_parent().close(get_parent())
 
 
 func open_main_craft_station():
-	open_station(main_station)
+	pass
+	#open_station(main_station)
 
 
 func close_craft_stations():
@@ -336,6 +279,4 @@ func close_craft_stations():
 
 func is_open_any_station():
 	return !opened_stations.is_empty()
-	
-	
 #endregion

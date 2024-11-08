@@ -204,7 +204,7 @@ func _clear_list() -> void:
 func _populate_list() -> void:
 	if !is_instance_valid(inventory) || !is_instance_valid(_ctrl_item_container):
 		return
-		
+	
 	for stack in inventory.stacks:
 		var grid_item_stack_ui = GridItemStackUI.new(inventory)
 		grid_item_stack_ui.texture = default_item_texture

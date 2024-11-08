@@ -55,7 +55,7 @@ func interact(character : Node, action_index : int = 0):
 
 func get_actual_item(actual_stack_index):
 	if actual_stack_index != -1:
-		return inventory.items[actual_stack_index].item_id
+		return inventory.stacks[actual_stack_index].item_id
 	return null
 
 

@@ -70,11 +70,13 @@ input_inventories = Array[NodePath]([NodePath("../InputInventory")])
 output_inventories = Array[NodePath]([NodePath("../InputInventory")])
 has_limit_crafts = true
 limit_number_crafts = 1
+type_id = "campfire"
 only_remove_ingredients_after_craft = true
 auto_craft = true
 database = ExtResource("5_72vu1")
 
-[node name="InputInventory" type="Inventory" parent="."]
+[node name="InputInventory" type="GridInventory" parent="."]
+size = Vector2i(8, 1)
 database = ExtResource("5_72vu1")
 
 [node name="Node" type="Node3D" parent="."]

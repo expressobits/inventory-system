@@ -24,11 +24,12 @@ collision_mask = 3
 script = ExtResource("1_f8i83")
 actions = [SubResource("Resource_nqvfx")]
 
+[node name="Inventory" type="GridInventory" parent="."]
+size = Vector2i(8, 2)
+database = ExtResource("3_nqx2d")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_x2vdb")
-
-[node name="Inventory" type="Inventory" parent="."]
-database = ExtResource("3_nqx2d")
 
 [node name="box" parent="." instance=ExtResource("3_4i45c")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, -0.57105, 0)

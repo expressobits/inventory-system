@@ -9,24 +9,15 @@ script = ExtResource("1_mwfdb")
 main_inventory_path = NodePath("Inventory")
 equipment_inventory_path = NodePath("EquipmentInventory")
 
-[node name="Inventory" type="Inventory" parent="."]
-slot_amount = 32
-inventory_name = "Player Inventory"
+[node name="Inventory" type="GridInventory" parent="."]
+size = Vector2i(8, 4)
 
-[node name="EquipmentInventory" type="Inventory" parent="."]
+[node name="EquipmentInventory" type="GridInventory" parent="."]
 slot_amount = 4
 inventory_name = "Equipment"
-
-[node name="Hotbar" type="Hotbar" parent="."]
-inventory = NodePath("../Inventory")
-
-[node name="CraftStation" type="CraftStation" parent="."]
-input_inventories = Array[NodePath]([NodePath("../Inventory"), NodePath("../EquipmentInventory")])
-output_inventories = Array[NodePath]([NodePath("../Inventory")])
 
 [node name="Interactor" type="NodeInventories" parent="."]
 script = ExtResource("2_ja62h")
 
 [node name="ObjectPlacer" type="NodeInventories" parent="Interactor"]
 script = ExtResource("9_3ia0e")
-main_inventory_path = NodePath("../../Inventory")

@@ -40,6 +40,7 @@ var is_burning := false:
 func _ready():
 	_update_is_burning()
 	craft_station.on_crafted.connect(_on_crafted)
+	input_inventory.item_added.connect(_on_input_inventory_item_added)
 	
 
 func _update_is_burning():
@@ -68,7 +69,7 @@ func check() -> bool:
 	var index = input_inventory.get_stack_index_with_an_item_of_category(category)
 	if index == -1:
 		return false
-	var item_id = input_inventory.items[index].item_id
+	var item_id = input_inventory.stacks[index].item_id
 	var definition = input_inventory.database.get_item(item_id)
 	if not definition.properties.has("fuel"):
 		return false

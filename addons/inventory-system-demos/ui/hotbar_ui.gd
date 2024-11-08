@@ -30,7 +30,7 @@ func set_hotbar(hotbar : Hotbar):
 func _on_changed_selection(selection_index):
 	if hotbar == null:
 		return
-	for i in min(hotbar.slots_in_hot_bar, hotbar.get_inventory().items.size()):
+	for i in min(hotbar.slots_in_hot_bar, hotbar.get_inventory().stacks.size()):
 		var ui_stack = ui_stacks[i]
 		ui_stack.set_selection(i == hotbar.selection_index)
 
@@ -47,7 +47,7 @@ func _update_stacks():
 		
 	ui_stacks.clear()
 		
-	for i in min(hotbar.slots_in_hot_bar, hotbar.get_inventory().items.size()):
+	for i in min(hotbar.slots_in_hot_bar, hotbar.get_inventory().stacks.size()):
 		var stack = hotbar.get_inventory().items[i]
 		var stack_ui = slot_ui_scene.instantiate()
 		slots_container.add_child(stack_ui)

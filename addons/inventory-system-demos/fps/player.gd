@@ -33,7 +33,7 @@ func _ready():
 	character_inventory_system.dropped.connect(_on_inventory_handler_dropped)
 	character_inventory_system.opened_inventory.connect(_on_player_inventory_opened)
 	character_inventory_system.closed_inventory.connect(_on_player_inventory_closed)
-	character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
+	#character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
 	
 	
 func _on_inventory_handler_picked(_dropped_item):
