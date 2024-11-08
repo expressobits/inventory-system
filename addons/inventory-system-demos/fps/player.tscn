@@ -43,6 +43,7 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." node_paths=PackedStringArray("raycast", "camera_3d") instance=ExtResource("3_hbu24")]
 database = ExtResource("4_0qsek")
+main_station_path = NodePath("CraftStation")
 raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 
@@ -55,7 +56,7 @@ script = ExtResource("5_u6t8r")
 [node name="EquipmentInventory" parent="CharacterInventorySystem" index="1"]
 database = ExtResource("4_0qsek")
 
-[node name="Interactor" parent="CharacterInventorySystem" index="2" node_paths=PackedStringArray("raycast", "camera")]
+[node name="Interactor" parent="CharacterInventorySystem" index="3" node_paths=PackedStringArray("raycast", "camera")]
 database = ExtResource("4_0qsek")
 node_base_to_interactions = NodePath("../..")
 raycast = NodePath("../../Camera3D/RayCast3D")

@@ -11,10 +11,10 @@ signal on_craft(craft_station : CraftStation, recipe_index : int)
 @export var recipe_ui_scene : PackedScene
 
 ## [InventoryUI] which represents the input inventory.
-@export var input_inventory_ui : InventoryUI
+@export var input_inventory_ui : GridInventoryUI
 
 ## [InventoryUI] which represents the output inventory.
-@export var output_inventory_ui : InventoryUI
+@export var output_inventory_ui : GridInventoryUI
 
 ## Show input inventory when open [CraftStationUI].
 @export var view_input_inventory := true
@@ -46,9 +46,9 @@ func open(craft_station : CraftStation):
 	var valid_input = view_input_inventory and craft_station.input_inventories.size() > 0 and craft_station.input_inventories[0] != null
 	var valid_output = view_output_inventory and craft_station.output_inventories.size() > 0 and craft_station.output_inventories[0] != null
 	if valid_input: 
-		input_inventory_ui.set_inventory(craft_station.get_input_inventory(0))
+		input_inventory_ui.inventory = craft_station.get_input_inventory(0)
 	if valid_output: 
-		input_inventory_ui.set_inventory(craft_station.get_input_inventory(0))
+		input_inventory_ui.inventory = craft_station.get_input_inventory(0)
 	input_inventory_ui.visible = valid_input
 	output_inventory_ui.visible = valid_output
 

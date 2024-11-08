@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cci6dwxmbapt1"]
+[gd_scene load_steps=8 format=3 uid="uid://cci6dwxmbapt1"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.gd" id="1_ny8hp"]
 [ext_resource type="PackedScene" uid="uid://duq60fhdry5hv" path="res://addons/inventory-system-demos/ui/craft/recipe_ui.tscn" id="2_jgmgq"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craftings_ui.gd" id="3_imm8o"]
 [ext_resource type="PackedScene" uid="uid://db7sndy7hfpq2" path="res://addons/inventory-system-demos/ui/craft/crafting_ui.tscn" id="4_5nmfv"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/inventory_ui.tscn" id="7_g573c"]
+[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="5_ce7df"]
+[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="6_mcrsa"]
+[ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="7_wbpus"]
 
 [node name="CraftStationUI" type="Control" node_paths=PackedStringArray("input_inventory_ui", "output_inventory_ui")]
 layout_mode = 3
@@ -18,8 +20,8 @@ offset_bottom = 267.0
 grow_vertical = 2
 script = ExtResource("1_ny8hp")
 recipe_ui_scene = ExtResource("2_jgmgq")
-input_inventory_ui = NodePath("InventoryUI")
-output_inventory_ui = NodePath("InventoryUI2")
+input_inventory_ui = NodePath("InputGridInventoryUI")
+output_inventory_ui = NodePath("OutputGridInventoryUI")
 
 [node name="CraftingsUI" type="VBoxContainer" parent="."]
 custom_minimum_size = Vector2(64, 64)
@@ -89,18 +91,22 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="InventoryUI" parent="." instance=ExtResource("7_g573c")]
-custom_minimum_size = Vector2(436, 140)
-layout_mode = 1
-offset_left = -219.0
-offset_top = -281.0
-offset_right = 217.0
-offset_bottom = -141.0
+[node name="InputGridInventoryUI" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 91.0
+offset_top = -160.0
+offset_right = 347.0
+offset_bottom = -54.0
+script = ExtResource("5_ce7df")
+field_dimensions = Vector2(48, 48)
+item_spacing = 2
+field_highlighted_style = ExtResource("6_mcrsa")
+selection_style = ExtResource("7_wbpus")
 
-[node name="InventoryUI2" parent="." instance=ExtResource("7_g573c")]
-custom_minimum_size = Vector2(436, 140)
-layout_mode = 1
-offset_left = -219.0
-offset_top = -432.0
-offset_right = 217.0
-offset_bottom = -292.0
+[node name="OutputGridInventoryUI" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 91.0
+offset_top = -160.0
+offset_right = 347.0
+offset_bottom = -54.0
+script = ExtResource("5_ce7df")

@@ -52,6 +52,9 @@ func _ready():
 	loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	player_inventory_ui.request_split.connect(_request_split)
 	loot_inventory_ui.request_split.connect(_request_split)
+	
+	other_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
+	#loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	player_craft_station_ui.on_craft.connect(_on_craft)
 	other_craft_station_ui.on_craft.connect(_on_craft)
 
@@ -117,7 +120,7 @@ func _on_open_craft_station(craft_station : CraftStation):
 	#if craft_station == character.main_station:
 		#player_craft_station_ui.open(craft_station)
 	#else:
-		#other_craft_station_ui.open(craft_station)
+	other_craft_station_ui.open(craft_station)
 	hotbar_ui.visible = false
 	_open_player_inventory()
 
@@ -126,7 +129,7 @@ func _on_close_craft_station(craft_station : CraftStation):
 	#if craft_station == character.main_station:
 		#player_craft_station_ui.close()
 	#else:
-		#other_craft_station_ui.close()
+	other_craft_station_ui.close()
 	hotbar_ui.visible = true
 	_close_player_inventory()
 

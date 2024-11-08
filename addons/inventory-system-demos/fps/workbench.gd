@@ -22,7 +22,7 @@ func get_interact_actions(_interactor : Interactor) -> Array:
 
 
 func interact(character : Node, action_index : int = 0):
-	craft_station.load_valid_recipes()
+	#craft_station.load_valid_recipes()
 	if action_index == 0 and !openable.is_open:
 		open(character)
 		character.character_inventory_system.open_station(craft_station)

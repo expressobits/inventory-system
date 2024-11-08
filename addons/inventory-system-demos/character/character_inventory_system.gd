@@ -19,8 +19,8 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var equipment_inventory : GridInventory = get_node(equipment_inventory_path)
 #@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
 #@onready var hotbar : Hotbar = get_node(hotbar_path)
-#@export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
-#@onready var main_station : CraftStation = get_node(main_station_path)
+@export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
+@onready var main_station : CraftStation = get_node(main_station_path)
 @export_node_path var interactor_path := NodePath("Interactor")
 @onready var interactor : Interactor = get_node(interactor_path)
 @export_node_path var drop_parent_path := NodePath("../..");
@@ -59,6 +59,7 @@ var opened_inventories : Array[Inventory]
 func _ready():
 	if Engine.is_editor_hint():
 		return
+	print(main_station.valid_recipes)
 	#main_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	#equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
 	#
@@ -264,8 +265,8 @@ func remove_open_station(station : CraftStation):
 	var index = opened_stations.find(station)
 	opened_stations.remove_at(index)
 	closed_station.emit(station)
-	#if main_station != station:
-		#station.get_parent().close(get_parent())
+	if main_station != station:
+		station.get_parent().close(get_parent())
 
 
 func open_main_craft_station():
