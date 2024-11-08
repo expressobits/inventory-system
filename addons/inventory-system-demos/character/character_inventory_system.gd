@@ -270,8 +270,7 @@ func remove_open_station(station : CraftStation):
 
 
 func open_main_craft_station():
-	pass
-	#open_station(main_station)
+	open_station(main_station)
 
 
 func close_craft_stations():

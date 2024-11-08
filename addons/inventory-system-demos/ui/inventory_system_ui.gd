@@ -53,8 +53,10 @@ func _ready():
 	player_inventory_ui.request_split.connect(_request_split)
 	loot_inventory_ui.request_split.connect(_request_split)
 	
+	#player_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	other_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
-	#loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
+	other_craft_station_ui.input_inventory_ui.request_split.connect(_request_split)
+	
 	player_craft_station_ui.on_craft.connect(_on_craft)
 	other_craft_station_ui.on_craft.connect(_on_craft)
 
@@ -117,19 +119,19 @@ func _on_open_inventory(inventory : Inventory):
 # Open Craft Station	
 func _on_open_craft_station(craft_station : CraftStation):
 	# TODO #42 Different skins for different types of craft stations
-	#if craft_station == character.main_station:
-		#player_craft_station_ui.open(craft_station)
-	#else:
-	other_craft_station_ui.open(craft_station)
+	if craft_station == character.main_station:
+		player_craft_station_ui.open(craft_station)
+	else:
+		other_craft_station_ui.open(craft_station)
 	hotbar_ui.visible = false
 	_open_player_inventory()
 
 
 func _on_close_craft_station(craft_station : CraftStation):
-	#if craft_station == character.main_station:
-		#player_craft_station_ui.close()
-	#else:
-	other_craft_station_ui.close()
+	if craft_station == character.main_station:
+		player_craft_station_ui.close()
+	else:
+		other_craft_station_ui.close()
 	hotbar_ui.visible = true
 	_close_player_inventory()
 
@@ -153,6 +155,7 @@ func _on_craft(craft_station : CraftStation, recipe_index : int):
 
 func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
 	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount)
-	
+
+
 func _request_split(inventory : Inventory, stack_index : int, amount : int):
 	character.split(inventory, stack_index, amount)

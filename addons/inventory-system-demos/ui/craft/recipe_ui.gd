@@ -40,9 +40,7 @@ func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : in
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(craft_station.database, ingredient)
 		_ingredients.append(ingredient_obj)
-	_check_if_has_ingredients()
-	for i in craft_station.input_inventories.size():
-		craft_station.get_input_inventory(i).updated_stack.connect(_on_updated_slot)
+	check_if_has_ingredients()
 
 
 func _clear_ingredients():
@@ -51,14 +49,6 @@ func _clear_ingredients():
 		_ingredients.clear()		
 
 
-func _on_updated_slot(slot_index : int):
-	_check_if_has_ingredients()
-
-
-func _on_removed_item(item : ItemDefinition, amount : int):
-	_check_if_has_ingredients()
-
-
-func _check_if_has_ingredients():
+func check_if_has_ingredients():
 	var recipe = craft_station.database.recipes[recipe_index]
 	craft_button.disabled = not craft_station.can_craft(recipe)

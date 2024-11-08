@@ -28,7 +28,6 @@ signal on_craft(craft_station : CraftStation, recipe_index : int)
 
 var _recipe_uis : Array[RecipeUI]
 
-
 ## Configure a craftstation for the [Recipe] list and [CraftingsUI] list
 func open(craft_station : CraftStation):
 	_clear()
@@ -51,6 +50,14 @@ func open(craft_station : CraftStation):
 		input_inventory_ui.inventory = craft_station.get_input_inventory(0)
 	input_inventory_ui.visible = valid_input
 	output_inventory_ui.visible = valid_output
+	
+	for i in craft_station.input_inventories.size():
+		craft_station.get_input_inventory(i).contents_changed.connect(_on_input_inventory_contents_changed)
+
+
+func _on_input_inventory_contents_changed():
+	for recipe_ui in _recipe_uis:
+		recipe_ui.check_if_has_ingredients()
 
 
 ## Hidden this UI
@@ -62,6 +69,7 @@ func _clear():
 	for recipe_ui in _recipe_uis:
 		recipe_ui.queue_free()
 	_recipe_uis.clear()
+
 
 func _on_craft_button_button_down(craft_station : CraftStation, recipe_index : int):
 	on_craft.emit(craft_station, recipe_index)
