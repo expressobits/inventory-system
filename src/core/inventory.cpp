@@ -213,6 +213,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (_added > 0) {
 		emit_signal("item_added", item_id, _added);
+		emit_signal("contents_changed");
 	}
 
 	if (drop_excess) {
@@ -221,10 +222,6 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 	}
 
 	return amount_in_interact;
-}
-
-int Inventory::add_stack(const Ref<ItemStack> &stack, const bool &drop_excess) {
-	return 0;
 }
 
 int Inventory::add_at_index(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
@@ -240,6 +237,7 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 	int _added = amount - amount_in_interact;
 	if (_added > 0) {
 		emit_signal("item_added", item_id, _added);
+		emit_signal("contents_changed");
 	}
 	return amount_in_interact;
 }
@@ -255,7 +253,9 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	on_insert_stack(stacks.size() - 1);
 
 	this->emit_signal("stack_added", stacks.size() - 1);
+	this->emit_signal("updated_stack", stacks.size() - 1);
 	emit_signal("item_added", item_id, amount);
+	emit_signal("contents_changed");
 	return 0;
 }
 
@@ -278,6 +278,7 @@ int Inventory::remove(const String &item_id, const int &amount) {
 	int _removed = amount - amount_in_interact;
 	if (_removed > 0) {
 		emit_signal("item_removed", item_id, _removed);
+		emit_signal("contents_changed");
 	}
 	return amount_in_interact;
 }
@@ -299,6 +300,7 @@ int Inventory::remove_at(const int &stack_index, const String &item_id, const in
 	int _removed = amount - amount_in_interact;
 	if (_removed > 0) {
 		emit_signal("item_removed", item_id, _removed);
+		emit_signal("contents_changed");
 	}
 	return amount_in_interact;
 }

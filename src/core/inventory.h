@@ -45,7 +45,6 @@ public:
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
 	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
-	int add_stack(const Ref<ItemStack> &stack, const bool &drop_excess = false);
 	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int remove(const String &item_id, const int &amount = 1);
