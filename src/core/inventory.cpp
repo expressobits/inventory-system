@@ -255,6 +255,7 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	on_insert_stack(stacks.size() - 1);
 
 	this->emit_signal("stack_added", stacks.size() - 1);
+	emit_signal("item_added", item_id, amount);
 	return 0;
 }
 
