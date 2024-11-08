@@ -1,5 +1,6 @@
 #include "craft_station.h"
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 void Crafting::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_recipe_index", "recipe_index"), &Crafting::set_recipe_index);
@@ -115,7 +116,7 @@ void CraftStation::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "limit_number_crafts"), "set_limit_number_crafts", "get_limit_number_crafts");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_processing_craftings"), "set_can_processing_craftings", "get_can_processing_craftings");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_finish_craftings"), "set_can_finish_craftings", "get_can_finish_craftings");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType"), "set_type", "get_type");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "type", PROPERTY_HINT_ARRAY_TYPE, "CraftStationType", PROPERTY_USAGE_NO_EDITOR), "set_type", "get_type");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "type_id"), "set_type_id", "get_type_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "only_remove_ingredients_after_craft"), "set_only_remove_ingredients_after_craft", "get_only_remove_ingredients_after_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "auto_craft"), "set_auto_craft", "get_auto_craft");
@@ -190,7 +191,7 @@ void CraftStation::finish_crafting(int crafting_index) {
 bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
 
-	if (recipe->get_station() != type)
+	if (recipe->get_station()->get_id() != type_id)
 		return false;
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
 		Ref<ItemStack> ingredient = recipe->get_ingredients()[i];
@@ -302,7 +303,7 @@ void CraftStation::load_valid_recipes() {
 	valid_recipes.clear();
 	for (int i = 0; i < get_database()->get_recipes().size(); i++) {
 		Ref<Recipe> recipe = get_database()->get_recipes()[i];
-		String recipe_craft_id;
+		String recipe_craft_id = "";
 		if (recipe->get_station() != nullptr) {
 			recipe_craft_id = recipe->get_station()->get_id();
 		}
