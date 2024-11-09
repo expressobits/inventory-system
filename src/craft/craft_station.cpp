@@ -191,7 +191,7 @@ void CraftStation::finish_crafting(int crafting_index) {
 bool CraftStation::_use_items(const Ref<Recipe> &recipe) {
 	ERR_FAIL_NULL_V_MSG(recipe, false, "'recipe' is null.");
 
-	if (recipe->get_station()->get_id() != type_id)
+	if (recipe->get_station() != type)
 		return false;
 	for (size_t i = 0; i < recipe->get_ingredients().size(); i++) {
 		Ref<ItemStack> ingredient = recipe->get_ingredients()[i];
