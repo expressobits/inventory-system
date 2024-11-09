@@ -2,7 +2,7 @@
 
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/grid_example/grid_example.gd" id="1_vkfix"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="2_3j1i5"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/inventory_ui.tscn" id="2_3j1i5"]
 
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")
@@ -27,22 +27,28 @@ layout_mode = 2
 theme_override_constants/separation = 16
 
 [node name="GridInventoryPanelLeft" parent="Control/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("2_3j1i5")]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(406, 288)
 layout_mode = 2
 inventory = NodePath("../../../../GridInventoryLeft")
 
 [node name="GridInventoryPanelRight" parent="Control/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("2_3j1i5")]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(256, 288)
 layout_mode = 2
 inventory = NodePath("../../../../GridInventoryRight")
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
 
 [node name="Label" type="Label" parent="Control/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Drag and drop items to transfer them from one inventory to the other.
 Press the 'Sort' buttons to sort the inventories.
 Press the 'Middle Mouse Button' to split the selected stack in half."
+
+[node name="LblInfo" type="Label" parent="Control"]
+unique_name_in_owner = true
+layout_mode = 2
+offset_top = 131.0
+offset_right = 40.0
+offset_bottom = 154.0
 
 [node name="GridInventoryLeft" type="GridInventory" parent="."]
 size = Vector2i(8, 5)

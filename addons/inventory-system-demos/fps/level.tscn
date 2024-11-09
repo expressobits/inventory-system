@@ -196,6 +196,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13844, 0, -3.8075)
 
 [node name="Label3D" parent="Sign" index="0"]
 transform = Transform3D(0.996587, 0.0825472, 0, -0.0825472, 0.996587, 0, 0, 0, 1, 0, 1.17597, 0.0772328)
+text = "Basic
+Inventory"
 
 [node name="signpostSingle" parent="Sign" index="1"]
 transform = Transform3D(-3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
@@ -204,19 +206,10 @@ transform = Transform3D(-3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.55362, 0, -3.8075)
 
 [node name="Label3D" parent="Sign2" index="0"]
-text = "Static
-Inventory"
-
-[node name="Sign3" parent="." instance=ExtResource("10_5mqut")]
-transform = Transform3D(0.246982, 0, -0.96902, 0, 1, 0, 0.96902, 0, 0.246982, 3.8889, 0, -1.6067)
-
-[node name="Label3D" parent="Sign3" index="0"]
-text = "Only Tools
+text = "Tools Only
 Inventory"
 
 [editable path="Sign"]
 [editable path="Sign/signpostSingle"]
 [editable path="Sign2"]
 [editable path="Sign2/signpostSingle"]
-[editable path="Sign3"]
-[editable path="Sign3/signpostSingle"]

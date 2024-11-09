@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://da2b73383isem"]
+[gd_scene load_steps=7 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
-[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="3_b24hb"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="3_akms1"]
 [ext_resource type="PackedScene" uid="uid://dq1rob2nkb0cb" path="res://addons/inventory-system-demos/ui/slot_ui.tscn" id="4_5h6ud"]
-[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="4_pkug6"]
-[ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="5_vwkkt"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="6_eoecr"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
@@ -40,46 +38,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PlayerGridInventoryUI" type="Control" parent="."]
+[node name="PlayerGridInventoryUI" parent="." instance=ExtResource("3_akms1")]
 unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 608.0
-offset_top = 341.0
-offset_right = 608.0
-offset_bottom = 341.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_b24hb")
-field_dimensions = Vector2(48, 48)
-item_spacing = 2
-field_highlighted_style = ExtResource("4_pkug6")
-selection_style = ExtResource("5_vwkkt")
+offset_left = 11.0
+offset_top = -68.0
+offset_right = 423.0
+offset_bottom = 220.0
 
-[node name="LootGridInventoryUI" type="Control" parent="."]
+[node name="LootGridInventoryUI" parent="." instance=ExtResource("3_akms1")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(406, 138)
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -429.0
-offset_top = 11.0
-offset_right = -46.0
-offset_bottom = 168.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("3_b24hb")
-field_dimensions = Vector2(48, 48)
-item_spacing = 2
-field_highlighted_style = ExtResource("4_pkug6")
-selection_style = ExtResource("5_vwkkt")
+offset_left = -426.0
+offset_top = -68.0
+offset_right = -20.0
+offset_bottom = 70.0
 
 [node name="PlayerCraftStationUI" parent="." instance=ExtResource("6_eoecr")]
 layout_mode = 1
+view_input_inventory = false
+view_output_inventory = false
 
 [node name="OtherCraftStationUI" parent="." instance=ExtResource("6_eoecr")]
 layout_mode = 1

@@ -18,10 +18,10 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @export var interactor : Interactor
 
 ## Player [InventoryUI], Typically the main usage inventory
-@onready var player_inventory_ui : GridInventoryUI = %PlayerGridInventoryUI
+@onready var player_inventory_ui : GridInventoryPanel = %PlayerGridInventoryUI
 
 ## Loot [InventoryUI], Typically an inventory that has been opened
-@onready var loot_inventory_ui : GridInventoryUI = %LootGridInventoryUI
+@onready var loot_inventory_ui : GridInventoryPanel = %LootGridInventoryUI
 
 ## Hotbar [HotbarUI]
 @onready var hotbar_ui : HotbarUI = get_node(NodePath("HotbarUI"))

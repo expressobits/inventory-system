@@ -219,6 +219,9 @@ func _populate_list() -> void:
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.size = _get_item_sprite_size(stack)
 		grid_item_stack_ui.stack_style = stack_style
+		var definition = inventory.database.get_item(stack.item_id)
+		if definition != null:
+			grid_item_stack_ui.tooltip_text = definition.name
 
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 		grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED

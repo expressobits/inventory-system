@@ -25,8 +25,6 @@ signal inventory_point_down(event: InputEvent, inventory : Inventory)
 var ui_stacks : Array[SlotUI]
 
 
-
-
 func _ready():
 	gui_input.connect(_on_inventory_gui_input)
 #	gui_input.connect(_on_inventory_gui_input)

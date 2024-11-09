@@ -243,7 +243,7 @@ func _ready() -> void:
 
 	if has_node(inventory_path):
 		inventory = get_node_or_null(inventory_path)
-
+		
 	_field_background_grid = Control.new()
 	_field_background_grid.name = "FieldBackgrounds"
 	add_child(_field_background_grid)
