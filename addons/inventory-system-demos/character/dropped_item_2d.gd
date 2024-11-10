@@ -17,10 +17,13 @@ func get_interaction_position(interaction_point : Vector2) -> Vector2:
 
 
 func get_interact_actions(_interactor : Interactor) -> Array:
-	var text = ""
-	if amount > 1:
-		text += str(amount) + " X "
-	actions[0].description = default_description.replace("Item", text + item_id)
+	var text = str(amount) + " X "
+	var item = _interactor.database.get_item(item_id)
+	if item != null:
+		text += item.name
+	else:
+		text += item_id
+	actions[0].description = default_description.replace("Item", text)
 	return actions
 
 
