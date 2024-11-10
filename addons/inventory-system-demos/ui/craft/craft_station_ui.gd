@@ -11,10 +11,10 @@ signal on_craft(craft_station : CraftStation, recipe_index : int)
 @export var recipe_ui_scene : PackedScene
 
 ## [InventoryUI] which represents the input inventory.
-@export var input_inventory_ui : GridInventoryUI
+@onready var input_inventory_ui : GridInventoryUI = %InputGridInventoryUI
 
 ## [InventoryUI] which represents the output inventory.
-@export var output_inventory_ui : GridInventoryUI
+@onready var output_inventory_ui : GridInventoryUI = %OutputGridInventoryUI
 
 ## Show input inventory when open [CraftStationUI].
 @export var view_input_inventory := true
@@ -23,13 +23,22 @@ signal on_craft(craft_station : CraftStation, recipe_index : int)
 @export var view_output_inventory := true
 
 @onready var _recipes_container : VBoxContainer = %RecipesContent
-@onready var _craftings_ui : CraftingsUI = get_node(NodePath("CraftingsUI"))
+@onready var _craftings_ui : CraftingsUI = %CraftingsUI
 
+var craft_station : CraftStation
 
 var _recipe_uis : Array[RecipeUI]
 
+
 ## Configure a craftstation for the [Recipe] list and [CraftingsUI] list
 func open(craft_station : CraftStation):
+	
+	if(self.craft_station != null):
+		for i in self.craft_station.input_inventories.size():
+			if self.craft_station.get_input_inventory(i).contents_changed.is_connected(_on_input_inventory_contents_changed):
+				self.craft_station.get_input_inventory(i).contents_changed.disconnect(_on_input_inventory_contents_changed)
+	
+	self.craft_station = craft_station
 	_clear()
 	_craftings_ui.set_craft_station(craft_station)
 	var recipes = craft_station.database.recipes

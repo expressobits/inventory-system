@@ -1,13 +1,13 @@
 [gd_scene load_steps=7 format=3 uid="uid://1dijqt6vr078"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_panel_ui.gd" id="1_gc205"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.gd" id="1_gc205"]
 [ext_resource type="Texture2D" uid="uid://dsewxlrqmqe30" path="res://addons/inventory-system/icons/crafter.svg" id="2_lh5b3"]
 [ext_resource type="Texture2D" uid="uid://dacqxpvwnm8x2" path="res://addons/inventory-system/icons/inventory_handler.svg" id="2_o2uor"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="3_72ot8"]
 [ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="4_bt3q3"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="5_r0kdv"]
 
-[node name="InventoryPanel" type="Panel" node_paths=PackedStringArray("grid_inventory_ui", "title_label")]
+[node name="GridInventoryPanel" type="PanelContainer" node_paths=PackedStringArray("grid_inventory_ui", "title_label")]
 texture_filter = 1
 custom_minimum_size = Vector2(406, 288)
 anchors_preset = 8
@@ -15,10 +15,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -70.0
-offset_top = -65.0
-offset_right = 164.0
-offset_bottom = 65.0
+offset_left = -156.0
+offset_top = -144.0
+offset_right = 250.0
+offset_bottom = 144.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gc205")
@@ -26,12 +26,7 @@ grid_inventory_ui = NodePath("VBoxContainer/MarginContainer/GridInventoryUI")
 title_label = NodePath("VBoxContainer/Panel/Title/HBoxContainer/TitleLabel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="Panel" type="Panel" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)

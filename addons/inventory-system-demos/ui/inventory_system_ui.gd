@@ -30,9 +30,9 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var drop_area: Control = get_node(NodePath("DropArea"))
 
 
-@onready var player_craft_station_ui : CraftStationUI = get_node(NodePath("PlayerCraftStationUI"))
+@onready var player_craft_station_ui : CraftStationUI = %PlayerCraftStationUI
 
-@onready var other_craft_station_ui : CraftStationUI = get_node(NodePath("OtherCraftStationUI"))
+@onready var other_craft_station_ui : CraftStationUI = %OtherCraftStationUI
 
 @onready var interactor_ui : InteractorUI = get_node(NodePath("InteractorUI"))
 
@@ -52,6 +52,8 @@ func _ready():
 	loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	player_inventory_ui.request_split.connect(_request_split)
 	loot_inventory_ui.request_split.connect(_request_split)
+	player_inventory_ui.request_sort.connect(_request_sort)
+	loot_inventory_ui.request_sort.connect(_request_sort)
 	
 	#player_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	other_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
@@ -159,3 +161,7 @@ func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destin
 
 func _request_split(inventory : Inventory, stack_index : int, amount : int):
 	character.split(inventory, stack_index, amount)
+
+
+func _request_sort(inventory : Inventory):
+	character.sort(inventory)

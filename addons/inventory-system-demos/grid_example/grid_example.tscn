@@ -28,7 +28,6 @@ theme_override_constants/separation = 16
 
 [node name="GridInventoryPanelLeft" parent="Control/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("inventory") instance=ExtResource("2_3j1i5")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(406, 288)
 layout_mode = 2
 inventory = NodePath("../../../../GridInventoryLeft")
 

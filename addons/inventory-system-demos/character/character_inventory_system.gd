@@ -147,6 +147,10 @@ func split(inventory : Inventory, stack_index : int, amount : int):
 	inventory.split(stack_index, amount)
 
 
+func sort(inventory : Inventory):
+	inventory.sort()
+
+
 func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
 	var packed_scene : PackedScene = load(dropped_item)
 	var node = packed_scene.instantiate()

@@ -8,6 +8,8 @@ signal context_activated
 
 @export var stack_style : StyleBox
 
+@export var icon_margin : Rect2i = Rect2i()
+
 var inventory : GridInventory
 
 func _init(inventory : GridInventory):
@@ -78,6 +80,15 @@ func _ready() -> void:
 	remove_theme_stylebox_override("panel")
 	if stack_style != null:
 		_texture_bg.add_theme_stylebox_override("panel", stack_style)
+		
+	var _margin_container = MarginContainer.new()
+	_margin_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_margin_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_margin_container.size = size
+	_margin_container.add_theme_constant_override("margin_top", icon_margin.position.x)
+	_margin_container.add_theme_constant_override("margin_left", icon_margin.position.y)
+	_margin_container.add_theme_constant_override("margin_right", icon_margin.size.x)
+	_margin_container.add_theme_constant_override("margin_bottom", icon_margin.size.y)
 	
 	_texture_rect = TextureRect.new()
 	_texture_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -90,7 +101,8 @@ func _ready() -> void:
 	_stack_size_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	
 	add_child(_texture_bg)
-	add_child(_texture_rect)
+	add_child(_margin_container)
+	_margin_container.add_child(_texture_rect)
 	add_child(_stack_size_label)
 	
 
@@ -169,6 +181,7 @@ func create_preview() -> Control:
 	preview.size = size
 	preview.stretch_mode = stretch_mode
 	preview.stack_style = stack_style
+	preview.icon_margin = icon_margin
 	return preview
 
 

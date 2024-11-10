@@ -8,46 +8,21 @@
 [ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="6_mcrsa"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="7_wbpus"]
 
-[node name="CraftStationUI" type="Control" node_paths=PackedStringArray("input_inventory_ui", "output_inventory_ui")]
+[node name="CraftStationUI" type="Control"]
+custom_minimum_size = Vector2(474, 512)
 layout_mode = 3
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_left = 16.0
-offset_top = 13.0
-offset_right = 620.0
-offset_bottom = 267.0
+offset_top = -116.0
+offset_right = 490.0
+offset_bottom = 396.0
 grow_vertical = 2
 script = ExtResource("1_ny8hp")
 recipe_ui_scene = ExtResource("2_jgmgq")
-input_inventory_ui = NodePath("InputGridInventoryUI")
-output_inventory_ui = NodePath("OutputGridInventoryUI")
 
-[node name="CraftingsUI" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -552.0
-offset_right = 70.0
-grow_vertical = 0
-alignment = 2
-script = ExtResource("3_imm8o")
-crafting_ui_scene = ExtResource("4_5nmfv")
-
-[node name="RecipesUI" type="Panel" parent="."]
-custom_minimum_size = Vector2(436, 5)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 83.0
-offset_right = -85.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="RecipesUI"]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -55,11 +30,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="RecipesUI/VBoxContainer"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="RecipesUI" type="Panel" parent="HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(406, 256)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 
-[node name="Title" type="MarginContainer" parent="RecipesUI/VBoxContainer/Panel"]
+[node name="Title" type="MarginContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,44 +61,51 @@ grow_vertical = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 4
 
-[node name="TitleLabel" type="Label" parent="RecipesUI/VBoxContainer/Panel/Title"]
+[node name="TitleLabel" type="Label" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/Panel/Title"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Recipes"
 
-[node name="Control" type="Control" parent="RecipesUI/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
 
-[node name="ScrollContainer" type="ScrollContainer" parent="RecipesUI/VBoxContainer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer"]
 layout_mode = 2
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 432.0
-offset_bottom = 222.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="RecipesContent" type="VBoxContainer" parent="RecipesUI/VBoxContainer/Control/ScrollContainer"]
+[node name="RecipesContent" type="VBoxContainer" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer/VBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="InputGridInventoryUI" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 91.0
-offset_top = -160.0
-offset_right = 347.0
-offset_bottom = -54.0
+[node name="OutputGridInventoryUI" type="Control" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("5_ce7df")
+
+[node name="InputGridInventoryUI" type="Control" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 script = ExtResource("5_ce7df")
 field_dimensions = Vector2(48, 48)
 item_spacing = 2
 field_highlighted_style = ExtResource("6_mcrsa")
 selection_style = ExtResource("7_wbpus")
 
-[node name="OutputGridInventoryUI" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 91.0
-offset_top = -160.0
-offset_right = 347.0
-offset_bottom = -54.0
-script = ExtResource("5_ce7df")
+[node name="CraftingsUI" type="VBoxContainer" parent="HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+alignment = 2
+script = ExtResource("3_imm8o")
+crafting_ui_scene = ExtResource("4_5nmfv")

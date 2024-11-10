@@ -1,11 +1,10 @@
-extends Panel
+extends PanelContainer
 class_name GridInventoryPanel
 
 
 signal request_split(inventory : Inventory, stack_index : int, amount : int)
 signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position : Vector2i, amount : int)
 signal request_sort
-
 
 @export var inventory: GridInventory:
 	set(new_Inventory):
@@ -16,17 +15,13 @@ signal request_sort
 			grid_inventory_ui.inventory_path = grid_inventory_ui.get_path_to(inventory)
 
 @export var grid_inventory_ui: GridInventoryUI
-
 @export var title_label: Label
-
 @onready var sort_button: Button = %SortButton
 
 
 func _ready() -> void:
-	if sort_button.icon == null:
-		sort_button.icon = get_theme_icon("Load", "EditorIcons")
 	sort_button.pressed.connect(func():
-		request_sort.emit()
+		request_sort.emit(inventory)
 	)
 	grid_inventory_ui.request_split.connect(func(inventory: GridInventory, stack_index: int, amount : int):
 		request_split.emit(inventory, stack_index, amount)
@@ -34,3 +29,24 @@ func _ready() -> void:
 	grid_inventory_ui.request_transfer_to.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, destination_inventory : GridInventory, destination_position: Vector2i, amount : int):
 		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount)
 	)
+
+# TODO Console mode (Code from old inventory_ui
+#for stack_index in ui_stacks.size():
+		#var ui_stack = ui_stacks[stack_index]
+		#for neighbor in ["left", "top", "right", "bottom"]:
+			#var neighbor_idx: int
+			#match neighbor:
+				#"left":
+					#neighbor_idx = stack_index - 1
+					#if stack_index % slots_container.columns == 0:
+						#neighbor_idx = -1
+				#"top":
+					#neighbor_idx = stack_index - slots_container.columns
+				#"right":
+					#neighbor_idx = stack_index + 1
+					#if (stack_index + 1) % slots_container.columns == 0:
+						#neighbor_idx = -1
+				#"bottom":
+					#neighbor_idx = stack_index + slots_container.columns
+			#if neighbor_idx >= 0 and neighbor_idx < ui_stacks.size():
+				#ui_stack.set("focus_neighbor_"+neighbor, ui_stacks[neighbor_idx].get_path())

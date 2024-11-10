@@ -64,6 +64,7 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		_clear_selection()
 		
 @export var stack_style: StyleBox
+@export var stack_icon_margin: Rect2i
 
 var inventory: GridInventory = null:
 	set(new_inventory):
@@ -219,6 +220,7 @@ func _populate_list() -> void:
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.size = _get_item_sprite_size(stack)
 		grid_item_stack_ui.stack_style = stack_style
+		grid_item_stack_ui.icon_margin = stack_icon_margin
 		var definition = inventory.database.get_item(stack.item_id)
 		if definition != null:
 			grid_item_stack_ui.tooltip_text = definition.name

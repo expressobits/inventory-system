@@ -59,6 +59,9 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		stretch_item_sprites = new_stretch_item_sprites
 		
 		
+@export var stack_icon_margin: Rect2i = Rect2i(8, 8, 8, 8)
+		
+		
 ## The size of each inventory field in pixels.
 @export var field_dimensions: Vector2 = Vector2(32, 32):
 	set(new_field_dimensions):
@@ -276,6 +279,7 @@ func _ready() -> void:
 	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
 	_grid_inventory_content_ui.select_mode = select_mode
 	_grid_inventory_content_ui.stack_style = stack_style
+	_grid_inventory_content_ui.stack_icon_margin = stack_icon_margin
 	add_child(_grid_inventory_content_ui)
 
 	_selection_panels = Control.new()

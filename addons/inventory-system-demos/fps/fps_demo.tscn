@@ -36,9 +36,6 @@ script = ExtResource("10_1ncja")
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("8_6rygg")
 
-[node name="PlayerGridInventoryUI" parent="UI/Inventory System UI" index="2"]
-offset_right = 417.0
-
 [node name="Level" parent="." instance=ExtResource("16_46jkf")]
 
 [node name="Box Inventory" parent="." instance=ExtResource("9_ia5mg")]
