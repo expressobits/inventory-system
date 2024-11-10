@@ -27,7 +27,7 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var hotbar_ui : HotbarUI = get_node(NodePath("HotbarUI"))
 
 ## Control that identifies area where a transaction slot can call the handler to drop items
-@onready var drop_area: Control = get_node(NodePath("DropArea"))
+@onready var drop_area: DropArea = get_node(NodePath("DropArea"))
 
 
 @onready var player_craft_station_ui : CraftStationUI = %PlayerCraftStationUI
@@ -46,7 +46,7 @@ func _ready():
 	hotbar_ui.visible = true
 	player_craft_station_ui.close()
 	other_craft_station_ui.close()
-	drop_area.gui_input.connect(_drop_area_input)
+	drop_area.request_drop.connect(_request_drop)
 	
 	player_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
@@ -161,6 +161,10 @@ func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destin
 
 func _request_split(inventory : Inventory, stack_index : int, amount : int):
 	character.split(inventory, stack_index, amount)
+
+
+func _request_drop(stack: ItemStack, inventory: Inventory):
+	character.drop(stack, inventory)
 
 
 func _request_sort(inventory : Inventory):

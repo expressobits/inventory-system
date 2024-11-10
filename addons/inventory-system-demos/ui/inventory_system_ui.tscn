@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://da2b73383isem"]
+[gd_scene load_steps=7 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
 [ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="3_akms1"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/drop_area.gd" id="3_ras8g"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="6_eoecr"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="7_e17fd"]
 [ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
@@ -36,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("3_ras8g")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -44,6 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 16
@@ -51,6 +54,7 @@ theme_override_constants/margin_bottom = 32
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 32
 alignment = 1
 

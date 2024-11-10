@@ -8,6 +8,7 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var openable : Openable = $Openable
 
 func _ready():
+	inventory.request_drop_obj.connect(_on_request_drop_obj)
 	openable.closed.connect(_on_openable_closed)
 	openable.opened.connect(_on_openable_opened)
 
@@ -61,3 +62,15 @@ func _on_openable_opened(character: Node) -> void:
 
 func _on_openable_closed(character: Node) -> void:
 	_on_close()
+
+
+func _on_request_drop_obj(dropped_item: String, item_id: String, amount: int, properties: Dictionary):
+	var packed_scene : PackedScene = load(dropped_item)
+	var node = packed_scene.instantiate()
+	get_parent().add_child(node)
+	node.set("item_id", item_id)
+	node.set("amount", amount)
+	node.set("position", get("position") + Vector3(0, 1, 0))
+	node.set("rotation", get("rotation"))
+	node.set("item_properties", properties)
+	#dropped.emit(node)

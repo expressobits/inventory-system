@@ -3,7 +3,6 @@ extends Workbench
 
 signal changed_burning_state(is_burning : bool)
 
-@onready var input_inventory : Inventory = $InputInventory
 @export var burnable_category : String = "burnable"
 @onready var gpu_particles_3d = $Node/GPUParticles3D
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
@@ -38,6 +37,7 @@ var is_burning := false:
 			
 
 func _ready():
+	super._ready()
 	_update_is_burning()
 	craft_station.on_crafted.connect(_on_crafted)
 	input_inventory.item_added.connect(_on_input_inventory_item_added)

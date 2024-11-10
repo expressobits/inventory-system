@@ -19,17 +19,17 @@ description = "Rotate"
 code = 1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
-size = Vector3(1.20602, 1.16811, 1.2693)
+size = Vector3(1.20602, 0.872332, 0.993135)
 
 [node name="Workbench" type="StaticBody3D"]
-transform = Transform3D(0.92406, 0, 0.382248, 0, 1, 0, -0.382248, 0, 0.92406, -3.70525, -2.38419e-07, -3.99706)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_sr5uf")
 actions = [SubResource("Resource_pm0e2"), SubResource("Resource_nrqkn")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.249215, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.76837e-07, 0.425824, 0.00825754)
 shape = SubResource("BoxShape3D_v5tyu")
 
 [node name="workbench" parent="." instance=ExtResource("2_2rlru")]

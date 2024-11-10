@@ -18,6 +18,8 @@ func is_active() -> bool:
 
 
 func _can_drop_data(at_position: Vector2, data) -> bool:
+	if data == null:
+		return false
 	return data is GridDraggableElementUI
 
 

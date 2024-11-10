@@ -242,6 +242,7 @@ func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
 	if is_instance_valid(stack) and inventory.has_stack(stack):
+		print(zone)
 		if zone == null:
 			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
 
@@ -249,7 +250,7 @@ func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack
 func _get_item_sprite_size(item: ItemStack) -> Vector2:
 	var definition: ItemDefinition = inventory.database.get_item(item.item_id)
 	if definition == null:
-		return Vector2i(32, 32)
+		return Vector2i(1, 1)
 	var item_size: Vector2i = definition.size
 	var sprite_size := Vector2(item_size) * field_dimensions
 
@@ -260,11 +261,11 @@ func _get_item_sprite_size(item: ItemStack) -> Vector2:
 
 
 func _on_item_activated(grid_item_stack_ui: GridItemStackUI) -> void:
-	var item = grid_item_stack_ui.item
-	if !item:
+	var stack = grid_item_stack_ui.stack
+	if !stack:
 		return
 
-	inventory_item_activated.emit(item)
+	inventory_item_activated.emit(stack)
 
 
 func _on_item_context_activated(grid_item_stack_ui: GridItemStackUI) -> void:
@@ -351,10 +352,10 @@ func _on_dragable_dropped(dragable: GridDraggableElementUI, drop_position: Vecto
 	if !is_instance_valid(inventory):
 		return
 
-	_handle_item_transfer(stack, drop_position, dragable.inventory)
+	_handle_stack_transfer(stack, drop_position, dragable.inventory)
 
 
-func _handle_item_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
+func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
 	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
 	
 	if source_inventory == null:

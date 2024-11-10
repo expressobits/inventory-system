@@ -59,10 +59,6 @@ var opened_inventories : Array[Inventory]
 func _ready():
 	if Engine.is_editor_hint():
 		return
-	print(main_station.valid_recipes)
-	#main_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	#equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	#
 	## Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
 		opened_inventory.connect(_update_opened_inventories)
@@ -130,8 +126,9 @@ func pick_to_inventory(node : Node):
 		
 	var item_id = node.item_id
 	var item_properties = node.item_properties
+	var amount = node.amount
 	
-	if main_inventory.add(item_id, 1, item_properties, true) == 0:
+	if main_inventory.add(item_id, amount, item_properties, true) == 0:
 		emit_signal("picked", node)
 		node.queue_free();
 		return
@@ -151,15 +148,12 @@ func sort(inventory : Inventory):
 	inventory.sort()
 
 
-func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
-	var packed_scene : PackedScene = load(dropped_item)
-	var node = packed_scene.instantiate()
-	drop_parent.add_child(node)
-	node.set("item_id", item_id)
-	node.set("position", drop_parent_position.get("position"))
-	node.set("rotation", drop_parent_position.get("position"))
-	node.set("item_properties", properties)
-	dropped.emit(node)
+func drop(stack: ItemStack, inventory: Inventory):
+	var stack_index = inventory.stacks.find(stack)
+	if stack_index == -1:
+		return
+	
+	inventory.drop_from_inventory(stack_index, stack.amount, stack.properties)
 #endregion
 
 #region Crafter
@@ -213,6 +207,7 @@ func add_open_inventory(inventory : Inventory):
 	opened_inventories.append(inventory)
 	opened_inventory.emit(inventory)
 	if not is_open_main_inventory():
+		#inventory.request_drop_obj.connect(_on_request_drop_obj)
 		open_main_inventory()
 	
 func open_main_inventory():
@@ -229,6 +224,8 @@ func remove_open_inventory(inventory : Inventory):
 	var index = opened_inventories.find(inventory)
 	opened_inventories.remove_at(index)
 	closed_inventory.emit(inventory)
+	#if main_inventory != inventory:
+		#inventory.request_drop_obj.disconnect(_on_request_drop_obj)
 
 
 func close_inventories():
