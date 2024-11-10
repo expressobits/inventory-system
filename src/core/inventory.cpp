@@ -216,7 +216,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 		emit_signal("contents_changed");
 	}
 
-	if (drop_excess) {
+	if (drop_excess && amount_in_interact > 0) {
 		drop(item_id, amount_in_interact, properties);
 		return 0;
 	}
@@ -429,15 +429,15 @@ void Inventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_ind
 }
 
 bool Inventory::drop(const String &item_id, const int &amount, const Dictionary &properties) {
+	ERR_FAIL_COND_V_MSG(amount < 0, false, "'amount' is negative.");
+	if(amount == 0)
+		return false;
 	ERR_FAIL_NULL_V_MSG(get_database(), false, "'database' is null.");
 	Ref<ItemDefinition> _definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(_definition, false, "'item_definition' is null.");
 	if (_definition->get_properties().has("dropped_item")) {
 		String path = _definition->get_properties()["dropped_item"];
-		// We have i < 1000 to have some enforced upper limit preventing long loops
-		for (size_t i = 0; i < amount && i < 1000; i++) {
-			emit_signal("request_drop_obj", path, item_id, properties);
-		}
+		emit_signal("request_drop_obj", path, item_id, amount, properties);
 		return true;
 	}
 	return false;
@@ -636,7 +636,7 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("emptied"));
 	ADD_SIGNAL(MethodInfo("updated_stack", PropertyInfo(Variant::INT, "stack_index")));
 
-	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::DICTIONARY, "item_properties")));
+	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::INT, "amount"), PropertyInfo(Variant::DICTIONARY, "item_properties")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_stacks", "get_stacks");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slot_amount"), "set_slot_amount", "get_slot_amount");
