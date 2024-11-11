@@ -13,6 +13,7 @@ func init_suite() -> void:
 		"test_transfer",
 		"test_remove_item",
 		"test_serialize",
+		"test_clear",
 		"test_serialize_json",
 		"test_has_space_item",
 	]
@@ -65,6 +66,12 @@ func test_remove_item() -> void:
 	assert(!inventory1.contains(item))
 
 
+func test_clear() -> void:
+	inventory1.clear()
+	assert(inventory1.stacks.size() == 0)
+	assert(inventory1.stacks.is_empty())
+
+
 func test_serialize() -> void:
 	assert(inventory1.add(item) == 0)
 	var inventory_data = inventory1.serialize()
@@ -77,6 +84,7 @@ func test_serialize() -> void:
 
 
 func test_serialize_json() -> void:
+	assert(inventory1.add(item) == 0)
 	var inventory_data: Dictionary = inventory1.serialize()
 
 	## To and from JSON serialization
@@ -85,13 +93,13 @@ func test_serialize_json() -> void:
 	assert(test_json_conv.parse(json_string) == OK)
 	inventory_data = test_json_conv.data
 
-	#inventory1.clear()
-	#assert(inventory1.is_empty())
-	#inventory1.deserialize(inventory_data)
-	#assert(!inventory1.is_empty())
-	#assert(inventory1.items.size() == 1)
-	#assert(inventory1.items[0].item_id == item)
-	#assert(inventory1.items[0].amount == 1)
+	inventory1.clear()
+	assert(inventory1.is_empty())
+	inventory1.deserialize(inventory_data)
+	assert(!inventory1.is_empty())
+	assert(inventory1.stacks.size() == 1)
+	assert(inventory1.stacks[0].item_id == item)
+	assert(inventory1.stacks[0].amount == 1)
 
 
 func test_has_space_item() -> void:

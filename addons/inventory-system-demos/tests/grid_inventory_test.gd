@@ -5,7 +5,7 @@ extends TestSuite
 # Item 1 x 1 (Stackable 16)
 @export var wood : String = "wood"
 # Item 2 x 2 (Stackable 1)
-@export var workbench : String = "workbench"
+@export var stone_pickaxe : String = "stone_pickaxe"
 # Item 2 x 2 (Stackable 8)
 @export var campfire : String = "campfire"
 
@@ -21,22 +21,24 @@ func init_suite():
 		"test_automerge",
 		"test_autosplitmerge",
 		"test_wrong_stack_type",
+		"test_clear",
+		"test_serialize"
 	]
 
 
 func test_has_place_for() -> void:
 	# Empty inventory
 	assert(inventory_3x3.has_space_for(wood))
-	assert(inventory_3x3.has_space_for(workbench))
+	assert(inventory_3x3.has_space_for(stone_pickaxe))
 	
 	# Inventory containing 1x1 item
 	assert(inventory_3x3.add(wood) == 0)
-	assert(inventory_3x3.has_space_for(workbench))
+	assert(inventory_3x3.has_space_for(stone_pickaxe))
 	#
 	## Inventory containing 2x2 item
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 1)
 	assert(inventory_3x3.add(campfire) == 0)
-	assert(!inventory_3x3.has_space_for(workbench))
+	assert(!inventory_3x3.has_space_for(stone_pickaxe))
 #
 	## Inventory containing 2x2 item with extended max_stack_size
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 10)
@@ -49,7 +51,7 @@ func test_has_place_for() -> void:
 
 func test_add_item_automerge() -> void:
 	## Inventory containing 2x2 item
-	assert(inventory_3x3.add(workbench) == 0)
+	assert(inventory_3x3.add(stone_pickaxe) == 0)
 	assert(inventory_3x3.stacks.size() == 1)
 	
 	inventory_3x3.clear()
@@ -98,7 +100,7 @@ func test_stack_cant_join() -> void:
 
 
 func test_automerge() -> void:
-	assert(inventory_3x3.add(workbench) == 0)
+	assert(inventory_3x3.add(stone_pickaxe) == 0)
 	assert(inventory_3x3_2.add(campfire) == 0)
 	assert(inventory_3x3_2.add(wood) == 0)
 	assert(inventory_3x3.stacks.size() == 1)
@@ -140,3 +142,33 @@ func test_wrong_stack_type() -> void:
 	assert(inventory_3x3_2.transfer(0, inventory_3x3, 1) == 0)
 	assert(inventory_3x3.stacks.size() == 2)
 	assert(inventory_3x3_2.stacks.size() == 0)
+	
+	inventory_3x3.clear()
+	inventory_3x3_2.clear()
+
+
+func test_clear() -> void:
+	assert(inventory_3x3.add(wood, 1) == 0)
+	assert(inventory_3x3.get_quad_tree().get_first(Vector2i(0,0)) != null)
+	assert(!inventory_3x3.get_quad_tree().is_empty())
+	assert(inventory_3x3.stack_positions.size() == 1)
+	inventory_3x3.clear()
+	assert(inventory_3x3.stacks.size() == 0)
+	assert(inventory_3x3.stacks.is_empty())
+	assert(inventory_3x3.stacks.is_empty())
+	assert(inventory_3x3.get_quad_tree().get_first(Vector2i(0,0)) == null)
+	assert(inventory_3x3.get_quad_tree().is_empty())
+	assert(inventory_3x3.stack_positions.size() == 0)
+
+
+func test_serialize() -> void:
+	assert(inventory_3x3.add_at(Vector2i(0, 1), wood, 1) == 0)
+	assert(inventory_3x3.stack_positions.size() == 1)
+	assert(inventory_3x3.stack_positions[0] == Vector2i(0, 1))
+	var data = inventory_3x3.serialize()
+	inventory_3x3.clear()
+	inventory_3x3_2.deserialize(data)
+	inventory_3x3.deserialize(data)
+	assert(inventory_3x3_2.contains(wood, 1))
+	assert(inventory_3x3_2.stack_positions.size() == 1)
+	assert(inventory_3x3_2.get_quad_tree().get_first(Vector2i(0,1)) != null)
