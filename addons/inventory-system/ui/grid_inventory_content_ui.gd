@@ -360,7 +360,7 @@ func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inv
 	
 	if source_inventory == null:
 		printerr("source_inventory is null?")
-		#inventory.add_at(stack, field_coords)
+		#inventory.add_at_position(stack, field_coords)
 		return
 	
 	if source_inventory.database != inventory.database:

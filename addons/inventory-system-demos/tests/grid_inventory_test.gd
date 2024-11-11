@@ -162,7 +162,7 @@ func test_clear() -> void:
 
 
 func test_serialize() -> void:
-	assert(inventory_3x3.add_at(Vector2i(0, 1), wood, 1) == 0)
+	assert(inventory_3x3.add_at_position(Vector2i(0, 1), wood, 1) == 0)
 	assert(inventory_3x3.stack_positions.size() == 1)
 	assert(inventory_3x3.stack_positions[0] == Vector2i(0, 1))
 	var data = inventory_3x3.serialize()
