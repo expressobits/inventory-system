@@ -31,7 +31,7 @@ void GridInventory::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("move_stack_to", "stack", "position"), &GridInventory::move_stack_to);
-	ClassDB::bind_method(D_METHOD("add_at", "position", "item_id", "amount", "properties"), &GridInventory::add_at, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("add_at_position", "position", "item_id", "amount", "properties"), &GridInventory::add_at_position, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("get_stack_index_at", "position"), &GridInventory::get_stack_index_at);
 	ClassDB::bind_method(D_METHOD("get_stack_position", "stack"), &GridInventory::get_stack_position);
 	ClassDB::bind_method(D_METHOD("get_stack_rect", "stack"), &GridInventory::get_stack_rect);
@@ -216,7 +216,7 @@ TypedArray<ItemStack> GridInventory::get_stacks_under(const Rect2i rect) const {
 	return result;
 }
 
-int GridInventory::add_at(const Vector2i position, const String item_id, const int amount, const Dictionary &properties) {
+int GridInventory::add_at_position(const Vector2i position, const String item_id, const int amount, const Dictionary &properties) {
 	int stack_index = get_stack_index_at(position);
 	if (stack_index == -1) {
 		Ref<ItemDefinition> definition = get_database()->get_item(item_id);
@@ -297,10 +297,10 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	int amount_to_transfer = amount_to_interact - amount_not_removed;
 	if (amount_to_transfer == 0)
 		return amount;
-	int amount_not_transferred = destination->add_at(destination_position, item_id, amount_to_transfer, properties);
+	int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties);
 	if (amount_not_transferred == 0)
 		return 0;
-	add_at(from_position, item_id, amount_not_transferred);
+	add_at_position(from_position, item_id, amount_not_transferred);
 
 	if (amount == amount_of_stack) {
 		if (swap_stacks(from_position, destination, destination_position))
@@ -337,8 +337,8 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	remove_at(stack_index, stack_item_id, stack_amount);
 	other_inventory->remove_at(other_stack_index, other_stack_item_id, other_stack_amount);
 
-	add_at(position, other_stack_item_id, other_stack_amount, other_stack_properties);
-	other_inventory->add_at(real_other_position, stack_item_id, stack_amount, stack_properties);
+	add_at_position(position, other_stack_item_id, other_stack_amount, other_stack_properties);
+	other_inventory->add_at_position(real_other_position, stack_item_id, stack_amount, stack_properties);
 
 	return true;
 }

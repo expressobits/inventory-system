@@ -53,7 +53,7 @@ public:
 	bool rotate_stack(const Ref<ItemStack> &stack);
 	bool is_rotate_item(const Ref<ItemStack> &stack) const;
 	bool can_rotate_item(const Ref<ItemStack> &stack) const;
-	int add_at(const Vector2i position, const String item_id, const int amount = 1, const Dictionary &properties = Dictionary());
+	int add_at_position(const Vector2i position, const String item_id, const int amount = 1, const Dictionary &properties = Dictionary());
 	Ref<ItemStack> get_stack_at(const Vector2i position) const;
 	int get_stack_index_at(const Vector2i position) const;
 	TypedArray<ItemStack> get_stacks_under(const Rect2i rect) const;
