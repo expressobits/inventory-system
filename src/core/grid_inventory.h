@@ -64,6 +64,8 @@ public:
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
 	Vector2i find_free_place(const Vector2i item_size, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
+	virtual Dictionary serialize() const;
+	virtual void deserialize(const Dictionary data);
 	virtual bool can_add_new_stack(const Ref<ItemStack> &stack) const;
 	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary()) const;
 	virtual void on_insert_stack(const int stack_index) override;

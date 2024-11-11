@@ -65,8 +65,8 @@ public:
 	int get_slot_amount() const;
 	void set_inventory_name(const String &new_inventory_name);
 	String get_inventory_name() const;
-	Dictionary serialize() const;
-	void deserialize(const Dictionary data);
+	virtual Dictionary serialize() const;
+	virtual void deserialize(const Dictionary data);
 	virtual bool can_add_new_stack(const Ref<ItemStack> &stack) const;
 	virtual void on_insert_stack(const int stack_index);
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index);

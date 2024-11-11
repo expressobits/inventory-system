@@ -31,6 +31,7 @@ void GridInventory::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("has_space_for", "item_id", "amount", "properties"), &GridInventory::has_space_for, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("move_stack_to", "stack", "position"), &GridInventory::move_stack_to);
+	ClassDB::bind_method(D_METHOD("add_at", "position", "item_id", "amount", "properties"), &GridInventory::add_at, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("get_stack_index_at", "position"), &GridInventory::get_stack_index_at);
 	ClassDB::bind_method(D_METHOD("get_stack_position", "stack"), &GridInventory::get_stack_position);
 	ClassDB::bind_method(D_METHOD("get_stack_rect", "stack"), &GridInventory::get_stack_rect);
@@ -388,6 +389,22 @@ bool GridInventory::sort() {
 		move_stack_to(stack, free_place);
 	}
 	return true;
+}
+
+Dictionary GridInventory::serialize() const {
+	Dictionary data = Inventory::serialize();
+	data["stack_positions"] = stack_positions.duplicate();
+	return data;
+}
+
+void GridInventory::deserialize(const Dictionary data) {
+	stack_positions = data["stack_positions"];
+	Inventory::deserialize(data);
+	for (size_t i = 0; i < stack_positions.size(); i++)
+	{
+		Ref<ItemStack> stack = stacks[i];
+		quad_tree->add(get_stack_rect(stack), stack);
+	}
 }
 
 bool GridInventory::can_add_new_stack(const Ref<ItemStack> &stack) const {
