@@ -22,7 +22,6 @@ code = 1
 size = Vector3(1.20602, 0.872332, 0.993135)
 
 [node name="Workbench" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 18
 collision_mask = 3
 script = ExtResource("1_sr5uf")

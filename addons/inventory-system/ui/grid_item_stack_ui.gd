@@ -4,7 +4,7 @@ class_name GridItemStackUI
 signal activated
 signal clicked
 signal middle_clicked
-signal context_activated
+signal context_activated(event: InputEvent)
 
 @export var stack_style : StyleBox
 
@@ -200,4 +200,4 @@ func _gui_input(event: InputEvent) -> void:
 	if mb_event.button_index == MOUSE_BUTTON_MIDDLE:
 		middle_clicked.emit()
 	elif mb_event.button_index == MOUSE_BUTTON_MASK_RIGHT:
-		context_activated.emit()
+		context_activated.emit(mb_event)

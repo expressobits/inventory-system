@@ -1,16 +1,16 @@
 extends Control
 class_name GridInventoryUI
 
-## Emitted when a grabbed [InventoryItem] is dropped.
-signal item_dropped(item, offset)
+## Emitted when a grabbed [ItemStack] is dropped.
+signal item_dropped(item: ItemStack, offset)
 ## Emitted when the selection has changed. Use [method get_selected_inventory_item]
 ## to obtain the currently selected item.
 signal selection_changed
 ## Emitted when an [InventoryItem] is activated (i.e. double clicked).
 signal inventory_item_activated(item)
-## Emitted when the context menu of an [InventoryItem] is activated
+## Emitted when the context menu of an [ItemStack] is activated
 ## (i.e. right clicked).
-signal inventory_item_context_activated(item)
+signal inventory_stack_context_activated(event: InputEvent,  inventory: Inventory, item: ItemStack)
 ## Emitted when the mouse enters the [Rect2] area of the control representing
 ## the given [InventoryItem].
 signal item_mouse_entered(item)
@@ -265,8 +265,8 @@ func _ready() -> void:
 	_grid_inventory_content_ui.inventory_item_activated.connect(func(item: ItemStack):
 		inventory_item_activated.emit(item)
 	)
-	_grid_inventory_content_ui.inventory_item_context_activated.connect(func(item: ItemStack):
-		inventory_item_context_activated.emit(item)
+	_grid_inventory_content_ui.inventory_stack_context_activated.connect(func(event: InputEvent, item: ItemStack):
+		inventory_stack_context_activated.emit(event, inventory, item)
 	)
 	_grid_inventory_content_ui.request_split.connect(func(inventory: GridInventory, stack_index: int, amount : int):
 		request_split.emit(inventory, stack_index, amount)

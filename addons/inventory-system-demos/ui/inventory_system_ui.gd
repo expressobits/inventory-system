@@ -36,8 +36,10 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @onready var interactor_ui : InteractorUI = get_node(NodePath("InteractorUI"))
 
+@onready var stack_popup_menu: PopupMenu = $StackPopupMenu
 
 func _ready():
+	stack_popup_menu.id_pressed.connect(_on_stack_popup_menu_id_pressed)
 	# TODO connect
 	# _setup_inventory_system_connection()
 	player_inventory_ui.visible = false
@@ -54,6 +56,11 @@ func _ready():
 	loot_inventory_ui.request_split.connect(_request_split)
 	player_inventory_ui.request_sort.connect(_request_sort)
 	loot_inventory_ui.request_sort.connect(_request_sort)
+	
+	player_inventory_ui.inventory_stack_context_activated.connect(_inventory_stack_context)
+	loot_inventory_ui.inventory_stack_context_activated.connect(_inventory_stack_context)
+	
+	other_craft_station_ui.input_inventory_ui.inventory_stack_context_activated.connect(_inventory_stack_context)
 	
 	#player_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	other_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
@@ -169,3 +176,66 @@ func _request_drop(stack: ItemStack, inventory: Inventory):
 
 func _request_sort(inventory : Inventory):
 	character.sort(inventory)
+
+
+var current_stack: ItemStack
+var current_inventory: GridInventory
+const STACK_MENU_ID_SPLIT = 0
+const STACK_MENU_ID_DROP = 1
+const STACK_MENU_ID_EQUIP = 2
+const STACK_MENU_ID_MOVE_TO = 4
+const STACK_MENU_ID_SORT = 9
+
+func _inventory_stack_context(event: InputEvent, inventory: GridInventory, stack: ItemStack):
+	current_stack = stack
+	current_inventory = inventory
+	if !(event is InputEventMouseButton):
+		return
+
+	var mb_event: InputEventMouseButton = event
+	
+	var def = inventory.database.get_item(stack.item_id)
+	var stack_name = str(stack.amount) + " x "
+	if def == null:
+		stack_name += stack.item_id
+	else:
+		stack_name += def.name
+	
+	stack_popup_menu.clear()
+	stack_popup_menu.add_item("Split", STACK_MENU_ID_SPLIT)
+	stack_popup_menu.add_item("Drop", STACK_MENU_ID_DROP)
+	stack_popup_menu.add_item("Equip", STACK_MENU_ID_EQUIP)
+	#stack_popup_menu.add_item("Move to ", STACK_MENU_ID_MOVE_TO)
+	stack_popup_menu.add_separator()
+	stack_popup_menu.add_item("Sort Inventory", STACK_MENU_ID_SORT)
+	
+	stack_popup_menu.set_item_disabled(0, stack.amount == 1)
+	
+	stack_popup_menu.position = mb_event.global_position
+	stack_popup_menu.popup()
+
+func _on_stack_popup_menu_id_pressed(id: int):
+	match id:
+		STACK_MENU_ID_SPLIT:
+			if current_stack == null:
+				return
+			if current_inventory == null:
+				return
+			var stack_index = current_inventory.stacks.find(current_stack)
+			if stack_index == -1:
+				return
+			_request_split(current_inventory, stack_index, current_stack.amount/2)
+		STACK_MENU_ID_DROP:
+			if current_inventory == null:
+				return
+			if current_stack == null:
+				return
+			_request_drop(current_stack, current_inventory)
+		STACK_MENU_ID_SORT:
+			if current_inventory == null:
+				return
+			_request_sort(current_inventory)
+		STACK_MENU_ID_MOVE_TO:
+			if current_inventory == null:
+				return
+			_request_sort(current_inventory)

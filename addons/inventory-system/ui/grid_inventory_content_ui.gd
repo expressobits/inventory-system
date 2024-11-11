@@ -5,7 +5,7 @@ class_name GridInventoryContentUI
 signal item_dropped(item, offset)
 signal selection_changed
 signal inventory_item_activated(item)
-signal inventory_item_context_activated(item)
+signal inventory_stack_context_activated(event: InputEvent, item: ItemStack)
 signal item_mouse_entered(item)
 signal item_mouse_exited(item)
 
@@ -268,12 +268,12 @@ func _on_item_activated(grid_item_stack_ui: GridItemStackUI) -> void:
 	inventory_item_activated.emit(stack)
 
 
-func _on_item_context_activated(grid_item_stack_ui: GridItemStackUI) -> void:
+func _on_item_context_activated(event: InputEvent, grid_item_stack_ui: GridItemStackUI) -> void:
 	var stack = grid_item_stack_ui.stack
 	if !stack:
 		return
 
-	inventory_item_context_activated.emit(stack)
+	inventory_stack_context_activated.emit(event, stack)
 
 
 func _on_item_mouse_entered(grid_item_stack_ui) -> void:
