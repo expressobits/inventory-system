@@ -213,7 +213,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (_added > 0) {
 		emit_signal("item_added", item_id, _added);
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 	}
 
 	if (drop_excess && amount_in_interact > 0) {
@@ -237,26 +237,37 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 	int _added = amount - amount_in_interact;
 	if (_added > 0) {
 		emit_signal("item_added", item_id, _added);
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 	}
 	return amount_in_interact;
 }
 
 int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties) {
+	if (!can_add_new_stack(item_id, amount, properties))
+		return amount;
+	int no_added = insert_stack(stacks.size(), item_id, amount, properties);
+
+	int added = amount - no_added;
+	if (added > 0) {
+		emit_signal("item_added", item_id, added);
+		_flag_contents_changed = true;
+	}
+	return 0;
+}
+
+int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
 	Ref<ItemStack> stack = memnew(ItemStack());
+	stacks.append(stack);
 	stack->set_item_id(item_id);
 	stack->set_amount(amount);
 	stack->set_properties(properties);
-	if (!can_add_new_stack(stack))
-		return amount;
-	stacks.append(stack);
-	on_insert_stack(stacks.size() - 1);
-
+	// int no_added = add_at_index(stacks.size() - 1, item_id, amount, properties);
+	on_insert_stack(stack_index);
 	this->emit_signal("stack_added", stacks.size() - 1);
-	this->emit_signal("updated_stack", stacks.size() - 1);
-	emit_signal("item_added", item_id, amount);
-	emit_signal("contents_changed");
 	return 0;
+}
+
+void Inventory::remove_stack(const int &stack_index) {
 }
 
 int Inventory::remove(const String &item_id, const int &amount) {
@@ -278,13 +289,13 @@ int Inventory::remove(const String &item_id, const int &amount) {
 	int _removed = amount - amount_in_interact;
 	if (_removed > 0) {
 		emit_signal("item_removed", item_id, _removed);
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 	}
 	return amount_in_interact;
 }
 
 int Inventory::remove_at(const int &stack_index, const String &item_id, const int &amount) {
-	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'slot index' is out of bounds.");
+	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'stack_index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
@@ -300,7 +311,7 @@ int Inventory::remove_at(const int &stack_index, const String &item_id, const in
 	int _removed = amount - amount_in_interact;
 	if (_removed > 0) {
 		emit_signal("item_removed", item_id, _removed);
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 	}
 	return amount_in_interact;
 }
@@ -418,7 +429,7 @@ void Inventory::deserialize(const Dictionary data) {
 	get_database()->deserialize_item_stacks(stacks, items_data);
 }
 
-bool Inventory::can_add_new_stack(const Ref<ItemStack> &stack) const {
+bool Inventory::can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const {
 	return true;
 }
 
@@ -430,7 +441,7 @@ void Inventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_ind
 
 bool Inventory::drop(const String &item_id, const int &amount, const Dictionary &properties) {
 	ERR_FAIL_COND_V_MSG(amount < 0, false, "'amount' is negative.");
-	if(amount == 0)
+	if (amount == 0)
 		return false;
 	ERR_FAIL_NULL_V_MSG(get_database(), false, "'database' is null.");
 	Ref<ItemDefinition> _definition = get_database()->get_item(item_id);
@@ -549,7 +560,7 @@ void Inventory::_remove_stack_at(int stack_index) {
 void Inventory::_call_events(int old_amount) {
 	int actual_amount = amount();
 	if (old_amount != actual_amount) {
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 		if (is_empty()) {
 			emit_signal("emptied");
 		}
@@ -619,6 +630,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("contains_category_in_stack", "stack", "category"), &Inventory::contains_category_in_stack);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
+	ClassDB::bind_method(D_METHOD("can_add_new_stack", "item_id", "amount", "properties"), &Inventory::can_add_new_stack, DEFVAL(1), DEFVAL(Dictionary()));
 
 	ClassDB::bind_method(D_METHOD("set_stacks", "stacks"), &Inventory::set_stacks);
 	ClassDB::bind_method(D_METHOD("get_stacks"), &Inventory::get_stacks);
@@ -646,4 +658,13 @@ void Inventory::_bind_methods() {
 void Inventory::update_stack(const int stack_index) {
 	emit_signal("updated_stack", stack_index);
 	_call_events(amount());
+}
+
+void Inventory::_process(float delta) {
+	if (Engine::get_singleton()->is_editor_hint())
+		return;
+	if (_flag_contents_changed) {
+		emit_signal("contents_changed");
+		_flag_contents_changed = false;
+	}
 }

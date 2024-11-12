@@ -97,9 +97,13 @@ TypedArray<Vector2i> GridInventory::get_stack_positions() const {
 }
 
 Vector2i GridInventory::get_stack_position(const Ref<ItemStack> &stack) const {
+	ERR_FAIL_NULL_V_MSG(stack, Vector2i(0, 0), "stack' is null.");
+
 	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return Vector2i(0, 0);
+
+	ERR_FAIL_COND_V_MSG(stack_index >= stack_positions.size(), Vector2i(0, 0), "stack_index' is out of bounds for stack_positions.");
 	return stack_positions[stack_index];
 }
 
@@ -221,8 +225,6 @@ int GridInventory::add_at_position(const Vector2i position, const String item_id
 	if (stack_index == -1) {
 		Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 		Rect2i rect = Rect2i(position, definition->get_size());
-		// TODO case 1 Nao tem o item
-		// Verificar se o rect está livre para adicao e adicionar
 		if (rect_free(rect)) {
 			int no_added = add_on_new_stack(item_id, amount, properties);
 			Ref<ItemStack> stack = stacks[stacks.size() - 1];
@@ -245,22 +247,10 @@ bool GridInventory::move_stack_to(const Ref<ItemStack> stack, const Vector2i pos
 	Rect2i rect = Rect2i(position, stack_size);
 	if (rect_free(rect, stack)) {
 		_move_item_to_unsafe(stack, position);
-		emit_signal("contents_changed");
+		_flag_contents_changed = true;
 		return true;
 	}
 	return false;
-}
-
-bool GridInventory::move_item_to_free_spot(const Ref<ItemStack> stack) {
-	if (rect_free(get_stack_rect(stack), stack))
-		return true;
-
-	Vector2i free_place = find_free_place(get_stack_size(stack), stack);
-	if (free_place == Vector2i(-1, -1))
-		return false;
-
-	_move_item_to_unsafe(stack, free_place);
-	return true;
 }
 
 int GridInventory::transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount) {
@@ -275,7 +265,7 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	Ref<ItemStack> stack = get_stack_at(from_position);
 	if (stack == nullptr)
 		return amount;
-	
+
 	int amount_of_stack = stack->get_amount();
 	int stack_index = stacks.find(stack);
 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'stack index' is out of bounds.");
@@ -297,14 +287,22 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	int amount_to_transfer = amount_to_interact - amount_not_removed;
 	if (amount_to_transfer == 0)
 		return amount;
+
 	int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties);
-	if (amount_not_transferred == 0)
-		return 0;
-	add_at_position(from_position, item_id, amount_not_transferred);
+
+	if (amount_not_transferred > 0)
+		amount_not_transferred = add_at_position(from_position, item_id, amount_not_transferred);
 
 	if (amount == amount_of_stack) {
 		if (swap_stacks(from_position, destination, destination_position))
-			return 0;
+			amount_not_transferred = 0;
+	}
+
+	if (amount_not_transferred != amount) {
+		_flag_contents_changed = true;
+		if (this != destination) {
+			destination->_flag_contents_changed = true;
+		}
 	}
 
 	return amount_not_transferred;
@@ -400,15 +398,14 @@ Dictionary GridInventory::serialize() const {
 void GridInventory::deserialize(const Dictionary data) {
 	stack_positions = data["stack_positions"];
 	Inventory::deserialize(data);
-	for (size_t i = 0; i < stack_positions.size(); i++)
-	{
+	for (size_t i = 0; i < stack_positions.size(); i++) {
 		Ref<ItemStack> stack = stacks[i];
 		quad_tree->add(get_stack_rect(stack), stack);
 	}
 }
 
-bool GridInventory::can_add_new_stack(const Ref<ItemStack> &stack) const {
-	return has_space_for(stack->get_item_id(), stack->get_amount(), stack->get_properties()) && Inventory::can_add_new_stack(stack);
+bool GridInventory::can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const {
+	return has_space_for(item_id, amount, properties) && Inventory::can_add_new_stack(item_id, amount, properties);
 }
 
 bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {

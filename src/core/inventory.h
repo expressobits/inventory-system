@@ -22,6 +22,7 @@ private:
 	int _remove_from_stack(int stack_index, const String &item_id, int amount = 1);
 
 protected:
+	bool _flag_contents_changed = false;
 	TypedArray<ItemStack> stacks;
 	static void _bind_methods();
 
@@ -29,6 +30,7 @@ public:
 	Inventory();
 	~Inventory();
 	virtual void _enter_tree() override;
+	virtual void _process(float delta);
 	void set_stack_content(const int stack_index, const String &item_id, const int &amount, const Dictionary &properties);
 	void update_stack(const int stack_index);
 	bool is_empty() const;
@@ -47,6 +49,8 @@ public:
 	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
 	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int insert_stack(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	void remove_stack(const int &stack_index);
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &stack_index, const String &item_id, const int &amount = 1);
 	bool split(const int &stack_index, const int &amount = 1);
@@ -67,7 +71,7 @@ public:
 	String get_inventory_name() const;
 	virtual Dictionary serialize() const;
 	virtual void deserialize(const Dictionary data);
-	virtual bool can_add_new_stack(const Ref<ItemStack> &stack) const;
+	virtual bool can_add_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary()) const;
 	virtual void on_insert_stack(const int stack_index);
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index);
 };
