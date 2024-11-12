@@ -10,6 +10,8 @@ void ItemStack::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_properties"), &ItemStack::get_properties);
 	ClassDB::bind_method(D_METHOD("contains", "item", "amount"), &ItemStack::contains, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("has_valid"), &ItemStack::has_valid);
+	ClassDB::bind_method(D_METHOD("serialize"), &ItemStack::serialize);
+	ClassDB::bind_method(D_METHOD("deserialize", "data"), &ItemStack::deserialize);
 
 	ADD_SIGNAL(MethodInfo("updated"));
 
