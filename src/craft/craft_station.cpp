@@ -181,7 +181,7 @@ void CraftStation::finish_crafting(int crafting_index) {
 				return;
 			}
 			Dictionary properties = get_database()->create_dynamic_properties(product->get_item_id());
-			amount_to_add = inventory->add(product->get_item_id(), product->get_amount(), properties);
+			amount_to_add = inventory->add(product->get_item_id(), product->get_amount(), properties, true);
 		}
 	}
 	emit_signal("on_crafted", crafting->get_recipe_index());
