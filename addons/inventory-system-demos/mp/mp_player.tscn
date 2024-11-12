@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dnlxnu6jpej17"]
+[gd_scene load_steps=16 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="8_227f4"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="9_c6j5p"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="9_vfq4s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tipcy"]
 shading_mode = 2
@@ -70,7 +71,6 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." index="5"]
 script = ExtResource("3_lbhsf")
-drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
 
 [node name="SyncInventory" type="Node" parent="CharacterInventorySystem/Inventory" index="1" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_2ppxc")
@@ -86,5 +86,9 @@ craft_station = NodePath("..")
 
 [node name="UseItemsExample" parent="." index="6"]
 script = ExtResource("8_227f4")
+
+[node name="Dropper" parent="." index="12"]
+script = ExtResource("9_vfq4s")
+drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
 
 [editable path="CharacterInventorySystem"]

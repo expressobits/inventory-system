@@ -28,10 +28,8 @@ var rot := Vector3()
 
 
 func _ready():
-	$CharacterInventorySystem/Inventory.request_drop_obj.connect(_on_request_drop_obj)
 	# Setup for audios 🔊
 	character_inventory_system.picked.connect(_on_inventory_handler_picked)
-	character_inventory_system.dropped.connect(_on_inventory_handler_dropped)
 	character_inventory_system.opened_inventory.connect(_on_player_inventory_opened)
 	character_inventory_system.closed_inventory.connect(_on_player_inventory_closed)
 	#character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
@@ -39,10 +37,6 @@ func _ready():
 	
 func _on_inventory_handler_picked(_dropped_item):
 	picked_audio.play()
-
-
-func _on_inventory_handler_dropped(_dropped_item):
-	drop_audio.play()
 	
 
 func _on_player_inventory_opened(inventory : Inventory):
@@ -94,15 +88,3 @@ func rotate_camera(mouse_axis : Vector2) -> void:
 	
 	rotation.y = rot.y
 	$Camera3D.rotation.x = rot.x
-
-
-func _on_request_drop_obj(dropped_item : String, item_id : String, amount : int, properties : Dictionary):
-	var packed_scene : PackedScene = load(dropped_item)
-	var node = packed_scene.instantiate()
-	get_parent().add_child(node)
-	node.set("item_id", item_id)
-	node.set("amount", amount)
-	node.set("position", get("position"))
-	node.set("rotation", get("rotation"))
-	node.set("item_properties", properties)
-	$DropAudio.play()

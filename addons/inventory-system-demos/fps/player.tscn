@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bnr02xnvoiun5"]
+[gd_scene load_steps=15 format=3 uid="uid://bnr02xnvoiun5"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/player.gd" id="1_qhbqk"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="2_toyi4"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="8_vym5c"]
 [ext_resource type="AudioStream" uid="uid://cyu1f4p35abbj" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookClose.ogg" id="9_su3a2"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/use_items_example.gd" id="10_mt1fm"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="12_2tit8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 
@@ -88,5 +89,10 @@ volume_db = -30.0
 [node name="PlayerInventoryCloseAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("9_su3a2")
 volume_db = -30.0
+
+[node name="Dropper" type="Node3D" parent="." node_paths=PackedStringArray("inventories")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
+script = ExtResource("12_2tit8")
+inventories = [NodePath("../CharacterInventorySystem/Inventory")]
 
 [editable path="CharacterInventorySystem"]

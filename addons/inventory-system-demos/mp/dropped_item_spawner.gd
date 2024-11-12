@@ -11,7 +11,7 @@ func _init():
 
 
 func _spawn_custom(data : Array):
-	if data.size() != 4 and data.size() != 3:
+	if data.size() != 5 and data.size() != 4:
 		print("data size error!")
 		return null
 	if typeof(data[0]) != TYPE_VECTOR3 or typeof(data[1]) != TYPE_VECTOR3 or typeof(data[2]) != TYPE_STRING:
@@ -22,7 +22,9 @@ func _spawn_custom(data : Array):
 	obj.position = data[0]
 	obj.rotation = data[1]
 	var item_id : String = obj.item_id
-	if data.size() == 4 and typeof(data[3]) == TYPE_DICTIONARY:
-		obj.item_properties = data[3]
+	if data.size() > 3 and typeof(data[3]) == TYPE_INT:
+		obj.amount = data[3]
+	if data.size() > 4  and typeof(data[4]) == TYPE_DICTIONARY:
+		obj.item_properties = data[4]
 	obj.item_id = item_id
 	return obj

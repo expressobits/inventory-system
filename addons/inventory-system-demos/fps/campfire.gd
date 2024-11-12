@@ -37,7 +37,6 @@ var is_burning := false:
 			
 
 func _ready():
-	super._ready()
 	_update_is_burning()
 	craft_station.on_crafted.connect(_on_crafted)
 	input_inventory.item_added.connect(_on_input_inventory_item_added)

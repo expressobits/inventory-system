@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc6pmwc0w143c"]
+[gd_scene load_steps=4 format=3 uid="uid://cc6pmwc0w143c"]
 
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="1_oluqa"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_mkq3m"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="3_bbuuj"]
 
 [node name="Box Inventory" instance=ExtResource("1_oluqa")]
-
-[node name="Open" parent="." index="4"]
-volume_db = -40.0
 
 [node name="Close" parent="." index="5"]
 volume_db = -40.0
@@ -14,3 +12,7 @@ volume_db = -40.0
 [node name="SyncInventory" type="Node" parent="." index="6" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_mkq3m")
 inventory = NodePath("../Inventory")
+
+[node name="Dropper" parent="." index="8"]
+script = ExtResource("3_bbuuj")
+drop_item_spawner_path = NodePath("../../DroppedItemSpawner")

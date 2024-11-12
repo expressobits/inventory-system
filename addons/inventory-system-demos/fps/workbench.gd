@@ -11,9 +11,6 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 var character
 
-func _ready() -> void:
-	input_inventory.request_drop_obj.connect(_on_request_drop_obj)
-
 
 func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
@@ -38,15 +35,3 @@ func open(character : Node):
 	
 func close(character : Node):
 	openable.close(character)
-	
-	
-func _on_request_drop_obj(dropped_item: String, item_id: String, amount: int, properties: Dictionary):
-	var packed_scene : PackedScene = load(dropped_item)
-	var node = packed_scene.instantiate()
-	get_parent().add_child(node)
-	node.set("item_id", item_id)
-	node.set("amount", amount)
-	node.set("position", get("position") + Vector3(0, 1, 0))
-	node.set("rotation", get("rotation"))
-	node.set("item_properties", properties)
-	#dropped.emit(node)

@@ -3,7 +3,6 @@
 class_name CharacterInventorySystem
 extends NodeInventories
 
-signal dropped(node : Node)
 signal opened_station(station : CraftStation)
 signal closed_station(station : CraftStation)
 signal opened_inventory(inventory : Inventory)

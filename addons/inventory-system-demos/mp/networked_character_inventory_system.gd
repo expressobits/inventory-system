@@ -1,9 +1,6 @@
 class_name NetworkedCharacterInventorySystem
 extends "../character/character_inventory_system.gd"
 
-@export_node_path var drop_item_spawner_path := NodePath("../../DroppedItemSpawner")
-@onready var drop_item_spawner = get_node(drop_item_spawner_path)
-
 
 func _ready():
 	if is_multiplayer_authority():
@@ -13,7 +10,6 @@ func _ready():
 		opened_station.connect(_update_opened_stations)
 		closed_station.connect(_update_opened_stations)
 		_update_opened_inventories(main_inventory)
-		
 	else:
 		picked.connect(_on_picked)
 
@@ -91,6 +87,15 @@ func sort(inventory : Inventory):
 		sort_rpc.rpc_id(1, inventory.get_path())
 
 
+func drop(stack: ItemStack, inventory: Inventory):
+	if multiplayer.is_server():
+		super.drop(stack, inventory)
+	else:
+		var stack_index = inventory.stacks.find(stack)
+		if stack_index != -1:
+			drop_rpc.rpc_id(1, stack_index, inventory.get_path())
+
+
 func open_main_craft_station():
 	if multiplayer.is_server():
 		super.open_main_craft_station()
@@ -129,20 +134,6 @@ func remove_open_station(craft_station : CraftStation):
 	if multiplayer.is_server():
 		remove_open_station_rpc.rpc(craft_station.get_path())
 	super.remove_open_station(craft_station)
-
-
-func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
-	if(drop_item_spawner == null):
-		printerr("Spawner is null!")
-		return
-	var packed_scene : PackedScene = load(dropped_item)
-	var data : Array
-	data.append(drop_parent_position.position)
-	data.append(drop_parent_position.rotation)
-	data.append(packed_scene.resource_path)
-	data.append(properties)
-	var obj = drop_item_spawner.spawn(data)
-	dropped.emit(obj)
 
 
 @rpc("any_peer")
@@ -220,6 +211,15 @@ func sort_rpc(inventory_path: NodePath):
 	if inv == null:
 		return
 	super.sort(inv)
+
+
+@rpc
+func drop_rpc(stack_index: int, inventory_path: NodePath):
+	var inv = get_node(inventory_path)
+	if inv == null:
+		return
+	var stack = inv.stacks[stack_index]
+	super.drop(stack, inv)
 
 
 @rpc
