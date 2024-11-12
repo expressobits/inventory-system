@@ -94,7 +94,6 @@ func setup(character : CharacterInventorySystem):
 
 ## Setup player inventories
 func set_player_inventory(player_inventory : GridInventory):
-	print(player_inventory)
 	player_inventory_ui.inventory = player_inventory
 
 

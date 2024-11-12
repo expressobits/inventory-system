@@ -120,6 +120,9 @@ func inventory_inputs():
 func pick_to_inventory(node : Node):
 	if main_inventory == null:
 		return
+	
+	if node == null:
+		return
 
 	if !node.get("is_pickable"):
 		return

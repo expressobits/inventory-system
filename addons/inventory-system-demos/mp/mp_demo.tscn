@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=16 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_efc1k"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="10_kjp1o"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/lag_test.gd" id="15_7tjb2"]
-[ext_resource type="PackedScene" uid="uid://d2tpdnjwuur2j" path="res://addons/inventory-system-demos/mp/mp_shelf.tscn" id="15_lou51"]
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
 
@@ -24,6 +23,42 @@ database = ExtResource("3_aep54")
 
 [node name="Setup Keys" type="Node" parent="."]
 script = ExtResource("10_efc1k")
+
+[node name="Level" parent="." instance=ExtResource("8_kfwho")]
+
+[node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
+script = ExtResource("10_4488h")
+
+[node name="Inventory" parent="Box Inventory" index="0"]
+inventory_name = "Dynamic Inventory"
+
+[node name="Openable" parent="Box Inventory" index="7"]
+script = ExtResource("10_kjp1o")
+
+[node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+script = ExtResource("10_4488h")
+
+[node name="Inventory" parent="Box Inventory2" index="0"]
+inventory_name = "Static Inventory"
+
+[node name="Openable" parent="Box Inventory2" index="7"]
+script = ExtResource("10_kjp1o")
+
+[node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
+transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, -4)
+
+[node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
+burnable_category = "burnables"
+
+[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = ExtResource("8_m78qf")
+database = ExtResource("3_aep54")
+
+[node name="LagTest" type="Node" parent="."]
+script = ExtResource("15_7tjb2")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -64,61 +99,9 @@ text = "HOST"
 layout_mode = 2
 text = "CONNECT TO LOCALHOST"
 
-[node name="Level" parent="." instance=ExtResource("8_kfwho")]
-
-[node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
-script = ExtResource("10_4488h")
-
-[node name="Inventory" parent="Box Inventory" index="1"]
-inventory_name = "Dynamic Inventory"
-
-[node name="Openable" parent="Box Inventory" index="7"]
-script = ExtResource("10_kjp1o")
-
-[node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
-script = ExtResource("10_4488h")
-
-[node name="Inventory" parent="Box Inventory2" index="1"]
-inventory_name = "Static Inventory"
-
-[node name="Openable" parent="Box Inventory2" index="7"]
-script = ExtResource("10_kjp1o")
-
-[node name="Box Inventory3" parent="." instance=ExtResource("9_y0513")]
-transform = Transform3D(-0.0526846, 0, -0.998611, 0, 1, 0, 0.998611, 0, -0.0526846, 4.17498, 0.5, -0.65866)
-script = ExtResource("10_4488h")
-
-[node name="Inventory" parent="Box Inventory3" index="1"]
-inventory_name = "Tools Inventory"
-
-[node name="Openable" parent="Box Inventory3" index="7"]
-script = ExtResource("10_kjp1o")
-
-[node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
-
-[node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
-burnable_category = "burnables"
-
-[node name="Shelf" parent="." instance=ExtResource("15_lou51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36572, 0.6775, 1.94776)
-actions = []
-
-[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
-spawn_path = NodePath("..")
-script = ExtResource("8_m78qf")
-database = ExtResource("3_aep54")
-
-[node name="LagTest" type="Node" parent="."]
-script = ExtResource("15_7tjb2")
-
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
 [connection signal="button_down" from="UI/Connect Panel/VBoxContainer/ConnectButton" to="." method="_on_connect_button_button_down"]
 
-[editable path="UI/Inventory System UI"]
-[editable path="UI/Inventory System UI/TransactionSlotUI"]
-[editable path="UI/Inventory System UI/PlayerInventoryUI"]
 [editable path="Box Inventory"]
 [editable path="Box Inventory2"]
-[editable path="Box Inventory3"]
+[editable path="UI/Inventory System UI"]

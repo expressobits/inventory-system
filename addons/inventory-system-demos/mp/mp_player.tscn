@@ -53,9 +53,8 @@ mesh = SubResource("BoxMesh_biea6")
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_bfpca")
 
-[node name="SyncHotbar" type="Node" parent="." index="3" node_paths=PackedStringArray("hotbar")]
+[node name="SyncHotbar" type="Node" parent="." index="3"]
 script = ExtResource("2_kp02v")
-hotbar = NodePath("../CharacterInventorySystem/Hotbar")
 
 [node name="HandItem" parent="Camera3D" index="1"]
 visible = false
@@ -71,18 +70,7 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." index="5"]
 script = ExtResource("3_lbhsf")
-hotbar_path = null
-main_station_path = null
-interactor_path = null
-drop_parent_path = null
-drop_parent_position_path = null
-change_mouse_state = null
-check_inputs = null
-toggle_inventory_input = null
-exit_inventory_and_craft_panel_input = null
-toggle_craft_panel_input = null
-can_interact = null
-drop_item_spawner_path = null
+drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
 
 [node name="SyncInventory" type="Node" parent="CharacterInventorySystem/Inventory" index="1" node_paths=PackedStringArray("inventory")]
 script = ExtResource("2_2ppxc")

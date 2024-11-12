@@ -6,10 +6,6 @@ extends "../character/character_inventory_system.gd"
 
 
 func _ready():
-	slot_holder = Slot.new()
-	main_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	equipment_inventory.request_drop_obj.connect(_on_request_drop_obj)
-	slot_holder.updated.connect(_on_slot_holder_updated)
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
 		opened_inventory.connect(_update_opened_inventories)
@@ -67,32 +63,32 @@ func close_inventories():
 		close_inventories_rpc.rpc_id(1)
 
 
-func to_holder(slot_index : int, inventory : Inventory, amount : int):
-	if multiplayer.is_server():
-		super.to_holder(slot_index, inventory, amount)
-	else:
-		to_holder_rpc.rpc_id(1, slot_index, get_path_to(inventory), amount)
-
-
-func holder_to(inventory : Inventory):
-	if multiplayer.is_server():
-		super.holder_to(inventory)
-	else:
-		holder_to_rpc.rpc_id(1, get_path_to(inventory))
-
-
-func holder_to_at(slot_index : int, inventory : Inventory, amount_to_move : int = -1):
-	if multiplayer.is_server():
-		super.holder_to_at(slot_index, inventory, amount_to_move)
-	else:
-		holder_to_at_rpc.rpc_id(1, slot_index, get_path_to(inventory), amount_to_move)
-
-
 func pick_to_inventory(node : Node):
 	if multiplayer.is_server():
 		super.pick_to_inventory(node)
 	else:
 		pick_to_inventory_rpc.rpc_id(1, node.get_path())
+
+
+func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
+	if multiplayer.is_server():
+		super.transfer_to(inventory, origin_pos, destination, destination_pos, amount)
+	else:
+		transfer_to_rpc.rpc_id(1, inventory.get_path(), origin_pos, destination.get_path(), destination_pos, amount)
+
+
+func split(inventory : Inventory, stack_index : int, amount : int):
+	if multiplayer.is_server():
+		super.split(inventory, stack_index, amount)
+	else:
+		split_rpc.rpc_id(1, inventory.get_path(), stack_index, amount)
+
+
+func sort(inventory : Inventory):
+	if multiplayer.is_server():
+		super.sort(inventory)
+	else:
+		sort_rpc.rpc_id(1, inventory.get_path())
 
 
 func open_main_craft_station():
@@ -135,34 +131,6 @@ func remove_open_station(craft_station : CraftStation):
 	super.remove_open_station(craft_station)
 
 
-func hotbar_change_selection(index : int):
-	if multiplayer.is_server():
-		hotbar_change_selection_rpc(index)
-	else:
-		hotbar_change_selection_rpc.rpc(index)
-
-
-func hotbar_previous_item():
-	if multiplayer.is_server():
-		hotbar_previous_item_rpc()
-	else:
-		hotbar_previous_item_rpc.rpc()
-
-
-func hotbar_next_item():
-	if multiplayer.is_server():
-		hotbar_next_item_rpc()
-	else:
-		hotbar_next_item_rpc.rpc()
-
-
-func drop_holder():
-	if multiplayer.is_server():
-		drop_holder_rpc()
-	else:
-		drop_holder_rpc.rpc()
-
-
 func _on_request_drop_obj(dropped_item : String, item_id : String, properties : Dictionary):
 	if(drop_item_spawner == null):
 		printerr("Spawner is null!")
@@ -175,14 +143,6 @@ func _on_request_drop_obj(dropped_item : String, item_id : String, properties : 
 	data.append(properties)
 	var obj = drop_item_spawner.spawn(data)
 	dropped.emit(obj)
-
-
-func _on_slot_holder_updated():
-	if not multiplayer.is_server():
-		return
-	var item_id = slot_holder.get_item_id()
-	var amount = slot_holder.get_amount()
-	slot_holder_updated_rpc.rpc(item_id, amount)
 
 
 @rpc("any_peer")
@@ -233,31 +193,33 @@ func close_inventories_rpc():
 
 
 @rpc
-func to_holder_rpc(slot_index : int, inventory_path : NodePath, amount : int):
-	var inventory : Inventory = get_node(inventory_path)
-	super.to_holder(slot_index, inventory, amount)
-
-
-@rpc
-func holder_to_rpc(inventory_path : NodePath):
-	var inventory : Inventory = get_node(inventory_path)
-	super.holder_to(inventory)
-
-
-@rpc
-func holder_to_at_rpc(slot_index : int, inventory_path : NodePath, amount_to_move : int):
-	var inventory : Inventory = get_node(inventory_path)
-	super.holder_to_at(slot_index, inventory, amount_to_move)
-
-
-@rpc("any_peer")
-func slot_holder_updated_rpc(item_id : String, amount : int):
-	change_holder(item_id, amount)
-
-
-@rpc
-func pick_to_inventory_rpc(node_path : NodePath):
+func pick_to_inventory_rpc(node_path: NodePath):
 	super.pick_to_inventory(get_node(node_path))
+
+
+@rpc
+func transfer_to_rpc(inventory_path: NodePath, origin_pos: Vector2i, destination_path: NodePath, destination_pos: Vector2i, amount: int):
+	var inv = get_node(inventory_path)
+	var dest_inv = get_node(destination_path)
+	if inv == null or dest_inv == null:
+		return
+	super.transfer_to(inv, origin_pos, dest_inv, destination_pos, amount)
+
+
+@rpc
+func split_rpc(inventory_path: NodePath, stack_index: int, amount: int):
+	var inv = get_node(inventory_path)
+	if inv == null:
+		return
+	super.split(inv, stack_index, amount)
+
+
+@rpc
+func sort_rpc(inventory_path: NodePath):
+	var inv = get_node(inventory_path)
+	if inv == null:
+		return
+	super.sort(inv)
 
 
 @rpc
@@ -281,23 +243,6 @@ func close_stations_rpc():
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 	var station = get_node(craft_station_path)
 	station.craft(recipe_index)
-
-
-@rpc
-func hotbar_change_selection_rpc(index : int):
-	hotbar.selection_index = index
-
-@rpc
-func hotbar_previous_item_rpc():
-	hotbar.previous_item()
-	
-@rpc	
-func hotbar_next_item_rpc():
-	hotbar.next_item()
-
-@rpc
-func drop_holder_rpc():
-	super.drop_holder()
 	
 
 func _physics_process(_delta : float):

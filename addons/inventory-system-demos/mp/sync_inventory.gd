@@ -4,7 +4,7 @@ extends Node
 @export var sync_item_added_signal := true
 @export var sync_item_removed_signal := true
 
-@export var inventory : Inventory
+@export var inventory : GridInventory
 
 ## Networked version of inventory where server sends rpcs to client for 
 ## slot update, add and remove signals
@@ -27,20 +27,28 @@ func _ready():
 
 
 func setup():
-	inventory.stack_added.connect(_on_stack_added)
-	inventory.updated_stack.connect(_on_updated_stack)
-	inventory.stack_removed.connect(_on_stack_removed)
-	if sync_item_added_signal:
-		inventory.item_added.connect(_on_item_added)
-	if sync_item_removed_signal:
-		inventory.item_removed.connect(_on_item_removed)
-	
+	#inventory.stack_added.connect(_on_stack_added)
+	#inventory.updated_stack.connect(_on_updated_stack)
+	#inventory.stack_removed.connect(_on_stack_removed)
+	inventory.contents_changed.connect(_on_contents_changed)
+	#if sync_item_added_signal:
+		#inventory.item_added.connect(_on_item_added)
+	#if sync_item_removed_signal:
+		#inventory.item_removed.connect(_on_item_removed)
+
+
+func _on_contents_changed():
+	if not multiplayer.is_server():
+		return
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+
 
 func _on_connected(id):
 	if not multiplayer.is_server():
 		return
-	var slots_sync = inventory.serialize()
-	_update_stacks_rpc.rpc_id(id, slots_sync)
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc_id(id, inv_data)
 
 
 func _on_stack_added(stack_index : int):
@@ -53,48 +61,57 @@ func _on_stack_added(stack_index : int):
 func _on_updated_stack(stack_index : int):
 	if not multiplayer.is_server():
 		return
-	_updated_slot_rpc.rpc(stack_index, inventory.database.serialize_stack(inventory.items[stack_index]))
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+	#_updated_slot_rpc.rpc(inventory.stacks[stack_index].serialize())
 
 
 func _on_stack_removed(stack_index : int):
 	if not multiplayer.is_server():
 		return
 	
-	_stack_removed_rpc.rpc(stack_index)
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+	#_stack_removed_rpc.rpc(stack_index)
 
 
 func _on_item_added(item_id : String, amount : int):
 	if not multiplayer.is_server():
 		return
-	_item_added_rpc.rpc(item_id, amount)
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+	#_item_added_rpc.rpc(item_id, amount)
 
 
 func _on_item_removed(item_id : String, amount : int):
 	if not multiplayer.is_server():
 		return
-	_item_removed_rpc.rpc(item_id, amount)
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+	#_item_removed_rpc.rpc(item_id, amount)
 
 
 @rpc
-func _update_stacks_rpc(stacks_sync : Dictionary):
+func _update_inventory_rpc(inv_data : Dictionary):
 	if not multiplayer.is_server():
-		inventory.deserialize(stacks_sync)
+		inventory.deserialize(inv_data)
+		inventory.contents_changed.emit()
 
 
 @rpc
 func _stack_added_rpc(stack_index : int):
 	if multiplayer.is_server():
 		return
-	inventory.insert_slot(stack_index)
+	#inventory.insert_stack(stack_index)
 
 
-@rpc
-func _updated_slot_rpc(stack_index : int, slot_data : Array):
-	if multiplayer.is_server():
-		return
-	var stack : ItemStack = inventory.items[stack_index]
-	stack.deserialize_stack(slot_data)
-	inventory.updated_stack.emit(stack_index)
+#@rpc
+#func _updated_slot_rpc(stack_index : int, slot_data : Array):
+	#if multiplayer.is_server():
+		#return
+	#var stack : ItemStack = inventory.items[stack_index]
+	#stack.deserialize(slot_data)
+	#inventory.updated_stack.emit(stack_index)
 
 @rpc
 func _stack_removed_rpc(stack_index : int):

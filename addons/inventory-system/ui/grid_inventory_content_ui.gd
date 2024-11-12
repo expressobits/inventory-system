@@ -242,7 +242,6 @@ func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack
 	# The item might have been freed in case the item stack has been moved and merged with another
 	# stack.
 	if is_instance_valid(stack) and inventory.has_stack(stack):
-		print(zone)
 		if zone == null:
 			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
 
