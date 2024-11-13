@@ -28,6 +28,8 @@ offset_bottom = 16.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
+expand_mode = 4
+stretch_mode = 5
 
 [node name="ItemName" type="Label" parent="."]
 layout_mode = 0

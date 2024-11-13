@@ -16,6 +16,8 @@ offset_left = -16.0
 offset_right = 16.0
 offset_bottom = 32.0
 grow_horizontal = 2
+expand_mode = 4
+stretch_mode = 5
 
 [node name="ProgressBar" type="ProgressBar" parent="."]
 unique_name_in_owner = true
