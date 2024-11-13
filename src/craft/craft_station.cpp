@@ -321,9 +321,11 @@ void CraftStation::tick(float delta) {
 	if (craftings.is_empty())
 		return;
 	_process_crafts(delta);
+	if(!can_finish_craftings)
+		return;
 	for (size_t i = 0; i < craftings.size(); i++) {
 		Ref<Crafting> crafting = craftings[i];
-		if (crafting->is_finished() && can_finish_craftings) {
+		if (crafting->is_finished()) {
 			finish_crafting(i);
 			return;
 		}
