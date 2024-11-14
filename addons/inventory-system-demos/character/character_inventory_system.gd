@@ -16,8 +16,8 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var main_inventory : GridInventory = get_node(main_inventory_path)
 @export_node_path var equipment_inventory_path := NodePath("InventoryHandler/EquipmentInventory")
 @onready var equipment_inventory : GridInventory = get_node(equipment_inventory_path)
-#@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
-#@onready var hotbar : Hotbar = get_node(hotbar_path)
+@export_node_path("Hotbar") var hotbar_path := NodePath("Hotbar")
+@onready var hotbar : Hotbar = get_node(hotbar_path)
 @export_node_path("CraftStation") var main_station_path := NodePath("CraftStation")
 @onready var main_station : CraftStation = get_node(main_station_path)
 @export_node_path var interactor_path := NodePath("Interactor")
@@ -144,6 +144,10 @@ func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: Gr
 
 func split(inventory : Inventory, stack_index : int, amount : int):
 	inventory.split(stack_index, amount)
+
+
+func equip(stack: ItemStack, inventory : Inventory):
+	hotbar.equip(stack, 0)
 
 
 func sort(inventory : Inventory):

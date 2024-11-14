@@ -45,10 +45,14 @@ func can_preview(interactor : Interactor) -> bool:
 	var node : Node3D = object as Node3D
 	if not node.is_in_group(group_name_for_place_area):
 		return false
-	var item = interactor.hotbar.get_selected_item()
-	if item == null:
+	
+	var stack = interactor.get_parent().hotbar.get_selected_stack()
+	if stack == null:
 		return false
-	if not item.definition.properties.has(property_from_item_for_object_scene):
+	var definition = interactor.database.get_item(stack.item_id)
+	if definition == null:
+		return false
+	if not definition.properties.has(property_from_item_for_object_scene):
 		return false
 	return true
 
@@ -58,7 +62,7 @@ func interact(character : Node, _action_code : int = 0):
 	var node : Node3D = object as Node3D
 	if node != null:
 		if node.is_in_group(group_name_for_place_area):
-			var item = interactor.hotbar.get_selected_item()
-			if item != null:
+			var stack = interactor.get_parent().hotbar.get_selected_stack()
+			if stack != null:
 				## TODO Thinking best catch interactor responses
-				character.character_inventory_system.interactor.get_node("ObjectPlacer").place_item(item, interactor.raycast.get_collision_point(), rotation)
+				character.character_inventory_system.interactor.get_node("ObjectPlacer").place_item(stack.item_id, interactor.raycast.get_collision_point(), rotation)

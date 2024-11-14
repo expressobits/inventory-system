@@ -9,6 +9,7 @@
 script = ExtResource("1_mwfdb")
 main_inventory_path = NodePath("Inventory")
 equipment_inventory_path = NodePath("EquipmentInventory")
+hotbar_path = null
 
 [node name="Inventory" type="GridInventory" parent="."]
 size = Vector2i(8, 4)
@@ -27,3 +28,9 @@ script = ExtResource("2_ja62h")
 
 [node name="ObjectPlacer" type="NodeInventories" parent="Interactor"]
 script = ExtResource("9_3ia0e")
+
+[node name="Hotbar" type="Hotbar" parent="."]
+inventory = NodePath("../Inventory")
+slots_count = 1
+selection_index = 0
+database = ExtResource("2_82l67")

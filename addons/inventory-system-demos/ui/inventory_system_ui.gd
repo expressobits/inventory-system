@@ -173,6 +173,10 @@ func _request_drop(stack: ItemStack, inventory: Inventory):
 	character.drop(stack, inventory)
 
 
+func _request_equip(stack: ItemStack, inventory : Inventory):
+	character.equip(stack, inventory)
+
+
 func _request_sort(inventory : Inventory):
 	character.sort(inventory)
 
@@ -214,27 +218,21 @@ func _inventory_stack_context(event: InputEvent, inventory: GridInventory, stack
 	stack_popup_menu.popup()
 
 func _on_stack_popup_menu_id_pressed(id: int):
+	if current_stack == null:
+		return
+	if current_inventory == null:
+		return
 	match id:
 		STACK_MENU_ID_SPLIT:
-			if current_stack == null:
-				return
-			if current_inventory == null:
-				return
 			var stack_index = current_inventory.stacks.find(current_stack)
 			if stack_index == -1:
 				return
 			_request_split(current_inventory, stack_index, current_stack.amount/2)
 		STACK_MENU_ID_DROP:
-			if current_inventory == null:
-				return
-			if current_stack == null:
-				return
 			_request_drop(current_stack, current_inventory)
 		STACK_MENU_ID_SORT:
-			if current_inventory == null:
-				return
 			_request_sort(current_inventory)
+		STACK_MENU_ID_EQUIP:
+			_request_equip(current_stack, current_inventory)
 		STACK_MENU_ID_MOVE_TO:
-			if current_inventory == null:
-				return
 			_request_sort(current_inventory)
