@@ -49,6 +49,5 @@ transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, 
 
 [node name="Campfire" parent="." instance=ExtResource("16_47qja")]
 transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612, -1.97455, 0, -3.89435)
-burnable_category = "burnables"
 
 [editable path="UI/Inventory System UI"]

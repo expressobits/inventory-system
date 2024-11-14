@@ -3,7 +3,7 @@ extends Workbench
 
 signal changed_burning_state(is_burning : bool)
 
-@export var burnable_category : String = "burnable"
+@export var burnable_category : String = "burnables"
 @onready var gpu_particles_3d = $Node/GPUParticles3D
 @onready var audio_stream_player_3d = $Node/AudioStreamPlayer3D
 @onready var craft_audio = $Node/CraftAudio
