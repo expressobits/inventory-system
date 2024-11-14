@@ -262,6 +262,9 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	ERR_FAIL_COND_V_MSG(get_database() != destination->get_database(), amount, "Operation between inventories that do not have the same database is invalid.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
+	if (this == destination && from_position == destination_position)
+		return amount;
+
 	Ref<ItemStack> stack = get_stack_at(from_position);
 	if (stack == nullptr)
 		return amount;
@@ -269,6 +272,7 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	int amount_of_stack = stack->get_amount();
 	int stack_index = stacks.find(stack);
 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'stack index' is out of bounds.");
+
 	String item_id = stack->get_item_id();
 	Dictionary properties = stack->get_properties();
 	int amount_to_interact = amount;
@@ -283,19 +287,20 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	// 	amount_to_interact = MIN(amount_to_interact, amount_to_left);
 	// }
 
-	int amount_not_removed = remove_at(stack_index, item_id, amount_to_interact);
-	int amount_to_transfer = amount_to_interact - amount_not_removed;
-	if (amount_to_transfer == 0)
-		return amount;
+	int amount_not_transferred = 0;
 
-	int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties);
+	if (amount == amount_of_stack && swap_stacks(from_position, destination, destination_position)) {
+		amount_not_transferred = 0;
+	} else {
+		int amount_not_removed = remove_at(stack_index, item_id, amount_to_interact);
+		int amount_to_transfer = amount_to_interact - amount_not_removed;
+		if (amount_to_transfer == 0)
+			return amount;
 
-	if (amount_not_transferred > 0)
-		amount_not_transferred = add_at_position(from_position, item_id, amount_not_transferred);
+		int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties);
 
-	if (amount == amount_of_stack) {
-		if (swap_stacks(from_position, destination, destination_position))
-			amount_not_transferred = 0;
+		if (amount_not_transferred > 0)
+			amount_not_transferred = add_at_position(from_position, item_id, amount_not_transferred, properties);
 	}
 
 	if (amount_not_transferred != amount) {
@@ -315,24 +320,30 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	Ref<ItemStack> other_stack = other_inventory->get_stack_at(other_position);
 	if (other_stack == nullptr)
 		return false;
+	if (stack == other_stack)
+		return false;
 	Vector2i real_other_position = other_inventory->get_stack_position(other_stack);
 	if (!_size_check(stack, other_stack))
 		return false;
 	int stack_index = stacks.find(stack);
 	if (stack_index == -1)
 		return false;
-	int other_stack_index = other_inventory->stacks.find(other_stack);
-	if (other_stack_index == -1)
-		return false;
 
 	String stack_item_id = stack->get_item_id();
 	String other_stack_item_id = other_stack->get_item_id();
+
+	if(stack_item_id == other_stack_item_id)
+		return false;
 	int stack_amount = stack->get_amount();
 	int other_stack_amount = other_stack->get_amount();
 	Dictionary stack_properties = stack->get_properties();
 	Dictionary other_stack_properties = other_stack->get_properties();
 
 	remove_at(stack_index, stack_item_id, stack_amount);
+
+	int other_stack_index = other_inventory->stacks.find(other_stack);
+	if (other_stack_index == -1)
+		return false;
 	other_inventory->remove_at(other_stack_index, other_stack_item_id, other_stack_amount);
 
 	add_at_position(position, other_stack_item_id, other_stack_amount, other_stack_properties);
