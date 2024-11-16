@@ -30,9 +30,11 @@ public:
 	int get_slots_count() const;
 	void set_selection_index(const int &new_selection_index);
 	int get_selection_index() const;
+	void set_equipped_stacks(const TypedArray<ItemStack> new_equipped_stacks);
+	TypedArray<ItemStack> get_equipped_stacks() const;
 
 	void equip(Ref<ItemStack> stack, int slot_index = 0);
-	void unequip(Ref<ItemStack> stack);
+	void unequip(const int slot_index);
 	void next_item();
 	void previous_item();
 	bool has_valid_item_id() const;

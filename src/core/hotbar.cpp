@@ -11,6 +11,7 @@ void Hotbar::_on_contents_changed() {
 		if (stack_index == -1) {
 			equipped_stacks[i] = nullptr;
 			emit_signal("equipped_stack_changed", i);
+			unequip(i);
 		}
 	}
 }
@@ -23,7 +24,11 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_slots_count"), &Hotbar::get_slots_count);
 	ClassDB::bind_method(D_METHOD("set_selection_index", "selection_index"), &Hotbar::set_selection_index);
 	ClassDB::bind_method(D_METHOD("get_selection_index"), &Hotbar::get_selection_index);
+	ClassDB::bind_method(D_METHOD("set_equipped_stacks", "equipped_stacks"), &Hotbar::set_equipped_stacks);
+	ClassDB::bind_method(D_METHOD("get_equipped_stacks"), &Hotbar::get_equipped_stacks);
+
 	ClassDB::bind_method(D_METHOD("equip", "stack", "slot_index"), &Hotbar::equip);
+	ClassDB::bind_method(D_METHOD("unequip", "slot_index"), &Hotbar::unequip);
 	ClassDB::bind_method(D_METHOD("next_item"), &Hotbar::next_item);
 	ClassDB::bind_method(D_METHOD("previous_item"), &Hotbar::previous_item);
 	ClassDB::bind_method(D_METHOD("has_valid_item_id"), &Hotbar::has_valid_item_id);
@@ -33,7 +38,10 @@ void Hotbar::_bind_methods() {
 
 	ADD_SIGNAL(MethodInfo("on_change_selection", PropertyInfo(Variant::INT, "selection_index")));
 	ADD_SIGNAL(MethodInfo("equipped_stack_changed", PropertyInfo(Variant::INT, "slot_index")));
+	ADD_SIGNAL(MethodInfo("equipped", PropertyInfo(Variant::INT, "slot_index")));
+	ADD_SIGNAL(MethodInfo("unequipped", PropertyInfo(Variant::INT, "slot_index")));
 
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "equipped_stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack"), PROPERTY_USAGE_NONE), "set_equipped_stacks", "get_equipped_stacks");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory"), "set_inventory_path", "get_inventory_path");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slots_count"), "set_slots_count", "get_slots_count");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "selection_index"), "set_selection_index", "get_selection_index");
@@ -96,16 +104,22 @@ int Hotbar::get_selection_index() const {
 	return selection_index;
 }
 
-void Hotbar::equip(Ref<ItemStack> stack, int slot_index) {
-	equipped_stacks[slot_index] = stack;
-	emit_signal("equipped_stack_changed", slot_index);
+void Hotbar::set_equipped_stacks(const TypedArray<ItemStack> new_equipped_stacks) {
+	equipped_stacks = new_equipped_stacks;
 }
 
-void Hotbar::unequip(Ref<ItemStack> stack) {
-	int slot_index = equipped_stacks.find(stack);
-	if (slot_index == -1)
-		return;
+TypedArray<ItemStack> Hotbar::get_equipped_stacks() const {
+	return equipped_stacks;
+}
+
+void Hotbar::equip(Ref<ItemStack> stack, int slot_index) {
+	equipped_stacks[slot_index] = stack;
+	emit_signal("equipped", slot_index);
+}
+
+void Hotbar::unequip(const int slot_index) {
 	equipped_stacks[slot_index] = nullptr;
+	emit_signal("unequipped", slot_index);
 }
 
 void Hotbar::next_item() {
