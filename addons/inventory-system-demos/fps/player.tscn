@@ -44,7 +44,6 @@ mesh = SubResource("BoxMesh_d1alo")
 
 [node name="CharacterInventorySystem" parent="." node_paths=PackedStringArray("raycast", "camera_3d") instance=ExtResource("3_hbu24")]
 database = ExtResource("4_0qsek")
-hotbar_path = null
 raycast = NodePath("../Camera3D/RayCast3D")
 camera_3d = NodePath("../Camera3D")
 

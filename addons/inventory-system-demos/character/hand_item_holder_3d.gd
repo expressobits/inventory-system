@@ -19,10 +19,20 @@ var objects_per_id : Dictionary
 func _ready():
 	#hotbar.on_change_selection.connect(_on_change_selection)
 	hotbar.equipped_stack_changed.connect(_on_update_selection_stack)
+	hotbar.equipped.connect(_on_equipped)
+	hotbar.unequipped.connect(_on_unequipped)
+	_on_change_selection(hotbar.selection_index)
+
+
+func _on_equipped(slot_index: int):
 	_on_change_selection(hotbar.selection_index)
 
 
 func _on_update_selection_stack(slot_index: int):
+	_on_change_selection(hotbar.selection_index)
+
+
+func _on_unequipped(slot_index: int):
 	_on_change_selection(hotbar.selection_index)
 
 

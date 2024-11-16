@@ -234,7 +234,7 @@ ingredients = Array[ItemStack]([SubResource("ItemStack_qxf53"), SubResource("Ite
 
 [sub_resource type="ItemStack" id="ItemStack_vmn0l"]
 item_id = "grass"
-amount = 1
+amount = 2
 
 [sub_resource type="ItemStack" id="ItemStack_0ubii"]
 item_id = "lashing"
@@ -251,7 +251,7 @@ amount = 4
 
 [sub_resource type="ItemStack" id="ItemStack_y3o70"]
 item_id = "stone"
-amount = 8
+amount = 2
 
 [sub_resource type="ItemStack" id="ItemStack_ykgij"]
 item_id = "campfire"
@@ -263,7 +263,7 @@ ingredients = Array[ItemStack]([SubResource("ItemStack_kgu7b"), SubResource("Ite
 
 [sub_resource type="ItemStack" id="ItemStack_uks53"]
 item_id = "wood"
-amount = 1
+amount = 4
 
 [sub_resource type="ItemStack" id="ItemStack_qcw8a"]
 item_id = "workbench"

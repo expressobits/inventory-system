@@ -54,9 +54,6 @@ mesh = SubResource("BoxMesh_biea6")
 root_path = NodePath("../Mesh")
 replication_config = SubResource("SceneReplicationConfig_bfpca")
 
-[node name="SyncHotbar" type="Node" parent="." index="3"]
-script = ExtResource("2_kp02v")
-
 [node name="HandItem" parent="Camera3D" index="1"]
 visible = false
 
@@ -69,7 +66,7 @@ script = ExtResource("3_g726w")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.103376, 0, 0.154242)
 mesh = SubResource("BoxMesh_d1alo")
 
-[node name="CharacterInventorySystem" parent="." index="5"]
+[node name="CharacterInventorySystem" parent="." index="4"]
 script = ExtResource("3_lbhsf")
 
 [node name="SyncInventory" type="Node" parent="CharacterInventorySystem/Inventory" index="1" node_paths=PackedStringArray("inventory")]
@@ -84,10 +81,15 @@ inventory = NodePath("..")
 script = ExtResource("9_c6j5p")
 craft_station = NodePath("..")
 
-[node name="UseItemsExample" parent="." index="6"]
+[node name="SyncHotbar" type="Node" parent="CharacterInventorySystem/Hotbar" index="0" node_paths=PackedStringArray("hotbar")]
+unique_name_in_owner = true
+script = ExtResource("2_kp02v")
+hotbar = NodePath("..")
+
+[node name="UseItemsExample" parent="." index="5"]
 script = ExtResource("8_227f4")
 
-[node name="Dropper" parent="." index="12"]
+[node name="Dropper" parent="." index="11"]
 script = ExtResource("9_vfq4s")
 drop_item_spawner_path = NodePath("../../DroppedItemSpawner")
 

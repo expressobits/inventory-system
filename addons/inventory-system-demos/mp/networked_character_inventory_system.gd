@@ -96,6 +96,15 @@ func drop(stack: ItemStack, inventory: Inventory):
 			drop_rpc.rpc_id(1, stack_index, inventory.get_path())
 
 
+func equip(stack: ItemStack, inventory: Inventory):
+	if multiplayer.is_server():
+		super.equip(stack, inventory)
+	else:
+		var stack_index = inventory.stacks.find(stack)
+		if stack_index != -1:
+			equip_rpc.rpc_id(1, stack_index, inventory.get_path())
+
+
 func open_main_craft_station():
 	if multiplayer.is_server():
 		super.open_main_craft_station()
@@ -115,7 +124,7 @@ func craft(craft_station : CraftStation, recipe_index : int):
 		craft_rpc(craft_station.get_path(), recipe_index)
 	else:
 		craft_rpc.rpc(craft_station.get_path(), recipe_index)
-		
+	
 
 func open_station(craft_station : CraftStation):
 	if multiplayer.is_server():
@@ -220,6 +229,15 @@ func drop_rpc(stack_index: int, inventory_path: NodePath):
 		return
 	var stack = inv.stacks[stack_index]
 	super.drop(stack, inv)
+
+
+@rpc
+func equip_rpc(stack_index: int, inventory_path: NodePath):
+	var inv = get_node(inventory_path)
+	if inv == null:
+		return
+	var stack = inv.stacks[stack_index]
+	super.equip(stack, inv)
 
 
 @rpc
