@@ -153,6 +153,8 @@ void Hotbar::next_item() {
 		new_selection += max_slots;
 	}
 	set_selection_index(new_selection);
+	if(!is_active_slot(new_selection))
+		next_item();
 }
 
 void Hotbar::previous_item() {
@@ -164,6 +166,8 @@ void Hotbar::previous_item() {
 		new_selection += max_slots;
 	}
 	set_selection_index(new_selection);
+	if(!is_active_slot(new_selection))
+		previous_item();
 }
 
 bool Hotbar::has_valid_stack_on_selection() const {
