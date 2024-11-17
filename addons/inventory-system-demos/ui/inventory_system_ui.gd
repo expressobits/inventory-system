@@ -88,7 +88,7 @@ func setup(character : CharacterInventorySystem):
 	self.interactor = interactor
 	interactor_ui.setup(character.interactor)
 	# Hotbar
-	#hotbar_ui.set_hotbar(character.hotbar)
+	hotbar_ui.set_hotbar(character.hotbar)
 	
 
 
@@ -173,8 +173,8 @@ func _request_drop(stack: ItemStack, inventory: Inventory):
 	character.drop(stack, inventory)
 
 
-func _request_equip(stack: ItemStack, inventory : Inventory):
-	character.equip(stack, inventory)
+func _request_equip(stack: ItemStack, inventory: Inventory, slot_index: int):
+	character.equip(stack, inventory, slot_index)
 
 
 func _request_sort(inventory : Inventory):
@@ -207,7 +207,16 @@ func _inventory_stack_context(event: InputEvent, inventory: GridInventory, stack
 	stack_popup_menu.clear()
 	stack_popup_menu.add_item("Split", STACK_MENU_ID_SPLIT)
 	stack_popup_menu.add_item("Drop", STACK_MENU_ID_DROP)
-	stack_popup_menu.add_item("Equip", STACK_MENU_ID_EQUIP)
+	
+	
+	var equip_menu : PopupMenu = PopupMenu.new()
+	for i in 4:
+		if hotbar_ui.hotbar.is_active_slot(i):
+			equip_menu.add_item(str("Equip on ",(i+1)), i)
+	equip_menu.id_pressed.connect(_on_equip_menu_id_pressed)
+	
+	
+	stack_popup_menu.add_submenu_node_item("Equip", equip_menu)
 	#stack_popup_menu.add_item("Move to ", STACK_MENU_ID_MOVE_TO)
 	stack_popup_menu.add_separator()
 	stack_popup_menu.add_item("Sort Inventory", STACK_MENU_ID_SORT)
@@ -232,7 +241,13 @@ func _on_stack_popup_menu_id_pressed(id: int):
 			_request_drop(current_stack, current_inventory)
 		STACK_MENU_ID_SORT:
 			_request_sort(current_inventory)
-		STACK_MENU_ID_EQUIP:
-			_request_equip(current_stack, current_inventory)
 		STACK_MENU_ID_MOVE_TO:
 			_request_sort(current_inventory)
+
+
+func _on_equip_menu_id_pressed(id: int):
+	if current_stack == null:
+		return
+	if current_inventory == null:
+		return
+	_request_equip(current_stack, current_inventory, id)

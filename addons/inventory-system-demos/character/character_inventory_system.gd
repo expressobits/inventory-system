@@ -58,6 +58,8 @@ var opened_inventories : Array[Inventory]
 func _ready():
 	if Engine.is_editor_hint():
 		return
+	hotbar.active_slot(0)
+	hotbar.active_slot(1)
 	## Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
 		opened_inventory.connect(_update_opened_inventories)
@@ -146,8 +148,8 @@ func split(inventory : Inventory, stack_index : int, amount : int):
 	inventory.split(stack_index, amount)
 
 
-func equip(stack: ItemStack, inventory : Inventory):
-	hotbar.equip(stack, 0)
+func equip(stack: ItemStack, inventory : Inventory, slot_index: int):
+	hotbar.equip(stack, slot_index)
 
 
 func sort(inventory : Inventory):
@@ -184,18 +186,17 @@ func hot_bar_inputs(event : InputEvent):
 
 
 func hotbar_change_selection(index : int):
-	pass
-	#hotbar.selection_index = index
+	if hotbar.selection_index == index:
+		index = -1
+	hotbar.selection_index = index
 
 
 func hotbar_previous_item():
-	pass
-	#hotbar.previous_item()
+	hotbar.previous_item()
 	
 
 func hotbar_next_item():
-	pass
-	#hotbar.next_item()
+	hotbar.next_item()
 
 #endregion
 

@@ -46,7 +46,7 @@ func can_preview(interactor : Interactor) -> bool:
 	if not node.is_in_group(group_name_for_place_area):
 		return false
 	
-	var stack = interactor.get_parent().hotbar.get_selected_stack()
+	var stack = interactor.get_parent().hotbar.get_stack_on_selection()
 	if stack == null:
 		return false
 	var definition = interactor.database.get_item(stack.item_id)
@@ -62,7 +62,7 @@ func interact(character : Node, _action_code : int = 0):
 	var node : Node3D = object as Node3D
 	if node != null:
 		if node.is_in_group(group_name_for_place_area):
-			var stack = interactor.get_parent().hotbar.get_selected_stack()
+			var stack = interactor.get_parent().hotbar.get_stack_on_selection()
 			if stack != null:
 				## TODO Thinking best catch interactor responses
 				character.character_inventory_system.interactor.get_node("ObjectPlacer").place_item(stack.item_id, interactor.raycast.get_collision_point(), rotation)

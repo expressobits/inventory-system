@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="3_akms1"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/drop_area.gd" id="3_ras8g"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="6_eoecr"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="7_e17fd"]
+[ext_resource type="PackedScene" uid="uid://m1rlbb42ylv6" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_ui.tscn" id="6_lkdat"]
 [ext_resource type="PackedScene" uid="uid://doyklj58bvj21" path="res://addons/inventory-system-demos/ui/interactor/interactor_ui.tscn" id="7_vn7uk"]
 
 [node name="Inventory System UI" type="Control"]
@@ -81,40 +81,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="HotbarUI" type="Control" parent="." node_paths=PackedStringArray("slots_container")]
-texture_filter = 1
-custom_minimum_size = Vector2(234, 78)
+[node name="HotbarUI" parent="." instance=ExtResource("6_lkdat")]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -213.0
-offset_top = -78.0
-offset_right = 213.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("7_e17fd")
-slots_container = NodePath("Control/UI Inventory")
-
-[node name="Control" type="Control" parent="HotbarUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="UI Inventory" type="GridContainer" parent="HotbarUI/Control"]
-layout_mode = 2
-offset_left = 4.0
-offset_top = 20.0
-offset_right = 4.0
-offset_bottom = 20.0
-theme_override_constants/h_separation = 0
-theme_override_constants/v_separation = 0
-columns = 8
+offset_top = -64.0
+offset_bottom = -16.0
 
 [node name="SlotClick" type="AudioStreamPlayer" parent="."]
 volume_db = -12.0

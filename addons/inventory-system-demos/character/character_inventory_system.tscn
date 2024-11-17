@@ -30,6 +30,4 @@ script = ExtResource("9_3ia0e")
 
 [node name="Hotbar" type="Hotbar" parent="."]
 inventory = NodePath("../Inventory")
-slots_count = 1
-selection_index = 0
 database = ExtResource("2_82l67")

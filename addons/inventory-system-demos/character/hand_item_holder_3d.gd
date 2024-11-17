@@ -17,7 +17,7 @@ var objects_per_id : Dictionary
 
 
 func _ready():
-	#hotbar.on_change_selection.connect(_on_change_selection)
+	hotbar.on_change_selection.connect(_on_change_selection)
 	hotbar.equipped_stack_changed.connect(_on_update_selection_stack)
 	hotbar.equipped.connect(_on_equipped)
 	hotbar.unequipped.connect(_on_unequipped)
@@ -38,10 +38,13 @@ func _on_unequipped(slot_index: int):
 
 func _on_change_selection(new_index: int):
 	_clear_last_selection()
-	if not hotbar.has_valid_item_id():
+	if not hotbar.has_valid_stack_on_selection():
 		interactor.set_actual_hand_object(null)
 		return
-	var item_id = hotbar.get_selected_item_id()
+	var stack = hotbar.get_stack_on_selection()
+	var item_id = ""
+	if stack != null:
+		item_id = stack.item_id
 	var item_definition = hotbar.database.get_item(item_id)
 	var hand_item_scene = null
 	if item_definition.properties.has("hand_item"):

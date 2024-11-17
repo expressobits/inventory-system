@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://m1rlbb42ylv6"]
+
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="1_mkx60"]
+[ext_resource type="PackedScene" uid="uid://chrbciyyqkgx5" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_slot_ui.tscn" id="2_jfg0f"]
+
+[node name="HotbarUI" type="Control" node_paths=PackedStringArray("slots_container")]
+texture_filter = 1
+custom_minimum_size = Vector2(234, 48)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -213.0
+offset_top = -78.0
+offset_right = 213.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("1_mkx60")
+slot_ui_scene = ExtResource("2_jfg0f")
+slots_container = NodePath("Control/HBoxContainer")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
