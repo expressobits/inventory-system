@@ -9,11 +9,29 @@ using namespace godot;
 class Hotbar : public NodeInventories {
 	GDCLASS(Hotbar, NodeInventories);
 
+public:
+	class Slot : public RefCounted {
+        GDCLASS(Slot, RefCounted);
+    private:
+		Ref<ItemStack> stack = nullptr;
+		bool active = false;
+
+	protected:
+		static void _bind_methods();
+
+	public:
+		void clear();
+		void set_stack(const Ref<ItemStack> &new_stack);
+		Ref<ItemStack> get_stack() const;
+		void set_active(const bool new_active);
+		bool is_active() const;
+	};
+
 private:
 	NodePath inventory_path;
-	int slots_count = 4;
+	int max_slots = 4;
 	int selection_index = -1;
-	TypedArray<ItemStack> equipped_stacks;
+	TypedArray<Slot> slots;
 	void _on_contents_changed();
 
 protected:
@@ -26,21 +44,25 @@ public:
 	void set_inventory_path(const NodePath &new_inventory);
 	NodePath get_inventory_path() const;
 	Inventory *get_inventory() const;
-	void set_slots_count(const int &new_slots_count);
-	int get_slots_count() const;
+	void set_max_slots(const int &new_slots_count);
+	int get_max_slots() const;
 	void set_selection_index(const int &new_selection_index);
 	int get_selection_index() const;
-	void set_equipped_stacks(const TypedArray<ItemStack> new_equipped_stacks);
-	TypedArray<ItemStack> get_equipped_stacks() const;
+	void set_slots(const TypedArray<Hotbar::Slot> new_slots);
+	TypedArray<Hotbar::Slot> get_slots() const;
 
+	void active_slot(const int slot_index);
+	void deactive_slot(const int slot_index);
+
+	bool is_active_slot(int slot_index) const;
 	void equip(Ref<ItemStack> stack, int slot_index = 0);
 	void unequip(const int slot_index);
 	void next_item();
 	void previous_item();
-	bool has_valid_item_id() const;
-	bool has_item_on_selection() const;
-	String get_selected_item_id() const;
-	Ref<ItemStack> get_selected_stack() const;
+	bool has_valid_stack_on_selection() const;
+	bool has_valid_stack_on_slot(const int slot_index) const;
+	Ref<ItemStack> get_stack_on_slot(const int slot_index) const;
+	Ref<ItemStack> get_stack_on_selection() const;
 };
 
 #endif // HOTBAR_CLASS_H
