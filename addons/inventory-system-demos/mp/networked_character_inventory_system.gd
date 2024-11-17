@@ -12,6 +12,8 @@ func _ready():
 		_update_opened_inventories(main_inventory)
 	else:
 		picked.connect(_on_picked)
+	hotbar.active_slot(0)
+	hotbar.active_slot(1)
 
 
 func _on_picked(obj : Node):
@@ -96,13 +98,34 @@ func drop(stack: ItemStack, inventory: Inventory):
 			drop_rpc.rpc_id(1, stack_index, inventory.get_path())
 
 
-func equip(stack: ItemStack, inventory: Inventory):
+func equip(stack: ItemStack, inventory: Inventory, slot_index: int):
 	if multiplayer.is_server():
-		super.equip(stack, inventory)
+		super.equip(stack, inventory, slot_index)
 	else:
 		var stack_index = inventory.stacks.find(stack)
 		if stack_index != -1:
-			equip_rpc.rpc_id(1, stack_index, inventory.get_path())
+			equip_rpc.rpc_id(1, stack_index, inventory.get_path(), slot_index)
+
+
+func hotbar_change_selection(index : int):
+	if multiplayer.is_server():
+		super.hotbar_change_selection(index)
+	else:
+		hotbar_change_selection_rpc.rpc_id(1, index)
+
+
+func hotbar_previous_item():
+	if multiplayer.is_server():
+		super.hotbar_previous_item()
+	else:
+		hotbar_previous_item_rpc.rpc_id(1)
+	
+
+func hotbar_next_item():
+	if multiplayer.is_server():
+		super.hotbar_next_item()
+	else:
+		hotbar_next_item_rpc.rpc_id(1)
 
 
 func open_main_craft_station():
@@ -232,13 +255,33 @@ func drop_rpc(stack_index: int, inventory_path: NodePath):
 
 
 @rpc
-func equip_rpc(stack_index: int, inventory_path: NodePath):
+func equip_rpc(stack_index: int, inventory_path: NodePath, slot_index: int):
 	var inv = get_node(inventory_path)
 	if inv == null:
 		return
 	var stack = inv.stacks[stack_index]
-	super.equip(stack, inv)
+	super.equip(stack, inv, slot_index)
 
+
+@rpc
+func hotbar_change_selection_rpc(selection_index: int):
+	if not multiplayer.is_server():
+		return
+	super.hotbar_change_selection(selection_index)
+
+
+@rpc
+func hotbar_previous_item_rpc():
+	if not multiplayer.is_server():
+		return
+	super.hotbar_previous_item()
+
+
+@rpc
+func hotbar_next_item_rpc():
+	if not multiplayer.is_server():
+		return
+	super.hotbar_next_item()
 
 @rpc
 func open_main_craft_station_rpc():
