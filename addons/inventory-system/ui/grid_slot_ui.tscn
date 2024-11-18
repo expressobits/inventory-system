@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxevor61mdhtc"]
+
+[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_slot_ui.gd" id="1_cjqhj"]
+[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="2_x4mfq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0etqt"]
+bg_color = Color(0.225, 0.225, 0.225, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="GridSlotUI" type="Panel"]
+script = ExtResource("1_cjqhj")
+regular_style = SubResource("StyleBoxFlat_0etqt")
+hover_style = ExtResource("2_x4mfq")

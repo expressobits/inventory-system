@@ -7,13 +7,14 @@ signal middle_clicked
 signal context_activated(event: InputEvent)
 
 @export var stack_style : StyleBox
-
+@export var hover_stack_style : StyleBox
 @export var icon_margin : Rect2i = Rect2i()
 
 var inventory : GridInventory
 
 func _init(inventory : GridInventory):
 	self.inventory = inventory
+
 
 var stack: ItemStack:
 	set(new_stack):
@@ -112,12 +113,20 @@ func _ready() -> void:
 		_stack_size_label.size = size
 	)
 	grabbed.connect(func(_offset):
-		if _texture_bg:
-			_texture_bg.hide()
-		if _texture_rect:
-			_texture_rect.hide()
-		if _stack_size_label:
-			_stack_size_label.hide()
+		pass
+		#if _texture_bg:
+			#_texture_bg.hide()
+		#if _texture_rect:
+			#_texture_rect.hide()
+		#if _stack_size_label:
+			#_stack_size_label.hide()
+	)
+	
+	mouse_entered.connect(func():
+		_set_panel_style(hover_stack_style)
+	)
+	mouse_exited.connect(func():
+		_set_panel_style(stack_style)
 	)
 
 	if stack == null:
@@ -201,3 +210,9 @@ func _gui_input(event: InputEvent) -> void:
 		middle_clicked.emit()
 	elif mb_event.button_index == MOUSE_BUTTON_MASK_RIGHT:
 		context_activated.emit(mb_event)
+
+
+func _set_panel_style(style: StyleBox) -> void:
+	remove_theme_stylebox_override("panel")
+	if style != null:
+		add_theme_stylebox_override("panel", style)

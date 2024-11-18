@@ -1,11 +1,23 @@
-[gd_scene load_steps=7 format=3 uid="uid://1dijqt6vr078"]
+[gd_scene load_steps=8 format=3 uid="uid://1dijqt6vr078"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.gd" id="1_gc205"]
 [ext_resource type="Texture2D" uid="uid://dsewxlrqmqe30" path="res://addons/inventory-system/icons/crafter.svg" id="2_lh5b3"]
 [ext_resource type="Texture2D" uid="uid://dacqxpvwnm8x2" path="res://addons/inventory-system/icons/inventory_handler.svg" id="2_o2uor"]
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_inventory_ui.gd" id="3_72ot8"]
-[ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="4_bt3q3"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="5_r0kdv"]
+[ext_resource type="PackedScene" uid="uid://cxevor61mdhtc" path="res://addons/inventory-system/ui/grid_slot_ui.tscn" id="5_s2dju"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p43b5"]
+bg_color = Color(0, 0, 0, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.501961, 0.501961, 0.501961, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [node name="GridInventoryPanel" type="PanelContainer" node_paths=PackedStringArray("grid_inventory_ui", "title_label")]
 texture_filter = 1
@@ -78,7 +90,9 @@ theme_override_constants/margin_bottom = 4
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("3_72ot8")
+grid_slot_ui_scene = ExtResource("5_s2dju")
 field_dimensions = Vector2(48, 48)
 item_spacing = 2
-field_highlighted_style = ExtResource("4_bt3q3")
 selection_style = ExtResource("5_r0kdv")
+stack_style = SubResource("StyleBoxFlat_p43b5")
+hover_stack_style = ExtResource("5_r0kdv")

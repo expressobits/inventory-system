@@ -23,6 +23,8 @@ signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vec
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
+@export var grid_slot_ui_scene: PackedScene
+
 ## Path to an [Inventory] node.
 @export var inventory_path: NodePath:
 	set(new_inv_path):
@@ -89,27 +91,6 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 
 @export_group("Custom Styles")
-## Style of a single inventory field.
-@export var field_style: StyleBox:
-	set(new_field_style):
-		field_style = new_field_style
-		_queue_refresh()
-
-
-## Style of a single inventory field when the mouse hovers over it.
-@export var field_highlighted_style: StyleBox:
-	set(new_field_highlighted_style):
-		field_highlighted_style = new_field_highlighted_style
-		_queue_refresh()
-
-
-## Style of a single inventory field when the item on top of it is selected.
-@export var field_selected_style: StyleBox:
-	set(new_field_selected_style):
-		field_selected_style = new_field_selected_style
-		_queue_refresh()
-
-
 ## Style of a rectangle that will be drawn on top of the selected item.
 @export var selection_style: StyleBox:
 	set(new_selection_style):
@@ -119,9 +100,11 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 ## Style of item stack slot on grid
 @export var stack_style: StyleBox:
-	set(new_selection_style):
-		stack_style = new_selection_style
+	set(new_stack_style):
+		stack_style = new_stack_style
 		_queue_refresh()
+		
+@export var hover_stack_style: StyleBox
 
 
 ## The [Inventory] node linked to this control.
@@ -230,7 +213,7 @@ func _refresh_field_background_grid() -> void:
 	for i in range(inventory.size.x):
 		_field_backgrounds.append([])
 		for j in range(inventory.size.y):
-			var field_panel: GridPriorityPanel = GridPriorityPanel.new(field_style, field_highlighted_style)
+			var field_panel: GridSlotUI = grid_slot_ui_scene.instantiate()
 			field_panel.size = field_dimensions
 			field_panel.position = _grid_inventory_content_ui._get_field_position(Vector2i(i, j))
 			_field_background_grid.add_child(field_panel)
@@ -279,6 +262,7 @@ func _ready() -> void:
 	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
 	_grid_inventory_content_ui.select_mode = select_mode
 	_grid_inventory_content_ui.stack_style = stack_style
+	_grid_inventory_content_ui.hover_stack_style = hover_stack_style
 	_grid_inventory_content_ui.stack_icon_margin = stack_icon_margin
 	add_child(_grid_inventory_content_ui)
 
@@ -287,17 +271,18 @@ func _ready() -> void:
 	_selection_panels.name = "SelectionPanels"
 	add_child(_selection_panels)
 
-	GridDraggableElementUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
-		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
-	)
+	#GridDraggableElementUI.dragable_dropped.connect(func(_grabbed_dragable, _zone, _local_drop_position):
+		#_fill_background(field_style, GridSlotUI.StylePriority.LOW)
+	#)
 
 	_update_size()
 	_queue_refresh()
 
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_DRAG_END:
-		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
+	pass
+	#if what == NOTIFICATION_DRAG_END:
+		#_fill_background(field_style, GridSlotUI.StylePriority.LOW)
 
 
 func _update_size() -> void:
@@ -306,12 +291,10 @@ func _update_size() -> void:
 
 
 func _on_item_mouse_entered(item: ItemStack) -> void:
-	_set_item_background(item, field_highlighted_style, GridPriorityPanel.StylePriority.MEDIUM)
 	item_mouse_entered.emit(item)
 
 
 func _on_item_mouse_exited(item: ItemStack) -> void:
-	_set_item_background(item, null, GridPriorityPanel.StylePriority.MEDIUM)
 	item_mouse_exited.emit(item)
 
 
@@ -325,13 +308,9 @@ func _handle_selection_change() -> void:
 		return
 	_refresh_selection_panel()
 
-	if !field_selected_style:
-		return
 	for item in inventory.stacks:
-		if item in _grid_inventory_content_ui.get_selected_inventory_items():
-			_set_item_background(item, field_selected_style, GridPriorityPanel.StylePriority.HIGH)
-		else:
-			_set_item_background(item, null, GridPriorityPanel.StylePriority.HIGH)
+		if item:
+			_set_background_on_item_selected(inventory.get_stack_rect(item), item in _grid_inventory_content_ui.get_selected_inventory_items())
 
 
 func _on_inventory_resized() -> void:
@@ -343,23 +322,22 @@ func _input(event) -> void:
 		return
 	if !is_instance_valid(inventory):
 		return
-	
-	if !field_highlighted_style:
+
 		return
-	_highlight_grabbed_item(field_highlighted_style)
+	_highlight_grabbed_item()
 
 
-func _highlight_grabbed_item(style: StyleBox):
+func _highlight_grabbed_item():
 	var grabbed_item: ItemStack = _get_global_grabbed_item()
 	if !grabbed_item:
 		return
 
 	var global_grabbed_item_pos: Vector2 = _get_global_grabbed_item_local_pos()
 	if !_is_hovering(global_grabbed_item_pos):
-		_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
+		#_set_background_on_item_dragged(rect, false)
 		return
 
-	_fill_background(field_style, GridPriorityPanel.StylePriority.LOW)
+	#_set_background_on_item_dragged(rect, false)
 
 	var grabbed_item_coords := _grid_inventory_content_ui.get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
 	var definition : ItemDefinition = inventory.database.get_item(grabbed_item.item_id)
@@ -367,27 +345,27 @@ func _highlight_grabbed_item(style: StyleBox):
 	var rect := Rect2i(grabbed_item_coords, item_size)
 	if !Rect2i(Vector2i.ZERO, inventory.size).encloses(rect):
 		return
-	_set_rect_background(rect, style, GridPriorityPanel.StylePriority.LOW)
+	_set_background_on_item_dragged(rect, true)
 
 
 func _is_hovering(local_pos: Vector2) -> bool:
 	return Rect2(Vector2.ZERO, size).has_point(local_pos)
 
 
-func _set_item_background(item: ItemStack, style: StyleBox, priority: int) -> bool:
-	if !item:
-		return false
-
-	_set_rect_background(inventory.get_stack_rect(item), style, priority)
-	return true
-
-
-func _set_rect_background(rect: Rect2i, style: StyleBox, priority: int) -> void:
+func _set_background_on_item_selected(rect: Rect2i, selected: bool) -> void:
 	var h_range = min(rect.size.x + rect.position.x, inventory.size.x)
 	for i in range(rect.position.x, h_range):
 		var v_range = min(rect.size.y + rect.position.y, inventory.size.y)
 		for j in range(rect.position.y, v_range):
-			_field_backgrounds[i][j].set_style(style, priority)
+			_field_backgrounds[i][j].item_selected = selected
+
+
+func _set_background_on_item_dragged(rect: Rect2i, dragged: bool) -> void:
+	var h_range = min(rect.size.x + rect.position.x, inventory.size.x)
+	for i in range(rect.position.x, h_range):
+		var v_range = min(rect.size.y + rect.position.y, inventory.size.y)
+		for j in range(rect.position.y, v_range):
+			_field_backgrounds[i][j].item_dragged = dragged
 
 
 func _fill_background(style: StyleBox, priority: int) -> void:

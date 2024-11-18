@@ -1,5 +1,5 @@
 @tool
-extends Control
+extends Panel
 class_name GridDraggableElementUI
 
 # Somewhat hacky way to do static signals:
