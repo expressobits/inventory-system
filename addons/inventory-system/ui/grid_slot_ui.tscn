@@ -16,6 +16,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="GridSlotUI" type="Panel"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_0etqt")
 script = ExtResource("1_cjqhj")
 regular_style = SubResource("StyleBoxFlat_0etqt")
 hover_style = ExtResource("2_x4mfq")

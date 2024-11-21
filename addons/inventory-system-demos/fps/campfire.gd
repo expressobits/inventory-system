@@ -39,7 +39,7 @@ var is_burning := false:
 func _ready():
 	_update_is_burning()
 	craft_station.on_crafted.connect(_on_crafted)
-	input_inventory.item_added.connect(_on_input_inventory_item_added)
+	input_inventory.contents_changed.connect(_on_input_inventory_contents_changed)
 	
 
 func _update_is_burning():
@@ -49,7 +49,7 @@ func _update_is_burning():
 	audio_stream_player_3d.playing = is_burning
 
 
-func _on_input_inventory_item_added(_item, _amount):
+func _on_input_inventory_contents_changed():
 	check()
 
 
@@ -63,8 +63,8 @@ func check() -> bool:
 	if is_burning:
 		return false
 	var category = input_inventory.database.get_category_from_id(burnable_category)
-	#if not input_inventory.contains_category(category):
-		#return false
+	if not input_inventory.contains_category(category):
+		return false
 	var index = input_inventory.get_stack_index_with_an_item_of_category(category)
 	if index == -1:
 		return false

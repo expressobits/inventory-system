@@ -154,10 +154,6 @@ func _on_inventory_resized() -> void:
 	_queue_refresh()
 
 
-func _on_item_added(item_id: String, amount : int) -> void:
-	_queue_refresh()
-
-
 func _on_stack_added(stack_index: int) -> void:
 	_queue_refresh()
 
