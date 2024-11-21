@@ -229,16 +229,11 @@ void CraftStation::remove_crafting(int crafting_index) {
 	emit_signal("crafting_removed", crafting_index);
 }
 
-void CraftStation::_on_input_inventory_item_added(const String &item_id, int amount) {
+void CraftStation::_on_input_inventory_contents_changed() {
 	if (Engine::get_singleton()->is_editor_hint())
 		return;
 	if (auto_craft)
 		_check_auto_crafts();
-}
-
-void CraftStation::_on_input_inventory_item_removed(const String &item_id, int amount) {
-	if (Engine::get_singleton()->is_editor_hint())
-		return;
 
 	ERR_FAIL_NULL_MSG(get_database(), "Database is null.");
 
@@ -292,8 +287,7 @@ void CraftStation::_setup_connections() {
 			ERR_PRINT("Passed object is not a Inventory!");
 			continue;
 		}
-		inventory->connect("item_added", callable_mp(this, &CraftStation::_on_input_inventory_item_added));
-		inventory->connect("item_removed", callable_mp(this, &CraftStation::_on_input_inventory_item_removed));
+		inventory->connect("contents_changed", callable_mp(this, &CraftStation::_on_input_inventory_contents_changed));
 	}
 }
 

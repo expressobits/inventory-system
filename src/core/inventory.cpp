@@ -212,7 +212,6 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 	ERR_FAIL_COND_V_MSG(_added < 0 || _added > amount, amount, "Invalid _added value calculated.");
 
 	if (_added > 0) {
-		emit_signal("item_added", item_id, _added);
 		_flag_contents_changed = true;
 	}
 
@@ -236,7 +235,6 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 	}
 	int _added = amount - amount_in_interact;
 	if (_added > 0) {
-		emit_signal("item_added", item_id, _added);
 		_flag_contents_changed = true;
 	}
 	return amount_in_interact;
@@ -249,7 +247,6 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 
 	int added = amount - no_added;
 	if (added > 0) {
-		emit_signal("item_added", item_id, added);
 		_flag_contents_changed = true;
 	}
 	return 0;

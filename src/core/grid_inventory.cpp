@@ -49,14 +49,9 @@ void GridInventory::_bind_methods() {
 }
 
 GridInventory::GridInventory() {
-	// Ref<QuadTree> new_quad_tree = memnew(QuadTree());
-	// new_quad_tree->init(size);
-	// set_quad_tree(new_quad_tree);
 }
 
 GridInventory::~GridInventory() {
-	// inventory->connect("item_added", callable_mp(this, &CraftStation::_on_input_inventory_item_added));
-	// inventory->connect("item_removed", callable_mp(this, &CraftStation::_on_input_inventory_item_removed));
 }
 
 void GridInventory::set_size(const Vector2i &new_size) {

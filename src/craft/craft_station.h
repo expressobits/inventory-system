@@ -51,8 +51,7 @@ private:
 	void _validate_property(PropertyInfo &p_property) const;
 	void _process_crafts(float delta);
 	bool _use_items(const Ref<Recipe> &recipe);
-	void _on_input_inventory_item_added(const String &item_id, int amount);
-	void _on_input_inventory_item_removed(const String &item_id, int amount);
+	void _on_input_inventory_contents_changed();
 	void _check_auto_crafts();
 
 protected:
