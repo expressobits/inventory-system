@@ -24,6 +24,7 @@ signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vec
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 @export var grid_slot_ui_scene: PackedScene
+@export var grid_item_stack_ui_scene: PackedScene
 
 ## Path to an [Inventory] node.
 @export var inventory_path: NodePath:
@@ -50,18 +51,6 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		if is_instance_valid(_grid_inventory_content_ui):
 			_grid_inventory_content_ui.default_item_texture = new_default_item_texture
 		default_item_texture = new_default_item_texture
-
-
-## If true, the inventory item sprites will be stretched to fit the inventory
-## fields they are positioned on.
-@export var stretch_item_sprites: bool = true:
-	set(new_stretch_item_sprites):
-		if is_instance_valid(_grid_inventory_content_ui):
-			_grid_inventory_content_ui.stretch_item_sprites = new_stretch_item_sprites
-		stretch_item_sprites = new_stretch_item_sprites
-		
-		
-@export var stack_icon_margin: Rect2i = Rect2i(8, 8, 8, 8)
 		
 		
 ## The size of each inventory field in pixels.
@@ -98,15 +87,6 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		_queue_refresh()
 
 
-## Style of item stack slot on grid
-@export var stack_style: StyleBox:
-	set(new_stack_style):
-		stack_style = new_stack_style
-		_queue_refresh()
-		
-@export var hover_stack_style: StyleBox
-
-
 ## The [Inventory] node linked to this control.
 var inventory: GridInventory = null:
 	set(new_inventory):
@@ -134,8 +114,6 @@ func _connect_inventory_signals() -> void:
 		return
 	if !inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.connect(_queue_refresh)
-	#if !inventory.stack_added.is_connected(_on_stack_added):
-		#inventory.stack_added.connect(_on_stack_added)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.connect(_on_inventory_resized)
 
@@ -145,12 +123,6 @@ func _disconnect_inventory_signals() -> void:
 		return
 	if inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.disconnect(_queue_refresh)
-	#if inventory.item_added.is_connected(_queue_refresh):
-		#inventory.item_added.disconnect(_queue_refresh)
-	#if inventory.stack_added.is_connected(_on_stack_added):
-		#inventory.stack_added.disconnect(_on_stack_added)
-	#if inventory.item_removed.is_connected(_queue_refresh):
-		#inventory.item_removed.disconnect(_queue_refresh)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.disconnect(_on_inventory_resized)
 
@@ -231,11 +203,11 @@ func _ready() -> void:
 	add_child(_field_background_grid)
 
 	_grid_inventory_content_ui = GridInventoryContentUI.new()
+	_grid_inventory_content_ui.grid_item_stack_ui_scene = grid_item_stack_ui_scene
 	_grid_inventory_content_ui.inventory = inventory
 	_grid_inventory_content_ui.field_dimensions = field_dimensions
 	_grid_inventory_content_ui.item_spacing = item_spacing
 	_grid_inventory_content_ui.default_item_texture = default_item_texture
-	_grid_inventory_content_ui.stretch_item_sprites = stretch_item_sprites
 	_grid_inventory_content_ui.name = "GridInventoryContentUI"
 	_grid_inventory_content_ui.resized.connect(_update_size)
 	_grid_inventory_content_ui.item_dropped.connect(func(item: ItemStack, drop_position: Vector2):
@@ -257,9 +229,6 @@ func _ready() -> void:
 	_grid_inventory_content_ui.item_mouse_exited.connect(_on_item_mouse_exited)
 	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
 	_grid_inventory_content_ui.select_mode = select_mode
-	_grid_inventory_content_ui.stack_style = stack_style
-	_grid_inventory_content_ui.hover_stack_style = hover_stack_style
-	_grid_inventory_content_ui.stack_icon_margin = stack_icon_margin
 	add_child(_grid_inventory_content_ui)
 
 	_selection_panels = Control.new()

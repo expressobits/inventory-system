@@ -1,15 +1,28 @@
-[gd_scene load_steps=2 format=3 uid="uid://ch1ixmsfcaf5c"]
+[gd_scene load_steps=4 format=3 uid="uid://ch1ixmsfcaf5c"]
 
 [ext_resource type="Script" path="res://addons/inventory-system/ui/grid_item_stack_ui.gd" id="1_xrm8g"]
+[ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="2_jll5p"]
 
-[node name="GridItemStackUI" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p43b5"]
+bg_color = Color(0, 0, 0, 0.501961)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.501961, 0.501961, 0.501961, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="GridItemStackUI" type="Panel"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_xrm8g")
+stack_style = SubResource("StyleBoxFlat_p43b5")
+hover_stack_style = ExtResource("2_jll5p")
 
-[node name="BGPanel" type="Panel" parent="."]
+[node name="TextureBG" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,3 +30,33 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StackSizeLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "12"
+horizontal_alignment = 2
+vertical_alignment = 2

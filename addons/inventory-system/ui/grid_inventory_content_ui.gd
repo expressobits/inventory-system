@@ -14,6 +14,8 @@ signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vec
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
+@export var grid_item_stack_ui_scene: PackedScene
+
 @export var field_dimensions: Vector2 = Vector2(32, 32):
 	set(new_field_dimensions):
 		if new_field_dimensions == field_dimensions:
@@ -51,21 +53,13 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		default_item_texture = new_default_item_texture
 		_queue_refresh()
 
-@export var stretch_item_sprites: bool = true:
-	set(new_stretch_item_sprites):
-		stretch_item_sprites = new_stretch_item_sprites
-		_queue_refresh()
-
 @export_enum("Single", "Multi") var select_mode: int = SelectMode.SELECT_SINGLE:
 	set(new_select_mode):
 		if select_mode == new_select_mode:
 			return
 		select_mode = new_select_mode
 		_clear_selection()
-		
-@export var stack_style: StyleBox
-@export var hover_stack_style: StyleBox
-@export var stack_icon_margin: Rect2i
+
 
 var inventory: GridInventory = null:
 	set(new_inventory):
@@ -132,8 +126,8 @@ func _connect_inventory_signals() -> void:
 
 	if !inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.connect(_queue_refresh)
-	if !inventory.stack_added.is_connected(_on_stack_added):
-		inventory.stack_added.connect(_on_stack_added)
+	#if !inventory.stack_added.is_connected(_on_stack_added):
+		#inventory.stack_added.connect(_on_stack_added)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.connect(_on_inventory_resized)
 
@@ -144,8 +138,8 @@ func _disconnect_inventory_signals() -> void:
 
 	if inventory.contents_changed.is_connected(_queue_refresh):
 		inventory.contents_changed.disconnect(_queue_refresh)
-	if inventory.stack_added.is_connected(_on_stack_added):
-		inventory.stack_added.disconnect(_on_stack_added)
+	#if inventory.stack_added.is_connected(_on_stack_added):
+		#inventory.stack_added.disconnect(_on_stack_added)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.disconnect(_on_inventory_resized)
 
@@ -204,9 +198,8 @@ func _populate_list() -> void:
 		return
 	
 	for stack in inventory.stacks:
-		var grid_item_stack_ui = GridItemStackUI.new(inventory)
-		grid_item_stack_ui.texture = default_item_texture
-		grid_item_stack_ui.stack = stack
+		var grid_item_stack_ui : GridItemStackUI = grid_item_stack_ui_scene.instantiate()
+		grid_item_stack_ui.setup(inventory, stack)
 		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
 		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
 		grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
@@ -216,17 +209,7 @@ func _populate_list() -> void:
 		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.size = _get_item_sprite_size(stack)
-		grid_item_stack_ui.stack_style = stack_style
-		grid_item_stack_ui.hover_stack_style = hover_stack_style
-		grid_item_stack_ui.icon_margin = stack_icon_margin
-		var definition = inventory.database.get_item(stack.item_id)
-		if definition != null:
-			grid_item_stack_ui.tooltip_text = definition.name
-
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
-		grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
-		if stretch_item_sprites:
-			grid_item_stack_ui.stretch_mode = TextureRect.STRETCH_SCALE
 
 		_ctrl_item_container.add_child(grid_item_stack_ui)
 
@@ -250,10 +233,8 @@ func _get_item_sprite_size(item: ItemStack) -> Vector2:
 		return Vector2i(1, 1)
 	var item_size: Vector2i = definition.size
 	var sprite_size := Vector2(item_size) * field_dimensions
-
 	# Also take item spacing into consideration
 	sprite_size += (Vector2(item_size) - Vector2.ONE) * item_spacing
-	
 	return sprite_size
 
 
