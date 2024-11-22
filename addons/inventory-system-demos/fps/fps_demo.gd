@@ -6,7 +6,6 @@ extends Node
 var main_inventory : Inventory
 
 func _ready():
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	$"UI/Inventory System UI".setup($"Player/CharacterInventorySystem")
 	main_inventory = $"Player/CharacterInventorySystem".main_inventory
 	main_inventory.add("workbench", 1)
