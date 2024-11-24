@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://m1rlbb42ylv6"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar_ui.gd" id="1_mkx60"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_ui.gd" id="1_mkx60"]
 [ext_resource type="PackedScene" uid="uid://chrbciyyqkgx5" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_slot_ui.tscn" id="2_jfg0f"]
 
 [node name="HotbarUI" type="Control" node_paths=PackedStringArray("slots_container")]

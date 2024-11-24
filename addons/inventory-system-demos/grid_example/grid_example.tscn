@@ -2,7 +2,7 @@
 
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="1_i0aw7"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/grid_example/grid_example.gd" id="1_vkfix"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="2_3j1i5"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid/grid_inventory_panel.tscn" id="2_3j1i5"]
 
 [node name="GridExample" type="Node"]
 script = ExtResource("1_vkfix")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://da2b73383isem"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/inventory_system_ui.gd" id="2_ci0ph"]
-[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid_inventory_panel.tscn" id="3_akms1"]
+[ext_resource type="PackedScene" uid="uid://1dijqt6vr078" path="res://addons/inventory-system-demos/ui/grid/grid_inventory_panel.tscn" id="3_akms1"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/drop_area.gd" id="3_ras8g"]
 [ext_resource type="PackedScene" uid="uid://cci6dwxmbapt1" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.tscn" id="6_eoecr"]
 [ext_resource type="PackedScene" uid="uid://m1rlbb42ylv6" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_ui.tscn" id="6_lkdat"]

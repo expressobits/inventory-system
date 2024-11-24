@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ch1ixmsfcaf5c"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_item_stack_ui.gd" id="1_xrm8g"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_item_stack_ui.gd" id="1_xrm8g"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="2_jll5p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p43b5"]

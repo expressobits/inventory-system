@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxevor61mdhtc"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/ui/grid_slot_ui.gd" id="1_cjqhj"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_slot_ui.gd" id="1_cjqhj"]
 [ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="2_x4mfq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0etqt"]
