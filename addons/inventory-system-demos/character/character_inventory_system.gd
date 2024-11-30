@@ -140,8 +140,8 @@ func pick_to_inventory(node : Node):
 	printerr("pick_to_inventory return false");
 
 
-func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
-	inventory.transfer_to(origin_pos, destination, destination_pos, amount)
+func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int, is_rotated: bool):
+	inventory.transfer_to(origin_pos, destination, destination_pos, amount, is_rotated)
 
 
 func split(inventory : Inventory, stack_index : int, amount : int):

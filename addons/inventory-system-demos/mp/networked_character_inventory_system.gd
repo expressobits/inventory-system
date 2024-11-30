@@ -68,11 +68,11 @@ func pick_to_inventory(node : Node):
 		pick_to_inventory_rpc.rpc_id(1, node.get_path())
 
 
-func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
+func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int, is_rotated: bool):
 	if multiplayer.is_server():
-		super.transfer_to(inventory, origin_pos, destination, destination_pos, amount)
+		super.transfer_to(inventory, origin_pos, destination, destination_pos, amount, is_rotated)
 	else:
-		transfer_to_rpc.rpc_id(1, inventory.get_path(), origin_pos, destination.get_path(), destination_pos, amount)
+		transfer_to_rpc.rpc_id(1, inventory.get_path(), origin_pos, destination.get_path(), destination_pos, amount, is_rotated)
 
 
 func split(inventory : Inventory, stack_index : int, amount : int):
@@ -221,12 +221,12 @@ func pick_to_inventory_rpc(node_path: NodePath):
 
 
 @rpc
-func transfer_to_rpc(inventory_path: NodePath, origin_pos: Vector2i, destination_path: NodePath, destination_pos: Vector2i, amount: int):
+func transfer_to_rpc(inventory_path: NodePath, origin_pos: Vector2i, destination_path: NodePath, destination_pos: Vector2i, amount: int, is_rotated: bool):
 	var inv = get_node(inventory_path)
 	var dest_inv = get_node(destination_path)
 	if inv == null or dest_inv == null:
 		return
-	super.transfer_to(inv, origin_pos, dest_inv, destination_pos, amount)
+	super.transfer_to(inv, origin_pos, dest_inv, destination_pos, amount, is_rotated)
 
 
 @rpc

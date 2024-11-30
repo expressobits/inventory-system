@@ -199,6 +199,7 @@ func _populate_list() -> void:
 	
 	for stack in inventory.stacks:
 		var grid_item_stack_ui : GridItemStackUI = grid_item_stack_ui_scene.instantiate()
+		grid_item_stack_ui.size = _get_item_sprite_size(stack)
 		grid_item_stack_ui.setup(inventory, stack)
 		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
 		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
@@ -208,7 +209,6 @@ func _populate_list() -> void:
 		grid_item_stack_ui.mouse_exited.connect(_on_item_mouse_exited.bind(grid_item_stack_ui))
 		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
-		grid_item_stack_ui.size = _get_item_sprite_size(stack)
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 
 		_ctrl_item_container.add_child(grid_item_stack_ui)
@@ -227,11 +227,8 @@ func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack
 			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
 
 
-func _get_item_sprite_size(item: ItemStack) -> Vector2:
-	var definition: ItemDefinition = inventory.database.get_item(item.item_id)
-	if definition == null:
-		return Vector2i(1, 1)
-	var item_size: Vector2i = definition.size
+func _get_item_sprite_size(stack: ItemStack) -> Vector2:
+	var item_size: Vector2i = inventory.get_stack_size(stack)
 	var sprite_size := Vector2(item_size) * field_dimensions
 	# Also take item spacing into consideration
 	sprite_size += (Vector2(item_size) - Vector2.ONE) * item_spacing

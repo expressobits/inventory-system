@@ -38,6 +38,8 @@ func _ready() -> void:
 	mouse_exited.connect(func():
 		_set_panel_style(regular_style)
 	)
+	if inventory == null:
+		return
 	for i in inventory.grid_constraints:
 		if i is CategoryGridInventoryConstraint:
 			var category: String = i.get_category(grid_position)
