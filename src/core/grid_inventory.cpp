@@ -30,6 +30,8 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_quad_tree"), &GridInventory::get_quad_tree);
 	ClassDB::bind_method(D_METHOD("set_stack_positions", "stack_positions"), &GridInventory::set_stack_positions);
 	ClassDB::bind_method(D_METHOD("get_stack_positions"), &GridInventory::get_stack_positions);
+	ClassDB::bind_method(D_METHOD("set_stack_rotations", "stack_rotations"), &GridInventory::set_stack_rotations);
+	ClassDB::bind_method(D_METHOD("get_stack_rotations"), &GridInventory::get_stack_rotations);
 
 	ClassDB::bind_method(D_METHOD("get_stack_position", "stack"), &GridInventory::get_stack_position);
 	ClassDB::bind_method(D_METHOD("set_stack_position", "stack", "new_position"), &GridInventory::set_stack_position);
@@ -109,6 +111,14 @@ TypedArray<Vector2i> GridInventory::get_stack_positions() const {
 	return stack_positions;
 }
 
+void GridInventory::set_stack_rotations(const TypedArray<bool> &new_stack_rotations) {
+	stack_rotations = new_stack_rotations;
+}
+
+TypedArray<bool> GridInventory::get_stack_rotations() const {
+	return stack_rotations;
+}
+
 Vector2i GridInventory::get_stack_position(const Ref<ItemStack> &stack) const {
 	ERR_FAIL_NULL_V_MSG(stack, Vector2i(0, 0), "stack' is null.");
 
@@ -132,23 +142,12 @@ bool GridInventory::set_stack_position(const Ref<ItemStack> &stack, const Vector
 	return true;
 }
 
-Vector2i GridInventory::get_stack_size(const Ref<ItemStack> &stack) const {
-	// TODO implement rotation
-	Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
-	if (definition == nullptr)
-		return Vector2i();
-	return definition->get_size();
-}
-
-Rect2i GridInventory::get_stack_rect(const Ref<ItemStack> &stack) const {
-	Vector2i item_pos = get_stack_position(stack);
-	Vector2i item_size = get_stack_size(stack);
-	return Rect2i(item_pos, item_size);
-}
-
-bool GridInventory::is_stack_rotated(const Ref<ItemStack> &stack) const {
-	// return item.get_property(KEY_ROTATED, false)
-	return false;
+bool GridInventory::can_rotate_item(const Ref<ItemStack> &stack) const {
+	Rect2i rotated_rect = get_stack_rect(stack);
+	int temp = rotated_rect.size.x;
+	rotated_rect.size.x = rotated_rect.size.y;
+	rotated_rect.size.y = temp;
+	return rect_free(rotated_rect, stack);
 }
 
 bool GridInventory::rotate_stack(const Ref<ItemStack> &stack) {
@@ -156,13 +155,33 @@ bool GridInventory::rotate_stack(const Ref<ItemStack> &stack) {
 	return false;
 }
 
-bool GridInventory::can_rotate_item(const Ref<ItemStack> &stack) const {
-	// var rotated_rect := get_item_rect(item)
-	// var temp := rotated_rect.size.x
-	// rotated_rect.size.x = rotated_rect.size.y
-	// rotated_rect.size.y = temp
-	// return rect_free(rotated_rect, item)
-	return false;
+bool GridInventory::is_stack_rotated(const Ref<ItemStack> &stack) const {
+	ERR_FAIL_NULL_V_MSG(stack, false, "stack' is null.");
+
+	int stack_index = stacks.find(stack);
+	if (stack_index == -1)
+		return false;
+
+	ERR_FAIL_COND_V_MSG(stack_index >= stack_rotations.size(), false, "stack_index' is out of bounds for stack_rotations.");
+	return stack_rotations[stack_index];
+}
+
+Vector2i GridInventory::get_stack_size(const Ref<ItemStack> &stack) const {
+	bool is_rotated = is_stack_rotated(stack);
+	Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
+	if (definition == nullptr)
+		return Vector2i();
+	Vector2i size = definition->get_size();
+	if (is_rotated) {
+		size = Vector2i(size.y, size.x);
+	}
+	return size;
+}
+
+Rect2i GridInventory::get_stack_rect(const Ref<ItemStack> &stack) const {
+	Vector2i item_pos = get_stack_position(stack);
+	Vector2i item_size = get_stack_size(stack);
+	return Rect2i(item_pos, item_size);
 }
 
 Ref<ItemStack> GridInventory::get_stack_at(const Vector2i position) const {
@@ -191,16 +210,23 @@ TypedArray<ItemStack> GridInventory::get_stacks_under(const Rect2i rect) const {
 	return result;
 }
 
-int GridInventory::add_at_position(const Vector2i position, const String item_id, const int amount, const Dictionary &properties) {
+int GridInventory::add_at_position(const Vector2i position, const String item_id, const int amount, const Dictionary &properties, const bool is_rotated) {
 	int stack_index = get_stack_index_at(position);
 	if (stack_index == -1) {
 		Ref<ItemDefinition> definition = get_database()->get_item(item_id);
-		Rect2i rect = Rect2i(position, definition->get_size());
-		if (rect_free(rect) && _can_add_on_position(position, item_id, amount, properties)) {
+		Vector2i size;
+		if (is_rotated) {
+			size = definition->get_rotated_size();
+		} else {
+			size = definition->get_size();
+		}
+		Rect2i rect = Rect2i(position, size);
+		if (rect_free(rect) && _can_add_on_position(position, item_id, amount, properties, is_rotated)) {
 			int no_added = add_on_new_stack(item_id, amount, properties);
 			if (no_added == amount)
 				return amount;
 			Ref<ItemStack> stack = stacks[stacks.size() - 1];
+			stack_rotations[stacks.size() - 1] = is_rotated;
 			bool move_success = move_stack_to(stack, position);
 			if (!move_success)
 				UtilityFunctions::printerr("Can't move the item to the given place!");
@@ -309,6 +335,8 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	int other_stack_amount = other_stack->get_amount();
 	Dictionary stack_properties = stack->get_properties();
 	Dictionary other_stack_properties = other_stack->get_properties();
+	bool stack_rotation = false;
+	bool other_stack_rotation = false;
 
 	int other_stack_index = other_inventory->stacks.find(other_stack);
 	if (other_stack_index == -1)
@@ -320,10 +348,10 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	if (!_can_swap_to_inventory(other_inventory, stack_item_id, stack_amount, stack_properties))
 		return false;
 
-	if (!_can_add_on_position(position, other_stack_item_id, other_stack_amount, other_stack_properties))
+	if (!_can_add_on_position(position, other_stack_item_id, other_stack_amount, other_stack_properties, other_stack_rotation))
 		return false;
 
-	if (!other_inventory->_can_add_on_position(real_other_position, stack_item_id, stack_amount, stack_properties))
+	if (!other_inventory->_can_add_on_position(real_other_position, stack_item_id, stack_amount, stack_properties, stack_rotation))
 		return false;
 
 	remove_at(stack_index, stack_item_id, stack_amount);
@@ -347,12 +375,16 @@ bool GridInventory::rect_free(const Rect2i &rect, const Ref<ItemStack> &exceptio
 	return quad_tree->get_first(rect, exception) == nullptr;
 }
 
-Vector2i GridInventory::find_free_place(const Vector2i item_size, const String item_id, const int amount, const Dictionary properties, const Ref<ItemStack> &exception) const {
+Vector2i GridInventory::find_free_place(const Vector2i item_size, const String item_id, const int amount, const Dictionary properties, const bool is_rotated, const Ref<ItemStack> &exception) const {
 	Vector2i result = Vector2i(-1, -1);
-	for (size_t y = 0; y < (size.y - (item_size.y - 1)); y++) {
-		for (size_t x = 0; x < (size.x - (item_size.x - 1)); x++) {
-			Rect2i rect = Rect2i(Vector2i(x, y), item_size);
-			if (rect_free(rect, exception) && _can_add_on_position(Vector2i(x, y), item_id, amount, properties)) {
+	Vector2i final_size = item_size;
+	if (is_rotated) {
+		final_size = Vector2i(final_size.y, final_size.x);
+	}
+	for (size_t y = 0; y < (size.y - (final_size.y - 1)); y++) {
+		for (size_t x = 0; x < (size.x - (final_size.x - 1)); x++) {
+			Rect2i rect = Rect2i(Vector2i(x, y), final_size);
+			if (rect_free(rect, exception) && _can_add_on_position(Vector2i(x, y), item_id, amount, properties, is_rotated)) {
 				return Vector2i(x, y);
 			}
 		}
@@ -399,10 +431,10 @@ void GridInventory::deserialize(const Dictionary data) {
 }
 
 bool GridInventory::can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const {
-	return has_space_for(item_id, amount, properties) && Inventory::can_add_new_stack(item_id, amount, properties);
+	return (has_space_for(item_id, amount, properties, false) || has_space_for(item_id, amount, properties, true)) && Inventory::can_add_new_stack(item_id, amount, properties);
 }
 
-bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {
+bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties, const bool is_rotated) const {
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
 
@@ -410,7 +442,7 @@ bool GridInventory::has_space_for(const String &item_id, const int amount, const
 	// 	return true;
 
 	Vector2i item_size = definition->get_size();
-	Vector2i result = find_free_place(item_size, item_id, amount, properties);
+	Vector2i result = find_free_place(item_size, item_id, amount, properties, is_rotated);
 	return result != Vector2i(-1, -1);
 }
 
@@ -422,9 +454,18 @@ void GridInventory::on_insert_stack(const int stack_index) {
 	ERR_FAIL_NULL_MSG(get_database(), "'database' is null.");
 	Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
 	ERR_FAIL_NULL_MSG(definition, "'definition' is null.");
-	Vector2i position = find_free_place(definition->get_size(), stack->get_item_id(), stack->get_amount(), stack->get_properties());
+	// TODO origin of is_rotated
+	bool is_rotated = false;
+	Vector2i position = find_free_place(definition->get_size(), stack->get_item_id(), stack->get_amount(), stack->get_properties(), is_rotated);
 	stack_positions.insert(stack_index, position);
-	quad_tree->add(Rect2i(position, definition->get_size()), stack);
+	stack_rotations.insert(stack_index, is_rotated);
+	Vector2i size;
+	if (is_rotated) {
+		size = definition->get_rotated_size();
+	} else {
+		size = definition->get_size();
+	}
+	quad_tree->add(Rect2i(position, size), stack);
 }
 
 void GridInventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_index) {
@@ -474,7 +515,7 @@ void GridInventory::_sort_if_needed() {
 		sort();
 }
 
-bool GridInventory::_can_add_on_position(const Vector2i position, const String item_id, const int amount, const Dictionary properties) const {
+bool GridInventory::_can_add_on_position(const Vector2i position, const String item_id, const int amount, const Dictionary properties, const bool is_rotated) const {
 	for (size_t i = 0; i < grid_constraints.size(); i++) {
 		Ref<GridInventoryConstraint> grid_constraint = grid_constraints[i];
 		if (grid_constraint != nullptr && !grid_constraint->can_add_on_position(this, position, item_id, amount, properties)) {
