@@ -243,25 +243,34 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties) {
 	if (!can_add_new_stack(item_id, amount, properties))
 		return amount;
-	int no_added = insert_stack(stacks.size(), item_id, amount, properties);
+
+	int amount_to_add = _get_amount_to_add_from_constraints(item_id, amount, properties);
+	// amount_to_add = MIN(amount_to_add, _get_max_stack(item_id, amount, properties));
+
+	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties);
+	no_added += amount - amount_to_add;
 
 	int added = amount - no_added;
 	if (added > 0) {
 		_flag_contents_changed = true;
 	}
-	return 0;
+	return no_added;
 }
 
 int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
 	Ref<ItemStack> stack = memnew(ItemStack());
 	stacks.append(stack);
 	stack->set_item_id(item_id);
-	stack->set_amount(amount);
+
+	int max_stack = _get_max_stack_for_stack(item_id, amount, properties);
+	int amount_to_add = MIN(amount, max_stack - stack->get_amount());
+
+	stack->set_amount(amount_to_add);
 	stack->set_properties(properties);
 	// int no_added = add_at_index(stacks.size() - 1, item_id, amount, properties);
 	on_insert_stack(stack_index);
 	this->emit_signal("stack_added", stacks.size() - 1);
-	return 0;
+	return amount - amount_to_add;
 }
 
 void Inventory::remove_stack(const int &stack_index) {
@@ -323,6 +332,7 @@ bool Inventory::split(const int &stack_index, const int &amount) {
 
 	const String item_id = current_stack->get_item_id();
 	const Dictionary properties = current_stack->get_properties();
+
 	int amount_no_removed = remove_at(stack_index, item_id, amount);
 	int to_add = amount_in_interaction - amount_no_removed;
 	if (to_add <= 0)
@@ -414,6 +424,14 @@ String Inventory::get_inventory_name() const {
 	return inventory_name;
 }
 
+void Inventory::set_constraints(const TypedArray<InventoryConstraint> &new_constraints) {
+	constraints = new_constraints;
+}
+
+TypedArray<InventoryConstraint> Inventory::get_constraints() const {
+	return constraints;
+}
+
 Dictionary Inventory::serialize() const {
 	Dictionary data = Dictionary();
 	data["items"] = get_database()->serialize_item_stacks(stacks);
@@ -427,7 +445,7 @@ void Inventory::deserialize(const Dictionary data) {
 }
 
 bool Inventory::can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const {
-	return true;
+	return _can_add_on_inventory_from_constraints(item_id, amount, properties) && _can_add_new_stack_on_inventory_from_constraints(item_id, amount, properties);
 }
 
 void Inventory::on_insert_stack(int stack_index) {
@@ -466,25 +484,26 @@ void Inventory::drop_from_inventory(const int &stack_index, const int &amount, c
 int Inventory::add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties) {
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 
-	ERR_FAIL_NULL_V_MSG(get_database(), amount, "The 'database' is null.");
-	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
-	ERR_FAIL_NULL_V_MSG(definition, amount, "The 'definition' is null.");
-
 	// if (stack->is_categorized()) {
 	// 	int flag_category = get_flag_categories_of_slot(slot);
 	// 	if (flag_category != 0 && !is_accept_any_categories(flag_category, definition->get_categories())) {
 	// 		return amount;
 	// 	}
 	// }
-	if (amount <= 0) {
-		return amount;
-	}
-	if (stack->has_valid() && (stack->get_item_id() != item_id || stack->get_properties() != properties)) {
-		return amount;
-	}
 
-	int max_stack = definition->get_max_stack();
-	int amount_to_add = MIN(amount, max_stack - stack->get_amount());
+	if (amount <= 0)
+		return amount;
+
+	if (stack->has_valid() && (stack->get_item_id() != item_id || stack->get_properties() != properties))
+		return amount;
+
+	if (!_can_add_on_inventory_from_constraints(item_id, amount, properties))
+		return amount;
+
+	int amount_to_add = _get_amount_to_add_from_constraints(item_id, amount, properties);
+	int max_stack = _get_max_stack_for_stack(item_id, amount, properties);
+
+	amount_to_add = MIN(amount_to_add, max_stack - stack->get_amount());
 	stack->set_amount(stack->get_amount() + amount_to_add);
 	stack->set_item_id(item_id);
 	stack->set_properties(properties);
@@ -597,6 +616,76 @@ int Inventory::_remove_from_stack(int stack_index, const String &item_id, int am
 	return _remaining_amount;
 }
 
+int Inventory::_get_max_stack_for_stack(const String item_id, const int amount, const Dictionary properties) const {
+	ERR_FAIL_NULL_V_MSG(get_database(), amount, "The 'database' is null.");
+	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
+	ERR_FAIL_NULL_V_MSG(definition, amount, "The 'definition' is null.");
+	int max_stack = _get_max_stack_from_constraints(item_id, amount, properties);
+	if (!_is_override_max_stack_from_constraints(item_id, amount, properties))
+		max_stack = MIN(max_stack, definition->get_max_stack());
+	return max_stack;
+}
+
+bool Inventory::_can_add_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
+	for (size_t i = 0; i < constraints.size(); i++) {
+		Ref<InventoryConstraint> constraint = constraints[i];
+		if (constraint != nullptr && !constraint->can_add_on_inventory(this, item_id, amount, properties))
+			return false;
+	}
+	return true;
+}
+
+bool Inventory::_can_add_new_stack_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
+	for (size_t i = 0; i < constraints.size(); i++) {
+		Ref<InventoryConstraint> constraint = constraints[i];
+		if (constraint != nullptr && !constraint->can_add_new_stack_on_inventory(this, item_id, amount, properties))
+			return false;
+	}
+	return true;
+}
+
+int Inventory::_get_amount_to_add_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
+	int to_added = amount;
+	for (size_t i = 0; i < constraints.size(); i++) {
+		Ref<InventoryConstraint> constraint = constraints[i];
+		if (constraint != nullptr) {
+			int value = constraint->get_amount_to_add(this, item_id, amount, properties);
+			to_added = MIN(value, to_added);
+		}
+	}
+	return to_added;
+}
+
+int Inventory::_get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
+	int max_stack = INT_MAX;
+	for (size_t i = 0; i < constraints.size(); i++) {
+		Ref<InventoryConstraint> constraint = constraints[i];
+		if (constraint != nullptr) {
+			int value = constraint->get_max_stack(this, item_id, amount, properties);
+			max_stack = MIN(value, max_stack);
+		}
+	}
+	return max_stack;
+}
+
+bool Inventory::_is_override_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
+	for (size_t i = 0; i < constraints.size(); i++) {
+		Ref<InventoryConstraint> constraint = constraints[i];
+		if (constraint != nullptr) {
+			if (constraint->is_override_max_stack(this, item_id, amount, properties))
+				return true;
+		}
+	}
+	return false;
+}
+
+bool Inventory::_can_swap_to_inventory(const Inventory *inventory, const String item_id, const int amount, const Dictionary properties) const {
+	int other_real_add = inventory->_get_amount_to_add_from_constraints(item_id, amount, properties);
+	int other_max_stack = inventory->_get_max_stack_for_stack(item_id, other_real_add, properties);
+	int other_amount_to_add = MIN(other_real_add, other_max_stack);
+	return other_amount_to_add == amount;
+}
+
 void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_stack_content", "stack_index", "item_id", "amount", "properties"), &Inventory::set_stack_content, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("is_empty"), &Inventory::is_empty);
@@ -635,6 +724,8 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_slot_amount"), &Inventory::get_slot_amount);
 	ClassDB::bind_method(D_METHOD("set_inventory_name", "inventory_name"), &Inventory::set_inventory_name);
 	ClassDB::bind_method(D_METHOD("get_inventory_name"), &Inventory::get_inventory_name);
+	ClassDB::bind_method(D_METHOD("set_constraints", "constraints"), &Inventory::set_constraints);
+	ClassDB::bind_method(D_METHOD("get_constraints"), &Inventory::get_constraints);
 	ClassDB::bind_method(D_METHOD("update_stack", "stack_index"), &Inventory::update_stack);
 	ADD_SIGNAL(MethodInfo("contents_changed"));
 	ADD_SIGNAL(MethodInfo("stack_added", PropertyInfo(Variant::INT, "stack_index")));
@@ -650,6 +741,7 @@ void Inventory::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_stacks", "get_stacks");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "slot_amount"), "set_slot_amount", "get_slot_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "inventory_name"), "set_inventory_name", "get_inventory_name");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "constraints", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "InventoryConstraint")), "set_constraints", "get_constraints");
 }
 
 void Inventory::update_stack(const int stack_index) {

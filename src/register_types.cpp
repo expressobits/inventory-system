@@ -12,6 +12,8 @@
 #include "base/item_stack.h"
 #include "base/node_inventories.h"
 #include "base/recipe.h"
+#include "constraints/inventory_constraint.h"
+#include "constraints/grid_inventory_constraint.h"
 #include "core/quad_tree.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
@@ -31,6 +33,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(ItemStack);
 	GDREGISTER_CLASS(NodeInventories);
 	GDREGISTER_CLASS(Recipe);
+	GDREGISTER_CLASS(InventoryConstraint);
+	GDREGISTER_CLASS(GridInventoryConstraint);
 	GDREGISTER_CLASS(QuadTree);
 	GDREGISTER_CLASS(QuadTree::QuadNode);
 	GDREGISTER_CLASS(QuadTree::QuadRect);

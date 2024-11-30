@@ -2,6 +2,7 @@
 #define GRID_INVENTORY_CLASS_H
 
 // #include "base/node_inventories.h"
+#include "constraints/grid_inventory_constraint.h"
 #include "core/inventory.h"
 #include "core/quad_tree.h"
 
@@ -15,6 +16,7 @@ private:
 	Vector2i _swap_position = Vector2i(0, 0);
 	Ref<QuadTree> quad_tree;
 	Vector2i size = Vector2i(8, 8);
+	TypedArray<GridInventoryConstraint> grid_constraints = new TypedArray<GridInventoryConstraint>();
 	TypedArray<Vector2i> stack_positions = new TypedArray<Vector2i>();
 	bool _bounds_broken() const;
 	void _refresh_quad_tree();
@@ -23,6 +25,7 @@ private:
 	void _move_stack_to_unsafe(const Ref<ItemStack> &stack, const Vector2i &position);
 	bool _compare_stacks(const Ref<ItemStack> &stack1, const Ref<ItemStack> &stack2) const;
 	void _sort_if_needed();
+	bool _can_add_on_position(const Vector2i position, const String item_id, const int amount, const Dictionary properties) const;
 
 protected:
 	static void _bind_methods();
@@ -33,6 +36,8 @@ public:
 	~GridInventory();
 	void set_size(const Vector2i &new_size);
 	Vector2i get_size() const;
+	void set_grid_constraints(const TypedArray<GridInventoryConstraint> &new_grid_constraints);
+	TypedArray<GridInventoryConstraint> get_grid_constraints() const;
 	void set_quad_tree(const Ref<QuadTree> &new_quad_tree);
 	Ref<QuadTree> get_quad_tree() const;
 	void set_stack_positions(const TypedArray<Vector2i> &new_quad_tree);
@@ -54,7 +59,7 @@ public:
 	int transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount = 1);
 	bool swap_stacks(const Vector2i position, GridInventory *other_inventory, const Vector2i other_position);
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
-	Vector2i find_free_place(const Vector2i stack_size, const Ref<ItemStack> &exception = nullptr) const;
+	Vector2i find_free_place(const Vector2i stack_size, const String item_id, const int amount, const Dictionary properties, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
 	virtual Dictionary serialize() const;
 	virtual void deserialize(const Dictionary data);

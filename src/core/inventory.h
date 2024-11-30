@@ -4,6 +4,7 @@
 #include "base/node_inventories.h"
 #include "base/slot.h"
 #include "base/item_stack.h"
+#include "constraints/inventory_constraint.h"
 
 using namespace godot;
 
@@ -14,6 +15,7 @@ private:
 	int slot_amount = 16;
 	int max_size = 16;
 	String inventory_name = "Inventory";
+	TypedArray<InventoryConstraint> constraints = new TypedArray<InventoryConstraint>();
 	void _load_slots();
 	void _insert_stack(int stack_index);
 	void _remove_stack_at(int stack_index);
@@ -25,6 +27,13 @@ protected:
 	bool _flag_contents_changed = false;
 	TypedArray<ItemStack> stacks;
 	static void _bind_methods();
+	int _get_max_stack_for_stack(const String item_id, const int amount, const Dictionary properties) const;
+	bool _can_add_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	bool _can_add_new_stack_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	int _get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	int _get_amount_to_add_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	bool _is_override_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	bool _can_swap_to_inventory(const Inventory* inventory, const String item_id, const int amount, const Dictionary properties) const;
 
 public:
 	Inventory();
@@ -69,6 +78,8 @@ public:
 	int get_slot_amount() const;
 	void set_inventory_name(const String &new_inventory_name);
 	String get_inventory_name() const;
+	void set_constraints(const TypedArray<InventoryConstraint> &new_constraints);
+	TypedArray<InventoryConstraint> get_constraints() const;
 	virtual Dictionary serialize() const;
 	virtual void deserialize(const Dictionary data);
 	virtual bool can_add_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary()) const;
