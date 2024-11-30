@@ -6,10 +6,12 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @onready var inventory : Inventory = $Inventory
 @export var actions : Array
 @onready var openable : Openable = $Openable
+@export var constraints : Array[GridInventoryConstraint]
 
 func _ready():
 	openable.closed.connect(_on_openable_closed)
 	openable.opened.connect(_on_openable_opened)
+	inventory.grid_constraints = constraints
 
 func get_inventory() -> Inventory:
 	return $Inventory

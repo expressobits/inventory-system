@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://bsr3c46mxy2fw"]
+[gd_scene load_steps=20 format=3 uid="uid://bsr3c46mxy2fw"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/campfire.gd" id="1_11afe"]
 [ext_resource type="PackedScene" uid="uid://bmewr3e0dn71h" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/campfire.glb" id="2_eww0k"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="3_sl0h4"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_1s2gy"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_72vu1"]
+[ext_resource type="Script" path="res://addons/inventory-system/category_grid_inventory_constraint.gd" id="5_vl8k7"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="8_g2guq"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="8_oju8p"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://addons/inventory-system-demos/assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
@@ -23,6 +24,21 @@ code = 0
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_v5tyu"]
 size = Vector3(1.20602, 1.16811, 1.2693)
+
+[sub_resource type="GridInventoryConstraint" id="GridInventoryConstraint_mwexs"]
+script = ExtResource("5_vl8k7")
+category_position = {
+Vector2i(0, 0): "burnables",
+Vector2i(1, 0): "burnables",
+Vector2i(2, 0): "food",
+Vector2i(3, 0): "food",
+Vector2i(4, 0): "food",
+Vector2i(5, 0): "food",
+Vector2i(6, 0): "food",
+Vector2i(7, 0): "food",
+}
+is_only_one_category_for_slots = false
+one_category_for_slots = ""
 
 [sub_resource type="Curve" id="Curve_gbe35"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -78,6 +94,7 @@ database = ExtResource("5_72vu1")
 
 [node name="InputInventory" type="GridInventory" parent="."]
 size = Vector2i(8, 1)
+grid_constraints = Array[GridInventoryConstraint]([SubResource("GridInventoryConstraint_mwexs")])
 database = ExtResource("5_72vu1")
 
 [node name="Node" type="Node3D" parent="."]

@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=15 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system-demos/fps/labels.tscn" id="6_5epcx"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system-demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="8_6rygg"]
+[ext_resource type="Script" path="res://addons/inventory-system/category_grid_inventory_constraint.gd" id="8_qudo1"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="11_fkc5i"]
@@ -12,6 +13,12 @@
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="16_46jkf"]
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="16_47qja"]
+
+[sub_resource type="GridInventoryConstraint" id="GridInventoryConstraint_i88gv"]
+script = ExtResource("8_qudo1")
+category_position = {}
+is_only_one_category_for_slots = true
+one_category_for_slots = "tools"
 
 [node name="Demo" type="Node"]
 script = ExtResource("1_mxj54")
@@ -34,6 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
 [node name="Box Inventory2" parent="Level" instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
+constraints = Array[GridInventoryConstraint]([SubResource("GridInventoryConstraint_i88gv")])
 
 [node name="Workbench" parent="Level" instance=ExtResource("11_fkc5i")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, -4)

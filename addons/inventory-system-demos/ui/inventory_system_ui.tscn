@@ -65,7 +65,7 @@ size_flags_vertical = 8
 
 [node name="LootGridInventoryUI" parent="MarginContainer/HBoxContainer" instance=ExtResource("3_akms1")]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(406, 138)
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 size_flags_vertical = 8
 

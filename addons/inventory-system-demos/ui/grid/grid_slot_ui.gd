@@ -8,6 +8,11 @@ enum StylePriority {HIGH = 0, MEDIUM = 1, LOW = 2}
 @export var hover_style: StyleBox
 var _styles: Array[StyleBox] = [null, null, null]
 
+@onready var category_icon: TextureRect = %CategoryIcon
+var grid_position: Vector2i
+var inventory: GridInventory
+
+
 var item_selected: bool = false:
 	set(value):
 		pass
@@ -18,6 +23,11 @@ var item_dragged: bool = false:
 	set(value):
 		pass
 		#print("item_grabbed",value)
+		
+		
+func setup(grid_position: Vector2i, inventory: GridInventory):
+	self.grid_position = grid_position
+	self.inventory = inventory
 
 
 func _ready() -> void:
@@ -28,6 +38,18 @@ func _ready() -> void:
 	mouse_exited.connect(func():
 		_set_panel_style(regular_style)
 	)
+	for i in inventory.grid_constraints:
+		if i is CategoryGridInventoryConstraint:
+			var category: String = i.get_category(grid_position)
+			if category != "" and inventory.database != null:
+				var cat: ItemCategory = inventory.database.get_category_from_id(category)
+				if cat != null:
+					category_icon.visible = true
+					category_icon.texture = cat.icon
+					self_modulate = cat.color
+					return
+	self_modulate = Color.WHITE
+	category_icon.visible = false
 
 
 func set_style(style: StyleBox, priority: int = StylePriority.LOW) -> void:

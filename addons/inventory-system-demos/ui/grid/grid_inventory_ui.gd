@@ -184,6 +184,7 @@ func _refresh_field_background_grid() -> void:
 			var field_panel: GridSlotUI = grid_slot_ui_scene.instantiate()
 			field_panel.size = field_dimensions
 			field_panel.position = _grid_inventory_content_ui._get_field_position(Vector2i(i, j))
+			field_panel.setup(Vector2i(i, j), inventory)
 			_field_background_grid.add_child(field_panel)
 			_field_backgrounds[i].append(field_panel)
 
