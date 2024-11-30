@@ -43,10 +43,10 @@ void GridInventory::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_stack_at", "position"), &GridInventory::get_stack_at);
 	ClassDB::bind_method(D_METHOD("get_stack_index_at", "position"), &GridInventory::get_stack_index_at);
-	ClassDB::bind_method(D_METHOD("add_at_position", "position", "item_id", "amount", "properties"), &GridInventory::add_at_position, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("add_at_position", "position", "item_id", "amount", "properties", "is_rotated"), &GridInventory::add_at_position, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("get_stacks_under", "rect"), &GridInventory::get_stacks_under);
 	// ClassDB::bind_method(D_METHOD("move_stack_to", "stack", "position"), &GridInventory::move_stack_to);
-	ClassDB::bind_method(D_METHOD("transfer_to", "from_position", "destination", "destination_position", "amount"), &GridInventory::transfer_to, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("transfer_to", "from_position", "destination", "destination_position", "amount", "is_rotated"), &GridInventory::transfer_to, DEFVAL(1), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("swap_stacks", "position", "other_inventory", "other_position"), &GridInventory::swap_stacks);
 	ClassDB::bind_method(D_METHOD("rect_free", "rect", "exception"), &GridInventory::rect_free, DEFVAL(nullptr));
 	// ClassDB::bind_method(D_METHOD("find_free_place", "stack_size", "exception"), &GridInventory::find_free_place, DEFVAL(nullptr));
@@ -233,6 +233,9 @@ int GridInventory::add_at_position(const Vector2i position, const String item_id
 			return no_added;
 		}
 	} else {
+		Ref<ItemStack> stack = stacks[stack_index];
+		if(is_rotated != is_stack_rotated(stack))
+			return amount;
 		int no_added = add_at_index(stack_index, item_id, amount, properties);
 		return no_added;
 	}
@@ -250,7 +253,7 @@ bool GridInventory::move_stack_to(const Ref<ItemStack> stack, const Vector2i pos
 	return false;
 }
 
-int GridInventory::transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount) {
+int GridInventory::transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount, const bool is_rotated) {
 	ERR_FAIL_COND_V_MSG(from_position.x < 0 || from_position.x >= size.x, amount, "from_position.x' is out of size grid bounds.");
 	ERR_FAIL_COND_V_MSG(from_position.y < 0 || from_position.y >= size.y, amount, "from_position.x' is out of size grid bounds.");
 	ERR_FAIL_NULL_V_MSG(destination, amount, "Destination inventory is null on transfer.");
@@ -262,9 +265,15 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	if (this == destination && from_position == destination_position)
 		return amount;
 
+
+	UtilityFunctions::print(is_rotated);
+
+
 	Ref<ItemStack> stack = get_stack_at(from_position);
 	if (stack == nullptr)
 		return amount;
+
+	bool is_rotated_on_origin_position = is_stack_rotated(stack);
 
 	int amount_of_stack = stack->get_amount();
 	int stack_index = stacks.find(stack);
@@ -294,10 +303,10 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 		if (amount_to_transfer == 0)
 			return amount;
 
-		int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties);
+		int amount_not_transferred = destination->add_at_position(destination_position, item_id, amount_to_transfer, properties, is_rotated);
 
 		if (amount_not_transferred > 0)
-			amount_not_transferred = add_at_position(from_position, item_id, amount_not_transferred, properties);
+			amount_not_transferred = add_at_position(from_position, item_id, amount_not_transferred, properties, is_rotated_on_origin_position);
 	}
 
 	if (amount_not_transferred != amount) {
@@ -418,11 +427,13 @@ bool GridInventory::sort() {
 Dictionary GridInventory::serialize() const {
 	Dictionary data = Inventory::serialize();
 	data["stack_positions"] = stack_positions.duplicate();
+	data["stack_rotations"] = stack_rotations.duplicate();
 	return data;
 }
 
 void GridInventory::deserialize(const Dictionary data) {
 	stack_positions = data["stack_positions"];
+	stack_rotations = data["stack_rotations"];
 	Inventory::deserialize(data);
 	for (size_t i = 0; i < stack_positions.size(); i++) {
 		Ref<ItemStack> stack = stacks[i];
@@ -470,6 +481,7 @@ void GridInventory::on_insert_stack(const int stack_index) {
 
 void GridInventory::on_removed_stack(const Ref<ItemStack> stack, const int stack_index) {
 	stack_positions.remove_at(stack_index);
+	stack_rotations.remove_at(stack_index);
 	if (stack == nullptr)
 		return;
 	quad_tree->remove(stack);
@@ -518,7 +530,7 @@ void GridInventory::_sort_if_needed() {
 bool GridInventory::_can_add_on_position(const Vector2i position, const String item_id, const int amount, const Dictionary properties, const bool is_rotated) const {
 	for (size_t i = 0; i < grid_constraints.size(); i++) {
 		Ref<GridInventoryConstraint> grid_constraint = grid_constraints[i];
-		if (grid_constraint != nullptr && !grid_constraint->can_add_on_position(this, position, item_id, amount, properties)) {
+		if (grid_constraint != nullptr && !grid_constraint->can_add_on_position(this, position, item_id, amount, properties, is_rotated)) {
 			return false;
 		}
 	}
