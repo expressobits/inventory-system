@@ -14,7 +14,7 @@ void Hotbar::_on_contents_changed() {
 		int stack_index = inventory->get_stacks().find(stack);
 		if (stack_index == -1) {
 			slot->clear();
-			emit_signal("equipped_stack_changed", i);
+			emit_signal("equipped_stack_changed", ((int)i));
 			unequip(i);
 		}
 	}

@@ -426,16 +426,18 @@ bool GridInventory::sort() {
 
 Dictionary GridInventory::serialize() const {
 	Dictionary data = Inventory::serialize();
-	Variant stack_pos_var = stack_positions.duplicate();
-	Variant stack_rot_var = stack_positions.duplicate();
-	data["stack_positions"] = stack_pos_var;
-	data["stack_rotations"] = stack_rot_var;
+	data["stack_positions"] = stack_positions.duplicate();
+	data["stack_rotations"] = stack_positions.duplicate();
 	return data;
 }
 
 void GridInventory::deserialize(const Dictionary data) {
-	stack_positions = data["stack_positions"];
-	stack_rotations = data["stack_rotations"];
+	Variant stack_positions_var = data["stack_positions"];
+	Variant stack_rotations_var = data["stack_rotations"];
+
+	stack_positions = stack_positions_var;
+	stack_rotations = stack_rotations_var;
+
 	Inventory::deserialize(data);
 	for (size_t i = 0; i < stack_positions.size(); i++) {
 		Ref<ItemStack> stack = stacks[i];
