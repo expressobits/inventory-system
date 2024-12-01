@@ -51,6 +51,7 @@ public:
 	void set_categories(const TypedArray<ItemCategory> &new_categories);
 	TypedArray<ItemCategory> get_categories() const;
 	bool is_in_category(const Ref<ItemCategory> category) const;
+	Vector2i get_rotated_size() const;
 };
 
 #endif

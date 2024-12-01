@@ -20,8 +20,8 @@ protected:
 public:
 	GridInventoryConstraint();
 	~GridInventoryConstraint();
-	virtual bool can_add_on_position(const Node* inventory_node, const Vector2i position, const String item_id, const int amount, const Dictionary properties);
-	GDVIRTUAL5R(bool, _can_add_on_position, const Node*, Vector2i, String, int, Dictionary);
+	virtual bool can_add_on_position(const Node* inventory_node, const Vector2i position, const String item_id, const int amount, const Dictionary properties, const bool is_rotated);
+	GDVIRTUAL6R(bool, _can_add_on_position, const Node*, Vector2i, String, int, Dictionary, bool);
 
 };
 
