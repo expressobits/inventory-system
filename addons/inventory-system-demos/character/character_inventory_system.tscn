@@ -14,7 +14,6 @@ equipment_inventory_path = NodePath("EquipmentInventory")
 size = Vector2i(8, 4)
 
 [node name="EquipmentInventory" type="GridInventory" parent="."]
-slot_amount = 4
 inventory_name = "Equipment"
 
 [node name="CraftStation" type="CraftStation" parent="."]
