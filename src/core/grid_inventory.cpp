@@ -56,7 +56,8 @@ void GridInventory::_bind_methods() {
 
 	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "size"), "set_size", "get_size");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "grid_constraints", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "GridInventoryConstraint")), "set_grid_constraints", "get_grid_constraints");
-	ADD_PROPERTY(PropertyInfo(Variant::VECTOR2I, "stack_positions"), "set_stack_positions", "get_stack_positions");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stack_positions"), "set_stack_positions", "get_stack_positions");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stack_rotations"), "set_stack_rotations", "get_stack_rotations");
 	// ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "quad_tree", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_NONE), "set_quad_tree", "get_quad_tree");
 }
 
@@ -432,11 +433,20 @@ Dictionary GridInventory::serialize() const {
 }
 
 void GridInventory::deserialize(const Dictionary data) {
-	Variant stack_positions_var = data["stack_positions"];
-	Variant stack_rotations_var = data["stack_rotations"];
+	Array stack_positions_var = data["stack_positions"];
+	Array stack_rotations_var = data["stack_rotations"];
 
-	stack_positions = stack_positions_var;
-	stack_rotations = stack_rotations_var;
+	stack_positions.clear();
+	for (size_t i = 0; i < stack_positions_var.size(); i++)
+	{
+		stack_positions.append(stack_positions_var[i]);
+	}
+
+	stack_rotations.clear();
+	for (size_t i = 0; i < stack_rotations_var.size(); i++)
+	{
+		stack_rotations.append(stack_rotations_var[i]);
+	}
 
 	Inventory::deserialize(data);
 	for (size_t i = 0; i < stack_positions.size(); i++) {
