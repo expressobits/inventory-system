@@ -10,14 +10,14 @@
 	<tutorials>
 	</tutorials>
 	<members>
-		<member name="ingredients" type="Slot[]" setter="set_ingredients" getter="get_ingredients" default="[]">
-			[Slot] list for [Item]s needed for crafting. If [member CraftStation.only_remove_ingredients_after_craft] is true these items are removed from [Inventory] after crafting, if false will be removed at the beginning of the crafting process, after calling [method CraftStation.craft].
+		<member name="ingredients" type="ItemStack[]" setter="set_ingredients" getter="get_ingredients" default="[]">
+			[ItemStack] list for items needed for crafting. If [member CraftStation.only_remove_ingredients_after_craft] is true these items are removed from [Inventory] after crafting, if false will be removed at the beginning of the crafting process, after calling [method CraftStation.craft].
 		</member>
-		<member name="products" type="Slot[]" setter="set_products" getter="get_products" default="[]">
-			List of slotted items from the result after crafting is completed. These items must be added in [Inventory] after crafting is complete.
+		<member name="products" type="ItemStack[]" setter="set_products" getter="get_products" default="[]">
+			List of stacked items from the result after crafting is completed. These items must be added in [Inventory] after crafting is complete.
 		</member>
-		<member name="required_items" type="Slot[]" setter="set_required_items" getter="get_required_items" default="[]">
-			[Slot] of items that are required for crafting. Unlike [member ingredients] items, these items are not removed after the crafting process.
+		<member name="required_items" type="ItemStack[]" setter="set_required_items" getter="get_required_items" default="[]">
+			[ItemStack] of items that are required for crafting. Unlike [member ingredients] items, these items are not removed after the crafting process.
 		</member>
 		<member name="station" type="CraftStationType" setter="set_station" getter="get_station">
 			[CraftStationType] required for this crafting to work.

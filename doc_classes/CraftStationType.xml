@@ -12,6 +12,8 @@
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
 			Station type icon.
 		</member>
+		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
+		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
 			Station type name.
 		</member>

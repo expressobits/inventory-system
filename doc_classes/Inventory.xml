@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="Inventory" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		This node is a slot container.
+		This node is a stack container.
 	</brief_description>
 	<description>
-		Each slot contains data about amount, [ItemDefinition] and custom properties.
-		Slots are stored in an Array, which can be accessed with inventory.slots, but it is best to avoid changing data directly and instead use methods within this node, such as [method add], [method remove], [method set_slot], ...
+		Each stack contains data about amount, [ItemStack](with String item_id from [InventoryDatabase]) and custom properties.
+		Stacks are stored in an Array, which can be accessed with inventory.stacks, but it is best to avoid changing data directly and instead use methods within this node, such as [method add], [method remove], [method set_stack_content], ...
 		The methods correctly call signals when necessary.
 
-		Some methods have their general version and a direct version of some [Slot] index, such as [method contains] and [method contains_at].
+		Some methods have their general version and a direct version of some [Stack] index, such as [method contains] and [method contains_at].
 	</description>
 	<tutorials>
 		<link title="Add items to inventory">https://github.com/expressobits/inventory-system/wiki/Inventory-Node#Add-items-to-inventory</link>
@@ -16,24 +16,22 @@
 	<methods>
 		<method name="add">
 			<return type="int" />
-			<param index="0" name="item" type="Item" />
+			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<param index="3" name="drop_excess" type="bool" default="false" />
 			<description>
-				Adds an amount of [Item] to the inventory and returns the amount that cannot be added.
+				Adds an amount of [ItemStack] to the inventory and returns the amount that cannot be added.
 				[codeblocks]
 				[gdscript]
-				@export var my_item_definition : ItemDefinition
-				...
-				var my_item : Item = Item.new()
-				my_item.definition = my_item_definition
-				inventory.add(my_item, 2) # Add two my_item to inventory
+				inventory.add("my_item_id", 2) # Add two my_item_id to inventory
 				[/gdscript]
 				[/codeblocks]
 
 				There are cases where the inventory may be full or does not accept this item by its category, so the return of this call corresponds to the quantity that was not added (If it returns 0 it means that all items were added correctly)
 				[codeblocks]
 				[gdscript]
-				var unadded_amount = inventory.add(my_item, 2) # Add two my_item to inventory
+				var unadded_amount = inventory.add("my_item_id", 2) # Add two my_item to inventory
 				if unadded_amount == 0:
 				    print("All items added!")
 				else:
@@ -42,52 +40,73 @@
 				[/codeblocks]
 			</description>
 		</method>
-		<method name="add_at">
+		<method name="add_at_index">
 			<return type="int" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="item" type="Item" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
+			<param index="3" name="properties" type="Dictionary" default="{}" />
 			<description>
-				Adds an amount of [Item] to a specific inventory slot and returns the amount that cannot be added.
+				Adds an amount of [ItemStack](with string id from [InventoryDatabase]) to a specific inventory stack index and returns the amount that cannot be added.
 				[codeblocks]
 				[gdscript]
-				@export var my_item : Item
-				...
-				var my_item : Item = Item.new()
-				my_item.definition = my_item_definition
-				inventory.add(3, my_item, 2) # Add two my_item to inventory in 3 slot index
+				inventory.add_at_index(3, "my_item_id", 2) # Add two my_item to inventory in 3 slot index
 				[/gdscript]
 				[/codeblocks]
 			</description>
 		</method>
-		<method name="add_slot">
-			<return type="void" />
+		<method name="add_on_new_stack">
+			<return type="int" />
+			<param index="0" name="item_id" type="String" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
 			<description>
-				Add a new slot to the inventory, a trigger signal flag can be set.
+			</description>
+		</method>
+		<method name="add_to_stack">
+			<return type="int" />
+			<param index="0" name="stack" type="ItemStack" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" default="1" />
+			<param index="3" name="properties" type="Dictionary" default="{}" />
+			<description>
 			</description>
 		</method>
 		<method name="amount_of_item" qualifiers="const">
 			<return type="int" />
-			<param index="0" name="item" type="Item" />
+			<param index="0" name="item_id" type="String" />
 			<description>
-				Returns amount of the specified [Item].
+				Returns amount of the specified [ItemStack].
+			</description>
+		</method>
+		<method name="can_add_new_stack" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item_id" type="String" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="clear">
+			<return type="void" />
+			<description>
 			</description>
 		</method>
 		<method name="contains" qualifiers="const">
 			<return type="bool" />
-			<param index="0" name="item" type="Item" />
+			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" default="1" />
 			<description>
-				Returns true if contains the amount of the specified [Item]
+				Returns true if contains the amount of the specified [ItemStack](with String item_id from [InventoryDatabase]).
 			</description>
 		</method>
 		<method name="contains_at" qualifiers="const">
 			<return type="bool" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="item" type="Item" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Returns true if the slot index contains the amount of the specified [Item]
+				Returns true if the slot index contains the amount of the specified [ItemStack](with String item_id from [InventoryDatabase]).
 			</description>
 		</method>
 		<method name="contains_category" qualifiers="const">
@@ -95,7 +114,36 @@
 			<param index="0" name="category" type="ItemCategory" />
 			<param index="1" name="amount" type="int" default="1" />
 			<description>
-				Returns true if contains the amount of [Item] with the specified [ItemCategory].
+				Returns true if contains the amount of [ItemStack](with String item_id from [InventoryDatabase]) with the specified [ItemCategory].
+			</description>
+		</method>
+		<method name="contains_category_in_stack" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="stack" type="ItemStack" />
+			<param index="1" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="drop">
+			<return type="bool" />
+			<param index="0" name="item_id" type="String" default="1" />
+			<param index="1" name="amount" type="int" default="{}" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="drop_from_inventory">
+			<return type="void" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<description>
 			</description>
 		</method>
 		<method name="get_amount" qualifiers="const">
@@ -111,16 +159,30 @@
 				Returns amount of the specified [ItemCategory].
 			</description>
 		</method>
-		<method name="get_slot_index_with_an_item_of_category" qualifiers="const">
+		<method name="get_stack_index_with_an_item_of_category" qualifiers="const">
 			<return type="int" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
-				Returns the index of the [Slot] that contains the [Item] of the [ItemCategory], returns [code]-1[/code] if there is no item of that category.
 			</description>
 		</method>
-		<method name="insert_slot">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
+		<method name="has_space_for" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item" type="String" />
+			<param index="1" name="amount" type="int" default="1" />
+			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="has_stack" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="is_accept_any_categories" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="categories_flag" type="int" />
+			<param index="1" name="slot" type="ItemCategory[]" />
 			<description>
 			</description>
 		</method>
@@ -128,13 +190,6 @@
 			<return type="bool" />
 			<description>
 				Returns true if inventory is empty.
-			</description>
-		</method>
-		<method name="is_empty_slot" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="slot_index" type="int" />
-			<description>
-				Returns true if the [Slot] is empty.
 			</description>
 		</method>
 		<method name="is_full" qualifiers="const">
@@ -145,143 +200,138 @@
 		</method>
 		<method name="remove">
 			<return type="int" />
-			<param index="0" name="item" type="Item" />
+			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" default="1" />
 			<description>
-				Removes a amount of the [Item] from inventory and returns the amount that was not removed.
+				Removes a amount of the [ItemStack](with String item_id from [InventoryDatabase]) from inventory and returns the amount that was not removed.
 			</description>
 		</method>
 		<method name="remove_at">
 			<return type="int" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="item" type="Item" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Removes an [Item] amount to the specified inventory [Slot] index and returns the remaining value that was not removed.
+				Removes an item_id amount to the specified inventory [Slot] index and returns the remaining value that was not removed.
 			</description>
 		</method>
-		<method name="remove_slot_at">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
-			<description>
-				Remove slot with [param slot_index] parameter, set [param emit_signal] to false to disable events called by [method update_slot].
-			</description>
-		</method>
-		<method name="set_slot">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="item" type="Item" />
-			<param index="2" name="amount" type="int" />
-			<description>
-				Define [Slot] specific index information.
-			</description>
-		</method>
-		<method name="set_slot_content">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="item" type="ItemDefinition" />
-			<param index="2" name="properties" type="Dictionary" />
-			<param index="3" name="amount" type="int" />
-			<description>
-				Define [Slot] specific index information.
-			</description>
-		</method>
-		<method name="set_slot_with_other_slot">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
-			<param index="1" name="other_slot" type="Slot" />
-			<description>
-				Define [Slot] specific index information with content of other [Slot].
-			</description>
-		</method>
-		<method name="size" qualifiers="const">
+		<method name="remove_from_stack">
 			<return type="int" />
+			<param index="0" name="stack" type="ItemStack" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Returns the sum of the amount of items in all slots.
+				Remove slot with [param stack] parameter, set [param emit_signal] to false to disable events called by [method update_stack].
+			</description>
+		</method>
+		<method name="serialize" qualifiers="const">
+			<return type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="set_stack_content">
+			<return type="void" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" default="1" />
+			<param index="3" name="properties" type="Dictionary" default="{}" />
+			<description>
+			</description>
+		</method>
+		<method name="split">
+			<return type="bool" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
 			</description>
 		</method>
 		<method name="transfer">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
+			<return type="int" />
+			<param index="0" name="stack_index" type="int" />
 			<param index="1" name="destination" type="Inventory" />
-			<param index="2" name="destination_slot_index" type="int" />
-			<param index="3" name="amount" type="int" default="-1" />
+			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Transfer the contents of the index slot [param slot index] of this inventory to another slot ([param destination_slot_index]) of [param destination] inventory.
-				Note: If amount is -1 (default value), the entire contents of the slot are sent to another inventory.
+				Transfer the contents of the stack_index [param stack_index] of this inventory to another inventory ([param destination]).
+				Note: If amount is -1 (default value), the entire contents of the stack are sent to another inventory.
 			</description>
 		</method>
-		<method name="update_slot">
-			<return type="void" />
-			<param index="0" name="slot_index" type="int" />
+		<method name="transfer_at">
+			<return type="int" />
+			<param index="0" name="stack_index" type="int" />
+			<param index="1" name="destination" type="Inventory" />
+			<param index="2" name="destination_stack_index" type="int" />
+			<param index="3" name="amount" type="int" default="1" />
 			<description>
-				Call update slot to trigger events.
+				Transfer the contents of the stack_index [param stack_index] of this inventory to another stack_index ([param destination_stack_index]) of destination [Inventory].
+				Note: If amount is -1 (default value), the entire contents of the stack are sent to another inventory.
+			</description>
+		</method>
+		<method name="update_stack">
+			<return type="void" />
+			<param index="0" name="stack_index" type="int" />
+			<description>
 			</description>
 		</method>
 	</methods>
 	<members>
-		<member name="create_slot_if_needed" type="bool" setter="set_create_slot_if_needed" getter="get_create_slot_if_needed" default="false">
-			Creates a [Slot] when use  [method add]  for adding item to inventory when it is full.
+		<member name="constraints" type="InventoryConstraint[]" setter="set_constraints" getter="get_constraints" default="[]">
 		</member>
 		<member name="inventory_name" type="String" setter="set_inventory_name" getter="get_inventory_name" default="&quot;Inventory&quot;">
 			The name of the inventory, to be displayed in UI.
 		</member>
-		<member name="remove_slot_if_empty" type="bool" setter="set_remove_slot_if_empty" getter="get_remove_slot_if_empty" default="false">
-			Removes a [Slot] when the slot becomes empty using [method remove] function.
-		</member>
-		<member name="slot_amount" type="int" setter="set_slot_amount" getter="get_slot_amount" default="16">
-			Sets the initial amount of [Slot]s in the inventory in the [method _ready] function.
-		</member>
-		<member name="slots" type="Slot[]" setter="set_slots" getter="get_slots" default="[]">
-			Array of [Slot] that stores items and their quantities. The slot uses [Item] to store item id information and [b]"amount"[/b] for your quantity.
+		<member name="stacks" type="ItemStack[]" setter="set_stacks" getter="get_stacks" default="[]">
 		</member>
 	</members>
 	<signals>
+		<signal name="contents_changed">
+			<description>
+			</description>
+		</signal>
 		<signal name="emptied">
 			<description>
-				Emitted when inventory is empty. This signal is emitted after the [method remove], [method remove_at] or [method set_slot] function and it only happens when all slots are empty or there are no slots.
+				Emitted when inventory is empty. This signal is emitted after the [method remove], [method remove_at] or [method set_stack_content] function and it only happens when there are no stacks.
 			</description>
 		</signal>
 		<signal name="filled">
 			<description>
-				Emitted when inventory is filled. This signal is emitted after the [method add], [method add_at] or [method set_slot] function and it only happens when all slots are filled.
-			</description>
-		</signal>
-		<signal name="inventory_changed">
-			<description>
-				Emitted when a amount or [Item] has changed in any [Slot].
+				Emitted when inventory is filled. This signal is emitted after the [method add], [method add_at] or [method set_stack_content] function and it only happens when all stacks are filled.
 			</description>
 		</signal>
 		<signal name="item_added">
-			<param index="0" name="item" type="Item" />
+			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" />
 			<description>
 				Emitted when a [Item] was added.
 			</description>
 		</signal>
 		<signal name="item_removed">
-			<param index="0" name="item_definition" type="ItemDefinition" />
+			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" />
 			<description>
 				Emitted when a [Item] was removed.
 			</description>
 		</signal>
-		<signal name="slot_added">
-			<param index="0" name="slot_index" type="int" />
+		<signal name="request_drop_obj">
+			<param index="0" name="drop_item_packed_scene_path" type="String" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="item_properties" type="Dictionary" />
 			<description>
-				Emitted when a [Slot] was added. This signal is emitted after calling [method add] function and happens only when there is no space available and [member create_slot_if_needed] is set to true.
 			</description>
 		</signal>
-		<signal name="slot_removed">
-			<param index="0" name="slot_index" type="int" />
+		<signal name="stack_added">
+			<param index="0" name="stack_index" type="int" />
 			<description>
-				Emitted when a [Slot] was removed. This signal is emitted after calling the [method remove] function and happens only when the [Slot] is empty and the [member remove_slot_if_empty] is set to true.
 			</description>
 		</signal>
-		<signal name="updated_slot">
-			<param index="0" name="slot_index" type="int" />
+		<signal name="stack_removed">
+			<param index="0" name="stack_index" type="int" />
 			<description>
-				Emitted when a [Slot] has been changed. This signal is emitted after functions that change the inventory content: [method add], [method add_at], [method remove], [method remove_at] and [method set_slot].
+			</description>
+		</signal>
+		<signal name="updated_stack">
+			<param index="0" name="stack_index" type="int" />
+			<description>
 			</description>
 		</signal>
 	</signals>

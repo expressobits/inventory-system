@@ -1,106 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<class name="Slot" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+<class name="Slot" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Item and amount representation from the [member Inventory.slots] list.
+		Item and amount representation from the [member Hotbar.slots] list.
 	</brief_description>
 	<description>
 	</description>
 	<tutorials>
 	</tutorials>
-	<methods>
-		<method name="add">
-			<return type="int" />
-			<param index="0" name="item" type="Item" />
-			<param index="1" name="amount" type="int" default="1" />
-			<description>
-				Adds a amount of [Item] to this slot.
-				Returns the unadded amount.
-			</description>
-		</method>
-		<method name="contains" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="item" type="Item" />
-			<param index="1" name="amount" type="int" default="1" />
-			<description>
-				Returns true if contains a quantity of [Item].
-			</description>
-		</method>
-		<method name="contains_category" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="category" type="ItemCategory" />
-			<description>
-				Returns true if [Item] is in [param category].
-			</description>
-		</method>
-		<method name="get_item_id" qualifiers="const">
-			<return type="int" />
-			<description>
-				Returns the id of the [member item], if it is null it returns [cons Item::NONE].
-			</description>
-		</method>
-		<method name="get_max_stack_for_item" qualifiers="const">
-			<return type="int" />
-			<param index="0" name="item" type="ItemDefinition" />
-			<description>
-				Returns the maximum number of items this slot can hold. Returns [member max_stack] if it is set to anything other than -1, otherwise the max_stack from the [member Item.definition] definition is returned.
-			</description>
-		</method>
-		<method name="has_valid" qualifiers="const">
-			<return type="bool" />
-			<description>
-				Returns true if there is an item in that slot with amount greater than zero.
-			</description>
-		</method>
-		<method name="is_accept_any_categories_of_item" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="item" type="ItemDefinition" />
-			<description>
-				Returns true if this slot accepts any category from [param other_item]. This method checks if the [member accepted_categories_code] is equal to zero or if the category codes match this [param other_item].
-			</description>
-		</method>
-		<method name="is_empty" qualifiers="const">
-			<return type="bool" />
-			<description>
-				Returns true if the slot is empty.
-			</description>
-		</method>
-		<method name="is_full" qualifiers="const">
-			<return type="bool" />
-			<description>
-				Returns true if the slot is full.
-			</description>
-		</method>
-		<method name="remove">
-			<return type="int" />
-			<param index="0" name="item" type="Item" />
-			<param index="1" name="amount" type="int" default="1" />
-			<description>
-				Removes a [param amount] of [param item] from the slot. Returns the unremoved amount.
-			</description>
-		</method>
-	</methods>
-	<members>
-		<member name="accepted_categories" type="ItemCategory[]" setter="set_accepted_categories" getter="get_accepted_categories" default="[]">
-			List of [ItemCategory] an item must be in to be accepted by this slot.
-		</member>
-		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
-			Amount of items in this slot.
-		</member>
-		<member name="categorized" type="int" setter="set_categorized" getter="is_categorized" default="0">
-			If enabled, this slot only accepts items that are from the [ItemCategory]s listed in [param accepted_categories].
-		</member>
-		<member name="item" type="Item" setter="set_item" getter="get_item">
-			The item in this slot contains the [ItemDefinition] definition and a dictionary of dynamic properties (such as the item's current durability). Note: Dynamic properties only work with items with max_stack 1.
-		</member>
-		<member name="max_stack" type="int" setter="set_max_stack" getter="get_max_stack" default="-1">
-			Custom maximum amount of this slot, if kept with value [code]-1[/code] (default) the [member ItemDefinition.max_stack] value of the currently stored item is used.
-		</member>
-	</members>
-	<signals>
-		<signal name="updated">
-			<description>
-				Emitted when slot information is updated. Emitted within [method add] and [method remove] methods.
-			</description>
-		</signal>
-	</signals>
 </class>

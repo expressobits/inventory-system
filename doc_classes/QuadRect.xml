@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="QuadRect" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<members>
+		<member name="metadata" type="Variant" setter="set_metadata" getter="get_metadata" default="null">
+		</member>
+		<member name="rect" type="Rect2i" setter="set_rect" getter="get_rect" default="Rect2i(0, 0, 0, 0)">
+		</member>
+	</members>
+</class>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="QuadTree" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add">
+			<return type="void" />
+			<param index="0" name="rect" type="Rect2i" />
+			<param index="1" name="metadata" type="Variant" />
+			<description>
+			</description>
+		</method>
+		<method name="get_all" qualifiers="const">
+			<return type="Array" />
+			<param index="0" name="at" type="Variant" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="get_first" qualifiers="const">
+			<return type="QuadRect" />
+			<param index="0" name="at" type="Variant" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="init">
+			<return type="void" />
+			<param index="0" name="size" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="is_empty" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="remove">
+			<return type="bool" />
+			<param index="0" name="metadata" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="root" type="QuadNode" setter="set_root" getter="get_root">
+		</member>
+		<member name="size" type="Vector2i" setter="set_size" getter="get_size" default="Vector2i(0, 0)">
+		</member>
+	</members>
+</class>

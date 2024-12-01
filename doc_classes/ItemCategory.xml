@@ -23,6 +23,8 @@
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
 			Category icon. Used for example for a background of a categorized [Slot].
 		</member>
+		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
+		</member>
 		<member name="item_dynamic_properties" type="String[]" setter="set_item_dynamic_properties" getter="get_item_dynamic_properties" default="[]">
 			Defines dynamic properties for items that contain this category. Added automatically when [member ItemDefinition.categories] is set.
 		</member>

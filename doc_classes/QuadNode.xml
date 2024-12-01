@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="QuadNode" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add">
+			<return type="void" />
+			<param index="0" name="quad_rect" type="QuadRect" />
+			<description>
+			</description>
+		</method>
+		<method name="can_subdivide" qualifiers="static">
+			<return type="bool" />
+			<param index="0" name="size" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_all_containing_point" qualifiers="const">
+			<return type="Array" />
+			<param index="0" name="point" type="Vector2i" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="get_all_under_rect" qualifiers="const">
+			<return type="Array" />
+			<param index="0" name="test_rect" type="Rect2i" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="get_first_containing_point" qualifiers="const">
+			<return type="QuadRect" />
+			<param index="0" name="point" type="Vector2i" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="get_first_under_rect" qualifiers="const">
+			<return type="QuadRect" />
+			<param index="0" name="test_rect" type="Rect2i" />
+			<param index="1" name="exception_metadata" type="Variant" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="get_quadrant_rects" qualifiers="static">
+			<return type="Rect2i[]" />
+			<param index="0" name="rect" type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="is_empty" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="remove">
+			<return type="bool" />
+			<param index="0" name="metadata" type="Variant" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="quad_rects" type="QuadRect[]" setter="set_quad_rects" getter="get_quad_rects" default="[]">
+		</member>
+		<member name="quadrant_count" type="int" setter="set_quadrant_count" getter="get_quadrant_count" default="0">
+		</member>
+		<member name="quadrants" type="QuadNode[]" setter="set_quadrants" getter="get_quadrants" default="[null, null, null, null]">
+		</member>
+		<member name="rect" type="Rect2i" setter="set_rect" getter="get_rect" default="Rect2i(0, 0, 0, 0)">
+		</member>
+	</members>
+</class>

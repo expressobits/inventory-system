@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="InventoryConstraint" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="_can_add_new_stack_on_inventory" qualifiers="virtual">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Node" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="properties" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_can_add_on_inventory" qualifiers="virtual">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Node" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="properties" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_amount_to_add" qualifiers="virtual">
+			<return type="int" />
+			<param index="0" name="inventory" type="Node" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="properties" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_get_max_stack" qualifiers="virtual">
+			<return type="int" />
+			<param index="0" name="inventory" type="Node" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="properties" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="_is_override_max_stack" qualifiers="virtual">
+			<return type="bool" />
+			<param index="0" name="inventory" type="Node" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" />
+			<param index="3" name="properties" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+	</methods>
+</class>

@@ -10,7 +10,7 @@
 	</tutorials>
 	<methods>
 		<method name="get_id_from_item" qualifiers="const">
-			<return type="int" />
+			<return type="String" />
 			<param index="0" name="item" type="ItemDefinition" />
 			<description>
 				Returns the id of an item.
@@ -18,7 +18,7 @@
 		</method>
 		<method name="get_item_from_id" qualifiers="const">
 			<return type="ItemDefinition" />
-			<param index="0" name="id" type="int" />
+			<param index="0" name="id" type="String" />
 			<description>
 				Returns the [ItemDefinition] with a parameter of [param id]. This method uses an optimized cache fetch to avoid repeated processes.
 			</description>

@@ -8,28 +8,58 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="active_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="deactive_slot">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="equip">
+			<return type="void" />
+			<param index="0" name="stack" type="ItemStack" />
+			<param index="1" name="slot_index" type="int" />
+			<description>
+			</description>
+		</method>
 		<method name="get_inventory" qualifiers="const">
 			<return type="Inventory" />
 			<description>
 				Returns the [Inventory] that is related to this hotbar.
 			</description>
 		</method>
-		<method name="get_selected_item" qualifiers="const">
-			<return type="Item" />
+		<method name="get_stack_on_selection" qualifiers="const">
+			<return type="ItemStack" />
 			<description>
-				Returns the selected [Item] in the hotbar.
 			</description>
 		</method>
-		<method name="has_item_on_selection" qualifiers="const">
-			<return type="bool" />
+		<method name="get_stack_on_slot" qualifiers="const">
+			<return type="ItemStack" />
+			<param index="0" name="slot_index" type="int" />
 			<description>
-				Returns true if a valid [Item] is in the current selection.
 			</description>
 		</method>
-		<method name="has_valid_item_id" qualifiers="const">
+		<method name="has_valid_stack_on_selection" qualifiers="const">
 			<return type="bool" />
 			<description>
-				Returns true if a valid [Item] is in the current selection.
+			</description>
+		</method>
+		<method name="has_valid_stack_on_slot" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</method>
+		<method name="is_active_slot" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+				Returns true if a valid [ItemStack] is in the current selection.
 			</description>
 		</method>
 		<method name="next_item">
@@ -44,28 +74,43 @@
 				Switches from the current [member selection_index] to the previous selection.
 			</description>
 		</method>
+		<method name="unequip">
+			<return type="void" />
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
 		<member name="inventory" type="NodePath" setter="set_inventory_path" getter="get_inventory_path" default="NodePath(&quot;&quot;)">
 			[Inventory] related to hotbar.
 		</member>
-		<member name="selection_index" type="int" setter="set_selection_index" getter="get_selection_index" default="0">
-			Current selection within the hotbar.
+		<member name="max_slots" type="int" setter="set_max_slots" getter="get_max_slots" default="4">
 		</member>
-		<member name="slots_in_hot_bar" type="int" setter="set_slots_in_hot_bar" getter="get_slots_in_hot_bar" default="8">
-			Number of slots in the hotbar. This value determines what limit the [member selection_index] should have.
+		<member name="selection_index" type="int" setter="set_selection_index" getter="get_selection_index" default="-1">
+			Current selection within the hotbar.
 		</member>
 	</members>
 	<signals>
+		<signal name="equipped">
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</signal>
+		<signal name="equipped_stack_changed">
+			<param index="0" name="slot_index" type="int" />
+			<description>
+			</description>
+		</signal>
 		<signal name="on_change_selection">
 			<param index="0" name="selection_index" type="int" />
 			<description>
 				Emitted when [member selection_index] changes.
 			</description>
 		</signal>
-		<signal name="on_update_selection_slot">
+		<signal name="unequipped">
+			<param index="0" name="slot_index" type="int" />
 			<description>
-				Emitted when the currently selected inventory slot is changed.
 			</description>
 		</signal>
 	</signals>

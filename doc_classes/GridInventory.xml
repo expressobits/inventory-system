@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="GridInventory" inherits="Inventory" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="add_at_position">
+			<return type="int" />
+			<param index="0" name="position" type="Vector2i" />
+			<param index="1" name="item_id" type="String" />
+			<param index="2" name="amount" type="int" default="1" />
+			<param index="3" name="properties" type="Dictionary" default="{}" />
+			<param index="4" name="is_rotated" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+		<method name="can_rotate_item" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="get_quad_tree" qualifiers="const">
+			<return type="QuadTree" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_at" qualifiers="const">
+			<return type="ItemStack" />
+			<param index="0" name="position" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_index_at" qualifiers="const">
+			<return type="int" />
+			<param index="0" name="position" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_position" qualifiers="const">
+			<return type="Vector2i" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_rect" qualifiers="const">
+			<return type="Rect2i" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_rotations" qualifiers="const">
+			<return type="bool[]" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stack_size" qualifiers="const">
+			<return type="Vector2i" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="get_stacks_under" qualifiers="const">
+			<return type="ItemStack[]" />
+			<param index="0" name="rect" type="Rect2i" />
+			<description>
+			</description>
+		</method>
+		<method name="is_stack_rotated" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="rect_free" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="rect" type="Rect2i" />
+			<param index="1" name="exception" type="ItemStack" default="null" />
+			<description>
+			</description>
+		</method>
+		<method name="rotate">
+			<return type="void" />
+			<param index="0" name="stack" type="ItemStack" />
+			<description>
+			</description>
+		</method>
+		<method name="set_quad_tree">
+			<return type="void" />
+			<param index="0" name="quad_tree" type="QuadTree" />
+			<description>
+			</description>
+		</method>
+		<method name="set_stack_position">
+			<return type="bool" />
+			<param index="0" name="stack" type="ItemStack" />
+			<param index="1" name="new_position" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="set_stack_rotations">
+			<return type="void" />
+			<param index="0" name="stack_rotations" type="bool[]" />
+			<description>
+			</description>
+		</method>
+		<method name="sort">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="swap_stacks">
+			<return type="bool" />
+			<param index="0" name="position" type="Vector2i" />
+			<param index="1" name="other_inventory" type="GridInventory" />
+			<param index="2" name="other_position" type="Vector2i" />
+			<description>
+			</description>
+		</method>
+		<method name="transfer_to">
+			<return type="int" />
+			<param index="0" name="from_position" type="Vector2i" />
+			<param index="1" name="destination" type="GridInventory" />
+			<param index="2" name="destination_position" type="Vector2i" />
+			<param index="3" name="amount" type="int" default="1" />
+			<param index="4" name="is_rotated" type="bool" default="false" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="grid_constraints" type="GridInventoryConstraint[]" setter="set_grid_constraints" getter="get_grid_constraints" default="[]">
+		</member>
+		<member name="size" type="Vector2i" setter="set_size" getter="get_size" default="Vector2i(8, 8)">
+		</member>
+		<member name="stack_positions" type="Vector2i[]" setter="set_stack_positions" getter="get_stack_positions" default="[]">
+		</member>
+	</members>
+	<signals>
+		<signal name="size_changed">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

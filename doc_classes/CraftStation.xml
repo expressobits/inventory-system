@@ -53,6 +53,12 @@
 				Calls a new craft with recipe from index [param recipe_index] of [member valid_recipes] to be processed (added to the [member.craftings] list). Note: It will only be included if [method contains_ingredients] is true.
 			</description>
 		</method>
+		<method name="deserialize">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
 		<method name="finish_crafting">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
@@ -73,6 +79,11 @@
 				Returns true if the craftstation is processing a crafting.
 			</description>
 		</method>
+		<method name="load_valid_recipes">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
 		<method name="remove_crafting">
 			<return type="void" />
 			<param index="0" name="crafting_index" type="int" />
@@ -85,6 +96,11 @@
 			<param index="0" name="input_inventory" type="Inventory" />
 			<description>
 				Remove a [Inventory] used as input for crafting.
+			</description>
+		</method>
+		<method name="serialize" qualifiers="const">
+			<return type="Dictionary" />
+			<description>
 			</description>
 		</method>
 		<method name="tick">
@@ -157,6 +173,8 @@
 		</member>
 		<member name="type" type="CraftStationType" setter="set_type" getter="get_type">
 			Defines the station type with resource [CraftStationType]. This resource must be created in [InventoryDatabase] with a custom editor. This defines which recipes will be valid for this station in the variable [member valid_recipes].
+		</member>
+		<member name="type_id" type="String" setter="set_type_id" getter="get_type_id" default="&quot;&quot;">
 		</member>
 		<member name="valid_recipes" type="int[]" setter="set_valid_recipes" getter="get_valid_recipes" default="[]">
 			Valid recipes that are filtered based on the defined station type. See in [member type].

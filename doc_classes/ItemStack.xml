@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="ItemStack" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+	</brief_description>
+	<description>
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="contains" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="item" type="String" />
+			<param index="1" name="amount" type="int" default="1" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize">
+			<return type="void" />
+			<param index="0" name="data" type="Array" />
+			<description>
+			</description>
+		</method>
+		<method name="has_valid" qualifiers="const">
+			<return type="bool" />
+			<description>
+			</description>
+		</method>
+		<method name="serialize" qualifiers="const">
+			<return type="Array" />
+			<description>
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="amount" type="int" setter="set_amount" getter="get_amount" default="0">
+		</member>
+		<member name="item_id" type="String" setter="set_item_id" getter="get_item_id" default="&quot;&quot;">
+			Defining which item_id is used from [member InventoryDatabase.items].
+		</member>
+		<member name="properties" type="Dictionary" setter="set_properties" getter="get_properties" default="{}">
+			Custom properties of this item. Example "durability".
+		</member>
+	</members>
+	<signals>
+		<signal name="updated">
+			<description>
+			</description>
+		</signal>
+	</signals>
+</class>

@@ -8,6 +8,21 @@
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="add_craft_station_type">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="add_item">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="add_item_category">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
 		<method name="add_new_category">
 			<return type="void" />
 			<param index="0" name="category" type="ItemCategory" />
@@ -22,6 +37,61 @@
 				Add new [ItemDefinition] to database. This method update item definition code cache for fast check items id in running game.
 			</description>
 		</method>
+		<method name="add_recipe">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="clear_current_data">
+			<return type="void" />
+			<description>
+			</description>
+		</method>
+		<method name="create_dynamic_properties">
+			<return type="Dictionary" />
+			<param index="0" name="item_id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize_item_category" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="category" type="ItemCategory" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize_item_definition" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="definition" type="ItemDefinition" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize_recipe" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="recipe" type="Recipe" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="deserialize_station_type" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="station_type" type="CraftStationType" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
+		<method name="export_json_file">
+			<return type="int" enum="Error" />
+			<param index="0" name="path" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="export_to_invdata" qualifiers="const">
+			<return type="String" />
+			<description>
+			</description>
+		</method>
 		<method name="get_category">
 			<return type="ItemCategory" />
 			<param index="0" name="code" type="int" />
@@ -29,30 +99,60 @@
 				Return [ItemCategory] of code. This code is used as a bitflag to easily access the item in your category list when running the game.
 			</description>
 		</method>
+		<method name="get_category_from_id" qualifiers="const">
+			<return type="ItemCategory" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
 		<method name="get_item" qualifiers="const">
 			<return type="ItemDefinition" />
-			<param index="0" name="id" type="int" />
+			<param index="0" name="id" type="String" />
 			<description>
 				Returns an [ItemDefinition] based on the param [param id]. This ID is searched for in the cache list managed by this database, this list is updated when we run the game.
 			</description>
 		</method>
 		<method name="get_new_valid_id" qualifiers="const">
-			<return type="int" />
+			<return type="String" />
 			<description>
 				Returns a new valid identifier for the [ItemDefinition]. This method does not return ids that already exist.
 			</description>
 		</method>
 		<method name="get_valid_id" qualifiers="const">
-			<return type="int" />
+			<return type="String" />
 			<description>
 				Returns an existing id of [member items].
 			</description>
 		</method>
+		<method name="has_craft_station_type_id" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="has_item_category_id" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
 		<method name="has_item_id" qualifiers="const">
 			<return type="bool" />
-			<param index="0" name="id" type="int" />
+			<param index="0" name="id" type="String" />
 			<description>
 				Returns true if there is an [ItemDefinition] with the [param id].
+			</description>
+		</method>
+		<method name="import_from_invdata">
+			<return type="void" />
+			<param index="0" name="json" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="import_json_file">
+			<return type="int" enum="Error" />
+			<param index="0" name="path" type="String" />
+			<description>
 			</description>
 		</method>
 		<method name="remove_category">
@@ -67,6 +167,30 @@
 			<param index="0" name="item" type="ItemDefinition" />
 			<description>
 				Remove [ItemDefinition] from database. This method update item definition code cache for fast check items id in running game.
+			</description>
+		</method>
+		<method name="serialize_item_category" qualifiers="const">
+			<return type="Dictionary" />
+			<param index="0" name="category" type="ItemCategory" />
+			<description>
+			</description>
+		</method>
+		<method name="serialize_item_definition" qualifiers="const">
+			<return type="Dictionary" />
+			<param index="0" name="definition" type="ItemDefinition" />
+			<description>
+			</description>
+		</method>
+		<method name="serialize_recipe" qualifiers="const">
+			<return type="Dictionary" />
+			<param index="0" name="recipe" type="Recipe" />
+			<description>
+			</description>
+		</method>
+		<method name="serialize_station_type" qualifiers="const">
+			<return type="Dictionary" />
+			<param index="0" name="station_type" type="CraftStationType" />
+			<description>
 			</description>
 		</method>
 	</methods>
