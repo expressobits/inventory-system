@@ -13,7 +13,7 @@ class Inventory : public NodeInventories {
 private:
 	int max_size = 16;
 	String inventory_name = "Inventory";
-	TypedArray<InventoryConstraint> constraints = new TypedArray<InventoryConstraint>();
+	TypedArray<InventoryConstraint> constraints;
 	void _load_slots();
 	void _insert_stack(int stack_index);
 	void _remove_stack_at(int stack_index);

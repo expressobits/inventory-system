@@ -16,9 +16,9 @@ private:
 	Vector2i _swap_position = Vector2i(0, 0);
 	Ref<QuadTree> quad_tree;
 	Vector2i size = Vector2i(8, 8);
-	TypedArray<GridInventoryConstraint> grid_constraints = new TypedArray<GridInventoryConstraint>();
-	TypedArray<Vector2i> stack_positions = new TypedArray<Vector2i>();
-	TypedArray<bool> stack_rotations = new TypedArray<bool>();
+	TypedArray<GridInventoryConstraint> grid_constraints;
+	TypedArray<Vector2i> stack_positions;
+	TypedArray<bool> stack_rotations;
 	bool _bounds_broken() const;
 	void _refresh_quad_tree();
 	bool _size_check(const Ref<ItemStack> stack1, const Ref<ItemStack> stack2);
