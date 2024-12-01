@@ -10,7 +10,7 @@ signal context_activated(event: InputEvent)
 @export var hover_stack_style: StyleBox
 
 @onready var texture_bg: Panel = $TextureBG
-@onready var item_icon: TextureRect = $MarginContainer/ItemIcon
+@onready var item_icon: TextureRect = %ItemIcon
 @onready var stack_size_label: Label = $StackSizeLabel
 
 var inventory : GridInventory
@@ -22,12 +22,19 @@ func setup(inventory : Inventory, stack : ItemStack):
 	if stack and inventory != null:
 		var definition: ItemDefinition = inventory.database.get_item(stack.item_id)
 		tooltip_text = definition.name
-		$MarginContainer/ItemIcon.texture = definition.icon
+		var is_rotated = inventory.is_stack_rotated(stack)
+		var texture = definition.icon
+		if is_rotated:
+			var image = texture.get_image()
+			image.rotate_90(CLOCKWISE)
+			texture = ImageTexture.create_from_image(image)
+		%ItemIcon.texture = texture
+		
 		activate()
 		_disconnect_item_signals()
 		_connect_item_signals(stack)
 	else:
-		$MarginContainer/ItemIcon.texture = null
+		%ItemIcon.texture = null
 		deactivate()
 	_update_stack_size()
 
@@ -58,10 +65,9 @@ func _ready() -> void:
 	grabbed.connect(func(_offset):
 		visible = false
 	)
-
 	if stack == null:
 		deactivate()
-
+	
 	_refresh()
 
 

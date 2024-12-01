@@ -162,7 +162,9 @@ func _on_craft(craft_station : CraftStation, recipe_index : int):
 
 
 func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
-	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount, true)
+	var stack = inventory.get_stack_at(origin_pos)
+	var rot = !inventory.is_stack_rotated(stack)
+	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount, rot)
 
 
 func _request_split(inventory : Inventory, stack_index : int, amount : int):

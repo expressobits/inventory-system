@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://ch1ixmsfcaf5c"]
+[gd_scene load_steps=5 format=3 uid="uid://ch1ixmsfcaf5c"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_item_stack_ui.gd" id="1_xrm8g"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="2_jll5p"]
+[ext_resource type="Texture2D" uid="uid://bp4k6gmkgd0n8" path="res://addons/inventory-system-demos/assets/icons/stone_axe.png" id="3_k3aua"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p43b5"]
 bg_color = Color(0, 0, 0, 0.501961)
@@ -16,7 +17,7 @@ corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
 [node name="GridItemStackUI" type="Panel"]
-offset_right = 40.0
+offset_right = 80.0
 offset_bottom = 40.0
 script = ExtResource("1_xrm8g")
 stack_style = SubResource("StyleBoxFlat_p43b5")
@@ -38,14 +39,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
 [node name="ItemIcon" type="TextureRect" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("3_k3aua")
 expand_mode = 1
 stretch_mode = 5
 
