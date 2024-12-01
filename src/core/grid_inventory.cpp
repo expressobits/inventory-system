@@ -426,8 +426,10 @@ bool GridInventory::sort() {
 
 Dictionary GridInventory::serialize() const {
 	Dictionary data = Inventory::serialize();
-	data["stack_positions"] = stack_positions.duplicate();
-	data["stack_rotations"] = stack_rotations.duplicate();
+	Variant stack_pos_var = stack_positions.duplicate();
+	Variant stack_rot_var = stack_positions.duplicate();
+	data["stack_positions"] = stack_pos_var;
+	data["stack_rotations"] = stack_rot_var;
 	return data;
 }
 
