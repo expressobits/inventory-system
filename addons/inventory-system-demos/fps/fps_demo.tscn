@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bqnv3x0igblvs" path="res://addons/inventory-system-demos/fps/labels.tscn" id="6_5epcx"]
 [ext_resource type="PackedScene" uid="uid://da2b73383isem" path="res://addons/inventory-system-demos/ui/inventory_system_ui.tscn" id="6_gphqh"]
 [ext_resource type="Resource" uid="uid://vm1ta374rw08" path="res://addons/inventory-system-demos/base/kenney_input_icons.tres" id="8_6rygg"]
-[ext_resource type="Script" path="res://addons/inventory-system/category_grid_inventory_constraint.gd" id="8_qudo1"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/constraints/category_grid_inventory_constraint.gd" id="8_qudo1"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_1ncja"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="11_fkc5i"]

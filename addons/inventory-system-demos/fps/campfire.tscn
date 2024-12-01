@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="3_sl0h4"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_1s2gy"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_72vu1"]
-[ext_resource type="Script" path="res://addons/inventory-system/category_grid_inventory_constraint.gd" id="5_vl8k7"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/constraints/category_grid_inventory_constraint.gd" id="5_vl8k7"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="8_g2guq"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="8_oju8p"]
 [ext_resource type="AudioStream" uid="uid://c7erllg58q3h3" path="res://addons/inventory-system-demos/assets/audios/campfire_crackle_2.wav" id="11_dck0x"]
