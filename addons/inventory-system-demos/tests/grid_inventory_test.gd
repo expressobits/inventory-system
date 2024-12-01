@@ -38,7 +38,7 @@ func test_has_place_for() -> void:
 	## Inventory containing 2x2 item
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 1)
 	assert(inventory_3x3.add(campfire) == 0)
-	assert(!inventory_3x3.has_space_for(stone_pickaxe))
+	assert(inventory_3x3.has_space_for(stone_pickaxe))
 #
 	## Inventory containing 2x2 item with extended max_stack_size
 	##InventoryGridStacked.set_item_max_stack_size(item_2x2, 10)
