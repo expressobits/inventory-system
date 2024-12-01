@@ -61,10 +61,6 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_recipe", "recipe", "data"), &InventoryDatabase::deserialize_recipe);
 	ClassDB::bind_method(D_METHOD("serialize_station_type", "station_type"), &InventoryDatabase::serialize_station_type);
 	ClassDB::bind_method(D_METHOD("deserialize_station_type", "station_type", "data"), &InventoryDatabase::deserialize_station_type);
-	ClassDB::bind_method(D_METHOD("serialize_slot", "slot"), &InventoryDatabase::serialize_slot);
-	ClassDB::bind_method(D_METHOD("deserialize_slot", "slot", "data"), &InventoryDatabase::deserialize_slot);
-	ClassDB::bind_method(D_METHOD("serialize_slots", "slots"), &InventoryDatabase::serialize_slots);
-	ClassDB::bind_method(D_METHOD("deserialize_slots", "slots", "data"), &InventoryDatabase::deserialize_slots);
 
 	ClassDB::bind_method(D_METHOD("get_category_from_id", "id"), &InventoryDatabase::get_category_from_id);
 
@@ -382,51 +378,6 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 	if (data.has("icon")) {
 		Ref<Texture2D> icon = ResourceLoader::get_singleton()->load(data["icon"]);
 		craft_station_type->set_icon(icon);
-	}
-}
-
-Array InventoryDatabase::serialize_slot(const Ref<Slot> slot) const {
-	Array data = Array();
-	data.append(slot->get_item_id());
-	data.append(slot->get_amount());
-	if (!slot->get_properties().is_empty()) {
-		data.append(slot->get_properties());
-	}
-	return data;
-}
-
-void InventoryDatabase::deserialize_slot(Ref<Slot> slot, const Array data) const {
-	ERR_FAIL_COND_MSG(data.size() < 2, "Data to deserialize item_stack is invalid: Does not contain the 'amount' field");
-	slot->set_item_id(data[0]);
-	slot->set_amount(data[1]);
-	if (data.size() > 2) {
-		slot->set_properties(data[2]);
-	}
-}
-
-Array InventoryDatabase::serialize_slots(const TypedArray<Slot> slots) const {
-	Array slots_data = Array();
-	for (size_t slot_index = 0; slot_index < slots.size(); slot_index++) {
-		Array data = serialize_slot(slots[slot_index]);
-		slots_data.append(data);
-	}
-	return slots_data;
-}
-
-void InventoryDatabase::deserialize_slots(TypedArray<Slot> slots, const Array data) const {
-	for (size_t slot_index = 0; slot_index < data.size(); slot_index++) {
-		if (slot_index >= slots.size()) {
-			Ref<Slot> slot = memnew(Slot());
-			deserialize_slot(slot, data[slot_index]);
-			slots.append(slot);
-		} else {
-			Ref<Slot> slot = slots[slot_index];
-			deserialize_slot(slot, data[slot_index]);
-		}
-	}
-	int size = slots.size();
-	for (size_t slot_index = data.size(); slot_index < size; slot_index++) {
-		slots.remove_at(data.size());
 	}
 }
 

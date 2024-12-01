@@ -3,7 +3,6 @@
 
 #include "craft_station_type.h"
 #include "item_stack.h"
-#include "slot.h"
 #include <godot_cpp/classes/resource.hpp>
 
 using namespace godot;

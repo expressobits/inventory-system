@@ -2,7 +2,6 @@
 #define INVENTORY_CLASS_H
 
 #include "base/node_inventories.h"
-#include "base/slot.h"
 #include "base/item_stack.h"
 #include "constraints/inventory_constraint.h"
 
@@ -12,7 +11,6 @@ class Inventory : public NodeInventories {
 	GDCLASS(Inventory, NodeInventories);
 
 private:
-	int slot_amount = 16;
 	int max_size = 16;
 	String inventory_name = "Inventory";
 	TypedArray<InventoryConstraint> constraints = new TypedArray<InventoryConstraint>();
@@ -74,8 +72,6 @@ public:
 	bool contains_category_in_stack(const Ref<ItemStack> &slot, const Ref<ItemCategory> &category) const;
 	void set_stacks(const TypedArray<ItemStack> &new_items);
 	TypedArray<ItemStack> get_stacks() const;
-	void set_slot_amount(const int &new_slot_amount);
-	int get_slot_amount() const;
 	void set_inventory_name(const String &new_inventory_name);
 	String get_inventory_name() const;
 	void set_constraints(const TypedArray<InventoryConstraint> &new_constraints);

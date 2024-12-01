@@ -408,14 +408,6 @@ TypedArray<ItemStack> Inventory::get_stacks() const {
 	return stacks;
 }
 
-void Inventory::set_slot_amount(const int &new_slot_amount) {
-	slot_amount = new_slot_amount;
-}
-
-int Inventory::get_slot_amount() const {
-	return slot_amount;
-}
-
 void Inventory::set_inventory_name(const String &new_inventory_name) {
 	inventory_name = new_inventory_name;
 }
@@ -720,8 +712,6 @@ void Inventory::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_stacks", "stacks"), &Inventory::set_stacks);
 	ClassDB::bind_method(D_METHOD("get_stacks"), &Inventory::get_stacks);
-	ClassDB::bind_method(D_METHOD("set_slot_amount", "slot_amount"), &Inventory::set_slot_amount);
-	ClassDB::bind_method(D_METHOD("get_slot_amount"), &Inventory::get_slot_amount);
 	ClassDB::bind_method(D_METHOD("set_inventory_name", "inventory_name"), &Inventory::set_inventory_name);
 	ClassDB::bind_method(D_METHOD("get_inventory_name"), &Inventory::get_inventory_name);
 	ClassDB::bind_method(D_METHOD("set_constraints", "constraints"), &Inventory::set_constraints);
@@ -739,7 +729,6 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::INT, "amount"), PropertyInfo(Variant::DICTIONARY, "item_properties")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_stacks", "get_stacks");
-	ADD_PROPERTY(PropertyInfo(Variant::INT, "slot_amount"), "set_slot_amount", "get_slot_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "inventory_name"), "set_inventory_name", "get_inventory_name");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "constraints", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "InventoryConstraint")), "set_constraints", "get_constraints");
 }
