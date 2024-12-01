@@ -49,7 +49,7 @@ public:
 	Vector2i get_stack_position(const Ref<ItemStack> &stack) const;
 	bool set_stack_position(const Ref<ItemStack> &stack, const Vector2i new_position);
 	bool can_rotate_item(const Ref<ItemStack> &stack) const;
-	bool rotate_stack(const Ref<ItemStack> &stack);
+	void rotate(const Ref<ItemStack> &stack);
 	bool is_stack_rotated(const Ref<ItemStack> &stack) const;
 	Vector2i get_stack_size(const Ref<ItemStack> &stack) const;
 	Rect2i get_stack_rect(const Ref<ItemStack> &stack) const;

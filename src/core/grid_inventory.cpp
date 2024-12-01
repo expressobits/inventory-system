@@ -38,7 +38,7 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stack_size", "stack"), &GridInventory::get_stack_size);
 	ClassDB::bind_method(D_METHOD("get_stack_rect", "stack"), &GridInventory::get_stack_rect);
 	ClassDB::bind_method(D_METHOD("is_stack_rotated", "stack"), &GridInventory::is_stack_rotated);
-	ClassDB::bind_method(D_METHOD("rotate_stack", "stack"), &GridInventory::rotate_stack);
+	ClassDB::bind_method(D_METHOD("rotate", "stack"), &GridInventory::rotate);
 	ClassDB::bind_method(D_METHOD("can_rotate_item", "stack"), &GridInventory::can_rotate_item);
 
 	ClassDB::bind_method(D_METHOD("get_stack_at", "position"), &GridInventory::get_stack_at);
@@ -150,9 +150,13 @@ bool GridInventory::can_rotate_item(const Ref<ItemStack> &stack) const {
 	return rect_free(rotated_rect, stack);
 }
 
-bool GridInventory::rotate_stack(const Ref<ItemStack> &stack) {
-	// return set_item_rotation(item, !is_item_rotated(item))
-	return false;
+void GridInventory::rotate(const Ref<ItemStack> &stack) {
+	Vector2i size = get_stack_size(stack);
+	if (size.x == size.y)
+		return;
+	Vector2i item_pos = get_stack_position(stack);
+	bool is_rotated = is_stack_rotated(stack);
+	transfer_to(item_pos, this, item_pos, stack->get_amount(), !is_rotated);
 }
 
 bool GridInventory::is_stack_rotated(const Ref<ItemStack> &stack) const {
@@ -234,7 +238,7 @@ int GridInventory::add_at_position(const Vector2i position, const String item_id
 		}
 	} else {
 		Ref<ItemStack> stack = stacks[stack_index];
-		if(is_rotated != is_stack_rotated(stack))
+		if (is_rotated != is_stack_rotated(stack))
 			return amount;
 		int no_added = add_at_index(stack_index, item_id, amount, properties);
 		return no_added;
@@ -262,18 +266,14 @@ int GridInventory::transfer_to(const Vector2i from_position, GridInventory *dest
 	ERR_FAIL_COND_V_MSG(get_database() != destination->get_database(), amount, "Operation between inventories that do not have the same database is invalid.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
-	if (this == destination && from_position == destination_position)
-		return amount;
-
-
-	UtilityFunctions::print(is_rotated);
-
-
 	Ref<ItemStack> stack = get_stack_at(from_position);
 	if (stack == nullptr)
 		return amount;
 
 	bool is_rotated_on_origin_position = is_stack_rotated(stack);
+
+	if (this == destination && from_position == destination_position && is_rotated_on_origin_position == is_rotated)
+		return amount;
 
 	int amount_of_stack = stack->get_amount();
 	int stack_index = stacks.find(stack);
@@ -465,9 +465,13 @@ void GridInventory::on_insert_stack(const int stack_index) {
 	ERR_FAIL_NULL_MSG(get_database(), "'database' is null.");
 	Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
 	ERR_FAIL_NULL_MSG(definition, "'definition' is null.");
-	// TODO origin of is_rotated
 	bool is_rotated = false;
-	Vector2i position = find_free_place(definition->get_size(), stack->get_item_id(), stack->get_amount(), stack->get_properties(), is_rotated);
+	Vector2i position;
+	position = find_free_place(definition->get_size(), stack->get_item_id(), stack->get_amount(), stack->get_properties(), is_rotated);
+	if (position == Vector2i(-1, -1)) {
+		is_rotated = true;
+		position = find_free_place(definition->get_size(), stack->get_item_id(), stack->get_amount(), stack->get_properties(), true);
+	}
 	stack_positions.insert(stack_index, position);
 	stack_rotations.insert(stack_index, is_rotated);
 	Vector2i size;
