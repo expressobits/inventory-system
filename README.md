@@ -1,30 +1,30 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-0.8.71-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-2.0.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
-See demos in:
-Github: [Branch demos](https://github.com/expressobits/inventory-system/tree/demos)
-Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
+## Branchs Map
+
+🪹[main](https://github.com/expressobits/inventory-system/tree/main): Contains C++ Plugin
+
+🪹[addon](https://github.com/expressobits/inventory-system/tree/addon): Compiled version of the libs (with demos) that are in the godot asset lib store.
 
 
 ## Features
 
-✔️ Inventory with Slots.
+✔️ Inventory with Item Stacks.
 
 ✔️ Separate UI inventory logic.
 
 ✔️ First Person demo with chests.
 
-✔️ Fully commented core and UI code.
+<!-- ✔️ Fully commented core and UI code. -->
 
-✔️ Item as Extendable Resource.
+✔️ Item Definition as Extendable Resource.
 
 ✔️ Demonstrations of dropped items and item pickup.
-
-✔️ Static and dynamic inventory options.
 
 ✔️ Multiplayer compatible (Including example).
 
@@ -46,23 +46,24 @@ Godot Asset Lib: https://godotengine.org/asset-library/asset/1895
 
 ✔️ Unconventional inventory. https://github.com/expressobits/inventory-system/issues/32
 
+✔️ Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
+
+✔️ Equipament Inventory
+
 ## In Progress
 
-🔨 Equipament Inventory
-
 ## Planneds
-
-📅 Inventory with grids like RE4. (https://github.com/expressobits/inventory-system/issues/35)
-
-📅 Change core to CPP #83
 
 📅 Inventory UI dynamic #83
 
 ## Install
 See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
 
-## Structure
-![UML](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/UML.png)
+## Struture
+### [Gloot](https://github.com/peter-kish/gloot)
+Grid Inventory and Grid UIs based on plugin [Gloot](https://github.com/peter-kish/gloot)
+Special thanks to [Peter Kiš](https://github.com/peter-kish) and its contributors
+The grid system and its UI were based on this repository.
 
 ## Authors
 

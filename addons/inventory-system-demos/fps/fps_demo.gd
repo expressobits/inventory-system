@@ -9,13 +9,9 @@ func _ready():
 	$"UI/Inventory System UI".setup($"Player/CharacterInventorySystem")
 	main_inventory = $"Player/CharacterInventorySystem".main_inventory
 	main_inventory.add("workbench", 1)
-	main_inventory.add("workbench", 1)
-	main_inventory.add("stone_pickaxe", 1)
-	main_inventory.add("stone_pickaxe", 1)
-	main_inventory.add("stone_pickaxe", 1)
-	main_inventory.add("stone_pickaxe", 1)
-	main_inventory.add("stone_pickaxe", 1)
-	main_inventory.add("stone_axe", 1)
+	main_inventory.add("helmet_labor", 1)
+	main_inventory.add("wood", 16)
+	main_inventory.add("stone", 8)
 	
 #
 func _process(_delta):
