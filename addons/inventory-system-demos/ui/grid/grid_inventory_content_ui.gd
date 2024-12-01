@@ -10,7 +10,7 @@ signal item_mouse_entered(item)
 signal item_mouse_exited(item)
 
 signal request_split(inventory: GridInventory, stack_index : int, amount : int)
-signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position : Vector2i, amount : int)
+signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool)
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
@@ -342,7 +342,9 @@ func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inv
 		return
 		
 	var stack_position : Vector2i = source_inventory.get_stack_position(stack)
-	request_transfer_to.emit(source_inventory, stack_position, inventory, field_coords, stack.amount)
+	#TODO make rotation with R key or mouse wheel
+	var is_rotated: bool = source_inventory.is_stack_rotated(stack)
+	request_transfer_to.emit(source_inventory, stack_position, inventory, field_coords, stack.amount, is_rotated)
 
 
 func get_field_coords(local_pos: Vector2) -> Vector2i:

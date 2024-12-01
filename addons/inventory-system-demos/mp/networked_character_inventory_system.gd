@@ -75,6 +75,15 @@ func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: Gr
 		transfer_to_rpc.rpc_id(1, inventory.get_path(), origin_pos, destination.get_path(), destination_pos, amount, is_rotated)
 
 
+func rotate(stack: ItemStack, inventory: Inventory):
+	if multiplayer.is_server():
+		super.rotate(stack, inventory)
+	else:
+		var stack_index = inventory.stacks.find(stack)
+		if stack_index != -1:
+			rotate_rpc.rpc_id(1, stack_index, inventory.get_path())
+
+
 func split(inventory : Inventory, stack_index : int, amount : int):
 	if multiplayer.is_server():
 		super.split(inventory, stack_index, amount)
@@ -235,6 +244,15 @@ func split_rpc(inventory_path: NodePath, stack_index: int, amount: int):
 	if inv == null:
 		return
 	super.split(inv, stack_index, amount)
+
+
+@rpc
+func rotate_rpc(stack_index: int, inventory_path: NodePath):
+	var inv = get_node(inventory_path)
+	if inv == null:
+		return
+	var stack = inv.stacks[stack_index]
+	super.rotate(stack, inv)
 
 
 @rpc

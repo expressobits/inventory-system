@@ -19,7 +19,7 @@ signal item_mouse_entered(item)
 signal item_mouse_exited(item)
 
 signal request_split(inventory : Inventory, stack_index : int, amount : int)
-signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position : Vector2i, amount : int)
+signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool)
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
@@ -223,8 +223,8 @@ func _ready() -> void:
 	_grid_inventory_content_ui.request_split.connect(func(inventory: GridInventory, stack_index: int, amount : int):
 		request_split.emit(inventory, stack_index, amount)
 	)
-	_grid_inventory_content_ui.request_transfer_to.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, destination_inventory : GridInventory, destination_position: Vector2i, amount : int):
-		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount)
+	_grid_inventory_content_ui.request_transfer_to.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, destination_inventory : GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool):
+		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount, is_rotated)
 	)
 	_grid_inventory_content_ui.item_mouse_entered.connect(_on_item_mouse_entered)
 	_grid_inventory_content_ui.item_mouse_exited.connect(_on_item_mouse_exited)

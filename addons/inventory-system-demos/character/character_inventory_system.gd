@@ -152,6 +152,10 @@ func equip(stack: ItemStack, inventory : Inventory, slot_index: int):
 	hotbar.equip(stack, slot_index)
 
 
+func rotate(stack: ItemStack, inventory : Inventory):
+	inventory.rotate(stack)
+
+
 func sort(inventory : Inventory):
 	inventory.sort()
 

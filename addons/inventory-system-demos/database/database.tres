@@ -143,7 +143,7 @@ properties = {
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_24066"]
 id = "workbench"
-max_stack = 8
+max_stack = 1
 name = "Workbench"
 icon = ExtResource("12_ltu7p")
 weight = 5.0

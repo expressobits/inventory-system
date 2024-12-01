@@ -161,10 +161,8 @@ func _on_craft(craft_station : CraftStation, recipe_index : int):
 	character.craft(craft_station, recipe_index)
 
 
-func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int):
-	var stack = inventory.get_stack_at(origin_pos)
-	var rot = !inventory.is_stack_rotated(stack)
-	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount, rot)
+func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int, is_rotated: bool):
+	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount, is_rotated)
 
 
 func _request_split(inventory : Inventory, stack_index : int, amount : int):
@@ -173,6 +171,10 @@ func _request_split(inventory : Inventory, stack_index : int, amount : int):
 
 func _request_drop(stack: ItemStack, inventory: Inventory):
 	character.drop(stack, inventory)
+
+
+func _request_rotate(stack: ItemStack, inventory: Inventory):
+	character.rotate(stack, inventory)
 
 
 func _request_equip(stack: ItemStack, inventory: Inventory, slot_index: int):
@@ -188,6 +190,7 @@ var current_inventory: GridInventory
 const STACK_MENU_ID_SPLIT = 0
 const STACK_MENU_ID_DROP = 1
 const STACK_MENU_ID_EQUIP = 2
+const STACK_MENU_ID_ROTATE = 3
 const STACK_MENU_ID_MOVE_TO = 4
 const STACK_MENU_ID_SORT = 9
 
@@ -208,7 +211,9 @@ func _inventory_stack_context(event: InputEvent, inventory: GridInventory, stack
 	
 	stack_popup_menu.clear()
 	stack_popup_menu.add_item("Split", STACK_MENU_ID_SPLIT)
+	stack_popup_menu.add_item("Rotate", STACK_MENU_ID_ROTATE)
 	stack_popup_menu.add_item("Drop", STACK_MENU_ID_DROP)
+	
 	
 	
 	var equip_menu : PopupMenu = PopupMenu.new()
@@ -241,6 +246,8 @@ func _on_stack_popup_menu_id_pressed(id: int):
 			_request_split(current_inventory, stack_index, current_stack.amount/2)
 		STACK_MENU_ID_DROP:
 			_request_drop(current_stack, current_inventory)
+		STACK_MENU_ID_ROTATE:
+			_request_rotate(current_stack, current_inventory)
 		STACK_MENU_ID_SORT:
 			_request_sort(current_inventory)
 		STACK_MENU_ID_MOVE_TO:
