@@ -12,30 +12,12 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -4.0
+offset_right = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 split_offset = -128
 
-[node name="NewResourceDialog" type="FileDialog" parent="."]
-unique_name_in_owner = true
-size = Vector2i(1024, 162)
-dialog_hide_on_ok = true
-access = 2
-filters = PackedStringArray("*.tres ; ItemDefinition")
-
-[node name="OpenResourceDialog" type="FileDialog" parent="."]
-title = "Open a File"
-size = Vector2i(312, 157)
-ok_button_text = "Open"
-dialog_hide_on_ok = true
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.tres ; ItemDefinition")
-
 [node name="RemoveConfirmationDialog" type="ConfirmationDialog" parent="."]
-unique_name_in_owner = true
-size = Vector2i(400, 100)
-
-[node name="RemoveAndDeleteConfirmationDialog" type="ConfirmationDialog" parent="."]
 unique_name_in_owner = true
 size = Vector2i(400, 100)

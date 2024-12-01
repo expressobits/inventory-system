@@ -6,7 +6,6 @@ var item : ItemDefinition
 var database : InventoryDatabase
 var properties_obj : Array
 
-@export var property_scene : PackedScene = preload("res://addons/inventory-system/editor/recipes/ingredient_editor.tscn")
 @onready var v_box_container = $ScrollContainer/VBoxContainer
 @onready var add_button = $Panel/HBoxContainer/AddButton
 @onready var line_edit = $Panel/HBoxContainer/NewKeyLineEdit
@@ -40,12 +39,12 @@ func loading_properties():
 	var new_item_properties : Dictionary = make_dictionary_unique(item.properties)
 	for key in new_item_properties.keys():
 		if key is String:
-			var property_obj = property_scene.instantiate()
-			var property : BasePropertyItemEditor = property_obj as BasePropertyItemEditor
-			property.setup(item, key, item.properties[key])
-			property.removed.connect(_property_removed.bind())
-			properties_obj.append(property_obj)
-			v_box_container.add_child(property_obj)
+			var property : ItemDefinitionPropertyEditor = ItemDefinitionPropertyEditor.new()
+			property.setup(key, item.dynamic_properties.find(key) != -1, item.properties[key])
+			property.removed.connect(_property_removed.bind(item))
+			property.changed.connect(_property_changed.bind(item))
+			properties_obj.append(property)
+			v_box_container.add_child(property)
 	item.properties = new_item_properties
 
 
@@ -58,8 +57,20 @@ func build_type_options():
 	new_type_option_button.add_icon_item(get_theme_icon("Color", "EditorIcons"),"Color", TYPE_COLOR)
 
 
-func _property_removed():
+func _property_removed(key, item : ItemDefinition):
+	item.properties.erase(key)
 	loading_properties()
+
+
+func _property_changed(key : String, is_dynamic : bool, value, item : ItemDefinition):
+	item.properties[key] = value
+	var index = item.dynamic_properties.find(key)
+	var contains = index != -1
+	if contains != is_dynamic:
+		if is_dynamic:
+			item.dynamic_properties.append(key)
+		else:
+			item.dynamic_properties.remove_at(index)
 
 
 func _on_add_button_pressed():

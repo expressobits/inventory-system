@@ -18,12 +18,12 @@ var filter: String:
 		return filter
 
 signal changed_products_in_recipe(recipe : Recipe)
-signal request_remove(recipe : Recipe, request_code : int)
+signal request_remove(recipe : Recipe)
 signal selected(recipe : Recipe)
 
 
 func _ready():
-	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed.bind())
+	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed)
 
 
 func load_recipes(database : InventoryDatabase):
@@ -41,7 +41,7 @@ func update_recipes():
 		recipes_ui.append(recipe_item)
 		v_box_container.add_child(recipe_item)
 		recipe_item.selected.connect(_on_recipe_item_selected.bind(index))
-		recipe_item.request_remove.connect(_on_recipe_item_request_remove_menu.bind())
+		recipe_item.request_remove.connect(_on_recipe_item_request_remove_menu)
 	if recipes.size() > 0:
 		recipes_ui[0].select()
 
@@ -88,9 +88,10 @@ func is_contains_product_name(recipe : Recipe, filter_name : String) -> bool:
 	if filter_name == "":
 		return true
 	for product in recipe.products:
-		if product.item == null:
+		var item = database.get_item(product.item_id)
+		if item == null:
 			return true
-		if filter_name.to_lower() in product.item.name.to_lower():
+		if filter_name.to_lower() in item.name.to_lower():
 			return true
 	return false
 
@@ -103,8 +104,8 @@ func _on_recipe_item_selected(index):
 			recipes_ui[i].unselect()
 
 
-func _on_recipe_item_request_remove_menu(recipe : Recipe, request_code : int):
-	request_remove.emit(recipe, request_code)
+func _on_recipe_item_request_remove_menu(recipe : Recipe):
+	request_remove.emit(recipe)
 
 
 func _on_search_line_edit_text_changed(new_text : String):

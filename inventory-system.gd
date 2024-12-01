@@ -1,14 +1,17 @@
 @tool
 extends EditorPlugin
+class_name InventorySystemEditorPlugin
+
 
 const icon_plugin = preload("res://addons/inventory-system/icons/inventory_main_screen.svg")
 const inventory_editor_scene = preload("res://addons/inventory-system/editor/inventory_editor.tscn")
 const InventorySettings = preload("res://addons/inventory-system/editor/inventory_settings.gd")
-const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
 
 var _inventory_editor : Control
 
 var database_file_cache: Dictionary = {}
+
+var import_plugin
 
 func _enter_tree():
 	if Engine.is_editor_hint():
@@ -30,6 +33,7 @@ func _exit_tree():
 		_inventory_editor.queue_free()
 	# Clean-up of the plugin goes here.
 #	remove_inspector_plugin()
+	import_plugin = null
 
 
 func _has_main_screen():
@@ -65,4 +69,3 @@ func _build() -> bool:
 			push_error("You have %d error(s) in %s" % [database_file.errors.size(), database_file.path])
 			can_build = false
 	return can_build
-

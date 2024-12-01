@@ -16,9 +16,3 @@ layout_mode = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
-
-[node name="NewResourceDialog" parent="." index="1"]
-filters = PackedStringArray("*.tres ; Recipe")
-
-[node name="OpenResourceDialog" parent="." index="2"]
-filters = PackedStringArray("*.tres ; Recipe")

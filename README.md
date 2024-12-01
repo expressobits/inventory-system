@@ -24,8 +24,6 @@ Compiled version but just the addon folder, to be added as a git
 
 ✔️ Separate UI inventory logic.
 
-✔️ Inventory Handler - which manages inventories.
-
 ✔️ First Person demo with chests.
 
 ✔️ Fully commented core and UI code.

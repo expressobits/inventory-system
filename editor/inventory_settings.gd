@@ -1,7 +1,8 @@
 @tool
 extends Node
 
-const InventoryConstants = preload("res://addons/inventory-system/editor/constants.gd")
+const USER_CONFIG_PATH = "user://inventory_system_user_config.json"
+const CACHE_PATH = "user://inventory_system_cache.json"
 
 
 static func prepare() -> void:
@@ -18,15 +19,15 @@ static func get_user_config() -> Dictionary:
 		is_running_test_scene = false
 	}
 	
-	if FileAccess.file_exists(InventoryConstants.USER_CONFIG_PATH):
-		var file: FileAccess = FileAccess.open(InventoryConstants.USER_CONFIG_PATH, FileAccess.READ)
+	if FileAccess.file_exists(USER_CONFIG_PATH):
+		var file: FileAccess = FileAccess.open(USER_CONFIG_PATH, FileAccess.READ)
 		user_config.merge(JSON.parse_string(file.get_as_text()), true)
 	
 	return user_config
 
 
 static func save_user_config(user_config: Dictionary) -> void:
-	var file: FileAccess = FileAccess.open(InventoryConstants.USER_CONFIG_PATH, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(USER_CONFIG_PATH, FileAccess.WRITE)
 	file.store_string(JSON.stringify(user_config))
 
 

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   viewBox="0 0 4.2333 4.2333"
+   id="svg14"
+   sodipodi:docname="inventory_database_editor.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="50.125"
+     inkscape:cx="8"
+     inkscape:cy="8"
+     inkscape:window-width="2560"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <g
+     fill="#35d4f4"
+     id="g14"
+     style="fill:#e0e0e0;fill-opacity:1">
+    <rect
+       x="6.2711"
+       y="7.7306"
+       width="0"
+       height="3.1242"
+       rx="2"
+       ry="2"
+       stroke="#fff"
+       stroke-width="2"
+       id="rect1"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="1.3545"
+       y="1.419"
+       stroke="#fff"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       stroke-width=".52917"
+       id="rect2"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x=".26458"
+       y="3.7042"
+       width="3.7042"
+       height=".52917"
+       id="rect3"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x=".26458"
+       y="-4.2206e-8"
+       width="3.7042"
+       height=".52917"
+       id="rect4"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       transform="rotate(-90)"
+       x="-4.2333"
+       y="4.7201e-8"
+       width="4.2333"
+       height=".52917"
+       ry=".26868"
+       id="rect5"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       transform="rotate(-90)"
+       x="-4.2333"
+       y="3.7042"
+       width="4.2333"
+       height=".52917"
+       ry=".26458"
+       id="rect6"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x=".79375"
+       y=".79375"
+       width=".52917"
+       height=".79375"
+       rx="4.2206e-8"
+       ry="6.3309e-8"
+       id="rect7"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x=".79375"
+       y="1.8521"
+       width=".52917"
+       height=".52917"
+       rx="4.2206e-8"
+       ry="4.2206e-8"
+       id="rect8"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x=".79375"
+       y="2.6458"
+       width=".52917"
+       height=".79375"
+       rx="4.2206e-8"
+       ry="6.3309e-8"
+       id="rect9"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="1.5875"
+       y=".79375"
+       width="1.0583"
+       height=".79375"
+       rx="8.4412e-8"
+       ry="6.3309e-8"
+       id="rect10"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="1.5875"
+       y="2.6458"
+       width="1.8521"
+       height=".79375"
+       rx="1.4772e-7"
+       ry="6.3309e-8"
+       id="rect11"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="1.5875"
+       y="1.8521"
+       width=".79375"
+       height=".52917"
+       rx="6.3309e-8"
+       ry="4.2206e-8"
+       id="rect12"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="2.6458"
+       y="1.8521"
+       width=".79375"
+       height=".52917"
+       rx="6.3309e-8"
+       ry="4.2206e-8"
+       id="rect13"
+       style="fill:#e0e0e0;fill-opacity:1" />
+    <rect
+       x="2.9104"
+       y=".79375"
+       width=".52917"
+       height=".79375"
+       rx="4.2206e-8"
+       ry="6.3309e-8"
+       id="rect14"
+       style="fill:#e0e0e0;fill-opacity:1" />
+  </g>
+</svg>
