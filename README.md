@@ -20,7 +20,7 @@
 
 ✔️ First Person demo with chests.
 
-✔️ Fully commented core and UI code.
+<!-- ✔️ Fully commented core and UI code. -->
 
 ✔️ Item Definition as Extendable Resource.
 
@@ -59,6 +59,7 @@
 ## Install
 See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
 
+## Struture
 ### [Gloot](https://github.com/peter-kish/gloot)
 Grid Inventory and Grid UIs based on plugin [Gloot](https://github.com/peter-kish/gloot)
 Special thanks to [Peter Kiš](https://github.com/peter-kish) and its contributors
