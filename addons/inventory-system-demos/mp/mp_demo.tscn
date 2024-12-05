@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene load_steps=17 format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_box_inventory.gd" id="10_4488h"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_efc1k"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="10_kjp1o"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/placeable_item_spawner.gd" id="12_tyg5k"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/lag_test.gd" id="15_7tjb2"]
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
@@ -56,6 +57,10 @@ burnable_category = "burnables"
 spawn_path = NodePath("..")
 script = ExtResource("8_m78qf")
 database = ExtResource("3_aep54")
+
+[node name="PlaceableItemSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = ExtResource("12_tyg5k")
 
 [node name="LagTest" type="Node" parent="."]
 script = ExtResource("15_7tjb2")

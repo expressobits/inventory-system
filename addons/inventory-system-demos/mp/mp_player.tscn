@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dnlxnu6jpej17"]
+[gd_scene load_steps=17 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_character_inventory_system.gd" id="3_lbhsf"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_object_placer.gd" id="7_pn3xn"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_use_items_example_3d.gd" id="8_227f4"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="9_c6j5p"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="9_vfq4s"]
@@ -80,6 +81,10 @@ inventory = NodePath("..")
 [node name="SyncCraftStation" type="Node" parent="CharacterInventorySystem/CraftStation" index="0" node_paths=PackedStringArray("craft_station")]
 script = ExtResource("9_c6j5p")
 craft_station = NodePath("..")
+
+[node name="ObjectPlacer" parent="CharacterInventorySystem/Interactor" index="0"]
+script = ExtResource("7_pn3xn")
+spawner_path = NodePath("../../../../PlaceableItemSpawner")
 
 [node name="SyncHotbar" type="Node" parent="CharacterInventorySystem/Hotbar" index="0" node_paths=PackedStringArray("hotbar")]
 unique_name_in_owner = true
