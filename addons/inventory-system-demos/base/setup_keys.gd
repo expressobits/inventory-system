@@ -11,8 +11,12 @@ const ACTIONS = [
 	DefaultActions.CHARACTER_CONTROLLER_JUMP,
 	DefaultActions.CHARACTER_CONTROLLER_ESCAPE,
 	DefaultActions.CHARACTER_CONTROLLER_INTERACT,
+	DefaultActions.CHARACTER_CONTROLLER_HAND_INTERACT,
 	DefaultActions.CHARACTER_CONTROLLER_TOGGLE_CRAFT_PANEL,
 	DefaultActions.CHARACTER_CONTROLLER_TOGGLE_INVENTORY,
+	DefaultActions.CHARACTER_CONTROLLER_PICK_ITEM,
+	DefaultActions.CHARACTER_CONTROLLER_PLACE_ITEM,
+	DefaultActions.CHARACTER_CONTROLLER_ROTATE,
 	DefaultActions.CHARACTER_CONTROLLER_ADD_ITEM_A,
 	DefaultActions.CHARACTER_CONTROLLER_REMOVE_ITEM_A,
 	DefaultActions.CHARACTER_CONTROLLER_ADD_ITEM_B,
@@ -35,7 +39,11 @@ func _enter_tree():
 			var action_props_events = action_props["events"]
 
 			for event_data in action_props_events:
-				var event = InputEventKey.new()
+				var event
+				if action_props.has("event_type") and action_props["event_type"] == "mouse_button":
+					event = InputEventMouseButton.new()
+				else:
+					event = InputEventKey.new()
 				for prop_name in event_data:
 					event.set(prop_name, event_data[prop_name])
 

@@ -71,7 +71,7 @@ shadow_mesh = SubResource("ArrayMesh_rnfke")
 
 [sub_resource type="Resource" id="Resource_s0tlk"]
 script = ExtResource("2_kk7nc")
-input = "item_pickup"
+input = "hand_interact"
 description = "Use"
 code = 0
 

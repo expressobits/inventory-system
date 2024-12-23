@@ -4,7 +4,7 @@ extends Node3D
 @export var hotbar : Hotbar
 
 func use_item_selected_in_hotbar():
-	var stack : ItemStack = hotbar.get_selected_stack()
+	var stack : ItemStack = hotbar.get_stack_on_selection()
 	if stack == null:
 		return
 	var stack_index = hotbar.get_inventory().stacks.find(stack)

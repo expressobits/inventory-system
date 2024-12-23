@@ -99,7 +99,7 @@ shadow_mesh = SubResource("ArrayMesh_fjye7")
 
 [sub_resource type="Resource" id="Resource_5424s"]
 script = ExtResource("2_h8kk8")
-input = "item_pickup"
+input = "hand_interact"
 description = "Use"
 code = 0
 

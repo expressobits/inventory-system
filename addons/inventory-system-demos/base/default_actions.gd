@@ -60,6 +60,16 @@ const CHARACTER_CONTROLLER_INTERACT := {
 	]
 }
 
+const CHARACTER_CONTROLLER_HAND_INTERACT := {
+	"name": "hand_interact",
+	"event_type": "mouse_button",
+	"events": [
+		{
+			"button_index": 1,
+		}
+	]
+}
+
 const CHARACTER_CONTROLLER_TOGGLE_CRAFT_PANEL := {
 	"name": "toggle_craft_panel",
 	"events": [
@@ -74,6 +84,34 @@ const CHARACTER_CONTROLLER_TOGGLE_INVENTORY := {
 	"events": [
 		{
 			"physical_keycode": KEY_I,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_PICK_ITEM := {
+	"name": "item_pickup",
+	"events": [
+		{
+			"physical_keycode": KEY_E,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_PLACE_ITEM := {
+	"name": "item_place",
+	"event_type": "mouse_button",
+	"events": [
+		{
+			"button_index": 2,
+		}
+	]
+}
+
+const CHARACTER_CONTROLLER_ROTATE := {
+	"name": "rotate",
+	"events": [
+		{
+			"physical_keycode": KEY_R,
 		}
 	]
 }
@@ -128,15 +166,6 @@ const CHARACTER_CONTROLLER_REMOVE_ITEM_C := {
 	"events": [
 		{
 			"physical_keycode": KEY_F6,
-		}
-	]
-}
-
-const CHARACTER_CONTROLLER_INTERACT_ITEM := {
-	"name": "interact_item",
-	"events": [
-		{
-			"physical_keycode": MOUSE_BUTTON_LEFT,
 		}
 	]
 }
