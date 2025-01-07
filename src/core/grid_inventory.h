@@ -32,6 +32,7 @@ protected:
 	static void _bind_methods();
 
 public:
+	virtual void _enter_tree() override;
 	const Vector2i DEFAULT_SIZE = Vector2i(8, 8);
 	GridInventory();
 	~GridInventory();

@@ -2,6 +2,10 @@
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
+void GridInventory::_enter_tree() {
+	_refresh_quad_tree();
+}
+
 bool GridInventory::_bounds_broken() const {
 	for (size_t i = 0; i < get_stacks().size(); i++) {
 		Ref<ItemStack> stack = get_stacks()[i];
