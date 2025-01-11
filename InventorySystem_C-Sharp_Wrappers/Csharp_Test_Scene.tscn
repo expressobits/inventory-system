@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://crxt02rofs717"]
+
+[ext_resource type="Script" path="res://TestCsharp.cs" id="1_fe74g"]
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("inventoryNode")]
+script = ExtResource("1_fe74g")
+inventoryNode = NodePath("Inventory")
+
+[node name="Inventory" type="Inventory" parent="."]
