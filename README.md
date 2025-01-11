@@ -1,6 +1,6 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-2.0.4-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-no-red.svg)](todo-doc)
+![Version](https://img.shields.io/badge/version-2.0.5-blue.svg?cacheSeconds=2592000)
+[![Documentation](https://img.shields.io/badge/documentation-no-red.svg)](https://github.com/ExpressoBits/inventory-system/wiki)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
@@ -10,6 +10,8 @@
 🪹[main](https://github.com/expressobits/inventory-system/tree/main): Contains C++ Plugin
 
 🪹[addon](https://github.com/expressobits/inventory-system/tree/addon): Compiled version of the libs (with demos) that are in the godot asset lib store.
+
+🪹[csharp](https://github.com/expressobits/inventory-system/tree/csharp): Contains Conversion version to csharp Glitshy.
 
 
 ## Features
