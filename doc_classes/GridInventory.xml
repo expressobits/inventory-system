@@ -52,11 +52,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="get_stack_rotations" qualifiers="const">
-			<return type="bool[]" />
-			<description>
-			</description>
-		</method>
 		<method name="get_stack_size" qualifiers="const">
 			<return type="Vector2i" />
 			<param index="0" name="stack" type="ItemStack" />
@@ -101,12 +96,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="set_stack_rotations">
-			<return type="void" />
-			<param index="0" name="stack_rotations" type="bool[]" />
-			<description>
-			</description>
-		</method>
 		<method name="sort">
 			<return type="bool" />
 			<description>
@@ -137,6 +126,8 @@
 		<member name="size" type="Vector2i" setter="set_size" getter="get_size" default="Vector2i(8, 8)">
 		</member>
 		<member name="stack_positions" type="Vector2i[]" setter="set_stack_positions" getter="get_stack_positions" default="[]">
+		</member>
+		<member name="stack_rotations" type="bool[]" setter="set_stack_rotations" getter="get_stack_rotations" default="[]">
 		</member>
 	</members>
 	<signals>

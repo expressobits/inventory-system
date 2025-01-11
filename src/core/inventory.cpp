@@ -461,6 +461,13 @@ bool Inventory::drop(const String &item_id, const int &amount, const Dictionary 
 	return false;
 }
 
+void Inventory::drop_all_stacks() {
+	for (int i = stacks.size() - 1; i >= 0; i--) {
+		Ref<ItemStack> stack = stacks[i];
+		drop_from_inventory(i, stack->get_amount(), stack->get_properties());
+	}
+}
+
 void Inventory::drop_from_inventory(const int &stack_index, const int &amount, const Dictionary &properties) {
 	ERR_FAIL_COND(stack_index < 0 || stack_index >= stacks.size());
 
@@ -701,6 +708,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("transfer_at", "stack_index", "destination", "destination_stack_index", "amount"), &Inventory::transfer_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer", "stack_index", "destination", "amount"), &Inventory::transfer, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("drop", "item_id", "amount", "properties"), &Inventory::drop, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("drop_all_stacks"), &Inventory::drop_all_stacks);
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "stack_index", "amount", "properties"), &Inventory::drop_from_inventory, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));

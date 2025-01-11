@@ -64,6 +64,7 @@ public:
 	int transfer_at(const int &stack_index, Inventory *destination, const int &destination_stack_index, const int &amount = 1);
 	int transfer(const int &stack_index, Inventory *destination, const int &amount = 1);
 	virtual bool drop(const String &item_id, const int &amount, const Dictionary &properties);
+	void drop_all_stacks();
 	void drop_from_inventory(const int &stack_index, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties = Dictionary());
 	int remove_from_stack(Ref<ItemStack> stack, const String &item_id, const int &amount);

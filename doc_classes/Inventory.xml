@@ -138,6 +138,12 @@
 			<description>
 			</description>
 		</method>
+		<method name="drop_all_stacks">
+			<return type="void" />
+			<description>
+				Drop all stacks on inventory, [request_drop_obj] signal is emitted for each stack.
+			</description>
+		</method>
 		<method name="drop_from_inventory">
 			<return type="void" />
 			<param index="0" name="stack_index" type="int" />
@@ -317,6 +323,7 @@
 			<param index="2" name="amount" type="int" />
 			<param index="3" name="item_properties" type="Dictionary" />
 			<description>
+				Emitted when the [method drop] method is called (Usually called within [method drop_from_inventory] or [method drop_all_stacks]).
 			</description>
 		</signal>
 		<signal name="stack_added">
