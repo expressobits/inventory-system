@@ -35,7 +35,7 @@ Vector2i(3, 0): "food",
 Vector2i(4, 0): "food",
 Vector2i(5, 0): "food",
 Vector2i(6, 0): "food",
-Vector2i(7, 0): "food",
+Vector2i(7, 0): "food"
 }
 is_only_one_category_for_slots = false
 one_category_for_slots = ""
