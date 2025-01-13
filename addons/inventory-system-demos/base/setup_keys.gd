@@ -23,6 +23,7 @@ const ACTIONS = [
 	DefaultActions.CHARACTER_CONTROLLER_REMOVE_ITEM_B,
 	DefaultActions.CHARACTER_CONTROLLER_ADD_ITEM_C,
 	DefaultActions.CHARACTER_CONTROLLER_REMOVE_ITEM_C,
+	DefaultActions.UI_INVENTORY_TRANSFER,
 ]
 
 func _enter_tree():

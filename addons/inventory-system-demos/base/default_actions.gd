@@ -169,3 +169,12 @@ const CHARACTER_CONTROLLER_REMOVE_ITEM_C := {
 		}
 	]
 }
+
+const UI_INVENTORY_TRANSFER := {
+	"name": "ui_inventory_transfer",
+	"events": [
+		{
+			"physical_keycode": KEY_SHIFT,
+		}
+	]
+}

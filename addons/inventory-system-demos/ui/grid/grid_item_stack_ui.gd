@@ -5,6 +5,7 @@ signal activated
 signal clicked
 signal middle_clicked
 signal context_activated(event: InputEvent)
+signal request_transfer(event: InputEvent)
 
 @export var stack_style: StyleBox
 @export var hover_stack_style: StyleBox
@@ -15,6 +16,7 @@ signal context_activated(event: InputEvent)
 
 var inventory : GridInventory
 var stack: ItemStack
+
 
 func setup(inventory : Inventory, stack : ItemStack):
 	self.inventory = inventory
@@ -56,6 +58,7 @@ func _disconnect_item_signals() -> void:
 
 
 func _ready() -> void:
+	_set_panel_style(stack_style)
 	mouse_entered.connect(func():
 		_set_panel_style(hover_stack_style)
 	)
@@ -108,10 +111,13 @@ func _gui_input(event: InputEvent) -> void:
 	if !mb_event.pressed:
 		return
 	if mb_event.button_index == MOUSE_BUTTON_LEFT:
-		if mb_event.double_click:
-			activated.emit()
+		if Input.is_action_pressed("ui_inventory_transfer"):
+			request_transfer.emit(event)
 		else:
-			clicked.emit()
+			if mb_event.double_click:
+				activated.emit()
+			else:
+				clicked.emit()
 	if mb_event.button_index == MOUSE_BUTTON_MIDDLE:
 		middle_clicked.emit()
 	elif mb_event.button_index == MOUSE_BUTTON_MASK_RIGHT:
