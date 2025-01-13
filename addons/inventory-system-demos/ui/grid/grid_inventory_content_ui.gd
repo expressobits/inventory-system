@@ -11,7 +11,7 @@ signal item_mouse_exited(item)
 
 signal request_split(inventory: GridInventory, stack_index : int, amount : int)
 signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool)
-
+signal request_transfer(origin_inventory: GridInventory, origin_position: Vector2i, amount: int)
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 @export var grid_item_stack_ui_scene: PackedScene
@@ -208,6 +208,7 @@ func _populate_list() -> void:
 		grid_item_stack_ui.mouse_entered.connect(_on_item_mouse_entered.bind(grid_item_stack_ui))
 		grid_item_stack_ui.mouse_exited.connect(_on_item_mouse_exited.bind(grid_item_stack_ui))
 		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
+		grid_item_stack_ui.request_transfer.connect(_on_stack_request_transfer.bind(grid_item_stack_ui))
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 
@@ -272,6 +273,17 @@ func _on_item_clicked(grid_item_stack_ui) -> void:
 	else:
 		_clear_selection()
 		_select(stack)
+
+
+func _on_stack_request_transfer(event: InputEvent, grid_item_stack_ui) -> void:
+	var stack = grid_item_stack_ui.stack
+	if !is_instance_valid(stack):
+		return
+	var stack_position : Vector2i = inventory.get_stack_position(stack)
+	#TODO make rotation with R key or mouse wheel
+	var is_rotated: bool = inventory.is_stack_rotated(stack)
+	
+	request_transfer.emit(inventory, stack_position, stack.amount)
 
 
 func _on_item_middle_clicked(grid_item_stack_ui) -> void:
