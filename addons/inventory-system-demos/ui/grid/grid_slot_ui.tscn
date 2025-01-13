@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxevor61mdhtc"]
+[gd_scene load_steps=6 format=3 uid="uid://cxevor61mdhtc"]
 
 [ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_slot_ui.gd" id="1_cjqhj"]
 [ext_resource type="StyleBox" uid="uid://xixm5r6l556f" path="res://addons/inventory-system-demos/grid_example/grid_field_highlighted_style_box.tres" id="2_x4mfq"]
 [ext_resource type="Texture2D" uid="uid://t3olj7qicyss" path="res://addons/inventory-system-demos/assets/icons/hat-svgrepo-com.svg" id="3_ofs2h"]
+[ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="4_nrpsh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0etqt"]
 bg_color = Color(0.360784, 0.360784, 0.360784, 0.6)
@@ -40,3 +41,6 @@ modulate = Color(1, 1, 1, 0.501961)
 layout_mode = 2
 texture = ExtResource("3_ofs2h")
 expand_mode = 4
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nrpsh")

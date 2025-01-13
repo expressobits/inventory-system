@@ -17,13 +17,13 @@ signal inventory_stack_context_activated(event: InputEvent, inventory : Inventor
 
 @export var grid_inventory_ui: GridInventoryUI
 @export var title_label: Label
-@onready var sort_button: Button = %SortButton
+#@onready var sort_button: Button = %SortButton
 
 
 func _ready() -> void:
-	sort_button.pressed.connect(func():
-		request_sort.emit(inventory)
-	)
+	#sort_button.pressed.connect(func():
+		#request_sort.emit(inventory)
+	#)
 	grid_inventory_ui.request_split.connect(func(inventory: GridInventory, stack_index: int, amount : int):
 		request_split.emit(inventory, stack_index, amount)
 	)

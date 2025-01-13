@@ -7,6 +7,7 @@ enum StylePriority {HIGH = 0, MEDIUM = 1, LOW = 2}
 @export var regular_style: StyleBox
 @export var hover_style: StyleBox
 var _styles: Array[StyleBox] = [null, null, null]
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @onready var category_icon: TextureRect = %CategoryIcon
 var grid_position: Vector2i
@@ -34,6 +35,7 @@ func _ready() -> void:
 	_set_panel_style(regular_style)
 	mouse_entered.connect(func():
 		_set_panel_style(hover_style)
+		audio_stream_player.play()
 	)
 	mouse_exited.connect(func():
 		_set_panel_style(regular_style)

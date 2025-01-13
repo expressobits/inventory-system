@@ -13,6 +13,8 @@ signal request_transfer(event: InputEvent)
 @onready var texture_bg: Panel = $TextureBG
 @onready var item_icon: TextureRect = %ItemIcon
 @onready var stack_size_label: Label = $StackSizeLabel
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var audio_stream_player_2: AudioStreamPlayer = $AudioStreamPlayer2
 
 var inventory : GridInventory
 var stack: ItemStack
@@ -61,12 +63,14 @@ func _ready() -> void:
 	_set_panel_style(stack_style)
 	mouse_entered.connect(func():
 		_set_panel_style(hover_stack_style)
+		audio_stream_player_2.play()
 	)
 	mouse_exited.connect(func():
 		_set_panel_style(stack_style)
 	)
 	grabbed.connect(func(_offset):
 		visible = false
+		audio_stream_player.play()
 	)
 	if stack == null:
 		deactivate()
