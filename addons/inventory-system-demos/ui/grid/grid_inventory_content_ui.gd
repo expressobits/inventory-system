@@ -208,7 +208,6 @@ func _populate_list() -> void:
 		grid_item_stack_ui.mouse_entered.connect(_on_item_mouse_entered.bind(grid_item_stack_ui))
 		grid_item_stack_ui.mouse_exited.connect(_on_item_mouse_exited.bind(grid_item_stack_ui))
 		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
-		grid_item_stack_ui.request_transfer.connect(_on_stack_request_transfer.bind(grid_item_stack_ui))
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 
@@ -263,27 +262,24 @@ func _on_item_mouse_exited(grid_item_stack_ui) -> void:
 func _on_item_clicked(grid_item_stack_ui) -> void:
 	var stack = grid_item_stack_ui.stack
 	if !is_instance_valid(stack):
-		return
-
-	if select_mode == SelectMode.SELECT_MULTI && Input.is_key_pressed(KEY_CTRL):
-		if !_is_item_selected(stack):
-			_select(stack)
-		else:
-			_deselect(stack)
-	else:
-		_clear_selection()
-		_select(stack)
-
-
-func _on_stack_request_transfer(event: InputEvent, grid_item_stack_ui) -> void:
-	var stack = grid_item_stack_ui.stack
-	if !is_instance_valid(stack):
-		return
-	var stack_position : Vector2i = inventory.get_stack_position(stack)
-	#TODO make rotation with R key or mouse wheel
-	var is_rotated: bool = inventory.is_stack_rotated(stack)
+			return
 	
-	request_transfer.emit(inventory, stack_position, stack.amount)
+	if Input.is_action_pressed("ui_inventory_transfer"):
+		var stack_position : Vector2i = inventory.get_stack_position(stack)
+		#TODO make rotation with R key or mouse wheel
+		var is_rotated: bool = inventory.is_stack_rotated(stack)
+		
+		request_transfer.emit(inventory, stack_position, stack.amount)
+	else:
+		
+		if select_mode == SelectMode.SELECT_MULTI && Input.is_key_pressed(KEY_CTRL):
+			if !_is_item_selected(stack):
+				_select(stack)
+			else:
+				_deselect(stack)
+		else:
+			_clear_selection()
+			_select(stack)
 
 
 func _on_item_middle_clicked(grid_item_stack_ui) -> void:

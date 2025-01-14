@@ -52,6 +52,10 @@ func _ready():
 	
 	player_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	loot_inventory_ui.request_transfer_to.connect(_request_transfer_to)
+	
+	player_inventory_ui.request_fast_transfer.connect(_request_fast_transfer)
+	loot_inventory_ui.request_fast_transfer.connect(_request_fast_transfer)
+	
 	player_inventory_ui.request_split.connect(_request_split)
 	loot_inventory_ui.request_split.connect(_request_split)
 	player_inventory_ui.request_sort.connect(_request_sort)
@@ -163,6 +167,15 @@ func _on_craft(craft_station : CraftStation, recipe_index : int):
 
 func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int, is_rotated: bool):
 	character.transfer_to(inventory, origin_pos, destination, destination_pos, amount, is_rotated)
+
+
+func _request_fast_transfer(inventory: GridInventory, origin_pos: Vector2i, amount: int):
+	var destination: Inventory
+	if inventory == player_inventory_ui.inventory:
+		destination = loot_inventory_ui.inventory
+	else:
+		destination = player_inventory_ui.inventory
+	character.transfer(inventory, origin_pos, destination, amount)
 
 
 func _request_split(inventory : Inventory, stack_index : int, amount : int):

@@ -20,8 +20,7 @@ signal item_mouse_exited(item)
 
 signal request_split(inventory : Inventory, stack_index : int, amount : int)
 signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool)
-signal request_transfer(origin_inventory: GridInventory, origin_position: Vector2i, amount: int)
-
+signal request_fast_transfer(origin_inventory: GridInventory, origin_position: Vector2i, amount: int)
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 @export var grid_slot_ui_scene: PackedScene
@@ -228,7 +227,7 @@ func _ready() -> void:
 		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount, is_rotated)
 	)
 	_grid_inventory_content_ui.request_transfer.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, amount: int):
-		request_transfer.emit(origin_inventory, origin_position, amount)
+		request_fast_transfer.emit(origin_inventory, origin_position, amount)
 	)
 	_grid_inventory_content_ui.item_mouse_entered.connect(_on_item_mouse_entered)
 	_grid_inventory_content_ui.item_mouse_exited.connect(_on_item_mouse_exited)

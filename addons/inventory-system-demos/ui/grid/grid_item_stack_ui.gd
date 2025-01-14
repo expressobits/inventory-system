@@ -5,7 +5,6 @@ signal activated
 signal clicked
 signal middle_clicked
 signal context_activated(event: InputEvent)
-signal request_transfer(event: InputEvent)
 
 @export var stack_style: StyleBox
 @export var hover_stack_style: StyleBox
@@ -115,13 +114,10 @@ func _gui_input(event: InputEvent) -> void:
 	if !mb_event.pressed:
 		return
 	if mb_event.button_index == MOUSE_BUTTON_LEFT:
-		if Input.is_action_pressed("ui_inventory_transfer"):
-			request_transfer.emit(event)
+		if mb_event.double_click:
+			activated.emit()
 		else:
-			if mb_event.double_click:
-				activated.emit()
-			else:
-				clicked.emit()
+			clicked.emit()
 	if mb_event.button_index == MOUSE_BUTTON_MIDDLE:
 		middle_clicked.emit()
 	elif mb_event.button_index == MOUSE_BUTTON_MASK_RIGHT:

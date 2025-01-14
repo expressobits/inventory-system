@@ -133,11 +133,17 @@ func pick_to_inventory(node : Node):
 	var amount = node.amount
 	
 	if main_inventory.add(item_id, amount, item_properties, true) == 0:
-		emit_signal("picked", node)
+		picked.emit(node)
 		node.queue_free();
 		return
 		
 	printerr("pick_to_inventory return false");
+
+func transfer(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, amount: int):
+	var stack_index = inventory.get_stack_index_at(origin_pos)
+	if stack_index == -1:
+		return
+	inventory.transfer(stack_index, destination, amount)
 
 
 func transfer_to(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, destination_pos: Vector2i, amount: int, is_rotated: bool):
@@ -166,6 +172,12 @@ func drop(stack: ItemStack, inventory: Inventory):
 		return
 	
 	inventory.drop_from_inventory(stack_index, stack.amount, stack.properties)
+	
+	
+func drop_all_items():
+	main_inventory.drop_all_stacks()
+	equipment_inventory.drop_all_stacks()
+
 #endregion
 
 #region Crafter
