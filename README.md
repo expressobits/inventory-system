@@ -11,7 +11,7 @@
 
 🪹[addon](https://github.com/expressobits/inventory-system/tree/addon): Compiled version of the libs (with demos) that are in the godot asset lib store.
 
-🪹[csharp](https://github.com/expressobits/inventory-system/tree/csharp): Contains Conversion version to csharp Glitshy.
+🪹[csharp](https://github.com/expressobits/inventory-system/tree/csharp): Contains Conversion version to csharp by [Glitshy](https://github.com/Glitshy).
 
 
 ## Features
