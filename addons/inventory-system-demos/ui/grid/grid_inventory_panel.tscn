@@ -81,6 +81,6 @@ layout_mode = 2
 script = ExtResource("3_72ot8")
 grid_slot_ui_scene = ExtResource("5_s2dju")
 grid_item_stack_ui_scene = ExtResource("6_itnis")
-field_dimensions = Vector2(48, 48)
+grid_slot_size = Vector2(48, 48)
 item_spacing = 2
 selection_style = ExtResource("5_r0kdv")
