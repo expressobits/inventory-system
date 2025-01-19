@@ -44,29 +44,18 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 		update_configuration_warnings()
 
 ## The size of each inventory field in pixels.
-@export var field_dimensions: Vector2 = Vector2(32, 32):
-	set(new_field_dimensions):
-		if is_instance_valid(_grid_inventory_content_ui):
-			_grid_inventory_content_ui.field_dimensions = new_field_dimensions
-		field_dimensions = new_field_dimensions
-
+@export var field_dimensions: Vector2 = Vector2(32, 32)
 
 ## The spacing between items in pixels.
-@export var item_spacing: int = 0:
-	set(new_item_spacing):
-		if is_instance_valid(_grid_inventory_content_ui):
-			_grid_inventory_content_ui.item_spacing = new_item_spacing
-		item_spacing = new_item_spacing
-
+@export var item_spacing: int = 0
 
 ## Single or multi select mode (hold CTRL to select multiple items).
-@export_enum("Single", "Multi") var select_mode: int = GridInventoryContentUI.SelectMode.SELECT_SINGLE:
+@export_enum("Single", "Multi") var select_mode: int = SelectMode.SELECT_SINGLE:
 	set(new_select_mode):
 		if select_mode == new_select_mode:
 			return
 		select_mode = new_select_mode
-		if is_instance_valid(_grid_inventory_content_ui):
-			_grid_inventory_content_ui.select_mode = select_mode
+		_clear_selection()
 
 
 @export_group("Custom Styles")
@@ -89,17 +78,17 @@ var inventory: GridInventory = null:
 		inventory = new_inventory
 		_connect_inventory_signals()
 
-		if is_instance_valid(_grid_inventory_content_ui):
-			_grid_inventory_content_ui.inventory = inventory
 		_queue_refresh()
 
-var _grid_inventory_content_ui: GridInventoryContentUI = null
+var _grid_inventory_content_ui: Control = null
 var _field_background_grid: Control = null
 var _field_backgrounds: Array = []
 var _selection_panels: Control = null
 var _refresh_queued: bool = false
 var _stack_uis: Array = []
 var _selected_stacks: Array[ItemStack] = []
+var _ctrl_item_container: Control = null
+var _grid_drop_zone_ui: GridDropZoneUI = null
 
 
 func _get_configuration_warnings() -> PackedStringArray:
@@ -142,7 +131,7 @@ func _refresh() -> void:
 	_refresh_field_background_grid()
 	_refresh_selection_panel()
 	if is_instance_valid(_grid_inventory_content_ui):
-		_grid_inventory_content_ui._grid_drop_zone_ui.deactivate()
+		_grid_drop_zone_ui.deactivate()
 		_grid_inventory_content_ui.custom_minimum_size = _get_inventory_size_pixels()
 		size = custom_minimum_size
 
@@ -185,7 +174,7 @@ func _refresh_selection_panel() -> void:
 	for child in _selection_panels.get_children():
 		child.queue_free()
 
-	var selected_items := _grid_inventory_content_ui.get_selected_inventory_items()
+	var selected_items := get_selected_inventory_items()
 	_selection_panels.visible = (!selected_items.is_empty()) && (selection_style != null)
 	if selected_items.is_empty():
 		return
@@ -235,26 +224,29 @@ func _ready() -> void:
 	_field_background_grid.name = "FieldBackgrounds"
 	add_child(_field_background_grid)
 
-	_grid_inventory_content_ui = GridInventoryContentUI.new()
-	_grid_inventory_content_ui.grid_inventory_ui = self
-	_grid_inventory_content_ui.grid_item_stack_ui_scene = grid_item_stack_ui_scene
-	_grid_inventory_content_ui.inventory = inventory
-	_grid_inventory_content_ui.field_dimensions = field_dimensions
-	_grid_inventory_content_ui.item_spacing = item_spacing
+	_grid_inventory_content_ui = Control.new()
 	_grid_inventory_content_ui.name = "GridInventoryContentUI"
 	_grid_inventory_content_ui.resized.connect(_update_size)
-	_grid_inventory_content_ui.item_dropped.connect(func(item: ItemStack, drop_position: Vector2):
-		item_dropped.emit(item, drop_position)
-	)
-	_grid_inventory_content_ui.inventory_item_activated.connect(func(item: ItemStack):
-		inventory_item_activated.emit(item)
-	)
-	_grid_inventory_content_ui.request_transfer_to.connect(func(origin_inventory: GridInventory, origin_position: Vector2i, destination_inventory : GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool):
-		request_transfer_to.emit(origin_inventory, origin_position, destination_inventory, destination_position, amount, is_rotated)
-	)
-	_grid_inventory_content_ui.selection_changed.connect(_on_selection_changed)
-	_grid_inventory_content_ui.select_mode = select_mode
+	_grid_inventory_content_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_grid_inventory_content_ui)
+	
+	_ctrl_item_container = Control.new()
+	_ctrl_item_container.size = size
+	_ctrl_item_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_grid_inventory_content_ui.resized.connect(func(): _ctrl_item_container.size = size)
+	_grid_inventory_content_ui.add_child(_ctrl_item_container)
+
+	_grid_drop_zone_ui = GridDropZoneUI.new()
+	_grid_drop_zone_ui.dragable_dropped.connect(_on_dragable_dropped)
+	_grid_drop_zone_ui.size = size
+	resized.connect(func(): _grid_drop_zone_ui.size = size)
+	GridDraggableElementUI.dragable_grabbed.connect(func(dragable: GridDraggableElementUI, grab_position: Vector2):
+		_grid_drop_zone_ui.activate()
+	)
+	GridDraggableElementUI.dragable_dropped.connect(func(dragable: GridDraggableElementUI, zone: GridDropZoneUI, drop_position: Vector2):
+		_grid_drop_zone_ui.deactivate()
+	)
+	_grid_inventory_content_ui.add_child(_grid_drop_zone_ui)
 
 	_selection_panels = Control.new()
 	_selection_panels.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -270,7 +262,8 @@ func _ready() -> void:
 
 
 func _notification(what: int) -> void:
-	pass
+	if what == NOTIFICATION_DRAG_END:
+		_grid_drop_zone_ui.deactivate()
 	#if what == NOTIFICATION_DRAG_END:
 		#_fill_background(field_style, GridSlotUI.StylePriority.LOW)
 
@@ -300,7 +293,7 @@ func _handle_selection_change() -> void:
 
 	for item in inventory.stacks:
 		if item:
-			_set_background_on_item_selected(inventory.get_stack_rect(item), item in _grid_inventory_content_ui.get_selected_inventory_items())
+			_set_background_on_item_selected(inventory.get_stack_rect(item), item in get_selected_inventory_items())
 
 
 func _on_inventory_resized() -> void:
@@ -330,7 +323,7 @@ func _highlight_grabbed_item():
 
 	#_set_background_on_item_dragged(rect, false)
 
-	var grabbed_item_coords := _grid_inventory_content_ui.get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
+	var grabbed_item_coords := get_field_coords(global_grabbed_item_pos + (field_dimensions / 2))
 	var definition : ItemDefinition = inventory.database.get_item(grabbed_item.item_id)
 	var item_size := definition.size
 	var rect := Rect2i(grabbed_item_coords, item_size)
@@ -378,16 +371,12 @@ func _get_global_grabbed_item_local_pos() -> Vector2:
 
 ## Deselects the selected item.
 func deselect_inventory_item() -> void:
-	if !is_instance_valid(_grid_inventory_content_ui):
-		return
-	_grid_inventory_content_ui.deselect_inventory_item()
+	_clear_selection()
 
 
 ## Selects the given item.
-func select_inventory_item(item: ItemStack) -> void:
-	if !is_instance_valid(_grid_inventory_content_ui):
-		return
-	_grid_inventory_content_ui.select_inventory_item(item)
+func select_inventory_item(stack: ItemStack) -> void:
+	_select(stack)
 
 
 ## Returns the currently selected item. In case multiple items are selected,
@@ -395,48 +384,46 @@ func select_inventory_item(item: ItemStack) -> void:
 func get_selected_inventory_item() -> ItemStack:
 	if !is_instance_valid(_grid_inventory_content_ui):
 		return null
-	return _grid_inventory_content_ui.get_selected_inventory_item()
+	return _selected_stacks[0]
 
 
 ## Returns all the currently selected items.
 func get_selected_inventory_items() -> Array[ItemStack]:
 	if !is_instance_valid(_grid_inventory_content_ui):
 		return []
-	return _grid_inventory_content_ui.get_selected_inventory_items()
+	return _selected_stacks.duplicate()
 
-#region ContentUI
-func _get_inventory_size_pixels() -> Vector2:
-	if !is_instance_valid(inventory):
-		return Vector2.ZERO
-
-	var result := Vector2(inventory.size.x * field_dimensions.x, \
-		inventory.size.y * field_dimensions.y)
-
-	# Also take item spacing into consideration
-	result += Vector2(inventory.size - Vector2i.ONE) * item_spacing
-
-	return result
 	
+#region ContentUI
+func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
+	var stack: ItemStack = grid_item_stack_ui.item
+	# The item might have been freed in case the item stack has been moved and merged with another
+	# stack.
+	if is_instance_valid(stack) and inventory.has_stack(stack):
+		if zone == null:
+			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
+
+
 func _clear_list() -> void:
-	if !is_instance_valid(_grid_inventory_content_ui._ctrl_item_container):
+	if !is_instance_valid(_ctrl_item_container):
 		return
 	
 	_stack_uis.clear()
-	for ctrl_inventory_item in _grid_inventory_content_ui._ctrl_item_container.get_children():
-		_grid_inventory_content_ui._ctrl_item_container.remove_child(ctrl_inventory_item)
+	for ctrl_inventory_item in _ctrl_item_container.get_children():
+		_ctrl_item_container.remove_child(ctrl_inventory_item)
 		ctrl_inventory_item.queue_free()
 
 
 func _populate_list() -> void:
-	if !is_instance_valid(inventory) || !is_instance_valid(_grid_inventory_content_ui._ctrl_item_container):
+	if !is_instance_valid(inventory) || !is_instance_valid(_ctrl_item_container):
 		return
 	
 	for stack in inventory.stacks:
 		var grid_item_stack_ui : GridItemStackUI = grid_item_stack_ui_scene.instantiate()
 		grid_item_stack_ui.size = _get_item_sprite_size(stack)
 		grid_item_stack_ui.setup(inventory, stack)
-		grid_item_stack_ui.grabbed.connect(_grid_inventory_content_ui._on_item_grab.bind(grid_item_stack_ui))
-		grid_item_stack_ui.dropped.connect(_grid_inventory_content_ui._on_item_drop.bind(grid_item_stack_ui))
+		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
+		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
 		grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
 		grid_item_stack_ui.context_activated.connect(_on_item_context_activated.bind(grid_item_stack_ui))
 		grid_item_stack_ui.mouse_entered.connect(_on_item_mouse_entered.bind(grid_item_stack_ui))
@@ -445,7 +432,7 @@ func _populate_list() -> void:
 		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
 		grid_item_stack_ui.position = _get_field_position(inventory.get_stack_position(stack))
 
-		_grid_inventory_content_ui._ctrl_item_container.add_child(grid_item_stack_ui)
+		_ctrl_item_container.add_child(grid_item_stack_ui)
 		_stack_uis.append(grid_item_stack_ui)
 		
 		
@@ -476,13 +463,17 @@ func _on_item_clicked(grid_item_stack_ui) -> void:
 	else:
 		
 		if select_mode == SelectMode.SELECT_MULTI && Input.is_key_pressed(KEY_CTRL):
-			if !_grid_inventory_content_ui._is_item_selected(stack):
+			if !_is_item_selected(stack):
 				_select(stack)
 			else:
 				_deselect(stack)
 		else:
 			_clear_selection()
 			_select(stack)
+
+
+func _on_item_grab(offset: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
+	_clear_selection()
 
 
 func _on_item_context_activated(event: InputEvent, grid_item_stack_ui: GridItemStackUI) -> void:
@@ -506,11 +497,10 @@ func _on_dragable_dropped(dragable: GridDraggableElementUI, drop_position: Vecto
 
 
 func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
-	var field_coords = _grid_inventory_content_ui.get_field_coords(drop_position + (field_dimensions / 2))
+	var field_coords = get_field_coords(drop_position + (field_dimensions / 2))
 	
 	if source_inventory == null:
 		printerr("source_inventory is null?")
-		#inventory.add_at_position(stack, field_coords)
 		return
 	
 	if source_inventory.database != inventory.database:
@@ -521,6 +511,34 @@ func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inv
 	var is_rotated: bool = source_inventory.is_stack_rotated(stack)
 	request_transfer_to.emit(source_inventory, stack_position, inventory, field_coords, stack.amount, is_rotated)
 
+
+#region Stack UI Utils
+func _get_inventory_size_pixels() -> Vector2:
+	if !is_instance_valid(inventory):
+		return Vector2.ZERO
+
+	var result := Vector2(inventory.size.x * field_dimensions.x, \
+		inventory.size.y * field_dimensions.y)
+
+	# Also take item spacing into consideration
+	result += Vector2(inventory.size - Vector2i.ONE) * item_spacing
+
+	return result
+	
+
+func get_field_coords(local_pos: Vector2) -> Vector2i:
+	# We have to consider the item spacing when calculating field coordinates, thus we expand the
+	# size of each field by Vector2(item_spacing, item_spacing).
+	var field_dimensions_ex = field_dimensions + Vector2(item_spacing, item_spacing)
+
+	# We also don't want the item spacing to disturb snapping to the closest field, so we add half
+	# the spacing to the local coordinates.
+	var local_pos_ex = local_pos + (Vector2(item_spacing, item_spacing) / 2)
+
+	var x: int = local_pos_ex.x / (field_dimensions_ex.x)
+	var y: int = local_pos_ex.y / (field_dimensions_ex.y)
+	return Vector2i(x, y)
+#endregion
 
 #region Selected Stacks
 func _is_item_selected(stack: ItemStack) -> bool:
