@@ -27,10 +27,10 @@ func _ready():
 
 
 func setup():
-	inventory.stack_added.connect(_on_stack_added)
+	#inventory.stack_added.connect(_on_stack_added)
 	#inventory.updated_stack.connect(_on_updated_stack)
-	inventory.stack_removed.connect(_on_stack_removed)
-	#inventory.contents_changed.connect(_on_contents_changed)
+	#inventory.stack_removed.connect(_on_stack_removed)
+	inventory.contents_changed.connect(_on_contents_changed)
 	#if sync_item_added_signal:
 		#inventory.item_added.connect(_on_item_added)
 	#if sync_item_removed_signal:
@@ -55,10 +55,7 @@ func _on_stack_added(stack_index : int):
 	if not multiplayer.is_server():
 		return
 	
-	var stack = inventory.stacks[stack_index]
-	var position = inventory.stack_positions[stack_index]
-	var rotation = inventory.stack_rotations[stack_index]
-	_stack_added_rpc.rpc(stack.item_id, stack.amount, stack.properties, position, rotation)
+	_stack_added_rpc.rpc(stack_index)
 
 
 func _on_updated_stack(stack_index : int):
@@ -73,9 +70,9 @@ func _on_stack_removed(stack_index : int):
 	if not multiplayer.is_server():
 		return
 	
-	#var inv_data = inventory.serialize()
-	_stack_removed_rpc.rpc(stack_index)
-	#_update_inventory_rpc.rpc(inv_data)
+	var inv_data = inventory.serialize()
+	_update_inventory_rpc.rpc(inv_data)
+	#_stack_removed_rpc.rpc(stack_index)
 
 
 func _on_item_added(item_id : String, amount : int):
@@ -102,10 +99,10 @@ func _update_inventory_rpc(inv_data : Dictionary):
 
 
 @rpc
-func _stack_added_rpc(item_id: String, amount: int, properties: Dictionary, position: Vector2i, is_rotation: bool):
+func _stack_added_rpc(stack_index : int):
 	if multiplayer.is_server():
 		return
-	inventory.add_at_position(position, item_id, amount, properties, is_rotation)
+	#inventory.insert_stack(stack_index)
 
 
 #@rpc
@@ -120,9 +117,7 @@ func _stack_added_rpc(item_id: String, amount: int, properties: Dictionary, posi
 func _stack_removed_rpc(stack_index : int):
 	if multiplayer.is_server():
 		return
-	var item_id = inventory.stacks[stack_index].item_id
-	var amount = inventory.stacks[stack_index].amount
-	inventory.remove_at(stack_index, item_id, amount)
+	inventory.remove_stack_at(stack_index)
 
 
 @rpc
