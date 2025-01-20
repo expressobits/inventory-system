@@ -77,6 +77,14 @@ func _ready() -> void:
 	_refresh()
 
 
+func select():
+	self_modulate = Color.GREEN
+
+
+func unselect():
+	self_modulate = Color.WHITE
+
+
 func _notification(what) -> void:
 	if what == NOTIFICATION_DRAG_END:
 		visible = true
