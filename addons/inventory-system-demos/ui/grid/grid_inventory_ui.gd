@@ -89,7 +89,6 @@ var inventory: GridInventory = null:
 var _grid_inventory_content_ui: Control = null
 var _grid_slots_container: Control = null
 var _grid_slots: Array = []
-var _selection_panels: Control = null
 var _refresh_queued: bool = false
 var _stack_uis: Array = []
 var _selected_stacks: Array[GridItemStackUI] = []
@@ -136,11 +135,6 @@ func _ready() -> void:
 		_grid_drop_zone_ui.deactivate()
 	)
 	_grid_inventory_content_ui.add_child(_grid_drop_zone_ui)
-
-	_selection_panels = Control.new()
-	_selection_panels.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_selection_panels.name = "SelectionPanels"
-	add_child(_selection_panels)
 
 	_update_size()
 	_queue_refresh()
@@ -198,7 +192,6 @@ func _on_stack_added(stack_index : int):
 
 func _refresh() -> void:
 	_refresh_grid_slots()
-	_refresh_selection_panel()
 	size = custom_minimum_size
 	_clear_list()
 	_populate_list()
@@ -254,7 +247,10 @@ func _set_selected_grid_slots(rect: Rect2i, selected: bool) -> void:
 	for i in range(rect.position.x, h_range):
 		var v_range = min(rect.size.y + rect.position.y, inventory.size.y)
 		for j in range(rect.position.y, v_range):
-			_grid_slots[i][j].item_selected = selected
+			if selected:
+				_grid_slots[i][j].select()
+			else:
+				_grid_slots[i][j].unselect()
 
 
 func _set_dragged_grid_slots(rect: Rect2i, dragged: bool) -> void:
@@ -491,28 +487,6 @@ func _get_inventory_size_pixels() -> Vector2:
 #endregion
 
 #region Selected Stacks
-func _refresh_selection_panel() -> void:
-	if !is_instance_valid(_selection_panels):
-		return
-
-	for child in _selection_panels.get_children():
-		child.queue_free()
-
-	var selected_stacks := get_selected_stacks()
-	_selection_panels.visible = (!selected_stacks.is_empty()) && (selection_style != null)
-	if selected_stacks.is_empty():
-		return
-
-	for selected_stack in selected_stacks:
-		var selection_panel := GridSelectionPanel.new()
-		var rect := get_stack_rect(selected_stack.stack)
-		selection_panel.position = rect.position
-		selection_panel.size = rect.size
-		selection_panel.set_style(selection_style)
-		selection_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_selection_panels.add_child(selection_panel)
-
-
 func _on_selection_changed() -> void:
 	_handle_selection_change()
 	selection_changed.emit()
@@ -521,11 +495,10 @@ func _on_selection_changed() -> void:
 func _handle_selection_change() -> void:
 	if !is_instance_valid(inventory):
 		return
-	_refresh_selection_panel()
 
-	for item in inventory.stacks:
-		if item:
-			_set_selected_grid_slots(inventory.get_stack_rect(item), item in get_selected_stacks())
+	for stack_ui in _stack_uis:
+		if stack_ui:
+			_set_selected_grid_slots(inventory.get_stack_rect(stack_ui.stack), stack_ui in get_selected_stacks())
 
 
 func _is_item_selected(stack: ItemStack) -> bool:
@@ -541,7 +514,7 @@ func _select(stack_ui: GridItemStackUI) -> void:
 		return
 
 	_selected_stacks.append(stack_ui)
-	selection_changed.emit()
+	_on_selection_changed()
 	stack_ui.select()
 	
 	
@@ -553,7 +526,7 @@ func _deselect(stack_ui: GridItemStackUI) -> void:
 	if idx < 0:
 		return
 	_selected_stacks.remove_at(idx)
-	selection_changed.emit()
+	_on_selection_changed()
 	stack_ui.unselect()
 
 
@@ -561,7 +534,8 @@ func _clear_selection() -> void:
 	if _selected_stacks.is_empty():
 		return
 	for selected_stack in _selected_stacks:
-		selected_stack.unselect()
+		if is_instance_valid(selected_stack):
+			selected_stack.unselect()
 	_selected_stacks.clear()
 	selection_changed.emit()
 	
