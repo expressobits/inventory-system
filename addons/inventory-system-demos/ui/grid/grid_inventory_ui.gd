@@ -195,11 +195,8 @@ func _on_stack_added(stack_index : int):
 
 
 func _on_inventory_stack_added(stack_index: int):
-	#TODO gambiarra make add_new_stack_with_position on grid_inventory
-	await get_tree().create_timer(0.1).timeout
 	var stack = inventory.stacks[stack_index]
 	add_grid_item_stack_ui(stack)
-	print(inventory.get_stack_position(stack))
 
 
 func _on_inventory_stack_removed(stack_index: int):
