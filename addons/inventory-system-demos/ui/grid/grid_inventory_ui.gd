@@ -171,8 +171,10 @@ func _input(event) -> void:
 func _connect_inventory_signals() -> void:
 	if !is_instance_valid(inventory):
 		return
-	if !inventory.contents_changed.is_connected(_queue_refresh):
-		inventory.contents_changed.connect(_queue_refresh)
+	if !inventory.stack_added.is_connected(_on_inventory_stack_added):
+		inventory.stack_added.connect(_on_inventory_stack_added)
+	if !inventory.stack_removed.is_connected(_on_inventory_stack_removed):
+		inventory.stack_removed.connect(_on_inventory_stack_removed)
 	if !inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.connect(_on_inventory_resized)
 
@@ -180,8 +182,10 @@ func _connect_inventory_signals() -> void:
 func _disconnect_inventory_signals() -> void:
 	if !is_instance_valid(inventory):
 		return
-	if inventory.contents_changed.is_connected(_queue_refresh):
-		inventory.contents_changed.disconnect(_queue_refresh)
+	if inventory.stack_added.is_connected(_on_inventory_stack_added):
+		inventory.stack_added.disconnect(_on_inventory_stack_added)
+	if inventory.stack_removed.is_connected(_on_inventory_stack_removed):
+		inventory.stack_removed.disconnect(_on_inventory_stack_removed)
 	if inventory.size_changed.is_connected(_on_inventory_resized):
 		inventory.size_changed.disconnect(_on_inventory_resized)
 
@@ -190,11 +194,23 @@ func _on_stack_added(stack_index : int):
 	_queue_refresh()
 
 
+func _on_inventory_stack_added(stack_index: int):
+	#TODO gambiarra make add_new_stack_with_position on grid_inventory
+	await get_tree().create_timer(0.1).timeout
+	var stack = inventory.stacks[stack_index]
+	add_grid_item_stack_ui(stack)
+	print(inventory.get_stack_position(stack))
+
+
+func _on_inventory_stack_removed(stack_index: int):
+	var _stack_ui = _stack_uis[stack_index]
+	_stack_ui.queue_free()
+	_stack_uis.remove_at(stack_index)
+
+
 func _refresh() -> void:
 	_refresh_grid_slots()
 	size = custom_minimum_size
-	_clear_list()
-	_populate_list()
 	
 	if is_instance_valid(_grid_drop_zone_ui):
 		_grid_drop_zone_ui.deactivate()
@@ -337,41 +353,27 @@ func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack
 			item_dropped.emit(stack, drop_position + grid_item_stack_ui.position)
 
 
-func _clear_list() -> void:
-	if !is_instance_valid(_ctrl_item_container):
-		return
+func add_grid_item_stack_ui(stack: ItemStack):
+	var grid_item_stack_ui : GridItemStackUI = grid_item_stack_ui_scene.instantiate()
+	grid_item_stack_ui.size = _get_stack_sprite_size(stack)
+	grid_item_stack_ui.setup(inventory, stack)
+	grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
+	grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
+	grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
+	grid_item_stack_ui.context_activated.connect(_on_item_context_activated.bind(grid_item_stack_ui))
+	grid_item_stack_ui.mouse_entered.connect(func():
+		item_mouse_entered.emit(grid_item_stack_ui.stack)
+	)
+	grid_item_stack_ui.mouse_exited.connect(func():
+		item_mouse_exited.emit(grid_item_stack_ui.stack)
+	)
+	grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
+	grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
+	grid_item_stack_ui.position = _get_grid_slot_position(inventory.get_stack_position(stack))
+
+	_ctrl_item_container.add_child(grid_item_stack_ui)
+	_stack_uis.append(grid_item_stack_ui)
 	
-	_stack_uis.clear()
-	for ctrl_inventory_item in _ctrl_item_container.get_children():
-		_ctrl_item_container.remove_child(ctrl_inventory_item)
-		ctrl_inventory_item.queue_free()
-
-
-func _populate_list() -> void:
-	if !is_instance_valid(inventory) || !is_instance_valid(_ctrl_item_container):
-		return
-	
-	for stack in inventory.stacks:
-		var grid_item_stack_ui : GridItemStackUI = grid_item_stack_ui_scene.instantiate()
-		grid_item_stack_ui.size = _get_stack_sprite_size(stack)
-		grid_item_stack_ui.setup(inventory, stack)
-		grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
-		grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
-		grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
-		grid_item_stack_ui.context_activated.connect(_on_item_context_activated.bind(grid_item_stack_ui))
-		grid_item_stack_ui.mouse_entered.connect(func():
-			item_mouse_entered.emit(grid_item_stack_ui.stack)
-		)
-		grid_item_stack_ui.mouse_exited.connect(func():
-			item_mouse_exited.emit(grid_item_stack_ui.stack)
-		)
-		grid_item_stack_ui.clicked.connect(_on_item_clicked.bind(grid_item_stack_ui))
-		grid_item_stack_ui.middle_clicked.connect(_on_item_middle_clicked.bind(grid_item_stack_ui))
-		grid_item_stack_ui.position = _get_grid_slot_position(inventory.get_stack_position(stack))
-
-		_ctrl_item_container.add_child(grid_item_stack_ui)
-		_stack_uis.append(grid_item_stack_ui)
-		
 		
 func _on_item_middle_clicked(grid_item_stack_ui) -> void:
 	var stack = grid_item_stack_ui.stack
