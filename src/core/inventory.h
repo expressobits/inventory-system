@@ -1,8 +1,8 @@
 #ifndef INVENTORY_CLASS_H
 #define INVENTORY_CLASS_H
 
-#include "base/node_inventories.h"
 #include "base/item_stack.h"
+#include "base/node_inventories.h"
 #include "constraints/inventory_constraint.h"
 
 using namespace godot;
@@ -30,7 +30,7 @@ protected:
 	int _get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
 	int _get_amount_to_add_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
 	bool _is_override_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
-	bool _can_swap_to_inventory(const Inventory* inventory, const String item_id, const int amount, const Dictionary properties) const;
+	bool _can_swap_to_inventory(const Inventory *inventory, const String item_id, const int amount, const Dictionary properties) const;
 
 public:
 	Inventory();
@@ -54,8 +54,8 @@ public:
 	int amount() const;
 	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
 	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
-	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
-	int insert_stack(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
+	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_signal = true);
+	int insert_stack(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_signal = true);
 	void remove_stack(const int &stack_index);
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &stack_index, const String &item_id, const int &amount = 1);

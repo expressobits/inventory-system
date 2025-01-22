@@ -8,7 +8,6 @@
 
 using namespace godot;
 
-
 class GridInventory : public Inventory {
 	GDCLASS(GridInventory, Inventory);
 
@@ -57,7 +56,9 @@ public:
 
 	Ref<ItemStack> get_stack_at(const Vector2i position) const;
 	int get_stack_index_at(const Vector2i position) const;
+	int add_new_stack_on_position(const String &item_id, const Vector2i position, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false);
 	int add_at_position(const Vector2i position, const String item_id, const int amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false);
+	int insert_stack_on_grid(const int &stack_index, const Vector2i position, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false);
 	TypedArray<ItemStack> get_stacks_under(const Rect2i rect) const;
 	bool move_stack_to(const Ref<ItemStack> stack, const Vector2i position);
 	int transfer_to(const Vector2i from_position, GridInventory *destination, const Vector2i destination_position, const int &amount = 1, const bool is_rotated = false);
@@ -70,6 +71,7 @@ public:
 	virtual bool can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const override;
 	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false) const;
 	virtual void on_insert_stack(const int stack_index) override;
+	void on_insert_stack_on_position(const int stack_index, const Vector2i position, const bool is_rotated = false);
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index) override;
 };
 

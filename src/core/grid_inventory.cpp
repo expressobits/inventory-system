@@ -231,7 +231,7 @@ int GridInventory::add_at_position(const Vector2i position, const String item_id
 		}
 		Rect2i rect = Rect2i(position, size);
 		if (rect_free(rect) && _can_add_on_position(position, item_id, amount, properties, is_rotated)) {
-			int no_added = add_on_new_stack(item_id, amount, properties);
+			int no_added = add_on_new_stack(item_id, amount, properties, false);
 			if (no_added == amount)
 				return amount;
 			Ref<ItemStack> stack = stacks[stacks.size() - 1];
@@ -239,6 +239,7 @@ int GridInventory::add_at_position(const Vector2i position, const String item_id
 			bool move_success = move_stack_to(stack, position);
 			if (!move_success)
 				UtilityFunctions::printerr("Can't move the item to the given place!");
+			this->emit_signal("stack_added", stacks.size() - 1);
 			return no_added;
 		}
 	} else {
@@ -441,14 +442,12 @@ void GridInventory::deserialize(const Dictionary data) {
 	Array stack_rotations_var = data["stack_rotations"];
 
 	stack_positions.clear();
-	for (size_t i = 0; i < stack_positions_var.size(); i++)
-	{
+	for (size_t i = 0; i < stack_positions_var.size(); i++) {
 		stack_positions.append(stack_positions_var[i]);
 	}
 
 	stack_rotations.clear();
-	for (size_t i = 0; i < stack_rotations_var.size(); i++)
-	{
+	for (size_t i = 0; i < stack_rotations_var.size(); i++) {
 		stack_rotations.append(stack_rotations_var[i]);
 	}
 

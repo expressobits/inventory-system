@@ -240,14 +240,14 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 	return amount_in_interact;
 }
 
-int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties) {
+int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_signal) {
 	if (!can_add_new_stack(item_id, amount, properties))
 		return amount;
 
 	int amount_to_add = _get_amount_to_add_from_constraints(item_id, amount, properties);
 	// amount_to_add = MIN(amount_to_add, _get_max_stack(item_id, amount, properties));
 
-	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties);
+	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties, can_emit_signal);
 	no_added += amount - amount_to_add;
 
 	int added = amount - no_added;
@@ -257,7 +257,7 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	return no_added;
 }
 
-int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
+int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_signal) {
 	Ref<ItemStack> stack = memnew(ItemStack());
 	stacks.append(stack);
 	stack->set_item_id(item_id);
@@ -269,7 +269,9 @@ int Inventory::insert_stack(const int &stack_index, const String &item_id, const
 	stack->set_properties(properties);
 	// int no_added = add_at_index(stacks.size() - 1, item_id, amount, properties);
 	on_insert_stack(stack_index);
-	this->emit_signal("stack_added", stacks.size() - 1);
+	if (can_emit_signal) {
+		this->emit_signal("stack_added", stacks.size() - 1);
+	}
 	return amount - amount_to_add;
 }
 
