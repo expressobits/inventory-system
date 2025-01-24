@@ -60,7 +60,9 @@
 			<param index="0" name="item_id" type="String" />
 			<param index="1" name="amount" type="int" default="1" />
 			<param index="2" name="properties" type="Dictionary" default="{}" />
+			<param index="3" name="can_emit_signal" type="bool" default="true" />
 			<description>
+				Add [param item_id] to a new stack, ignoring the possibility of adding that item to an existing stack.
 			</description>
 		</method>
 		<method name="add_to_stack">
@@ -85,6 +87,7 @@
 			<param index="1" name="amount" type="int" default="1" />
 			<param index="2" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Returns true if it is possible to add a new stack to the inventory, note that this method consults the configured constraints.
 			</description>
 		</method>
 		<method name="clear">
@@ -228,6 +231,12 @@
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
 				Remove slot with [param stack] parameter, set [param emit_signal] to false to disable events called by [method update_stack].
+			</description>
+		</method>
+		<method name="remove_stack">
+			<return type="void" />
+			<param index="0" name="stack_index" type="int" />
+			<description>
 			</description>
 		</method>
 		<method name="serialize" qualifiers="const">

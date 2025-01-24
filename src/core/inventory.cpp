@@ -276,6 +276,9 @@ int Inventory::insert_stack(const int &stack_index, const String &item_id, const
 }
 
 void Inventory::remove_stack(const int &stack_index) {
+	int old_amount = this->amount();
+	_remove_stack_at(stack_index);
+	_call_events(old_amount);
 }
 
 int Inventory::remove(const String &item_id, const int &amount) {
@@ -703,9 +706,10 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::amount);
 	ClassDB::bind_method(D_METHOD("add", "item_id", "amount", "properties", "drop_excess"), &Inventory::add, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(false));
 	ClassDB::bind_method(D_METHOD("add_at_index", "stack_index", "item_id", "amount", "properties"), &Inventory::add_at_index, DEFVAL(1), DEFVAL(Dictionary()));
-	ClassDB::bind_method(D_METHOD("add_on_new_stack", "item_id", "amount", "properties"), &Inventory::add_on_new_stack, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("add_on_new_stack", "item_id", "amount", "properties", "can_emit_signal"), &Inventory::add_on_new_stack, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("remove", "item_id", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "stack_index", "item_id", "amount"), &Inventory::remove_at, DEFVAL(1));
+	ClassDB::bind_method(D_METHOD("remove_stack", "stack_index"), &Inventory::remove_stack);
 	ClassDB::bind_method(D_METHOD("split", "stack_index", "amount"), &Inventory::split, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer_at", "stack_index", "destination", "destination_stack_index", "amount"), &Inventory::transfer_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("transfer", "stack_index", "destination", "amount"), &Inventory::transfer, DEFVAL(1));
