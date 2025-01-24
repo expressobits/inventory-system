@@ -6,18 +6,13 @@ enum StylePriority {HIGH = 0, MEDIUM = 1, LOW = 2}
 
 @export var regular_style: StyleBox
 @export var hover_style: StyleBox
+@export var selected_style: StyleBox
 var _styles: Array[StyleBox] = [null, null, null]
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @onready var category_icon: TextureRect = %CategoryIcon
 var grid_position: Vector2i
 var inventory: GridInventory
-
-
-var item_selected: bool = false:
-	set(value):
-		pass
-		#print("item_selected", value)
 
 
 var item_dragged: bool = false:
@@ -29,6 +24,15 @@ var item_dragged: bool = false:
 func setup(grid_position: Vector2i, inventory: GridInventory):
 	self.grid_position = grid_position
 	self.inventory = inventory
+
+
+func select():
+	if is_instance_valid(selected_style):
+		_set_panel_style(selected_style)
+
+
+func unselect():
+	_set_panel_style(regular_style)
 
 
 func _ready() -> void:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://dnlxnu6jpej17"]
 
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="1_067pm"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="2_2ppxc"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_grid_inventory.gd" id="2_2ppxc"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/mp_player.gd" id="2_7hphp"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_hotbar.gd" id="2_kp02v"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="3_g726w"]

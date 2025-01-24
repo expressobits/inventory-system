@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="1_myace"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_workbench.gd" id="2_30epd"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="2_qdlmm"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="3_j3l4y"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_grid_inventory.gd" id="3_j3l4y"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="5_27wef"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="6_26suk"]
 

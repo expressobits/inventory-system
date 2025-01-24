@@ -8,6 +8,7 @@ signal context_activated(event: InputEvent)
 
 @export var stack_style: StyleBox
 @export var hover_stack_style: StyleBox
+@export var selected_stack_style: StyleBox
 
 @onready var texture_bg: Panel = $TextureBG
 @onready var item_icon: TextureRect = %ItemIcon
@@ -75,6 +76,15 @@ func _ready() -> void:
 		deactivate()
 	
 	_refresh()
+
+
+func select():
+	if is_instance_valid(selected_stack_style):
+		_set_panel_style(selected_stack_style)
+
+
+func unselect():
+	_set_panel_style(stack_style)
 
 
 func _notification(what) -> void:
