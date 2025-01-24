@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="1_2iaw6"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_campfire.gd" id="2_hw73w"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="2_wux35"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_inventory.gd" id="3_jx6wv"]
+[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_grid_inventory.gd" id="3_jx6wv"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="5_1yik4"]
 [ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="6_qydj7"]
 
