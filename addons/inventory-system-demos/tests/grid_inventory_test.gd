@@ -81,8 +81,8 @@ func test_stack_cant_split() -> void:
 
 
 func test_stack_join() -> void:
-	assert(inventory_3x3.add_on_new_stack(wood) == 0)
-	assert(inventory_3x3.add_on_new_stack(wood) == 0)
+	assert(inventory_3x3.add_on_new_stack(wood, 1) == 0)
+	assert(inventory_3x3.add_on_new_stack(wood, 1) == 0)
 	assert(inventory_3x3.stacks.size() == 2)
 	assert(inventory_3x3.transfer_at(1, inventory_3x3, 0, 1) == 0)
 	assert(inventory_3x3.stacks.size() == 1)
