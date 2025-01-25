@@ -85,6 +85,7 @@ var inventory: GridInventory = null:
 		_connect_inventory_signals()
 
 		_queue_refresh()
+		_update_stacks()
 
 var _grid_inventory_content_ui: Control = null
 var _grid_slots_container: Control = null
@@ -193,6 +194,14 @@ func _disconnect_inventory_signals() -> void:
 func _on_stack_added(stack_index : int):
 	_queue_refresh()
 
+
+func _update_stacks():
+	for stack_ui in _stack_uis:
+		stack_ui.queue_free()
+	_stack_uis.clear()
+	for stack_index in inventory.stacks.size():
+		_on_inventory_stack_added(stack_index)
+	
 
 func _on_inventory_stack_added(stack_index: int):
 	var stack = inventory.stacks[stack_index]
