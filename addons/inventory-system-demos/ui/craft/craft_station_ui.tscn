@@ -95,6 +95,7 @@ layout_mode = 2
 script = ExtResource("5_ce7df")
 grid_slot_ui_scene = ExtResource("4_y7p0v")
 grid_item_stack_ui_scene = ExtResource("5_v57bc")
+grid_slot_size = Vector2(48, 48)
 
 [node name="InputGridInventoryUI" type="Control" parent="HBoxContainer/VBoxContainer2/RecipesUI/VBoxContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -102,7 +103,7 @@ layout_mode = 2
 script = ExtResource("5_ce7df")
 grid_slot_ui_scene = ExtResource("4_y7p0v")
 grid_item_stack_ui_scene = ExtResource("5_v57bc")
-field_dimensions = Vector2(48, 48)
+grid_slot_size = Vector2(48, 48)
 item_spacing = 2
 selection_style = ExtResource("7_wbpus")
 
