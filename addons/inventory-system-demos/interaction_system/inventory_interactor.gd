@@ -51,6 +51,7 @@ func interact_object(object : Node, actions : Array):
 	for action in actions:
 		if Input.is_action_just_pressed(action.input):
 			object.interact(get_node(node_base_to_interactions), action.code)
+			interacted.emit(object)
 			return
 
 
@@ -58,6 +59,7 @@ func interact_hand_item(hand_object, hand_actions):
 	for action in hand_actions:
 		if Input.is_action_just_pressed(action.input):
 			hand_object.interact(get_node(node_base_to_interactions), action.code)
+			interacted.emit(hand_object)
 			return
 
 

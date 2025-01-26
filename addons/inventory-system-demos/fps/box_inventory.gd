@@ -57,9 +57,9 @@ func close(character : Node):
 	openable.close(character)
 
 
-func _on_openable_opened(character: Node) -> void:
+func _on_openable_opened(_character: Node) -> void:
 	_on_open()
 
 
-func _on_openable_closed(character: Node) -> void:
+func _on_openable_closed(_character: Node) -> void:
 	_on_close()

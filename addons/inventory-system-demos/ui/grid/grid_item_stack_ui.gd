@@ -20,9 +20,9 @@ var inventory : GridInventory
 var stack: ItemStack
 
 
-func setup(inventory : Inventory, stack : ItemStack):
-	self.inventory = inventory
-	self.stack = stack
+func setup(inv: Inventory, new_stack: ItemStack):
+	self.inventory = inv
+	self.stack = new_stack
 	if stack and inventory != null:
 		var definition: ItemDefinition = inventory.database.get_item(stack.item_id)
 		tooltip_text = definition.name

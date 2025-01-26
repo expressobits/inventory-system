@@ -31,14 +31,14 @@ var _recipe_uis : Array[RecipeUI]
 
 
 ## Configure a craftstation for the [Recipe] list and [CraftingsUI] list
-func open(craft_station : CraftStation):
+func open(_craft_station : CraftStation):
 	
 	if(self.craft_station != null):
 		for i in self.craft_station.input_inventories.size():
 			if self.craft_station.get_input_inventory(i).contents_changed.is_connected(_on_input_inventory_contents_changed):
 				self.craft_station.get_input_inventory(i).contents_changed.disconnect(_on_input_inventory_contents_changed)
 	
-	self.craft_station = craft_station
+	self.craft_station = _craft_station
 	_clear()
 	_craftings_ui.set_craft_station(craft_station)
 	var recipes = craft_station.database.recipes
@@ -80,5 +80,5 @@ func _clear():
 	_recipe_uis.clear()
 
 
-func _on_craft_button_button_down(craft_station : CraftStation, recipe_index : int):
-	on_craft.emit(craft_station, recipe_index)
+func _on_craft_button_button_down(_craft_station : CraftStation, _recipe_index : int):
+	on_craft.emit(_craft_station, _recipe_index)

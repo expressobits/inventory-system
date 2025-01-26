@@ -8,8 +8,8 @@ extends Control
 var database : InventoryDatabase
 
 ## Setup ingredient
-func setup(database : InventoryDatabase, item_stack : ItemStack):
-	self.database = database
+func setup(_database : InventoryDatabase, item_stack : ItemStack):
+	self.database = _database
 	var definition = database.get_item(item_stack.item_id)
 	self.icon.texture = definition.icon
 	self.amount.text = "X "+str(item_stack.amount)

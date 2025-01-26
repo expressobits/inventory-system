@@ -3,8 +3,6 @@ extends Control
 
 ## Represents a [Recipe] in the interface. It is instantiated by [CraftStationUI]
 
-signal on_craft(station : CraftStation, recipe_index : int)
-
 # Scene to instantiate the [IngredientUI]
 @export var ingredient_scene : PackedScene
 
@@ -22,20 +20,20 @@ var _ingredients : Array[IngredientUI]
 
 ## Configures the recipe with index values from [Recipe] from [InventoryDatabase].
 ## Called by [CraftStationUI].
-func set_recipe(craft_station : CraftStation, recipe : Recipe, recipe_index : int):
-	self.craft_station = craft_station
-	self.recipe_index = recipe_index
-	var product_item : ItemDefinition = craft_station.database.get_item(recipe.products[0].item_id)
+func set_recipe(_craft_station : CraftStation, _recipe : Recipe, _recipe_index : int):
+	self.craft_station = _craft_station
+	self.recipe_index = _recipe_index
+	var product_item : ItemDefinition = craft_station.database.get_item(_recipe.products[0].item_id)
 	icon.texture = product_item.icon
 	item_name.text = product_item.name
-	time_to_craft.text = str(recipe.time_to_craft) + " Seconds"
+	time_to_craft.text = str(_recipe.time_to_craft) + " Seconds"
 	_clear_ingredients()
-	for ingredient in recipe.ingredients:
+	for ingredient in _recipe.ingredients:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(craft_station.database, ingredient)
 		_ingredients.append(ingredient_obj)
-	for ingredient in recipe.required_items:
+	for ingredient in _recipe.required_items:
 		var ingredient_obj : IngredientUI = ingredient_scene.instantiate()
 		ingredients_container.add_child(ingredient_obj)
 		ingredient_obj.setup(craft_station.database, ingredient)

@@ -53,7 +53,7 @@ func _on_input_inventory_contents_changed():
 	check()
 
 
-func _on_crafted(recipe_index: int):
+func _on_crafted(_recipe_index: int):
 	craft_audio.play(1.0)
 
 
@@ -101,10 +101,10 @@ func get_interact_actions(_interactor : Interactor) -> Array:
 	return current_actions
 
 
-func interact(character : Node, action_index : int = 0):
+func interact(_character : Node, action_index : int = 0):
 	if action_index == 0 and !openable.is_open:
-		character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
+		_character.character_inventory_system.open_inventory(craft_station.get_input_inventory())
 		#craft_station.load_valid_recipes()
-		openable.open(character)
+		openable.open(_character)
 	else:
 		active_fire = !active_fire

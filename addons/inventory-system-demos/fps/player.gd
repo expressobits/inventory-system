@@ -39,11 +39,11 @@ func _on_inventory_handler_picked(_dropped_item):
 	picked_audio.play()
 	
 
-func _on_player_inventory_opened(inventory : Inventory):
+func _on_player_inventory_opened(_inventory : Inventory):
 	player_inventory_open_audio.play()
 
 
-func _on_player_inventory_closed(inventory : Inventory):
+func _on_player_inventory_closed(_inventory : Inventory):
 	player_inventory_close_audio.play()
 
 

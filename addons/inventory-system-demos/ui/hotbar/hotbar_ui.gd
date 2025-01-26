@@ -14,11 +14,11 @@ var ui_stacks: Array[Panel]
 
 ## Defines an [Hotbar] linked to this hotbar UI.
 ## This function disconnects signals from the previous [Inventory] and connects signals with new [Inventory]
-func set_hotbar(hotbar : Hotbar):
-	if hotbar != self.hotbar:
+func set_hotbar(new_hotbar : Hotbar):
+	if new_hotbar != self.hotbar:
 		if self.hotbar != null:
 			self.hotbar.on_change_selection.disconnect(_on_changed_selection)
-		self.hotbar = hotbar
+		self.hotbar = new_hotbar
 		self.hotbar.on_change_selection.connect(_on_changed_selection)
 		self.hotbar.equipped.connect(_on_equipped_stack)
 		self.hotbar.unequipped.connect(_on_equipped_stack)
@@ -27,7 +27,7 @@ func set_hotbar(hotbar : Hotbar):
 		
 
 
-func _on_changed_selection(selection_index):
+func _on_changed_selection(_selection_index):
 	_update_selection()
 
 
@@ -39,7 +39,7 @@ func _update_selection():
 		ui_stack.set_selection(i == hotbar.selection_index)
 
 
-func _on_equipped_stack(slot_index: int):
+func _on_equipped_stack(_slot_index: int):
 	_update_slots()
 
 

@@ -129,10 +129,10 @@ func _ready() -> void:
 	_grid_drop_zone_ui.dragable_dropped.connect(_on_dragable_dropped)
 	_grid_drop_zone_ui.size = size
 	resized.connect(func(): _grid_drop_zone_ui.size = size)
-	GridDraggableElementUI.dragable_grabbed.connect(func(dragable: GridDraggableElementUI, grab_position: Vector2):
+	GridDraggableElementUI.dragable_grabbed.connect(func(_dragable: GridDraggableElementUI, _grab_position: Vector2):
 		_grid_drop_zone_ui.activate()
 	)
-	GridDraggableElementUI.dragable_dropped.connect(func(dragable: GridDraggableElementUI, zone: GridDropZoneUI, drop_position: Vector2):
+	GridDraggableElementUI.dragable_dropped.connect(func(_dragable: GridDraggableElementUI, _zone: GridDropZoneUI, _drop_position: Vector2):
 		_grid_drop_zone_ui.deactivate()
 	)
 	_grid_inventory_content_ui.add_child(_grid_drop_zone_ui)
@@ -191,7 +191,7 @@ func _disconnect_inventory_signals() -> void:
 		inventory.size_changed.disconnect(_on_inventory_resized)
 
 
-func _on_stack_added(stack_index : int):
+func _on_stack_added(_stack_index : int):
 	_queue_refresh()
 
 
@@ -364,7 +364,7 @@ func add_grid_item_stack_ui(stack: ItemStack):
 	grid_item_stack_ui.size = _get_stack_sprite_size(stack)
 	grid_item_stack_ui.setup(inventory, stack)
 	grid_item_stack_ui.grabbed.connect(_on_item_grab.bind(grid_item_stack_ui))
-	grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
+	#grid_item_stack_ui.dropped.connect(_on_item_drop.bind(grid_item_stack_ui))
 	grid_item_stack_ui.activated.connect(_on_item_activated.bind(grid_item_stack_ui))
 	grid_item_stack_ui.context_activated.connect(_on_item_context_activated.bind(grid_item_stack_ui))
 	grid_item_stack_ui.mouse_entered.connect(func():
@@ -402,7 +402,7 @@ func _on_item_clicked(grid_item_stack_ui) -> void:
 	if Input.is_action_pressed("ui_inventory_transfer"):
 		var stack_position : Vector2i = inventory.get_stack_position(stack)
 		#TODO make rotation with R key or mouse wheel
-		var is_rotated: bool = inventory.is_stack_rotated(stack)
+		var _is_rotated: bool = inventory.is_stack_rotated(stack)
 		
 		request_fast_transfer.emit(inventory, stack_position, stack.amount)
 	else:
@@ -417,7 +417,7 @@ func _on_item_clicked(grid_item_stack_ui) -> void:
 			_select(grid_item_stack_ui)
 
 
-func _on_item_grab(offset: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
+func _on_item_grab(_offset: Vector2, _grid_item_stack_ui: GridItemStackUI) -> void:
 	_clear_selection()
 
 

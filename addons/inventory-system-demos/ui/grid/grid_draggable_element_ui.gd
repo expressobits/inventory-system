@@ -20,7 +20,7 @@ static var dragable_dropped: Signal = (func():
 ).call()
 
 signal grabbed(position)
-signal dropped(zone, position)
+#signal dropped(zone, position)
 
 static var _grabbed_dragable: GridDraggableElementUI = null
 static var _grab_offset: Vector2

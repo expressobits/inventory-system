@@ -24,19 +24,19 @@ func _ready():
 	_on_change_selection(hotbar.selection_index)
 
 
-func _on_equipped(slot_index: int):
+func _on_equipped(_slot_index: int):
 	_on_change_selection(hotbar.selection_index)
 
 
-func _on_update_selection_stack(slot_index: int):
+func _on_update_selection_stack(_slot_index: int):
 	_on_change_selection(hotbar.selection_index)
 
 
-func _on_unequipped(slot_index: int):
+func _on_unequipped(_slot_index: int):
 	_on_change_selection(hotbar.selection_index)
 
 
-func _on_change_selection(new_index: int):
+func _on_change_selection(_new_index: int):
 	_clear_last_selection()
 	if not hotbar.has_valid_stack_on_selection():
 		interactor.set_actual_hand_object(null)

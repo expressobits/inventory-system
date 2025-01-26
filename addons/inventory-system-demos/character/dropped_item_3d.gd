@@ -12,7 +12,7 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @export var default_description : String = "Get Item"
 
 
-func get_interaction_position(interaction_point : Vector3) -> Vector3:
+func get_interaction_position(_interaction_point : Vector3) -> Vector3:
 	return position
 
 

@@ -23,6 +23,7 @@ func place_item(item_id : String, position : Vector3, rotation : Vector3):
 		var scene = res as PackedScene
 		if main_inventory.remove(item_id) <= 0:
 			_instantiate_object(scene, position, rotation)
+			placed.emit()
 			return
 
 

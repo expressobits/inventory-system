@@ -12,10 +12,10 @@ var default_interact_message_position : Vector2
 var interact_object
 var interact_hand_object
 
-func setup(interactor : Interactor):
+func setup(_interactor : Interactor):
 	if self.interactor != null:
 		interactor.preview_interacted.disconnect(_on_preview_interacted)
-	self.interactor = interactor
+	self.interactor = _interactor
 	interactor.preview_interacted.connect(_on_preview_interacted)
 
 

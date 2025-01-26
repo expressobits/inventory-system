@@ -58,8 +58,8 @@ func _ready():
 	
 	player_inventory_ui.request_split.connect(_request_split)
 	loot_inventory_ui.request_split.connect(_request_split)
-	player_inventory_ui.request_sort.connect(_request_sort)
-	loot_inventory_ui.request_sort.connect(_request_sort)
+	#player_inventory_ui.request_sort.connect(_request_sort)
+	#loot_inventory_ui.request_sort.connect(_request_sort)
 	
 	player_inventory_ui.inventory_stack_context_activated.connect(_inventory_stack_context)
 	loot_inventory_ui.inventory_stack_context_activated.connect(_inventory_stack_context)
@@ -75,8 +75,8 @@ func _ready():
 
 
 ## Setup inventory handler and connect all signals
-func setup(character : CharacterInventorySystem):
-	self.character = character
+func setup(_character : CharacterInventorySystem):
+	self.character = _character
 	
 	var inventories : Array[Inventory]
 	inventories.append(character.main_inventory)
@@ -148,7 +148,7 @@ func _on_close_craft_station(craft_station : CraftStation):
 	_close_player_inventory()
 
 
-func _on_close_inventory(inventory : Inventory):
+func _on_close_inventory(_inventory : Inventory):
 	_close_player_inventory()
 
 
@@ -215,12 +215,12 @@ func _inventory_stack_context(event: InputEvent, inventory: GridInventory, stack
 
 	var mb_event: InputEventMouseButton = event
 	
-	var def = inventory.database.get_item(stack.item_id)
-	var stack_name = str(stack.amount) + " x "
-	if def == null:
-		stack_name += stack.item_id
-	else:
-		stack_name += def.name
+	#var def = inventory.database.get_item(stack.item_id)
+	#var stack_name = str(stack.amount) + " x "
+	#if def == null:
+		#stack_name += stack.item_id
+	#else:
+		#stack_name += def.name
 	
 	stack_popup_menu.clear()
 	stack_popup_menu.add_item("Split", STACK_MENU_ID_SPLIT)
@@ -256,7 +256,7 @@ func _on_stack_popup_menu_id_pressed(id: int):
 			var stack_index = current_inventory.stacks.find(current_stack)
 			if stack_index == -1:
 				return
-			_request_split(current_inventory, stack_index, current_stack.amount/2)
+			_request_split(current_inventory, stack_index, (int)(current_stack.amount/2.0))
 		STACK_MENU_ID_DROP:
 			_request_drop(current_stack, current_inventory)
 		STACK_MENU_ID_ROTATE:

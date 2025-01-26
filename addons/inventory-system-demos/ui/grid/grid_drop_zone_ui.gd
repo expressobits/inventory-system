@@ -17,7 +17,7 @@ func is_active() -> bool:
 	return (mouse_filter != Control.MOUSE_FILTER_IGNORE)
 
 
-func _can_drop_data(at_position: Vector2, data) -> bool:
+func _can_drop_data(_at_position: Vector2, data) -> bool:
 	if data == null:
 		return false
 	return data is GridDraggableElementUI

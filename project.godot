@@ -15,6 +15,10 @@ run/main_scene="res://addons/inventory-system-demos/fps/fps_demo.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/warnings/exclude_addons=false
+
 [dotnet]
 
 project/assembly_name="inventory-system-demos"

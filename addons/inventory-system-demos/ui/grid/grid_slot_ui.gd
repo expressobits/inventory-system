@@ -11,7 +11,7 @@ var _styles: Array[StyleBox] = [null, null, null]
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @onready var category_icon: TextureRect = %CategoryIcon
-var grid_position: Vector2i
+var _grid_position: Vector2i
 var inventory: GridInventory
 
 
@@ -21,9 +21,9 @@ var item_dragged: bool = false:
 		#print("item_grabbed",value)
 		
 		
-func setup(grid_position: Vector2i, inventory: GridInventory):
-	self.grid_position = grid_position
-	self.inventory = inventory
+func setup(grid_position: Vector2i, new_inventory: GridInventory):
+	self._grid_position = grid_position
+	self.inventory = new_inventory
 
 
 func select():
@@ -48,7 +48,7 @@ func _ready() -> void:
 		return
 	for i in inventory.grid_constraints:
 		if i is CategoryGridInventoryConstraint:
-			var category: String = i.get_category(grid_position)
+			var category: String = i.get_category(_grid_position)
 			if category != "" and inventory.database != null:
 				var cat: ItemCategory = inventory.database.get_category_from_id(category)
 				if cat != null:

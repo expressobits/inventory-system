@@ -14,8 +14,8 @@ var crafting : Crafting
 
 
 ## Set crafting based on [CraftStation] crafting index
-func set_crafting(station : CraftStation, crafting_index : int):
-	self.station = station
+func set_crafting(_station : CraftStation, crafting_index : int):
+	self.station = _station
 	crafting = station.craftings[crafting_index]
 	var recipe_index = crafting.recipe_index
 	var recipe = station.database.recipes[recipe_index]
@@ -24,5 +24,5 @@ func set_crafting(station : CraftStation, crafting_index : int):
 	_progress_bar.max_value = recipe.time_to_craft
 
 
-func _process(delta):
+func _process(_delta : float):
 	_progress_bar.value =  _progress_bar.max_value - crafting.time

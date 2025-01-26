@@ -44,15 +44,15 @@ var opened_inventories : Array[Inventory]
 @export var raycast : RayCast3D:
 	set(value):
 		raycast = value
-		var interactor = get_node(interactor_path)
-		if interactor != null and value != null:
-			interactor.raycast = value
+		var _interactor = get_node(interactor_path)
+		if _interactor != null and value != null:
+			_interactor.raycast = value
 @export var camera_3d : Camera3D:
 	set(value):
 		camera_3d = value
-		var interactor = get_node(interactor_path)
-		if interactor != null and value != null:
-			interactor.camera = value
+		var _interactor = get_node(interactor_path)
+		if _interactor != null and value != null:
+			_interactor.camera = value
 
 
 func _ready():
@@ -154,7 +154,7 @@ func split(inventory : Inventory, stack_index : int, amount : int):
 	inventory.split(stack_index, amount)
 
 
-func equip(stack: ItemStack, inventory : Inventory, slot_index: int):
+func equip(stack: ItemStack, _inventory : Inventory, slot_index: int):
 	hotbar.equip(stack, slot_index)
 
 
