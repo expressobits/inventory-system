@@ -33,15 +33,15 @@ func loading_categories():
 		h_flow_container.add_child(option_obj)
 
 
-func make_array_unique(input_array) -> Array:
-	var unique_array := []
+func make_array_unique(input_array) -> Array[ItemCategory]:
+	var unique_array : Array[ItemCategory] = []
 	for value in input_array:
-		unique_array.append(value.name)
+		unique_array.append(value)
 	return unique_array
 
 
 func _on_toggled_category_option(toggled : bool, category : ItemCategory):
-	var new_categories : Array = make_array_unique(item.categories)
+	var new_categories : Array[ItemCategory] = make_array_unique(item.categories)
 	if toggled:
 		new_categories.append(category)
 	else:
