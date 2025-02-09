@@ -112,7 +112,6 @@ func _ready():
 	
 	var dynamic_property : HBoxContainer = HBoxContainer.new()
 	dynamic_property.layout_mode = 2
-	dynamic_property.visible = is_dynamic_property
 	add_child(dynamic_property)
 	
 	var dynamic_property_label : Label = Label.new()
