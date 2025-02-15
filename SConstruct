@@ -69,7 +69,7 @@ if env["target"] in ["editor", "template_debug"]:
 file = "{}{}{}".format(libname, env["suffix"], env["SHLIBSUFFIX"])
 
 if env["platform"] == "macos" or env["platform"] == "ios":
-    platlibname = "{}.{}.{}".format(libname, env["platform"], env["target"])
+    platlibname = "{}.{}.{}.dylib".format(libname, env["platform"], env["target"])
     file = "{}.framework/{}".format(env["platform"], platlibname, platlibname)
 
 libraryfile = "bin/{}/{}".format(env["platform"], file)
