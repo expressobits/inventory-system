@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bl40ri4you0n5"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/categories_in_item.gd" id="1_eq3id"]
+[ext_resource type="Script" uid="uid://bxbv4smi0115m" path="res://addons/inventory-system/editor/items/categories_in_item.gd" id="1_eq3id"]
 
 [node name="CategoriesInItem" type="HBoxContainer"]
 custom_minimum_size = Vector2(0, 64)

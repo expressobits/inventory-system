@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cdv6y2uu0ywq0"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.gd" id="1_rih6e"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_station_id_editor.gd" id="2_mcdya"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_ct0mp"]
+[ext_resource type="Script" uid="uid://c1bq50hrivxkw" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.gd" id="1_rih6e"]
+[ext_resource type="Script" uid="uid://bp6f231s4c4cf" path="res://addons/inventory-system/editor/craft_stations/craft_station_id_editor.gd" id="2_mcdya"]
+[ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_ct0mp"]
 
 [node name="CraftStationTypeEditor" type="Control"]
 layout_mode = 3
