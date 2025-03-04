@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bbrirgr4jkgip"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_5t3gu"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd" id="2_4uswq"]
+[ext_resource type="Script" uid="uid://nfw58u8hlg4h" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_5t3gu"]
+[ext_resource type="Script" uid="uid://du4odj2yajra2" path="res://addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd" id="2_4uswq"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="2_ueq65"]
 
 [node name="SimpleTransferDemo" type="Node3D" node_paths=PackedStringArray("inventory_left", "inventory_right")]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://5wb5xuou85vf"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/item_editor.gd" id="1_smo60"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_by1w4"]
+[ext_resource type="Script" uid="uid://d04ajbl247oot" path="res://addons/inventory-system/editor/items/item_editor.gd" id="1_smo60"]
+[ext_resource type="Script" uid="uid://drx1fh0xues8k" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_by1w4"]
 [ext_resource type="PackedScene" uid="uid://bl40ri4you0n5" path="res://addons/inventory-system/editor/items/categories_in_item.tscn" id="3_cy8bj"]
 [ext_resource type="PackedScene" uid="uid://c1am6gfdvbcgx" path="res://addons/inventory-system/editor/items/custom_properties.tscn" id="3_obam6"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_p8qlp"]
+[ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_p8qlp"]
 
 [node name="ItemEditor" type="Control"]
 custom_minimum_size = Vector2(256, 0)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bkrqq2gbr45r5"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/recipes/recipes_list_editor.gd" id="1_ctpv3"]
+[ext_resource type="Script" uid="uid://cs36uxrbmg4vy" path="res://addons/inventory-system/editor/recipes/recipes_list_editor.gd" id="1_ctpv3"]
 
 [node name="RecipesListEditor" type="Control"]
 custom_minimum_size = Vector2(336, 0)

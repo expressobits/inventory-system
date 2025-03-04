@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://4ateud0jxegv"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/interactor/action_message_ui.gd" id="1_d8uh5"]
+[ext_resource type="Script" uid="uid://bg2bckrg6q140" path="res://addons/inventory-system-demos/ui/interactor/action_message_ui.gd" id="1_d8uh5"]
 [ext_resource type="Resource" uid="uid://bxe7obvu1xl0x" path="res://addons/inventory-system-demos/ui/interactor/default_input_helper.tres" id="2_3rlpb"]
 [ext_resource type="Resource" uid="uid://c2cuwwcpbs81y" path="res://addons/inventory-system-demos/ui/interactor/default_input_icons.tres" id="3_rgd78"]
 

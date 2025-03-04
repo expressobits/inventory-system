@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cci6dwxmbapt1"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.gd" id="1_ny8hp"]
+[ext_resource type="Script" uid="uid://bwcj7kcis430l" path="res://addons/inventory-system-demos/ui/craft/craft_station_ui.gd" id="1_ny8hp"]
 [ext_resource type="PackedScene" uid="uid://duq60fhdry5hv" path="res://addons/inventory-system-demos/ui/craft/recipe_ui.tscn" id="2_jgmgq"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/craft/craftings_ui.gd" id="3_imm8o"]
+[ext_resource type="Script" uid="uid://1xhu1ilcqq5y" path="res://addons/inventory-system-demos/ui/craft/craftings_ui.gd" id="3_imm8o"]
 [ext_resource type="PackedScene" uid="uid://db7sndy7hfpq2" path="res://addons/inventory-system-demos/ui/craft/crafting_ui.tscn" id="4_5nmfv"]
 [ext_resource type="PackedScene" uid="uid://cxevor61mdhtc" path="res://addons/inventory-system-demos/ui/grid/grid_slot_ui.tscn" id="4_y7p0v"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_inventory_ui.gd" id="5_ce7df"]
+[ext_resource type="Script" uid="uid://ctu3vfl53whl3" path="res://addons/inventory-system-demos/ui/grid/grid_inventory_ui.gd" id="5_ce7df"]
 [ext_resource type="PackedScene" uid="uid://ch1ixmsfcaf5c" path="res://addons/inventory-system-demos/ui/grid/grid_item_stack_ui.tscn" id="5_v57bc"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="7_wbpus"]
 

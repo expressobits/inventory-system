@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://w6mkeioqln3k"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
+[ext_resource type="Script" uid="uid://cv3gjo1nrdhya" path="res://addons/inventory-system/editor/inventory_editor.gd" id="1_hn7br"]
 [ext_resource type="Texture2D" uid="uid://3f53y2sfj1sb" path="res://addons/inventory-system/icons/inventory_database_editor.svg" id="2_0nqqt"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
+[ext_resource type="Script" uid="uid://du48nvpnxfcqx" path="res://addons/inventory-system/editor/tab_container_inventory.gd" id="2_3cl1k"]
 [ext_resource type="Texture2D" uid="uid://7ueixntymdwg" path="res://addons/inventory-system/icons/new_inventory_item.svg" id="2_lu5r1"]
 [ext_resource type="Texture2D" uid="uid://76umvuslxorx" path="res://addons/inventory-system/icons/inventory_item.svg" id="3_6kl7v"]
 [ext_resource type="Texture2D" uid="uid://dhpnx4f2e7pwf" path="res://addons/inventory-system/icons/new_recipe.svg" id="3_clewf"]

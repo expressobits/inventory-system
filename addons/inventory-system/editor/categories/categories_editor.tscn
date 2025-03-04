@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cfevgv38d1bll"]
 
 [ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_7csdk"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/categories/categories_editor.gd" id="2_eyvx1"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/inventory_item_list.gd" id="3_xhxmq"]
+[ext_resource type="Script" uid="uid://dycxtndxpf56i" path="res://addons/inventory-system/editor/categories/categories_editor.gd" id="2_eyvx1"]
+[ext_resource type="Script" uid="uid://baoflx32svgcc" path="res://addons/inventory-system/editor/items/inventory_item_list.gd" id="3_xhxmq"]
 [ext_resource type="PackedScene" uid="uid://dqcgncj4oicwn" path="res://addons/inventory-system/editor/categories/item_category_editor.tscn" id="4_0s65b"]
 
 [node name="Categories" instance=ExtResource("1_7csdk")]

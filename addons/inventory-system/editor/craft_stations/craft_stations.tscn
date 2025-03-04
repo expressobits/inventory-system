@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://clj2qii0ta8lx"]
 
 [ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/inventory_tab_editor.tscn" id="1_g1usf"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="2_0s4ew"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/items/inventory_item_list.gd" id="3_ov27o"]
+[ext_resource type="Script" uid="uid://dlj8qgchs77a3" path="res://addons/inventory-system/editor/craft_stations/craft_stations_types_editor.gd" id="2_0s4ew"]
+[ext_resource type="Script" uid="uid://baoflx32svgcc" path="res://addons/inventory-system/editor/items/inventory_item_list.gd" id="3_ov27o"]
 [ext_resource type="PackedScene" uid="uid://cdv6y2uu0ywq0" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.tscn" id="4_1l8uv"]
 
 [node name="InventoryTabEditor" instance=ExtResource("1_g1usf")]

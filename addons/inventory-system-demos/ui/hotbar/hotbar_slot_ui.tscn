@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://chrbciyyqkgx5"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_slot_ui.gd" id="1_nmk33"]
+[ext_resource type="Script" uid="uid://g00b2w6063n0" path="res://addons/inventory-system-demos/ui/hotbar/hotbar_slot_ui.gd" id="1_nmk33"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s4xb6"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

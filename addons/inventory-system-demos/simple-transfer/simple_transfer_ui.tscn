@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cfglgpxfj5775"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_uoafe"]
+[ext_resource type="Script" uid="uid://nfw58u8hlg4h" path="res://addons/inventory-system-demos/simple-transfer/simple_transfer_demo.gd" id="1_uoafe"]
 
 [node name="SimpleTransferMode" type="Control"]
 layout_mode = 3

@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dqcgncj4oicwn"]
 
-[ext_resource type="Script" path="res://addons/inventory-system/editor/categories/item_category_editor.gd" id="1_pk45a"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/categories/item_category_id_editor.gd" id="2_3658w"]
+[ext_resource type="Script" uid="uid://uf1neksemcpp" path="res://addons/inventory-system/editor/categories/item_category_editor.gd" id="1_pk45a"]
+[ext_resource type="Script" uid="uid://cldkwwe5x8urh" path="res://addons/inventory-system/editor/categories/item_category_id_editor.gd" id="2_3658w"]
 [ext_resource type="PackedScene" uid="uid://cv8naqmqxqy8k" path="res://addons/inventory-system/editor/categories/category_custom_properties.tscn" id="2_nl7i2"]
-[ext_resource type="Script" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_c5p76"]
+[ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_c5p76"]
 
 [node name="ItemCategoryEditor" type="Control"]
 layout_mode = 3

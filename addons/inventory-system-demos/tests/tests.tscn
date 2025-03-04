@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bks3lecuf50li"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/tests.gd" id="1_l7dn5"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/quad_tree_tests.gd" id="2_jtl62"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/inventory_tests.gd" id="2_surif"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tests/grid_inventory_test.gd" id="3_k7xlo"]
+[ext_resource type="Script" uid="uid://27s4xp0upogr" path="res://addons/inventory-system-demos/tests/tests.gd" id="1_l7dn5"]
+[ext_resource type="Script" uid="uid://btcruk34wn08a" path="res://addons/inventory-system-demos/tests/quad_tree_tests.gd" id="2_jtl62"]
+[ext_resource type="Script" uid="uid://cdn4e7tu2h0kw" path="res://addons/inventory-system-demos/tests/inventory_tests.gd" id="2_surif"]
+[ext_resource type="Script" uid="uid://2ijkx2o3xnof" path="res://addons/inventory-system-demos/tests/grid_inventory_test.gd" id="3_k7xlo"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_1lhre"]
 
 [node name="Tests" type="Node"]

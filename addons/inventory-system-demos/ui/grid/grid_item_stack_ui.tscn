@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ch1ixmsfcaf5c"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/ui/grid/grid_item_stack_ui.gd" id="1_xrm8g"]
+[ext_resource type="Script" uid="uid://2wlbtf3n6pc5" path="res://addons/inventory-system-demos/ui/grid/grid_item_stack_ui.gd" id="1_xrm8g"]
 [ext_resource type="StyleBox" uid="uid://da318y6qn0f4e" path="res://addons/inventory-system-demos/grid_example/grid_item_stack_selection_style_box.tres" id="2_jll5p"]
 [ext_resource type="Texture2D" uid="uid://bp4k6gmkgd0n8" path="res://addons/inventory-system-demos/assets/icons/stone_axe.png" id="3_k3aua"]
 [ext_resource type="AudioStream" uid="uid://df1ibxkrver3m" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/metalClick.ogg" id="4_x61r8"]

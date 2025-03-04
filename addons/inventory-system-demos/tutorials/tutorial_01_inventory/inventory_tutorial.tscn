@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://csvypwppcls1l"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_nssfi"]
+[ext_resource type="Script" uid="uid://kic1vda81phq" path="res://addons/inventory-system-demos/tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_nssfi"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_okmux"]
 
 [node name="InventoryTutorial" type="Node3D"]

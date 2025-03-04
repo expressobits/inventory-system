@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://ccgrlrqx2vvqf"]
 
 [ext_resource type="PackedScene" uid="uid://bsr3c46mxy2fw" path="res://addons/inventory-system-demos/fps/campfire.tscn" id="1_2iaw6"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_campfire.gd" id="2_hw73w"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="2_wux35"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/sync_grid_inventory.gd" id="3_jx6wv"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="5_1yik4"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="6_qydj7"]
+[ext_resource type="Script" uid="uid://bui8px3uxj2vv" path="res://addons/inventory-system-demos/mp/networked_campfire.gd" id="2_hw73w"]
+[ext_resource type="Script" uid="uid://bldichxbdfybi" path="res://addons/inventory-system-demos/mp/sync_craft_station.gd" id="2_wux35"]
+[ext_resource type="Script" uid="uid://dlemxn6c687mt" path="res://addons/inventory-system-demos/mp/sync_grid_inventory.gd" id="3_jx6wv"]
+[ext_resource type="Script" uid="uid://dl8kl1msejot2" path="res://addons/inventory-system-demos/character/networked_openable.gd" id="5_1yik4"]
+[ext_resource type="Script" uid="uid://bkxu1ymravf51" path="res://addons/inventory-system-demos/mp/networked_dropper.gd" id="6_qydj7"]
 
 [node name="Campfire" instance=ExtResource("1_2iaw6")]
 script = ExtResource("2_hw73w")

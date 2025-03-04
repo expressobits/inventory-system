@@ -1,15 +1,15 @@
 [gd_scene load_steps=14 format=3 uid="uid://cn6sy338tb7m4"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/box_inventory.gd" id="1_f8i83"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_o7yjt"]
+[ext_resource type="Script" uid="uid://2mjq1r8i0m8a" path="res://addons/inventory-system-demos/fps/box_inventory.gd" id="1_f8i83"]
+[ext_resource type="Script" uid="uid://dttp27rk0lwvx" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_o7yjt"]
 [ext_resource type="PackedScene" uid="uid://blbmab4op747n" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/box.glb" id="3_4i45c"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/constraints/category_grid_inventory_constraint.gd" id="3_7aabl"]
+[ext_resource type="Script" uid="uid://7bxxqncb8akj" path="res://addons/inventory-system-demos/fps/constraints/category_grid_inventory_constraint.gd" id="3_7aabl"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="3_nqx2d"]
 [ext_resource type="PackedScene" uid="uid://1e0sia1epsfi" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/boxOpen.glb" id="4_jaqj8"]
 [ext_resource type="AudioStream" uid="uid://c4fwwaoaldmu" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorOpen_1.ogg" id="5_sufq2"]
 [ext_resource type="AudioStream" uid="uid://b3gtnm1sd6eyg" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/doorClose_1.ogg" id="6_x0aos"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="7_nxnqq"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="9_2glac"]
+[ext_resource type="Script" uid="uid://gngi6ncgkswy" path="res://addons/inventory-system-demos/character/openable.gd" id="7_nxnqq"]
+[ext_resource type="Script" uid="uid://2g51nyosadfu" path="res://addons/inventory-system-demos/fps/dropper.gd" id="9_2glac"]
 
 [sub_resource type="Resource" id="Resource_nqvfx"]
 script = ExtResource("2_o7yjt")

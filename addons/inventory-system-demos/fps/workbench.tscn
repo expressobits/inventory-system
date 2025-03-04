@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://bvjagvllelgcf"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/workbench.gd" id="1_sr5uf"]
+[ext_resource type="Script" uid="uid://bag25ldlhay8m" path="res://addons/inventory-system-demos/fps/workbench.gd" id="1_sr5uf"]
 [ext_resource type="PackedScene" uid="uid://dushsiymhgtib" path="res://addons/inventory-system-demos/assets/survival-kit-1.1/Models/GLTF format/workbench.glb" id="2_2rlru"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_wdbxt"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="5_c7aqi"]
+[ext_resource type="Script" uid="uid://dttp27rk0lwvx" path="res://addons/inventory-system-demos/interaction_system/interact_action.gd" id="2_wdbxt"]
+[ext_resource type="Script" uid="uid://gngi6ncgkswy" path="res://addons/inventory-system-demos/character/openable.gd" id="5_c7aqi"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_d4au8"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="6_wgcst"]
+[ext_resource type="Script" uid="uid://2g51nyosadfu" path="res://addons/inventory-system-demos/fps/dropper.gd" id="6_wgcst"]
 
 [sub_resource type="Resource" id="Resource_pm0e2"]
 script = ExtResource("2_wdbxt")

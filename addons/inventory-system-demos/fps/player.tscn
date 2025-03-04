@@ -1,17 +1,17 @@
 [gd_scene load_steps=15 format=3 uid="uid://bnr02xnvoiun5"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/player.gd" id="1_qhbqk"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="2_toyi4"]
+[ext_resource type="Script" uid="uid://dh3yakhaw2or8" path="res://addons/inventory-system-demos/fps/player.gd" id="1_qhbqk"]
+[ext_resource type="Script" uid="uid://chpxhifwptoga" path="res://addons/inventory-system-demos/character/hand_item_holder_3d.gd" id="2_toyi4"]
 [ext_resource type="PackedScene" uid="uid://cw4rwxc3dyovc" path="res://addons/inventory-system-demos/character/character_inventory_system.tscn" id="3_hbu24"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="4_0qsek"]
 [ext_resource type="AudioStream" uid="uid://n8yvnoax543q" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/cloth4.ogg" id="5_1ptxj"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/openable.gd" id="5_u6t8r"]
+[ext_resource type="Script" uid="uid://gngi6ncgkswy" path="res://addons/inventory-system-demos/character/openable.gd" id="5_u6t8r"]
 [ext_resource type="AudioStream" uid="uid://chgg2p17if5mo" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/dropLeather.ogg" id="6_3rbsy"]
 [ext_resource type="AudioStream" uid="uid://df1ibxkrver3m" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/metalClick.ogg" id="7_77smm"]
 [ext_resource type="AudioStream" uid="uid://djoihrfwojghx" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookOpen.ogg" id="8_vym5c"]
 [ext_resource type="AudioStream" uid="uid://cyu1f4p35abbj" path="res://addons/inventory-system-demos/assets/kenney_rpgaudio/Audio/bookClose.ogg" id="9_su3a2"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/use_items_example.gd" id="10_mt1fm"]
-[ext_resource type="Script" path="res://addons/inventory-system-demos/fps/dropper.gd" id="12_2tit8"]
+[ext_resource type="Script" uid="uid://cbmf3ywinq1id" path="res://addons/inventory-system-demos/fps/use_items_example.gd" id="10_mt1fm"]
+[ext_resource type="Script" uid="uid://2g51nyosadfu" path="res://addons/inventory-system-demos/fps/dropper.gd" id="12_2tit8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ccrms"]
 

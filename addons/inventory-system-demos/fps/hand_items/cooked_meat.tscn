@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=4 uid="uid://m4utrr3bvvcc"]
 
-[ext_resource type="Script" path="res://addons/inventory-system-demos/character/hand_item_3d.gd" id="1_5q8we"]
+[ext_resource type="Script" uid="uid://2x3fbqydumks" path="res://addons/inventory-system-demos/character/hand_item_3d.gd" id="1_5q8we"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kxy1o"]
 resource_name = "brownLight"
