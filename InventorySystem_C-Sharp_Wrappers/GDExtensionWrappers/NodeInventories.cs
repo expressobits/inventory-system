@@ -35,7 +35,7 @@ public partial class NodeInventories : Node
 
     public InventoryDatabase Database
     {
-        get => (InventoryDatabase)Get("database");
+        get => GDExtensionHelper.Bind<InventoryDatabase>(Get("database").AsGodotObject());
         set => Set("database", Variant.From(value));
     }
 
