@@ -93,6 +93,4 @@ volume_db = -12.0
 volume_db = -12.0
 
 [node name="StackPopupMenu" type="PopupMenu" parent="."]
-transparent_bg = true
 size = Vector2i(20, 8)
-transparent = true

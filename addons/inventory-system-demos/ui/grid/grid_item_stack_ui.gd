@@ -1,3 +1,4 @@
+@tool
 extends GridDraggableElementUI
 class_name GridItemStackUI
 
