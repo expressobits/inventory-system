@@ -3,6 +3,8 @@ extends "../character/character_inventory_system.gd"
 
 
 func _ready():
+	if Engine.is_editor_hint():
+		return
 	if is_multiplayer_authority():
 		# Setup for enabled/disabled mouse 🖱️😀
 		opened_inventory.connect(_update_opened_inventories)
