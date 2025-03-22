@@ -143,7 +143,7 @@ func _ready():
 			value_bool.button_pressed = value
 			value_bool.visible = true
 		TYPE_INT:
-			value_integer.value = value
+			value_integer.value = int(value)
 			value_integer.visible = true
 		TYPE_FLOAT:
 			value_float_line_edit.value = value
@@ -198,7 +198,7 @@ func _on_value_float_value_changed(new_value):
 
 
 func _on_value_integer_value_changed(new_value):
-	value = new_value
+	value = int(new_value)
 	_changed()
 
 
