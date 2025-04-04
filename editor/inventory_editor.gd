@@ -245,6 +245,7 @@ func _on_export_menu_id_pressed(id: int) -> void:
 
 func _on_new_item_menu_id_pressed() -> void:
 	var new_item_definition = ItemDefinition.new()
+	new_item_definition.name = "New Item"
 	database.add_new_item(new_item_definition)
 	save_file()
 	load_database(database)
