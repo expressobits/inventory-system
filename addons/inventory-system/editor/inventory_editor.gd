@@ -250,7 +250,7 @@ func _on_new_item_menu_id_pressed() -> void:
 		push_warning("Item definition with empty id can exist only once.")
 		return
 	var new_item_definition = ItemDefinition.new()
-	new_item_definition.name = "New Item defition"
+	new_item_definition.name = "New Item definition"
 	database.add_new_item(new_item_definition)
 	save_file()
 	load_database(database)
