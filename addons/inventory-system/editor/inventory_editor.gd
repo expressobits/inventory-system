@@ -24,6 +24,8 @@ const NEW_ITEM_FROM_RESOURCE = 101
 # The Inventory System plugin
 var editor_plugin : InventorySystemEditorPlugin
 
+@onready var tab_container : TabContainer = $MarginContainer/VBoxContainer/Content/TabContainer
+
 @onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
 @onready var recipes_editor : RecipesEditor = %Recipes
 @onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
@@ -252,12 +254,14 @@ func _on_new_item_menu_id_pressed() -> void:
 	database.add_new_item(new_item_definition)
 	save_file()
 	load_database(database)
+	tab_container.current_tab = 0
 
 
 func _on_new_recipe_menu_id_pressed() -> void:
 	database.add_recipe()
 	save_file()
 	load_database(database)
+	tab_container.current_tab = 1
 
 
 func _on_new_craft_station_menu_id_pressed() -> void:
@@ -269,6 +273,7 @@ func _on_new_craft_station_menu_id_pressed() -> void:
 	database.stations_type.append(new_craft_station_type)
 	save_file()
 	load_database(database)
+	tab_container.current_tab = 2
 
 
 func _on_new_item_category_menu_id_pressed() -> void:
@@ -280,6 +285,7 @@ func _on_new_item_category_menu_id_pressed() -> void:
 	database.item_categories.append(new_item_category)
 	save_file()
 	load_database(database)
+	tab_container.current_tab = 3
 
 
 func remove_item_definition(item : ItemDefinition):
