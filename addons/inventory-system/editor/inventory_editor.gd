@@ -247,10 +247,10 @@ func _on_export_menu_id_pressed(id: int) -> void:
 
 func _on_new_item_menu_id_pressed() -> void:
 	if database.items.any(func(item) -> bool: return item.id == ""):
-		push_warning("Item with empty id can exist only once.")
+		push_warning("Item definition with empty id can exist only once.")
 		return
 	var new_item_definition = ItemDefinition.new()
-	new_item_definition.name = "New Item"
+	new_item_definition.name = "New Item defition"
 	database.add_new_item(new_item_definition)
 	save_file()
 	load_database(database)
