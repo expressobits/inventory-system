@@ -84,13 +84,17 @@ install(
 	DESTINATION ${LIBRARY_PLATFORM}
 )
 
-if(MSVC)
+# There is one exception where we provide the lib file
+if(CMAKE_SYSTEM_NAME STREQUAL Windows)
 	install(
 		TARGETS ${LIBRARY_TARGET}
 		LIBRARY
 		DESTINATION ${LIBRARY_PLATFORM}
 	)
+endif()
 
+# There is one exception where we provide the pdb file
+if(MSVC)
 	install(FILES $<TARGET_PDB_FILE:${LIBRARY_TARGET}>
 		DESTINATION ${LIBRARY_PLATFORM}
 		OPTIONAL
