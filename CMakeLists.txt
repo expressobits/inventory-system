@@ -61,6 +61,8 @@ target_link_options(${LIBRARY_TARGET} PRIVATE
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bin")
 
+# use library name naming convention from godot::cpp target
+
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
 	set(TEMPLATE "template_debug")
 elseif(CMAKE_BUILD_TYPE STREQUAL Release)
