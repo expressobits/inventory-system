@@ -69,12 +69,7 @@ endif()
 get_target_property(LIBRARY_PLATFORM godot-cpp.${TEMPLATE} GODOTCPP_PLATFORM)
 get_target_property(LIBRARY_SUFFIX godot-cpp.${TEMPLATE} GODOTCPP_SUFFIX)
 
-# There is one exception where we do not prefix with lib
-if (NOT CMAKE_SYSTEM_NAME STREQUAL Windows)
-	get_target_property(LIBRARY_PREFIX godot-cpp.${TEMPLATE} PREFIX)
-endif ()
-
-set_target_properties(${LIBRARY_TARGET} PROPERTIES OUTPUT_NAME "${LIBRARY_PREFIX}${LIBRARY_TARGET}${LIBRARY_SUFFIX}")
+set_target_properties(${LIBRARY_TARGET} PROPERTIES OUTPUT_NAME "${LIBRARY_TARGET}${LIBRARY_SUFFIX}")
 
 install(
 	TARGETS ${LIBRARY_TARGET}
