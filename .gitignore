@@ -49,3 +49,9 @@ compile_commands.json
 .vscode/*
 !.vscode/extensions.json
 src/gen/doc_data.gen.cpp
+
+# jetbrains
+.idea/
+
+# cmake build folder
+/cmake-build-*

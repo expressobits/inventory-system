@@ -1,150 +1,90 @@
-project(inventory-system-cpp)
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.27)
+project(inventory_system LANGUAGES CXX)
 
-set(GODOT_GDEXTENSION_DIR godot-cpp/gdextension/ CACHE STRING "Path to GDExtension interface header directory")
-set(CPP_BINDINGS_PATH godot-cpp/ CACHE STRING "Path to C++ bindings")
-
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-	set(TARGET_PATH x11)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-	set(TARGET_PATH win64)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-	set(TARGET_PATH macos)
-else()
-	message(FATAL_ERROR "Not implemented support for ${CMAKE_SYSTEM_NAME}")
-endif()
-
-# Change the output directory to the bin directory
-set(BUILD_PATH ${CMAKE_SOURCE_DIR}/bin/${TARGET_PATH})
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${BUILD_PATH}")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${BUILD_PATH}")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${BUILD_PATH}")
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
-SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BUILD_PATH}")
-SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BUILD_PATH}")
-
-# Set the c++ standard to c++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(GODOT_COMPILE_FLAGS )
-set(GODOT_LINKER_FLAGS )
+# set GODOTCPP_PRECISION=single|double
+# set BITS=32|64
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-	# using Visual Studio C++
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /EHsc /WX") # /GF /MP
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /DTYPED_METHOD_BIND")
+set(GODOTCPP_USE_HOT_RELOAD ON CACHE BOOL "Enable hot reload for godot-cpp")
+add_subdirectory(godot-cpp)
 
-	if(CMAKE_BUILD_TYPE MATCHES Debug)
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /MDd") # /Od /RTC1 /Zi
-	else()
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /MD /O2") # /Oy /GL /Gy
-		STRING(REGEX REPLACE "/RTC(su|[1su])" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-		string(REPLACE "/RTC1" "" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
-	endif(CMAKE_BUILD_TYPE MATCHES Debug)
+set(LIBRARY_TARGET "${PROJECT_NAME}")
 
-	# Disable conversion warning, truncation, unreferenced var, signed mismatch
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} /wd4244 /wd4305 /wd4101 /wd4018 /wd4267")
+file(GLOB_RECURSE SOURCES src/*.c** src/*.h**)
 
-	add_definitions(-DNOMINMAX)
+add_library(${LIBRARY_TARGET} SHARED ${SOURCES})
 
-	# Unkomment for warning level 4
-	#if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-	#	string(REGEX REPLACE "/W[0-4]" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-	#endif()
-
-else()
-
-#elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	# using Clang
-#elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	# using GCC and maybe MinGW?
-
-	set(GODOT_LINKER_FLAGS "-static-libgcc -static-libstdc++ -Wl,-R,'$$ORIGIN'")
-
-	# Hmm.. maybe to strikt?
-	set(GODOT_COMPILE_FLAGS "-fPIC -g -Wwrite-strings")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wchar-subscripts -Wcomment -Wdisabled-optimization")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wformat -Wformat=2 -Wformat-security -Wformat-y2k")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wimport -Winit-self -Winline -Winvalid-pch -Werror")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-braces -Wmissing-format-attribute")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wmissing-include-dirs -Wmissing-noreturn -Wpacked -Wpointer-arith")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wredundant-decls -Wreturn-type -Wsequence-point")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wswitch -Wswitch-enum -Wtrigraphs")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wuninitialized -Wunknown-pragmas -Wunreachable-code -Wunused-label")
-	set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wunused-value -Wvariadic-macros -Wvolatile-register-var -Wno-error=attributes")
-
-	# -Wshadow -Wextra -Wall -Weffc++ -Wfloat-equal -Wstack-protector -Wunused-parameter -Wsign-compare -Wunused-variable -Wcast-align
-	# -Wunused-function -Wstrict-aliasing -Wstrict-aliasing=2 -Wmissing-field-initializers
-
-	if(NOT CMAKE_SYSTEM_NAME STREQUAL "Android")
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -Wno-ignored-attributes")
-	endif()
-
-	if(CMAKE_BUILD_TYPE MATCHES Debug)
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -fno-omit-frame-pointer -O0")
-	else()
-		set(GODOT_COMPILE_FLAGS "${GODOT_COMPILE_FLAGS} -O3")
-	endif(CMAKE_BUILD_TYPE MATCHES Debug)
-endif()
-
-# Get Sources
-file(GLOB_RECURSE SOURCES src/*.c**)
-file(GLOB_RECURSE HEADERS include/*.h**)
-
-# Define our godot-cpp library
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
-
-target_include_directories(${PROJECT_NAME} SYSTEM
-	PRIVATE
-		${CPP_BINDINGS_PATH}/include
-		${CPP_BINDINGS_PATH}/gen/include
-		${GODOT_GDEXTENSION_DIR}
+target_include_directories(${LIBRARY_TARGET} PRIVATE
+	${CMAKE_BINARY_DIR}/godot-cpp/gen/include
+	godot-cpp/include
+	src
 )
 
-# Create the correct name (godot.os.build_type.system_bits)
-# Synchronized with godot-cpp's CMakeLists.txt
+target_link_libraries(${LIBRARY_TARGET} PRIVATE godot::cpp)
 
-set(BITS 32)
-if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-	set(BITS 64)
-endif(CMAKE_SIZEOF_VOID_P EQUAL 8)
+target_compile_definitions(${LIBRARY_TARGET} PRIVATE TYPED_METHOD_BIND=1 HOT_RELOAD_ENABLED=1 $<$<CXX_COMPILER_ID:MSVC>:$<$<CONFIG:Debug>:_ITERATOR_DEBUG_LEVEL=0>>)
 
-if(CMAKE_BUILD_TYPE MATCHES Debug)
-	set(GODOT_CPP_BUILD_TYPE Debug)
+target_compile_options(${LIBRARY_TARGET} PRIVATE
+	# added here to show what warnings have to be fixed!
+	$<$<CXX_COMPILER_ID:MSVC>:
+		/wd4244 # C4244: disable type conversion data loss warning
+		/wd4305 # C4305: disable type truncation warning
+		/wd4101 # C4101: disable unreferenced local variable warning
+		/wd4018 # C4018: disable signed/unsigned mismatch warning
+		/wd4267 # C4267: disable conversion from 'size_t' to 'int' warning
+		/wd4458 # C4458: disable declaration of hides class member
+		/wd4456 # C4456: disable declaration of hides function parameter
+		/wd4701 # C4701: disable local variable may be used without having been initialized
+		/wd4702 # C4702: disable unreachable code warning
+		/wd4189 # C4189: disable local variable is initialized but not referenced
+	>
+	# added here to show what warnings have to be fixed!
+	$<$<CXX_COMPILER_ID:GNU>:
+		-Wno-sign-compare
+		-Wno-unused-variable
+		-Wno-unused-but-set-variable
+		-Wno-unused-but-set-parameter
+		-Wno-shadow=compatible-local
+	>
+)
+
+target_link_options(${LIBRARY_TARGET} PRIVATE
+	$<$<CXX_COMPILER_ID:GNU>:
+		-fno-rtti
+	>
+)
+
+# install
+
+set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/bin")
+
+# use library name naming convention from godot::cpp target
+
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+	set(TEMPLATE "template_debug")
+elseif(CMAKE_BUILD_TYPE STREQUAL Release)
+	set(TEMPLATE "template_release")
 else()
-	set(GODOT_CPP_BUILD_TYPE Release)
+	message(FATAL_ERROR "Unsupported or invalid build type: ${CMAKE_BUILD_TYPE}")
 endif()
 
-string(TOLOWER ${CMAKE_SYSTEM_NAME} SYSTEM_NAME)
-string(TOLOWER ${GODOT_CPP_BUILD_TYPE} BUILD_TYPE)
+get_target_property(LIBRARY_PLATFORM godot-cpp.${TEMPLATE} GODOTCPP_PLATFORM)
+get_target_property(LIBRARY_SUFFIX godot-cpp.${TEMPLATE} GODOTCPP_SUFFIX)
 
-if(ANDROID)
-	# Added the android abi after system name
-	set(SYSTEM_NAME ${SYSTEM_NAME}.${ANDROID_ABI})
-endif()
+set_target_properties(${LIBRARY_TARGET} PROPERTIES OUTPUT_NAME "${LIBRARY_TARGET}${LIBRARY_SUFFIX}")
 
-if(CMAKE_VERSION VERSION_GREATER "3.13")
-	target_link_directories(${PROJECT_NAME}
-		PRIVATE
-		${CPP_BINDINGS_PATH}/bin/
+install(
+	TARGETS ${LIBRARY_TARGET}
+	DESTINATION ${LIBRARY_PLATFORM}
+)
+
+# There is one exception where we provide the pdb file
+if(MSVC)
+	install(FILES $<TARGET_PDB_FILE:${LIBRARY_TARGET}>
+		DESTINATION ${LIBRARY_PLATFORM}
+		OPTIONAL
 	)
-
-	target_link_libraries(${PROJECT_NAME}
-		godot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>
-	)
-else()
-	target_link_libraries(${PROJECT_NAME}
-			${CPP_BINDINGS_PATH}/bin/libgodot-cpp.${SYSTEM_NAME}.${BUILD_TYPE}$<$<NOT:$<PLATFORM_ID:Android>>:.${BITS}>.a
-	)
-endif()
-
-# Add the compile flags
-set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY COMPILE_FLAGS ${GODOT_COMPILE_FLAGS})
-set_property(TARGET ${PROJECT_NAME} APPEND_STRING PROPERTY LINK_FLAGS ${GODOT_LINKER_FLAGS})
-
-set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME "inventory-system-cpp")
+endif ()
