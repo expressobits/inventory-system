@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# set GODOTCPP_PRECISION=single|double
+# set BITS=32|64
+
 set(GODOTCPP_USE_HOT_RELOAD ON CACHE BOOL "Enable hot reload for godot-cpp")
 add_subdirectory(godot-cpp)
 
