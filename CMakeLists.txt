@@ -37,8 +37,6 @@ target_compile_options(${LIBRARY_TARGET} PRIVATE
 		/wd4701 # C4701: disable local variable may be used without having been initialized
 		/wd4702 # C4702: disable unreachable code warning
 		/wd4189 # C4189: disable local variable is initialized but not referenced
-
-		/Zi # Enable debug information (generation of pdb files for both debug and release)
 	>
 	# added here to show what warnings have to be fixed!
 	$<$<CXX_COMPILER_ID:GNU>:
@@ -80,18 +78,8 @@ set_target_properties(${LIBRARY_TARGET} PROPERTIES OUTPUT_NAME "${LIBRARY_PREFIX
 
 install(
 	TARGETS ${LIBRARY_TARGET}
-	RUNTIME
 	DESTINATION ${LIBRARY_PLATFORM}
 )
-
-# There is one exception where we provide the lib file
-if(CMAKE_SYSTEM_NAME STREQUAL Windows)
-	install(
-		TARGETS ${LIBRARY_TARGET}
-		LIBRARY
-		DESTINATION ${LIBRARY_PLATFORM}
-	)
-endif()
 
 # There is one exception where we provide the pdb file
 if(MSVC)
