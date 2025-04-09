@@ -32,6 +32,14 @@ jobs:
           ]
         target-type: [template_debug, template_release]
         float-precision: [single, double]
+        # include: # Also build a release version for these specific targets. Remove if you add template_release above.
+        #   - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
+        #     target-type: template_release
+        #     float-precision: single
+
+        #   - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
+        #     target-type: template_release
+        #     float-precision: double
 
     runs-on: ${{ matrix.target.os }}
     steps:
@@ -59,11 +67,13 @@ jobs:
           em-version: 3.1.62
 
       # Build GDExtension (with caches)
-      - name: Cache .scons_cache
-        uses: actions/cache@v4
+
+      - name: Restore .scons_cache
+        uses: ./godot-cpp/.github/actions/godot-cache-restore
         with:
-          path: ${{ github.workspace }}/.scons-cache/
-          key: ${{ matrix.target.platform }}_${{ matrix.target.arch }}_${{ matrix.float-precision }}_${{ matrix.target-type }}_cache
+          scons-cache: ${{ github.workspace }}/.scons-cache/
+          cache-name: ${{ matrix.target.platform }}_${{ matrix.target.arch }}_${{ matrix.float-precision }}_${{ matrix.target-type }}
+
       - name: Build GDExtension Debug Build
         shell: sh
         env:
@@ -71,21 +81,11 @@ jobs:
         run: |
           scons target=${{ matrix.target-type }} platform=${{ matrix.target.platform }} arch=${{ matrix.target.arch }} precision=${{ matrix.float-precision }}
 
-      # Sign the binary (macOS only)
-      - name: Mac Sign
-        # Disable sign if secrets are not set
-        if: ${{ matrix.target.platform == 'macos' && env.APPLE_CERT_BASE64 }}
-        env:
-          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
-        uses: ./.github/actions/sign
+      - name: Save .scons_cache
+        uses: ./godot-cpp/.github/actions/godot-cache-save
         with:
-          FRAMEWORK_PATH: bin/macos/macos.framework
-          APPLE_CERT_BASE64: ${{ secrets.APPLE_CERT_BASE64 }}
-          APPLE_CERT_PASSWORD: ${{ secrets.APPLE_CERT_PASSWORD }}
-          APPLE_DEV_PASSWORD: ${{ secrets.APPLE_DEV_PASSWORD }}
-          APPLE_DEV_ID: ${{ secrets.APPLE_DEV_ID }}
-          APPLE_DEV_TEAM_ID: ${{ secrets.APPLE_DEV_TEAM_ID }}
-          APPLE_DEV_APP_ID: ${{ secrets.APPLE_DEV_APP_ID }}
+          scons-cache: ${{ github.workspace }}/.scons-cache/
+          cache-name: ${{ matrix.target.platform }}_${{ matrix.target.arch }}_${{ matrix.float-precision }}_${{ matrix.target-type }}
 
       # Clean up compilation files
       - name: Windows - Delete compilation files

@@ -1,4 +1,5 @@
-# Godot 4+ specific ignores
+# Godot auto generated files
+*.gen.*
 .godot/
 
 # Ignore library files but not the gdextension file
@@ -24,6 +25,9 @@ custom.py
 # Ignore generated compile_commands.json
 compile_commands.json
 
+# Ignore files generated for documentation
+/src/gen
+
 # Binaries
 *.o
 *.os
@@ -48,9 +52,9 @@ compile_commands.json
 # VSCode
 .vscode/*
 !.vscode/extensions.json
-src/gen/doc_data.gen.cpp
+.DS_Store
 
-# jetbrains
+# Jetbrains
 .idea/
 
 # cmake build folder
