@@ -22,7 +22,7 @@ func _process(delta):
 
 func print_inventory():
 	print("Inventory Items:")
-	for item in inventory.items:
+	for item in inventory.stacks:
 		if item.item_id != "":
 			print(item.item_id," x ", item.amount)
 		else:
