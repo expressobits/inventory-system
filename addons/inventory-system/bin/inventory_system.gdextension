@@ -1,6 +1,6 @@
 [configuration]
 
-entry_symbol = "example_library_init"
+entry_symbol = "inventory_system_init"
 compatibility_minimum = "4.1"
 
 [libraries]
