@@ -1,6 +1,6 @@
 @tool
 class_name CategoriesEditor
-extends InventoryTabEditor
+extends BaseInventoryEditor
 
 
 @onready var item_categories_item_list = $HSplitContainer/ItemCategoriesItemList
@@ -36,6 +36,7 @@ func remove_current_data() -> bool:
 	
 func select(category : ItemCategory):
 	item_category_editor.load_category(database, category)
+	item_categories_item_list.select(category)
 
 
 func load_item_categories():
@@ -47,6 +48,8 @@ func _on_item_category_popup_menu_id_pressed(id):
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Item Category \""+current_data.name+"\"?"
+		ITEM_DUPLICATE:
+			super.duplicate_current_data()
 
 
 func _on_item_categories_item_list_item_popup_menu_requested(at_position):
@@ -54,6 +57,9 @@ func _on_item_categories_item_list_item_popup_menu_requested(at_position):
 	var icon = get_theme_icon("Remove", "EditorIcons")
 	item_category_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	
+	icon = get_theme_icon("Duplicate", "EditorIcons")
+	item_category_popup_menu.add_icon_item(icon, "Duplicate", ITEM_DUPLICATE)
+
 	var a = item_categories_item_list.get_global_mouse_position()
 	item_category_popup_menu.position = Vector2(get_viewport().position) + a
 	item_category_popup_menu.popup()

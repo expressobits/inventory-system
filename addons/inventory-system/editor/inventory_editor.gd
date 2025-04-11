@@ -26,10 +26,10 @@ var editor_plugin : InventorySystemEditorPlugin
 
 @onready var tab_container : TabContainer = $MarginContainer/VBoxContainer/Content/TabContainer
 
-@onready var items_editor : ItemsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
-@onready var recipes_editor : RecipesEditor = %Recipes
-@onready var craft_stations_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations"
-@onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/Categories"
+@onready var item_definitions_editor : ItemDefinitionsEditor = get_node("MarginContainer/VBoxContainer/Content/TabContainer/Items")
+@onready var recipes_editor : RecipesEditor = %RecipesEditor
+@onready var craft_station_types_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/CraftStationTypesEditor"
+@onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/CategoriesEditor"
 
 
 var database : InventoryDatabase
@@ -53,14 +53,17 @@ var database_path : String
 
 
 func _ready():
-	items_editor.set_editor_plugin(editor_plugin)
+	item_definitions_editor.set_editor_plugin(editor_plugin)
 	recipes_editor.set_editor_plugin(editor_plugin)
-	craft_stations_editor.set_editor_plugin(editor_plugin)
+	craft_station_types_editor.set_editor_plugin(editor_plugin)
 	categories_editor.set_editor_plugin(editor_plugin)
-	items_editor.removed.connect(remove_item_definition)
+	item_definitions_editor.removed.connect(remove_item_definition)
+	item_definitions_editor.duplicated.connect(duplicate_item_definition)
 	recipes_editor.removed.connect(remove_recipe)
-	craft_stations_editor.removed.connect(remove_craft_station)
+	craft_station_types_editor.removed.connect(remove_craft_station_type)
+	craft_station_types_editor.duplicated.connect(duplicate_craft_station_type)
 	categories_editor.removed.connect(remove_item_category)
+	categories_editor.duplicated.connect(duplicate_item_category)
 	apply_theme()
 	load_database(null)
 	new_dialog.file_selected.connect(_on_new_dialog_file_selected)
@@ -81,9 +84,9 @@ func set_editor_plugin(editor_plugin : EditorPlugin):
 func load_database(database : InventoryDatabase):
 	var menu : Popup = database_button.get_popup()
 	if database != null:
-		items_editor.load_from_database(database)
+		item_definitions_editor.load_from_database(database)
 		recipes_editor.load_from_database(database)
-		craft_stations_editor.load_from_database(database)
+		craft_station_types_editor.load_from_database(database)
 		categories_editor.load_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
@@ -295,6 +298,21 @@ func remove_item_definition(item : ItemDefinition):
 	save_file()
 
 
+func duplicate_item_definition(item : ItemDefinition):
+	if item.id == "":
+		push_warning("Item definition with empty id cannot be duplicated.")
+		return
+	var new_item: ItemDefinition = item.duplicate()
+	while database.has_item_id(new_item.id):
+		new_item.id = new_item.id + "_duplicate"
+	while database.items.any(func(item) -> bool: return item.name == new_item.name):
+		new_item.name = new_item.name + "(2)"
+	database.items.push_back(new_item)
+	save_file()
+	load_database(database)
+	item_definitions_editor.select(new_item)
+
+
 func remove_item_category(category : ItemCategory):
 	database.remove_category(category)
 	categories_editor.load_item_categories()
@@ -302,14 +320,44 @@ func remove_item_category(category : ItemCategory):
 	save_file()
 
 
-func remove_craft_station(craft_station_type : CraftStationType):
+func duplicate_item_category(item : ItemCategory):
+	if item.id == "":
+		push_warning("Item category with empty id cannot be duplicated.")
+		return
+	var new_item: ItemCategory = item.duplicate()
+	while database.has_item_category_id(new_item.id):
+		new_item.id = new_item.id + "_duplicate"
+	while database.item_categories.any(func(item) -> bool: return item.name == new_item.name):
+		new_item.name = new_item.name + "(2)"
+	database.item_categories.push_back(new_item)
+	save_file()
+	load_database(database)
+	categories_editor.select(new_item)
+
+
+func remove_craft_station_type(craft_station_type : CraftStationType):
 	var index = database.stations_type.find(craft_station_type)
 	if index == -1:
 		return
 	database.stations_type.remove_at(index)
-	craft_stations_editor.load_craft_station_types()
-	craft_stations_editor.data_changed.emit()
+	craft_station_types_editor.load_craft_station_types()
+	craft_station_types_editor.data_changed.emit()
 	save_file()
+
+
+func duplicate_craft_station_type(item : CraftStationType):
+	if item.id == "":
+		push_warning("Craft station type with empty id cannot be duplicated.")
+		return
+	var new_item: CraftStationType = item.duplicate()
+	while database.has_craft_station_type_id(new_item.id):
+		new_item.id = new_item.id + "_duplicate"
+	while database.stations_type.any(func(item) -> bool: return item.name == new_item.name):
+		new_item.name = new_item.name + "(2)"
+	database.stations_type.push_back(new_item)
+	save_file()
+	load_database(database)
+	craft_station_types_editor.select(new_item)
 
 
 func remove_recipe(recipe : Recipe):

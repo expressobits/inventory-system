@@ -1,10 +1,10 @@
 @tool
-class_name ItemsEditor
-extends InventoryTabEditor
+class_name ItemDefinitionsEditor
+extends BaseInventoryEditor
 
-@onready var item_editor : ItemEditor = $HSplitContainer/ItemEditor
-@onready var inventory_item_list  = $HSplitContainer/InventoryItemList
-@onready var items_popup_menu : PopupMenu = $HSplitContainer/InventoryItemList/ItemsPopupMenu
+@onready var item_editor : ItemDefinitionEditor = $HSplitContainer/ItemDefinitionEditor
+@onready var inventory_item_list_editor  = $HSplitContainer/InventoryItemListEditor
+@onready var items_popup_menu : PopupMenu = $ItemsPopupMenu
 
 
 func _ready():
@@ -24,7 +24,7 @@ func on_load_database() -> void:
 
 
 func load_items() -> void:
-	inventory_item_list.load_items(database.items)
+	inventory_item_list_editor.load_items(database.items)
 
 
 func remove_current_data() -> bool:
@@ -36,16 +36,15 @@ func remove_current_data() -> bool:
 	return removed
 
 
-func select(id : String):
-	for item_in_list in database.items:
-		if item_in_list.id == id:
-			item_editor.load_item(database.get_item(id), database)
+func select(item: ItemDefinition) -> void:
+	item_editor.load_item(item, database)
+	inventory_item_list_editor.select(item)
 
 
 func _apply_theme():
 	super._apply_theme()
-	if is_instance_valid(inventory_item_list.search_icon):
-		inventory_item_list.search_icon.texture = get_theme_icon("Search", "EditorIcons")
+	if is_instance_valid(inventory_item_list_editor.search_icon):
+		inventory_item_list_editor.search_icon.texture = get_theme_icon("Search", "EditorIcons")
 
 
 func _on_theme_changed():
@@ -59,10 +58,14 @@ func _on_inventory_item_list_item_selected(item, index):
 
 func _on_inventory_item_list_item_popup_menu_requested(at_position):
 	items_popup_menu.clear()
-	var icon = get_theme_icon("Remove", "EditorIcons")
+
+	var icon: Texture2D = get_theme_icon("Remove", "EditorIcons")
 	items_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 	
-	var a = inventory_item_list.get_global_mouse_position()
+	icon = get_theme_icon("Duplicate", "EditorIcons")
+	items_popup_menu.add_icon_item(icon, "Duplicate", ITEM_DUPLICATE)
+
+	var a = inventory_item_list_editor.get_global_mouse_position()
 	items_popup_menu.position = Vector2(get_viewport().position) + a
 	items_popup_menu.popup()
 
@@ -73,11 +76,13 @@ func _on_items_popup_menu_id_pressed(id: int) -> void:
 			if current_data == null:
 				return
 			remove_confirmation_dialog.popup_centered()
-			remove_confirmation_dialog.dialog_text = "Remove Item \""+current_data.name+"\"?"
+			remove_confirmation_dialog.dialog_text = "Remove Item Defintion \""+current_data.name+"\"?"
+		ITEM_DUPLICATE:
+			super.duplicate_current_data()
 
 
 func _on_item_editor_changed(id):
-	var index = inventory_item_list.get_index_of_item_id(id)
+	var index = inventory_item_list_editor.get_index_of_item_id(id)
 	if index > -1:
-		inventory_item_list.update_item(index)
+		inventory_item_list_editor.update_item(index)
 		data_changed.emit()

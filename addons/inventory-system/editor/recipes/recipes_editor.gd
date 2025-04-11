@@ -1,6 +1,6 @@
 @tool
 class_name RecipesEditor
-extends InventoryTabEditor
+extends BaseInventoryEditor
 
 @onready var search_icon = $HSplitContainer/RecipesListEditor/VBoxContainer/Control/SearchIcon
 @onready var recipe_editor : RecipeEditor = %RecipeEditor

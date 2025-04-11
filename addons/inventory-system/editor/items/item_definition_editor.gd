@@ -1,5 +1,5 @@
 @tool
-class_name ItemEditor
+class_name ItemDefinitionEditor
 extends Control
 
 signal changed(id : String)
