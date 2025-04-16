@@ -76,7 +76,7 @@ func _on_items_popup_menu_id_pressed(id: int) -> void:
 			if current_data == null:
 				return
 			remove_confirmation_dialog.popup_centered()
-			remove_confirmation_dialog.dialog_text = "Remove Item Defintion \""+current_data.name+"\"?"
+			remove_confirmation_dialog.dialog_text = "Remove Item Definition \""+current_data.name+"\"?"
 		ITEM_DUPLICATE:
 			super.duplicate_current_data()
 
