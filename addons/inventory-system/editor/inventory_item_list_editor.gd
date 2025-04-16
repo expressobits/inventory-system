@@ -1,3 +1,17 @@
+## Inventory Item List Editor
+##
+## Item means an item in the GUI element ItemList. So, this class is responsible for the types:
+##	* ItemDefinition
+##	* CraftStationType
+##	* ItemCategory.
+##
+## It is used to create a list of items in the editor on the left side.
+## It provides a search bar to filter the items by name on top of the list.
+##
+## It maintains a dictionary of items and their corresponding IDs.
+## It provides signals to notify when an item is selected or when the popup menu is requested.
+## It is used in the ItemDefinitionsEditor class to display the list of items and handle item selection.
+
 @tool
 class_name InventoryItemListEditor
 extends VBoxContainer
@@ -5,13 +19,15 @@ extends VBoxContainer
 signal item_selected(item, index : int)
 signal item_popup_menu_requested(at_position: Vector2)
 
-var list : ItemList
-var search_icon : TextureRect
-var search_line_edit : LineEdit
-var control: Control
-
 var item_map : Dictionary = {}
 var item_list_handler : Array
+
+@onready var control: Control = $SearchItems
+@onready var search_line_edit : LineEdit = $SearchItems/LineEdit
+@onready var search_icon : TextureRect = $SearchItems/TextureRect
+@onready var item_list : ItemList = $ItemList
+
+
 
 var items: Array = []:
 	set(next_files):
@@ -21,7 +37,8 @@ var items: Array = []:
 		apply_filter()
 	get:
 		return items
-		
+
+
 var filter: String:
 	set(next_filter):
 		filter = next_filter
@@ -34,13 +51,10 @@ func _ready() -> void:
 	offset_right = 256.0
 	offset_bottom = 36.0
 	
-	control = Control.new()
 	control.custom_minimum_size = Vector2(0, 32)
 	control.layout_mode = 2
 	control.size_flags_vertical = 4
-	add_child(control)
 	
-	search_line_edit = LineEdit.new()
 	search_line_edit.custom_minimum_size = Vector2(0, 32)
 	search_line_edit.layout_mode = 1
 	search_line_edit.anchors_preset = 15
@@ -52,9 +66,7 @@ func _ready() -> void:
 	search_line_edit.placeholder_text = "Search Items"
 	search_line_edit.draw_control_chars = true
 	search_line_edit.text_changed.connect(_on_search_line_edit_text_changed)
-	control.add_child(search_line_edit)
 	
-	search_icon = TextureRect.new()
 	search_icon.custom_minimum_size = Vector2(16, 16)
 	search_icon.layout_mode = 1
 	search_icon.anchors_preset = 6
@@ -69,15 +81,13 @@ func _ready() -> void:
 	search_icon.grow_horizontal = 0
 	search_icon.grow_vertical = 2
 	search_icon.expand_mode = 1
-	control.add_child(search_icon)
 	
-	list = ItemList.new()
-	list.unique_name_in_owner = true
-	list.layout_mode = 2
-	list.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	list.fixed_icon_size = Vector2i(16, 16)
-	list.item_clicked.connect(_on_item_list_item_clicked)
-	add_child(list)
+	assert(item_list != null, "ItemList not found")
+	item_list.unique_name_in_owner = true
+	item_list.layout_mode = 2
+	item_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	item_list.fixed_icon_size = Vector2i(16, 16)
+	item_list.item_clicked.connect(_on_item_list_item_clicked)
 
 
 func load_items(items : Array) -> void:
@@ -105,9 +115,10 @@ func update_item_map() -> void:
 
 
 func update_item_list(items : Array):
-	list.clear()
+	assert(item_list != null, "ItemList not found")
+	item_list.clear()
 	for i in items.size():
-		list.add_item("")
+		item_list.add_item("")
 		update_item(i)
 
 
@@ -121,8 +132,9 @@ func update_item(index : int):
 		else:
 			name_to_show = item.name
 		icon = item.icon
-	list.set_item_text(index, name_to_show)
-	list.set_item_icon(index, icon)
+	assert(item_list != null, "ItemList not found")
+	item_list.set_item_text(index, name_to_show)
+	item_list.set_item_icon(index, icon)
 
 
 func get_index_of_item_id(id : String) -> int:
@@ -131,6 +143,15 @@ func get_index_of_item_id(id : String) -> int:
 		if item.id == id:
 			return index
 	return -1
+
+
+func select(item) -> void:
+	var index = get_index_of_item_id(item.id)
+	assert(index > -1, "Item not found in list")
+	if index > -1:
+		assert(item_list_handler[index] == item)
+		item_list.select(index)
+
 
 func apply_filter() -> void:
 	item_list_handler.clear()
@@ -151,20 +172,20 @@ func apply_filter() -> void:
 
 
 func _on_item_list_item_activated(index):
-	var item_text = list.get_item_text(index)
+	var item_text = item_list.get_item_text(index)
 	var item_database = item_map.find_key(int(item_text))
 
 
 func _on_item_list_item_clicked(index, at_position, mouse_button_index):
 	if mouse_button_index != 1 and mouse_button_index != 2:
 		return
-	if not list.is_item_selectable(index):
+	if not item_list.is_item_selectable(index):
 		return
 	item_selected.emit(item_list_handler[index], index)
 	
 	if mouse_button_index == 2:
 		item_popup_menu_requested.emit(at_position)
-		list.select(index)
+
 
 func _on_search_line_edit_text_changed(new_text):
 	filter = new_text
