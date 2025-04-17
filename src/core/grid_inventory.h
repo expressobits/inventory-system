@@ -65,10 +65,12 @@ public:
 	bool swap_stacks(const Vector2i position, GridInventory *other_inventory, const Vector2i other_position);
 	bool rect_free(const Rect2i &rect, const Ref<ItemStack> &exception = nullptr) const;
 	Vector2i find_free_place(const Vector2i stack_size, const String item_id, const int amount, const Dictionary properties, const bool is_rotated, const Ref<ItemStack> &exception = nullptr) const;
+	bool has_free_place(const Vector2i stack_size, const Ref<ItemStack> &exception = nullptr) const;
 	bool sort();
 	virtual Dictionary serialize() const override;
 	virtual void deserialize(const Dictionary data) override;
 	virtual bool can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const override;
+	virtual bool is_full() const;
 	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false) const;
 	virtual void on_insert_stack(const int stack_index) override;
 	void on_insert_stack_on_position(const int stack_index, const Vector2i position, const bool is_rotated = false);

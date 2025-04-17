@@ -54,6 +54,7 @@ void GridInventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("swap_stacks", "position", "other_inventory", "other_position"), &GridInventory::swap_stacks);
 	ClassDB::bind_method(D_METHOD("rect_free", "rect", "exception"), &GridInventory::rect_free, DEFVAL(nullptr));
 	// ClassDB::bind_method(D_METHOD("find_free_place", "stack_size", "exception"), &GridInventory::find_free_place, DEFVAL(nullptr));
+	ClassDB::bind_method(D_METHOD("has_free_place", "stack_size", "exception"), &GridInventory::has_free_place, DEFVAL(nullptr));
 	ClassDB::bind_method(D_METHOD("sort"), &GridInventory::sort);
 
 	ADD_SIGNAL(MethodInfo("size_changed"));
@@ -407,6 +408,18 @@ Vector2i GridInventory::find_free_place(const Vector2i item_size, const String i
 	return result;
 }
 
+bool GridInventory::has_free_place(const Vector2i stack_size, const Ref<ItemStack> &exception) const {
+	for (size_t y = 0; y < (size.y - (stack_size.y - 1)); y++) {
+		for (size_t x = 0; x < (size.x - (stack_size.x - 1)); x++) {
+			Rect2i rect = Rect2i(Vector2i(x, y), stack_size);
+			if (rect_free(rect, exception)) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 bool GridInventory::sort() {
 	// TypedArray<ItemStack> stack_array;
 	// for (size_t i = 0; i < stacks.size(); i++) {
@@ -462,7 +475,12 @@ bool GridInventory::can_add_new_stack(const String &item_id, const int &amount, 
 	return (has_space_for(item_id, amount, properties, false) || has_space_for(item_id, amount, properties, true)) && Inventory::can_add_new_stack(item_id, amount, properties);
 }
 
+bool GridInventory::is_full() const {
+	return Inventory::is_full() && !has_free_place(Vector2i(1, 1));
+}
+
 bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties, const bool is_rotated) const {
+	
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
 
