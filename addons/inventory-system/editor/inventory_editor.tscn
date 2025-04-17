@@ -164,6 +164,7 @@ categories_icon = ExtResource("10_86ysm")
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 0
+metadata/_tab_name = "Item Definitions"
 
 [node name="RecipesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
 unique_name_in_owner = true
@@ -171,18 +172,21 @@ visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 1
+metadata/_tab_name = "Recipes"
 
 [node name="CraftStationTypesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 2
+metadata/_tab_name = "Craft Station Types"
 
 [node name="CategoriesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("12_kvj1p")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 3
+metadata/_tab_name = "Item Categories"
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
