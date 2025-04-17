@@ -22,7 +22,8 @@ func init_suite():
 		"test_autosplitmerge",
 		"test_wrong_stack_type",
 		"test_clear",
-		"test_serialize"
+		"test_serialize",
+		"test_full"
 	]
 
 
@@ -160,6 +161,23 @@ func test_clear() -> void:
 	assert(inventory_3x3.get_quad_tree().is_empty())
 	assert(inventory_3x3.stack_positions.size() == 0)
 
+
+func test_full() -> void:
+	inventory_3x3.clear()
+	assert(inventory_3x3.has_free_place(Vector2i(1,1)))
+	assert(!inventory_3x3.is_full())
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(!inventory_3x3.is_full())
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(!inventory_3x3.is_full())
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.add(wood, 16) == 0)
+	assert(inventory_3x3.is_full())
 
 func test_serialize() -> void:
 	assert(inventory_3x3.add_at_position(Vector2i(0, 1), wood, 1) == 0)
