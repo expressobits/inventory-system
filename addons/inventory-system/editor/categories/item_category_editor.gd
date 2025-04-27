@@ -23,7 +23,6 @@ func _ready():
 
 func set_editor_plugin(editor_plugin : EditorPlugin):
 	self.editor_plugin = editor_plugin
-	icon_selector.setup(editor_plugin)
 
 
 func load_category(database : InventoryDatabase, category : ItemCategory):
