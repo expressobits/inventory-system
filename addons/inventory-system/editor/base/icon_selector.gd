@@ -8,7 +8,7 @@ var texture_picker: EditorResourcePicker
 
 func _ready() -> void:
 	var label : Label = Label.new()
-	label.custom_minimum_size = Vector2(128, 0)
+	label.custom_minimum_size = Vector2(64, 0)
 	label.text = "Icon"
 	label.layout_mode = 2
 	add_child(label)

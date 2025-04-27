@@ -8,12 +8,12 @@ var item : ItemDefinition
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 
-@onready var item_id_editor : ItemIDEditor = $ScrollContainer/MarginContainer/VBoxContainer/ItemIDEditor
+@onready var item_id_editor : ItemIDEditor = %ItemIDEditor
 @onready var item_name_text_edit : LineEdit = %ItemNameTextEdit
 @onready var item_max_stack_spin_box : SpinBox = %MaxStackSpinBox
 @onready var icon_selector : IconSelector = %IconSelector
 @onready var custom_properties : CustomPropertiesItemEditor = $ScrollContainer/MarginContainer/VBoxContainer/CustomProperties
-@onready var weight_spin_box = $ScrollContainer/MarginContainer/VBoxContainer/Weight/WeightSpinBox
+@onready var weight_spin_box = %WeightSpinBox
 @onready var categories_in_item : CategoriesInItem = $ScrollContainer/MarginContainer/VBoxContainer/CategoriesInItem
 @onready var can_stack_check_box : CheckBox = %CanStackCheckBox
 @onready var max_stack = %MaxStack
