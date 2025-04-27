@@ -9,11 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://br4lqgdunlyet" path="res://addons/inventory-system/icons/recipe.svg" id="4_20x4i"]
 [ext_resource type="Texture2D" uid="uid://ilsakiynp5o7" path="res://addons/inventory-system/icons/new_craft_station_type.svg" id="4_jbtk0"]
 [ext_resource type="Texture2D" uid="uid://6b7n3apcb8hy" path="res://addons/inventory-system/icons/new_item_category.svg" id="5_4w1hd"]
-[ext_resource type="PackedScene" uid="uid://kuckh8lq8mwr" path="res://addons/inventory-system/editor/items/items.tscn" id="5_fwymy"]
-[ext_resource type="PackedScene" uid="uid://c20tt03af3qw6" path="res://addons/inventory-system/editor/recipes/recipes.tscn" id="6_qmu8k"]
+[ext_resource type="PackedScene" uid="uid://kuckh8lq8mwr" path="res://addons/inventory-system/editor/items/item_definitions_editor.tscn" id="5_fwymy"]
+[ext_resource type="PackedScene" uid="uid://c20tt03af3qw6" path="res://addons/inventory-system/editor/recipes/recipes_editor.tscn" id="6_qmu8k"]
 [ext_resource type="Texture2D" uid="uid://3qxo8va657qh" path="res://addons/inventory-system/icons/craft_station_type.svg" id="8_4vmnl"]
 [ext_resource type="Texture2D" uid="uid://bgx18ev7eamk5" path="res://addons/inventory-system/icons/item_category.svg" id="10_86ysm"]
-[ext_resource type="PackedScene" uid="uid://clj2qii0ta8lx" path="res://addons/inventory-system/editor/craft_stations/craft_stations.tscn" id="11_rrabm"]
+[ext_resource type="PackedScene" uid="uid://clj2qii0ta8lx" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_editor.tscn" id="11_rrabm"]
 [ext_resource type="PackedScene" uid="uid://cfevgv38d1bll" path="res://addons/inventory-system/editor/categories/categories_editor.tscn" id="12_kvj1p"]
 
 [node name="InventoryEditor" type="Control"]
@@ -132,6 +132,7 @@ custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "dsadasdsa"
+popup/item_0/id = 0
 popup/item_1/text = "dadsadsa"
 popup/item_1/id = 1
 
@@ -163,25 +164,29 @@ categories_icon = ExtResource("10_86ysm")
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 0
+metadata/_tab_name = "Item Definitions"
 
-[node name="Recipes" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
+[node name="RecipesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("6_qmu8k")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 1
+metadata/_tab_name = "Recipes"
 
-[node name="Craft Stations" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
+[node name="CraftStationTypesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("11_rrabm")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 2
+metadata/_tab_name = "Craft Station Types"
 
-[node name="Categories" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("12_kvj1p")]
+[node name="CategoriesEditor" parent="MarginContainer/VBoxContainer/Content/TabContainer" instance=ExtResource("12_kvj1p")]
 visible = false
 layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 3
+metadata/_tab_name = "Item Categories"
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true
@@ -217,4 +222,4 @@ dialog_hide_on_ok = true
 filters = PackedStringArray("*.inv ; Inventory")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
-[connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/Craft Stations" to="MarginContainer/VBoxContainer/Content/TabContainer/Recipes" method="_on_data_changed"]
+[connection signal="data_changed" from="MarginContainer/VBoxContainer/Content/TabContainer/CraftStationTypesEditor" to="MarginContainer/VBoxContainer/Content/TabContainer/RecipesEditor" method="_on_data_changed"]

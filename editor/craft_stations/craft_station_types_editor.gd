@@ -1,6 +1,6 @@
 @tool
 class_name CraftStationTypesEditor
-extends InventoryTabEditor
+extends BaseInventoryEditor
 
 @onready var craft_station_type_editor : CraftStationTypeEditor = $HSplitContainer/CraftStationTypeEditor
 @onready var craft_station_types_list : InventoryItemListEditor = $HSplitContainer/CraftStationTypesItemList
@@ -27,14 +27,15 @@ func on_load_database() -> void:
 
 func select(station : CraftStationType):
 	craft_station_type_editor.load_station(database, station)
+	craft_station_types_list.select(station)
 
 
 func load_craft_station_types():
 	craft_station_types_list.load_items(database.stations_type)
 
 
-func _on_craft_station_type_editor_changed(station):
-	var index = craft_station_types_list.get_index_of(station)
+func _on_craft_station_type_editor_changed(station: CraftStationType):
+	var index = craft_station_types_list.get_index_of_item_id(station.id)
 	if index > -1:
 		craft_station_types_list.update_item(index)
 
@@ -44,6 +45,8 @@ func _on_craft_station_types_popup_menu_id_pressed(id):
 		ITEM_REMOVE:
 			remove_confirmation_dialog.popup_centered()
 			remove_confirmation_dialog.dialog_text = "Remove Craft Station Type \""+current_data.name+"\"?"
+		ITEM_DUPLICATE:
+			super.duplicate_current_data()
 
 
 func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
@@ -51,6 +54,8 @@ func _on_craft_station_types_item_list_item_popup_menu_requested(at_position):
 	var icon = get_theme_icon("Remove", "EditorIcons")
 	craft_station_types_popup_menu.add_icon_item(icon, "Remove", ITEM_REMOVE)
 
+	icon = get_theme_icon("Duplicate", "EditorIcons")
+	craft_station_types_popup_menu.add_icon_item(icon, "Duplicate", ITEM_DUPLICATE)
 
 	var a = craft_station_types_list.get_global_mouse_position()
 	craft_station_types_popup_menu.position = Vector2(get_viewport().position) + a

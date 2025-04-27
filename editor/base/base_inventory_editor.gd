@@ -1,15 +1,17 @@
 @tool
-class_name InventoryTabEditor
+class_name BaseInventoryEditor
 extends Control
 
 signal data_changed
 signal removed(data : Resource)
+signal duplicated(data : Resource)
 
 var database : InventoryDatabase
 var editor_plugin : EditorPlugin
 var current_data : Resource
 
 const ITEM_REMOVE = 105
+const ITEM_DUPLICATE = 106
 
 @onready var remove_confirmation_dialog = %RemoveConfirmationDialog
 
@@ -46,6 +48,11 @@ func remove_current_data() -> bool:
 		removed.emit(current_data)
 		return true
 	return false
+
+
+func duplicate_current_data():
+	if current_data != null:
+		duplicated.emit(current_data)
 
 
 func _on_remove_confirmation_dialog_confirmed():
