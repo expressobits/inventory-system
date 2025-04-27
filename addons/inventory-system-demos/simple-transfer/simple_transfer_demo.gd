@@ -39,7 +39,7 @@ func _on_button_move_to_right_pressed() -> void:
 	if selected_items.is_empty():
 		return
 
-	for selected_item_index in selected_items.size():
+	for selected_item_index in selected_items:
 		inventory_left.transfer(selected_item_index, inventory_right)
 
 
