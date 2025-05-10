@@ -1,15 +1,19 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-2.1.9-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](todo-doc)
+![Version](https://img.shields.io/badge/version-2.2.0-blue.svg?cacheSeconds=2592000)
+[![Documentation](https://img.shields.io/badge/documentation-no-red.svg)](https://github.com/ExpressoBits/inventory-system/wiki)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
+
+New here? Read our new [Documentation](https://expressobits.com/inventory-system-docs/)
 
 ## Branchs Map
 
 🪹[main](https://github.com/expressobits/inventory-system/tree/main): Contains C++ Plugin
 
 🪹[addon](https://github.com/expressobits/inventory-system/tree/addon): Compiled version of the libs (with demos) that are in the godot asset lib store.
+
+🪹[csharp](https://github.com/expressobits/inventory-system/tree/csharp): Contains Conversion version to csharp by [Glitshy](https://github.com/Glitshy).
 
 
 ## Features
@@ -27,8 +31,6 @@
 ✔️ Demonstrations of dropped items and item pickup.
 
 ✔️ Multiplayer compatible (Including example).
-
-  - [[WIKI] How to test multiplayer demo](https://github.com/expressobits/inventory-system/wiki/How-to-test-multiplayer-demo)
  
 ✔️ Hotbar.
 
@@ -37,8 +39,6 @@
 ✔️ Item Editor.
 
 ✔️ Categories. (https://github.com/expressobits/inventory-system/issues/5)
-
-  - [[WIKI] Item Categories](https://github.com/expressobits/inventory-system/wiki/Item-Categories)
 
 ✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
 
@@ -57,13 +57,29 @@
 📅 Inventory UI dynamic #83
 
 ## Install
-See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
+See in [Docs](https://expressobits.com/inventory-system-docs/getting_started/installation/)
 
 ## Struture
 ### [Gloot](https://github.com/peter-kish/gloot)
 Grid Inventory and Grid UIs based on plugin [Gloot](https://github.com/peter-kish/gloot)
 Special thanks to [Peter Kiš](https://github.com/peter-kish) and its contributors
 The grid system and its UI were based on this repository.
+
+## CMake support
+
+### git submodule setup in main repository
+`git submodule init`  
+`git submodule update`
+
+### cmake configure in main repository
+`cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -B cmake-build-debug .`
+
+Define variables GODOTCPP_PRECISION=single|double and/or BITS=32|64 for further build variants if needed.
+
+### cmake build/install in specified build folder cmake-build-debug
+`cmake --build . --target install --config Debug`
+
+This installs the built library in the bin folder of the repository.
 
 ## Authors
 
