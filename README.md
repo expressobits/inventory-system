@@ -5,6 +5,8 @@
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
+[Documentation](https://expressobits.com/inventory-system-docs/)
+
 ## Branchs Map
 
 🪹[main](https://github.com/expressobits/inventory-system/tree/main): Contains C++ Plugin
