@@ -5,7 +5,7 @@
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
-[Documentation](https://expressobits.com/inventory-system-docs/)
+New here? Read our new [Documentation](https://expressobits.com/inventory-system-docs/)
 
 ## Branchs Map
 
@@ -31,8 +31,6 @@
 ✔️ Demonstrations of dropped items and item pickup.
 
 ✔️ Multiplayer compatible (Including example).
-
-  - [[WIKI] How to test multiplayer demo](https://github.com/expressobits/inventory-system/wiki/How-to-test-multiplayer-demo)
  
 ✔️ Hotbar.
 
@@ -41,8 +39,6 @@
 ✔️ Item Editor.
 
 ✔️ Categories. (https://github.com/expressobits/inventory-system/issues/5)
-
-  - [[WIKI] Item Categories](https://github.com/expressobits/inventory-system/wiki/Item-Categories)
 
 ✔️ Specialized slot category inventory. (https://github.com/expressobits/inventory-system/issues/40)
 
@@ -61,7 +57,7 @@
 📅 Inventory UI dynamic #83
 
 ## Install
-See in [Wiki](https://github.com/ExpressoBits/inventory-system/wiki)
+See in [Docs](https://expressobits.com/inventory-system-docs/getting_started/installation/)
 
 ## Struture
 ### [Gloot](https://github.com/peter-kish/gloot)
