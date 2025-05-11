@@ -15,3 +15,10 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: API
+
+   api/index

@@ -8,7 +8,7 @@ echo --- Running Godot to dump XML files
 cd $REPO/inventory-system
 godot --doctool ../docs --gdextension-docs
 
-cd $REPO/doc
+cd $REPO/docs
 
 echo --- Running make_rst.py to produce sphinx output
 $MAKERST --verbose --filter inventory-system --output api path doc_classes/ 2>&1 | egrep -v 'Unresolved (type|enum)'
