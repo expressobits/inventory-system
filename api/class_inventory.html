@@ -1,0 +1,486 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="InventoryConstraint" href="class_inventoryconstraint.html" />
+    <link rel="prev" title="Hotbar" href="class_hotbar.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventoryconstraint.html">GridInventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_hotbar.html">Hotbar</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Inventory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tutorials">Tutorials</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventorydatabase.html">InventoryDatabase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemstack.html">ItemStack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">All classes</a></li>
+      <li class="breadcrumb-item active">Inventory</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inventory">
+<span id="class-inventory"></span><h1>Inventory<a class="headerlink" href="#inventory" title="Permalink to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_nodeinventories.html#class-nodeinventories"><span class="std std-ref">NodeInventories</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p><strong>Inherited By:</strong> <a class="reference internal" href="class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a></p>
+<p>This node is a stack container.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>Each stack contains data about amount, <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) and custom properties.</p>
+<p>Stacks are stored in an Array, which can be accessed with inventory.stacks, but it is best to avoid changing data directly and instead use methods within this node, such as <a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">add()</span></a>, <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove()</span></a>, <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content()</span></a>, …</p>
+<p>The methods correctly call signals when necessary.</p>
+<p>Some methods have their general version and a direct version of some <code class="docutils literal notranslate"><span class="pre">Stack</span></code> index, such as <a class="reference internal" href="#class-inventory-method-contains"><span class="std std-ref">contains()</span></a> and <a class="reference internal" href="#class-inventory-method-contains-at"><span class="std std-ref">contains_at()</span></a>.</p>
+</section>
+<section class="classref-introduction-group" id="tutorials">
+<h2>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/expressobits/inventory-system/wiki/Inventory-Node#Add-items-to-inventory">Add items to inventory</a></p></li>
+</ul>
+</section>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>]</p></td>
+<td><p><a class="reference internal" href="#class-inventory-property-constraints"><span class="std std-ref">constraints</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-property-inventory-name"><span class="std std-ref">inventory_name</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;Inventory&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>]</p></td>
+<td><p><a class="reference internal" href="#class-inventory-property-stacks"><span class="std std-ref">stacks</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">add</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}, drop_excess: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = false)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-add-at-index"><span class="std std-ref">add_at_index</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {})</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-add-on-new-stack"><span class="std std-ref">add_on_new_stack</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}, can_emit_signal: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = true)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-add-to-stack"><span class="std std-ref">add_to_stack</span></a>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {})</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-amount-of-item"><span class="std std-ref">amount_of_item</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-can-add-new-stack"><span class="std std-ref">can_add_new_stack</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-clear"><span class="std std-ref">clear</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-contains"><span class="std std-ref">contains</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-contains-at"><span class="std std-ref">contains_at</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-contains-category"><span class="std std-ref">contains_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-contains-category-in-stack"><span class="std std-ref">contains_category_in_stack</span></a>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-deserialize"><span class="std std-ref">deserialize</span></a>(data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-drop"><span class="std std-ref">drop</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {})</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-drop-all-stacks"><span class="std std-ref">drop_all_stacks</span></a>()</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-drop-from-inventory"><span class="std std-ref">drop_from_inventory</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {})</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-get-amount"><span class="std std-ref">get_amount</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-get-amount-of-category"><span class="std std-ref">get_amount_of_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-get-stack-index-with-an-item-of-category"><span class="std std-ref">get_stack_index_with_an_item_of_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-has-space-for"><span class="std std-ref">has_space_for</span></a>(item: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-has-stack"><span class="std std-ref">has_stack</span></a>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">is_accept_any_categories</span></a>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, slot: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-is-empty"><span class="std std-ref">is_empty</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-is-full"><span class="std std-ref">is_full</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove</span></a>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">remove_at</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-remove-from-stack"><span class="std std-ref">remove_from_stack</span></a>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-remove-stack"><span class="std std-ref">remove_stack</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-serialize"><span class="std std-ref">serialize</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {})</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-split"><span class="std std-ref">split</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-transfer"><span class="std std-ref">transfer</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, destination: <a class="reference internal" href="#class-inventory"><span class="std std-ref">Inventory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-transfer-at"><span class="std std-ref">transfer_at</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, destination: <a class="reference internal" href="#class-inventory"><span class="std std-ref">Inventory</span></a>, destination_stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack</span></a>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h2>
+<p class="classref-signal" id="class-inventory-signal-contents-changed"><strong>contents_changed</strong>() <a class="reference internal" href="#class-inventory-signal-contents-changed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-emptied"><strong>emptied</strong>() <a class="reference internal" href="#class-inventory-signal-emptied"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when inventory is empty. This signal is emitted after the <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove()</span></a>, <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">remove_at()</span></a> or <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content()</span></a> function and it only happens when there are no stacks.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-filled"><strong>filled</strong>() <a class="reference internal" href="#class-inventory-signal-filled"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when inventory is filled. This signal is emitted after the <a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">add()</span></a>, <span class="xref std std-ref">add_at()</span> or <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content()</span></a> function and it only happens when all stacks are filled.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-item-added"><strong>item_added</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-item-added"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a <code class="docutils literal notranslate"><span class="pre">Item</span></code> was added.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-item-removed"><strong>item_removed</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-item-removed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a <code class="docutils literal notranslate"><span class="pre">Item</span></code> was removed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-request-drop-obj"><strong>request_drop_obj</strong>(drop_item_packed_scene_path: <code class="docutils literal notranslate"><span class="pre">String</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <a class="reference internal" href="#class-inventory-signal-request-drop-obj"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when the <a class="reference internal" href="#class-inventory-method-drop"><span class="std std-ref">drop()</span></a> method is called (Usually called within <a class="reference internal" href="#class-inventory-method-drop-from-inventory"><span class="std std-ref">drop_from_inventory()</span></a> or <a class="reference internal" href="#class-inventory-method-drop-all-stacks"><span class="std std-ref">drop_all_stacks()</span></a>).</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-stack-added"><strong>stack_added</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-stack-added"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-stack-removed"><strong>stack_removed</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-stack-removed"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-inventory-signal-updated-stack"><strong>updated_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-updated-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-property" id="class-inventory-property-constraints"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>] <strong>constraints</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-inventory-property-constraints"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_constraints</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>] <strong>get_constraints</strong>()</p></li>
+</ul>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-inventory-property-inventory-name"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>inventory_name</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;Inventory&quot;</span></code> <a class="reference internal" href="#class-inventory-property-inventory-name"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_inventory_name</strong>(value: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>get_inventory_name</strong>()</p></li>
+</ul>
+<p>The name of the inventory, to be displayed in UI.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-inventory-property-stacks"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>] <strong>stacks</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-inventory-property-stacks"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_stacks</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>] <strong>get_stacks</strong>()</p></li>
+</ul>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-method" id="class-inventory-method-add"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>add</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}, drop_excess: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = false) <a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">🔗</span></a></p>
+<p>Adds an amount of <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a> to the inventory and returns the amount that cannot be added.</p>
+<p>There are cases where the inventory may be full or does not accept this item by its category, so the return of this call corresponds to the quantity that was not added (If it returns 0 it means that all items were added correctly)</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-add-at-index"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>add_at_index</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-add-at-index"><span class="std std-ref">🔗</span></a></p>
+<p>Adds an amount of <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with string id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) to a specific inventory stack index and returns the amount that cannot be added.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-add-on-new-stack"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>add_on_new_stack</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}, can_emit_signal: <code class="docutils literal notranslate"><span class="pre">bool</span></code> = true) <a class="reference internal" href="#class-inventory-method-add-on-new-stack"><span class="std std-ref">🔗</span></a></p>
+<p>Add <code class="docutils literal notranslate"><span class="pre">item_id</span></code> to a new stack, ignoring the possibility of adding that item to an existing stack.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-add-to-stack"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>add_to_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-add-to-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-amount-of-item"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>amount_of_item</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-amount-of-item"><span class="std std-ref">🔗</span></a></p>
+<p>Returns amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-can-add-new-stack"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>can_add_new_stack</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-can-add-new-stack"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if it is possible to add a new stack to the inventory, note that this method consults the configured constraints.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-clear"><abbr title="No return value.">void</abbr> <strong>clear</strong>() <a class="reference internal" href="#class-inventory-method-clear"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-contains"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-contains-at"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_at</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-at"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if the slot index contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-contains-category"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-category"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if contains the amount of <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) with the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-contains-category-in-stack"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_category_in_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-category-in-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-deserialize"><abbr title="No return value.">void</abbr> <strong>deserialize</strong>(data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <a class="reference internal" href="#class-inventory-method-deserialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-drop"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>drop</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-drop"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-drop-all-stacks"><abbr title="No return value.">void</abbr> <strong>drop_all_stacks</strong>() <a class="reference internal" href="#class-inventory-method-drop-all-stacks"><span class="std std-ref">🔗</span></a></p>
+<p>Drop all stacks on inventory, <code class="docutils literal notranslate"><span class="pre">request_drop_obj</span></code> signal is emitted for each stack.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-drop-from-inventory"><abbr title="No return value.">void</abbr> <strong>drop_from_inventory</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-drop-from-inventory"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-get-amount"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_amount</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-get-amount"><span class="std std-ref">🔗</span></a></p>
+<p>Returns amount of items.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-get-amount-of-category"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_amount_of_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-get-amount-of-category"><span class="std std-ref">🔗</span></a></p>
+<p>Returns amount of the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-get-stack-index-with-an-item-of-category"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_stack_index_with_an_item_of_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-get-stack-index-with-an-item-of-category"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-has-space-for"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_space_for</strong>(item: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-has-space-for"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-has-stack"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-has-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-is-accept-any-categories"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_accept_any_categories</strong>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, slot: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-is-empty"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_empty</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-empty"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if inventory is empty.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-is-full"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_full</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-full"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if inventory is full.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-remove"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>remove</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">🔗</span></a></p>
+<p>Removes a amount of the <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) from inventory and returns the amount that was not removed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-remove-at"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>remove_at</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">🔗</span></a></p>
+<p>Removes an item_id amount to the specified inventory <a class="reference internal" href="class_slot.html#class-slot"><span class="std std-ref">Slot</span></a> index and returns the remaining value that was not removed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-remove-from-stack"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>remove_from_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-remove-from-stack"><span class="std std-ref">🔗</span></a></p>
+<p>Remove slot with <code class="docutils literal notranslate"><span class="pre">stack</span></code> parameter, set <code class="docutils literal notranslate"><span class="pre">emit_signal</span></code> to false to disable events called by <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-remove-stack"><abbr title="No return value.">void</abbr> <strong>remove_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-method-remove-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-serialize"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>serialize</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-serialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-set-stack-content"><abbr title="No return value.">void</abbr> <strong>set_stack_content</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-split"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>split</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-split"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-transfer"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>transfer</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, destination: <a class="reference internal" href="#class-inventory"><span class="std std-ref">Inventory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-transfer"><span class="std std-ref">🔗</span></a></p>
+<p>Transfer the contents of the stack_index <code class="docutils literal notranslate"><span class="pre">stack_index</span></code> of this inventory to another inventory (<code class="docutils literal notranslate"><span class="pre">destination</span></code>).</p>
+<p>Note: If amount is -1 (default value), the entire contents of the stack are sent to another inventory.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-transfer-at"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>transfer_at</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, destination: <a class="reference internal" href="#class-inventory"><span class="std std-ref">Inventory</span></a>, destination_stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-transfer-at"><span class="std std-ref">🔗</span></a></p>
+<p>Transfer the contents of the stack_index <code class="docutils literal notranslate"><span class="pre">stack_index</span></code> of this inventory to another stack_index (<code class="docutils literal notranslate"><span class="pre">destination_stack_index</span></code>) of destination <strong>Inventory</strong>.</p>
+<p>Note: If amount is -1 (default value), the entire contents of the stack are sent to another inventory.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventory-method-update-stack"><abbr title="No return value.">void</abbr> <strong>update_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_hotbar.html" class="btn btn-neutral float-left" title="Hotbar" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_inventoryconstraint.html" class="btn btn-neutral float-right" title="InventoryConstraint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Rafael Correa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

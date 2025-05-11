@@ -1,0 +1,241 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ItemStack &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NodeInventories" href="class_nodeinventories.html" />
+    <link rel="prev" title="ItemDefinition" href="class_itemdefinition.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventoryconstraint.html">GridInventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_hotbar.html">Hotbar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventorydatabase.html">InventoryDatabase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ItemStack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">All classes</a></li>
+      <li class="breadcrumb-item active">ItemStack</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="itemstack">
+<span id="class-itemstack"></span><h1>ItemStack<a class="headerlink" href="#itemstack" title="Permalink to this heading"></a></h1>
+<p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">Resource</span></code></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this class. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-property-amount"><span class="std std-ref">amount</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-property-item-id"><span class="std std-ref">item_id</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-property-properties"><span class="std std-ref">properties</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{}</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-method-contains"><span class="std std-ref">contains</span></a>(item: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-method-deserialize"><span class="std std-ref">deserialize</span></a>(data: <code class="docutils literal notranslate"><span class="pre">Array</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-method-has-valid"><span class="std std-ref">has_valid</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Array</span></code></p></td>
+<td><p><a class="reference internal" href="#class-itemstack-method-serialize"><span class="std std-ref">serialize</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h2>
+<p class="classref-signal" id="class-itemstack-signal-updated"><strong>updated</strong>() <a class="reference internal" href="#class-itemstack-signal-updated"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-property" id="class-itemstack-property-amount"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>amount</strong> = <code class="docutils literal notranslate"><span class="pre">0</span></code> <a class="reference internal" href="#class-itemstack-property-amount"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_amount</strong>(value: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_amount</strong>()</p></li>
+</ul>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-itemstack-property-item-id"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>item_id</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> <a class="reference internal" href="#class-itemstack-property-item-id"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_item_id</strong>(value: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>get_item_id</strong>()</p></li>
+</ul>
+<p>Defining which item_id is used from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase-property-items"><span class="std std-ref">InventoryDatabase.items</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-itemstack-property-properties"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>properties</strong> = <code class="docutils literal notranslate"><span class="pre">{}</span></code> <a class="reference internal" href="#class-itemstack-property-properties"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_properties</strong>(value: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>get_properties</strong>()</p></li>
+</ul>
+<p>Custom properties of this item. Example “durability”.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-method" id="class-itemstack-method-contains"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains</strong>(item: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-itemstack-method-contains"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-itemstack-method-deserialize"><abbr title="No return value.">void</abbr> <strong>deserialize</strong>(data: <code class="docutils literal notranslate"><span class="pre">Array</span></code>) <a class="reference internal" href="#class-itemstack-method-deserialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-itemstack-method-has-valid"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_valid</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-itemstack-method-has-valid"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-itemstack-method-serialize"><code class="docutils literal notranslate"><span class="pre">Array</span></code> <strong>serialize</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-itemstack-method-serialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_itemdefinition.html" class="btn btn-neutral float-left" title="ItemDefinition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_nodeinventories.html" class="btn btn-neutral float-right" title="NodeInventories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Rafael Correa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

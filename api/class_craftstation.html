@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftStation &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/dark_mode_js/default_dark.js?v=fd565c74"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CraftStationType" href="class_craftstationtype.html" />
+    <link rel="prev" title="Crafting" href="class_crafting.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">CraftStation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_gridinventoryconstraint.html">GridInventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_hotbar.html">Hotbar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventory.html">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_inventorydatabase.html">InventoryDatabase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_itemstack.html">ItemStack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">All classes</a></li>
+      <li class="breadcrumb-item active">CraftStation</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="craftstation">
+<span id="class-craftstation"></span><h1>CraftStation<a class="headerlink" href="#craftstation" title="Permalink to this heading"></a></h1>
+<p><strong>Inherits:</strong> <a class="reference internal" href="class_nodeinventories.html#class-nodeinventories"><span class="std std-ref">NodeInventories</span></a> <strong>&lt;</strong> <code class="docutils literal notranslate"><span class="pre">Node</span></code></p>
+<p>Station where new <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> processes are generated.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>This node has a list of recipes that are generated based on the recipes in <a class="reference internal" href="class_nodeinventories.html#class-nodeinventories-property-database"><span class="std std-ref">NodeInventories.database</span></a> filtered by the <a class="reference internal" href="#class-craftstation-property-type"><span class="std std-ref">type</span></a> of this station (If there is no type defined, the recipes will be those that also have no type defined. See more in <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>)</p>
+<p>The node also maintains a list of crafting processes currently being performed, which are created by <a class="reference internal" href="#class-craftstation-method-craft"><span class="std std-ref">craft()</span></a> and finished by <span class="xref std std-ref">finish_craft()</span>.</p>
+</section>
+<section class="classref-reftable-group" id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-auto-craft"><span class="std std-ref">auto_craft</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-can-finish-craftings"><span class="std std-ref">can_finish_craftings</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-can-processing-craftings"><span class="std std-ref">can_processing_craftings</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">true</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a>]</p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-has-limit-crafts"><span class="std std-ref">has_limit_crafts</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>]</p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">input_inventories</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-limit-number-crafts"><span class="std std-ref">limit_number_crafts</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>]</p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-output-inventories"><span class="std std-ref">output_inventories</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-processing-mode"><span class="std std-ref">processing_mode</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-tick-update-method"><span class="std std-ref">tick_update_method</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-type"><span class="std std-ref">type</span></a></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-type-id"><span class="std std-ref">type_id</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">int</span></code>]</p></td>
+<td><p><a class="reference internal" href="#class-craftstation-property-valid-recipes"><span class="std std-ref">valid_recipes</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="classref-reftable-group" id="methods">
+<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-add-crafting"><span class="std std-ref">add_crafting</span></a>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-add-input-inventory"><span class="std std-ref">add_input_inventory</span></a>(input_inventory: <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-can-craft"><span class="std std-ref">can_craft</span></a>(recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-cancel-craft"><span class="std std-ref">cancel_craft</span></a>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-contains-ingredients"><span class="std std-ref">contains_ingredients</span></a>(recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-craft"><span class="std std-ref">craft</span></a>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-deserialize"><span class="std std-ref">deserialize</span></a>(data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-finish-crafting"><span class="std std-ref">finish_crafting</span></a>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-get-input-inventory"><span class="std std-ref">get_input_inventory</span></a>(index: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 0) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-is-crafting"><span class="std std-ref">is_crafting</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-load-valid-recipes"><span class="std std-ref">load_valid_recipes</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-remove-crafting"><span class="std std-ref">remove_crafting</span></a>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-remove-input-inventory"><span class="std std-ref">remove_input_inventory</span></a>(input_inventory: <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-serialize"><span class="std std-ref">serialize</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-craftstation-method-tick"><span class="std std-ref">tick</span></a>(delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="signals">
+<h2>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h2>
+<p class="classref-signal" id="class-craftstation-signal-crafting-added"><strong>crafting_added</strong>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-signal-crafting-added"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a new crafting is added to the <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> list. This signal is emitted after <a class="reference internal" href="#class-craftstation-method-add-crafting"><span class="std std-ref">add_crafting()</span></a> method occurs.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-craftstation-signal-crafting-removed"><strong>crafting_removed</strong>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-signal-crafting-removed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a crafting is removed from the list of <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a>. This signal is emitted after <a class="reference internal" href="#class-craftstation-method-remove-crafting"><span class="std std-ref">remove_crafting()</span></a> method occurs.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-craftstation-signal-input-inventory-added"><strong>input_inventory_added</strong>(input_inventory_path: <code class="docutils literal notranslate"><span class="pre">NodePath</span></code>) <a class="reference internal" href="#class-craftstation-signal-input-inventory-added"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a new <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> is added to the <a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">input_inventories</span></a> list. This signal is emitted after the <a class="reference internal" href="#class-craftstation-method-add-input-inventory"><span class="std std-ref">add_input_inventory()</span></a> method occurs.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-craftstation-signal-input-inventory-removed"><strong>input_inventory_removed</strong>(input_inventory_path: <code class="docutils literal notranslate"><span class="pre">NodePath</span></code>) <a class="reference internal" href="#class-craftstation-signal-input-inventory-removed"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a new <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> is removed from the <a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">input_inventories</span></a> list. This signal is emitted after the <a class="reference internal" href="#class-craftstation-method-remove-input-inventory"><span class="std std-ref">remove_input_inventory()</span></a> method occurs.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-craftstation-signal-on-crafted"><strong>on_crafted</strong>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-signal-on-crafted"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> is successfully completed. This signal is emitted after the <span class="xref std std-ref">finish_craft()</span> method successfully completes.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-signal" id="class-craftstation-signal-on-request-craft"><strong>on_request_craft</strong>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-signal-on-request-craft"><span class="std std-ref">🔗</span></a></p>
+<p>Emitted when a <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> is requested, unlike crafting_added, this signal can happen even when the crafting cannot be done. This signal is emitted at the start of the <a class="reference internal" href="#class-craftstation-method-craft"><span class="std std-ref">craft()</span></a> method.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="property-descriptions">
+<h2>Property Descriptions<a class="headerlink" href="#property-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-property" id="class-craftstation-property-auto-craft"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>auto_craft</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-craftstation-property-auto-craft"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_auto_craft</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_auto_craft</strong>()</p></li>
+</ul>
+<p>When activating the station upon identifying a change in the input inventories, it can call the <a class="reference internal" href="#class-craftstation-method-craft"><span class="std std-ref">craft()</span></a> method when possible. This is used in the demo with the campfire, it activates this option when it is turned on with fuel.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-can-finish-craftings"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>can_finish_craftings</strong> = <code class="docutils literal notranslate"><span class="pre">true</span></code> <a class="reference internal" href="#class-craftstation-property-can-finish-craftings"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_can_finish_craftings</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_can_finish_craftings</strong>()</p></li>
+</ul>
+<p>If true calls <span class="xref std std-ref">finish_craft()</span> after <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> finish.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-can-processing-craftings"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>can_processing_craftings</strong> = <code class="docutils literal notranslate"><span class="pre">true</span></code> <a class="reference internal" href="#class-craftstation-property-can-processing-craftings"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_can_processing_craftings</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_can_processing_craftings</strong>()</p></li>
+</ul>
+<p>If true the station processes crafts based on the method <a class="reference internal" href="#class-craftstation-method-tick"><span class="std std-ref">tick()</span></a> called (This method is called differently depending on the option chosen in <a class="reference internal" href="#class-craftstation-property-tick-update-method"><span class="std std-ref">tick_update_method</span></a>).</p>
+<p>In the demo the is_burning of campfire is used to turn this option on/off.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-craftings"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a>] <strong>craftings</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_craftings</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a>] <strong>get_craftings</strong>()</p></li>
+</ul>
+<p>List of current craftings being processed, if the <a class="reference internal" href="#class-craftstation-property-processing-mode"><span class="std std-ref">processing_mode</span></a> option is <span class="xref std std-ref">processing_mode.Parallel</span> the processings will be happening together, otherwise only one will be processing and the others will be waiting for the first one to finish.</p>
+<p>An example of using this list is in the demo in <code class="docutils literal notranslate"><span class="pre">crafting_ui.gd</span></code>:</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-has-limit-crafts"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_limit_crafts</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-craftstation-property-has-limit-crafts"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_has_limit_crafts</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_has_limit_crafts</strong>()</p></li>
+</ul>
+<p>If true the craftstation may have a limit of <a class="reference internal" href="#class-craftstation-property-limit-number-crafts"><span class="std std-ref">limit_number_crafts</span></a> to process in the <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> list.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-input-inventories"><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>] <strong>input_inventories</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_input_inventories</strong>(value: <span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>] <strong>get_input_inventories</strong>()</p></li>
+</ul>
+<p>List of <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> items that will be used for crafting <a class="reference internal" href="class_recipe.html#class-recipe-property-ingredients"><span class="std std-ref">Recipe.ingredients</span></a> items.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-limit-number-crafts"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>limit_number_crafts</strong> = <code class="docutils literal notranslate"><span class="pre">4</span></code> <a class="reference internal" href="#class-craftstation-property-limit-number-crafts"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_limit_number_crafts</strong>(value: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_limit_number_crafts</strong>()</p></li>
+</ul>
+<p>Limit the number of craftings in the <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> list. This value is only set if <a class="reference internal" href="#class-craftstation-property-has-limit-crafts"><span class="std std-ref">has_limit_crafts</span></a> is true.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-only-remove-ingredients-after-craft"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>only_remove_ingredients_after_craft</strong> = <code class="docutils literal notranslate"><span class="pre">false</span></code> <a class="reference internal" href="#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_only_remove_ingredients_after_craft</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_only_remove_ingredients_after_craft</strong>()</p></li>
+</ul>
+<p>Removes ingredients only when the crafting process finishes in <span class="xref std std-ref">finish_craft()</span>, this is used in the demo campfire to not remove meats while crafting is happening.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-output-inventories"><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>] <strong>output_inventories</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-craftstation-property-output-inventories"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_output_inventories</strong>(value: <span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">NodePath</span></code>] <strong>get_output_inventories</strong>()</p></li>
+</ul>
+<p>Craft product output inventory, after <span class="xref std std-ref">finish_craft()</span> happens a list of products from <span class="xref std std-ref">Recipe.produts</span> is added to these inventories. Note: An inventory can be part of both <a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">input_inventories</span></a> and <a class="reference internal" href="#class-craftstation-property-output-inventories"><span class="std std-ref">output_inventories</span></a> at the same time.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-processing-mode"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>processing_mode</strong> = <code class="docutils literal notranslate"><span class="pre">0</span></code> <a class="reference internal" href="#class-craftstation-property-processing-mode"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_processing_mode</strong>(value: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_processing_mode</strong>()</p></li>
+</ul>
+<p>Processing mode for <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a>. If set to <code class="docutils literal notranslate"><span class="pre">Parallel</span></code>, all craftings will happen together, if set to <code class="docutils literal notranslate"><span class="pre">Sequential</span></code> only one craft will be processed at a time.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-tick-update-method"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>tick_update_method</strong> = <code class="docutils literal notranslate"><span class="pre">0</span></code> <a class="reference internal" href="#class-craftstation-property-tick-update-method"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_tick_update_method</strong>(value: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_tick_update_method</strong>()</p></li>
+</ul>
+<p>Method for updating crafting processes. If marked as <code class="docutils literal notranslate"><span class="pre">Process</span></code> or <code class="docutils literal notranslate"><span class="pre">Physic</span> <span class="pre">Process</span></code> , the <a class="reference internal" href="#class-craftstation-method-tick"><span class="std std-ref">tick()</span></a> call will happen internally in your respective godot calls. If marked as <code class="docutils literal notranslate"><span class="pre">Custom</span></code> the <a class="reference internal" href="#class-craftstation-method-tick"><span class="std std-ref">tick()</span></a> method will not be called anywhere and you will have to call it in your code, it should be useful for multiplayer systems where the server manages this time.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-type"><a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> <strong>type</strong> <a class="reference internal" href="#class-craftstation-property-type"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_type</strong>(value: <a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>)</p></li>
+<li><p><a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> <strong>get_type</strong>()</p></li>
+</ul>
+<p>Defines the station type with resource <a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>. This resource must be created in <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> with a custom editor. This defines which recipes will be valid for this station in the variable <a class="reference internal" href="#class-craftstation-property-valid-recipes"><span class="std std-ref">valid_recipes</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-type-id"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>type_id</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> <a class="reference internal" href="#class-craftstation-property-type-id"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_type_id</strong>(value: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>get_type_id</strong>()</p></li>
+</ul>
+<div class="contribute docutils container">
+<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-craftstation-property-valid-recipes"><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">int</span></code>] <strong>valid_recipes</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-craftstation-property-valid-recipes"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_valid_recipes</strong>(value: <span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">int</span></code>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">int</span></code>] <strong>get_valid_recipes</strong>()</p></li>
+</ul>
+<p>Valid recipes that are filtered based on the defined station type. See in <a class="reference internal" href="#class-craftstation-property-type"><span class="std std-ref">type</span></a>.</p>
+</section>
+<hr class="classref-section-separator docutils" />
+<section class="classref-descriptions-group" id="method-descriptions">
+<h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Permalink to this heading"></a></h2>
+<p class="classref-method" id="class-craftstation-method-add-crafting"><abbr title="No return value.">void</abbr> <strong>add_crafting</strong>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>) <a class="reference internal" href="#class-craftstation-method-add-crafting"><span class="std std-ref">🔗</span></a></p>
+<p>Adds a new crafting process with the <code class="docutils literal notranslate"><span class="pre">recipe</span></code> index <code class="docutils literal notranslate"><span class="pre">recipe_index</span></code> to the station’s crafting process list. It emits the signal <a class="reference internal" href="#class-craftstation-signal-crafting-added"><span class="std std-ref">crafting_added</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-add-input-inventory"><abbr title="No return value.">void</abbr> <strong>add_input_inventory</strong>(input_inventory: <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a>) <a class="reference internal" href="#class-craftstation-method-add-input-inventory"><span class="std std-ref">🔗</span></a></p>
+<p>Adds a new <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> used as input for crafting. Items in this inventory will be used as <a class="reference internal" href="class_recipe.html#class-recipe-property-ingredients"><span class="std std-ref">Recipe.ingredients</span></a> and <a class="reference internal" href="class_recipe.html#class-recipe-property-required-items"><span class="std std-ref">Recipe.required_items</span></a> for crafting.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-can-craft"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>can_craft</strong>(recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-craftstation-method-can-craft"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if the <code class="docutils literal notranslate"><span class="pre">recipe</span></code> can be created. It checks whether the ingredients are present in the <a class="reference internal" href="#class-craftstation-property-input-inventories"><span class="std std-ref">input_inventories</span></a> and whether this recipe is of the <a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> type of this station.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-cancel-craft"><abbr title="No return value.">void</abbr> <strong>cancel_craft</strong>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-method-cancel-craft"><span class="std std-ref">🔗</span></a></p>
+<p>Cancels <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> with index <code class="docutils literal notranslate"><span class="pre">crafting_index</span></code> and returns the items used by crafting to the input inventory. Note: Canceling does not return items to their previous positions, such as <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> or a specific <a class="reference internal" href="class_slot.html#class-slot"><span class="std std-ref">Slot</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-contains-ingredients"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_ingredients</strong>(recipe: <a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-craftstation-method-contains-ingredients"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if the input inventories have the <a class="reference internal" href="class_recipe.html#class-recipe-property-ingredients"><span class="std std-ref">Recipe.ingredients</span></a> and <a class="reference internal" href="class_recipe.html#class-recipe-property-required-items"><span class="std std-ref">Recipe.required_items</span></a> for this <a class="reference internal" href="class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> recipe.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-craft"><abbr title="No return value.">void</abbr> <strong>craft</strong>(recipe_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-method-craft"><span class="std std-ref">🔗</span></a></p>
+<p>Calls a new craft with recipe from index <code class="docutils literal notranslate"><span class="pre">recipe_index</span></code> of <a class="reference internal" href="#class-craftstation-property-valid-recipes"><span class="std std-ref">valid_recipes</span></a> to be processed (added to the <code class="docutils literal notranslate"><span class="pre">member.craftings</span></code> list). Note: It will only be included if <a class="reference internal" href="#class-craftstation-method-contains-ingredients"><span class="std std-ref">contains_ingredients()</span></a> is true.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-deserialize"><abbr title="No return value.">void</abbr> <strong>deserialize</strong>(data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <a class="reference internal" href="#class-craftstation-method-deserialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-finish-crafting"><abbr title="No return value.">void</abbr> <strong>finish_crafting</strong>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-method-finish-crafting"><span class="std std-ref">🔗</span></a></p>
+<p>Finishes a craft from the <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> process list with index <code class="docutils literal notranslate"><span class="pre">crafting_index</span></code>. This method removes the items from <a class="reference internal" href="class_recipe.html#class-recipe-property-ingredients"><span class="std std-ref">Recipe.ingredients</span></a> from the input inventories if the <a class="reference internal" href="#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a> option is enabled. Adds the <a class="reference internal" href="class_recipe.html#class-recipe-property-products"><span class="std std-ref">Recipe.products</span></a> to the output inventories. The <a class="reference internal" href="#class-craftstation-signal-on-crafted"><span class="std std-ref">on_crafted</span></a> is emitted when successfully removed.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-get-input-inventory"><a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> <strong>get_input_inventory</strong>(index: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 0) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-craftstation-method-get-input-inventory"><span class="std std-ref">🔗</span></a></p>
+<p>Returns an input <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> by the index of <code class="docutils literal notranslate"><span class="pre">index</span></code>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-is-crafting"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_crafting</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-craftstation-method-is-crafting"><span class="std std-ref">🔗</span></a></p>
+<p>Returns true if the craftstation is processing a crafting.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-load-valid-recipes"><abbr title="No return value.">void</abbr> <strong>load_valid_recipes</strong>() <a class="reference internal" href="#class-craftstation-method-load-valid-recipes"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-remove-crafting"><abbr title="No return value.">void</abbr> <strong>remove_crafting</strong>(crafting_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-craftstation-method-remove-crafting"><span class="std std-ref">🔗</span></a></p>
+<p>Removes a crafting from the list of <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> with index <code class="docutils literal notranslate"><span class="pre">crafting_index</span></code>. This is called by <a class="reference internal" href="#class-craftstation-method-finish-crafting"><span class="std std-ref">finish_crafting()</span></a>. Note: This method does not do the same as <a class="reference internal" href="#class-craftstation-method-finish-crafting"><span class="std std-ref">finish_crafting()</span></a>, it does not add crafting after removal. It emits the signal <a class="reference internal" href="#class-craftstation-signal-crafting-removed"><span class="std std-ref">crafting_removed</span></a>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-remove-input-inventory"><abbr title="No return value.">void</abbr> <strong>remove_input_inventory</strong>(input_inventory: <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a>) <a class="reference internal" href="#class-craftstation-method-remove-input-inventory"><span class="std std-ref">🔗</span></a></p>
+<p>Remove a <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> used as input for crafting.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-serialize"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>serialize</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-craftstation-method-serialize"><span class="std std-ref">🔗</span></a></p>
+<div class="contribute docutils container">
+<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
+</div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-craftstation-method-tick"><abbr title="No return value.">void</abbr> <strong>tick</strong>(delta: <code class="docutils literal notranslate"><span class="pre">float</span></code>) <a class="reference internal" href="#class-craftstation-method-tick"><span class="std std-ref">🔗</span></a></p>
+<p>Method called to update the list of <a class="reference internal" href="#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a>. This method can be called internally or by your code by setting the <a class="reference internal" href="#class-craftstation-property-tick-update-method"><span class="std std-ref">tick_update_method</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="class_crafting.html" class="btn btn-neutral float-left" title="Crafting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="class_craftstationtype.html" class="btn btn-neutral float-right" title="CraftStationType" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Rafael Correa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
