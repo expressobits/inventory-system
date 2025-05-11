@@ -64,6 +64,13 @@
 			<description>
 			</description>
 		</method>
+		<method name="has_free_place" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="stack_size" type="Vector2i" />
+			<param index="1" name="exception" type="ItemStack" default="null" />
+			<description>
+			</description>
+		</method>
 		<method name="is_stack_rotated" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="stack" type="ItemStack" />
