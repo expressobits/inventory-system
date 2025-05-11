@@ -59,3 +59,7 @@ compile_commands.json
 
 # cmake build folder
 /cmake-build-*
+
+
+#Ignore docs html generated files
+/docs/build
