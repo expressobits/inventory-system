@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Slot &mdash; Inventory System 2.3.1 documentation</title>
+  <title>How to Test Multiplayer &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,7 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Recipe" href="class_recipe.html" /> 
+    <link rel="next" title="CMake support" href="../contributing/cmake_support.html" />
+    <link rel="prev" title="Item Definition" href="../manual/item_definition.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,36 +60,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../manual/item_definition.html">Item Definition</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">How to Test Multiplayer</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contributing/cmake_support.html">CMake support</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_gridinventoryconstraint.html">GridInventoryConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_hotbar.html">Hotbar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventory.html">Inventory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventorydatabase.html">InventoryDatabase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemstack.html">ItemStack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Slot</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">All classes</a></li>
 </ul>
 
         </div>
@@ -105,11 +86,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">All classes</a></li>
-      <li class="breadcrumb-item active">Slot</li>
+      <li class="breadcrumb-item active">How to Test Multiplayer</li>
       <li class="wy-breadcrumbs-aside">
-              <!-- User defined GitHub URL -->
-              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+            <a href="../_sources/tutorials/how_to_test_multiplayer.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -117,17 +96,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slot">
-<span id="class-slot"></span><h1>Slot<a class="headerlink" href="#slot" title="Permalink to this heading"></a></h1>
-<p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">RefCounted</span></code></p>
-<p>Item and amount representation from the <span class="xref std std-ref">Hotbar.slots</span> list.</p>
+  <section id="how-to-test-multiplayer">
+<h1>How to Test Multiplayer<a class="headerlink" href="#how-to-test-multiplayer" title="Permalink to this heading"></a></h1>
+<ol class="arabic simple">
+<li><p>Open Project Settings</p></li>
+</ol>
+<img alt="https://user-images.githubusercontent.com/1673249/221444490-2d59a40b-6d44-4bf5-be16-54af8c303e27.png" src="https://user-images.githubusercontent.com/1673249/221444490-2d59a40b-6d44-4bf5-be16-54af8c303e27.png" />
+<ol class="arabic simple" start="2">
+<li><p>Select the “Run” option</p></li>
+</ol>
+<img alt="https://user-images.githubusercontent.com/1673249/221444514-0b931377-653c-4f9c-9c13-b6af5100c368.png" src="https://user-images.githubusercontent.com/1673249/221444514-0b931377-653c-4f9c-9c13-b6af5100c368.png" />
+<ol class="arabic simple" start="3">
+<li><p>In the “Main Scene” choose the mp_demo.tscn which is in <a class="reference external" href="res://addons/inventory-system/demos/mp">res://addons/inventory-system/demos/mp</a></p></li>
+</ol>
+<img alt="https://user-images.githubusercontent.com/1673249/221444578-b7265ca4-3d37-4263-a7ad-84c504c9844d.png" src="https://user-images.githubusercontent.com/1673249/221444578-b7265ca4-3d37-4263-a7ad-84c504c9844d.png" />
+<ol class="arabic simple" start="4">
+<li><p>Now in the “Debug” menu choose more than one instance to run</p></li>
+</ol>
+<img alt="https://user-images.githubusercontent.com/1673249/221444647-ebf91685-6ee4-4f64-b3a2-41821614e03b.png" src="https://user-images.githubusercontent.com/1673249/221444647-ebf91685-6ee4-4f64-b3a2-41821614e03b.png" />
+<ol class="arabic simple" start="5">
+<li><p>That’s it, now it’s enough to host the server and other clients connect, currently it is previously configured for a localhost connection.</p></li>
+</ol>
+<img alt="https://user-images.githubusercontent.com/1673249/221444727-4e768a5e-b0db-4143-a631-9f7c326603e8.png" src="https://user-images.githubusercontent.com/1673249/221444727-4e768a5e-b0db-4143-a631-9f7c326603e8.png" />
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="class_recipe.html" class="btn btn-neutral float-left" title="Recipe" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../manual/item_definition.html" class="btn btn-neutral float-left" title="Item Definition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing/cmake_support.html" class="btn btn-neutral float-right" title="CMake support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

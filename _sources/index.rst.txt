@@ -13,7 +13,7 @@ We are currently improving all documentation to improve your experience with the
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Getting Started
    
    getting_started/introduction
@@ -23,6 +23,24 @@ We are currently improving all documentation to improve your experience with the
    getting_started/quickstart/add_items_to_inventory
 
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Manual
+   
+   manual/database
+   manual/item_definition
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Tutorials
+   
+   tutorials/how_to_test_multiplayer
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contributing
+   
+   contributing/cmake_support
 
 .. toctree::
    :maxdepth: 2

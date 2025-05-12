@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Slot &mdash; Inventory System 2.3.1 documentation</title>
+  <title>Database &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,7 +23,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Recipe" href="class_recipe.html" /> 
+    <link rel="next" title="Item Definition" href="item_definition.html" />
+    <link rel="prev" title="Add items to Inventory" href="../getting_started/quickstart/add_items_to_inventory.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -54,9 +55,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../manual/database.html">Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../manual/item_definition.html">Item Definition</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
@@ -67,28 +68,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributing/cmake_support.html">CMake support</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_gridinventoryconstraint.html">GridInventoryConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_hotbar.html">Hotbar</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventory.html">Inventory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_inventorydatabase.html">InventoryDatabase</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_itemstack.html">ItemStack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Slot</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">All classes</a></li>
 </ul>
 
         </div>
@@ -105,11 +86,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">All classes</a></li>
-      <li class="breadcrumb-item active">Slot</li>
+      <li class="breadcrumb-item active">Database</li>
       <li class="wy-breadcrumbs-aside">
-              <!-- User defined GitHub URL -->
-              <a href="hide" class="fa fa-github"> Edit on GitHub</a>
+            <a href="../_sources/manual/database.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -117,17 +96,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="slot">
-<span id="class-slot"></span><h1>Slot<a class="headerlink" href="#slot" title="Permalink to this heading"></a></h1>
-<p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">RefCounted</span></code></p>
-<p>Item and amount representation from the <span class="xref std std-ref">Hotbar.slots</span> list.</p>
+  <section id="database">
+<h1>Database<a class="headerlink" href="#database" title="Permalink to this heading"></a></h1>
+<p>The database is a resource that contains all information about items, recipes, craft stations and item categories.
+To use the inventory system you need to have at least one resource created in your project.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The demo already includes an example database, it is possible to use it, it is in the folder <span class="guilabel"><span class="accelerator">a</span>ddons/inventory-system/demos/base/database.tres</span></p>
+</div>
+<p><a class="reference internal" href="../getting_started/quickstart/create_database.html#create-database"><span class="std std-ref">Creating a Database</span></a> shows how to create a new database.
+<span class="xref std std-ref">getting_started/quickstart/use_inventory_database</span> shows how to use the database in your project.</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="class_recipe.html" class="btn btn-neutral float-left" title="Recipe" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../getting_started/quickstart/add_items_to_inventory.html" class="btn btn-neutral float-left" title="Add items to Inventory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="item_definition.html" class="btn btn-neutral float-right" title="Item Definition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
