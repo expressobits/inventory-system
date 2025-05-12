@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Creating a Database &mdash; Inventory System 2.3.1 documentation</title>
+  <title>Create Item Definition &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Create Item Definition" href="create_item_definition.html" />
-    <link rel="prev" title="Installation and Setup" href="../installation.html" /> 
+    <link rel="next" title="Add items to Inventory" href="add_items_to_inventory.html" />
+    <link rel="prev" title="Creating a Database" href="create_database.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,8 +50,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation and Setup</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Creating a Database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_database.html">Creating a Database</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Create Item Definition</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating">Creating</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-new-item-definition">Setup New Item Definition</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="add_items_to_inventory.html">Add items to Inventory</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
@@ -73,9 +77,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Creating a Database</li>
+      <li class="breadcrumb-item active">Create Item Definition</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/getting_started/quickstart/create_database.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/getting_started/quickstart/create_item_definition.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -83,36 +87,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="creating-a-database">
-<h1>Creating a Database<a class="headerlink" href="#creating-a-database" title="Permalink to this heading"></a></h1>
-<p>This guide shows how to create a new database, the demo (inventory-system-demos/base folder) in the addon already contains a database used in fps-demo.
-Database is a resource that will manage project-level information about items, recipes, and craft stations. It contains lists of internal resources for each data type.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>You can edit it via Godot’s own inspector, but we recommend using the plugin’s own editor for this.</p>
-</div>
-<p>Go to <strong>Inventory</strong> in top view of godot editor</p>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/1b3f4273-97ff-4a65-bc99-846d5d8cb403" src="https://github.com/expressobits/inventory-system/assets/1673249/1b3f4273-97ff-4a65-bc99-846d5d8cb403" />
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p>If the Inventory tab above does not appear, it means that your plugin was not installed correctly or that it was not active in the Project Settings, check the [Instalation](../../installation)</p>
-</div>
-<p>In this part you will see the editor empty, we will add the key file for adding any resource to the inventory system, the Inventory Database.</p>
-<img alt="../../_images/empty_editor.png" src="../../_images/empty_editor.png" />
-<p>Select the new database option to open the window to create a new database.</p>
-<img alt="../../_images/select_new_database.png" src="../../_images/select_new_database.png" />
-<p>Choose the name of your database and Select <a href="#id1"><span class="problematic" id="id2">**</span></a>Ok**(Normally a simple project will have no more than one database, that is, a name like ‘database’ would already be suggested)</p>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/020ad9a0-519c-4a38-963b-bda58c931a2a" src="https://github.com/expressobits/inventory-system/assets/1673249/020ad9a0-519c-4a38-963b-bda58c931a2a" />
-<p>Now we can see that the editor screen has changed, showing 4 icons available in the editor, to add a new item, recipe, craft-station and category respectively.</p>
-<img alt="../../_images/new_database_editor.png" src="../../_images/new_database_editor.png" />
+  <section id="create-item-definition">
+<h1>Create Item Definition<a class="headerlink" href="#create-item-definition" title="Permalink to this heading"></a></h1>
+<section id="creating">
+<h2>Creating<a class="headerlink" href="#creating" title="Permalink to this heading"></a></h2>
+<p>To create new items in a database, select the <strong>New Item</strong> option:</p>
+<img alt="../../_images/select_new_item_def.png" src="../../_images/select_new_item_def.png" />
+<p>If created successfully your editor will update to show the item in the <strong>Item Definitions</strong> tab:</p>
+<img alt="../../_images/new_item_def_editor.png" src="../../_images/new_item_def_editor.png" />
+</section>
+<section id="setup-new-item-definition">
+<h2>Setup New Item Definition<a class="headerlink" href="#setup-new-item-definition" title="Permalink to this heading"></a></h2>
+<p>Define your item’s settings, the most essential ones for this start are id, name and whether your item stacks.
+See more about item definition on <a class="reference internal" href="../../api/class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>
+For this quick start we put a wood with 16 stack, this will be used for the next steps of this guide:</p>
+<img alt="../../_images/add_wood_item_to_database.png" src="../../_images/add_wood_item_to_database.png" />
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../installation.html" class="btn btn-neutral float-left" title="Installation and Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="create_item_definition.html" class="btn btn-neutral float-right" title="Create Item Definition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="create_database.html" class="btn btn-neutral float-left" title="Creating a Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="add_items_to_inventory.html" class="btn btn-neutral float-right" title="Add items to Inventory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

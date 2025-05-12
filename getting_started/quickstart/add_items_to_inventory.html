@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add items to Inventory &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="All classes" href="../../api/index.html" />
+    <link rel="prev" title="Create Item Definition" href="create_item_definition.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Add items to Inventory</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#showing-inventory-items">Showing inventory items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Add Items to Inventory</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Add items to Inventory</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/getting_started/quickstart/add_items_to_inventory.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="add-items-to-inventory">
+<h1>Add items to Inventory<a class="headerlink" href="#add-items-to-inventory" title="Permalink to this heading"></a></h1>
+<p>In this guide we will start to see the nodes of this plugin, the first and most important is the Inventory Node, it is used to store your items.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>There is also a <a class="reference internal" href="../../api/class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a> node in the module that extends the Inventory node,
+it stores and manages items based on a grid using the grid_size attributes of the item definitions.</p>
+</div>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this heading"></a></h2>
+<p>Let’s start with an empty scene:</p>
+<img alt="../../_images/empty_scene_for_inventory_tutorial.png" src="../../_images/empty_scene_for_inventory_tutorial.png" />
+<p>Add an inventory node, the inventory node is the main structure of this addon:</p>
+<img alt="../../_images/add_inventory_node.gif" src="../../_images/add_inventory_node.gif" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Understanding the basics is important to understand the flexibility of this addon.</p>
+</div>
+<p>After adding the node, it will display a warning indicating that it needs to configure its database:</p>
+<img alt="../../_images/inventory_warning.png" src="../../_images/inventory_warning.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="../../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> is where the item structures and their attributes will be saved, important data, for example, an item’s identifier, are contained within this resource. This tutorial does not cover the database, we will use the database already available in the demo, to understand more about Inventory Database, check the tutorials about it.</p>
+</div>
+<p>Define the database, it should look like this:</p>
+<img alt="../../_images/setup_database_in_inventory.png" src="../../_images/setup_database_in_inventory.png" />
+<p>In the node inspector, we can see the current inventory stacks, we will use it to view what is available within the inventory. Don’t change anything now.
+Create a test script on the parent node of the inventory node, it will be used for all our tests from now on.</p>
+<img alt="../../_images/add_script_on_inventory_tutorial.gif" src="../../_images/add_script_on_inventory_tutorial.gif" />
+<p>Let’s add keys for interaction in this tutorial, to do this open the top menu <strong>Project &gt; ProjectSettings &gt; Access the “InputMap” tab</strong>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is only necessary to create it if you do not have the inventory-system-demos folder, if it was added, it automatically adds keys to your project.</p>
+</div>
+<img alt="../../_images/empty_input_map.png" src="../../_images/empty_input_map.png" />
+<p>Add the keys you will need for this guide:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Key</p></th>
+<th class="head"><p>Input Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="guilabel"><span class="accelerator">E</span></span></p></td>
+<td><p>interact</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="guilabel"><span class="accelerator">F</span>1</span></p></td>
+<td><p>add_item_a</p></td>
+</tr>
+</tbody>
+</table>
+<p>If you don’t know how to add it, you can see this guide from the godot documentation <a class="reference external" href="https://docs.godotengine.org/en/latest/tutorials/inputs/input_examples.html">Input Examples of Godot Docs</a></p>
+</section>
+<section id="showing-inventory-items">
+<h2>Showing inventory items<a class="headerlink" href="#showing-inventory-items" title="Permalink to this heading"></a></h2>
+<p>Let’s now show the items in this inventory with a simple command.</p>
+<p>Let’s create a variable pointing to the inventory, dragging it to the script while holding the <span class="guilabel"><span class="accelerator">C</span>ontrol</span> key.</p>
+<img alt="../../_images/add_variable_inventory_to_script.gif" src="../../_images/add_variable_inventory_to_script.gif" />
+<p>We added code to display stacks each time we click the configured action “interact” which in the demo is the <span class="guilabel"><span class="accelerator">e</span></span> key:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s2">&quot;interact&quot;</span><span class="p">):</span>
+<span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inventory Stacks:&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="p">:</span>
+<span class="w">                        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A Stack&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result is this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Inventory</span> <span class="n">Stacks</span><span class="p">:</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+<span class="n">A</span> <span class="n">Stack</span>
+</pre></div>
+</div>
+<p>Modify the code now to display when there is an item in the stack, its id and quantity, if not it displays the message “Empty”:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s2">&quot;interact&quot;</span><span class="p">):</span>
+<span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inventory Stacks:&quot;</span><span class="p">)</span>
+<span class="w">                </span><span class="k">for</span><span class="w"> </span><span class="n">stack</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="p">:</span>
+<span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="n">stack</span><span class="o">.</span><span class="n">item</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span>
+<span class="w">                                </span><span class="nb">print</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span><span class="s2">&quot; x &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stack</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="w">                        </span><span class="k">else</span><span class="p">:</span>
+<span class="w">                                </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Empty&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>Add Items to Inventory<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<p>Let’s configure an item to be added, add a variable to link an item to the script, so we can add it to the inventory:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>...
+@onready var inventory = $Inventory
+
+# Add this 👇
+@export var item_id : String = &quot;wood&quot;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+...
+</pre></div>
+</div>
+<p>We added code that adds an item each time we click the <span class="guilabel"><span class="accelerator">F</span>1</span> key:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="w">                </span><span class="nb">print</span><span class="p">(</span><span class="n">stack</span><span class="o">.</span><span class="n">item_id</span><span class="p">,</span><span class="s2">&quot; x &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">stack</span><span class="o">.</span><span class="n">amount</span><span class="p">)</span>
+<span class="w">                </span><span class="k">else</span><span class="p">:</span>
+<span class="w">                        </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Empty&quot;</span><span class="p">)</span>
+<span class="c1"># Add this 👇</span>
+<span class="k">if</span><span class="w"> </span><span class="n">Input</span><span class="o">.</span><span class="n">is_action_just_pressed</span><span class="p">(</span><span class="s2">&quot;add_item_a&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="n">inventory</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item_id</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now after typing <span class="guilabel"><span class="accelerator">F</span>1</span> (key that adds item configured in the demo) and then <span class="guilabel"><span class="accelerator">E</span></span> (interaction key configured in the demo), you can see that an item has been added to the inventory.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Inventory</span> <span class="n">Stacks</span><span class="p">:</span>
+<span class="n">Wood</span> <span class="n">x</span> <span class="mi">1</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+<span class="n">Empty</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="create_item_definition.html" class="btn btn-neutral float-left" title="Create Item Definition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../api/index.html" class="btn btn-neutral float-right" title="All classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Rafael Correa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
