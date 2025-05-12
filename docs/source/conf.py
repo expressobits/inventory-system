@@ -16,7 +16,7 @@ release = '2.3.1'
 
 extensions = [
     "sphinx_rtd_dark_mode",
-    "myst_parser",
+    # "myst_parser",
     # "sphinx_tabs.tabs",
     # "notfound.extension",
     # "sphinxext.opengraph",
