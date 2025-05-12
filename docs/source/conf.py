@@ -22,7 +22,7 @@ extensions = [
     # "sphinxext.opengraph",
     # "sphinx_copybutton",
     # "sphinxcontrib.video",
-    "sphinxemoji.sphinxemoji",
+    # "sphinxemoji.sphinxemoji",
 ]
 
 myst_heading_anchors = 3
