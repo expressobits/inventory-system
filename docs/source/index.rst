@@ -28,7 +28,8 @@ We are currently improving all documentation to improve your experience with the
    :caption: Manual
    
    manual/database
-   manual/item_definition
+   manual/inventories
+
 
 .. toctree::
    :maxdepth: 1
