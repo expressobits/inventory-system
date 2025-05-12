@@ -14,10 +14,11 @@ We are currently improving all documentation to improve your experience with the
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Getting Started
    
    getting_started/introduction
    getting_started/installation
+   getting_started/quickstart/create_database
 
 
 
