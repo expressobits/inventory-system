@@ -5,7 +5,7 @@
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
-New here? Read our new [Documentation](https://expressobits.com/inventory-system-docs/)
+New here? Read our new [Documentation](https://expressobits.com/inventory-system/)
 
 ## Branchs Map
 
