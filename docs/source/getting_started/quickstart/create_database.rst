@@ -1,3 +1,5 @@
+.. _create_database:
+
 ######################
 Creating a Database
 ######################
@@ -14,7 +16,7 @@ Go to **Inventory** in top view of godot editor
 .. image:: https://github.com/expressobits/inventory-system/assets/1673249/1b3f4273-97ff-4a65-bc99-846d5d8cb403
 
 
-.. attention:: If the Inventory tab above does not appear, it means that your plugin was not installed correctly or that it was not active in the Project Settings, check the [Instalation](../../installation)
+.. attention:: If the Inventory tab above does not appear, it means that your plugin was not installed correctly or that it was not active in the Project Settings, check the :ref:`installation`
 
 
 In this part you will see the editor empty, we will add the key file for adding any resource to the inventory system, the Inventory Database.
