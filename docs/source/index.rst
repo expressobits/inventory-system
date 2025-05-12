@@ -3,17 +3,21 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Inventory System documentation
+Inventory System Docs
 ==============================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+Welcome to Inventory System Docs!
+
+We are currently improving all documentation to improve your experience with the plugin!
+
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   getting_started/introduction
+   getting_started/installation
 
 
 

@@ -14,7 +14,18 @@ release = '2.3.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ["sphinx_rtd_dark_mode"]
+extensions = [
+    "sphinx_rtd_dark_mode",
+    "myst_parser",
+    # "sphinx_tabs.tabs",
+    # "notfound.extension",
+    # "sphinxext.opengraph",
+    # "sphinx_copybutton",
+    # "sphinxcontrib.video",
+    "sphinxemoji.sphinxemoji",
+]
+
+myst_heading_anchors = 3
 
 default_dark_mode = True
 
