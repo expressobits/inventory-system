@@ -4,7 +4,7 @@
 		Category to specify an [ItemDefinition].
 	</brief_description>
 	<description>
-		This resource is used to add the same properties to multiple [ItemDefinition] at the same time. This category is also used by [member Slot.categorized] to specify a slot that can only accept a certain type of category.
+		This resource is used to add the same properties to multiple [ItemDefinition] at the same time. This category is also used by [InventoryConstraint] to specify a stack that can only accept a certain type of category.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -18,10 +18,10 @@
 	</methods>
 	<members>
 		<member name="color" type="Color" setter="set_color" getter="get_color" default="Color(0, 0, 0, 1)">
-			Color to identify the category. Used for example in a UI to paint a categorized [Slot].
+			Color to identify the category. Used for example in a UI to paint a categorized slot in UI.
 		</member>
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
-			Category icon. Used for example for a background of a categorized [Slot].
+			Category icon. Used for example for a background of a categorized slot in UI.
 		</member>
 		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
 		</member>

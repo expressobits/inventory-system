@@ -10,10 +10,14 @@
 All classes
 ===========
 
+Variant types
+=============
+
 .. toctree::
     :maxdepth: 1
     :name: toc-class-ref-variants
 
+    class_variant
     class_crafting
     class_craftstation
     class_craftstationtype
@@ -31,5 +35,4 @@ All classes
     class_quadrect
     class_quadtree
     class_recipe
-    class_slot
 

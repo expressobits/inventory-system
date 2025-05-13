@@ -50,7 +50,7 @@
 				Adds an amount of [ItemStack](with string id from [InventoryDatabase]) to a specific inventory stack index and returns the amount that cannot be added.
 				[codeblocks]
 				[gdscript]
-				inventory.add_at_index(3, "my_item_id", 2) # Add two my_item to inventory in 3 slot index
+				inventory.add_at_index(3, "my_item_id", 2) # Add two my_item to inventory in 3 stack index
 				[/gdscript]
 				[/codeblocks]
 			</description>
@@ -109,7 +109,7 @@
 			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Returns true if the slot index contains the amount of the specified [ItemStack](with String item_id from [InventoryDatabase]).
+				Returns true if the stack index contains the amount of the specified [ItemStack](with String item_id from [InventoryDatabase]).
 			</description>
 		</method>
 		<method name="contains_category" qualifiers="const">
@@ -191,7 +191,7 @@
 		<method name="is_accept_any_categories" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="categories_flag" type="int" />
-			<param index="1" name="slot" type="ItemCategory[]" />
+			<param index="1" name="categories" type="ItemCategory[]" />
 			<description>
 			</description>
 		</method>
@@ -221,7 +221,7 @@
 			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Removes an item_id amount to the specified inventory [Slot] index and returns the remaining value that was not removed.
+				Removes an item_id amount to the specified inventory [ItemStack] index and returns the remaining value that was not removed.
 			</description>
 		</method>
 		<method name="remove_from_stack">
@@ -230,7 +230,7 @@
 			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<description>
-				Remove slot with [param stack] parameter, set [param emit_signal] to false to disable events called by [method update_stack].
+				Remove stack with [param stack] parameter, set [param emit_signal] to false to disable events called by [method update_stack].
 			</description>
 		</method>
 		<method name="remove_stack">

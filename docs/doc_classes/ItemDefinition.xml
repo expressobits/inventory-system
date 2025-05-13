@@ -26,13 +26,13 @@
 	</methods>
 	<members>
 		<member name="can_stack" type="bool" setter="set_can_stack" getter="get_can_stack" default="true">
-			Defines whether there is a [member max_stack] for the item containing this item definition, unchecked means the item can be added unlimitedly to a slot.
+			Defines whether there is a [member max_stack] for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.
 		</member>
 		<member name="categories" type="ItemCategory[]" setter="set_categories" getter="get_categories" default="[]">
-			Categories this item is in are used for categorized slots to only accept specific items. See in [member Slot.categorized]
+			Categories this item is in are used for categorized stacks to only accept specific items. See in [member InventoryConstraint]
 		</member>
 		<member name="dynamic_properties" type="String[]" setter="set_dynamic_properties" getter="get_dynamic_properties" default="[]">
-			Properties that are defined as dynamic and are calculated for individual items within the slot. Can only be used when [member max_stack] is 1.
+			Properties that are defined as dynamic and are calculated for individual items within the stack. Can only be used when [member max_stack] is 1.
 		</member>
 		<member name="icon" type="Texture2D" setter="set_icon" getter="get_icon">
 			Item icon in texture2D, displayed by UI e.g.

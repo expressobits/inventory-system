@@ -2,22 +2,45 @@
 Item Definition
 ######################
 
-Editor
+The item definition is a resource that has values 
+for items that will be used in the :ref:`class_inventory` node. In it we store various information such as its name, its id, its weight, etc...
+
+
+==============================
+Item ID
 ==============================
 
-- :guilabel:`&ID`: String identification of the item, used to get the item based on a list of items easily using the id.
-        You can use the button to edit the id correctly, it will indicate in red if the id already exists.
+In inventories and other nodes of this plugin, items will not be used as definitions but rather referenced by their id.
+Many times you will want to acquire the item definition by id, for this you can use ready-made calls in the inventory node or database:
 
-.. note:: 
-    The base node (NodeInventories) has two methods that use the database field (InventoryDatabase) that use this id to facilitate access to items
 
 .. code-block:: gdscript
-    # Get id of item
-    int get_id_from_item(item: ItemDefinition)
 
-    # Get resource (ItemDefinition) from id param
-    ItemDefinition get_item_from_id(id: int)
-    
+    var db: InventoryDatabase
+    var def: ItemDefinition = db.get_item("my_item_id") # Get item definition by id
 
-- :guilabel:`&Icon`: Texture to display your item in-game and in the editor
-- :guilabel:`&Name`: Name to be displayed or used as additional identification (It is your responsibility to use this field)
+.. note::
+    The nodes in this plugin also extend the :ref:`class_nodeinventories` which has a direct call to get_item_from_id as well.
+
+    .. code-block:: gdscript
+
+        # Code in a node that extends NodeInventories (Inventory, CraftStation, etc)
+        var def: ItemDefinition = db.get_item_from_id("my_item_id") # Get item definition by id
+
+==============================
+Item Definition Editor
+==============================
+
+.. image:: ./images/item_definition_editor.png
+
+In the window, items are displayed in a list on the left side, or we can also search by name.
+
+- :guilabel:`&ID`: 
+        String identification of the item, used to get the item based on a list of items easily using the id.
+        You can use the button to edit the id correctly, it will indicate in red if the id already exists.
+- :guilabel:`&Icon`: 
+        Texture to display your item in-game and in the editor
+- :guilabel:`&Name`: 
+        Name to be displayed or used as additional identification (It is your responsibility to use this field)
+- :guilabel:`&Can Stack`: 
+        Defines whether there is a :guilabel:`&Max Stack` for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.

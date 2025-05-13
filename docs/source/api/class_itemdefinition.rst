@@ -94,7 +94,7 @@ Property Descriptions
 - |void| **set_can_stack**\ (\ value\: ``bool``\ )
 - ``bool`` **get_can_stack**\ (\ )
 
-Defines whether there is a :ref:`max_stack<class_ItemDefinition_property_max_stack>` for the item containing this item definition, unchecked means the item can be added unlimitedly to a slot.
+Defines whether there is a :ref:`max_stack<class_ItemDefinition_property_max_stack>` for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.
 
 .. rst-class:: classref-item-separator
 
@@ -111,7 +111,7 @@ Defines whether there is a :ref:`max_stack<class_ItemDefinition_property_max_sta
 - |void| **set_categories**\ (\ value\: :ref:`Array<class_Array>`\[:ref:`ItemCategory<class_ItemCategory>`\]\ )
 - :ref:`Array<class_Array>`\[:ref:`ItemCategory<class_ItemCategory>`\] **get_categories**\ (\ )
 
-Categories this item is in are used for categorized slots to only accept specific items. See in :ref:`Slot.categorized<class_Slot_property_categorized>`
+Categories this item is in are used for categorized stacks to only accept specific items. See in :ref:`InventoryConstraint<class_ItemDefinition_property_InventoryConstraint>`
 
 .. rst-class:: classref-item-separator
 
@@ -128,7 +128,7 @@ Categories this item is in are used for categorized slots to only accept specifi
 - |void| **set_dynamic_properties**\ (\ value\: :ref:`Array<class_Array>`\[``String``\]\ )
 - :ref:`Array<class_Array>`\[``String``\] **get_dynamic_properties**\ (\ )
 
-Properties that are defined as dynamic and are calculated for individual items within the slot. Can only be used when :ref:`max_stack<class_ItemDefinition_property_max_stack>` is 1.
+Properties that are defined as dynamic and are calculated for individual items within the stack. Can only be used when :ref:`max_stack<class_ItemDefinition_property_max_stack>` is 1.
 
 .. rst-class:: classref-item-separator
 

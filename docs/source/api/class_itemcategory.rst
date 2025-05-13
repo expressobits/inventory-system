@@ -19,7 +19,7 @@ Category to specify an :ref:`ItemDefinition<class_ItemDefinition>`.
 Description
 -----------
 
-This resource is used to add the same properties to multiple :ref:`ItemDefinition<class_ItemDefinition>` at the same time. This category is also used by :ref:`Slot.categorized<class_Slot_property_categorized>` to specify a slot that can only accept a certain type of category.
+This resource is used to add the same properties to multiple :ref:`ItemDefinition<class_ItemDefinition>` at the same time. This category is also used by :ref:`InventoryConstraint<class_InventoryConstraint>` to specify a stack that can only accept a certain type of category.
 
 .. rst-class:: classref-reftable-group
 
@@ -75,7 +75,7 @@ Property Descriptions
 - |void| **set_color**\ (\ value\: ``Color``\ )
 - ``Color`` **get_color**\ (\ )
 
-Color to identify the category. Used for example in a UI to paint a categorized :ref:`Slot<class_Slot>`.
+Color to identify the category. Used for example in a UI to paint a categorized slot in UI.
 
 .. rst-class:: classref-item-separator
 
@@ -92,7 +92,7 @@ Color to identify the category. Used for example in a UI to paint a categorized 
 - |void| **set_icon**\ (\ value\: ``Texture2D``\ )
 - ``Texture2D`` **get_icon**\ (\ )
 
-Category icon. Used for example for a background of a categorized :ref:`Slot<class_Slot>`.
+Category icon. Used for example for a background of a categorized slot in UI.
 
 .. rst-class:: classref-item-separator
 
