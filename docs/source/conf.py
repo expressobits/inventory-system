@@ -6,6 +6,12 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
+import os
+
+if os.getenv("GITHUB_ACTIONS"):
+  extensions.append("sphinxcontrib.googleanalytics")
+  googleanalytics_id = "G-TBJYX8K1T0"
+
 project = 'Inventory System'
 copyright = '2025, Rafael Correa'
 author = 'Rafael Correa'
@@ -16,6 +22,7 @@ release = '2.3.1'
 
 extensions = [
     "sphinx_rtd_dark_mode",
+    # "sphinxcontrib.googleanalytics",
     # "myst_parser",
     # "sphinx_tabs.tabs",
     # "notfound.extension",
@@ -25,6 +32,8 @@ extensions = [
     # "sphinxemoji.sphinxemoji",
 ]
 
+
+# googleanalytics_id = "G-TBJYX8K1T0"
 myst_heading_anchors = 3
 
 default_dark_mode = False

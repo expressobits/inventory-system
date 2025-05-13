@@ -8,6 +8,8 @@ Inventory System Docs
 
 Welcome to Inventory System Docs!
 
+.. image:: assets/images/demo.gif
+
 We are currently improving all documentation to improve your experience with the plugin!
 
 
