@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://bsbba7hy8e501"]
+
+[ext_resource type="Script" uid="uid://xcmuo66eae7n" path="res://addons/inventory-system-demos/tutorials/tutorial_03_transfer_inventories/inventory_tutorial.gd" id="1_628rb"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="2_umqil"]
+[ext_resource type="Script" uid="uid://du4odj2yajra2" path="res://addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd" id="3_xif71"]
+
+[node name="InventoryTutorial" type="Node3D"]
+script = ExtResource("1_628rb")
+item_id = "wood"
+
+[node name="Inventory" type="Inventory" parent="."]
+database = ExtResource("2_umqil")
+
+[node name="OtherInventory" type="Inventory" parent="."]
+database = ExtResource("2_umqil")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SimpleInventoryUI" type="ItemList" parent="HBoxContainer" node_paths=PackedStringArray("inventory")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_xif71")
+inventory = NodePath("../../Inventory")
+metadata/_custom_type_script = "uid://du4odj2yajra2"
+
+[node name="ButtonLeft" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = ">>>"
+
+[node name="ButtonRight" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "<<<"
+
+[node name="OtherSimpleInventoryUI" type="ItemList" parent="HBoxContainer" node_paths=PackedStringArray("inventory")]
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("3_xif71")
+inventory = NodePath("../../OtherInventory")
+metadata/_custom_type_script = "uid://du4odj2yajra2"
+
+[connection signal="button_down" from="HBoxContainer/ButtonLeft" to="." method="_on_button_left_button_down"]
+[connection signal="button_down" from="HBoxContainer/ButtonRight" to="." method="_on_button_right_button_down"]
