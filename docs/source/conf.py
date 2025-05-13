@@ -8,10 +8,6 @@
 
 import os
 
-if os.getenv("GITHUB_ACTIONS"):
-  extensions.append("sphinxcontrib.googleanalytics")
-  googleanalytics_id = "G-TBJYX8K1T0"
-
 project = 'Inventory System'
 copyright = '2025, Rafael Correa'
 author = 'Rafael Correa'
@@ -32,6 +28,9 @@ extensions = [
     # "sphinxemoji.sphinxemoji",
 ]
 
+if os.getenv("GITHUB_ACTIONS"):
+  extensions.append("sphinxcontrib.googleanalytics")
+  googleanalytics_id = "G-TBJYX8K1T0"
 
 # googleanalytics_id = "G-TBJYX8K1T0"
 myst_heading_anchors = 3
