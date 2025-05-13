@@ -1,7 +1,7 @@
-.. _inventories:
+.. _craft_stations:
 
 ######################
-Inventories
+Craft Stations
 ######################
 
 No documentation at the moment, please contribute!

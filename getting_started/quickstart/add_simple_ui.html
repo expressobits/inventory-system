@@ -23,7 +23,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Database" href="../../manual/database.html" />
+    <link rel="next" title="Operation between inventories" href="operation_between_inventories.html" />
     <link rel="prev" title="Add items to Inventory" href="add_items_to_inventory.html" /> 
 </head>
 
@@ -58,10 +58,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#understanding-the-script-simple-inventory-ui-gd">Understanding the script simple_inventory_ui.gd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="operation_between_inventories.html">Operation between inventories</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../manual/database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/craft_stations.html">Craft Stations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
@@ -105,14 +108,15 @@
 <h1>Add Simple UI<a class="headerlink" href="#add-simple-ui" title="Permalink to this heading"></a></h1>
 <p>This guide shows how to connect a UI to your inventory already created in the last guide.
 The idea of this plugin is for the developer to create their own UIs, as each game will have its own UI nuances,
-but UI scripts placed in the addons/inventory-system-demos/ui folder can be used as bases.</p>
+but UI scripts placed in the addons/inventory-system-demos/simple_transfer folder can be used as bases.</p>
 <section id="adding-a-ui">
 <h2>Adding a UI<a class="headerlink" href="#adding-a-ui" title="Permalink to this heading"></a></h2>
 <p>Add a SimpleInventoryUI node to the previously created scene, switch to 2D view and place this node to fill the entire screen:</p>
 <img alt="../../_images/add_simple_ui_to_scene.gif" src="../../_images/add_simple_ui_to_scene.gif" />
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This script is only in the plugin demos, it is only downloaded from the addon branch or via godot asset lib, it is not included via git modules.</p>
+<p>This script is only in the plugin demos, it is only downloaded from the addon branch or via godot asset lib, it is not included via git modules.
+See code here: <a class="reference external" href="https://github.com/expressobits/inventory-system/blob/7335c341afc0b2f5ea81bd7e7a84e59285a24a0f/addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd">simple_inventory_ui.gd</a></p>
 </div>
 <p>Now let’s define the connection between the inventory and the UI. To do this, select the newly created Simple Inventory UI node and in the inspector, place the reference to the Inventory node:</p>
 <a class="reference internal image-reference" href="../../_images/simple_inventory_ui_inspector.png"><img alt="../../_images/simple_inventory_ui_inspector.png" src="../../_images/simple_inventory_ui_inspector.png" style="width: 50%;" /></a>
@@ -176,7 +180,7 @@ such as updating the UI, making an automatic craft happen or needing to update t
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="add_items_to_inventory.html" class="btn btn-neutral float-left" title="Add items to Inventory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../../manual/database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="operation_between_inventories.html" class="btn btn-neutral float-right" title="Operation between inventories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

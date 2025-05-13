@@ -55,14 +55,17 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Add items to Inventory</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setup">Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#showing-inventory-items">Showing inventory items</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Add Items to Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Add Items to Inventory</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="add_simple_ui.html">Add Simple UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operation_between_inventories.html">Operation between inventories</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../manual/database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/craft_stations.html">Craft Stations</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
@@ -103,7 +106,7 @@
            <div itemprop="articleBody">
              
   <section id="add-items-to-inventory">
-<h1>Add items to Inventory<a class="headerlink" href="#add-items-to-inventory" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Add items to Inventory<a class="headerlink" href="#add-items-to-inventory" title="Permalink to this heading"></a></h1>
 <p>In this guide we will start to see the nodes of this plugin, the first and most important is the Inventory Node, it is used to store your items.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -200,8 +203,8 @@ Create a test script on the parent node of the inventory node, it will be used f
 </pre></div>
 </div>
 </section>
-<section id="id1">
-<h2>Add Items to Inventory<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h2>
+<section id="id2">
+<h2>Add Items to Inventory<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h2>
 <p>Let’s configure an item to be added, add a variable to link an item to the script, so we can add it to the inventory:</p>
 <div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>...
 @onready var inventory = $Inventory

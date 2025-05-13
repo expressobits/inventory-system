@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operation between inventories &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Database" href="../../manual/database.html" />
+    <link rel="prev" title="Add Simple UI" href="add_simple_ui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_simple_ui.html">Add Simple UI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Operation between inventories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#change-scene-structure">Change scene structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-transfer-logic">Add Transfer Logic</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/craft_stations.html">Craft Stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html#variant-types">Variant types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Operation between inventories</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/getting_started/quickstart/operation_between_inventories.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="operation-between-inventories">
+<h1>Operation between inventories<a class="headerlink" href="#operation-between-inventories" title="Permalink to this heading"></a></h1>
+<p>Many times we will want to transfer items between inventories, for this we have the function <span class="xref std std-ref">class_inventory.transfer</span> which allows us to transfer items between inventories.
+This guide will show you how to do this in a simple way.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This guide assumes you have already created a database and an inventory, if you haven’t done so, please see <a class="reference internal" href="create_database.html#create-database"><span class="std std-ref">Creating a Database</span></a> and <a class="reference internal" href="add_items_to_inventory.html#add-items-to-inventory"><span class="std std-ref">Add items to Inventory</span></a> guide.</p>
+</div>
+<section id="change-scene-structure">
+<h2>Change scene structure<a class="headerlink" href="#change-scene-structure" title="Permalink to this heading"></a></h2>
+<p>Add new second inventory and second simple inventory ui in scene:</p>
+<img alt="../../_images/add_other_inventory.gif" src="../../_images/add_other_inventory.gif" />
+<p>Link database with second inventory and second inventory to the second simple inventory ui:</p>
+<img alt="../../_images/link_references_of_other_inventory.gif" src="../../_images/link_references_of_other_inventory.gif" />
+<p>Let’s organize UI, add a new HBoxContainer node and move the two UI nodes inside this new UI node.</p>
+<img alt="../../_images/add_hbox_to_inventories.png" src="../../_images/add_hbox_to_inventories.png" />
+<p>Now set the anchor preset to full rect of the HBoxContainer and for the children set it to expand horizontally</p>
+<img alt="../../_images/fill_ui_in_transfer_demo.gif" src="../../_images/fill_ui_in_transfer_demo.gif" />
+<p>Now add two more buttons, place them between the inventories, each one will be triggered to move from one inventory to the other.</p>
+<img alt="../../_images/add_two_buttons.gif" src="../../_images/add_two_buttons.gif" />
+</section>
+<section id="add-transfer-logic">
+<h2>Add Transfer Logic<a class="headerlink" href="#add-transfer-logic" title="Permalink to this heading"></a></h2>
+<p>Now with the scene setup complete, let’s start working with the codes, go back to the script <strong>inventory_tutorial</strong> placed in the root node of the scene.
+Add the missing inventory reference to the script and Inventory UI nodes, your code should look like this:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>@onready var inventory : Inventory = $Inventory
+@onready var other_inventory: Inventory = $OtherInventory
+@onready var simple_inventory_ui: SimpleInventoryUI = $HBoxContainer/SimpleInventoryUI
+@onready var other_simple_inventory_ui: SimpleInventoryUI = $HBoxContainer/OtherSimpleInventoryUI
+</pre></div>
+</div>
+<p>Now add the added buttons down signals to inventory_tutorial script:</p>
+<img alt="../../_images/add_signals_from_buttons.gif" src="../../_images/add_signals_from_buttons.gif" />
+<p>With this you add two new functions to the script:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_on_button_left_button_down</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">pass</span><span class="w"> </span><span class="c1"># Replace with function body.</span>
+
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_button_right_button_down</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">pass</span><span class="w"> </span><span class="c1"># Replace with function body.</span>
+</pre></div>
+</div>
+<p>Fill the new functions with this code, each function will identify the selected item from each inventory and move it to
+another inventory with the method <a class="reference internal" href="../../api/class_inventory.html#class-inventory-method-transfer"><span class="std std-ref">transfer</span></a>:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_on_button_left_button_down</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">selected_items</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="nb nb-Type">int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">simple_inventory_ui</span><span class="o">.</span><span class="n">get_selected_inventory_items</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">selected_items</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+<span class="w">        </span><span class="k">return</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">selected_item_index</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">selected_items</span><span class="p">:</span>
+<span class="w">        </span><span class="n">inventory</span><span class="o">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">selected_item_index</span><span class="p">,</span><span class="w"> </span><span class="n">other_inventory</span><span class="p">)</span>
+
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_button_right_button_down</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">selected_items</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Array</span><span class="p">[</span><span class="nb nb-Type">int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">other_simple_inventory_ui</span><span class="o">.</span><span class="n">get_selected_inventory_items</span><span class="p">()</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">selected_items</span><span class="o">.</span><span class="n">is_empty</span><span class="p">():</span>
+<span class="w">        </span><span class="k">return</span>
+
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">selected_item_index</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">selected_items</span><span class="p">:</span>
+<span class="w">        </span><span class="n">other_inventory</span><span class="o">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">selected_item_index</span><span class="p">,</span><span class="w"> </span><span class="n">inventory</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now just run and test with the <a href="#id1"><span class="problematic" id="id2">:guilabe:`&amp;F1`</span></a> key to add the item, and test moving between one inventory and another.</p>
+<img alt="../../_images/tutorial_transfer_finished.gif" src="../../_images/tutorial_transfer_finished.gif" />
+<p>It’s amazing that you can use the full transfer power of the inventory. This function internalizes several operations such as adding, removing, checking available stacks.
+You can check available parameters, such as changing the transfer to:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="n">other_inventory</span><span class="o">.</span><span class="n">transfer</span><span class="p">(</span><span class="n">selected_item_index</span><span class="p">,</span><span class="w"> </span><span class="n">inventory</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Putting a number at the end specifies the quantity you want to move.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>See more about it in the <a class="reference internal" href="../../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> API and also in the <a class="reference internal" href="../../manual/inventories.html#inventories"><span class="std std-ref">Inventories</span></a> manual.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="add_simple_ui.html" class="btn btn-neutral float-left" title="Add Simple UI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../manual/database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
