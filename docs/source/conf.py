@@ -18,7 +18,7 @@ release = '2.3.1'
 
 extensions = [
     "sphinx_rtd_dark_mode",
-    # "sphinxcontrib.googleanalytics",
+    "sphinxcontrib.googleanalytics",
     # "myst_parser",
     # "sphinx_tabs.tabs",
     # "notfound.extension",
@@ -28,11 +28,11 @@ extensions = [
     # "sphinxemoji.sphinxemoji",
 ]
 
-if os.getenv("GITHUB_ACTIONS"):
-  extensions.append("sphinxcontrib.googleanalytics")
-  googleanalytics_id = "G-TBJYX8K1T0"
+# if os.getenv("GITHUB_ACTIONS"):
+#   extensions.append("sphinxcontrib.googleanalytics")
+#   googleanalytics_id = "G-TBJYX8K1T0"
 
-# googleanalytics_id = "G-TBJYX8K1T0"
+googleanalytics_id = "G-TBJYX8K1T0"
 myst_heading_anchors = 3
 
 default_dark_mode = False
