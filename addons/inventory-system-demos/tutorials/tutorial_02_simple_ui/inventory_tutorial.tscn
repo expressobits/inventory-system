@@ -11,13 +11,13 @@ item_id = "wood"
 [node name="Inventory" type="Inventory" parent="."]
 database = ExtResource("2_v3bvs")
 
-[node name="SimpleInventoryUI" type="Control" parent="."]
-layout_mode = 3
+[node name="SimpleInventoryUI" type="ItemList" parent="." node_paths=PackedStringArray("inventory")]
+clip_contents = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 script = ExtResource("3_52sku")
-inventory_path = NodePath("../Inventory")
-metadata/_custom_type_script = "uid://du4odj2yajra2"
+inventory = NodePath("../Inventory")
