@@ -18,8 +18,7 @@ release = '2.3.1'
 
 extensions = [
     "sphinx_rtd_dark_mode",
-    "sphinxcontrib.googleanalytics",
-    # "myst_parser",
+    # "sphinxcontrib.googleanalytics",
     # "sphinx_tabs.tabs",
     # "notfound.extension",
     # "sphinxext.opengraph",
@@ -32,7 +31,7 @@ extensions = [
 #   extensions.append("sphinxcontrib.googleanalytics")
 #   googleanalytics_id = "G-TBJYX8K1T0"
 
-googleanalytics_id = "G-TBJYX8K1T0"
+# googleanalytics_id = "G-TBJYX8K1T0"
 myst_heading_anchors = 3
 
 default_dark_mode = False
