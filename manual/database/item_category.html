@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_database.html">Creating a Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_simple_ui.html">Add Simple UI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul class="current">
@@ -62,6 +63,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Item Category</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#creating">Creating</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-a-category-to-an-item">Adding a Category to an Item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#viewing-item-category-in-code">Viewing item category in code</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
@@ -141,6 +143,19 @@
 <li><p>Check the categories this item has</p></li>
 </ol>
 <img alt="https://github.com/expressobits/inventory-system/assets/1673249/a987ead2-2c46-4642-ac0c-22e9e9f1f1fd" src="https://github.com/expressobits/inventory-system/assets/1673249/a987ead2-2c46-4642-ac0c-22e9e9f1f1fd" />
+<p>If the category contains custom properties and the item does not, they will be created for the item. Removing the category does not remove its related properties.</p>
+</section>
+<section id="viewing-item-category-in-code">
+<h2>Viewing item category in code<a class="headerlink" href="#viewing-item-category-in-code" title="Permalink to this heading"></a></h2>
+<p>The item category can be checked by the code:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">item</span><span class="p">:</span><span class="w"> </span><span class="n">ItemDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s2">&quot;my_item_id&quot;</span><span class="p">)</span>
+<span class="k">var</span><span class="w"> </span><span class="n">category</span><span class="p">:</span><span class="w"> </span><span class="n">ItemCategory</span>
+<span class="k">if</span><span class="w"> </span><span class="n">item</span><span class="o">.</span><span class="n">is_in_category</span><span class="p">(</span><span class="n">category</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Item has category&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Item does not have category&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 </section>
 
@@ -155,7 +170,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Rafael Correa.</p>
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

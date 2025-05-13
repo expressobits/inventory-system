@@ -53,6 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_database.html">Creating a Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_simple_ui.html">Add Simple UI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul class="current">
@@ -160,6 +161,21 @@ You can use the button to edit the id correctly, it will indicate in red if the 
 </dd>
 </dl>
 </li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">W</span>eight</span>:</dt><dd><p>Weight of the item, used to calculate the weight of the inventory.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">G</span>rid Size</span>:</dt><dd><p>Size of the item in Vector2i, used to calculate the size of item in <a class="reference internal" href="../../api/class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">C</span>ategories</span>:</dt><dd><p>Categories this item is in are used for categorized stacks to only accept specific items. See in <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 </section>
@@ -175,7 +191,7 @@ You can use the button to edit the id correctly, it will indicate in red if the 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Rafael Correa.</p>
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

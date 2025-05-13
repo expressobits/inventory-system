@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Simple UI &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Database" href="../../manual/database.html" />
+    <link rel="prev" title="Add items to Inventory" href="add_items_to_inventory.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Add Simple UI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#adding-a-ui">Adding a UI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#understanding-the-script-simple-inventory-ui-gd">Understanding the script simple_inventory_ui.gd</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../manual/database.html">Database</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html#variant-types">Variant types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Add Simple UI</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/getting_started/quickstart/add_simple_ui.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="add-simple-ui">
+<h1>Add Simple UI<a class="headerlink" href="#add-simple-ui" title="Permalink to this heading"></a></h1>
+<p>This guide shows how to connect a UI to your inventory already created in the last guide.
+The idea of this plugin is for the developer to create their own UIs, as each game will have its own UI nuances,
+but UI scripts placed in the addons/inventory-system-demos/ui folder can be used as bases.</p>
+<section id="adding-a-ui">
+<h2>Adding a UI<a class="headerlink" href="#adding-a-ui" title="Permalink to this heading"></a></h2>
+<p>Add a SimpleInventoryUI node to the previously created scene, switch to 2D view and place this node to fill the entire screen:</p>
+<img alt="../../_images/add_simple_ui_to_scene.gif" src="../../_images/add_simple_ui_to_scene.gif" />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This script is only in the plugin demos, it is only downloaded from the addon branch or via godot asset lib, it is not included via git modules.</p>
+</div>
+<p>Now let’s define the connection between the inventory and the UI. To do this, select the newly created Simple Inventory UI node and in the inspector, place the reference to the Inventory node:</p>
+<a class="reference internal image-reference" href="../../_images/simple_ui_inspector.png"><img alt="../../_images/simple_ui_inspector.png" src="../../_images/simple_ui_inspector.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../../_images/simple_ui_inspector_filled.png"><img alt="../../_images/simple_ui_inspector_filled.png" src="../../_images/simple_ui_inspector_filled.png" style="width: 50%;" /></a>
+<p>Done, now when you press play and use the <span class="guilabel"><span class="accelerator">F</span>1</span> keys to add items, you will be able to see your items being displayed with their information such as name and icon:</p>
+<img alt="../../_images/run_simple_ui.gif" src="../../_images/run_simple_ui.gif" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Play around here, go to the inventory editor and change the stack that can be stored to check that this number implies how many items are in each stack of this inventory.</p>
+</div>
+</section>
+<section id="understanding-the-script-simple-inventory-ui-gd">
+<h2>Understanding the script simple_inventory_ui.gd<a class="headerlink" href="#understanding-the-script-simple-inventory-ui-gd" title="Permalink to this heading"></a></h2>
+<p>Let’s understand a little bit of the code previously added to our scene. In the ready code we can see that two nodes are created at runtime,
+a VBoxContainer and an ItemList, the first is used only to organize the content vertically in case we have additional buttons (This is not the case here),
+while the item list is used to place the items and populate the UI.</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="n">Engine</span><span class="o">.</span><span class="n">is_editor_hint</span><span class="p">():</span>
+<span class="w">            </span><span class="c1"># Clean up, in case it is duplicated in the editor</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">_vbox_container</span><span class="p">):</span>
+<span class="w">                    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+
+<span class="w">    </span><span class="n">_vbox_container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VBoxContainer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">size_flags_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
+<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">size_flags_vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
+<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">anchor_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">anchor_bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
+<span class="w">    </span><span class="n">add_child</span><span class="p">(</span><span class="n">_vbox_container</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">_item_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ItemList</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">size_flags_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
+<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">size_flags_vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
+<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">item_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_list_item_activated</span><span class="p">)</span>
+<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">item_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_list_item_clicked</span><span class="p">)</span>
+<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">select_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_mode</span>
+<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">_item_list</span><span class="p">)</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">has_node</span><span class="p">(</span><span class="n">inventory_path</span><span class="p">):</span>
+<span class="w">            </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_node</span><span class="p">(</span><span class="n">inventory_path</span><span class="p">)</span>
+
+<span class="w">    </span><span class="n">_queue_refresh</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here we can see that when an inventory is defined (and also at initialization) it connects the inventory change signals to call the _queue_refresh() and _update_stack() methods.
+_queue_refresh() will update how many items there are and whether to remove or add new ones, while _update_stack() will update the contents of each item in the inventory.</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">inventory</span><span class="p">:</span><span class="w"> </span><span class="n">Inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb nb-Type">null</span><span class="p">:</span>
+<span class="w">    </span><span class="n">set</span><span class="p">(</span><span class="n">new_inventory</span><span class="p">):</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">new_inventory</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">inventory</span><span class="p">:</span>
+<span class="w">            </span><span class="k">return</span>
+
+<span class="w">        </span><span class="n">_disconnect_inventory_signals</span><span class="p">()</span>
+<span class="w">        </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">new_inventory</span>
+<span class="w">        </span><span class="n">_connect_inventory_signals</span><span class="p">()</span>
+
+<span class="w">        </span><span class="n">_queue_refresh</span><span class="p">()</span>
+
+
+<span class="k">func</span><span class="w"> </span><span class="n">_connect_inventory_signals</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">inventory</span><span class="p">):</span>
+<span class="w">        </span><span class="k">return</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="n">inventory</span><span class="o">.</span><span class="n">contents_changed</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">_queue_refresh</span><span class="p">):</span>
+<span class="w">        </span><span class="n">inventory</span><span class="o">.</span><span class="n">contents_changed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_queue_refresh</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="n">inventory</span><span class="o">.</span><span class="n">updated_stack</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="n">_on_stack_updated</span><span class="p">):</span>
+<span class="w">        </span><span class="n">inventory</span><span class="o">.</span><span class="n">updated_stack</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_stack_updated</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Understanding how the signals in a <a class="reference internal" href="../../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> are used is essential to make important and functional connections for your game,
+such as updating the UI, making an automatic craft happen or needing to update the client-server in the case of a multiplayer game.</p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="add_items_to_inventory.html" class="btn btn-neutral float-left" title="Add items to Inventory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../manual/database.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

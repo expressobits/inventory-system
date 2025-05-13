@@ -23,6 +23,7 @@ We are currently improving all documentation to improve your experience with the
    getting_started/quickstart/create_database
    getting_started/quickstart/create_item_definition
    getting_started/quickstart/add_items_to_inventory
+   getting_started/quickstart/add_simple_ui
 
 
 .. toctree::
