@@ -115,8 +115,8 @@ but UI scripts placed in the addons/inventory-system-demos/ui folder can be used
 <p>This script is only in the plugin demos, it is only downloaded from the addon branch or via godot asset lib, it is not included via git modules.</p>
 </div>
 <p>Now let’s define the connection between the inventory and the UI. To do this, select the newly created Simple Inventory UI node and in the inspector, place the reference to the Inventory node:</p>
-<a class="reference internal image-reference" href="../../_images/simple_ui_inspector.png"><img alt="../../_images/simple_ui_inspector.png" src="../../_images/simple_ui_inspector.png" style="width: 50%;" /></a>
-<a class="reference internal image-reference" href="../../_images/simple_ui_inspector_filled.png"><img alt="../../_images/simple_ui_inspector_filled.png" src="../../_images/simple_ui_inspector_filled.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../../_images/simple_inventory_ui_inspector.png"><img alt="../../_images/simple_inventory_ui_inspector.png" src="../../_images/simple_inventory_ui_inspector.png" style="width: 50%;" /></a>
+<a class="reference internal image-reference" href="../../_images/simple_inventory_ui_inspector_filled.png"><img alt="../../_images/simple_inventory_ui_inspector_filled.png" src="../../_images/simple_inventory_ui_inspector_filled.png" style="width: 50%;" /></a>
 <p>Done, now when you press play and use the <span class="guilabel"><span class="accelerator">F</span>1</span> keys to add items, you will be able to see your items being displayed with their information such as name and icon:</p>
 <img alt="../../_images/run_simple_ui.gif" src="../../_images/run_simple_ui.gif" />
 <div class="admonition note">
@@ -126,33 +126,18 @@ but UI scripts placed in the addons/inventory-system-demos/ui folder can be used
 </section>
 <section id="understanding-the-script-simple-inventory-ui-gd">
 <h2>Understanding the script simple_inventory_ui.gd<a class="headerlink" href="#understanding-the-script-simple-inventory-ui-gd" title="Permalink to this heading"></a></h2>
-<p>Let’s understand a little bit of the code previously added to our scene. In the ready code we can see that two nodes are created at runtime,
-a VBoxContainer and an ItemList, the first is used only to organize the content vertically in case we have additional buttons (This is not the case here),
-while the item list is used to place the items and populate the UI.</p>
-<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">if</span><span class="w"> </span><span class="n">Engine</span><span class="o">.</span><span class="n">is_editor_hint</span><span class="p">():</span>
-<span class="w">            </span><span class="c1"># Clean up, in case it is duplicated in the editor</span>
-<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">_vbox_container</span><span class="p">):</span>
-<span class="w">                    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">queue_free</span><span class="p">()</span>
+<p>Let’s understand a little bit of the code previously added to our scene.
+In ready, a _queue_refresh is triggered that will call the function below that adds an item through the add_item function in the node itself that extends godot’s ItemList:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_populate_list</span><span class="p">()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">void</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">!</span><span class="n">is_instance_valid</span><span class="p">(</span><span class="n">inventory</span><span class="p">):</span>
+<span class="w">            </span><span class="k">return</span>
 
-<span class="w">    </span><span class="n">_vbox_container</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VBoxContainer</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
-<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">size_flags_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
-<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">size_flags_vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
-<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">anchor_right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
-<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">anchor_bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.0</span>
-<span class="w">    </span><span class="n">add_child</span><span class="p">(</span><span class="n">_vbox_container</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">_item_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ItemList</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
-<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">size_flags_horizontal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
-<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">size_flags_vertical</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SIZE_EXPAND_FILL</span>
-<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">item_activated</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_list_item_activated</span><span class="p">)</span>
-<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">item_clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_list_item_clicked</span><span class="p">)</span>
-<span class="w">    </span><span class="n">_item_list</span><span class="o">.</span><span class="n">select_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">select_mode</span>
-<span class="w">    </span><span class="n">_vbox_container</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">_item_list</span><span class="p">)</span>
-
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">has_node</span><span class="p">(</span><span class="n">inventory_path</span><span class="p">):</span>
-<span class="w">            </span><span class="n">inventory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_node</span><span class="p">(</span><span class="n">inventory_path</span><span class="p">)</span>
-
-<span class="w">    </span><span class="n">_queue_refresh</span><span class="p">()</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="o">.</span><span class="n">size</span><span class="p">():</span>
+<span class="w">            </span><span class="k">var</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="w">            </span><span class="k">var</span><span class="w"> </span><span class="n">definition</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">ItemDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">item_id</span><span class="p">)</span>
+<span class="w">            </span><span class="k">var</span><span class="w"> </span><span class="n">texture</span><span class="w"> </span><span class="p">:</span><span class="o">=</span><span class="w"> </span><span class="n">definition</span><span class="o">.</span><span class="n">icon</span>
+<span class="w">            </span><span class="n">add_item</span><span class="p">(</span><span class="n">_get_item_title</span><span class="p">(</span><span class="n">item</span><span class="p">,</span><span class="w"> </span><span class="n">definition</span><span class="p">),</span><span class="w"> </span><span class="n">texture</span><span class="p">)</span>
+<span class="w">            </span><span class="n">set_item_metadata</span><span class="p">(</span><span class="n">get_item_count</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Here we can see that when an inventory is defined (and also at initialization) it connects the inventory change signals to call the _queue_refresh() and _update_stack() methods.
