@@ -54,7 +54,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Name"
+text = "Name"
 
 [node name="ItemNameTextEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -95,7 +95,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MaxStack"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Max Stack"
+text = "Max Stack"
 
 [node name="MaxStackSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/MaxStack"]
 unique_name_in_owner = true
@@ -114,7 +114,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Weight"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Weight"
+text = "Weight"
 
 [node name="WeightSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Weight"]
 unique_name_in_owner = true
@@ -136,7 +136,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Size"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Grid Size"
+text = "Grid Size"
 
 [node name="LabelX" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Size"]
 custom_minimum_size = Vector2(32, 0)
