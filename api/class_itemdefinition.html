@@ -95,6 +95,7 @@
 <li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
 </ul>
 </li>
 </ul>
@@ -208,7 +209,7 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_can_stack</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_can_stack</strong>()</p></li>
 </ul>
-<p>Defines whether there is a <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.</p>
+<p>Defines whether there is a <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> for the item containing this item definition, unchecked means only one item is added to the stack.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemdefinition-property-categories"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>] <strong>categories</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-itemdefinition-property-categories"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
@@ -244,9 +245,7 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_max_stack</strong>(value: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_max_stack</strong>()</p></li>
 </ul>
-<div class="contribute docutils container">
-<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Maximum stackable item in an inventory, only used if <a class="reference internal" href="#class-itemdefinition-property-can-stack"><span class="std std-ref">can_stack</span></a> is active.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemdefinition-property-name"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>name</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> <a class="reference internal" href="#class-itemdefinition-property-name"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">

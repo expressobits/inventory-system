@@ -94,7 +94,7 @@ Property Descriptions
 - |void| **set_can_stack**\ (\ value\: ``bool``\ )
 - ``bool`` **get_can_stack**\ (\ )
 
-Defines whether there is a :ref:`max_stack<class_ItemDefinition_property_max_stack>` for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.
+Defines whether there is a :ref:`max_stack<class_ItemDefinition_property_max_stack>` for the item containing this item definition, unchecked means only one item is added to the stack.
 
 .. rst-class:: classref-item-separator
 
@@ -181,9 +181,7 @@ This String can be used in the database to return an item by its id See :ref:`In
 - |void| **set_max_stack**\ (\ value\: ``int``\ )
 - ``int`` **get_max_stack**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Maximum stackable item in an inventory, only used if :ref:`can_stack<class_ItemDefinition_property_can_stack>` is active.
 
 .. rst-class:: classref-item-separator
 
