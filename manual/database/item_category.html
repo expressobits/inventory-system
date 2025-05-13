@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Item Category &mdash; Inventory System 2.3.1 documentation</title>
+  <title>Item Category &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Item Definition" href="item_definition.html" />
-    <link rel="prev" title="Inventory Database Editor" href="inventory_database_editor.html" /> 
+    <link rel="next" title="Using the Database in Scenes" href="using_database_in_scenes.html" />
+    <link rel="prev" title="Item Definition" href="item_definition.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,15 +58,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../database.html">Database</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="inventory_database_editor.html">Inventory Database Editor</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Create Item Category</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#create-a-category-with-inventory-editor">Create a category <strong>with</strong> Inventory Editor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#create-a-item-category-without-inventory-editor">Create a Item Category without Inventory Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Item Category</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating">Creating</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#adding-a-category-to-an-item">Adding a Category to an Item</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#adding-a-category-to-an-item-with-inventory-editor">Adding a Category to an Item with Inventory Editor</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#adding-a-category-to-an-item-without-inventory-editor">Adding a Category to an Item without Inventory Editor</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="work_with_json.html">Work with JSON</a></li>
 </ul>
@@ -83,6 +80,7 @@
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html#variant-types">Variant types</a></li>
 </ul>
 
         </div>
@@ -100,9 +98,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../database.html">Database</a></li>
-      <li class="breadcrumb-item active">Create Item Category</li>
+      <li class="breadcrumb-item active">Item Category</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/manual/database/creating_item_category.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/manual/database/item_category.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -110,58 +108,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="create-item-category">
-<h1>Create Item Category<a class="headerlink" href="#create-item-category" title="Permalink to this heading"></a></h1>
-<p>You can use item categories to highlight a slot that only accepts that type of item.
-.. image:: <a class="reference external" href="https://github.com/expressobits/inventory-system/assets/1673249/9294b461-8d61-41e0-9980-60c5dca21136">https://github.com/expressobits/inventory-system/assets/1673249/9294b461-8d61-41e0-9980-60c5dca21136</a></p>
+  <section id="item-category">
+<h1>Item Category<a class="headerlink" href="#item-category" title="Permalink to this heading"></a></h1>
+<p>You can use item categories to highlight a slot that only accepts that type of item.</p>
+<img alt="https://github.com/expressobits/inventory-system/assets/1673249/9294b461-8d61-41e0-9980-60c5dca21136" src="https://github.com/expressobits/inventory-system/assets/1673249/9294b461-8d61-41e0-9980-60c5dca21136" />
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Creating by inventory editor or without, results in the same resource database within the data.</p>
 </div>
-<section id="create-a-category-with-inventory-editor">
-<h2>Create a category <strong>with</strong> Inventory Editor<a class="headerlink" href="#create-a-category-with-inventory-editor" title="Permalink to this heading"></a></h2>
+<section id="creating">
+<h2>Creating<a class="headerlink" href="#creating" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Open Inventory Editor</p></li>
 </ol>
 <img alt="https://github.com/expressobits/inventory-system/assets/1673249/2bf12f88-031b-43b5-9b4c-65fa7aabc368" src="https://github.com/expressobits/inventory-system/assets/1673249/2bf12f88-031b-43b5-9b4c-65fa7aabc368" />
 <ol class="arabic simple" start="2">
-<li><p>Open a item database</p></li>
+<li><p>Click on “New Item Category” button</p></li>
 </ol>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/4bb364a0-3e79-41a5-a300-b0970578e360" src="https://github.com/expressobits/inventory-system/assets/1673249/4bb364a0-3e79-41a5-a300-b0970578e360" />
+<img alt="../../_images/menu_new_item_category.png" src="../../_images/menu_new_item_category.png" />
 <ol class="arabic simple" start="3">
-<li><p>Create new item category in last top button</p></li>
-</ol>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/3ccbc28e-98f3-4c81-abd7-9f9b7ef5fae6" src="https://github.com/expressobits/inventory-system/assets/1673249/3ccbc28e-98f3-4c81-abd7-9f9b7ef5fae6" />
-<ol class="arabic simple" start="4">
 <li><p>Edit a new category created</p></li>
 </ol>
 <img alt="https://github.com/expressobits/inventory-system/assets/1673249/129e12b2-a553-4b91-8f47-d0537545474c" src="https://github.com/expressobits/inventory-system/assets/1673249/129e12b2-a553-4b91-8f47-d0537545474c" />
 </section>
-<section id="create-a-item-category-without-inventory-editor">
-<h2>Create a Item Category without Inventory Editor<a class="headerlink" href="#create-a-item-category-without-inventory-editor" title="Permalink to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p>Create item category resource</p></li>
-</ol>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/11e9b2c2-1ba5-4988-a644-9d8c095eb7f5" src="https://github.com/expressobits/inventory-system/assets/1673249/11e9b2c2-1ba5-4988-a644-9d8c095eb7f5" />
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/d63784e1-35b0-48ba-bd28-76cec28005e3" src="https://github.com/expressobits/inventory-system/assets/1673249/d63784e1-35b0-48ba-bd28-76cec28005e3" />
-<ol class="arabic simple" start="2">
-<li><p>Edit a new category created</p></li>
-</ol>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/2ca4a681-4add-4546-ac9a-88a9ec27e097" src="https://github.com/expressobits/inventory-system/assets/1673249/2ca4a681-4add-4546-ac9a-88a9ec27e097" />
-<ol class="arabic simple" start="3">
-<li><p>Add new category to database resource</p></li>
-</ol>
-<img alt="https://github.com/expressobits/inventory-system/assets/1673249/3996d513-264e-4686-8228-f08f78bc1d21" src="https://github.com/expressobits/inventory-system/assets/1673249/3996d513-264e-4686-8228-f08f78bc1d21" />
-</section>
 <section id="adding-a-category-to-an-item">
 <h2>Adding a Category to an Item<a class="headerlink" href="#adding-a-category-to-an-item" title="Permalink to this heading"></a></h2>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Adding a Category by inventory editor or without, results in the same resource database within the data.</p>
-</div>
-</section>
-<section id="adding-a-category-to-an-item-with-inventory-editor">
-<h2>Adding a Category to an Item with Inventory Editor<a class="headerlink" href="#adding-a-category-to-an-item-with-inventory-editor" title="Permalink to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p>Open the item you want to put your category</p></li>
 </ol>
@@ -171,21 +142,14 @@
 </ol>
 <img alt="https://github.com/expressobits/inventory-system/assets/1673249/a987ead2-2c46-4642-ac0c-22e9e9f1f1fd" src="https://github.com/expressobits/inventory-system/assets/1673249/a987ead2-2c46-4642-ac0c-22e9e9f1f1fd" />
 </section>
-<section id="adding-a-category-to-an-item-without-inventory-editor">
-<h2>Adding a Category to an Item without Inventory Editor<a class="headerlink" href="#adding-a-category-to-an-item-without-inventory-editor" title="Permalink to this heading"></a></h2>
-<p>TODO</p>
-<ol class="arabic simple">
-<li><p>Open the item you want to put your category</p></li>
-</ol>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="inventory_database_editor.html" class="btn btn-neutral float-left" title="Inventory Database Editor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="item_definition.html" class="btn btn-neutral float-right" title="Item Definition" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="item_definition.html" class="btn btn-neutral float-left" title="Item Definition" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="using_database_in_scenes.html" class="btn btn-neutral float-right" title="Using the Database in Scenes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

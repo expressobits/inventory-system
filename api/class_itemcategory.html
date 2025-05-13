@@ -68,7 +68,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">All classes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html#variant-types">Variant types</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
@@ -93,7 +94,6 @@
 <li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
 </ul>
 </li>
 </ul>
@@ -130,7 +130,7 @@
 <p>Category to specify an <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>.</p>
 <section class="classref-introduction-group" id="description">
 <h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
-<p>This resource is used to add the same properties to multiple <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a> at the same time. This category is also used by <span class="xref std std-ref">Slot.categorized</span> to specify a slot that can only accept a certain type of category.</p>
+<p>This resource is used to add the same properties to multiple <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a> at the same time. This category is also used by <a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> to specify a stack that can only accept a certain type of category.</p>
 </section>
 <section class="classref-reftable-group" id="properties">
 <h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h2>
@@ -181,14 +181,14 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_color</strong>(value: <code class="docutils literal notranslate"><span class="pre">Color</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Color</span></code> <strong>get_color</strong>()</p></li>
 </ul>
-<p>Color to identify the category. Used for example in a UI to paint a categorized <a class="reference internal" href="class_slot.html#class-slot"><span class="std std-ref">Slot</span></a>.</p>
+<p>Color to identify the category. Used for example in a UI to paint a categorized slot in UI.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemcategory-property-icon"><code class="docutils literal notranslate"><span class="pre">Texture2D</span></code> <strong>icon</strong> <a class="reference internal" href="#class-itemcategory-property-icon"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
 <li><p><abbr title="No return value.">void</abbr> <strong>set_icon</strong>(value: <code class="docutils literal notranslate"><span class="pre">Texture2D</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Texture2D</span></code> <strong>get_icon</strong>()</p></li>
 </ul>
-<p>Category icon. Used for example for a background of a categorized <a class="reference internal" href="class_slot.html#class-slot"><span class="std std-ref">Slot</span></a>.</p>
+<p>Category icon. Used for example for a background of a categorized slot in UI.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemcategory-property-id"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>id</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> <a class="reference internal" href="#class-itemcategory-property-id"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">

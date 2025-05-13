@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Using the Database in Scenes" href="using_database_in_scenes.html" />
-    <link rel="prev" title="Create Item Category" href="creating_item_category.html" /> 
+    <link rel="next" title="Item Category" href="item_category.html" />
+    <link rel="prev" title="Inventory Database Editor" href="inventory_database_editor.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -58,11 +58,12 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../database.html">Database</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="inventory_database_editor.html">Inventory Database Editor</a></li>
-<li class="toctree-l2"><a class="reference internal" href="creating_item_category.html">Create Item Category</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Item Definition</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#editor">Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#item-id">Item ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#item-definition-editor">Item Definition Editor</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="item_category.html">Item Category</a></li>
 <li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="work_with_json.html">Work with JSON</a></li>
 </ul>
@@ -79,6 +80,7 @@
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html#variant-types">Variant types</a></li>
 </ul>
 
         </div>
@@ -108,22 +110,51 @@
              
   <section id="item-definition">
 <h1>Item Definition<a class="headerlink" href="#item-definition" title="Permalink to this heading"></a></h1>
-<section id="editor">
-<h2>Editor<a class="headerlink" href="#editor" title="Permalink to this heading"></a></h2>
+<p>The item definition is a resource that has values
+for items that will be used in the <a class="reference internal" href="../../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> node. In it we store various information such as its name, its id, its weight, etc…</p>
+<section id="item-id">
+<h2>Item ID<a class="headerlink" href="#item-id" title="Permalink to this heading"></a></h2>
+<p>In inventories and other nodes of this plugin, items will not be used as definitions but rather referenced by their id.
+Many times you will want to acquire the item definition by id, for this you can use ready-made calls in the inventory node or database:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">db</span><span class="p">:</span><span class="w"> </span><span class="n">InventoryDatabase</span>
+<span class="k">var</span><span class="w"> </span><span class="n">def</span><span class="p">:</span><span class="w"> </span><span class="n">ItemDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">get_item</span><span class="p">(</span><span class="s2">&quot;my_item_id&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># Get item definition by id</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The nodes in this plugin also extend the <a class="reference internal" href="../../api/class_nodeinventories.html#class-nodeinventories"><span class="std std-ref">NodeInventories</span></a> which has a direct call to get_item_from_id as well.</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Code in a node that extends NodeInventories (Inventory, CraftStation, etc)</span>
+<span class="k">var</span><span class="w"> </span><span class="n">def</span><span class="p">:</span><span class="w"> </span><span class="n">ItemDefinition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">db</span><span class="o">.</span><span class="n">get_item_from_id</span><span class="p">(</span><span class="s2">&quot;my_item_id&quot;</span><span class="p">)</span><span class="w"> </span><span class="c1"># Get item definition by id</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="item-definition-editor">
+<h2>Item Definition Editor<a class="headerlink" href="#item-definition-editor" title="Permalink to this heading"></a></h2>
+<img alt="../../_images/item_definition_editor.png" src="../../_images/item_definition_editor.png" />
+<p>In the window, items are displayed in a list on the left side, or we can also search by name.</p>
 <ul class="simple">
 <li><dl class="simple">
-<dt><span class="guilabel"><span class="accelerator">I</span>D</span>: String identification of the item, used to get the item based on a list of items easily using the id.</dt><dd><p>You can use the button to edit the id correctly, it will indicate in red if the id already exists.</p>
+<dt><span class="guilabel"><span class="accelerator">I</span>D</span>:</dt><dd><p>String identification of the item, used to get the item based on a list of items easily using the id.
+You can use the button to edit the id correctly, it will indicate in red if the id already exists.</p>
 </dd>
 </dl>
 </li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The base node (NodeInventories) has two methods that use the database field (InventoryDatabase) that use this id to facilitate access to items</p>
-</div>
-<ul class="simple">
-<li><p><span class="guilabel"><span class="accelerator">I</span>con</span>: Texture to display your item in-game and in the editor</p></li>
-<li><p><span class="guilabel"><span class="accelerator">N</span>ame</span>: Name to be displayed or used as additional identification (It is your responsibility to use this field)</p></li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">I</span>con</span>:</dt><dd><p>Texture to display your item in-game and in the editor</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">N</span>ame</span>:</dt><dd><p>Name to be displayed or used as additional identification (It is your responsibility to use this field)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><span class="guilabel"><span class="accelerator">C</span>an Stack</span>:</dt><dd><p>Defines whether there is a <span class="guilabel"><span class="accelerator">M</span>ax Stack</span> for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </section>
 </section>
@@ -132,8 +163,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="creating_item_category.html" class="btn btn-neutral float-left" title="Create Item Category" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="using_database_in_scenes.html" class="btn btn-neutral float-right" title="Using the Database in Scenes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inventory_database_editor.html" class="btn btn-neutral float-left" title="Inventory Database Editor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="item_category.html" class="btn btn-neutral float-right" title="Item Category" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

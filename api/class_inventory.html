@@ -68,7 +68,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">All classes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html#variant-types">Variant types</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
@@ -95,7 +96,6 @@
 <li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
 </ul>
 </li>
 </ul>
@@ -228,7 +228,7 @@
 <td><p><a class="reference internal" href="#class-inventory-method-has-stack"><span class="std std-ref">has_stack</span></a>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">is_accept_any_categories</span></a>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, slot: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">is_accept_any_categories</span></a>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, categories: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
 <td><p><a class="reference internal" href="#class-inventory-method-is-empty"><span class="std std-ref">is_empty</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
@@ -368,7 +368,7 @@
 <p>Returns true if contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-contains-at"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_at</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-at"><span class="std std-ref">🔗</span></a></p>
-<p>Returns true if the slot index contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
+<p>Returns true if the stack index contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-contains-category"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-category"><span class="std std-ref">🔗</span></a></p>
 <p>Returns true if contains the amount of <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) with the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
@@ -417,7 +417,7 @@
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
 </div>
 <hr class="classref-item-separator docutils" />
-<p class="classref-method" id="class-inventory-method-is-accept-any-categories"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_accept_any_categories</strong>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, slot: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">🔗</span></a></p>
+<p class="classref-method" id="class-inventory-method-is-accept-any-categories"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_accept_any_categories</strong>(categories_flag: <code class="docutils literal notranslate"><span class="pre">int</span></code>, categories: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>]) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-accept-any-categories"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
 </div>
@@ -432,10 +432,10 @@
 <p>Removes a amount of the <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) from inventory and returns the amount that was not removed.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-remove-at"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>remove_at</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">🔗</span></a></p>
-<p>Removes an item_id amount to the specified inventory <a class="reference internal" href="class_slot.html#class-slot"><span class="std std-ref">Slot</span></a> index and returns the remaining value that was not removed.</p>
+<p>Removes an item_id amount to the specified inventory <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a> index and returns the remaining value that was not removed.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-remove-from-stack"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>remove_from_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-remove-from-stack"><span class="std std-ref">🔗</span></a></p>
-<p>Remove slot with <code class="docutils literal notranslate"><span class="pre">stack</span></code> parameter, set <code class="docutils literal notranslate"><span class="pre">emit_signal</span></code> to false to disable events called by <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a>.</p>
+<p>Remove stack with <code class="docutils literal notranslate"><span class="pre">stack</span></code> parameter, set <code class="docutils literal notranslate"><span class="pre">emit_signal</span></code> to false to disable events called by <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-remove-stack"><abbr title="No return value.">void</abbr> <strong>remove_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-method-remove-stack"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">

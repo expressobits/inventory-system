@@ -68,7 +68,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">All classes</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">All classes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html#variant-types">Variant types</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="class_crafting.html">Crafting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstation.html">CraftStation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
@@ -94,7 +95,6 @@
 <li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadtree.html">QuadTree</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_recipe.html">Recipe</a></li>
-<li class="toctree-l2"><a class="reference internal" href="class_slot.html">Slot</a></li>
 </ul>
 </li>
 </ul>
@@ -208,21 +208,21 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_can_stack</strong>(value: <code class="docutils literal notranslate"><span class="pre">bool</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>get_can_stack</strong>()</p></li>
 </ul>
-<p>Defines whether there is a <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> for the item containing this item definition, unchecked means the item can be added unlimitedly to a slot.</p>
+<p>Defines whether there is a <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemdefinition-property-categories"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>] <strong>categories</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-itemdefinition-property-categories"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
 <li><p><abbr title="No return value.">void</abbr> <strong>set_categories</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>])</p></li>
 <li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>] <strong>get_categories</strong>()</p></li>
 </ul>
-<p>Categories this item is in are used for categorized slots to only accept specific items. See in <span class="xref std std-ref">Slot.categorized</span></p>
+<p>Categories this item is in are used for categorized stacks to only accept specific items. See in <span class="xref std std-ref">InventoryConstraint</span></p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemdefinition-property-dynamic-properties"><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">String</span></code>] <strong>dynamic_properties</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-itemdefinition-property-dynamic-properties"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
 <li><p><abbr title="No return value.">void</abbr> <strong>set_dynamic_properties</strong>(value: <span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">String</span></code>])</p></li>
 <li><p><span class="xref std std-ref">Array</span>[<code class="docutils literal notranslate"><span class="pre">String</span></code>] <strong>get_dynamic_properties</strong>()</p></li>
 </ul>
-<p>Properties that are defined as dynamic and are calculated for individual items within the slot. Can only be used when <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> is 1.</p>
+<p>Properties that are defined as dynamic and are calculated for individual items within the stack. Can only be used when <a class="reference internal" href="#class-itemdefinition-property-max-stack"><span class="std std-ref">max_stack</span></a> is 1.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-itemdefinition-property-icon"><code class="docutils literal notranslate"><span class="pre">Texture2D</span></code> <strong>icon</strong> <a class="reference internal" href="#class-itemdefinition-property-icon"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">

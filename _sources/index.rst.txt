@@ -26,7 +26,7 @@ We are currently improving all documentation to improve your experience with the
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Manual
    
    manual/database

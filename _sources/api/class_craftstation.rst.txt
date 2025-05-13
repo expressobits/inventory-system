@@ -514,7 +514,7 @@ Returns true if the ``recipe`` can be created. It checks whether the ingredients
 
 |void| **cancel_craft**\ (\ crafting_index\: ``int``\ ) :ref:`🔗<class_CraftStation_method_cancel_craft>`
 
-Cancels :ref:`Crafting<class_Crafting>` with index ``crafting_index`` and returns the items used by crafting to the input inventory. Note: Canceling does not return items to their previous positions, such as :ref:`Inventory<class_Inventory>` or a specific :ref:`Slot<class_Slot>`.
+Cancels :ref:`Crafting<class_Crafting>` with index ``crafting_index`` and returns the items used by crafting to the input inventory. Note: Canceling does not return items to their previous positions, such as :ref:`Inventory<class_Inventory>` or a specific ``Slot``.
 
 .. rst-class:: classref-item-separator
 
