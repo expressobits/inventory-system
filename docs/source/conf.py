@@ -9,7 +9,7 @@
 import os
 
 project = 'Inventory System'
-copyright = '2025, Rafael Correa'
+copyright = '2025, Expresso Bits'
 author = 'Rafael Correa'
 release = '2.3.1'
 

@@ -46,3 +46,9 @@ In the window, items are displayed in a list on the left side, or we can also se
         Defines whether there is a :guilabel:`&Max Stack` for the item containing this item definition, unchecked means only one item is added to the stack.
 - :guilabel:`&Max Stack`: 
         Maximum stackable item in an inventory, only used if :guilabel:`&Can Stack` is active.
+- :guilabel:`&Weight`: 
+        Weight of the item, used to calculate the weight of the inventory.
+- :guilabel:`&Grid Size`: 
+        Size of the item in Vector2i, used to calculate the size of item in :ref:`class_gridinventory`.	
+- :guilabel:`&Categories`:
+        Categories this item is in are used for categorized stacks to only accept specific items. See in :ref:`class_inventoryconstraint`.

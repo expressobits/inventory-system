@@ -51,9 +51,10 @@
 			Properties of this item, additional information here can be added (For example the 3d item that drops from this item, or its item from the player's hand, etc.)
 		</member>
 		<member name="size" type="Vector2i" setter="set_size" getter="get_size" default="Vector2i(1, 1)">
+			Size of the item in Vector2i, used to calculate the size of item in [GridInventory].
 		</member>
 		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="0.0">
-			Item weight in float.
+			Weight of the item, used to calculate the weight of the inventory.
 		</member>
 	</members>
 </class>

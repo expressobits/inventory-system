@@ -9,8 +9,9 @@ You can use item categories to highlight a slot that only accepts that type of i
 .. note::   
     Creating by inventory editor or without, results in the same resource database within the data.
 
+=============================
 Creating
------------------------------------------------
+=============================
 
 1. Open Inventory Editor
 
@@ -24,8 +25,9 @@ Creating
 
 .. image:: https://github.com/expressobits/inventory-system/assets/1673249/129e12b2-a553-4b91-8f47-d0537545474c
 
+=============================
 Adding a Category to an Item
------------------------------------------------
+=============================
 
 1. Open the item you want to put your category
 
@@ -35,5 +37,20 @@ Adding a Category to an Item
 
 .. image:: https://github.com/expressobits/inventory-system/assets/1673249/a987ead2-2c46-4642-ac0c-22e9e9f1f1fd
 
+If the category contains custom properties and the item does not, they will be created for the item. Removing the category does not remove its related properties.
 
+=============================
+Viewing item category in code
+=============================
+
+The item category can be checked by the code:
+
+.. code-block:: gdscript
+
+    var item: ItemDefinition = db.get_item("my_item_id")
+    var category: ItemCategory
+    if item.is_in_category(category):
+        print("Item has category")
+    else:
+        print("Item does not have category")
 
