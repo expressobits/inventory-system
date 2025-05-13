@@ -19,10 +19,10 @@ Add a SimpleInventoryUI node to the previously created scene, switch to 2D view 
 
 Now let's define the connection between the inventory and the UI. To do this, select the newly created Simple Inventory UI node and in the inspector, place the reference to the Inventory node:
 
-.. image:: ./images/simple_ui_inspector.png
+.. image:: ./images/simple_inventory_ui_inspector.png
     :width: 50%
 
-.. image:: ./images/simple_ui_inspector_filled.png
+.. image:: ./images/simple_inventory_ui_inspector_filled.png
     :width: 50%
 
 Done, now when you press play and use the :guilabel:`&F1` keys to add items, you will be able to see your items being displayed with their information such as name and icon:
@@ -36,36 +36,21 @@ Done, now when you press play and use the :guilabel:`&F1` keys to add items, you
 Understanding the script simple_inventory_ui.gd
 ==============================================
 
-Let's understand a little bit of the code previously added to our scene. In the ready code we can see that two nodes are created at runtime, 
-a VBoxContainer and an ItemList, the first is used only to organize the content vertically in case we have additional buttons (This is not the case here), 
-while the item list is used to place the items and populate the UI.
+Let's understand a little bit of the code previously added to our scene. 
+In ready, a _queue_refresh is triggered that will call the function below that adds an item through the add_item function in the node itself that extends godot's ItemList:
 
 .. code-block:: gdscript
 
-    if Engine.is_editor_hint():
-		# Clean up, in case it is duplicated in the editor
-		if is_instance_valid(_vbox_container):
-			_vbox_container.queue_free()
+    func _populate_list() -> void:
+	if !is_instance_valid(inventory):
+		return
 
-	_vbox_container = VBoxContainer.new()
-	_vbox_container.size_flags_horizontal = SIZE_EXPAND_FILL
-	_vbox_container.size_flags_vertical = SIZE_EXPAND_FILL
-	_vbox_container.anchor_right = 1.0
-	_vbox_container.anchor_bottom = 1.0
-	add_child(_vbox_container)
-
-	_item_list = ItemList.new()
-	_item_list.size_flags_horizontal = SIZE_EXPAND_FILL
-	_item_list.size_flags_vertical = SIZE_EXPAND_FILL
-	_item_list.item_activated.connect(_on_list_item_activated)
-	_item_list.item_clicked.connect(_on_list_item_clicked)
-	_item_list.select_mode = select_mode
-	_vbox_container.add_child(_item_list)
-
-	if has_node(inventory_path):
-		inventory = get_node(inventory_path)
-
-	_queue_refresh()
+	for i in inventory.stacks.size():
+		var item = inventory.stacks[i]
+		var definition : ItemDefinition = inventory.database.get_item(item.item_id)
+		var texture := definition.icon
+		add_item(_get_item_title(item, definition), texture)
+		set_item_metadata(get_item_count() - 1, i)
 
 
 Here we can see that when an inventory is defined (and also at initialization) it connects the inventory change signals to call the _queue_refresh() and _update_stack() methods.
