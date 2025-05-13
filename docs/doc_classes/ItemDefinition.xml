@@ -26,7 +26,7 @@
 	</methods>
 	<members>
 		<member name="can_stack" type="bool" setter="set_can_stack" getter="get_can_stack" default="true">
-			Defines whether there is a [member max_stack] for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.
+			Defines whether there is a [member max_stack] for the item containing this item definition, unchecked means only one item is added to the stack.
 		</member>
 		<member name="categories" type="ItemCategory[]" setter="set_categories" getter="get_categories" default="[]">
 			Categories this item is in are used for categorized stacks to only accept specific items. See in [member InventoryConstraint]
@@ -42,6 +42,7 @@
 			This String can be used in the database to return an item by its id See [member InventoryDatabase.get_item]
 		</member>
 		<member name="max_stack" type="int" setter="set_max_stack" getter="get_max_stack" default="0">
+			Maximum stackable item in an inventory, only used if [member can_stack] is active.
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
 			Name of the item to be displayed in the UI e.g.

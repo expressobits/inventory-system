@@ -43,4 +43,6 @@ In the window, items are displayed in a list on the left side, or we can also se
 - :guilabel:`&Name`: 
         Name to be displayed or used as additional identification (It is your responsibility to use this field)
 - :guilabel:`&Can Stack`: 
-        Defines whether there is a :guilabel:`&Max Stack` for the item containing this item definition, unchecked means the item can be added unlimitedly to a stack.
+        Defines whether there is a :guilabel:`&Max Stack` for the item containing this item definition, unchecked means only one item is added to the stack.
+- :guilabel:`&Max Stack`: 
+        Maximum stackable item in an inventory, only used if :guilabel:`&Can Stack` is active.

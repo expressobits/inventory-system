@@ -35,4 +35,5 @@ Variant types
     class_quadrect
     class_quadtree
     class_recipe
+    class_slot
 
