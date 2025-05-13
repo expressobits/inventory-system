@@ -24,6 +24,7 @@ We are currently improving all documentation to improve your experience with the
    getting_started/quickstart/create_item_definition
    getting_started/quickstart/add_items_to_inventory
    getting_started/quickstart/add_simple_ui
+   getting_started/quickstart/operation_between_inventories
 
 
 .. toctree::
@@ -32,6 +33,7 @@ We are currently improving all documentation to improve your experience with the
    
    manual/database
    manual/inventories
+   manual/craft_stations
 
 
 .. toctree::

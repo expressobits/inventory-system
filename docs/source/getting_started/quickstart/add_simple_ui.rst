@@ -4,7 +4,7 @@ Add Simple UI
 
 This guide shows how to connect a UI to your inventory already created in the last guide. 
 The idea of this plugin is for the developer to create their own UIs, as each game will have its own UI nuances, 
-but UI scripts placed in the addons/inventory-system-demos/ui folder can be used as bases.
+but UI scripts placed in the addons/inventory-system-demos/simple_transfer folder can be used as bases.
 
 ==============================
 Adding a UI
@@ -14,8 +14,10 @@ Add a SimpleInventoryUI node to the previously created scene, switch to 2D view 
 
 .. image:: ./images/add_simple_ui_to_scene.gif
 
+.. _simple_inventory_ui.gd: https://github.com/expressobits/inventory-system/blob/7335c341afc0b2f5ea81bd7e7a84e59285a24a0f/addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd
 .. warning::
     This script is only in the plugin demos, it is only downloaded from the addon branch or via godot asset lib, it is not included via git modules.
+    See code here: `simple_inventory_ui.gd`_
 
 Now let's define the connection between the inventory and the UI. To do this, select the newly created Simple Inventory UI node and in the inspector, place the reference to the Inventory node:
 
