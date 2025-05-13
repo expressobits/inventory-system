@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Item Definition &mdash; Inventory System 2.3.1 documentation</title>
+  <title>Inventory Database Editor &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Add items to Inventory" href="add_items_to_inventory.html" />
-    <link rel="prev" title="Creating a Database" href="create_database.html" /> 
+    <link rel="next" title="Create Item Category" href="creating_item_category.html" />
+    <link rel="prev" title="Database" href="../database.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,20 +47,23 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation and Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="create_database.html">Creating a Database</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Create Item Definition</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#creating">Creating</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setup-new-item-definition">Setup New Item Definition</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="add_items_to_inventory.html">Add items to Inventory</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../manual/database.html">Database</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../database.html">Database</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Inventory Database Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_item_category.html">Create Item Category</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="work_with_json.html">Work with JSON</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
@@ -89,9 +92,10 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Create Item Definition</li>
+          <li class="breadcrumb-item"><a href="../database.html">Database</a></li>
+      <li class="breadcrumb-item active">Inventory Database Editor</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/getting_started/quickstart/create_item_definition.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/manual/database/inventory_database_editor.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -99,30 +103,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="create-item-definition">
-<h1>Create Item Definition<a class="headerlink" href="#create-item-definition" title="Permalink to this heading"></a></h1>
-<section id="creating">
-<h2>Creating<a class="headerlink" href="#creating" title="Permalink to this heading"></a></h2>
-<p>To create new items in a database, select the <strong>New Item</strong> option:</p>
-<img alt="../../_images/select_new_item_def.png" src="../../_images/select_new_item_def.png" />
-<p>If created successfully your editor will update to show the item in the <strong>Item Definitions</strong> tab:</p>
-<img alt="../../_images/new_item_def_editor.png" src="../../_images/new_item_def_editor.png" />
-</section>
-<section id="setup-new-item-definition">
-<h2>Setup New Item Definition<a class="headerlink" href="#setup-new-item-definition" title="Permalink to this heading"></a></h2>
-<p>Define your item’s settings, the most essential ones for this start are id, name and whether your item stacks.
-See more about item definition on <a class="reference internal" href="../../api/class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>
-For this quick start we put a wood with 16 stack, this will be used for the next steps of this guide:</p>
-<img alt="../../_images/add_wood_item_to_database.png" src="../../_images/add_wood_item_to_database.png" />
-</section>
+  <section id="inventory-database-editor">
+<h1>Inventory Database Editor<a class="headerlink" href="#inventory-database-editor" title="Permalink to this heading"></a></h1>
+<p>TODO show editor sections</p>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="create_database.html" class="btn btn-neutral float-left" title="Creating a Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="add_items_to_inventory.html" class="btn btn-neutral float-right" title="Add items to Inventory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../database.html" class="btn btn-neutral float-left" title="Database" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="creating_item_category.html" class="btn btn-neutral float-right" title="Create Item Category" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

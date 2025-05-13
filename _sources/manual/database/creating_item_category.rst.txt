@@ -48,7 +48,9 @@ Create a Item Category without Inventory Editor
 Adding a Category to an Item
 -----------------------------------------------
 
-> Note: Adding a Category by inventory editor or without, results in the same resource database within the data.
+.. note::
+    Adding a Category by inventory editor or without, results in the same resource database within the data.
+
 
 Adding a Category to an Item with Inventory Editor
 -----------------------------------------------

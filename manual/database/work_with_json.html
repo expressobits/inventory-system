@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work with JSON &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="../inventories.html" />
+    <link rel="prev" title="Using the Database in Scenes" href="using_database_in_scenes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../database.html">Database</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="inventory_database_editor.html">Inventory Database Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="creating_item_category.html">Create Item Category</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Work with JSON</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-export">How to export?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importing-json-to-editor">Importing JSON to Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#import-and-export-via-code">Import and Export via code</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../database.html">Database</a></li>
+      <li class="breadcrumb-item active">Work with JSON</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/manual/database/work_with_json.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="work-with-json">
+<h1>Work with JSON<a class="headerlink" href="#work-with-json" title="Permalink to this heading"></a></h1>
+<p>Are you someone who wants full control, without having to touch editors and feel like a hacker modifying texts just to create your project?
+So this addon also allows this, with json files that have .inv format it is possible to import and export to the editor easily.
+Just like <span class="xref std std-ref">Inventory</span> and <span class="xref std std-ref">CraftStation</span> nodes, databases can be exported from resource to json and imported from json to resource.
+This makes it much easier for you to use a simple text editor to modify how all resources will be defined.</p>
+<section id="how-to-export">
+<h2>How to export?<a class="headerlink" href="#how-to-export" title="Permalink to this heading"></a></h2>
+<p>You can export in the “Inventories” editor (Tab at the top of the editor) by clicking on
+<span class="guilabel"><span class="accelerator">D</span>atabase &gt; Export As &gt; JSON</span></p>
+<img alt="../../_images/export_json.png" src="../../_images/export_json.png" />
+<p>Now choose the name and folder where the JSON will be saved.
+A file with the <span class="guilabel"><span class="accelerator">.</span>inv</span> extension will be created, here shows an example of the json created with the fps demonstration database.</p>
+<img alt="../../_images/json_file.png" src="../../_images/json_file.png" />
+</section>
+<section id="importing-json-to-editor">
+<h2>Importing JSON to Editor<a class="headerlink" href="#importing-json-to-editor" title="Permalink to this heading"></a></h2>
+<p>To import it is basically the opposite process, you can access it in menu <span class="guilabel"><span class="accelerator">D</span>atabase &gt; Import With &gt; Json file</span></p>
+<img alt="../../_images/import_json.png" src="../../_images/import_json.png" />
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Please note that the import will cause the data to be completely rewritten from the database editor in the inventory tab.</p>
+</div>
+</section>
+<section id="import-and-export-via-code">
+<h2>Import and Export via code<a class="headerlink" href="#import-and-export-via-code" title="Permalink to this heading"></a></h2>
+<p>It may be necessary to load your item information or export it at runtime, this is extremely useful for modding,
+generating the need to use this feature via code. For this you can use some codes provided by the <a class="reference internal" href="../../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> class.</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">var</span><span class="w"> </span><span class="n">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InventoryDatabase</span><span class="o">.</span><span class="n">new</span><span class="p">()</span>
+
+<span class="c1"># Clear current data</span>
+<span class="n">db</span><span class="o">.</span><span class="n">clear_current_data</span><span class="p">()</span>
+
+<span class="c1"># Load json file to database</span>
+
+<span class="n">db</span><span class="o">.</span><span class="n">import_json_file</span><span class="p">(</span><span class="s2">&quot;res://path/to/your/file.inv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Save database to json file</span>
+<span class="n">db</span><span class="o">.</span><span class="n">export_json_file</span><span class="p">(</span><span class="s2">&quot;res://path/to/your/file.inv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For modding it may be necessary to just import without having to clean the database first:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>@export var db : InventoryDatabase
+
+# Load Modding json file to database
+db.import_json_file(&quot;res://path/to/your/modding.inv&quot;)
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="using_database_in_scenes.html" class="btn btn-neutral float-left" title="Using the Database in Scenes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../inventories.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Rafael Correa.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

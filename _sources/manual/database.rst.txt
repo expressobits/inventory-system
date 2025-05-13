@@ -12,3 +12,13 @@ To use the inventory system you need to have at least one resource created in yo
 :ref:`getting_started/quickstart/use_inventory_database` shows how to use the database in your project.
 
 
+.. toctree::
+   :maxdepth: 1
+   :caption: Database
+   
+   database/inventory_database_editor
+   database/creating_item_category
+   database/item_definition
+   database/using_database_in_scenes
+   database/work_with_json
+
