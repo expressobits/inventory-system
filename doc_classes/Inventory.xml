@@ -11,7 +11,8 @@
 		Some methods have their general version and a direct version of some [Stack] index, such as [method contains] and [method contains_at].
 	</description>
 	<tutorials>
-		<link title="Add items to inventory">https://github.com/expressobits/inventory-system/wiki/Inventory-Node#Add-items-to-inventory</link>
+		<link title="Add items to inventory">https://expressobits.com/inventory-system/getting_started/quickstart/add_items_to_inventory.html</link>
+		<link title="Operations between Inventories">https://expressobits.com/inventory-system/getting_started/quickstart/operation_between_inventories.html</link>
 	</tutorials>
 	<methods>
 		<method name="add">
