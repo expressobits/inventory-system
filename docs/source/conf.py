@@ -13,6 +13,13 @@ copyright = '2025, Expresso Bits'
 author = 'Rafael Correa'
 release = '2.3.1'
 
+html_context = {
+#   'current_version' : "1.0",
+#   'versions' : [["1.0", "link to 1.0"], ["2.0", "link to 2.0"]],
+  'current_language': 'en',
+  'languages': [["en", "en"], ["pt_BR", "pt_BR"]]
+}
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
