@@ -190,13 +190,6 @@
 			<description>
 			</description>
 		</method>
-		<method name="is_accept_any_categories" qualifiers="const">
-			<return type="bool" />
-			<param index="0" name="categories_flag" type="int" />
-			<param index="1" name="categories" type="ItemCategory[]" />
-			<description>
-			</description>
-		</method>
 		<method name="is_empty" qualifiers="const">
 			<return type="bool" />
 			<description>

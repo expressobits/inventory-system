@@ -66,7 +66,6 @@ public:
 	void drop_from_inventory(const int &stack_index, const int &amount = 1, const Dictionary &properties = Dictionary());
 	int add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties = Dictionary());
 	int remove_from_stack(Ref<ItemStack> stack, const String &item_id, const int &amount);
-	bool is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &categories) const;
 	int get_max_stack_of_stack(const Ref<ItemStack> &stack, Ref<ItemDefinition> &item) const;
 	bool contains_category_in_stack(const Ref<ItemStack> &slot, const Ref<ItemCategory> &category) const;
 	void set_stacks(const TypedArray<ItemStack> &new_items);

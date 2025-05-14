@@ -488,13 +488,6 @@ void Inventory::drop_from_inventory(const int &stack_index, const int &amount, c
 int Inventory::add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties) {
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 
-	// if (stack->is_categorized()) {
-	// 	int flag_category = get_flag_categories_of_slot(slot);
-	// 	if (flag_category != 0 && !is_accept_any_categories(flag_category, definition->get_categories())) {
-	// 		return amount;
-	// 	}
-	// }
-
 	if (amount <= 0)
 		return amount;
 
@@ -526,18 +519,6 @@ int Inventory::remove_from_stack(Ref<ItemStack> stack, const String &item_id, co
 	stack->set_amount(stack->get_amount() - amount_to_remove);
 	stack->emit_signal("updated");
 	return amount - amount_to_remove;
-}
-
-bool Inventory::is_accept_any_categories(const int categories_flag, const TypedArray<ItemCategory> &other_list) const {
-	for (size_t i = 0; i < other_list.size(); i++) {
-		Ref<ItemCategory> c = other_list[i];
-		if (c == nullptr)
-			continue;
-		if ((categories_flag & c->get_code()) > 0) {
-			return true;
-		}
-	}
-	return false;
 }
 
 int Inventory::get_max_stack_of_stack(const Ref<ItemStack> &stack, Ref<ItemDefinition> &item) const {
@@ -704,7 +685,6 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "stack_index", "amount", "properties"), &Inventory::drop_from_inventory, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));
-	ClassDB::bind_method(D_METHOD("is_accept_any_categories", "categories_flag", "categories"), &Inventory::is_accept_any_categories);
 	ClassDB::bind_method(D_METHOD("contains_category_in_stack", "stack", "category"), &Inventory::contains_category_in_stack);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
