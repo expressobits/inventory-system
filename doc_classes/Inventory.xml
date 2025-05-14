@@ -132,6 +132,7 @@
 			<return type="void" />
 			<param index="0" name="data" type="Dictionary" />
 			<description>
+				Deserializes the inventory with a previously serialized dictionary by rewriting the data of this inventory.
 			</description>
 		</method>
 		<method name="drop">
@@ -243,6 +244,7 @@
 		<method name="serialize" qualifiers="const">
 			<return type="Dictionary" />
 			<description>
+				Serializes the inventory returning a dictionary with inventory information.
 			</description>
 		</method>
 		<method name="set_stack_content">
