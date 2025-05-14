@@ -23,13 +23,11 @@ public:
 	virtual bool can_add_on_inventory(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties);
 	virtual bool can_add_new_stack_on_inventory(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties);
 	virtual int get_amount_to_add(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties);
-	virtual int get_max_stack(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties);
-	virtual bool is_override_max_stack(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties);
+	virtual int get_max_stack(const Node* inventory_node, const String item_id, const int amount, const Dictionary properties, const int actual_max_stack);
 	GDVIRTUAL4R(bool, _can_add_on_inventory, const Node*, String, int, Dictionary);
 	GDVIRTUAL4R(bool, _can_add_new_stack_on_inventory, const Node*, String, int, Dictionary);
 	GDVIRTUAL4R(int, _get_amount_to_add, const Node*, String, int, Dictionary);
-	GDVIRTUAL4R(int, _get_max_stack, const Node*, String, int, Dictionary);
-	GDVIRTUAL4R(bool, _is_override_max_stack, const Node*, String, int, Dictionary);
+	GDVIRTUAL5R(int, _get_max_stack, const Node*, String, int, Dictionary, int);
 
 };
 

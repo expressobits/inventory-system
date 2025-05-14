@@ -27,9 +27,8 @@ protected:
 	int _get_max_stack_for_stack(const String item_id, const int amount, const Dictionary properties) const;
 	bool _can_add_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
 	bool _can_add_new_stack_on_inventory_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
-	int _get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
+	int _get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties, const int max_stack) const;
 	int _get_amount_to_add_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
-	bool _is_override_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const;
 	bool _can_swap_to_inventory(const Inventory *inventory, const String item_id, const int amount, const Dictionary properties) const;
 
 public:

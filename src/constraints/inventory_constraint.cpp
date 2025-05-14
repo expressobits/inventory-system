@@ -4,8 +4,7 @@ void InventoryConstraint::_bind_methods() {
     GDVIRTUAL_BIND(_can_add_on_inventory, "inventory", "item_id", "amount", "properties");
     GDVIRTUAL_BIND(_can_add_new_stack_on_inventory, "inventory", "item_id", "amount", "properties");
     GDVIRTUAL_BIND(_get_amount_to_add, "inventory", "item_id", "amount", "properties");
-    GDVIRTUAL_BIND(_get_max_stack, "inventory", "item_id", "amount", "properties");
-    GDVIRTUAL_BIND(_is_override_max_stack, "inventory", "item_id", "amount", "properties");
+    GDVIRTUAL_BIND(_get_max_stack, "inventory", "item_id", "amount", "properties", "actual_max_stack");
 }
 
 InventoryConstraint::InventoryConstraint() {
@@ -38,18 +37,10 @@ int InventoryConstraint::get_amount_to_add(const Node *inventory_node, const Str
 	return to_add;
 }
 
-int InventoryConstraint::get_max_stack(const Node *inventory_node, const String item_id, const int amount, const Dictionary properties) {
-    int max_stack = INT_MAX;
-    if (GDVIRTUAL_CALL(_get_max_stack, inventory_node, item_id, amount, properties, max_stack)) {
-		return max_stack;
+int InventoryConstraint::get_max_stack(const Node *inventory_node, const String item_id, const int amount, const Dictionary properties, const int actual_max_stack) {
+	int new_max_stack = actual_max_stack;
+	if (GDVIRTUAL_CALL(_get_max_stack, inventory_node, item_id, amount, properties, actual_max_stack, new_max_stack)) {
+		return new_max_stack;
 	}
-	return max_stack;
-}
-
-bool InventoryConstraint::is_override_max_stack(const Node *inventory_node, const String item_id, const int amount, const Dictionary properties) {
-	bool override_max_stack = false;
-    if (GDVIRTUAL_CALL(_is_override_max_stack, inventory_node, item_id, amount, properties, override_max_stack)) {
-		return override_max_stack;
-	}
-	return override_max_stack;
+	return new_max_stack;
 }

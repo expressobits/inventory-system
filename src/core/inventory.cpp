@@ -624,9 +624,7 @@ int Inventory::_get_max_stack_for_stack(const String item_id, const int amount, 
 	ERR_FAIL_NULL_V_MSG(get_database(), amount, "The 'database' is null.");
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, amount, "The 'definition' is null.");
-	int max_stack = _get_max_stack_from_constraints(item_id, amount, properties);
-	if (!_is_override_max_stack_from_constraints(item_id, amount, properties))
-		max_stack = MIN(max_stack, definition->get_max_stack());
+	int max_stack = _get_max_stack_from_constraints(item_id, amount, properties, definition->get_max_stack());
 	return max_stack;
 }
 
@@ -660,27 +658,15 @@ int Inventory::_get_amount_to_add_from_constraints(const String item_id, const i
 	return to_added;
 }
 
-int Inventory::_get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
-	int max_stack = INT_MAX;
+int Inventory::_get_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties, const int max_stack) const {
+	int new_max_stack = max_stack;
 	for (size_t i = 0; i < constraints.size(); i++) {
 		Ref<InventoryConstraint> constraint = constraints[i];
 		if (constraint != nullptr) {
-			int value = constraint->get_max_stack(this, item_id, amount, properties);
-			max_stack = MIN(value, max_stack);
+			new_max_stack = constraint->get_max_stack(this, item_id, amount, properties, max_stack);
 		}
 	}
-	return max_stack;
-}
-
-bool Inventory::_is_override_max_stack_from_constraints(const String item_id, const int amount, const Dictionary properties) const {
-	for (size_t i = 0; i < constraints.size(); i++) {
-		Ref<InventoryConstraint> constraint = constraints[i];
-		if (constraint != nullptr) {
-			if (constraint->is_override_max_stack(this, item_id, amount, properties))
-				return true;
-		}
-	}
-	return false;
+	return new_max_stack;
 }
 
 bool Inventory::_can_swap_to_inventory(const Inventory *inventory, const String item_id, const int amount, const Dictionary properties) const {
@@ -718,7 +704,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "stack_index", "amount", "properties"), &Inventory::drop_from_inventory, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));
-	ClassDB::bind_method(D_METHOD("is_accept_any_categories", "categories_flag", "slot"), &Inventory::is_accept_any_categories);
+	ClassDB::bind_method(D_METHOD("is_accept_any_categories", "categories_flag", "categories"), &Inventory::is_accept_any_categories);
 	ClassDB::bind_method(D_METHOD("contains_category_in_stack", "stack", "category"), &Inventory::contains_category_in_stack);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
