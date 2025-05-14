@@ -12,7 +12,7 @@ GridInventoryConstraint
 
 **Inherits:** ``Resource``
 
-Script that can be extended to define rules for :ref:`GridInventory<class_GridInventory>` behaviors.
+Script that can be extended to define add rules for :ref:`GridInventory<class_GridInventory>` behaviors.
 
 .. rst-class:: classref-introduction-group
 

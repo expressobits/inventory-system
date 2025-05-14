@@ -12,9 +12,7 @@ InventoryConstraint
 
 **Inherits:** ``Resource``
 
-.. container:: contribute
-
-	There is currently no description for this class. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Script that can be extended to define add rules for :ref:`Inventory<class_Inventory>` behaviors.
 
 .. rst-class:: classref-reftable-group
 
@@ -49,7 +47,34 @@ Method Descriptions
 
 ``bool`` **_can_add_new_stack_on_inventory**\ (\ inventory\: ``Node``, item_id\: ``String``, amount\: ``int``, properties\: ``Dictionary``\ ) |virtual| :ref:`🔗<class_InventoryConstraint_private_method__can_add_new_stack_on_inventory>`
 
-This method can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).
+This function can be extended to define whether or not the inventory accepts the creation of a stack.
+
+Returns `true` the inventory can create new stack with ``item_id``.
+
+Returns `false` the inventory cannot add new stack with ``item_id``.
+
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    # Example of stack limit in Inventory
+    func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
+        return inventory.stacks.count -< 2
+
+
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_InventoryConstraint_private_method__can_add_on_inventory:
+
+.. rst-class:: classref-method
+
+``bool`` **_can_add_on_inventory**\ (\ inventory\: ``Node``, item_id\: ``String``, amount\: ``int``, properties\: ``Dictionary``\ ) |virtual| :ref:`🔗<class_InventoryConstraint_private_method__can_add_on_inventory>`
+
+This function can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).
 
 Useful when you want the inventory to accept only one item or one category of item.
 
@@ -64,23 +89,9 @@ Returns `false` the inventory cannot add ``item_id``.
 
     # Example of limiting the item to be added to the inventory
     func _can_add_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
-    return item_id == "wood"
+        return item_id == "wood"
 
 
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_InventoryConstraint_private_method__can_add_on_inventory:
-
-.. rst-class:: classref-method
-
-``bool`` **_can_add_on_inventory**\ (\ inventory\: ``Node``, item_id\: ``String``, amount\: ``int``, properties\: ``Dictionary``\ ) |virtual| :ref:`🔗<class_InventoryConstraint_private_method__can_add_on_inventory>`
-
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
 
 .. rst-class:: classref-item-separator
 

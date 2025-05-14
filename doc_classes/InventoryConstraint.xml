@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="InventoryConstraint" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Script that can be extended to define add rules for [Inventory] behaviors.
 	</brief_description>
 	<description>
 	</description>
@@ -20,8 +21,8 @@
 				[codeblocks]
 				[gdscript]
 				# Example of stack limit in Inventory
-				func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
-					return inventory.stacks.count < 2
+				func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -&gt; bool:
+					return inventory.stacks.count -&lt; 2
 				[/gdscript]
 				[/codeblocks]
 			</description>
@@ -41,7 +42,7 @@
 				[gdscript]
 				# Example of limiting the item to be added to the inventory
 				func _can_add_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -&gt; bool:
-				return item_id == "wood"
+					return item_id == "wood"
 				[/gdscript]
 				[/codeblocks]
 			</description>

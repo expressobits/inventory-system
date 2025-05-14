@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="GridInventoryConstraint" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Script that can be extended to define rules for [GridInventory] behaviors.
+		Script that can be extended to define add rules for [GridInventory] behaviors.
 	</brief_description>
 	<description>
 		This script is used in the FPS demo to have inventories with specialized slots like the campfire that only accepts burnables and food.
