@@ -30,3 +30,12 @@ in the example below a constraint/rule is placed that all items in stacks can on
 
     It is possible to add as many as you want, the order is as follows, 
     if everyone agrees that the item can be added, then it will be, if one of the constraints is not agreed the item will not be added.
+
+==================================
+Creating a custom constraint
+==================================
+
+
+Create a new script and add choose extend :ref:`class_inventoryconstraint` or :ref:`class_gridinventoryconstraint` case you want to use the grid inventory.
+
+.. image:: ./images/custom_constraint.png

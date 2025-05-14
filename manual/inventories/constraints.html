@@ -62,6 +62,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../inventories.html">Inventories</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Constraints</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#how-to-use-it">How to use it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-custom-constraint">Creating a custom constraint</a></li>
 </ul>
 </li>
 </ul>
@@ -126,6 +127,11 @@ It is recommended to use only one or two constraints per inventory.</p>
 <p>You can add it in the inventory inspector by adding a new element and setting it to the constraint that you want,
 in the example below a constraint/rule is placed that all items in stacks can only have a maximum size of 2 in the stack.</p>
 <img alt="../../_images/adding_constraint.gif" src="../../_images/adding_constraint.gif" />
+</section>
+<section id="creating-a-custom-constraint">
+<h2>Creating a custom constraint<a class="headerlink" href="#creating-a-custom-constraint" title="Permalink to this heading"></a></h2>
+<p>Create a new script and add choose extend <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> or <a class="reference internal" href="../../api/class_gridinventoryconstraint.html#class-gridinventoryconstraint"><span class="std std-ref">GridInventoryConstraint</span></a> case you want to use the grid inventory.</p>
+<img alt="../../_images/custom_constraint.png" src="../../_images/custom_constraint.png" />
 </section>
 </section>
 
