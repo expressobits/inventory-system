@@ -73,6 +73,12 @@
 			<param index="2" name="amount" type="int" default="1" />
 			<param index="3" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Adds an amount of item_id to the specified stack and returns the amount that cannot be added.
+				[codeblocks]
+				[gdscript]
+				inventory.add_to_stack(stack, "my_item_id", 2) # Add two my_item to inventory in stack
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="amount_of_item" qualifiers="const">
@@ -94,6 +100,12 @@
 		<method name="clear">
 			<return type="void" />
 			<description>
+				Clears the inventory, removing all stacks.
+				[codeblocks]
+				[gdscript]
+				inventory.clear() # Clear inventory
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="contains" qualifiers="const">
@@ -126,6 +138,7 @@
 			<param index="0" name="stack" type="ItemStack" />
 			<param index="1" name="category" type="ItemCategory" />
 			<description>
+				Returns true if the stack contains the amount of item (with String item_id from [InventoryDatabase]) with the specified [ItemCategory].
 			</description>
 		</method>
 		<method name="deserialize">
@@ -141,6 +154,12 @@
 			<param index="1" name="amount" type="int" default="1" />
 			<param index="2" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Drop the specified amount of item(with String item_id from [InventoryDatabase]) from inventory and returns true if it was successful.
+				[codeblocks]
+				[gdscript]
+				inventory.drop("my_item_id", 2) # Drop two my_item_id from inventory
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="drop_all_stacks">
@@ -155,6 +174,12 @@
 			<param index="1" name="amount" type="int" default="1" />
 			<param index="2" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Drop the stack with the specified index.
+				[codeblocks]
+				[gdscript]
+				inventory.drop_from_inventory(0) # Drop stack with index 0
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="get_amount" qualifiers="const">
@@ -174,6 +199,8 @@
 			<return type="int" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
+				Returns the index of the first stack that contains an item of the specified [ItemCategory].
+				If there is no stack with an item of this category, it returns -1.
 			</description>
 		</method>
 		<method name="has_space_for" qualifiers="const">
@@ -182,12 +209,15 @@
 			<param index="1" name="amount" type="int" default="1" />
 			<param index="2" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Returns true if the inventory has space for the specified [ItemStack](with String item_id from [InventoryDatabase]).
+				Note: This method check the constraints too.
 			</description>
 		</method>
 		<method name="has_stack" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="stack" type="ItemStack" />
 			<description>
+				Returns true if the inventory has a stack with the specified [ItemStack].
 			</description>
 		</method>
 		<method name="is_empty" qualifiers="const">
@@ -232,6 +262,12 @@
 			<return type="void" />
 			<param index="0" name="stack_index" type="int" />
 			<description>
+				Removes the stack with the specified index.
+				[codeblocks]
+				[gdscript]
+				inventory.remove_stack(0) # Remove stack with index 0
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="serialize" qualifiers="const">
@@ -247,6 +283,12 @@
 			<param index="2" name="amount" type="int" default="1" />
 			<param index="3" name="properties" type="Dictionary" default="{}" />
 			<description>
+				Sets the content of the stack with the specified index.
+				[codeblocks]
+				[gdscript]
+				inventory.set_stack_content(0, "my_item_id", 2) # Set stack with index 0 to my_item_id and amount 2
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="split">
@@ -254,6 +296,12 @@
 			<param index="0" name="stack_index" type="int" />
 			<param index="1" name="amount" type="int" default="1" />
 			<description>
+				Splits the stack at the specified index and returns true if it was successful.
+				[codeblocks]
+				[gdscript]
+				inventory.split(0, 2) # Split stack with index 0 and amount 2
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="transfer">
@@ -281,21 +329,33 @@
 			<return type="void" />
 			<param index="0" name="stack_index" type="int" />
 			<description>
+				Updates the stack with the specified index.
+				This method is called automatically when a stack is added or removed, but it can also be called manually to update the stack.
+				[codeblocks]
+				[gdscript]
+				inventory.update_stack(0) # Update stack with index 0
+				[/gdscript]
+				[/codeblocks]
+				Note: This method emits the [signal updated_stack] signal.
 			</description>
 		</method>
 	</methods>
 	<members>
 		<member name="constraints" type="InventoryConstraint[]" setter="set_constraints" getter="get_constraints" default="[]">
+			Resources that extend [InventoryConstraint] and define rules about inventory additions.
 		</member>
 		<member name="inventory_name" type="String" setter="set_inventory_name" getter="get_inventory_name" default="&quot;Inventory&quot;">
 			The name of the inventory, to be displayed in UI.
 		</member>
 		<member name="stacks" type="ItemStack[]" setter="set_stacks" getter="get_stacks" default="[]">
+			[ItemStack] list, which stores three pieces of information: item_id, amount and dynamic properties of the items.
 		</member>
 	</members>
 	<signals>
 		<signal name="contents_changed">
 			<description>
+				Emitted when the contents of the inventory change.
+				This signal is emitted after the [method remove], [method remove_at], [method set_stack_content], [method add], [method add_at] or [method update_stack] function.
 			</description>
 		</signal>
 		<signal name="emptied">
@@ -334,16 +394,22 @@
 		<signal name="stack_added">
 			<param index="0" name="stack_index" type="int" />
 			<description>
+				Emitted when a new stack is added to the inventory.
+				This signal is emitted after the [method add], [method add_at] or [method add_new_stack] function.
 			</description>
 		</signal>
 		<signal name="stack_removed">
 			<param index="0" name="stack_index" type="int" />
 			<description>
+				Emitted when a stack is removed from the inventory.
+				This signal is emitted after the [method remove], [method remove_at] or [method remove_stack] function.
 			</description>
 		</signal>
 		<signal name="updated_stack">
 			<param index="0" name="stack_index" type="int" />
 			<description>
+				Emitted when a stack is updated.
+				This signal is emitted after the [method update_stack] function.
 			</description>
 		</signal>
 	</signals>
