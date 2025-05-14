@@ -23,7 +23,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Constraints" href="inventories/constraints.html" />
+    <link rel="next" title="Serialize Inventory" href="inventories/serialize_inventory.html" />
     <link rel="prev" title="Work with JSON" href="database/work_with_json.html" /> 
 </head>
 
@@ -60,6 +60,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Inventories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inventories/serialize_inventory.html">Serialize Inventory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="inventories/constraints.html">Constraints</a></li>
 </ul>
 </li>
@@ -105,10 +106,17 @@
              
   <section id="inventories">
 <span id="id1"></span><h1>Inventories<a class="headerlink" href="#inventories" title="Permalink to this heading"></a></h1>
-<p>No documentation at the moment, please contribute!</p>
+<p><a class="reference internal" href="../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> is node with stack container. Each stack contains data about amount, item_id and custom properties.
+Stacks are stored in an Array, which can be accessed with inventory.stacks, but it is best to avoid changing data directly and instead use methods within this node,
+such as add(), remove(), set_stack_content(), …
+The methods correctly call signals when necessary.
+Some methods have their general version and a direct version of some [Stack] index, such as contains() and contains_at().</p>
+<p>As demonstrated in the initial guide on adding items, it is also possible to remove them using the
+<span class="xref std std-ref">class_Inventory_method_remove</span> and <span class="xref std std-ref">class_Inventory_method_remove_at</span> functions.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Inventories</span></p>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="inventories/serialize_inventory.html">Serialize Inventory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inventories/constraints.html">Constraints</a></li>
 </ul>
 </div>
@@ -119,7 +127,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="database/work_with_json.html" class="btn btn-neutral float-left" title="Work with JSON" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="inventories/constraints.html" class="btn btn-neutral float-right" title="Constraints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="inventories/serialize_inventory.html" class="btn btn-neutral float-right" title="Serialize Inventory" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

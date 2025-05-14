@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Constraints &mdash; Inventory System 2.3.1 documentation</title>
+  <title>Serialize Inventory &mdash; Inventory System 2.3.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
@@ -23,8 +23,8 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Craft Stations" href="../craft_stations.html" />
-    <link rel="prev" title="Serialize Inventory" href="serialize_inventory.html" /> 
+    <link rel="next" title="Constraints" href="constraints.html" />
+    <link rel="prev" title="Inventories" href="../inventories.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,12 +60,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../database.html">Database</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../inventories.html">Inventories</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="serialize_inventory.html">Serialize Inventory</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Constraints</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#how-to-use-it">How to use it</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#creating-a-custom-constraint">Creating a custom constraint</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Serialize Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html">Constraints</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../craft_stations.html">Craft Stations</a></li>
@@ -99,9 +95,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../inventories.html">Inventories</a></li>
-      <li class="breadcrumb-item active">Constraints</li>
+      <li class="breadcrumb-item active">Serialize Inventory</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/manual/inventories/constraints.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/manual/inventories/serialize_inventory.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -109,49 +105,28 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="constraints">
-<span id="id1"></span><h1>Constraints<a class="headerlink" href="#constraints" title="Permalink to this heading"></a></h1>
-<p>At some point in the development of your game you will want to create and maintain rules for which items can be added to your inventories.
-This is easily achieved with <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>. With them you can define one or more rules for how your items are added, rules for accepting only one or more categories, the size of the item on the grid or its weight.
-You can also customize it like any other rule.</p>
-<section id="how-to-use-it">
-<h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this heading"></a></h2>
-<p>To use the constraints you need to create a new resource that extends type <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> and add it to your inventory.
-You can do this in the editor or in code.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The constraints are not automatically added to the inventory, you need to do it manually.
-You can add as many constraints as you want, but be careful with the performance of your game.
-The more constraints you have, the more checks will be made when adding items to the inventory.
-It is recommended to use only one or two constraints per inventory.</p>
-</div>
-<p>You can add it in the inventory inspector by adding a new element and setting it to the constraint that you want,
-in the example below a constraint/rule is placed that all items in stacks can only have a maximum size of 2 in the stack.</p>
-<img alt="../../_images/adding_constraint.gif" src="../../_images/adding_constraint.gif" />
-</section>
-<section id="creating-a-custom-constraint">
-<h2>Creating a custom constraint<a class="headerlink" href="#creating-a-custom-constraint" title="Permalink to this heading"></a></h2>
-<p>Create a new script and add choose extend <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> or <a class="reference internal" href="../../api/class_gridinventoryconstraint.html#class-gridinventoryconstraint"><span class="std std-ref">GridInventoryConstraint</span></a> case you want to use the grid inventory.</p>
-<img alt="../../_images/custom_constraint.png" src="../../_images/custom_constraint.png" />
-<p>You have 4 functions to expand, let’s demonstrate the use of <span class="guilabel"><span class="accelerator">_</span>can_add_new_stack_on_inventory</span> by limiting the amount of stacks you can have in your inventory:</p>
-<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">extends</span><span class="w"> </span><span class="s2">&quot;res://addons/inventory/constraints/inventoryconstraint.gd&quot;</span>
+  <section id="serialize-inventory">
+<h1>Serialize Inventory<a class="headerlink" href="#serialize-inventory" title="Permalink to this heading"></a></h1>
+<p>To save your game and/or synchronize network games, you can serialize and deserialize an inventory using the following functions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Serialize Inventory</span>
+<span class="n">var</span> <span class="n">serialized_inventory</span> <span class="p">:</span> <span class="n">Dictionary</span> <span class="o">=</span> <span class="n">inventory</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
 
-<span class="c1"># This is the function that will be called when the item is added to the inventory</span>
-<span class="k">func</span><span class="w"> </span><span class="n">_can_add_new_stack_on_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">properties</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="o">.</span><span class="n">count</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span>
+<span class="c1"># Deserialize Inventory</span>
+<span class="n">inventory</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">serialized_inventory</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This code above limits your inventory to only having 2 stacks, that is, if these two stacks fill all other items that you call with the add or transfer function will not be made and will return the excess number of items that were not added.
-You can see more about them in the <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> and <a class="reference internal" href="../../api/class_gridinventoryconstraint.html#class-gridinventoryconstraint"><span class="std std-ref">GridInventoryConstraint</span></a> API documentation.</p>
-</section>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Attention: Deserialize inventory will remove all items in the inventory and replace them with the serialized data.</p>
+</div>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="serialize_inventory.html" class="btn btn-neutral float-left" title="Serialize Inventory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../craft_stations.html" class="btn btn-neutral float-right" title="Craft Stations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../inventories.html" class="btn btn-neutral float-left" title="Inventories" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constraints.html" class="btn btn-neutral float-right" title="Constraints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
