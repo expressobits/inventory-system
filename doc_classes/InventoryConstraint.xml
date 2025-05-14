@@ -14,15 +14,14 @@
 			<param index="2" name="amount" type="int" />
 			<param index="3" name="properties" type="Dictionary" />
 			<description>
-				This method can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).
-				Useful when you want the inventory to accept only one item or one category of item.
-				Returns `true` the inventory can add [param item_id].
-				Returns `false` the inventory cannot add [param item_id].
+				This function can be extended to define whether or not the inventory accepts the creation of a stack.
+				Returns `true` the inventory can create new stack with [param item_id].
+				Returns `false` the inventory cannot add new stack with [param item_id].
 				[codeblocks]
 				[gdscript]
-				# Example of limiting the item to be added to the inventory
-				func _can_add_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -&gt; bool:
-				return item_id == "wood"
+				# Example of stack limit in Inventory
+				func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
+					return inventory.stacks.count < 2
 				[/gdscript]
 				[/codeblocks]
 			</description>
@@ -34,6 +33,17 @@
 			<param index="2" name="amount" type="int" />
 			<param index="3" name="properties" type="Dictionary" />
 			<description>
+				This function can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).
+				Useful when you want the inventory to accept only one item or one category of item.
+				Returns `true` the inventory can add [param item_id].
+				Returns `false` the inventory cannot add [param item_id].
+				[codeblocks]
+				[gdscript]
+				# Example of limiting the item to be added to the inventory
+				func _can_add_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -&gt; bool:
+				return item_id == "wood"
+				[/gdscript]
+				[/codeblocks]
 			</description>
 		</method>
 		<method name="_get_amount_to_add" qualifiers="virtual">
