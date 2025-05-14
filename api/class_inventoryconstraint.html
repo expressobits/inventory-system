@@ -129,9 +129,7 @@
   <section id="inventoryconstraint">
 <span id="class-inventoryconstraint"></span><h1>InventoryConstraint<a class="headerlink" href="#inventoryconstraint" title="Permalink to this heading"></a></h1>
 <p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">Resource</span></code></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this class. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Script that can be extended to define add rules for <a class="reference internal" href="class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> behaviors.</p>
 <section class="classref-reftable-group" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default">
@@ -155,15 +153,15 @@
 <section class="classref-descriptions-group" id="method-descriptions">
 <h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Permalink to this heading"></a></h2>
 <p class="classref-method" id="class-inventoryconstraint-private-method-can-add-new-stack-on-inventory"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_can_add_new_stack_on_inventory</strong>(inventory: <code class="docutils literal notranslate"><span class="pre">Node</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method should typically be overridden by the user to have any effect.">virtual</abbr> <a class="reference internal" href="#class-inventoryconstraint-private-method-can-add-new-stack-on-inventory"><span class="std std-ref">🔗</span></a></p>
-<p>This method can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).</p>
+<p>This function can be extended to define whether or not the inventory accepts the creation of a stack.</p>
+<p>Returns <cite>true</cite> the inventory can create new stack with <code class="docutils literal notranslate"><span class="pre">item_id</span></code>.</p>
+<p>Returns <cite>false</cite> the inventory cannot add new stack with <code class="docutils literal notranslate"><span class="pre">item_id</span></code>.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventoryconstraint-private-method-can-add-on-inventory"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_can_add_on_inventory</strong>(inventory: <code class="docutils literal notranslate"><span class="pre">Node</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method should typically be overridden by the user to have any effect.">virtual</abbr> <a class="reference internal" href="#class-inventoryconstraint-private-method-can-add-on-inventory"><span class="std std-ref">🔗</span></a></p>
+<p>This function can be extended to limit when an item can be added (regardless of whether it is adding a new stack or not).</p>
 <p>Useful when you want the inventory to accept only one item or one category of item.</p>
 <p>Returns <cite>true</cite> the inventory can add <code class="docutils literal notranslate"><span class="pre">item_id</span></code>.</p>
 <p>Returns <cite>false</cite> the inventory cannot add <code class="docutils literal notranslate"><span class="pre">item_id</span></code>.</p>
-<hr class="classref-item-separator docutils" />
-<p class="classref-method" id="class-inventoryconstraint-private-method-can-add-on-inventory"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_can_add_on_inventory</strong>(inventory: <code class="docutils literal notranslate"><span class="pre">Node</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method should typically be overridden by the user to have any effect.">virtual</abbr> <a class="reference internal" href="#class-inventoryconstraint-private-method-can-add-on-inventory"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventoryconstraint-private-method-get-amount-to-add"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>_get_amount_to_add</strong>(inventory: <code class="docutils literal notranslate"><span class="pre">Node</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method should typically be overridden by the user to have any effect.">virtual</abbr> <a class="reference internal" href="#class-inventoryconstraint-private-method-get-amount-to-add"><span class="std std-ref">🔗</span></a></p>
 <p>This function can be implemented to override the quantity that should be added to each inventory add interaction.</p>
