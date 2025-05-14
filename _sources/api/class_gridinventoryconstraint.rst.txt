@@ -12,9 +12,14 @@ GridInventoryConstraint
 
 **Inherits:** ``Resource``
 
-.. container:: contribute
+Script that can be extended to define rules for :ref:`GridInventory<class_GridInventory>` behaviors.
 
-	There is currently no description for this class. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+This script is used in the FPS demo to have inventories with specialized slots like the campfire that only accepts burnables and food.
 
 .. rst-class:: classref-reftable-group
 
@@ -43,9 +48,22 @@ Method Descriptions
 
 ``bool`` **_can_add_on_position**\ (\ inventory\: ``Node``, position\: ``Vector2i``, item_id\: ``String``, amount\: ``int``, properties\: ``Dictionary``, is_rotated\: ``bool``\ ) |virtual| :ref:`🔗<class_GridInventoryConstraint_private_method__can_add_on_position>`
 
-.. container:: contribute
+Extended function that defines whether an item can be added or not to a grid position.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    # Example of accepting only one item in the inventory position
+    func _can_add_on_position(inventory: Node, position: Vector2i, item_id: String, _amount: int, _properties: Dictionary, _is_rotated: bool):
+        return position == Vector2i(0, 0) and item_id == "wood"
+
+
+
+This script is used by :ref:`GridInventory<class_GridInventory>` to define rules for adding items to the inventory.
+
+It is used by default in :ref:`GridInventory<class_GridInventory>` and can be extended to create custom behaviors.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`

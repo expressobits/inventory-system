@@ -79,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="class_craftstationtype.html">CraftStationType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_gridinventory.html">GridInventory</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">GridInventoryConstraint</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#method-descriptions">Method Descriptions</a></li>
 </ul>
@@ -129,9 +130,11 @@
   <section id="gridinventoryconstraint">
 <span id="class-gridinventoryconstraint"></span><h1>GridInventoryConstraint<a class="headerlink" href="#gridinventoryconstraint" title="Permalink to this heading"></a></h1>
 <p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">Resource</span></code></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this class. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Script that can be extended to define rules for <a class="reference internal" href="class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a> behaviors.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>This script is used in the FPS demo to have inventories with specialized slots like the campfire that only accepts burnables and food.</p>
+</section>
 <section class="classref-reftable-group" id="methods">
 <h2>Methods<a class="headerlink" href="#methods" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default">
@@ -146,9 +149,9 @@
 <section class="classref-descriptions-group" id="method-descriptions">
 <h2>Method Descriptions<a class="headerlink" href="#method-descriptions" title="Permalink to this heading"></a></h2>
 <p class="classref-method" id="class-gridinventoryconstraint-private-method-can-add-on-position"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>_can_add_on_position</strong>(inventory: <code class="docutils literal notranslate"><span class="pre">Node</span></code>, position: <code class="docutils literal notranslate"><span class="pre">Vector2i</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code>, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>, is_rotated: <code class="docutils literal notranslate"><span class="pre">bool</span></code>) <abbr title="This method should typically be overridden by the user to have any effect.">virtual</abbr> <a class="reference internal" href="#class-gridinventoryconstraint-private-method-can-add-on-position"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Extended function that defines whether an item can be added or not to a grid position.</p>
+<p>This script is used by <a class="reference internal" href="class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a> to define rules for adding items to the inventory.</p>
+<p>It is used by default in <a class="reference internal" href="class_gridinventory.html#class-gridinventory"><span class="std std-ref">GridInventory</span></a> and can be extended to create custom behaviors.</p>
 </section>
 </section>
 
