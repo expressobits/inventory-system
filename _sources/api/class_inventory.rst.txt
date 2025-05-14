@@ -145,9 +145,9 @@ Signals
 
 **contents_changed**\ (\ ) :ref:`🔗<class_Inventory_signal_contents_changed>`
 
-.. container:: contribute
+Emitted when the contents of the inventory change.
 
-	There is currently no description for this signal. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+This signal is emitted after the :ref:`remove()<class_Inventory_method_remove>`, :ref:`remove_at()<class_Inventory_method_remove_at>`, :ref:`set_stack_content()<class_Inventory_method_set_stack_content>`, :ref:`add()<class_Inventory_method_add>`, :ref:`add_at()<class_Inventory_method_add_at>` or :ref:`update_stack()<class_Inventory_method_update_stack>` function.
 
 .. rst-class:: classref-item-separator
 
@@ -219,9 +219,9 @@ Emitted when the :ref:`drop()<class_Inventory_method_drop>` method is called (Us
 
 **stack_added**\ (\ stack_index\: ``int``\ ) :ref:`🔗<class_Inventory_signal_stack_added>`
 
-.. container:: contribute
+Emitted when a new stack is added to the inventory.
 
-	There is currently no description for this signal. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+This signal is emitted after the :ref:`add()<class_Inventory_method_add>`, :ref:`add_at()<class_Inventory_method_add_at>` or :ref:`add_new_stack()<class_Inventory_method_add_new_stack>` function.
 
 .. rst-class:: classref-item-separator
 
@@ -233,9 +233,9 @@ Emitted when the :ref:`drop()<class_Inventory_method_drop>` method is called (Us
 
 **stack_removed**\ (\ stack_index\: ``int``\ ) :ref:`🔗<class_Inventory_signal_stack_removed>`
 
-.. container:: contribute
+Emitted when a stack is removed from the inventory.
 
-	There is currently no description for this signal. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+This signal is emitted after the :ref:`remove()<class_Inventory_method_remove>`, :ref:`remove_at()<class_Inventory_method_remove_at>` or :ref:`remove_stack()<class_Inventory_method_remove_stack>` function.
 
 .. rst-class:: classref-item-separator
 
@@ -247,9 +247,9 @@ Emitted when the :ref:`drop()<class_Inventory_method_drop>` method is called (Us
 
 **updated_stack**\ (\ stack_index\: ``int``\ ) :ref:`🔗<class_Inventory_signal_updated_stack>`
 
-.. container:: contribute
+Emitted when a stack is updated.
 
-	There is currently no description for this signal. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+This signal is emitted after the :ref:`update_stack()<class_Inventory_method_update_stack>` function.
 
 .. rst-class:: classref-section-separator
 
@@ -271,9 +271,7 @@ Property Descriptions
 - |void| **set_constraints**\ (\ value\: :ref:`Array<class_Array>`\[:ref:`InventoryConstraint<class_InventoryConstraint>`\]\ )
 - :ref:`Array<class_Array>`\[:ref:`InventoryConstraint<class_InventoryConstraint>`\] **get_constraints**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Resources that extend :ref:`InventoryConstraint<class_InventoryConstraint>` and define rules about inventory additions.
 
 .. rst-class:: classref-item-separator
 
@@ -307,9 +305,7 @@ The name of the inventory, to be displayed in UI.
 - |void| **set_stacks**\ (\ value\: :ref:`Array<class_Array>`\[:ref:`ItemStack<class_ItemStack>`\]\ )
 - :ref:`Array<class_Array>`\[:ref:`ItemStack<class_ItemStack>`\] **get_stacks**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+:ref:`ItemStack<class_ItemStack>` list, which stores three pieces of information: item_id, amount and dynamic properties of the items.
 
 .. rst-class:: classref-section-separator
 
@@ -397,9 +393,16 @@ Add ``item_id`` to a new stack, ignoring the possibility of adding that item to 
 
 ``int`` **add_to_stack**\ (\ stack\: :ref:`ItemStack<class_ItemStack>`, item_id\: ``String``, amount\: ``int`` = 1, properties\: ``Dictionary`` = {}\ ) :ref:`🔗<class_Inventory_method_add_to_stack>`
 
-.. container:: contribute
+Adds an amount of item_id to the specified stack and returns the amount that cannot be added.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.add_to_stack(stack, "my_item_id", 2) # Add two my_item to inventory in stack
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -435,9 +438,16 @@ Returns true if it is possible to add a new stack to the inventory, note that th
 
 |void| **clear**\ (\ ) :ref:`🔗<class_Inventory_method_clear>`
 
-.. container:: contribute
+Clears the inventory, removing all stacks.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.clear() # Clear inventory
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -485,9 +495,7 @@ Returns true if contains the amount of :ref:`ItemStack<class_ItemStack>`\ (with 
 
 ``bool`` **contains_category_in_stack**\ (\ stack\: :ref:`ItemStack<class_ItemStack>`, category\: :ref:`ItemCategory<class_ItemCategory>`\ ) |const| :ref:`🔗<class_Inventory_method_contains_category_in_stack>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Returns true if the stack contains the amount of item (with String item_id from :ref:`InventoryDatabase<class_InventoryDatabase>`) with the specified :ref:`ItemCategory<class_ItemCategory>`.
 
 .. rst-class:: classref-item-separator
 
@@ -511,9 +519,16 @@ Deserializes the inventory with a previously serialized dictionary by rewriting 
 
 ``bool`` **drop**\ (\ item_id\: ``String``, amount\: ``int`` = 1, properties\: ``Dictionary`` = {}\ ) :ref:`🔗<class_Inventory_method_drop>`
 
-.. container:: contribute
+Drop the specified amount of item(with String item_id from :ref:`InventoryDatabase<class_InventoryDatabase>`) from inventory and returns true if it was successful.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.drop("my_item_id", 2) # Drop two my_item_id from inventory
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -537,9 +552,16 @@ Drop all stacks on inventory, ``request_drop_obj`` signal is emitted for each st
 
 |void| **drop_from_inventory**\ (\ stack_index\: ``int``, amount\: ``int`` = 1, properties\: ``Dictionary`` = {}\ ) :ref:`🔗<class_Inventory_method_drop_from_inventory>`
 
-.. container:: contribute
+Drop the stack with the specified index.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.drop_from_inventory(0) # Drop stack with index 0
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -575,9 +597,9 @@ Returns amount of the specified :ref:`ItemCategory<class_ItemCategory>`.
 
 ``int`` **get_stack_index_with_an_item_of_category**\ (\ category\: :ref:`ItemCategory<class_ItemCategory>`\ ) |const| :ref:`🔗<class_Inventory_method_get_stack_index_with_an_item_of_category>`
 
-.. container:: contribute
+Returns the index of the first stack that contains an item of the specified :ref:`ItemCategory<class_ItemCategory>`.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+If there is no stack with an item of this category, it returns -1.
 
 .. rst-class:: classref-item-separator
 
@@ -589,9 +611,9 @@ Returns amount of the specified :ref:`ItemCategory<class_ItemCategory>`.
 
 ``bool`` **has_space_for**\ (\ item\: ``String``, amount\: ``int`` = 1, properties\: ``Dictionary`` = {}\ ) |const| :ref:`🔗<class_Inventory_method_has_space_for>`
 
-.. container:: contribute
+Returns true if the inventory has space for the specified :ref:`ItemStack<class_ItemStack>`\ (with String item_id from :ref:`InventoryDatabase<class_InventoryDatabase>`).
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Note: This method check the constraints too.
 
 .. rst-class:: classref-item-separator
 
@@ -603,9 +625,7 @@ Returns amount of the specified :ref:`ItemCategory<class_ItemCategory>`.
 
 ``bool`` **has_stack**\ (\ stack\: :ref:`ItemStack<class_ItemStack>`\ ) |const| :ref:`🔗<class_Inventory_method_has_stack>`
 
-.. container:: contribute
-
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Returns true if the inventory has a stack with the specified :ref:`ItemStack<class_ItemStack>`.
 
 .. rst-class:: classref-item-separator
 
@@ -677,9 +697,16 @@ Remove stack with ``stack`` parameter, set ``emit_signal`` to false to disable e
 
 |void| **remove_stack**\ (\ stack_index\: ``int``\ ) :ref:`🔗<class_Inventory_method_remove_stack>`
 
-.. container:: contribute
+Removes the stack with the specified index.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.remove_stack(0) # Remove stack with index 0
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -703,9 +730,16 @@ Serializes the inventory returning a dictionary with inventory information.
 
 |void| **set_stack_content**\ (\ stack_index\: ``int``, item_id\: ``String``, amount\: ``int`` = 1, properties\: ``Dictionary`` = {}\ ) :ref:`🔗<class_Inventory_method_set_stack_content>`
 
-.. container:: contribute
+Sets the content of the stack with the specified index.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.set_stack_content(0, "my_item_id", 2) # Set stack with index 0 to my_item_id and amount 2
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -717,9 +751,16 @@ Serializes the inventory returning a dictionary with inventory information.
 
 ``bool`` **split**\ (\ stack_index\: ``int``, amount\: ``int`` = 1\ ) :ref:`🔗<class_Inventory_method_split>`
 
-.. container:: contribute
+Splits the stack at the specified index and returns true if it was successful.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.split(0, 2) # Split stack with index 0 and amount 2
+
+
 
 .. rst-class:: classref-item-separator
 
@@ -759,9 +800,20 @@ Note: If amount is -1 (default value), the entire contents of the stack are sent
 
 |void| **update_stack**\ (\ stack_index\: ``int``\ ) :ref:`🔗<class_Inventory_method_update_stack>`
 
-.. container:: contribute
+Updates the stack with the specified index.
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+This method is called automatically when a stack is added or removed, but it can also be called manually to update the stack.
+
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    inventory.update_stack(0) # Update stack with index 0
+
+
+
+Note: This method emits the :ref:`updated_stack<class_Inventory_signal_updated_stack>` signal.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`

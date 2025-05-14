@@ -276,9 +276,8 @@
 <section class="classref-descriptions-group" id="signals">
 <h2>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h2>
 <p class="classref-signal" id="class-inventory-signal-contents-changed"><strong>contents_changed</strong>() <a class="reference internal" href="#class-inventory-signal-contents-changed"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Emitted when the contents of the inventory change.</p>
+<p>This signal is emitted after the <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove()</span></a>, <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">remove_at()</span></a>, <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content()</span></a>, <a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">add()</span></a>, <span class="xref std std-ref">add_at()</span> or <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a> function.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-signal" id="class-inventory-signal-emptied"><strong>emptied</strong>() <a class="reference internal" href="#class-inventory-signal-emptied"><span class="std std-ref">🔗</span></a></p>
 <p>Emitted when inventory is empty. This signal is emitted after the <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove()</span></a>, <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">remove_at()</span></a> or <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">set_stack_content()</span></a> function and it only happens when there are no stacks.</p>
@@ -296,19 +295,16 @@
 <p>Emitted when the <a class="reference internal" href="#class-inventory-method-drop"><span class="std std-ref">drop()</span></a> method is called (Usually called within <a class="reference internal" href="#class-inventory-method-drop-from-inventory"><span class="std std-ref">drop_from_inventory()</span></a> or <a class="reference internal" href="#class-inventory-method-drop-all-stacks"><span class="std std-ref">drop_all_stacks()</span></a>).</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-signal" id="class-inventory-signal-stack-added"><strong>stack_added</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-stack-added"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Emitted when a new stack is added to the inventory.</p>
+<p>This signal is emitted after the <a class="reference internal" href="#class-inventory-method-add"><span class="std std-ref">add()</span></a>, <span class="xref std std-ref">add_at()</span> or <span class="xref std std-ref">add_new_stack()</span> function.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-signal" id="class-inventory-signal-stack-removed"><strong>stack_removed</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-stack-removed"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Emitted when a stack is removed from the inventory.</p>
+<p>This signal is emitted after the <a class="reference internal" href="#class-inventory-method-remove"><span class="std std-ref">remove()</span></a>, <a class="reference internal" href="#class-inventory-method-remove-at"><span class="std std-ref">remove_at()</span></a> or <a class="reference internal" href="#class-inventory-method-remove-stack"><span class="std std-ref">remove_stack()</span></a> function.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-signal" id="class-inventory-signal-updated-stack"><strong>updated_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-signal-updated-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this signal. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Emitted when a stack is updated.</p>
+<p>This signal is emitted after the <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a> function.</p>
 </section>
 <hr class="classref-section-separator docutils" />
 <section class="classref-descriptions-group" id="property-descriptions">
@@ -318,9 +314,7 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_constraints</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>])</p></li>
 <li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a>] <strong>get_constraints</strong>()</p></li>
 </ul>
-<div class="contribute docutils container">
-<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Resources that extend <a class="reference internal" href="class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> and define rules about inventory additions.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-inventory-property-inventory-name"><code class="docutils literal notranslate"><span class="pre">String</span></code> <strong>inventory_name</strong> = <code class="docutils literal notranslate"><span class="pre">&quot;Inventory&quot;</span></code> <a class="reference internal" href="#class-inventory-property-inventory-name"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
@@ -334,9 +328,7 @@
 <li><p><abbr title="No return value.">void</abbr> <strong>set_stacks</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>])</p></li>
 <li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>] <strong>get_stacks</strong>()</p></li>
 </ul>
-<div class="contribute docutils container">
-<p>There is currently no description for this property. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p><a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a> list, which stores three pieces of information: item_id, amount and dynamic properties of the items.</p>
 </section>
 <hr class="classref-section-separator docutils" />
 <section class="classref-descriptions-group" id="method-descriptions">
@@ -352,9 +344,7 @@
 <p>Add <code class="docutils literal notranslate"><span class="pre">item_id</span></code> to a new stack, ignoring the possibility of adding that item to an existing stack.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-add-to-stack"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>add_to_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-add-to-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Adds an amount of item_id to the specified stack and returns the amount that cannot be added.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-amount-of-item"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>amount_of_item</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-amount-of-item"><span class="std std-ref">🔗</span></a></p>
 <p>Returns amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>.</p>
@@ -363,9 +353,7 @@
 <p>Returns true if it is possible to add a new stack to the inventory, note that this method consults the configured constraints.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-clear"><abbr title="No return value.">void</abbr> <strong>clear</strong>() <a class="reference internal" href="#class-inventory-method-clear"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Clears the inventory, removing all stacks.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-contains"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains"><span class="std std-ref">🔗</span></a></p>
 <p>Returns true if contains the amount of the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
@@ -377,25 +365,19 @@
 <p>Returns true if contains the amount of <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) with the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-contains-category-in-stack"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>contains_category_in_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>, category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-contains-category-in-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Returns true if the stack contains the amount of item (with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) with the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-deserialize"><abbr title="No return value.">void</abbr> <strong>deserialize</strong>(data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <a class="reference internal" href="#class-inventory-method-deserialize"><span class="std std-ref">🔗</span></a></p>
 <p>Deserializes the inventory with a previously serialized dictionary by rewriting the data of this inventory.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-drop"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>drop</strong>(item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-drop"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Drop the specified amount of item(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>) from inventory and returns true if it was successful.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-drop-all-stacks"><abbr title="No return value.">void</abbr> <strong>drop_all_stacks</strong>() <a class="reference internal" href="#class-inventory-method-drop-all-stacks"><span class="std std-ref">🔗</span></a></p>
 <p>Drop all stacks on inventory, <code class="docutils literal notranslate"><span class="pre">request_drop_obj</span></code> signal is emitted for each stack.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-drop-from-inventory"><abbr title="No return value.">void</abbr> <strong>drop_from_inventory</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-drop-from-inventory"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Drop the stack with the specified index.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-get-amount"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_amount</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-get-amount"><span class="std std-ref">🔗</span></a></p>
 <p>Returns amount of items.</p>
@@ -404,19 +386,15 @@
 <p>Returns amount of the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-get-stack-index-with-an-item-of-category"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>get_stack_index_with_an_item_of_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-get-stack-index-with-an-item-of-category"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Returns the index of the first stack that contains an item of the specified <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>.</p>
+<p>If there is no stack with an item of this category, it returns -1.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-has-space-for"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_space_for</strong>(item: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-has-space-for"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Returns true if the inventory has space for the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>(with String item_id from <a class="reference internal" href="class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a>).</p>
+<p>Note: This method check the constraints too.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-has-stack"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>has_stack</strong>(stack: <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-has-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Returns true if the inventory has a stack with the specified <a class="reference internal" href="class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-is-empty"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>is_empty</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-is-empty"><span class="std std-ref">🔗</span></a></p>
 <p>Returns true if inventory is empty.</p>
@@ -434,22 +412,16 @@
 <p>Remove stack with <code class="docutils literal notranslate"><span class="pre">stack</span></code> parameter, set <code class="docutils literal notranslate"><span class="pre">emit_signal</span></code> to false to disable events called by <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">update_stack()</span></a>.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-remove-stack"><abbr title="No return value.">void</abbr> <strong>remove_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-method-remove-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Removes the stack with the specified index.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-serialize"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>serialize</strong>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventory-method-serialize"><span class="std std-ref">🔗</span></a></p>
 <p>Serializes the inventory returning a dictionary with inventory information.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-set-stack-content"><abbr title="No return value.">void</abbr> <strong>set_stack_content</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, item_id: <code class="docutils literal notranslate"><span class="pre">String</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1, properties: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> = {}) <a class="reference internal" href="#class-inventory-method-set-stack-content"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Sets the content of the stack with the specified index.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-split"><code class="docutils literal notranslate"><span class="pre">bool</span></code> <strong>split</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-split"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Splits the stack at the specified index and returns true if it was successful.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-transfer"><code class="docutils literal notranslate"><span class="pre">int</span></code> <strong>transfer</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>, destination: <a class="reference internal" href="#class-inventory"><span class="std std-ref">Inventory</span></a>, amount: <code class="docutils literal notranslate"><span class="pre">int</span></code> = 1) <a class="reference internal" href="#class-inventory-method-transfer"><span class="std std-ref">🔗</span></a></p>
 <p>Transfer the contents of the stack_index <code class="docutils literal notranslate"><span class="pre">stack_index</span></code> of this inventory to another inventory (<code class="docutils literal notranslate"><span class="pre">destination</span></code>).</p>
@@ -460,9 +432,9 @@
 <p>Note: If amount is -1 (default value), the entire contents of the stack are sent to another inventory.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventory-method-update-stack"><abbr title="No return value.">void</abbr> <strong>update_stack</strong>(stack_index: <code class="docutils literal notranslate"><span class="pre">int</span></code>) <a class="reference internal" href="#class-inventory-method-update-stack"><span class="std std-ref">🔗</span></a></p>
-<div class="contribute docutils container">
-<p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
-</div>
+<p>Updates the stack with the specified index.</p>
+<p>This method is called automatically when a stack is added or removed, but it can also be called manually to update the stack.</p>
+<p>Note: This method emits the <a class="reference internal" href="#class-inventory-signal-updated-stack"><span class="std std-ref">updated_stack</span></a> signal.</p>
 </section>
 </section>
 
