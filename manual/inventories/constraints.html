@@ -132,6 +132,16 @@ in the example below a constraint/rule is placed that all items in stacks can on
 <h2>Creating a custom constraint<a class="headerlink" href="#creating-a-custom-constraint" title="Permalink to this heading"></a></h2>
 <p>Create a new script and add choose extend <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> or <a class="reference internal" href="../../api/class_gridinventoryconstraint.html#class-gridinventoryconstraint"><span class="std std-ref">GridInventoryConstraint</span></a> case you want to use the grid inventory.</p>
 <img alt="../../_images/custom_constraint.png" src="../../_images/custom_constraint.png" />
+<p>You have 4 functions to expand, let’s demonstrate the use of <span class="guilabel"><span class="accelerator">_</span>can_add_new_stack_on_inventory</span> by limiting the amount of stacks you can have in your inventory:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">extends</span><span class="w"> </span><span class="s2">&quot;res://addons/inventory/constraints/inventoryconstraint.gd&quot;</span>
+
+<span class="c1"># This is the function that will be called when the item is added to the inventory</span>
+<span class="k">func</span><span class="w"> </span><span class="n">_can_add_new_stack_on_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">:</span><span class="w"> </span><span class="n">Node</span><span class="p">,</span><span class="w"> </span><span class="n">item_id</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">String</span><span class="p">,</span><span class="w"> </span><span class="n">amount</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">,</span><span class="w"> </span><span class="n">properties</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">Dictionary</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nb nb-Type">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">inventory</span><span class="o">.</span><span class="n">stacks</span><span class="o">.</span><span class="n">count</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>This code above limits your inventory to only having 2 stacks, that is, if these two stacks fill all other items that you call with the add or transfer function will not be made and will return the excess number of items that were not added.
+You can see more about them in the <a class="reference internal" href="../../api/class_inventoryconstraint.html#class-inventoryconstraint"><span class="std std-ref">InventoryConstraint</span></a> and <a class="reference internal" href="../../api/class_gridinventoryconstraint.html#class-gridinventoryconstraint"><span class="std std-ref">GridInventoryConstraint</span></a> API documentation.</p>
 </section>
 </section>
 
