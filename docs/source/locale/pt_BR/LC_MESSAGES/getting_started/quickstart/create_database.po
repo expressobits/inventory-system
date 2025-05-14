@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/getting_started/quickstart/create_database.rst:5
+msgid "Creating a Database"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:7
+msgid ""
+"This guide shows how to create a new database, the demo (inventory-"
+"system-demos/base folder) in the addon already contains a database used "
+"in fps-demo. Database is a resource that will manage project-level "
+"information about items, recipes, and craft stations. It contains lists "
+"of internal resources for each data type."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:11
+msgid ""
+"You can edit it via Godot's own inspector, but we recommend using the "
+"plugin's own editor for this."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:14
+msgid "Go to **Inventory** in top view of godot editor"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:19
+msgid ""
+"If the Inventory tab above does not appear, it means that your plugin was"
+" not installed correctly or that it was not active in the Project "
+"Settings, check the :ref:`installation`"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:22
+msgid ""
+"In this part you will see the editor empty, we will add the key file for "
+"adding any resource to the inventory system, the Inventory Database."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:26
+msgid ""
+"Select the new database option to open the window to create a new "
+"database."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:30
+msgid ""
+"Choose the name of your database and Select **Ok**(Normally a simple "
+"project will have no more than one database, that is, a name like "
+"'database' would already be suggested)"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/create_database.rst:34
+msgid ""
+"Now we can see that the editor screen has changed, showing 4 icons "
+"available in the editor, to add a new item, recipe, craft-station and "
+"category respectively."
+msgstr ""
+

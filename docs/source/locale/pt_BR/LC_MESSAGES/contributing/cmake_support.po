@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/contributing/cmake_support.rst:3
+msgid "CMake support"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:5
+msgid "Git submodule setup in main repository"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:7
+msgid ":command:`git submodule init`"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:9
+msgid ":command:`git submodule update`"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:11
+msgid "Cmake configure in main repository"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:13
+msgid ":command:`cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -B cmake-build-debug .`"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:15
+msgid ""
+"Define variables GODOTCPP_PRECISION=single|double and/or BITS=32|64 for "
+"further build variants if needed."
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:17
+msgid "Cmake build/install in specified build folder cmake-build-debug"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:19
+msgid ":command:`cmake --build . --target install --config Debug`"
+msgstr ""
+
+#: ../../source/contributing/cmake_support.rst:21
+msgid "This installs the built library in the bin folder of the repository."
+msgstr ""
+

@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:4
+msgid "Add items to Inventory"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:6
+msgid ""
+"In this guide we will start to see the nodes of this plugin, the first "
+"and most important is the Inventory Node, it is used to store your items."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:9
+msgid ""
+"There is also a :ref:`class_gridinventory` node in the module that "
+"extends the Inventory node, it stores and manages items based on a grid "
+"using the grid_size attributes of the item definitions."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:14
+msgid "Setup"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:16
+msgid "Let's start with an empty scene:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:20
+msgid ""
+"Add an inventory node, the inventory node is the main structure of this "
+"addon:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:25
+msgid ""
+"Understanding the basics is important to understand the flexibility of "
+"this addon."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:27
+msgid ""
+"After adding the node, it will display a warning indicating that it needs"
+" to configure its database:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:32
+msgid ""
+"The :ref:`class_inventorydatabase` is where the item structures and their"
+" attributes will be saved, important data, for example, an item's "
+"identifier, are contained within this resource. This tutorial does not "
+"cover the database, we will use the database already available in the "
+"demo, to understand more about Inventory Database, check the tutorials "
+"about it."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:34
+msgid "Define the database, it should look like this:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:38
+msgid ""
+"In the node inspector, we can see the current inventory stacks, we will "
+"use it to view what is available within the inventory. Don't change "
+"anything now. Create a test script on the parent node of the inventory "
+"node, it will be used for all our tests from now on."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:43
+msgid ""
+"Let's add keys for interaction in this tutorial, to do this open the top "
+"menu **Project > ProjectSettings > Access the \"InputMap\" tab**."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:46
+msgid ""
+"It is only necessary to create it if you do not have the inventory-"
+"system-demos folder, if it was added, it automatically adds keys to your "
+"project."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:50
+msgid "Add the keys you will need for this guide:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:53
+msgid "Key"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:53
+msgid "Input Name"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:55
+msgid ":guilabel:`&E`"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:55
+msgid "interact"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:56
+msgid ":guilabel:`&F1`"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:56
+msgid "add_item_a"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:59
+msgid ""
+"If you don't know how to add it, you can see this guide from the godot "
+"documentation `Input Examples of Godot Docs`_"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:64
+msgid "Showing inventory items"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:66
+msgid "Let's now show the items in this inventory with a simple command."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:68
+msgid ""
+"Let's create a variable pointing to the inventory, dragging it to the "
+"script while holding the :guilabel:`&Control` key."
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:72
+msgid ""
+"We added code to display stacks each time we click the configured action "
+"\"interact\" which in the demo is the :guilabel:`&e` key:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:83
+msgid "The result is this:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:106
+msgid ""
+"Modify the code now to display when there is an item in the stack, its id"
+" and quantity, if not it displays the message \"Empty\":"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:121
+msgid "Add Items to Inventory"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:123
+msgid ""
+"Let's configure an item to be added, add a variable to link an item to "
+"the script, so we can add it to the inventory:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:138
+msgid ""
+"We added code that adds an item each time we click the :guilabel:`&F1` "
+"key:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart/add_items_to_inventory.rst:150
+msgid ""
+"Now after typing :guilabel:`&F1` (key that adds item configured in the "
+"demo) and then :guilabel:`&E` (interaction key configured in the demo), "
+"you can see that an item has been added to the inventory."
+msgstr ""
+

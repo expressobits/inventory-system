@@ -40,9 +40,16 @@ templates_path = ['_templates']
 exclude_patterns = []
 
 
+supported_languages = {
+    "en": "Inventory System documentation in English",
+    "pt_BR": "Documentação do Inventory System em Português Brasileiro",
+}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+locale_dirs = ['locale/']   # path is example but recommended.
+gettext_compact = False     # optional.

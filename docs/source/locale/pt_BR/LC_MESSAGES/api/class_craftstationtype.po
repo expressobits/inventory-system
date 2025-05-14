@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/class_craftstationtype.rst:11
+msgid "CraftStationType"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:13
+msgid "**Inherits:** ``Resource``"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:15
+msgid "Determines the type of :ref:`CraftStation<class_CraftStation>`."
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:20
+msgid "Description"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:22
+msgid ""
+"This is used by :ref:`CraftStation<class_CraftStation>` to filter the "
+"valid :ref:`Recipe<class_Recipe>`\\ s in the "
+"``CraftStation.valid_recipes`` list using the value set in the "
+"``Recipe.station`` recipes."
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:27
+msgid "Properties"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:33
+msgid "``Texture2D``"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:33
+msgid ":ref:`icon<class_CraftStationType_property_icon>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:35
+#: ../../source/api/class_craftstationtype.rst:37
+msgid "``String``"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:35
+msgid ":ref:`id<class_CraftStationType_property_id>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:35
+#: ../../source/api/class_craftstationtype.rst:37
+msgid "``\"\"``"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:37
+msgid ":ref:`name<class_CraftStationType_property_name>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:47
+msgid "Property Descriptions"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:53
+msgid "``Texture2D`` **icon** :ref:`🔗<class_CraftStationType_property_icon>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:57
+msgid "|void| **set_icon**\\ (\\ value\\: ``Texture2D``\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:58
+msgid "``Texture2D`` **get_icon**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:60
+msgid "Station type icon."
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:70
+msgid "``String`` **id** = ``\"\"`` :ref:`🔗<class_CraftStationType_property_id>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:74
+msgid "|void| **set_id**\\ (\\ value\\: ``String``\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:75
+msgid "``String`` **get_id**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:79
+msgid ""
+"There is currently no description for this property. Please help us by "
+":ref:`contributing one <doc_updating_the_class_reference>`!"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:89
+msgid ""
+"``String`` **name** = ``\"\"`` "
+":ref:`🔗<class_CraftStationType_property_name>`"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:93
+msgid "|void| **set_name**\\ (\\ value\\: ``String``\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:94
+msgid "``String`` **get_name**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_craftstationtype.rst:96
+msgid "Station type name."
+msgstr ""
+

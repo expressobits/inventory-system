@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/class_recipe.rst:11
+msgid "Recipe"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:13
+msgid "**Inherits:** ``Resource``"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:15
+msgid ""
+"Resource that contains the definition of items needed for "
+":ref:`Crafting<class_Crafting>` at the "
+":ref:`CraftStation<class_CraftStation>`."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:20
+msgid "Description"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:22
+msgid ""
+"This recipe is used by :ref:`CraftStation<class_CraftStation>` to list "
+"all possible recipes available, A :ref:`CraftStation<class_CraftStation>`"
+" load available recipes in the "
+":ref:`Node._ready()<class_Node_method__ready>`."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:24
+msgid ""
+"Note: :ref:`CraftStation<class_CraftStation>` must have the same "
+":ref:`CraftStationType<class_CraftStationType>` as the recipe for it to "
+"work. If the recipe does not have "
+":ref:`station<class_Recipe_property_station>` set it will be listed on a "
+":ref:`CraftStation<class_CraftStation>` that also does not have "
+":ref:`CraftStation.type<class_CraftStation_property_type>` set."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:29
+msgid "Properties"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:35 ../../source/api/class_recipe.rst:37
+#: ../../source/api/class_recipe.rst:39
+msgid ":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\]"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:35
+msgid ":ref:`ingredients<class_Recipe_property_ingredients>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:35 ../../source/api/class_recipe.rst:37
+#: ../../source/api/class_recipe.rst:39
+msgid "``[]``"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:37
+msgid ":ref:`products<class_Recipe_property_products>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:39
+msgid ":ref:`required_items<class_Recipe_property_required_items>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:41
+msgid ":ref:`CraftStationType<class_CraftStationType>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:41
+msgid ":ref:`station<class_Recipe_property_station>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:43
+msgid "``float``"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:43
+msgid ":ref:`time_to_craft<class_Recipe_property_time_to_craft>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:43
+msgid "``4.0``"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:53
+msgid "Property Descriptions"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:59
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**ingredients** = ``[]`` :ref:`🔗<class_Recipe_property_ingredients>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:63
+msgid ""
+"|void| **set_ingredients**\\ (\\ value\\: "
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\]\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:64
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**get_ingredients**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:66
+msgid ""
+":ref:`ItemStack<class_ItemStack>` list for items needed for crafting. If "
+":ref:`CraftStation.only_remove_ingredients_after_craft<class_CraftStation_property_only_remove_ingredients_after_craft>`"
+" is true these items are removed from :ref:`Inventory<class_Inventory>` "
+"after crafting, if false will be removed at the beginning of the crafting"
+" process, after calling "
+":ref:`CraftStation.craft()<class_CraftStation_method_craft>`."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:76
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**products** = ``[]`` :ref:`🔗<class_Recipe_property_products>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:80
+msgid ""
+"|void| **set_products**\\ (\\ value\\: "
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\]\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:81
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**get_products**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:83
+msgid ""
+"List of stacked items from the result after crafting is completed. These "
+"items must be added in :ref:`Inventory<class_Inventory>` after crafting "
+"is complete."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:93
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**required_items** = ``[]`` "
+":ref:`🔗<class_Recipe_property_required_items>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:97
+msgid ""
+"|void| **set_required_items**\\ (\\ value\\: "
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\]\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:98
+msgid ""
+":ref:`Array<class_Array>`\\[:ref:`ItemStack<class_ItemStack>`\\] "
+"**get_required_items**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:100
+msgid ""
+":ref:`ItemStack<class_ItemStack>` of items that are required for "
+"crafting. Unlike :ref:`ingredients<class_Recipe_property_ingredients>` "
+"items, these items are not removed after the crafting process."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:110
+msgid ""
+":ref:`CraftStationType<class_CraftStationType>` **station** "
+":ref:`🔗<class_Recipe_property_station>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:114
+msgid ""
+"|void| **set_station**\\ (\\ value\\: "
+":ref:`CraftStationType<class_CraftStationType>`\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:115
+msgid ":ref:`CraftStationType<class_CraftStationType>` **get_station**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:117
+msgid ""
+":ref:`CraftStationType<class_CraftStationType>` required for this "
+"crafting to work."
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:127
+msgid ""
+"``float`` **time_to_craft** = ``4.0`` "
+":ref:`🔗<class_Recipe_property_time_to_craft>`"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:131
+msgid "|void| **set_time_to_craft**\\ (\\ value\\: ``float``\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:132
+msgid "``float`` **get_time_to_craft**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_recipe.rst:134
+msgid "Time (in ticks) to complete the crafting process."
+msgstr ""
+

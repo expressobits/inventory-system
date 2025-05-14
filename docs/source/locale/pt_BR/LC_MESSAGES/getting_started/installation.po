@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/getting_started/installation.rst:5
+msgid "Installation and Setup"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:8
+msgid "Installing"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:10
+msgid ""
+"There are two ways to install the plugin, via godot asset lib and via "
+"submodule"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:13
+msgid "A. Installing via Godot Asset Lib"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:15
+msgid "Enter in Asset Lib on top view of Godot:"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:19
+msgid "Search for the \"Inventory System\" plugin"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:23
+msgid "Select Download"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:27
+msgid "Select Install for add addon in your project."
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:32
+msgid "B. Install via Git Modules"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:34
+msgid "Open a terminal in your project folder and type command for add submodule"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:40
+msgid "Type command for start submodule"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:48
+msgid "Active Plugin after install"
+msgstr ""
+
+#: ../../source/getting_started/installation.rst:50
+msgid ""
+"After installing, you may need to restart godot and then activate it in "
+"ProjectSettings"
+msgstr ""
+

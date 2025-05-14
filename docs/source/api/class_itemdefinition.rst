@@ -232,9 +232,7 @@ Properties of this item, additional information here can be added (For example t
 - |void| **set_size**\ (\ value\: ``Vector2i``\ )
 - ``Vector2i`` **get_size**\ (\ )
 
-.. container:: contribute
-
-	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+Size of the item in Vector2i, used to calculate the size of item in :ref:`GridInventory<class_GridInventory>`.
 
 .. rst-class:: classref-item-separator
 
@@ -251,7 +249,7 @@ Properties of this item, additional information here can be added (For example t
 - |void| **set_weight**\ (\ value\: ``float``\ )
 - ``float`` **get_weight**\ (\ )
 
-Item weight in float.
+Weight of the item, used to calculate the weight of the inventory.
 
 .. rst-class:: classref-section-separator
 

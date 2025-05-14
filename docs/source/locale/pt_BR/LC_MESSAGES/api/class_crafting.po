@@ -1,0 +1,201 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Expresso Bits
+# This file is distributed under the same license as the Inventory System
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Inventory System \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-13 22:34-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../source/api/class_crafting.rst:11
+msgid "Crafting"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:13
+msgid "**Inherits:** ``Resource``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:15
+msgid ""
+"Resource that identifies a creation process happening in "
+":ref:`CraftStation<class_CraftStation>`."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:20
+msgid "Description"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:22
+msgid ""
+"Crafting process is stored in its own resource and can be serialized "
+"(:ref:`serialize()<class_Crafting_method_serialize>`) and deserialized "
+"(:ref:`deserialize()<class_Crafting_method_deserialize>`) for persistence"
+" and networking purposes. It also contains a "
+":ref:`process()<class_Crafting_method_process>` that is called to update "
+"the time process of a crafting."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:27
+msgid "Properties"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:33
+msgid "``int``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:33
+msgid ":ref:`recipe_index<class_Crafting_property_recipe_index>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:33
+msgid "``0``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:35
+msgid "``float``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:35
+msgid ":ref:`time<class_Crafting_property_time>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:35
+msgid "``0.0``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:41
+msgid "Methods"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:47
+#: ../../source/api/class_crafting.rst:51
+msgid "|void|"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:47
+msgid ""
+":ref:`deserialize<class_Crafting_method_deserialize>`\\ (\\ data\\: "
+"``Dictionary``\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:49
+msgid "``bool``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:49
+msgid ":ref:`is_finished<class_Crafting_method_is_finished>`\\ (\\ ) |const|"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:51
+msgid ":ref:`process<class_Crafting_method_process>`\\ (\\ delta\\: ``float``\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:53
+msgid "``Dictionary``"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:53
+msgid ":ref:`serialize<class_Crafting_method_serialize>`\\ (\\ ) |const|"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:63
+msgid "Property Descriptions"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:69
+msgid ""
+"``int`` **recipe_index** = ``0`` "
+":ref:`🔗<class_Crafting_property_recipe_index>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:73
+msgid "|void| **set_recipe_index**\\ (\\ value\\: ``int``\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:74
+msgid "``int`` **get_recipe_index**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:76
+msgid "Recipe index on :ref:`CraftStation<class_CraftStation>`."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:86
+msgid "``float`` **time** = ``0.0`` :ref:`🔗<class_Crafting_property_time>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:90
+msgid "|void| **set_time**\\ (\\ value\\: ``float``\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:91
+msgid "``float`` **get_time**\\ (\\ )"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:93
+msgid "Elapsed crafting time."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:102
+msgid "Method Descriptions"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:108
+msgid ""
+"|void| **deserialize**\\ (\\ data\\: ``Dictionary``\\ ) "
+":ref:`🔗<class_Crafting_method_deserialize>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:110
+msgid ""
+"Updates the data for this crafting process with a ``data`` dictionary. "
+"Useful for game persistence and network synchronization."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:120
+msgid ""
+"``bool`` **is_finished**\\ (\\ ) |const| "
+":ref:`🔗<class_Crafting_method_is_finished>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:122
+msgid "Returns true if this crafting has finished."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:132
+msgid ""
+"|void| **process**\\ (\\ delta\\: ``float``\\ ) "
+":ref:`🔗<class_Crafting_method_process>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:134
+msgid ""
+"Calls a time process for crafting to happen, this should be called by "
+":ref:`CraftStation<class_CraftStation>`."
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:144
+msgid ""
+"``Dictionary`` **serialize**\\ (\\ ) |const| "
+":ref:`🔗<class_Crafting_method_serialize>`"
+msgstr ""
+
+#: ../../source/api/class_crafting.rst:146
+msgid ""
+"Transforms crafting process data into a dictionary. Useful for game "
+"persistence and network synchronization."
+msgstr ""
+
