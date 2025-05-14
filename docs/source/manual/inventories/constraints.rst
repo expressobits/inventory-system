@@ -39,3 +39,17 @@ Creating a custom constraint
 Create a new script and add choose extend :ref:`class_inventoryconstraint` or :ref:`class_gridinventoryconstraint` case you want to use the grid inventory.
 
 .. image:: ./images/custom_constraint.png
+
+
+You have 4 functions to expand, let's demonstrate the use of :guilabel:`&_can_add_new_stack_on_inventory` by limiting the amount of stacks you can have in your inventory:
+
+.. code-block:: gdscript
+
+    extends "res://addons/inventory/constraints/inventoryconstraint.gd"
+
+    # This is the function that will be called when the item is added to the inventory
+    func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
+	    return inventory.stacks.count <= 2
+
+This code above limits your inventory to only having 2 stacks, that is, if these two stacks fill all other items that you call with the add or transfer function will not be made and will return the excess number of items that were not added.
+You can see more about them in the :ref:`class_inventoryconstraint` and :ref:`class_gridinventoryconstraint` API documentation.
