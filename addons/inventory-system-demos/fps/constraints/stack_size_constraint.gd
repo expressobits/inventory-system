@@ -8,12 +8,7 @@ func _can_add_new_stack_on_inventory(inventory: Node, item_id: String, amount: i
 		return false
 	return true
 	
-func _get_max_stack(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> int:
+func _get_max_stack(inventory: Node, item_id: String, amount: int, properties: Dictionary, max_stack: int) -> int:
 	if item_id == "wood":
 		return 32
-	return 2
-
-func _is_override_max_stack(inventory: Node, item_id: String, amount: int, properties: Dictionary) -> bool:
-	if item_id == "wood":
-		return true
-	return false
+	return max_stack
