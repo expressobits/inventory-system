@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="GridInventoryConstraint" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
+		Script that can be extended to define rules for [GridInventory] behaviors.
 	</brief_description>
 	<description>
+		This script is used in the FPS demo to have inventories with specialized slots like the campfire that only accepts burnables and food.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -16,6 +18,16 @@
 			<param index="4" name="properties" type="Dictionary" />
 			<param index="5" name="is_rotated" type="bool" />
 			<description>
+				Extended function that defines whether an item can be added or not to a grid position.
+				[codeblocks]
+				[gdscript]
+				# Example of accepting only one item in the inventory position
+				func _can_add_on_position(inventory: Node, position: Vector2i, item_id: String, _amount: int, _properties: Dictionary, _is_rotated: bool):
+					return position == Vector2i(0, 0) and item_id == "wood"
+				[/gdscript]
+				[/codeblocks]
+				This script is used by [GridInventory] to define rules for adding items to the inventory.
+				It is used by default in [GridInventory] and can be extended to create custom behaviors.
 			</description>
 		</method>
 	</methods>
