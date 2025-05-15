@@ -165,7 +165,7 @@
 		<method name="drop_all_stacks">
 			<return type="void" />
 			<description>
-				Drop all stacks on inventory, [request_drop_obj] signal is emitted for each stack.
+				Drop all stacks on inventory, [request_drop_item] signal is emitted for each stack.
 			</description>
 		</method>
 		<method name="drop_from_inventory">
