@@ -455,15 +455,8 @@ bool Inventory::drop(const String &item_id, const int &amount, const Dictionary 
 	ERR_FAIL_COND_V_MSG(amount < 0, false, "'amount' is negative.");
 	if (amount == 0)
 		return false;
-	ERR_FAIL_NULL_V_MSG(get_database(), false, "'database' is null.");
-	Ref<ItemDefinition> _definition = get_database()->get_item(item_id);
-	ERR_FAIL_NULL_V_MSG(_definition, false, "'item_definition' is null.");
-	if (_definition->get_properties().has("dropped_item")) {
-		String path = _definition->get_properties()["dropped_item"];
-		emit_signal("request_drop_obj", path, item_id, amount, properties);
-		return true;
-	}
-	return false;
+	emit_signal("request_drop_item", item_id, amount, properties);
+	return true;
 }
 
 void Inventory::drop_all_stacks() {
@@ -706,7 +699,7 @@ void Inventory::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("emptied"));
 	ADD_SIGNAL(MethodInfo("updated_stack", PropertyInfo(Variant::INT, "stack_index")));
 
-	ADD_SIGNAL(MethodInfo("request_drop_obj", PropertyInfo(Variant::STRING, "drop_item_packed_scene_path"), PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::INT, "amount"), PropertyInfo(Variant::DICTIONARY, "item_properties")));
+	ADD_SIGNAL(MethodInfo("request_drop_item", PropertyInfo(Variant::STRING, "item_id"), PropertyInfo(Variant::INT, "amount"), PropertyInfo(Variant::DICTIONARY, "item_properties")));
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stacks", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_stacks", "get_stacks");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "inventory_name"), "set_inventory_name", "get_inventory_name");
