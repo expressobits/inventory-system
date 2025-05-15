@@ -6,13 +6,76 @@ var item : ItemDefinition
 var database : InventoryDatabase
 var properties_obj : Array
 
-@onready var v_box_container = $ScrollContainer/VBoxContainer
-@onready var add_button = $Panel/HBoxContainer/AddButton
-@onready var line_edit = $Panel/HBoxContainer/NewKeyLineEdit
-@onready var new_type_option_button = $Panel/HBoxContainer/NewTypeOptionButton
+var v_box_container: VBoxContainer
+var add_button
+var line_edit
+var new_type_option_button
 
 
 func _ready():
+	size_flags_horizontal = SIZE_EXPAND_FILL
+	size_flags_vertical = SIZE_EXPAND_FILL
+	
+	var label: Label = Label.new()
+	label.layout_mode = 2
+	label.text = "Custom Properties"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	add_child(label)
+	
+	var panel: Control = Control.new()
+	panel.clip_contents = true
+	panel.custom_minimum_size = Vector2(0, 40)
+	panel.layout_mode = 2
+	add_child(panel)
+	
+	var hbox_container: HBoxContainer = HBoxContainer.new()
+	hbox_container.layout_mode = 1
+	hbox_container.anchors_preset = 14
+	hbox_container.anchor_top = 0.5
+	hbox_container.anchor_right = 1.0
+	hbox_container.anchor_bottom = 0.5
+	hbox_container.offset_top = -15.5
+	hbox_container.offset_bottom = 15.5
+	hbox_container.grow_horizontal = GROW_DIRECTION_BOTH
+	hbox_container.grow_vertical = GROW_DIRECTION_BOTH
+	panel.add_child(hbox_container)
+	
+	var label2: Label = Label.new()
+	label2.layout_mode = 2
+	label2.text = "New Property:"
+	label2.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hbox_container.add_child(label2)
+	
+	line_edit = LineEdit.new()
+	line_edit.layout_mode = 2
+	line_edit.size_flags_horizontal = 3
+	line_edit.placeholder_text = "Place New Property Key Name Here..."
+	line_edit.text_changed.connect(_on_new_key_line_edit_text_changed)
+	hbox_container.add_child(line_edit)
+	
+	new_type_option_button = OptionButton.new()
+	new_type_option_button.layout_mode = 2
+	new_type_option_button.selected = 0
+	hbox_container.add_child(new_type_option_button)
+	
+	add_button = Button.new()
+	add_button.layout_mode = 2
+	add_button.text = "Add New Property"
+	add_button.pressed.connect(_on_add_button_pressed)
+	hbox_container.add_child(add_button)
+	
+	var scroll_container = ScrollContainer.new()
+	scroll_container.custom_minimum_size = Vector2(0, 128)
+	scroll_container.layout_mode = 2
+	scroll_container.size_flags_vertical = SIZE_EXPAND_FILL
+	add_child(scroll_container)
+	
+	v_box_container = VBoxContainer.new()
+	v_box_container.layout_mode = 2
+	v_box_container.size_flags_horizontal = SIZE_EXPAND_FILL
+	v_box_container.size_flags_vertical = SIZE_EXPAND_FILL
+	scroll_container.add_child(v_box_container)
+	
 	add_button.disabled = line_edit.text.is_empty()
 	build_type_options()
 
