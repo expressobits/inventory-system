@@ -64,3 +64,4 @@ script = ExtResource("7_nxnqq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("9_2glac")
 inventories = [NodePath("../Inventory")]
+database = ExtResource("3_nqx2d")

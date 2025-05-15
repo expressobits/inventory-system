@@ -95,5 +95,6 @@ volume_db = -30.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -0.5)
 script = ExtResource("12_2tit8")
 inventories = [NodePath("../CharacterInventorySystem/Inventory")]
+database = ExtResource("4_0qsek")
 
 [editable path="CharacterInventorySystem"]
