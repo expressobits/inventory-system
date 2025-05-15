@@ -382,11 +382,10 @@
 				Emitted when a [Item] was removed.
 			</description>
 		</signal>
-		<signal name="request_drop_obj">
-			<param index="0" name="drop_item_packed_scene_path" type="String" />
-			<param index="1" name="item_id" type="String" />
-			<param index="2" name="amount" type="int" />
-			<param index="3" name="item_properties" type="Dictionary" />
+		<signal name="request_drop_item">
+			<param index="0" name="item_id" type="String" />
+			<param index="1" name="amount" type="int" />
+			<param index="2" name="item_properties" type="Dictionary" />
 			<description>
 				Emitted when the [method drop] method is called (Usually called within [method drop_from_inventory] or [method drop_all_stacks]).
 			</description>
