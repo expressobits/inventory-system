@@ -201,11 +201,11 @@ Emitted when a ``Item`` was removed.
 
 ----
 
-.. _class_Inventory_signal_request_drop_obj:
+.. _class_Inventory_signal_request_drop_item:
 
 .. rst-class:: classref-signal
 
-**request_drop_obj**\ (\ drop_item_packed_scene_path\: ``String``, item_id\: ``String``, amount\: ``int``, item_properties\: ``Dictionary``\ ) :ref:`🔗<class_Inventory_signal_request_drop_obj>`
+**request_drop_item**\ (\ item_id\: ``String``, amount\: ``int``, item_properties\: ``Dictionary``\ ) :ref:`🔗<class_Inventory_signal_request_drop_item>`
 
 Emitted when the :ref:`drop()<class_Inventory_method_drop>` method is called (Usually called within :ref:`drop_from_inventory()<class_Inventory_method_drop_from_inventory>` or :ref:`drop_all_stacks()<class_Inventory_method_drop_all_stacks>`).
 
