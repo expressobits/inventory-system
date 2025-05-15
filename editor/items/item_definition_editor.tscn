@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://cyv2lh41dfq81" path="res://addons/inventory-system/editor/items/item_definition_editor.gd" id="1_smo60"]
 [ext_resource type="Script" uid="uid://drx1fh0xues8k" path="res://addons/inventory-system/editor/base/item_id_editor.gd" id="2_by1w4"]
 [ext_resource type="PackedScene" uid="uid://bl40ri4you0n5" path="res://addons/inventory-system/editor/items/categories_in_item.tscn" id="3_cy8bj"]
-[ext_resource type="PackedScene" uid="uid://c1am6gfdvbcgx" path="res://addons/inventory-system/editor/items/custom_properties.tscn" id="3_obam6"]
 [ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_p8qlp"]
+[ext_resource type="Script" uid="uid://c85vvlxjfn81v" path="res://addons/inventory-system/editor/items/custom_properties.gd" id="5_fmsp2"]
 
 [node name="ItemDefinitionEditor" type="Control"]
 custom_minimum_size = Vector2(256, 0)
@@ -54,7 +54,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Name"
+text = "Name"
 
 [node name="ItemNameTextEdit" type="LineEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -95,7 +95,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/MaxStack"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Max Stack"
+text = "Max Stack"
 
 [node name="MaxStackSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/MaxStack"]
 unique_name_in_owner = true
@@ -114,7 +114,7 @@ size_flags_horizontal = 3
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Weight"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Weight"
+text = "Weight"
 
 [node name="WeightSpinBox" type="SpinBox" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Weight"]
 unique_name_in_owner = true
@@ -136,7 +136,7 @@ layout_mode = 2
 [node name="Label" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Size"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-text = "Item Grid Size"
+text = "Grid Size"
 
 [node name="LabelX" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/WeightAndSize/Size"]
 custom_minimum_size = Vector2(32, 0)
@@ -178,8 +178,11 @@ layout_mode = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="CustomProperties" parent="ScrollContainer/MarginContainer/VBoxContainer" instance=ExtResource("3_obam6")]
+[node name="CustomProperties" type="VBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("5_fmsp2")
 
 [connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
 [connection signal="changed" from="ScrollContainer/MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/ItemIDEditor" to="." method="_on_item_id_editor_changed"]
