@@ -531,6 +531,18 @@ bool Inventory::contains_category_in_stack(const Ref<ItemStack> &stack, const Re
 	}
 }
 
+float Inventory::get_weight() const {
+	float weight = 0;
+	for (size_t i = 0; i < stacks.size(); i++) {
+		Ref<ItemStack> stack = stacks[i];
+		Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
+		if (definition != nullptr) {
+			weight += definition->get_weight() * stack->get_amount();
+		}
+	}
+	return weight;
+}
+
 void Inventory::_insert_stack(int stack_index) {
 	ERR_FAIL_COND_MSG(stack_index < 0 || stack_index > stacks.size(), "The 'stack index' is out of bounds.");
 
@@ -679,6 +691,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category_in_stack", "stack", "category"), &Inventory::contains_category_in_stack);
+	ClassDB::bind_method(D_METHOD("get_weight"), &Inventory::get_weight);
 	ClassDB::bind_method(D_METHOD("serialize"), &Inventory::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Inventory::deserialize);
 	ClassDB::bind_method(D_METHOD("can_add_new_stack", "item_id", "amount", "properties"), &Inventory::can_add_new_stack, DEFVAL(1), DEFVAL(Dictionary()));

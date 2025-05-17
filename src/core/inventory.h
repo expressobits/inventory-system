@@ -68,6 +68,7 @@ public:
 	int remove_from_stack(Ref<ItemStack> stack, const String &item_id, const int &amount);
 	int get_max_stack_of_stack(const Ref<ItemStack> &stack, Ref<ItemDefinition> &item) const;
 	bool contains_category_in_stack(const Ref<ItemStack> &slot, const Ref<ItemCategory> &category) const;
+	float get_weight() const;
 	void set_stacks(const TypedArray<ItemStack> &new_items);
 	TypedArray<ItemStack> get_stacks() const;
 	void set_inventory_name(const String &new_inventory_name);

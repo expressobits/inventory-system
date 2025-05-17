@@ -203,6 +203,18 @@
 				If there is no stack with an item of this category, it returns -1.
 			</description>
 		</method>
+		<method name="get_weight" qualifiers="const">
+			<return type="float" />
+			<description>
+				Returns the weight of the inventory.
+				The weight is calculated by summing the weight of all items in the inventory.
+				[codeblocks]
+				[gdscript]
+				var weight = inventory.get_weight() # Get weight of inventory
+				[/gdscript]
+				[/codeblocks]
+			</description>
+		</method>
 		<method name="has_space_for" qualifiers="const">
 			<return type="bool" />
 			<param index="0" name="item" type="String" />
