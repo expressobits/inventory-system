@@ -371,6 +371,9 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 		return false;
 
 	remove_at(stack_index, stack_item_id, stack_amount);
+
+	other_stack_index = other_inventory->stacks.find(other_stack);
+	
 	other_inventory->remove_at(other_stack_index, other_stack_item_id, other_stack_amount);
 
 	add_at_position(position, other_stack_item_id, other_stack_amount, other_stack_properties);
