@@ -23,7 +23,9 @@ func init_suite():
 		"test_wrong_stack_type",
 		"test_clear",
 		"test_serialize",
-		"test_full"
+		"test_full",
+		"test_get_stack_at",
+		"test_transfer_to_with_stack"
 	]
 
 
@@ -133,6 +135,25 @@ func test_autosplitmerge() -> void:
 	
 	inventory_3x3.clear()
 	inventory_3x3_2.clear()
+
+
+func test_get_stack_at() -> void:
+	inventory_3x3.clear()
+	assert(inventory_3x3.add_at_position(Vector2i(1,1), "wood", 4) == 0)
+	assert(inventory_3x3.add_at_position(Vector2i(2,1), "stone", 3) == 0)
+	var stack = inventory_3x3.get_stack_at(Vector2i(1,1))
+	assert(stack != null)
+	var index = inventory_3x3.stacks.find(stack)
+	assert(!(index < 0 or index >= inventory_3x3.stacks.size()))
+
+
+func test_transfer_to_with_stack() -> void:
+	inventory_3x3.clear()
+	assert(inventory_3x3.add_at_position(Vector2i(1,1), "wood", 4) == 0)
+	assert(inventory_3x3.add_at_position(Vector2i(2,1), "stone", 3) == 0)
+	assert(inventory_3x3.transfer_to(Vector2i(1,1), inventory_3x3, Vector2i(2,1), 4) == 0)
+	
+	assert(inventory_3x3.get_stack_at(Vector2i(1,1)).item_id == "stone")
 
 
 func test_wrong_stack_type() -> void:
