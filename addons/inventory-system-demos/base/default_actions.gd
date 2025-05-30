@@ -170,6 +170,15 @@ const CHARACTER_CONTROLLER_REMOVE_ITEM_C := {
 	]
 }
 
+const CHARACTER_CONTROLLER_TOGGLE_FIRE := {
+	"name": "toggle_fire",
+	"events": [
+		{
+			"physical_keycode": KEY_R,
+		}
+	]
+}
+
 const UI_INVENTORY_TRANSFER := {
 	"name": "ui_inventory_transfer",
 	"events": [
