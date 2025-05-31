@@ -394,10 +394,6 @@ int Inventory::transfer(const int &stack_index, Inventory *destination, const in
 	String item_id = stack->get_item_id();
 	Dictionary properties = stack->get_properties();
 
-	if (!destination->has_space_for(item_id, stack->get_amount(), properties)) {
-		return amount;
-	}
-
 	int amount_to_interact = amount;
 	if (amount_to_interact == 0)
 		return amount;
