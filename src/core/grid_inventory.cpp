@@ -373,7 +373,7 @@ bool GridInventory::swap_stacks(const Vector2i position, GridInventory *other_in
 	remove_at(stack_index, stack_item_id, stack_amount);
 
 	other_stack_index = other_inventory->stacks.find(other_stack);
-	
+
 	other_inventory->remove_at(other_stack_index, other_stack_item_id, other_stack_amount);
 
 	add_at_position(position, other_stack_item_id, other_stack_amount, other_stack_properties);
@@ -400,6 +400,12 @@ Vector2i GridInventory::find_free_place(const Vector2i item_size, const String i
 	if (is_rotated) {
 		final_size = Vector2i(final_size.y, final_size.x);
 	}
+
+	// Early return if item is bigger than inventory
+	if (final_size.x > size.x || final_size.y > size.y) {
+		return result;
+	}
+
 	for (size_t y = 0; y < (size.y - (final_size.y - 1)); y++) {
 		for (size_t x = 0; x < (size.x - (final_size.x - 1)); x++) {
 			Rect2i rect = Rect2i(Vector2i(x, y), final_size);
@@ -475,15 +481,14 @@ void GridInventory::deserialize(const Dictionary data) {
 }
 
 bool GridInventory::can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const {
-	return (has_space_for(item_id, amount, properties, false) || has_space_for(item_id, amount, properties, true)) && Inventory::can_add_new_stack(item_id, amount, properties);
+	return (has_space_in_grid_for(item_id, amount, properties, false) || has_space_in_grid_for(item_id, amount, properties, true)) && Inventory::can_add_new_stack(item_id, amount, properties);
 }
 
 bool GridInventory::is_full() const {
 	return Inventory::is_full() && !has_free_place(Vector2i(1, 1));
 }
 
-bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties, const bool is_rotated) const {
-	
+bool GridInventory::has_space_in_grid_for(const String &item_id, const int amount, const Dictionary &properties, const bool is_rotated) const {
 	Ref<ItemDefinition> definition = get_database()->get_item(item_id);
 	ERR_FAIL_NULL_V_MSG(definition, false, "'definition' is null.");
 
@@ -493,6 +498,13 @@ bool GridInventory::has_space_for(const String &item_id, const int amount, const
 	Vector2i item_size = definition->get_size();
 	Vector2i result = find_free_place(item_size, item_id, amount, properties, is_rotated);
 	return result != Vector2i(-1, -1);
+}
+
+bool GridInventory::has_space_for(const String &item_id, const int amount, const Dictionary &properties) const {
+	if(!Inventory::has_space_for(item_id, amount, properties))
+		return false;
+	if(has_space_in_grid_for(item_id, amount, properties, false) || has_space_in_grid_for(item_id, amount, properties, true)) 
+		return true;
 }
 
 void GridInventory::on_insert_stack(const int stack_index) {

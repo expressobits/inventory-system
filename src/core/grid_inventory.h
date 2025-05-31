@@ -71,7 +71,8 @@ public:
 	virtual void deserialize(const Dictionary data) override;
 	virtual bool can_add_new_stack(const String &item_id, const int &amount, const Dictionary &properties) const override;
 	virtual bool is_full() const;
-	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false) const;
+	virtual bool has_space_in_grid_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary(), const bool is_rotated = false) const;
+	virtual bool has_space_for(const String &item_id, const int amount = 1, const Dictionary &properties = Dictionary()) const override;
 	virtual void on_insert_stack(const int stack_index) override;
 	void on_insert_stack_on_position(const int stack_index, const Vector2i position, const bool is_rotated = false);
 	virtual void on_removed_stack(const Ref<ItemStack> stack, const int stack_index) override;
