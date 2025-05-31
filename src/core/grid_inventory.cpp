@@ -67,6 +67,7 @@ void GridInventory::_bind_methods() {
 }
 
 GridInventory::GridInventory() {
+	_refresh_quad_tree();
 }
 
 GridInventory::~GridInventory() {
