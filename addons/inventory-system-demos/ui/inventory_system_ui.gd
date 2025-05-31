@@ -38,6 +38,9 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 
 @onready var stack_popup_menu: PopupMenu = $StackPopupMenu
 
+
+var alternative_inventory : Inventory
+
 func _ready():
 	stack_popup_menu.id_pressed.connect(_on_stack_popup_menu_id_pressed)
 	# TODO connect
@@ -68,6 +71,7 @@ func _ready():
 	
 	#player_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
 	other_craft_station_ui.input_inventory_ui.request_transfer_to.connect(_request_transfer_to)
+	other_craft_station_ui.input_inventory_ui.request_fast_transfer.connect(_request_fast_transfer)
 	other_craft_station_ui.input_inventory_ui.request_split.connect(_request_split)
 	
 	player_craft_station_ui.on_craft.connect(_on_craft)
@@ -124,6 +128,7 @@ func _on_open_inventory(inventory : Inventory):
 	if character.main_inventory != inventory:
 		loot_inventory_ui.inventory = inventory
 		loot_inventory_ui.visible = true
+		alternative_inventory = loot_inventory_ui.inventory
 	else:
 		_open_player_inventory()
 		
@@ -135,6 +140,7 @@ func _on_open_craft_station(craft_station : CraftStation):
 		player_craft_station_ui.open(craft_station)
 	else:
 		other_craft_station_ui.open(craft_station)
+		alternative_inventory = craft_station.get_input_inventory()
 	hotbar_ui.visible = false
 	_open_player_inventory()
 
@@ -144,11 +150,14 @@ func _on_close_craft_station(craft_station : CraftStation):
 		player_craft_station_ui.close()
 	else:
 		other_craft_station_ui.close()
+		alternative_inventory = null
 	hotbar_ui.visible = true
 	_close_player_inventory()
 
 
-func _on_close_inventory(_inventory : Inventory):
+func _on_close_inventory(inventory : Inventory):
+	if character.main_inventory != inventory:
+		alternative_inventory = null
 	_close_player_inventory()
 
 
@@ -172,10 +181,11 @@ func _request_transfer_to(inventory: GridInventory, origin_pos: Vector2i, destin
 func _request_fast_transfer(inventory: GridInventory, origin_pos: Vector2i, amount: int):
 	var destination: Inventory
 	if inventory == player_inventory_ui.inventory:
-		destination = loot_inventory_ui.inventory
+		if alternative_inventory == null:
+			return
+		destination = alternative_inventory
 	else:
 		destination = player_inventory_ui.inventory
-	print("Fast transfer from ", inventory.name, " to ", destination.name, " with amount ", amount, " at position ", origin_pos)
 	character.transfer(inventory, origin_pos, destination, amount)
 
 
