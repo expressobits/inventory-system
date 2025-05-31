@@ -2,6 +2,8 @@ extends TestSuite
 
 @export var inventory_3x3 : GridInventory
 @export  var inventory_3x3_2 : GridInventory
+@export  var inventory_8x5 : GridInventory
+@export  var inventory_8x1 : GridInventory
 # Item 1 x 1 (Stackable 16)
 @export var wood : String = "wood"
 # Item 2 x 2 (Stackable 1)
@@ -26,6 +28,7 @@ func init_suite():
 		"test_full",
 		"test_get_stack_at",
 		"test_transfer_to_with_stack"
+		"test_has_space_for"
 	]
 
 
@@ -211,3 +214,28 @@ func test_serialize() -> void:
 	assert(inventory_3x3_2.contains(wood, 1))
 	assert(inventory_3x3_2.stack_positions.size() == 1)
 	assert(inventory_3x3_2.get_quad_tree().get_first(Vector2i(0,1)) != null)
+
+
+func test_move_workbench() -> void:
+	# Test moving a stack to a workbench
+	inventory_8x1.clear()
+	inventory_8x5.clear()
+	inventory_8x5.add("workbench", 1)
+	var stack_index = inventory_8x5.get_stack_index_at(Vector2i(0, 0))
+	if stack_index == -1:
+		return
+	print(stack_index)
+	var amount = inventory_8x5.transfer(stack_index, inventory_8x1, 1)
+	assert(amount == 0)
+
+
+func test_has_space_for() -> void:
+	# Test has_space_for with workbench
+	inventory_8x1.clear()
+	inventory_8x5.clear()
+
+	assert(!inventory_8x1.has_space_for("workbench"))
+	assert(inventory_8x5.has_space_for("workbench"))
+	
+	inventory_8x1.clear()
+	inventory_8x5.clear()

@@ -24,10 +24,12 @@ database = ExtResource("4_1lhre")
 [node name="QuadTreeTests" type="Node" parent="."]
 script = ExtResource("2_jtl62")
 
-[node name="GridInventoryTests" type="Node" parent="." node_paths=PackedStringArray("inventory_3x3", "inventory_3x3_2")]
+[node name="GridInventoryTests" type="Node" parent="." node_paths=PackedStringArray("inventory_3x3", "inventory_3x3_2", "inventory_8x5", "inventory_8x1")]
 script = ExtResource("3_k7xlo")
 inventory_3x3 = NodePath("GridInventory")
 inventory_3x3_2 = NodePath("GridInventory2")
+inventory_8x5 = NodePath("GridInventory8x5")
+inventory_8x1 = NodePath("GridInventory8x1")
 
 [node name="GridInventory" type="GridInventory" parent="GridInventoryTests"]
 size = Vector2i(3, 3)
@@ -35,4 +37,12 @@ database = ExtResource("4_1lhre")
 
 [node name="GridInventory2" type="GridInventory" parent="GridInventoryTests"]
 size = Vector2i(3, 3)
+database = ExtResource("4_1lhre")
+
+[node name="GridInventory8x5" type="GridInventory" parent="GridInventoryTests"]
+size = Vector2i(8, 5)
+database = ExtResource("4_1lhre")
+
+[node name="GridInventory8x1" type="GridInventory" parent="GridInventoryTests"]
+size = Vector2i(1, 8)
 database = ExtResource("4_1lhre")

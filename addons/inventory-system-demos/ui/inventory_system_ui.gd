@@ -175,6 +175,7 @@ func _request_fast_transfer(inventory: GridInventory, origin_pos: Vector2i, amou
 		destination = loot_inventory_ui.inventory
 	else:
 		destination = player_inventory_ui.inventory
+	print("Fast transfer from ", inventory.name, " to ", destination.name, " with amount ", amount, " at position ", origin_pos)
 	character.transfer(inventory, origin_pos, destination, amount)
 
 
