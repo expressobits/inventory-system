@@ -18,6 +18,7 @@ func init_suite() -> void:
 		"test_has_space_item",
 	]
 
+
 func cleanup_test() -> void:
 	inventory1.clear()
 	inventory2.clear()
@@ -28,8 +29,6 @@ func test_size() -> void:
 	assert(inventory1.stacks.size() == 1)
 	assert(inventory1.remove(item) == 0)
 	assert(inventory1.stacks.size() == 0)
-	
-	
 
 
 func test_add_remove() -> void:
