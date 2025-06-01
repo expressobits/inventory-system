@@ -80,6 +80,10 @@ void GridInventory::set_size(const Vector2i &new_size) {
 		return;
 	Vector2i old_size = size;
 	size = new_size;
+	if (size.x > 64 || size.y > 64) {
+		UtilityFunctions::printerr("GridInventory size is too large, it should not exceed 64x64.");
+		size = Vector2i(64, 64);
+	}
 	if (!Engine::get_singleton()->is_editor_hint()) {
 		if (_bounds_broken())
 			size = old_size;
