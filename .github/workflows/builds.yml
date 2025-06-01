@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
       inputs:
         inventory_tag:
+          description: 'Tag for the inventory build (optional)'
           required: false
           type: string
 
