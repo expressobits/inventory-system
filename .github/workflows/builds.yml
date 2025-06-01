@@ -114,3 +114,26 @@ jobs:
           name: inventory-system
           pattern: inventory-system-*
           delete-merged: true
+
+  post-build:
+    runs-on: ubuntu-22.04
+    needs: build
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Move build files to Godot addon bin folder
+        run: |
+          mkdir -p inventory-system/addons/inventory-system/bin
+          cp -r bin/* inventory-system/addons/inventory-system/bin/
+
+      - name: Commit build files to inventory-system submodule
+        run: |
+          cd inventory-system
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add addons/inventory-system/bin/*
+          git commit -m "Update built binaries [CI skip]" || echo "No changes to commit"
+          git push origin HEAD:addon || echo "No changes to push"
