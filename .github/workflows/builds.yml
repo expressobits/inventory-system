@@ -133,7 +133,7 @@ jobs:
       - name: Move build files to Godot addon bin folder
         run: |
           mkdir -p inventory-system/addons/inventory-system/bin
-          cp -r downloaded-artifacts/*/* inventory-system/addons/inventory-system/bin/
+          cp -r downloaded-artifacts/. inventory-system/addons/inventory-system/bin/
 
       - name: Commit build files to inventory-system submodule
         run: |
