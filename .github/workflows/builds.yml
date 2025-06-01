@@ -117,7 +117,7 @@ jobs:
 
   post-build:
     runs-on: ubuntu-22.04
-    needs: build
+    needs: merge
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v4
