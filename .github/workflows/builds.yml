@@ -134,6 +134,7 @@ jobs:
           cd inventory-system
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin addon || echo "No remote changes to rebase"
           git add addons/inventory-system/bin/*
           git commit -m "Update built binaries [CI skip]" || echo "No changes to commit"
           git push origin HEAD:addon || echo "No changes to push"
