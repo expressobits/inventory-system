@@ -1,0 +1,38 @@
+name: Post Build Inventory System
+
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: true
+        type: string
+
+jobs:
+  post-build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: downloaded-artifacts
+
+      - name: Move build files to Godot addon bin folder
+        run: |
+          mkdir -p inventory-system/addons/inventory-system/bin
+          cp -r downloaded-artifacts/. inventory-system/addons/inventory-system/bin/
+
+      - name: Commit build files to inventory-system submodule
+        run: |
+          cd inventory-system
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin addon || echo "No remote changes to rebase"
+          git add addons/inventory-system/bin/*
+          git commit -m "Update built binaries [CI skip]" || echo "No changes to commit"
+          git push origin HEAD:addon || echo "No changes to push"
