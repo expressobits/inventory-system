@@ -83,6 +83,7 @@ public:
 
 	Ref<ItemCategory> get_category_from_id(String id) const;
 	Ref<CraftStationType> get_craft_station_from_id(String id) const;
+	Ref<Loot> get_loot_table_from_id(String id) const;
 
 	Dictionary serialize() const;
 	void deserialize(const Dictionary data);

@@ -69,6 +69,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_loot_table", "loot", "data"), &InventoryDatabase::deserialize_loot_table);
 
 	ClassDB::bind_method(D_METHOD("get_category_from_id", "id"), &InventoryDatabase::get_category_from_id);
+	ClassDB::bind_method(D_METHOD("get_craft_station_from_id", "id"), &InventoryDatabase::get_craft_station_from_id);
+	ClassDB::bind_method(D_METHOD("get_loot_table_from_id", "id"), &InventoryDatabase::get_loot_table_from_id);
 
 	ClassDB::bind_method(D_METHOD("add_item"), &InventoryDatabase::add_item);
 	ClassDB::bind_method(D_METHOD("add_item_category"), &InventoryDatabase::add_item_category);
@@ -485,6 +487,15 @@ Ref<CraftStationType> InventoryDatabase::get_craft_station_from_id(String id) co
 		Ref<CraftStationType> station = stations_type[i];
 		if (station->get_id() == id)
 			return station;
+	}
+	return nullptr;
+}
+
+Ref<Loot> InventoryDatabase::get_loot_table_from_id(String id) const {
+	for (size_t i = 0; i < loot_tables.size(); i++) {
+		Ref<Loot> loot_table = loot_tables[i];
+		if (loot_table.is_valid() && loot_table->get_name() == id)
+			return loot_table;
 	}
 	return nullptr;
 }

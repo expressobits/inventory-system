@@ -12,7 +12,7 @@ class LootGenerator : public NodeInventories {
 	GDCLASS(LootGenerator, NodeInventories);
 
 private:
-	Ref<Loot> loot_table;
+	String loot_table_id;
 	NodePath target_inventory_path;
 
 protected:
@@ -21,7 +21,8 @@ protected:
 public:
 	LootGenerator();
 	~LootGenerator();
-	void set_loot_table(const Ref<Loot> &new_loot_table);
+	void set_loot_table_id(const String &new_loot_table_id);
+	String get_loot_table_id() const;
 	Ref<Loot> get_loot_table() const;
 	void set_target_inventory_path(const NodePath &new_target_inventory_path);
 	NodePath get_target_inventory_path() const;
