@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="LootGenerator" inherits="NodeInventories" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Node that generates random loot from loot tables into target inventories.
+	</brief_description>
+	<description>
+		The LootGenerator node provides functionality for generating random items from weighted loot tables and placing them into target inventories. It inherits from [NodeInventories] and can access the inventory database for item validation. This is commonly used in survival games for treasure chests, enemy drops, and resource gathering mechanics.
+		
+		The loot generation uses weighted random selection where items with higher weights are more likely to be selected. Each loot item can specify minimum and maximum amounts to generate random quantities.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="generate_loot">
+			<return type="void" />
+			<description>
+				Generate a single random item from the assigned loot table and add it to the target inventory. This is equivalent to calling [method generate_loot_count] with a count of 1.
+			</description>
+		</method>
+		<method name="generate_loot_count">
+			<return type="void" />
+			<param index="0" name="count" type="int" />
+			<description>
+				Generate the specified number of random items from the assigned loot table and add them to the target inventory. Each generation is independent, so the same item may be selected multiple times. The actual amount of each item is randomly determined between the min_amount and max_amount specified in the [LootItem].
+			</description>
+		</method>
+		<method name="get_target_inventory" qualifiers="const">
+			<return type="Inventory" />
+			<description>
+				Returns the target [Inventory] node found at the [member target_inventory_path]. Returns null if the path is empty or no valid inventory is found at the specified path.
+			</description>
+		</method>
+	</methods>
+	<members>
+		<member name="loot_table" type="Loot" setter="set_loot_table" getter="get_loot_table">
+			The [Loot] table resource containing the weighted list of items that can be generated. This table defines which items can be generated and their relative probabilities.
+		</member>
+		<member name="target_inventory_path" type="NodePath" setter="set_target_inventory_path" getter="get_target_inventory_path" default="NodePath(&quot;&quot;)">
+			The [NodePath] to the target [Inventory] node where generated loot will be placed. The path should point to a valid Inventory node in the scene tree.
+		</member>
+	</members>
+</class>
