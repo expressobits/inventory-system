@@ -12,12 +12,15 @@
 #include "base/item_stack.h"
 #include "base/node_inventories.h"
 #include "base/recipe.h"
+#include "base/loot_item.h"
+#include "base/loot.h"
 #include "constraints/inventory_constraint.h"
 #include "constraints/grid_inventory_constraint.h"
 #include "core/quad_tree.h"
 #include "core/hotbar.h"
 #include "core/inventory.h"
 #include "core/grid_inventory.h"
+#include "core/loot_generator.h"
 #include "craft/craft_station.h"
 
 using namespace godot;
@@ -31,6 +34,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(ItemCategory);
 	GDREGISTER_CLASS(ItemDefinition);
 	GDREGISTER_CLASS(ItemStack);
+	GDREGISTER_CLASS(LootItem);
+	GDREGISTER_CLASS(Loot);
 	GDREGISTER_CLASS(NodeInventories);
 	GDREGISTER_CLASS(Recipe);
 	GDREGISTER_CLASS(InventoryConstraint);
@@ -42,6 +47,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(Hotbar::Slot);
 	GDREGISTER_CLASS(Inventory);
 	GDREGISTER_CLASS(GridInventory);
+	GDREGISTER_CLASS(LootGenerator);
 	GDREGISTER_CLASS(CraftStation);
 	GDREGISTER_CLASS(Crafting);
 }

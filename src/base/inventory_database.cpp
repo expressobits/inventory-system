@@ -41,11 +41,15 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stations_type"), &InventoryDatabase::get_stations_type);
 	ClassDB::bind_method(D_METHOD("set_item_categories", "item_categories"), &InventoryDatabase::set_item_categories);
 	ClassDB::bind_method(D_METHOD("get_item_categories"), &InventoryDatabase::get_item_categories);
+	ClassDB::bind_method(D_METHOD("set_loot_tables", "loot_tables"), &InventoryDatabase::set_loot_tables);
+	ClassDB::bind_method(D_METHOD("get_loot_tables"), &InventoryDatabase::get_loot_tables);
 
 	ClassDB::bind_method(D_METHOD("add_new_item", "item"), &InventoryDatabase::add_new_item);
 	ClassDB::bind_method(D_METHOD("remove_item", "item"), &InventoryDatabase::remove_item);
 	ClassDB::bind_method(D_METHOD("add_new_category", "category"), &InventoryDatabase::add_new_category);
 	ClassDB::bind_method(D_METHOD("remove_category", "category"), &InventoryDatabase::remove_category);
+	ClassDB::bind_method(D_METHOD("add_new_loot_table", "loot"), &InventoryDatabase::add_new_loot_table);
+	ClassDB::bind_method(D_METHOD("remove_loot_table", "loot"), &InventoryDatabase::remove_loot_table);
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
 	ClassDB::bind_method(D_METHOD("has_item_category_id", "id"), &InventoryDatabase::has_item_category_id);
 	ClassDB::bind_method(D_METHOD("has_item_id", "id"), &InventoryDatabase::has_item_id);
@@ -61,6 +65,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_recipe", "recipe", "data"), &InventoryDatabase::deserialize_recipe);
 	ClassDB::bind_method(D_METHOD("serialize_station_type", "station_type"), &InventoryDatabase::serialize_station_type);
 	ClassDB::bind_method(D_METHOD("deserialize_station_type", "station_type", "data"), &InventoryDatabase::deserialize_station_type);
+	ClassDB::bind_method(D_METHOD("serialize_loot_table", "loot"), &InventoryDatabase::serialize_loot_table);
+	ClassDB::bind_method(D_METHOD("deserialize_loot_table", "loot", "data"), &InventoryDatabase::deserialize_loot_table);
 
 	ClassDB::bind_method(D_METHOD("get_category_from_id", "id"), &InventoryDatabase::get_category_from_id);
 
@@ -68,6 +74,7 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_item_category"), &InventoryDatabase::add_item_category);
 	ClassDB::bind_method(D_METHOD("add_recipe"), &InventoryDatabase::add_recipe);
 	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
+	ClassDB::bind_method(D_METHOD("add_loot_table"), &InventoryDatabase::add_loot_table);
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_from_invdata", "json"), &InventoryDatabase::import_from_invdata);
@@ -81,6 +88,7 @@ void InventoryDatabase::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stations_type", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")), "set_stations_type", "get_stations_type");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "item_categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_item_categories", "get_item_categories");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "loot_tables", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Loot")), "set_loot_tables", "get_loot_tables");
 }
 
 InventoryDatabase::InventoryDatabase() {
@@ -121,6 +129,14 @@ void InventoryDatabase::set_item_categories(const TypedArray<ItemCategory> &new_
 
 TypedArray<ItemCategory> InventoryDatabase::get_item_categories() const {
 	return item_categories;
+}
+
+void InventoryDatabase::set_loot_tables(const TypedArray<Loot> &new_loot_tables) {
+	loot_tables = new_loot_tables;
+}
+
+TypedArray<Loot> InventoryDatabase::get_loot_tables() const {
+	return loot_tables;
 }
 
 void InventoryDatabase::set_items_cache(const Dictionary &new_items_cache) {
@@ -166,6 +182,20 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 	if (index > -1) {
 		item_categories.remove_at(index);
 		_update_items_categories_cache();
+	}
+}
+
+void InventoryDatabase::add_new_loot_table(const Ref<Loot> loot) {
+	ERR_FAIL_NULL_MSG(loot, "'loot' is null.");
+	loot_tables.append(loot);
+}
+
+void InventoryDatabase::remove_loot_table(const Ref<Loot> loot) {
+	ERR_FAIL_NULL_MSG(loot, "'loot' is null.");
+	
+	int index = loot_tables.find(loot);
+	if (index > -1) {
+		loot_tables.remove_at(index);
 	}
 }
 
@@ -381,6 +411,14 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 	}
 }
 
+Dictionary InventoryDatabase::serialize_loot_table(const Ref<Loot> loot) const {
+	return loot->serialize();
+}
+
+void InventoryDatabase::deserialize_loot_table(Ref<Loot> loot, const Dictionary data) const {
+	loot->deserialize(data);
+}
+
 Array InventoryDatabase::serialize_item_stacks(const TypedArray<ItemStack> item_stacks) const {
 	Array slots_data = Array();
 	for (size_t item_stack_index = 0; item_stack_index < item_stacks.size(); item_stack_index++) {
@@ -428,6 +466,11 @@ void InventoryDatabase::add_craft_station_type() {
 	stations_type.append(craft_station_type);
 }
 
+void InventoryDatabase::add_loot_table() {
+	Ref<Loot> loot = memnew(Loot());
+	loot_tables.append(loot);
+}
+
 Ref<ItemCategory> InventoryDatabase::get_category_from_id(String id) const {
 	for (size_t category_index = 0; category_index < item_categories.size(); category_index++) {
 		Ref<ItemCategory> category = item_categories[category_index];
@@ -460,6 +503,9 @@ Dictionary InventoryDatabase::serialize() const {
 	Array craft_station_types_data = serialize_craft_station_types();
 	if (!craft_station_types_data.is_empty())
 		data["craft_station_types"] = craft_station_types_data;
+	Array loot_tables_data = serialize_loot_tables();
+	if (!loot_tables_data.is_empty())
+		data["loot_tables"] = loot_tables_data;
 	return data;
 }
 
@@ -476,6 +522,9 @@ void InventoryDatabase::deserialize(const Dictionary data) {
 	}
 	if (data.has("recipes")) {
 		deserialize_recipes(data["recipes"]);
+	}
+	if (data.has("loot_tables")) {
+		deserialize_loot_tables(data["loot_tables"]);
 	}
 }
 
@@ -559,11 +608,32 @@ void InventoryDatabase::deserialize_recipes(Array datas) {
 	}
 }
 
+Array InventoryDatabase::serialize_loot_tables() const {
+	Array datas = Array();
+	for (size_t i = 0; i < this->loot_tables.size(); i++) {
+		Ref<Loot> loot = this->loot_tables[i];
+		if (loot == nullptr)
+			continue;
+		Dictionary data = serialize_loot_table(loot);
+		datas.append(data);
+	}
+	return datas;
+}
+
+void InventoryDatabase::deserialize_loot_tables(Array datas) {
+	for (size_t i = 0; i < datas.size(); i++) {
+		Ref<Loot> loot = memnew(Loot());
+		deserialize_loot_table(loot, datas[i]);
+		loot_tables.append(loot);
+	}
+}
+
 void InventoryDatabase::clear_current_data() {
 	items.clear();
 	item_categories.clear();
 	stations_type.clear();
 	recipes.clear();
+	loot_tables.clear();
 }
 
 String InventoryDatabase::export_to_invdata() const {
