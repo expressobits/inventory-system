@@ -8,6 +8,7 @@
 #include "item_category.h"
 #include "item_definition.h"
 #include "recipe.h"
+#include "loot.h"
 
 using namespace godot;
 
@@ -19,6 +20,7 @@ private:
 	TypedArray<Recipe> recipes;
 	TypedArray<CraftStationType> stations_type;
 	TypedArray<ItemCategory> item_categories;
+	TypedArray<Loot> loot_tables;
 	Dictionary items_cache;
 	Dictionary categories_code_cache;
 
@@ -39,6 +41,8 @@ public:
 	TypedArray<CraftStationType> get_stations_type() const;
 	void set_item_categories(const TypedArray<ItemCategory> &new_item_categories);
 	TypedArray<ItemCategory> get_item_categories() const;
+	void set_loot_tables(const TypedArray<Loot> &new_loot_tables);
+	TypedArray<Loot> get_loot_tables() const;
 	void set_items_cache(const Dictionary &new_items_cache);
 	Dictionary get_items_cache() const;
 	void set_categories_code_cache(const Dictionary &new_categories_code_cache);
@@ -48,6 +52,8 @@ public:
 	void remove_item(const Ref<ItemDefinition> item);
 	void add_new_category(const Ref<ItemCategory> category);
 	void remove_category(const Ref<ItemCategory> category);
+	void add_new_loot_table(const Ref<Loot> loot);
+	void remove_loot_table(const Ref<Loot> loot);
 	Ref<ItemDefinition> get_item(String id) const;
 	bool has_item_category_id(String id) const;
 	bool has_item_id(String id) const;
@@ -64,6 +70,8 @@ public:
 	void deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const;
 	Dictionary serialize_station_type(const Ref<CraftStationType> craft_station_type) const;
 	void deserialize_station_type(Ref<CraftStationType> craft_station_type, const Dictionary data) const;
+	Dictionary serialize_loot_table(const Ref<Loot> loot) const;
+	void deserialize_loot_table(Ref<Loot> loot, const Dictionary data) const;
 	Array serialize_item_stacks(const TypedArray<ItemStack> stacks) const;
 	void deserialize_item_stacks(TypedArray<ItemStack> stacks, const Array data) const;
 
@@ -71,9 +79,11 @@ public:
 	void add_item_category();
 	void add_recipe();
 	void add_craft_station_type();
+	void add_loot_table();
 
 	Ref<ItemCategory> get_category_from_id(String id) const;
 	Ref<CraftStationType> get_craft_station_from_id(String id) const;
+	Ref<Loot> get_loot_table_from_id(String id) const;
 
 	Dictionary serialize() const;
 	void deserialize(const Dictionary data);
@@ -86,6 +96,8 @@ public:
 	void deserialize_craft_station_types(Array datas);
 	Array serialize_recipes() const;
 	void deserialize_recipes(Array datas);
+	Array serialize_loot_tables() const;
+	void deserialize_loot_tables(Array datas);
 
 	void clear_current_data();
 	String export_to_invdata() const;
