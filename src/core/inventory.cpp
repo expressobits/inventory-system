@@ -29,10 +29,29 @@ void Inventory::set_stack_content(const int stack_index, const String &item_id, 
 }
 
 bool Inventory::is_empty() const {
-	return amount() == 0;
+	for (size_t i = 0; i < stacks.size(); i++) {
+		Ref<ItemStack> stack = stacks[i];
+
+		if (stack == nullptr) {
+			continue;
+		}
+
+		// short circuit and return the moment we find any amount
+		if (stack->get_amount() > 0) {
+			return false;
+		}
+	}
+
+	// did not find any amount inventory is empty
+	return true;
 }
 
 bool Inventory::is_full() const {
+	// check if the inventory is empty
+	if (is_empty()) {
+		return false;
+	}
+
 	for (size_t i = 0; i < stacks.size(); i++) {
 		Ref<ItemStack> stack = stacks[i];
 		Ref<ItemDefinition> definition = get_database()->get_item(stack->get_item_id());
@@ -197,7 +216,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (amount_in_interact > 0) {
 		int previous_amount = amount_in_interact;
-		amount_in_interact = add_on_new_stack(item_id, amount_in_interact, properties);
+		amount_in_interact = add_on_new_stack(item_id, amount_in_interact, properties, false);
 
 		// Check for potential integer underflow
 		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot after creating new slot.");
@@ -213,6 +232,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (_added > 0) {
 		_flag_contents_changed = true;
+		this->emit_signal("item_added", item_id, _added);
 	}
 
 	if (drop_excess && amount_in_interact > 0) {
@@ -236,6 +256,7 @@ int Inventory::add_at_index(const int &stack_index, const String &item_id, const
 	int _added = amount - amount_in_interact;
 	if (_added > 0) {
 		_flag_contents_changed = true;
+		this->emit_signal("item_added", item_id, _added);
 	}
 	return amount_in_interact;
 }
@@ -247,17 +268,35 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	int amount_to_add = _get_amount_to_add_from_constraints(item_id, amount, properties);
 	// amount_to_add = MIN(amount_to_add, _get_max_stack(item_id, amount, properties));
 
+	// Do initial stack creation as we already checked its possible.
 	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties, can_emit_signal);
+	while (no_added > 0) {
+		int result = insert_stack(stacks.size(), item_id, no_added, properties, can_emit_signal);
+
+		// when result is the same as no_added we cant add any more stacks so break out of stack creation.
+		if(result == no_added) {
+			break;
+		}
+
+		no_added = result;
+	}
+
 	no_added += amount - amount_to_add;
 
-	int added = amount - no_added;
-	if (added > 0) {
+	int _added = amount - no_added;
+	if (_added > 0) {
 		_flag_contents_changed = true;
+		if (can_emit_signal) {
+			this->emit_signal("item_added", item_id, _added);
+		}
 	}
 	return no_added;
 }
 
 int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_signal) {
+	if (!can_add_new_stack(item_id, amount, properties))
+		return amount;
+
 	Ref<ItemStack> stack = memnew(ItemStack());
 	stacks.append(stack);
 	stack->set_item_id(item_id);
@@ -271,6 +310,7 @@ int Inventory::insert_stack(const int &stack_index, const String &item_id, const
 	on_insert_stack(stack_index);
 	if (can_emit_signal) {
 		this->emit_signal("stack_added", stacks.size() - 1);
+		this->emit_signal("item_added", item_id, amount_to_add);
 	}
 	return amount - amount_to_add;
 }
