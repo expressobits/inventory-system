@@ -76,6 +76,21 @@ custom_minimum_size = Vector2(192, 31)
 layout_mode = 2
 script = ExtResource("3_p8qlp")
 
+[node name="DescriptionContainer" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LabelDescription" type="Label" parent="ScrollContainer/MarginContainer/VBoxContainer/DescriptionContainer"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Description"
+
+[node name="ItemDescriptionTextEdit" type="TextEdit" parent="ScrollContainer/MarginContainer/VBoxContainer/DescriptionContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Enter item description here"
+
 [node name="CanMaxStack" type="HBoxContainer" parent="ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
