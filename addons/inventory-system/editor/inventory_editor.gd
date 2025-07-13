@@ -30,6 +30,7 @@ var editor_plugin : InventorySystemEditorPlugin
 @onready var recipes_editor : RecipesEditor = %RecipesEditor
 @onready var craft_station_types_editor : CraftStationTypesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/CraftStationTypesEditor"
 @onready var categories_editor : CategoriesEditor = $"MarginContainer/VBoxContainer/Content/TabContainer/CategoriesEditor"
+@onready var loots_editor = $TabContainer/LootsEditor
 
 
 var database : InventoryDatabase
@@ -88,6 +89,7 @@ func load_database(database : InventoryDatabase):
 		recipes_editor.load_from_database(database)
 		craft_station_types_editor.load_from_database(database)
 		categories_editor.load_from_database(database)
+		loots_editor.load_from_database(database)
 		$MarginContainer/VBoxContainer/Content.visible = true
 		new_item_button.disabled = false
 		new_recipe_button.disabled = false

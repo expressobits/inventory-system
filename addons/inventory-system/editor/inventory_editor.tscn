@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bgx18ev7eamk5" path="res://addons/inventory-system/icons/item_category.svg" id="10_86ysm"]
 [ext_resource type="PackedScene" uid="uid://clj2qii0ta8lx" path="res://addons/inventory-system/editor/craft_stations/craft_station_types_editor.tscn" id="11_rrabm"]
 [ext_resource type="PackedScene" uid="uid://cfevgv38d1bll" path="res://addons/inventory-system/editor/categories/categories_editor.tscn" id="12_kvj1p"]
+[ext_resource type="PackedScene" uid="uid://c20tt03af3qw6" path="res://addons/inventory-system/editor/loots/loots_editor.tscn" id="13_loots"]
 
 [node name="InventoryEditor" type="Control"]
 layout_mode = 3
@@ -150,7 +151,7 @@ theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/Content"]
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer/Content"]
 layout_mode = 2
 mouse_filter = 2
 current_tab = 0
@@ -187,6 +188,13 @@ layout_mode = 2
 mouse_filter = 1
 metadata/_tab_index = 3
 metadata/_tab_name = "Item Categories"
+
+[node name="LootsEditor" parent="VBoxContainer/Content/TabContainer" instance=ExtResource("13_loots")]
+visible = false
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 4
+metadata/_tab_name = "Loots"
 
 [node name="NewDialog" type="FileDialog" parent="."]
 dialog_hide_on_ok = true

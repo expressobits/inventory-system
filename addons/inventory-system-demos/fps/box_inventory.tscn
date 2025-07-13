@@ -65,3 +65,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 script = ExtResource("9_2glac")
 inventories = [NodePath("../Inventory")]
 database = ExtResource("3_nqx2d")
+
+[node name="LootGenerator" type="LootGenerator" parent="."]
+loot_table_id = "treasure"
+target_inventory_path = NodePath("../Inventory")
+database = ExtResource("3_nqx2d")

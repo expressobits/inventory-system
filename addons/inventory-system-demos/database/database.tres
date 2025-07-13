@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=54 format=3 uid="uid://de5qy8ycey7yn"]
+[gd_resource type="InventoryDatabase" load_steps=57 format=3 uid="uid://de5qy8ycey7yn"]
 
 [ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_pegli"]
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system-demos/assets/icons/branch.png" id="1_wk1an"]
@@ -192,6 +192,20 @@ properties = {
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_epmnv")])
 
+[sub_resource type="LootItem" id="LootItem_6ctep"]
+item_id = "wood"
+weight = 0.5
+max_amount = 10
+
+[sub_resource type="LootItem" id="LootItem_dqypk"]
+item_id = "stone"
+weight = 0.5
+max_amount = 10
+
+[sub_resource type="Loot" id="Loot_dqypk"]
+items = Array[LootItem]([SubResource("LootItem_6ctep"), SubResource("LootItem_dqypk")])
+name = "treasure"
+
 [sub_resource type="ItemStack" id="ItemStack_dbkim"]
 item_id = "wood"
 amount = 2
@@ -297,3 +311,4 @@ items = Array[ItemDefinition]([SubResource("ItemDefinition_b5y1y"), SubResource(
 recipes = Array[Recipe]([SubResource("Recipe_fapod"), SubResource("Recipe_0u4cu"), SubResource("Recipe_bl2yk"), SubResource("Recipe_e1irj"), SubResource("Recipe_bhgkx"), SubResource("Recipe_7jg1y")])
 stations_type = Array[CraftStationType]([SubResource("CraftStationType_fnhd3"), SubResource("CraftStationType_voset")])
 item_categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei"), SubResource("ItemCategory_ubgak"), SubResource("ItemCategory_mu46q"), SubResource("ItemCategory_epmnv")])
+loot_tables = Array[Loot]([SubResource("Loot_dqypk")])
