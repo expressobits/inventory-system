@@ -38,6 +38,8 @@ void ItemDefinition::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_categories"), &ItemDefinition::get_categories);
 	ClassDB::bind_method(D_METHOD("is_of_category", "category"), &ItemDefinition::is_in_category);
 	ClassDB::bind_method(D_METHOD("get_rotated_size"), &ItemDefinition::get_rotated_size);
+	ClassDB::bind_method(D_METHOD("set_description", "description"), &ItemDefinition::set_description);
+	ClassDB::bind_method(D_METHOD("get_description"), &ItemDefinition::get_description);
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "can_stack"), "set_can_stack", "get_can_stack");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_stack"), "set_max_stack", "get_max_stack");
@@ -48,6 +50,7 @@ void ItemDefinition::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "properties"), "set_properties", "get_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "dynamic_properties", PROPERTY_HINT_ARRAY_TYPE, "String"), "set_dynamic_properties", "get_dynamic_properties");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_categories", "get_categories");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "description"), "set_description", "get_description");
 }
 
 ItemDefinition::ItemDefinition() {
@@ -177,4 +180,12 @@ bool ItemDefinition::is_in_category(const Ref<ItemCategory> category) const {
 
 Vector2i ItemDefinition::get_rotated_size() const {
 	return Vector2i(size.y, size.x);
+}
+
+void ItemDefinition::set_description(const String &new_description) {
+    description = new_description;
+}
+
+String ItemDefinition::get_description() const {
+    return description;
 }

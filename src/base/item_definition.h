@@ -19,6 +19,7 @@ private:
 	Ref<Texture2D> icon;
 	float weight = 0.0;
 	Vector2i size = Vector2i(1, 1);
+	String description = ""; // <-- added
 	Dictionary properties;
 	TypedArray<String> dynamic_properties;
 	TypedArray<ItemCategory> categories;
@@ -52,6 +53,8 @@ public:
 	TypedArray<ItemCategory> get_categories() const;
 	bool is_in_category(const Ref<ItemCategory> category) const;
 	Vector2i get_rotated_size() const;
+	void set_description(const String &new_description);
+	String get_description() const;
 };
 
 #endif
