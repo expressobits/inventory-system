@@ -59,6 +59,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/wood.tscn"
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei")])
+description = "Wood: Basic material used for crafting and fuel. Lightweight and stackable."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_dxjj6"]
 id = "stone"
@@ -70,6 +71,7 @@ properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/rock.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/rock.tscn"
 }
+description = "Stone: Common resource for crafting tools and building structures."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_hpt3t"]
 id = "grass"
@@ -83,6 +85,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/grass.tscn"
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei")])
+description = "Grass: Used for crafting lashing and as a light fuel source."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_n86tn"]
 id = "stone_axe"
@@ -99,6 +102,7 @@ properties = {
 }
 dynamic_properties = Array[String](["durability"])
 categories = Array[ItemCategory]([SubResource("ItemCategory_ubgak")])
+description = "Stone Axe: Tool for chopping wood and breaking objects. Has durability."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_uhr2s"]
 id = "stone_pickaxe"
@@ -115,6 +119,7 @@ properties = {
 }
 dynamic_properties = Array[String](["durability"])
 categories = Array[ItemCategory]([SubResource("ItemCategory_ubgak")])
+description = "Stone Pickaxe: Tool for mining rocks and ores. Essential for resource gathering."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_eupl1"]
 id = "lashing"
@@ -127,6 +132,7 @@ properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/lashing.tscn",
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/lashing.tscn"
 }
+description = "Lashing: Crafted from grass, used for binding and crafting advanced items."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_scf45"]
 id = "campfire"
@@ -140,6 +146,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/campfire.tscn",
 "placeable": "res://addons/inventory-system-demos/fps/campfire.tscn"
 }
+description = "Campfire: Used for cooking food and providing warmth. Placeable in the world."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_24066"]
 id = "workbench"
@@ -153,6 +160,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/workbench.tscn",
 "placeable": "res://addons/inventory-system-demos/fps/workbench.tscn"
 }
+description = "Workbench: Station for crafting advanced items and tools."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_84tg3"]
 id = "raw_meat"
@@ -165,6 +173,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/raw_meat.tscn"
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_mu46q")])
+description = "Raw Meat: Uncooked meat, can be cooked for better nutrition."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_f2odo"]
 id = "cooked_meat"
@@ -177,6 +186,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/cooked_meat.tscn"
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_mu46q")])
+description = "Cooked Meat: Prepared meat, restores more hunger than raw meat."
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_6y8vb"]
 id = "helmet_labor"
@@ -191,6 +201,7 @@ properties = {
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/helmet_labor.tscn"
 }
 categories = Array[ItemCategory]([SubResource("ItemCategory_epmnv")])
+description = "Helmet Labor: Protective gear for the head, increases safety during work."
 
 [sub_resource type="ItemStack" id="ItemStack_dbkim"]
 item_id = "wood"

@@ -26,7 +26,7 @@ func setup(inv: Inventory, new_stack: ItemStack):
 	self.stack = new_stack
 	if stack and inventory != null:
 		var definition: ItemDefinition = inventory.database.get_item(stack.item_id)
-		tooltip_text = definition.name
+		tooltip_text = definition.description
 		var is_rotated = inventory.is_stack_rotated(stack)
 		var texture = definition.icon
 		if is_rotated:
