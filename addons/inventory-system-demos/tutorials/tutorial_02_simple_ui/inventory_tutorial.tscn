@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dsdkhssg6vutv"]
+[gd_scene load_steps=5 format=3 uid="uid://dsdkhssg6vutv"]
 
 [ext_resource type="Script" uid="uid://kic1vda81phq" path="res://addons/inventory-system-demos/tutorials/tutorial_01_inventory/inventory_tutorial.gd" id="1_uo0x7"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="2_v3bvs"]
 [ext_resource type="Script" uid="uid://du4odj2yajra2" path="res://addons/inventory-system-demos/simple-transfer/simple_inventory_ui.gd" id="3_52sku"]
+[ext_resource type="Script" uid="uid://bo10v3ducgixv" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="4_52sku"]
 
 [node name="InventoryTutorial" type="Node3D"]
 script = ExtResource("1_uo0x7")
@@ -20,3 +21,6 @@ grow_vertical = 2
 script = ExtResource("3_52sku")
 inventory = NodePath("../Inventory")
 metadata/_custom_type_script = "uid://du4odj2yajra2"
+
+[node name="Setup Keys" type="Node" parent="."]
+script = ExtResource("4_52sku")
