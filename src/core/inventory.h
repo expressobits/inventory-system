@@ -17,7 +17,7 @@ private:
 	void _insert_stack(int stack_index);
 	void _remove_stack_at(int stack_index);
 	void _call_events(int old_amount);
-	int _add_to_stack(int stack_index, const String &item_id, int amount = 1, const Dictionary &properties = Dictionary());
+	int _add_to_stack(int stack_index, const String &item_id, int amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_item_added_signal = true);
 	int _remove_from_stack(int stack_index, const String &item_id, int amount = 1);
 
 protected:
@@ -51,10 +51,10 @@ public:
 	int amount_of_item(const String &item) const;
 	int amount_of_category(const Ref<ItemCategory> &category) const;
 	int amount() const;
-	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false);
-	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary());
-	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_signal = true);
-	int insert_stack(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_signal = true);
+	virtual int add(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool &drop_excess = false, const bool can_emit_item_added_signal = true);
+	int add_at_index(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_item_added_signal = true);
+	int add_on_new_stack(const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_stack_added_signal = true, const bool can_emit_item_added_signal = true);
+	int insert_stack(const int &stack_index, const String &item_id, const int &amount = 1, const Dictionary &properties = Dictionary(), const bool can_emit_stack_added_signal = true, const bool can_emit_item_added_signal = true);
 	void remove_stack(const int &stack_index);
 	int remove(const String &item_id, const int &amount = 1);
 	int remove_at(const int &stack_index, const String &item_id, const int &amount = 1);
@@ -64,7 +64,7 @@ public:
 	virtual bool drop(const String &item_id, const int &amount, const Dictionary &properties);
 	void drop_all_stacks();
 	void drop_from_inventory(const int &stack_index, const int &amount = 1, const Dictionary &properties = Dictionary());
-	int add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties = Dictionary());
+	int add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties = Dictionary(), const bool can_emit_item_added_signal);
 	int remove_from_stack(Ref<ItemStack> stack, const String &item_id, const int &amount);
 	int get_max_stack_of_stack(const Ref<ItemStack> &stack, Ref<ItemDefinition> &item) const;
 	bool contains_category_in_stack(const Ref<ItemStack> &slot, const Ref<ItemCategory> &category) const;

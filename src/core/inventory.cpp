@@ -196,7 +196,7 @@ int Inventory::amount() const {
 	return amount_in_inventory;
 }
 
-int Inventory::add(const String &item_id, const int &amount, const Dictionary &properties, const bool &drop_excess) {
+int Inventory::add(const String &item_id, const int &amount, const Dictionary &properties, const bool &drop_excess, const bool can_emit_item_added_signal) {
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
@@ -204,7 +204,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	for (size_t i = 0; i < stacks.size(); i++) {
 		int previous_amount = amount_in_interact;
-		amount_in_interact = _add_to_stack(i, item_id, amount_in_interact, properties);
+		amount_in_interact = _add_to_stack(i, item_id, amount_in_interact, properties, can_emit_item_added_signal);
 
 		// Check for potential integer underflow
 		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot.");
@@ -216,7 +216,7 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (amount_in_interact > 0) {
 		int previous_amount = amount_in_interact;
-		amount_in_interact = add_on_new_stack(item_id, amount_in_interact, properties, false);
+		amount_in_interact = add_on_new_stack(item_id, amount_in_interact, properties, true, false);
 
 		// Check for potential integer underflow
 		ERR_FAIL_COND_V_MSG(amount_in_interact > previous_amount, amount, "Integer underflow detected in _add_to_slot after creating new slot.");
@@ -232,7 +232,9 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 
 	if (_added > 0) {
 		_flag_contents_changed = true;
-		this->emit_signal("item_added", item_id, _added);
+		if (can_emit_item_added_signal) {
+			this->emit_signal("item_added", item_id, _added);
+		}
 	}
 
 	if (drop_excess && amount_in_interact > 0) {
@@ -243,25 +245,27 @@ int Inventory::add(const String &item_id, const int &amount, const Dictionary &p
 	return amount_in_interact;
 }
 
-int Inventory::add_at_index(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties) {
+int Inventory::add_at_index(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_item_added_signal) {
 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'slot index' is out of bounds.");
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 
 	int amount_in_interact = amount;
 	int old_amount = this->amount();
 	if (stack_index < stacks.size()) {
-		amount_in_interact = _add_to_stack(stack_index, item_id, amount_in_interact, properties);
+		amount_in_interact = _add_to_stack(stack_index, item_id, amount_in_interact, properties, can_emit_item_added_signal);
 		_call_events(old_amount);
 	}
 	int _added = amount - amount_in_interact;
 	if (_added > 0) {
 		_flag_contents_changed = true;
-		this->emit_signal("item_added", item_id, _added);
+		if (can_emit_item_added_signal) {
+			this->emit_signal("item_added", item_id, _added);
+		}
 	}
 	return amount_in_interact;
 }
 
-int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_signal) {
+int Inventory::add_on_new_stack(const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_stack_added_signal, const bool can_emit_item_added_signal) {
 	if (!can_add_new_stack(item_id, amount, properties))
 		return amount;
 
@@ -269,12 +273,12 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	// amount_to_add = MIN(amount_to_add, _get_max_stack(item_id, amount, properties));
 
 	// Do initial stack creation as we already checked its possible.
-	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties, can_emit_signal);
+	int no_added = insert_stack(stacks.size(), item_id, amount_to_add, properties, can_emit_stack_added_signal, can_emit_item_added_signal);
 	while (no_added > 0) {
-		int result = insert_stack(stacks.size(), item_id, no_added, properties, can_emit_signal);
+		int result = insert_stack(stacks.size(), item_id, no_added, properties, can_emit_stack_added_signal, can_emit_item_added_signal);
 
 		// when result is the same as no_added we cant add any more stacks so break out of stack creation.
-		if(result == no_added) {
+		if (result == no_added) {
 			break;
 		}
 
@@ -286,14 +290,14 @@ int Inventory::add_on_new_stack(const String &item_id, const int &amount, const 
 	int _added = amount - no_added;
 	if (_added > 0) {
 		_flag_contents_changed = true;
-		if (can_emit_signal) {
+		if (can_emit_item_added_signal) {
 			this->emit_signal("item_added", item_id, _added);
 		}
 	}
 	return no_added;
 }
 
-int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_signal) {
+int Inventory::insert_stack(const int &stack_index, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_stack_added_signal, const bool can_emit_item_added_signal) {
 	if (!can_add_new_stack(item_id, amount, properties))
 		return amount;
 
@@ -308,10 +312,15 @@ int Inventory::insert_stack(const int &stack_index, const String &item_id, const
 	stack->set_properties(properties);
 	// int no_added = add_at_index(stacks.size() - 1, item_id, amount, properties);
 	on_insert_stack(stack_index);
-	if (can_emit_signal) {
+
+	if (can_emit_stack_added_signal) {
 		this->emit_signal("stack_added", stacks.size() - 1);
+	}
+
+	if (can_emit_item_added_signal) {
 		this->emit_signal("item_added", item_id, amount_to_add);
 	}
+
 	return amount - amount_to_add;
 }
 
@@ -519,7 +528,7 @@ void Inventory::drop_from_inventory(const int &stack_index, const int &amount, c
 	drop(item_id, removed, properties);
 }
 
-int Inventory::add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties) {
+int Inventory::add_to_stack(Ref<ItemStack> stack, const String &item_id, const int &amount, const Dictionary &properties, const bool can_emit_item_added_signal) {
 	ERR_FAIL_COND_V_MSG(amount < 0, 0, "The 'amount' is negative.");
 
 	if (amount <= 0)
@@ -539,6 +548,11 @@ int Inventory::add_to_stack(Ref<ItemStack> stack, const String &item_id, const i
 	stack->set_item_id(item_id);
 	stack->set_properties(properties);
 	stack->emit_signal("updated");
+
+	if (can_emit_item_added_signal) {
+		this->emit_signal("item_added", item_id, amount_to_add);
+	}
+
 	return amount - amount_to_add;
 }
 
@@ -617,14 +631,14 @@ void Inventory::_call_events(int old_amount) {
 	}
 }
 
-int Inventory::_add_to_stack(int stack_index, const String &item_id, int amount, const Dictionary &properties) {
+int Inventory::_add_to_stack(int stack_index, const String &item_id, int amount, const Dictionary &properties, const bool can_emit_item_added_signal) {
 	ERR_FAIL_COND_V_MSG(amount < 0, amount, "The 'amount' is negative.");
 	ERR_FAIL_COND_V_MSG(stack_index < 0 || stack_index >= stacks.size(), amount, "The 'slot index' is out of bounds.");
 
 	Ref<ItemStack> stack = stacks[stack_index];
 	ERR_FAIL_NULL_V_MSG(stack, amount, "The 'stack' is null.");
 
-	int _remaining_amount = add_to_stack(stack, item_id, amount, properties);
+	int _remaining_amount = add_to_stack(stack, item_id, amount, properties, can_emit_item_added_signal);
 
 	if (_remaining_amount == amount) {
 		return amount;
@@ -717,9 +731,9 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("amount_of_item", "item_id"), &Inventory::amount_of_item);
 	ClassDB::bind_method(D_METHOD("get_amount_of_category", "category"), &Inventory::amount_of_category);
 	ClassDB::bind_method(D_METHOD("get_amount"), &Inventory::amount);
-	ClassDB::bind_method(D_METHOD("add", "item_id", "amount", "properties", "drop_excess"), &Inventory::add, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(false));
-	ClassDB::bind_method(D_METHOD("add_at_index", "stack_index", "item_id", "amount", "properties"), &Inventory::add_at_index, DEFVAL(1), DEFVAL(Dictionary()));
-	ClassDB::bind_method(D_METHOD("add_on_new_stack", "item_id", "amount", "properties", "can_emit_signal"), &Inventory::add_on_new_stack, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(true));
+	ClassDB::bind_method(D_METHOD("add", "item_id", "amount", "properties", "drop_excess", "can_emit_item_added_signal"), &Inventory::add, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(false), DEFVAL(true));
+	ClassDB::bind_method(D_METHOD("add_at_index", "stack_index", "item_id", "amount", "properties", "can_emit_item_added_signal"), &Inventory::add_at_index, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(true));
+	ClassDB::bind_method(D_METHOD("add_on_new_stack", "item_id", "amount", "properties", "can_emit_stack_added_signal", "can_emit_item_added_signal"), &Inventory::add_on_new_stack, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(true), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("remove", "item_id", "amount"), &Inventory::remove, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_at", "stack_index", "item_id", "amount"), &Inventory::remove_at, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("remove_stack", "stack_index"), &Inventory::remove_stack);
@@ -729,7 +743,7 @@ void Inventory::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("drop", "item_id", "amount", "properties"), &Inventory::drop, DEFVAL(1), DEFVAL(Dictionary()));
 	ClassDB::bind_method(D_METHOD("drop_all_stacks"), &Inventory::drop_all_stacks);
 	ClassDB::bind_method(D_METHOD("drop_from_inventory", "stack_index", "amount", "properties"), &Inventory::drop_from_inventory, DEFVAL(1), DEFVAL(Dictionary()));
-	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()));
+	ClassDB::bind_method(D_METHOD("add_to_stack", "stack", "item_id", "amount", "properties"), &Inventory::add_to_stack, DEFVAL(1), DEFVAL(Dictionary()), DEFVAL(true));
 	ClassDB::bind_method(D_METHOD("remove_from_stack", "stack", "item_id", "amount"), &Inventory::remove_from_stack, DEFVAL(1));
 	ClassDB::bind_method(D_METHOD("contains_category_in_stack", "stack", "category"), &Inventory::contains_category_in_stack);
 	ClassDB::bind_method(D_METHOD("get_weight"), &Inventory::get_weight);
