@@ -110,9 +110,9 @@ Modify the code now to display when there is an item in the stack, its id and qu
 	func _process(delta):
 		if Input.is_action_just_pressed("interact"):
 			print("Inventory Stacks:")
-			for stack in inventory.stacks:
-				if stack.item != null:
-					print(stack.item_id," x ", stack.amount)
+			for item in inventory.stacks:
+				if item.item_id != "":
+					print(item.item_id," x ", item.amount)
 				else:
 					print("Empty")
 
