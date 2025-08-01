@@ -94,6 +94,11 @@ int Hotbar::get_max_slots() const {
 void Hotbar::set_selection_index(const int &new_selection_index) {
 	int old_selection = selection_index;
 	selection_index = new_selection_index;
+	if (slots.size() == 0) {
+		selection_index = -1;
+	} else {
+		selection_index = CLAMP(selection_index, 0, max_slots - 1);
+	}
 	if (old_selection != selection_index && is_node_ready()) {
 		emit_signal("on_change_selection", selection_index);
 	}
@@ -124,12 +129,15 @@ void Hotbar::deactive_slot(int slot_index) {
 }
 
 bool Hotbar::is_active_slot(int slot_index) const {
+	ERR_FAIL_COND_V_MSG(slot_index < 0 || slot_index >= slots.size(), false, "slot_index' is out of size slots bounds.");
 	Ref<Slot> slot = slots[slot_index];
 	return slot->is_active();
 }
 
 void Hotbar::equip(Ref<ItemStack> stack, int slot_index) {
+	ERR_FAIL_COND_MSG(slot_index < 0 || slot_index >= slots.size(), "slot_index' is out of size slots bounds.");
 	Ref<Slot> slot = slots[slot_index];
+	ERR_FAIL_COND_MSG(slot.is_null(), "Slot is null, can't equip item.");
 	if (!slot->is_active())
 		return;
 
@@ -153,7 +161,7 @@ void Hotbar::next_item() {
 		new_selection += max_slots;
 	}
 	set_selection_index(new_selection);
-	if(!is_active_slot(new_selection))
+	if (!is_active_slot(new_selection))
 		next_item();
 }
 
@@ -166,7 +174,7 @@ void Hotbar::previous_item() {
 		new_selection += max_slots;
 	}
 	set_selection_index(new_selection);
-	if(!is_active_slot(new_selection))
+	if (!is_active_slot(new_selection))
 		previous_item();
 }
 

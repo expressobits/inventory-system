@@ -510,6 +510,7 @@ bool GridInventory::has_space_for(const String &item_id, const int amount, const
 		return false;
 	if(has_space_in_grid_for(item_id, amount, properties, false) || has_space_in_grid_for(item_id, amount, properties, true)) 
 		return true;
+	return false;
 }
 
 void GridInventory::on_insert_stack(const int stack_index) {
