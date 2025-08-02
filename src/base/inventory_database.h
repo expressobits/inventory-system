@@ -81,6 +81,8 @@ public:
 	void add_craft_station_type();
 	void add_loot_table();
 
+	void add_new_recipe(const Ref<Recipe> recipe);
+
 	Ref<ItemCategory> get_category_from_id(String id) const;
 	Ref<CraftStationType> get_craft_station_from_id(String id) const;
 	Ref<Loot> get_loot_table_from_id(String id) const;

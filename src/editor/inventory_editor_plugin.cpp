@@ -20,6 +20,7 @@
 
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
+#include <godot_cpp/classes/editor_file_system.hpp>
 #include <godot_cpp/classes/editor_resource_preview.hpp>
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
@@ -386,7 +387,7 @@ void InventoryEditor::_on_new_recipe_button_pressed() {
 	new_recipe->set_name("New Recipe");
 	new_recipe->set_id(""); // Empty ID will need to be filled by user
 	
-	database->add_recipe(new_recipe);
+	database->add_new_recipe(new_recipe);
 	_save_file();
 	_load_database(database);
 	tab_container->set_current_tab(1);
