@@ -78,6 +78,8 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
 	ClassDB::bind_method(D_METHOD("add_loot_table"), &InventoryDatabase::add_loot_table);
 
+	ClassDB::bind_method(D_METHOD("add_new_recipe", "recipe"), &InventoryDatabase::add_new_recipe);
+
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_from_invdata", "json"), &InventoryDatabase::import_from_invdata);
 	ClassDB::bind_method(D_METHOD("clear_current_data"), &InventoryDatabase::clear_current_data);
@@ -355,6 +357,7 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 
 Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 	Dictionary data = Dictionary();
+	data["id"] = recipe->get_id();
 	if (!recipe->get_products().is_empty())
 		data["products"] = serialize_item_stacks(recipe->get_products());
 	data["time_to_craft"] = recipe->get_time_to_craft();
@@ -369,6 +372,9 @@ Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 }
 
 void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const {
+	if (data.has("id")) {
+		recipe->set_id(data["id"]);
+	}
 	if (data.has("products")) {
 		TypedArray<ItemStack> item_stacks = recipe->get_products();
 		deserialize_item_stacks(item_stacks, data["products"]);
@@ -471,6 +477,11 @@ void InventoryDatabase::add_craft_station_type() {
 void InventoryDatabase::add_loot_table() {
 	Ref<Loot> loot = memnew(Loot());
 	loot_tables.append(loot);
+}
+
+void InventoryDatabase::add_new_recipe(const Ref<Recipe> recipe) {
+	ERR_FAIL_NULL_MSG(recipe, "'recipe' is null.");
+	recipes.append(recipe);
 }
 
 Ref<ItemCategory> InventoryDatabase::get_category_from_id(String id) const {

@@ -47,7 +47,7 @@ Dictionary InventorySettings::get_user_config() {
 			json.instantiate();
 			Error error = json->parse(content);
 			if (error == OK) {
-				Variant result = json->data;
+				Variant result = json->get_data();
 				if (result.get_type() == Variant::DICTIONARY) {
 					Dictionary loaded_config = result;
 					user_config.merge(loaded_config, true);
