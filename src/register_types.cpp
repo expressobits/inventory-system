@@ -23,6 +23,11 @@
 #include "core/loot_generator.h"
 #include "craft/craft_station.h"
 
+#ifdef TOOLS_ENABLED
+#include "editor/inventory_editor_plugin.h"
+#include "editor/inventory_settings.h"
+#endif
+
 using namespace godot;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level) {
@@ -50,6 +55,12 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(LootGenerator);
 	GDREGISTER_CLASS(CraftStation);
 	GDREGISTER_CLASS(Crafting);
+	
+#ifdef TOOLS_ENABLED
+	GDREGISTER_CLASS(InventoryEditor);
+	GDREGISTER_CLASS(InventoryEditorPlugin);
+	GDREGISTER_CLASS(InventorySettings);
+#endif
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
