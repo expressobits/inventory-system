@@ -31,7 +31,7 @@ jobs:
             { platform: ios, arch: arm64, os: macos-latest },
             { platform: web, arch: wasm32, os: ubuntu-22.04 }
           ]
-        target-type: [template_debug, template_release]
+        target-type: [editor, template_release]
         float-precision: [single, double]
         # include: # Also build a release version for these specific targets. Remove if you add template_release above.
         #   - target: { platform: linux, arch: x86_64, os: ubuntu-22.04 }
