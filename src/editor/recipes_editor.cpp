@@ -15,11 +15,23 @@
 #include "../base/inventory_database.h"
 #include "../base/recipe.h"
 
+#include <godot_cpp/classes/line_edit.hpp>
+#include <godot_cpp/classes/spin_box.hpp>
+#include <godot_cpp/classes/option_button.hpp>
+#include <godot_cpp/classes/h_separator.hpp>
+#include <godot_cpp/classes/h_box_container.hpp>
+
 using namespace godot;
 
 void RecipesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_recipe_selected", "recipe", "index"), &RecipesEditor::_on_recipe_selected);
 	ClassDB::bind_method(D_METHOD("_on_recipe_popup_menu_requested", "at_position"), &RecipesEditor::_on_recipe_popup_menu_requested);
+	
+	// Property change handlers
+	ClassDB::bind_method(D_METHOD("_on_id_changed", "text"), &RecipesEditor::_on_id_changed);
+	ClassDB::bind_method(D_METHOD("_on_id_focus_exited"), &RecipesEditor::_on_id_focus_exited);
+	ClassDB::bind_method(D_METHOD("_on_time_changed", "value"), &RecipesEditor::_on_time_changed);
+	ClassDB::bind_method(D_METHOD("_on_station_selected", "index"), &RecipesEditor::_on_station_selected);
 
 	ADD_SIGNAL(MethodInfo("removed", PropertyInfo(Variant::OBJECT, "recipe", PROPERTY_HINT_RESOURCE_TYPE, "Recipe")));
 }
@@ -116,15 +128,138 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 	
 	no_selection_label->set_visible(false);
 	
-	// TODO: Create detailed property editor for recipe
-	// For now, just show basic info
-	Label *recipe_label = memnew(Label);
-	details_container->add_child(recipe_label);
-	recipe_label->set_text("Recipe: " + p_recipe->get_name());
+	// Create proper editor UI components
 	
+	// ID field
 	Label *id_label = memnew(Label);
 	details_container->add_child(id_label);
-	id_label->set_text("ID: " + p_recipe->get_id());
+	id_label->set_text("Recipe ID:");
+	
+	LineEdit *id_edit = memnew(LineEdit);
+	details_container->add_child(id_edit);
+	id_edit->set_text(p_recipe->get_id());
+	id_edit->set_placeholder("Enter unique recipe ID");
+	id_edit->connect("text_submitted", callable_mp(this, &RecipesEditor::_on_id_changed));
+	id_edit->connect("focus_exited", callable_mp(this, &RecipesEditor::_on_id_focus_exited));
+	
+	// Time to craft
+	Label *time_label = memnew(Label);
+	details_container->add_child(time_label);
+	time_label->set_text("Time to Craft (seconds):");
+	
+	SpinBox *time_spin = memnew(SpinBox);
+	details_container->add_child(time_spin);
+	time_spin->set_min(0.1);
+	time_spin->set_max(999.0);
+	time_spin->set_step(0.1);
+	time_spin->set_value(p_recipe->get_time_to_craft());
+	time_spin->connect("value_changed", callable_mp(this, &RecipesEditor::_on_time_changed));
+	
+	// Craft station
+	Label *station_label = memnew(Label);
+	details_container->add_child(station_label);
+	station_label->set_text("Required Craft Station:");
+	
+	OptionButton *station_option = memnew(OptionButton);
+	details_container->add_child(station_option);
+	station_option->add_item("(None)", -1);
+	
+	// Populate craft stations from database
+	if (database.is_valid()) {
+		TypedArray<CraftStationType> stations = database->get_craft_station_types();
+		for (int i = 0; i < stations.size(); i++) {
+			Ref<CraftStationType> station = stations[i];
+			if (station.is_valid()) {
+				String display_name = station->get_name();
+				if (display_name.is_empty()) {
+					display_name = station->get_id();
+				}
+				if (display_name.is_empty()) {
+					display_name = "Unnamed Station";
+				}
+				station_option->add_item(display_name, i);
+				
+				// Select current station
+				if (p_recipe->get_station() == station) {
+					station_option->select(i + 1); // +1 because of "None" option
+				}
+			}
+		}
+	}
+	station_option->connect("item_selected", callable_mp(this, &RecipesEditor::_on_station_selected));
+	
+	// Ingredients section
+	HSeparator *separator1 = memnew(HSeparator);
+	details_container->add_child(separator1);
+	
+	Label *ingredients_title = memnew(Label);
+	details_container->add_child(ingredients_title);
+	ingredients_title->set_text("Ingredients:");
+	ingredients_title->add_theme_font_size_override("font_size", 14);
+	
+	// List ingredients
+	TypedArray<ItemStack> ingredients = p_recipe->get_ingredients();
+	for (int i = 0; i < ingredients.size(); i++) {
+		Ref<ItemStack> ingredient = ingredients[i];
+		if (ingredient.is_valid() && ingredient->get_item_definition().is_valid()) {
+			HBoxContainer *ingredient_row = memnew(HBoxContainer);
+			details_container->add_child(ingredient_row);
+			
+			Label *ingredient_label = memnew(Label);
+			ingredient_row->add_child(ingredient_label);
+			String item_name = ingredient->get_item_definition()->get_name();
+			ingredient_label->set_text(String::num(ingredient->get_amount()) + "x " + item_name);
+		}
+	}
+	
+	// Products section
+	HSeparator *separator2 = memnew(HSeparator);
+	details_container->add_child(separator2);
+	
+	Label *products_title = memnew(Label);
+	details_container->add_child(products_title);
+	products_title->set_text("Products:");
+	products_title->add_theme_font_size_override("font_size", 14);
+	
+	// List products
+	TypedArray<ItemStack> products = p_recipe->get_products();
+	for (int i = 0; i < products.size(); i++) {
+		Ref<ItemStack> product = products[i];
+		if (product.is_valid() && product->get_item_definition().is_valid()) {
+			HBoxContainer *product_row = memnew(HBoxContainer);
+			details_container->add_child(product_row);
+			
+			Label *product_label = memnew(Label);
+			product_row->add_child(product_label);
+			String item_name = product->get_item_definition()->get_name();
+			product_label->set_text(String::num(product->get_amount()) + "x " + item_name);
+		}
+	}
+	
+	// Required items section (tools/equipment that are not consumed)
+	if (!p_recipe->get_required_items().is_empty()) {
+		HSeparator *separator3 = memnew(HSeparator);
+		details_container->add_child(separator3);
+		
+		Label *required_title = memnew(Label);
+		details_container->add_child(required_title);
+		required_title->set_text("Required Items (not consumed):");
+		required_title->add_theme_font_size_override("font_size", 14);
+		
+		TypedArray<ItemStack> required_items = p_recipe->get_required_items();
+		for (int i = 0; i < required_items.size(); i++) {
+			Ref<ItemStack> required_item = required_items[i];
+			if (required_item.is_valid() && required_item->get_item_definition().is_valid()) {
+				HBoxContainer *required_row = memnew(HBoxContainer);
+				details_container->add_child(required_row);
+				
+				Label *required_label = memnew(Label);
+				required_row->add_child(required_label);
+				String item_name = required_item->get_item_definition()->get_name();
+				required_label->set_text(String::num(required_item->get_amount()) + "x " + item_name);
+			}
+		}
+	}
 }
 
 void RecipesEditor::_clear_details() {
@@ -151,6 +286,47 @@ void RecipesEditor::_on_recipe_selected(const Variant &p_recipe, int p_index) {
 void RecipesEditor::_on_recipe_popup_menu_requested(const Vector2 &p_position) {
 	// TODO: Show context menu with options like remove, etc.
 	print_line("Context menu requested for recipe at position: " + p_position);
+}
+
+// Property change handlers
+void RecipesEditor::_on_id_changed(const String &p_text) {
+	if (current_recipe.is_valid()) {
+		// Get the LineEdit widget from the current details container
+		Array children = details_container->get_children();
+		for (int i = 0; i < children.size(); i++) {
+			LineEdit *line_edit = Object::cast_to<LineEdit>(children[i]);
+			if (line_edit && line_edit->get_placeholder() == "Enter unique recipe ID") {
+				current_recipe->set_id(line_edit->get_text());
+				break;
+			}
+		}
+	}
+}
+
+void RecipesEditor::_on_id_focus_exited() {
+	// Handle focus exit - just trigger the change handler
+	_on_id_changed("");
+}
+
+void RecipesEditor::_on_time_changed(double p_value) {
+	if (current_recipe.is_valid()) {
+		current_recipe->set_time_to_craft((float)p_value);
+	}
+}
+
+void RecipesEditor::_on_station_selected(int p_index) {
+	if (current_recipe.is_valid() && database.is_valid()) {
+		if (p_index == 0) {
+			// "None" selected
+			current_recipe->set_station(Ref<CraftStationType>());
+		} else {
+			TypedArray<CraftStationType> stations = database->get_craft_station_types();
+			int station_index = p_index - 1; // -1 because of "None" option
+			if (station_index >= 0 && station_index < stations.size()) {
+				current_recipe->set_station(stations[station_index]);
+			}
+		}
+	}
 }
 
 #endif // TOOLS_ENABLED
