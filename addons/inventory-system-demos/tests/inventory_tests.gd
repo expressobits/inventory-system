@@ -16,6 +16,11 @@ func init_suite() -> void:
 		"test_serialize_json",
 		"test_has_space_item",
 		"test_create_and_add_wood",
+		"test_is_empty",
+		"test_item_added_signal",
+		"test_item_removed_signal",
+		"test_stack_added_signal",
+		"test_stack_removed_signal",
 	]
 
 
@@ -136,4 +141,108 @@ func test_has_space_item() -> void:
 	assert(inventory.add(item, 16) == 0)
 	assert(inventory.add(item, 16) == 0)
 	assert(inventory.add(item, 16) == 0)
+	inventory.free()
+
+
+func test_is_empty() -> void:
+	var inventory = Inventory.new()
+	inventory.database = database
+
+	# Initial case: inventory is empty
+	assert(inventory.is_empty())
+
+	# Add an item and verify that the inventory is no longer empty
+	assert(inventory.add(item) == 0)
+	assert(!inventory.is_empty())
+
+	# Remove the item and verify that the inventory is empty again
+	assert(inventory.remove(item) == 0)
+	assert(inventory.is_empty())
+
+	# Add a null stack and verify that the inventory is still considered empty
+	inventory.stacks.append(null)
+	assert(inventory.is_empty())
+
+	inventory.free()
+
+# Variable to track if the signal was emitted
+var signal_emitted = false
+
+
+func test_item_added_signal() -> void:
+	var inventory = Inventory.new()
+	inventory.database = database
+
+	# Connect the signal to a callback function
+	inventory.item_added.connect(func(_item_id: String, _amount: int):
+		signal_emitted = true
+	)
+
+	# Add an item and verify that the signal is emitted
+	assert(inventory.add(item) == 0)
+	assert(signal_emitted)
+
+	inventory.free()
+
+# Variable to track if the signal was emitted
+var signal_removed_emitted = false
+
+
+func test_item_removed_signal() -> void:
+	var inventory = Inventory.new()
+	inventory.database = database
+
+	# Connect the signal to a callback function
+	inventory.item_removed.connect(func(_item_id: String, _amount: int):
+		signal_removed_emitted = true
+	)
+
+	# Add an item to the inventory
+	assert(inventory.add(item) == 0)
+
+	# Remove the item and verify that the signal is emitted
+	assert(inventory.remove(item) == 0)
+	assert(signal_removed_emitted)
+
+	inventory.free()
+
+# Variable to track if the stack_added signal was emitted
+var stack_added_emitted = false
+
+
+func test_stack_added_signal() -> void:
+	var inventory = Inventory.new()
+	inventory.database = database
+
+	# Connect the signal to a callback function
+	inventory.stack_added.connect(func(_stack_index: int):
+		stack_added_emitted = true
+	)
+
+	# Add an item and verify that the stack_added signal is emitted
+	assert(inventory.add(item) == 0)
+	assert(stack_added_emitted)
+
+	inventory.free()
+
+# Variable to track if the stack_removed signal was emitted
+var stack_removed_emitted = false
+
+
+func test_stack_removed_signal() -> void:
+	var inventory = Inventory.new()
+	inventory.database = database
+
+	# Connect the signal to a callback function
+	inventory.stack_removed.connect(func(_stack_index: int):
+		stack_removed_emitted = true
+	)
+
+	# Add an item to the inventory
+	assert(inventory.add(item) == 0)
+
+	# Remove the item and verify that the stack_removed signal is emitted
+	assert(inventory.remove(item) == 0)
+	assert(stack_removed_emitted)
+
 	inventory.free()
