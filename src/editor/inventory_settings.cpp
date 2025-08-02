@@ -17,8 +17,6 @@
 
 using namespace godot;
 
-const String InventorySettings::USER_CONFIG_PATH = "user://inventory_system_user_config.json";
-
 void InventorySettings::_bind_methods() {
 	ClassDB::bind_static_method("InventorySettings", D_METHOD("set_user_value", "key", "value"), &InventorySettings::set_user_value);
 	ClassDB::bind_static_method("InventorySettings", D_METHOD("get_user_value", "key", "default"), &InventorySettings::get_user_value, DEFVAL(Variant()));
@@ -39,8 +37,8 @@ Dictionary InventorySettings::get_user_config() {
 	Dictionary user_config;
 	user_config["recent_files"] = Array();
 	
-	if (FileAccess::file_exists(USER_CONFIG_PATH)) {
-		Ref<FileAccess> file = FileAccess::open(USER_CONFIG_PATH, FileAccess::READ);
+	if (FileAccess::file_exists("user://inventory_system_user_config.json")) {
+		Ref<FileAccess> file = FileAccess::open("user://inventory_system_user_config.json", FileAccess::READ);
 		if (file.is_valid()) {
 			String content = file->get_as_text();
 			Ref<JSON> json;
@@ -60,7 +58,7 @@ Dictionary InventorySettings::get_user_config() {
 }
 
 void InventorySettings::save_user_config(const Dictionary &p_config) {
-	Ref<FileAccess> file = FileAccess::open(USER_CONFIG_PATH, FileAccess::WRITE);
+	Ref<FileAccess> file = FileAccess::open("user://inventory_system_user_config.json", FileAccess::WRITE);
 	if (file.is_valid()) {
 		Ref<JSON> json;
 		json.instantiate();
