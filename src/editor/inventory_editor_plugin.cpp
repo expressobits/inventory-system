@@ -13,10 +13,14 @@
 #include "inventory_editor_plugin.h"
 
 #include "../base/inventory_database.h"
+#include "../base/craft_station_type.h"
+#include "../base/item_category.h"
 #include "inventory_settings.h"
 #include "item_definitions_editor.h"
 #include "inventory_item_list_editor.h"
 #include "recipes_editor.h"
+#include "craft_station_types_editor.h"
+#include "item_categories_editor.h"
 
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
@@ -25,6 +29,8 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/resource_saver.hpp>
+#include <godot_cpp/classes/json.hpp>
+#include <godot_cpp/classes/file_access.hpp>
 
 using namespace godot;
 
@@ -155,13 +161,15 @@ void InventoryEditor::_create_ui() {
 	recipes_tab->set_name("Recipes");
 	recipes_tab->set_editor_plugin(editor_plugin);
 	
-	Control *craft_stations_tab = memnew(Control);
+	CraftStationTypesEditor *craft_stations_tab = memnew(CraftStationTypesEditor);
 	tab_container->add_child(craft_stations_tab);
 	craft_stations_tab->set_name("Craft Station Types");
+	craft_stations_tab->set_editor_plugin(editor_plugin);
 	
-	Control *categories_tab = memnew(Control);
+	ItemCategoriesEditor *categories_tab = memnew(ItemCategoriesEditor);
 	tab_container->add_child(categories_tab);
 	categories_tab->set_name("Item Categories");
+	categories_tab->set_editor_plugin(editor_plugin);
 	
 	// Create dialogs
 	new_dialog = memnew(FileDialog);
@@ -275,6 +283,16 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		if (recipes_editor) {
 			recipes_editor->load_from_database(database);
 		}
+		
+		CraftStationTypesEditor *craft_stations_editor = Object::cast_to<CraftStationTypesEditor>(tab_container->get_tab_control(2));
+		if (craft_stations_editor) {
+			craft_stations_editor->load_from_database(database);
+		}
+		
+		ItemCategoriesEditor *categories_editor = Object::cast_to<ItemCategoriesEditor>(tab_container->get_tab_control(3));
+		if (categories_editor) {
+			categories_editor->load_from_database(database);
+		}
 	} else {
 		content->set_visible(false);
 		new_item_button->set_disabled(true);
@@ -292,6 +310,16 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		RecipesEditor *recipes_editor = Object::cast_to<RecipesEditor>(tab_container->get_tab_control(1));
 		if (recipes_editor) {
 			recipes_editor->load_from_database(Ref<InventoryDatabase>());
+		}
+		
+		CraftStationTypesEditor *craft_stations_editor = Object::cast_to<CraftStationTypesEditor>(tab_container->get_tab_control(2));
+		if (craft_stations_editor) {
+			craft_stations_editor->load_from_database(Ref<InventoryDatabase>());
+		}
+		
+		ItemCategoriesEditor *categories_editor = Object::cast_to<ItemCategoriesEditor>(tab_container->get_tab_control(3));
+		if (categories_editor) {
+			categories_editor->load_from_database(Ref<InventoryDatabase>());
 		}
 	}
 }
@@ -338,8 +366,31 @@ void InventoryEditor::_import_inv_file(const String &p_path) {
 		return;
 	}
 	
-	// TODO: Implement JSON import
-	print_line("JSON import not yet implemented: " + p_path);
+	// Read JSON file
+	Ref<FileAccess> file = FileAccess::open(p_path, FileAccess::READ);
+	if (!file.is_valid()) {
+		print_line("Failed to read JSON file: " + p_path);
+		return;
+	}
+	
+	String json_string = file->get_as_text();
+	file->close();
+	
+	// Parse JSON
+	Ref<JSON> json;
+	json.instantiate();
+	Error parse_result = json->parse(json_string);
+	if (parse_result != OK) {
+		print_line("Failed to parse JSON: " + p_path);
+		return;
+	}
+	
+	Dictionary data = json->get_data();
+	
+	// Import data into database
+	database->deserialize(data);
+	_load_database(database);
+	print_line("Database imported from JSON: " + p_path);
 }
 
 void InventoryEditor::_on_database_menu_pressed() {
@@ -394,8 +445,22 @@ void InventoryEditor::_on_save_inv_dialog_file_selected(const String &p_path) {
 	if (database.is_null()) {
 		return;
 	}
-	// TODO: Implement JSON export
-	print_line("JSON export not yet implemented: " + p_path);
+	
+	// Serialize database to JSON
+	Dictionary data = database->serialize();
+	Ref<JSON> json;
+	json.instantiate();
+	String json_string = json->stringify(data, "\t");
+	
+	// Write to file
+	Ref<FileAccess> file = FileAccess::open(p_path, FileAccess::WRITE);
+	if (file.is_valid()) {
+		file->store_string(json_string);
+		file->close();
+		print_line("Database exported to JSON: " + p_path);
+	} else {
+		print_line("Failed to write JSON file: " + p_path);
+	}
 }
 
 void InventoryEditor::_on_open_inv_dialog_file_selected(const String &p_path) {
@@ -441,8 +506,15 @@ void InventoryEditor::_on_new_craft_station_button_pressed() {
 		return;
 	}
 	
-	// TODO: Create new craft station type
-	print_line("New craft station creation not yet implemented");
+	// Create new craft station type
+	Ref<CraftStationType> new_craft_station;
+	new_craft_station.instantiate();
+	new_craft_station->set_name("New Craft Station Type");
+	new_craft_station->set_id(""); // Empty ID will need to be filled by user
+	
+	database->add_new_craft_station_type(new_craft_station);
+	_save_file();
+	_load_database(database);
 	tab_container->set_current_tab(2);
 }
 
@@ -451,8 +523,16 @@ void InventoryEditor::_on_new_category_button_pressed() {
 		return;
 	}
 	
-	// TODO: Create new category
-	print_line("New category creation not yet implemented");
+	// Create new category
+	Ref<ItemCategory> new_category;
+	new_category.instantiate();
+	new_category->set_name("New Item Category");
+	new_category->set_id(""); // Empty ID will need to be filled by user
+	new_category->set_color(Color(1.0, 1.0, 1.0, 1.0)); // Default to white
+	
+	database->add_new_category(new_category);
+	_save_file();
+	_load_database(database);
 	tab_container->set_current_tab(3);
 }
 
