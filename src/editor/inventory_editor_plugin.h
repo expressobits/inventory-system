@@ -116,7 +116,7 @@ protected:
 
 public:
 	virtual bool _has_main_screen() const override { return true; }
-	virtual String _get_plugin_name() const override { return "Inventory System"; }
+	virtual String _get_plugin_name() const override { return "Inventory"; }
 	virtual void _make_visible(bool p_visible) override;
 	virtual void _edit(Object *p_object) override;
 	virtual bool _handles(Object *p_object) const override;
