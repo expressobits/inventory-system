@@ -33,6 +33,7 @@ using namespace godot;
 void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_database_menu_pressed"), &InventoryEditor::_on_database_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_menu_id_pressed", "id"), &InventoryEditor::_on_database_menu_id_pressed);
+	ClassDB::bind_method(D_METHOD("_on_recent_menu_id_pressed", "id"), &InventoryEditor::_on_recent_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_dialog_file_selected", "path"), &InventoryEditor::_on_new_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_open_dialog_file_selected", "path"), &InventoryEditor::_on_open_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_save_inv_dialog_file_selected", "path"), &InventoryEditor::_on_save_inv_dialog_file_selected);
@@ -215,6 +216,32 @@ void InventoryEditor::_build_database_menu() {
 	
 	menu->add_item("New Database", DATABASE_NEW);
 	menu->add_item("Open Database...", DATABASE_OPEN);
+	
+	// Add Open Recent submenu
+	Array recent_files = InventorySettings::get_recent_files();
+	if (!recent_files.is_empty()) {
+		PopupMenu *recent_menu = memnew(PopupMenu);
+		recent_menu->set_name("recent_menu");
+		menu->add_child(recent_menu);
+		
+		for (int i = 0; i < recent_files.size() && i < 10; i++) {
+			String path = recent_files[i];
+			String display_name = path.get_file();
+			recent_menu->add_item(display_name, DATABASE_OPEN_RECENT + i);
+			recent_menu->set_item_tooltip(i, path);
+		}
+		
+		recent_menu->add_separator();
+		recent_menu->add_item("Clear Recent Files", DATABASE_OPEN_RECENT + 100);
+		recent_menu->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_recent_menu_id_pressed));
+		
+		menu->add_submenu_item("Open Recent", "recent_menu");
+		menu->set_item_disabled(menu->get_item_index(DATABASE_OPEN_RECENT), false);
+	} else {
+		menu->add_item("Open Recent", DATABASE_OPEN_RECENT);
+		menu->set_item_disabled(menu->get_item_index(DATABASE_OPEN_RECENT), true);
+	}
+	
 	menu->add_separator();
 	menu->add_item("Save Database", DATABASE_SAVE);
 	menu->add_separator();
@@ -336,6 +363,22 @@ void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
 		case DATABASE_EXPORT_JSON:
 			save_inv_dialog->popup_centered();
 			break;
+	}
+}
+
+void InventoryEditor::_on_recent_menu_id_pressed(int p_id) {
+	Array recent_files = InventorySettings::get_recent_files();
+	
+	if (p_id >= DATABASE_OPEN_RECENT + 100) {
+		// Clear recent files
+		InventorySettings::clear_recent_files();
+		return;
+	}
+	
+	int index = p_id - DATABASE_OPEN_RECENT;
+	if (index >= 0 && index < recent_files.size()) {
+		String path = recent_files[index];
+		_open_file(path);
 	}
 }
 

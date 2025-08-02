@@ -21,6 +21,15 @@
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/scroll_container.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/h_box_container.hpp>
+#include <godot_cpp/classes/line_edit.hpp>
+#include <godot_cpp/classes/text_edit.hpp>
+#include <godot_cpp/classes/check_box.hpp>
+#include <godot_cpp/classes/spin_box.hpp>
+#include <godot_cpp/classes/h_separator.hpp>
+#include <godot_cpp/classes/texture_button.hpp>
+#include <godot_cpp/classes/button.hpp>
+#include <godot_cpp/classes/file_dialog.hpp>
 
 using namespace godot;
 
@@ -42,6 +51,7 @@ private:
 	Label *no_selection_label;
 
 	Ref<ItemDefinition> current_item;
+	FileDialog *icon_dialog;
 
 	void _create_ui();
 	void _update_details(const Ref<ItemDefinition> &p_item);
@@ -49,6 +59,21 @@ private:
 
 	void _on_item_selected(const Variant &p_item, int p_index);
 	void _on_item_popup_menu_requested(const Vector2 &p_position);
+	
+	// Property change handlers
+	void _on_id_changed(const String &p_text);
+	void _on_id_focus_exited();
+	void _on_name_changed(const String &p_text);
+	void _on_name_focus_exited();
+	void _on_description_changed();
+	void _on_can_stack_changed(bool p_pressed);
+	void _on_max_stack_changed(double p_value);
+	void _on_weight_changed(double p_value);
+	void _on_size_width_changed(double p_value);
+	void _on_size_height_changed(double p_value);
+	void _on_icon_button_pressed();
+	void _on_clear_icon_pressed();
+	void _on_icon_dialog_file_selected(const String &p_path);
 
 protected:
 	static void _bind_methods();

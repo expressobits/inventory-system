@@ -41,6 +41,7 @@ private:
 	enum DatabaseMenuId {
 		DATABASE_NEW = 100,
 		DATABASE_OPEN = 200,
+		DATABASE_OPEN_RECENT = 250,
 		DATABASE_SAVE = 300,
 		DATABASE_IMPORT_JSON = 401,
 		DATABASE_EXPORT_JSON = 501,
@@ -83,6 +84,7 @@ private:
 
 	void _on_database_menu_pressed();
 	void _on_database_menu_id_pressed(int p_id);
+	void _on_recent_menu_id_pressed(int p_id);
 	void _on_new_dialog_file_selected(const String &p_path);
 	void _on_open_dialog_file_selected(const String &p_path);
 	void _on_save_inv_dialog_file_selected(const String &p_path);
