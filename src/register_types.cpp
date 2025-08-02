@@ -26,6 +26,8 @@
 #ifdef TOOLS_ENABLED
 #include "editor/inventory_editor_plugin.h"
 #include "editor/inventory_settings.h"
+#include "editor/inventory_item_list_editor.h"
+#include "editor/item_definitions_editor.h"
 #endif
 
 using namespace godot;
@@ -60,6 +62,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(InventoryEditor);
 	GDREGISTER_CLASS(InventoryEditorPlugin);
 	GDREGISTER_CLASS(InventorySettings);
+	GDREGISTER_CLASS(InventoryItemListEditor);
+	GDREGISTER_CLASS(ItemDefinitionsEditor);
 #endif
 }
 
