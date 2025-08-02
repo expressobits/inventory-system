@@ -461,8 +461,7 @@ bool InventoryEditorPlugin::_handles(Object *p_object) const {
 }
 
 Ref<Texture2D> InventoryEditorPlugin::_get_plugin_icon() const {
-	// TODO: Return inventory system icon
-	return Ref<Texture2D>();
+	return Ref<Texture2D>(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_main_screen.svg"));
 }
 
 #endif // TOOLS_ENABLED
