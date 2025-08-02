@@ -28,6 +28,7 @@
 #include "editor/inventory_settings.h"
 #include "editor/inventory_item_list_editor.h"
 #include "editor/item_definitions_editor.h"
+#include "editor/recipes_editor.h"
 #endif
 
 using namespace godot;
@@ -64,6 +65,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	GDREGISTER_CLASS(InventorySettings);
 	GDREGISTER_CLASS(InventoryItemListEditor);
 	GDREGISTER_CLASS(ItemDefinitionsEditor);
+	GDREGISTER_CLASS(RecipesEditor);
 #endif
 }
 

@@ -16,6 +16,7 @@
 #include "inventory_settings.h"
 #include "item_definitions_editor.h"
 #include "inventory_item_list_editor.h"
+#include "recipes_editor.h"
 
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
@@ -147,9 +148,10 @@ void InventoryEditor::_create_ui() {
 	items_tab->set_name("Item Definitions");
 	items_tab->set_editor_plugin(editor_plugin);
 	
-	Control *recipes_tab = memnew(Control);
+	RecipesEditor *recipes_tab = memnew(RecipesEditor);
 	tab_container->add_child(recipes_tab);
 	recipes_tab->set_name("Recipes");
+	recipes_tab->set_editor_plugin(editor_plugin);
 	
 	Control *craft_stations_tab = memnew(Control);
 	tab_container->add_child(craft_stations_tab);
@@ -240,6 +242,11 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		if (items_editor) {
 			items_editor->load_from_database(database);
 		}
+		
+		RecipesEditor *recipes_editor = Object::cast_to<RecipesEditor>(tab_container->get_tab_control(1));
+		if (recipes_editor) {
+			recipes_editor->load_from_database(database);
+		}
 	} else {
 		content->set_visible(false);
 		new_item_button->set_disabled(true);
@@ -252,6 +259,11 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		ItemDefinitionsEditor *items_editor = Object::cast_to<ItemDefinitionsEditor>(tab_container->get_tab_control(0));
 		if (items_editor) {
 			items_editor->load_from_database(Ref<InventoryDatabase>());
+		}
+		
+		RecipesEditor *recipes_editor = Object::cast_to<RecipesEditor>(tab_container->get_tab_control(1));
+		if (recipes_editor) {
+			recipes_editor->load_from_database(Ref<InventoryDatabase>());
 		}
 	}
 }
@@ -368,8 +380,15 @@ void InventoryEditor::_on_new_recipe_button_pressed() {
 		return;
 	}
 	
-	// TODO: Create new recipe
-	print_line("New recipe creation not yet implemented");
+	// Create new recipe
+	Ref<Recipe> new_recipe;
+	new_recipe.instantiate();
+	new_recipe->set_name("New Recipe");
+	new_recipe->set_id(""); // Empty ID will need to be filled by user
+	
+	database->add_recipe(new_recipe);
+	_save_file();
+	_load_database(database);
 	tab_container->set_current_tab(1);
 }
 
