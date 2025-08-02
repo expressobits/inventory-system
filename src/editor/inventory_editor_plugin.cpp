@@ -14,6 +14,8 @@
 
 #include "../base/inventory_database.h"
 #include "inventory_settings.h"
+#include "item_definitions_editor.h"
+#include "inventory_item_list_editor.h"
 
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
@@ -139,10 +141,11 @@ void InventoryEditor::_create_ui() {
 	content->add_child(tab_container);
 	tab_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 	
-	// Create tabs (placeholder for now)
-	Control *items_tab = memnew(Control);
+	// Create tabs
+	ItemDefinitionsEditor *items_tab = memnew(ItemDefinitionsEditor);
 	tab_container->add_child(items_tab);
 	items_tab->set_name("Item Definitions");
+	items_tab->set_editor_plugin(editor_plugin);
 	
 	Control *recipes_tab = memnew(Control);
 	tab_container->add_child(recipes_tab);
@@ -231,6 +234,12 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		new_craft_station_type_button->set_disabled(false);
 		new_item_categories_button->set_disabled(false);
 		title_label->set_text(database_path.is_empty() ? "Untitled Database" : database_path);
+		
+		// Update tab editors
+		ItemDefinitionsEditor *items_editor = Object::cast_to<ItemDefinitionsEditor>(tab_container->get_tab_control(0));
+		if (items_editor) {
+			items_editor->load_from_database(database);
+		}
 	} else {
 		content->set_visible(false);
 		new_item_button->set_disabled(true);
@@ -238,6 +247,12 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		new_craft_station_type_button->set_disabled(true);
 		new_item_categories_button->set_disabled(true);
 		title_label->set_text("No Database");
+		
+		// Clear tab editors
+		ItemDefinitionsEditor *items_editor = Object::cast_to<ItemDefinitionsEditor>(tab_container->get_tab_control(0));
+		if (items_editor) {
+			items_editor->load_from_database(Ref<InventoryDatabase>());
+		}
 	}
 }
 
@@ -336,8 +351,15 @@ void InventoryEditor::_on_new_item_button_pressed() {
 		return;
 	}
 	
-	// TODO: Create new item definition
-	print_line("New item creation not yet implemented");
+	// Create new item definition
+	Ref<ItemDefinition> new_item;
+	new_item.instantiate();
+	new_item->set_name("New Item Definition");
+	new_item->set_id(""); // Empty ID will need to be filled by user
+	
+	database->add_new_item(new_item);
+	_save_file();
+	_load_database(database);
 	tab_container->set_current_tab(0);
 }
 
