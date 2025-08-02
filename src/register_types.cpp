@@ -23,39 +23,56 @@
 #include "core/loot_generator.h"
 #include "craft/craft_station.h"
 
+#ifdef TOOLS_ENABLED
+#include "editor/inventory_editor_plugin.h"
+#include "editor/inventory_settings.h"
+#include "editor/inventory_item_list_editor.h"
+#include "editor/item_definitions_editor.h"
+#include "editor/recipes_editor.h"
+#endif
+
 using namespace godot;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
+	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
+		GDREGISTER_CLASS(CraftStationType);
+		GDREGISTER_CLASS(InventoryDatabase);
+		GDREGISTER_CLASS(ItemCategory);
+		GDREGISTER_CLASS(ItemDefinition);  
+		GDREGISTER_CLASS(ItemStack);
+		GDREGISTER_CLASS(LootItem);
+		GDREGISTER_CLASS(Loot);
+		GDREGISTER_CLASS(NodeInventories);
+		GDREGISTER_CLASS(Recipe);
+		GDREGISTER_CLASS(InventoryConstraint);
+		GDREGISTER_CLASS(GridInventoryConstraint);
+		GDREGISTER_CLASS(QuadTree);
+		GDREGISTER_CLASS(QuadTree::QuadNode);
+		GDREGISTER_CLASS(QuadTree::QuadRect);
+		GDREGISTER_CLASS(Hotbar);
+		GDREGISTER_CLASS(Hotbar::Slot);
+		GDREGISTER_CLASS(Inventory);
+		GDREGISTER_CLASS(GridInventory);
+		GDREGISTER_CLASS(LootGenerator);
+		GDREGISTER_CLASS(CraftStation);
+		GDREGISTER_CLASS(Crafting);
 	}
-	GDREGISTER_CLASS(CraftStationType);
-	GDREGISTER_CLASS(InventoryDatabase);
-	GDREGISTER_CLASS(ItemCategory);
-	GDREGISTER_CLASS(ItemDefinition);
-	GDREGISTER_CLASS(ItemStack);
-	GDREGISTER_CLASS(LootItem);
-	GDREGISTER_CLASS(Loot);
-	GDREGISTER_CLASS(NodeInventories);
-	GDREGISTER_CLASS(Recipe);
-	GDREGISTER_CLASS(InventoryConstraint);
-	GDREGISTER_CLASS(GridInventoryConstraint);
-	GDREGISTER_CLASS(QuadTree);
-	GDREGISTER_CLASS(QuadTree::QuadNode);
-	GDREGISTER_CLASS(QuadTree::QuadRect);
-	GDREGISTER_CLASS(Hotbar);
-	GDREGISTER_CLASS(Hotbar::Slot);
-	GDREGISTER_CLASS(Inventory);
-	GDREGISTER_CLASS(GridInventory);
-	GDREGISTER_CLASS(LootGenerator);
-	GDREGISTER_CLASS(CraftStation);
-	GDREGISTER_CLASS(Crafting);
+
+#ifdef TOOLS_ENABLED
+	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
+		GDREGISTER_INTERNAL_CLASS(InventoryEditor);
+		GDREGISTER_INTERNAL_CLASS(InventoryEditorPlugin);
+		GDREGISTER_INTERNAL_CLASS(InventorySettings);
+		GDREGISTER_INTERNAL_CLASS(InventoryItemListEditor);
+		GDREGISTER_INTERNAL_CLASS(ItemDefinitionsEditor);
+		GDREGISTER_INTERNAL_CLASS(RecipesEditor);
+		EditorPlugins::add_by_type<InventoryEditorPlugin>();
+	}
+#endif
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
+	// Nothing to cleanup yet
 }
 
 extern "C" {
@@ -64,7 +81,7 @@ GDExtensionBool GDE_EXPORT inventory_system_init(GDExtensionInterfaceGetProcAddr
 	GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 	init_obj.register_initializer(initialize_gdextension_types);
 	init_obj.register_terminator(uninitialize_gdextension_types);
-	init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SERVERS);
+	init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
 
 	return init_obj.init();
 }
