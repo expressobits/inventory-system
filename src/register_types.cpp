@@ -23,39 +23,67 @@
 #include "core/loot_generator.h"
 #include "craft/craft_station.h"
 
+#ifdef TOOLS_ENABLED
+#include "editor/base/base_inventory_editor.h"
+#include "editor/base/icon_selector.h"
+#include "editor/base/item_id_editor.h"
+#include "editor/base/item_stack_selector.h"
+#include "editor/base/item_definition_property_editor.h"
+#include "editor/inventory_editor_plugin.h"
+#include "editor/inventory_item_list_editor.h"
+#include "editor/inventory_settings.h"
+#include "editor/item_definitions_editor.h"
+#include "editor/item_categories_editor.h"
+#include "editor/craft_station_types_editor.h"
+#include "editor/recipes_editor.h"
+#endif
+
 using namespace godot;
 
 void initialize_gdextension_types(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
+	if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
+		GDREGISTER_CLASS(CraftStationType);
+		GDREGISTER_CLASS(InventoryDatabase);
+		GDREGISTER_CLASS(ItemCategory);
+		GDREGISTER_CLASS(ItemDefinition);
+		GDREGISTER_CLASS(ItemStack);
+		GDREGISTER_CLASS(LootItem);
+		GDREGISTER_CLASS(Loot);
+		GDREGISTER_CLASS(NodeInventories);
+		GDREGISTER_CLASS(Recipe);
+		GDREGISTER_CLASS(InventoryConstraint);
+		GDREGISTER_CLASS(GridInventoryConstraint);
+		GDREGISTER_CLASS(QuadTree);
+		GDREGISTER_CLASS(QuadTree::QuadNode);
+		GDREGISTER_CLASS(QuadTree::QuadRect);
+		GDREGISTER_CLASS(Hotbar);
+		GDREGISTER_CLASS(Hotbar::Slot);
+		GDREGISTER_CLASS(Inventory);
+		GDREGISTER_CLASS(GridInventory);
+		GDREGISTER_CLASS(LootGenerator);
+		GDREGISTER_CLASS(CraftStation);
+		GDREGISTER_CLASS(Crafting);
 	}
-	GDREGISTER_CLASS(CraftStationType);
-	GDREGISTER_CLASS(InventoryDatabase);
-	GDREGISTER_CLASS(ItemCategory);
-	GDREGISTER_CLASS(ItemDefinition);
-	GDREGISTER_CLASS(ItemStack);
-	GDREGISTER_CLASS(LootItem);
-	GDREGISTER_CLASS(Loot);
-	GDREGISTER_CLASS(NodeInventories);
-	GDREGISTER_CLASS(Recipe);
-	GDREGISTER_CLASS(InventoryConstraint);
-	GDREGISTER_CLASS(GridInventoryConstraint);
-	GDREGISTER_CLASS(QuadTree);
-	GDREGISTER_CLASS(QuadTree::QuadNode);
-	GDREGISTER_CLASS(QuadTree::QuadRect);
-	GDREGISTER_CLASS(Hotbar);
-	GDREGISTER_CLASS(Hotbar::Slot);
-	GDREGISTER_CLASS(Inventory);
-	GDREGISTER_CLASS(GridInventory);
-	GDREGISTER_CLASS(LootGenerator);
-	GDREGISTER_CLASS(CraftStation);
-	GDREGISTER_CLASS(Crafting);
+#ifdef TOOLS_ENABLED
+	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
+		GDREGISTER_INTERNAL_CLASS(BaseInventoryEditor);
+		GDREGISTER_INTERNAL_CLASS(IconSelector);
+		GDREGISTER_INTERNAL_CLASS(ItemIDEditor);
+		GDREGISTER_INTERNAL_CLASS(ItemStackSelector);
+		GDREGISTER_INTERNAL_CLASS(ItemDefinitionPropertyEditor);
+		GDREGISTER_INTERNAL_CLASS(InventoryEditorPlugin);
+		GDREGISTER_INTERNAL_CLASS(InventoryItemListEditor);
+		GDREGISTER_INTERNAL_CLASS(InventorySettings);
+		GDREGISTER_INTERNAL_CLASS(ItemDefinitionsEditor);
+		GDREGISTER_INTERNAL_CLASS(ItemCategoriesEditor);
+		GDREGISTER_INTERNAL_CLASS(CraftStationTypesEditor);
+		GDREGISTER_INTERNAL_CLASS(RecipesEditor);
+	}
+#endif
 }
 
 void uninitialize_gdextension_types(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
+	// Nothing specific to clean up
 }
 
 extern "C" {
