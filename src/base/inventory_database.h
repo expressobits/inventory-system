@@ -52,8 +52,6 @@ public:
 	void remove_item(const Ref<ItemDefinition> item);
 	void add_new_category(const Ref<ItemCategory> category);
 	void remove_category(const Ref<ItemCategory> category);
-	void add_new_craft_station_type(const Ref<CraftStationType> craft_station_type);
-	void remove_craft_station_type(const Ref<CraftStationType> craft_station_type);
 	void add_new_loot_table(const Ref<Loot> loot);
 	void remove_loot_table(const Ref<Loot> loot);
 	Ref<ItemDefinition> get_item(String id) const;
@@ -82,8 +80,6 @@ public:
 	void add_recipe();
 	void add_craft_station_type();
 	void add_loot_table();
-
-	void add_new_recipe(const Ref<Recipe> recipe);
 
 	Ref<ItemCategory> get_category_from_id(String id) const;
 	Ref<CraftStationType> get_craft_station_from_id(String id) const;
