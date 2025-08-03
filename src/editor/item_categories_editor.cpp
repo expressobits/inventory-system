@@ -212,7 +212,7 @@ void ItemCategoriesEditor::_update_details(const Ref<ItemCategory> &p_item) {
 	
 	ColorPickerButton *color_picker = memnew(ColorPickerButton);
 	color_container->add_child(color_picker);
-	color_picker->set_color(p_item->get_color());
+	color_picker->set_pick_color(p_item->get_color());
 	color_picker->set_custom_minimum_size(Vector2(0, 32));
 	color_picker->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	color_picker->connect("color_changed", callable_mp(this, &ItemCategoriesEditor::_on_color_changed));
@@ -247,8 +247,6 @@ void ItemCategoriesEditor::_update_details(const Ref<ItemCategory> &p_item) {
 	Button *clear_icon_btn = memnew(Button);
 	icon_buttons->add_child(clear_icon_btn);
 	clear_icon_btn->set_text("Clear Icon");
-	clear_icon_btn->connect("pressed", callable_mp(this, &ItemCategoriesEditor::_on_clear_icon_pressed));
-}
 	clear_icon_btn->connect("pressed", callable_mp(this, &ItemCategoriesEditor::_on_clear_icon_pressed));
 }
 

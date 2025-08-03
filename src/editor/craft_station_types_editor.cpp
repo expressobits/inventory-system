@@ -23,6 +23,7 @@
 #include <godot_cpp/classes/file_dialog.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/h_separator.hpp>
 #include <godot_cpp/classes/resource_loader.hpp>
 
 using namespace godot;
