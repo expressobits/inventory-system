@@ -10,10 +10,9 @@
 #include "item_id_editor.h"
 #include "../../base/item_stack.h"
 #include "../../base/item_definition.h"
+#include "../../base/inventory_database.h"
 
 namespace godot {
-
-class InventoryDatabase;
 
 class ItemStackSelector : public HBoxContainer {
     GDCLASS(ItemStackSelector, HBoxContainer)

@@ -6,10 +6,9 @@
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/theme.hpp>
+#include "../../base/inventory_database.h"
 
 namespace godot {
-
-class InventoryDatabase;
 
 class ItemIDEditor : public HBoxContainer {
     GDCLASS(ItemIDEditor, HBoxContainer)

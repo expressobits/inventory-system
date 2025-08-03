@@ -5,10 +5,9 @@
 #include <godot_cpp/classes/confirmation_dialog.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>
 #include <godot_cpp/classes/resource.hpp>
+#include "../../base/inventory_database.h"
 
 namespace godot {
-
-class InventoryDatabase;
 
 class BaseInventoryEditor : public Control {
     GDCLASS(BaseInventoryEditor, Control)
