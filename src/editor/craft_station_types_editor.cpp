@@ -80,30 +80,32 @@ void CraftStationTypesEditor::set_editor_plugin(EditorPlugin *p_plugin) {
 }
 
 void CraftStationTypesEditor::_create_ui() {
-	// Split container
+	// Split container (HSplitContainer)
 	hsplit_container = memnew(HSplitContainer);
 	add_child(hsplit_container);
 	hsplit_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 
-	// Item list editor
+	// Item list editor (left side) - matches .tscn minimum size
 	item_list_editor = memnew(InventoryItemListEditor);
 	hsplit_container->add_child(item_list_editor);
 	item_list_editor->set_custom_minimum_size(Vector2(256, 0));
 	item_list_editor->connect("item_selected", callable_mp(this, &CraftStationTypesEditor::_on_item_selected));
 	item_list_editor->connect("item_popup_menu_requested", callable_mp(this, &CraftStationTypesEditor::_on_item_popup_menu_requested));
 
-	// Details panel
-	details_scroll = memnew(ScrollContainer);
-	hsplit_container->add_child(details_scroll);
-	details_scroll->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-
-	details_container = memnew(VBoxContainer);
-	details_scroll->add_child(details_container);
+	// Details container (right side) - matches .tscn structure
+	details_container = memnew(MarginContainer);
+	hsplit_container->add_child(details_container);
 	details_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	details_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	details_container->set_visible(false); // Initially invisible like in .tscn
+	
+	// VBoxContainer inside margin container
+	details_vbox = memnew(VBoxContainer);
+	details_container->add_child(details_vbox);
 
 	// No selection label
 	no_selection_label = memnew(Label);
-	details_container->add_child(no_selection_label);
+	hsplit_container->add_child(no_selection_label);
 	no_selection_label->set_text("Select a craft station type to edit its properties");
 	no_selection_label->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
 	no_selection_label->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
@@ -143,54 +145,68 @@ void CraftStationTypesEditor::_update_details(const Ref<CraftStationType> &p_ite
 	
 	if (p_item.is_null()) {
 		no_selection_label->set_visible(true);
+		details_container->set_visible(false);
 		return;
 	}
 	
 	no_selection_label->set_visible(false);
+	details_container->set_visible(true);
 	
-	// Create proper editor UI components
+	// Create proper editor UI that matches .tscn structure exactly
 	
-	// ID field
+	// ID Editor (HBoxContainer to match CraftStationTypeIDEditor)
+	HBoxContainer *id_container = memnew(HBoxContainer);
+	details_vbox->add_child(id_container);
+	
 	Label *id_label = memnew(Label);
-	details_container->add_child(id_label);
-	id_label->set_text("ID:");
+	id_container->add_child(id_label);
+	id_label->set_text("ID");
+	id_label->set_custom_minimum_size(Vector2(160, 0));
 	
 	LineEdit *id_edit = memnew(LineEdit);
-	details_container->add_child(id_edit);
+	id_container->add_child(id_edit);
 	id_edit->set_text(p_item->get_id());
 	id_edit->set_placeholder("Enter unique craft station type ID");
+	id_edit->set_custom_minimum_size(Vector2(0, 32));
+	id_edit->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	id_edit->connect("text_submitted", callable_mp(this, &CraftStationTypesEditor::_on_id_changed));
 	id_edit->connect("focus_exited", callable_mp(this, &CraftStationTypesEditor::_on_id_focus_exited));
 	
-	// Name field
+	// HSeparator to match .tscn
+	HSeparator *separator = memnew(HSeparator);
+	details_vbox->add_child(separator);
+	
+	// Name section (HBoxContainer to match .tscn)
+	HBoxContainer *name_container = memnew(HBoxContainer);
+	details_vbox->add_child(name_container);
+	
 	Label *name_label = memnew(Label);
-	details_container->add_child(name_label);
-	name_label->set_text("Name:");
+	name_container->add_child(name_label);
+	name_label->set_text("Name");
+	name_label->set_custom_minimum_size(Vector2(160, 0));
 	
 	LineEdit *name_edit = memnew(LineEdit);
-	details_container->add_child(name_edit);
+	name_container->add_child(name_edit);
 	name_edit->set_text(p_item->get_name());
-	name_edit->set_placeholder("Enter craft station type name");
+	name_edit->set_placeholder("Place Item Name Here");
+	name_edit->set_custom_minimum_size(Vector2(0, 32));
+	name_edit->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	name_edit->connect("text_submitted", callable_mp(this, &CraftStationTypesEditor::_on_name_changed));
 	name_edit->connect("focus_exited", callable_mp(this, &CraftStationTypesEditor::_on_name_focus_exited));
 	
-	// Visual properties
-	Label *visual_label = memnew(Label);
-	details_container->add_child(visual_label);
-	visual_label->set_text("Visual Properties:");
-	visual_label->add_theme_font_size_override("font_size", 14);
+	// Icon selector (HBoxContainer to match .tscn)
+	HBoxContainer *icon_selector = memnew(HBoxContainer);
+	details_vbox->add_child(icon_selector);
 	
 	Label *icon_label = memnew(Label);
-	details_container->add_child(icon_label);
-	icon_label->set_text("Icon:");
+	icon_selector->add_child(icon_label);
+	icon_label->set_text("Icon");
+	icon_label->set_custom_minimum_size(Vector2(160, 0));
 	
-	HBoxContainer *icon_container = memnew(HBoxContainer);
-	details_container->add_child(icon_container);
-	
+	// Icon preview button
 	TextureButton *icon_preview = memnew(TextureButton);
-	icon_container->add_child(icon_preview);
+	icon_selector->add_child(icon_preview);
 	icon_preview->set_custom_minimum_size(Vector2(64, 64));
-	// icon_preview->set_expand_mode(TextureButton::EXPAND_FIT_WIDTH_PROPORTIONAL); // API may have changed
 	icon_preview->set_stretch_mode(TextureButton::STRETCH_KEEP_ASPECT_CENTERED);
 	if (p_item->get_icon().is_valid()) {
 		icon_preview->set_texture_normal(p_item->get_icon());
@@ -198,7 +214,7 @@ void CraftStationTypesEditor::_update_details(const Ref<CraftStationType> &p_ite
 	icon_preview->connect("pressed", callable_mp(this, &CraftStationTypesEditor::_on_icon_button_pressed));
 	
 	VBoxContainer *icon_buttons = memnew(VBoxContainer);
-	icon_container->add_child(icon_buttons);
+	icon_selector->add_child(icon_buttons);
 	
 	Button *select_icon_btn = memnew(Button);
 	icon_buttons->add_child(select_icon_btn);
@@ -210,14 +226,15 @@ void CraftStationTypesEditor::_update_details(const Ref<CraftStationType> &p_ite
 	clear_icon_btn->set_text("Clear Icon");
 	clear_icon_btn->connect("pressed", callable_mp(this, &CraftStationTypesEditor::_on_clear_icon_pressed));
 }
+}
 
 void CraftStationTypesEditor::_clear_details() {
-	// Remove all children except the no selection label
-	Array children = details_container->get_children();
+	// Remove all children from the details VBox
+	Array children = details_vbox->get_children();
 	for (int i = 0; i < children.size(); i++) {
 		Node *child = Object::cast_to<Node>(children[i]);
-		if (child && child != no_selection_label) {
-			details_container->remove_child(child);
+		if (child) {
+			details_vbox->remove_child(child);
 			child->queue_free();
 		}
 	}

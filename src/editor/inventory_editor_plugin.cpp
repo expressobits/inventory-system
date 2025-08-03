@@ -31,6 +31,7 @@
 #include <godot_cpp/classes/resource_saver.hpp>
 #include <godot_cpp/classes/json.hpp>
 #include <godot_cpp/classes/file_access.hpp>
+#include <godot_cpp/classes/v_separator.hpp>
 
 using namespace godot;
 
@@ -85,70 +86,120 @@ void InventoryEditor::edit_database(const Ref<InventoryDatabase> &p_database, co
 }
 
 void InventoryEditor::_create_ui() {
-	// Main container
+	// Main MarginContainer to match .tscn structure
 	margin_container = memnew(MarginContainer);
 	add_child(margin_container);
 	margin_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	
+	// Main VBoxContainer
 	main_vbox = memnew(VBoxContainer);
 	margin_container->add_child(main_vbox);
 	
-	// Toolbar
+	// Toolbar MarginContainer - matches .tscn margins
 	toolbar_margin = memnew(MarginContainer);
 	main_vbox->add_child(toolbar_margin);
 	toolbar_margin->add_theme_constant_override("margin_left", 4);
 	toolbar_margin->add_theme_constant_override("margin_right", 4);
 	
+	// Toolbar HBoxContainer - matches .tscn separation
 	toolbar = memnew(HBoxContainer);
 	toolbar_margin->add_child(toolbar);
 	toolbar->add_theme_constant_override("separation", 0);
 	
-	// Database button
+	// Database MenuButton - matches .tscn properties
 	database_button = memnew(MenuButton);
 	toolbar->add_child(database_button);
+	database_button->set_custom_minimum_size(Vector2(28, 28));
 	database_button->set_text("Database");
+	database_button->set_flat(false);
 	database_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_menu_pressed));
 	database_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_menu_id_pressed));
 	
-	// Title label
-	title_label = memnew(Label);
-	toolbar->add_child(title_label);
-	title_label->set_text("No Database");
-	title_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	// VSeparator after database button
+	VSeparator *sep1 = memnew(VSeparator);
+	toolbar->add_child(sep1);
 	
-	// New buttons
+	// New Item Definition Button - matches .tscn properties  
 	new_item_button = memnew(Button);
 	toolbar->add_child(new_item_button);
-	new_item_button->set_text("New Item");
+	new_item_button->set_custom_minimum_size(Vector2(32, 32));
+	new_item_button->set_text("New Item Definition");
+	new_item_button->set_tooltip_text("New Inventory Item");
+	new_item_button->set_flat(true);
 	new_item_button->set_disabled(true);
 	new_item_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_item_button_pressed));
 	
+	// VSeparator
+	VSeparator *sep2 = memnew(VSeparator);
+	toolbar->add_child(sep2);
+	
+	// New Recipe Button - matches .tscn properties
 	new_recipe_button = memnew(Button);
 	toolbar->add_child(new_recipe_button);
+	new_recipe_button->set_custom_minimum_size(Vector2(32, 32));
 	new_recipe_button->set_text("New Recipe");
+	new_recipe_button->set_tooltip_text("New Recipe");
+	new_recipe_button->set_flat(true);
 	new_recipe_button->set_disabled(true);
 	new_recipe_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_recipe_button_pressed));
 	
+	// VSeparator
+	VSeparator *sep3 = memnew(VSeparator);
+	toolbar->add_child(sep3);
+	
+	// New Craft Station Type Button - matches .tscn properties
 	new_craft_station_type_button = memnew(Button);
 	toolbar->add_child(new_craft_station_type_button);
-	new_craft_station_type_button->set_text("New Craft Station");
+	new_craft_station_type_button->set_custom_minimum_size(Vector2(32, 32));
+	new_craft_station_type_button->set_text("New Craft Station Type");
+	new_craft_station_type_button->set_tooltip_text("New Craft Station Type");
+	new_craft_station_type_button->set_flat(true);
 	new_craft_station_type_button->set_disabled(true);
 	new_craft_station_type_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_craft_station_button_pressed));
 	
+	// VSeparator
+	VSeparator *sep4 = memnew(VSeparator);
+	toolbar->add_child(sep4);
+	
+	// New Item Category Button - matches .tscn properties
 	new_item_categories_button = memnew(Button);
 	toolbar->add_child(new_item_categories_button);
-	new_item_categories_button->set_text("New Category");
+	new_item_categories_button->set_custom_minimum_size(Vector2(32, 32));
+	new_item_categories_button->set_text("New Item Category");
+	new_item_categories_button->set_tooltip_text("New Item Category");
+	new_item_categories_button->set_flat(true);
 	new_item_categories_button->set_disabled(true);
 	new_item_categories_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_category_button_pressed));
 	
-	// Content area
-	content = memnew(Control);
-	main_vbox->add_child(content);
-	content->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	// VSeparator
+	VSeparator *sep5 = memnew(VSeparator);
+	toolbar->add_child(sep5);
 	
+	// Title Label - matches .tscn properties (expand fill, right alignment)
+	title_label = memnew(Label);
+	toolbar->add_child(title_label);
+	title_label->set_text("Open the InventoryDatabase resource to see the content here");
+	title_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	title_label->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT);
+	title_label->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
+	
+	// Content MarginContainer - matches .tscn margins and visibility
+	content = memnew(MarginContainer);
+	main_vbox->add_child(content);
+	content->set_visible(false); // Hidden by default like in .tscn
+	content->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	content->add_theme_constant_override("margin_left", 4);
+	content->add_theme_constant_override("margin_top", 4);
+	content->add_theme_constant_override("margin_right", 4);
+	content->add_theme_constant_override("margin_bottom", 4);
+	
+	// TabContainer - matches .tscn properties
 	tab_container = memnew(TabContainer);
 	content->add_child(tab_container);
-	tab_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	tab_container->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	tab_container->set_current_tab(0);
 	
 	// Create tabs
 	ItemDefinitionsEditor *items_tab = memnew(ItemDefinitionsEditor);

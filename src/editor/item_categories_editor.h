@@ -22,11 +22,13 @@
 #include <godot_cpp/classes/scroll_container.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
+#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/texture_button.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/file_dialog.hpp>
 #include <godot_cpp/classes/color_picker.hpp>
+#include <godot_cpp/classes/color_picker_button.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
 
 using namespace godot;
@@ -44,8 +46,8 @@ private:
 	// UI Components
 	HSplitContainer *hsplit_container;
 	InventoryItemListEditor *item_list_editor;
-	ScrollContainer *details_scroll;
-	VBoxContainer *details_container;
+	MarginContainer *details_container;
+	VBoxContainer *details_vbox;
 	Label *no_selection_label;
 
 	Ref<ItemCategory> current_item;
