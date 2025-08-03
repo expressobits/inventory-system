@@ -52,6 +52,13 @@ sources = [
     Glob('src/craft/*.cpp'),
     ]
 
+# Add editor sources when building for editor
+if env["target"] in ["editor", "template_debug"]:
+    sources.extend([
+        Glob('src/editor/*.cpp'),
+        Glob('src/editor/base/*.cpp'),
+    ])
+
 if env["target"] in ["editor", "template_debug"]:
     try:
         doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
