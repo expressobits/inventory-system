@@ -57,7 +57,7 @@ void ItemStackSelector::_ready() {
     product_amount_spin_box->set_min(1);
     product_amount_spin_box->set_max(100000000);
     product_amount_spin_box->set_value(1);
-    product_amount_spin_box->set_rounded(true);
+    product_amount_spin_box->set_step(1.0);  // Set step instead of rounded
     product_amount_spin_box->connect("value_changed", Callable(this, "_on_product_amount_spin_box_value_changed"));
     add_child(product_amount_spin_box);
 }

@@ -379,7 +379,6 @@ void ItemDefinitionsEditor::_update_details(const Ref<ItemDefinition> &p_item) {
 	size_y_spin->set_allow_greater(true);
 	size_y_spin->connect("value_changed", callable_mp(this, &ItemDefinitionsEditor::_on_size_height_changed));
 }
-}
 
 void ItemDefinitionsEditor::_clear_details() {
 	// Remove all children except the no selection label

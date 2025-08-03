@@ -142,7 +142,7 @@ void ItemDefinitionPropertyEditor::_ready() {
     value_integer->set_visible(false);
     value_integer->set_custom_minimum_size(Vector2(128, 0));
     value_integer->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-    value_integer->set_rounded(true);
+    value_integer->set_step(1.0);  // Set step instead of rounded
     value_integer->set_allow_greater(true);
     value_integer->set_allow_lesser(true);
     value_integer->connect("value_changed", Callable(this, "_on_value_integer_value_changed"));
@@ -199,7 +199,7 @@ void ItemDefinitionPropertyEditor::_ready() {
     // Create confirmation dialog
     remove_confirmation_dialog = memnew(ConfirmationDialog);
     remove_confirmation_dialog->set_size(Vector2i(400, 100));
-    remove_confirmation_dialog->set_dialog_text("Remove?");
+    remove_confirmation_dialog->set_text("Remove?");
     remove_confirmation_dialog->connect("confirmed", Callable(this, "_on_remove_confirmation_dialog_confirmed"));
     add_child(remove_confirmation_dialog);
 }

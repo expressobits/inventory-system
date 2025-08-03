@@ -227,7 +227,6 @@ void CraftStationTypesEditor::_update_details(const Ref<CraftStationType> &p_ite
 	clear_icon_btn->set_text("Clear Icon");
 	clear_icon_btn->connect("pressed", callable_mp(this, &CraftStationTypesEditor::_on_clear_icon_pressed));
 }
-}
 
 void CraftStationTypesEditor::_clear_details() {
 	// Remove all children from the details VBox

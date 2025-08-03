@@ -19,9 +19,6 @@ void BaseInventoryEditor::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_current_data", "data"), &BaseInventoryEditor::set_current_data);
     ClassDB::bind_method(D_METHOD("get_current_data"), &BaseInventoryEditor::get_current_data);
 
-    ClassDB::bind_static_method(D_METHOD("get_name_of_resource", "resource"), &BaseInventoryEditor::get_name_of_resource);
-    ClassDB::bind_static_method(D_METHOD("get_name_of_resource_path", "path"), &BaseInventoryEditor::get_name_of_resource_path);
-
     ADD_SIGNAL(MethodInfo("data_changed"));
     ADD_SIGNAL(MethodInfo("removed", PropertyInfo(Variant::OBJECT, "data", PROPERTY_HINT_RESOURCE_TYPE, "Resource")));
     ADD_SIGNAL(MethodInfo("duplicated", PropertyInfo(Variant::OBJECT, "data", PROPERTY_HINT_RESOURCE_TYPE, "Resource")));
@@ -40,7 +37,7 @@ void BaseInventoryEditor::_ready() {
     // Create remove confirmation dialog
     remove_confirmation_dialog = memnew(ConfirmationDialog);
     remove_confirmation_dialog->set_name("RemoveConfirmationDialog");
-    remove_confirmation_dialog->set_dialog_text("Are you sure you want to remove this item?");
+    remove_confirmation_dialog->set_text("Are you sure you want to remove this item?");
     add_child(remove_confirmation_dialog);
 
     // Connect the confirmed signal
