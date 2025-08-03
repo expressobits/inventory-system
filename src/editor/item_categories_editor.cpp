@@ -120,7 +120,7 @@ void ItemCategoriesEditor::load_from_database(const Ref<InventoryDatabase> &p_da
 	database = p_database;
 	
 	if (database.is_valid()) {
-		TypedArray<ItemCategory> items = database->get_categories();
+		TypedArray<ItemCategory> items = database->get_item_categories();
 		Array item_array;
 		for (int i = 0; i < items.size(); i++) {
 			item_array.append(items[i]);
@@ -195,7 +195,7 @@ void ItemCategoriesEditor::_update_details(const Ref<ItemCategory> &p_item) {
 	
 	ColorPicker *color_picker = memnew(ColorPicker);
 	details_container->add_child(color_picker);
-	color_picker->set_color(p_item->get_color());
+	color_picker->set_pick_color(p_item->get_color());
 	color_picker->set_custom_minimum_size(Vector2(200, 150));
 	color_picker->connect("color_changed", callable_mp(this, &ItemCategoriesEditor::_on_color_changed));
 	
@@ -230,7 +230,7 @@ void ItemCategoriesEditor::_update_details(const Ref<ItemCategory> &p_item) {
 	TextureButton *icon_preview = memnew(TextureButton);
 	icon_container->add_child(icon_preview);
 	icon_preview->set_custom_minimum_size(Vector2(64, 64));
-	icon_preview->set_expand_mode(TextureButton::EXPAND_FIT_WIDTH_PROPORTIONAL);
+	// icon_preview->set_expand_mode(TextureButton::EXPAND_FIT_WIDTH_PROPORTIONAL); // API may have changed
 	icon_preview->set_stretch_mode(TextureButton::STRETCH_KEEP_ASPECT_CENTERED);
 	if (p_item->get_icon().is_valid()) {
 		icon_preview->set_texture_normal(p_item->get_icon());

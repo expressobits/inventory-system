@@ -166,7 +166,7 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 	
 	// Populate craft stations from database
 	if (database.is_valid()) {
-		TypedArray<CraftStationType> stations = database->get_craft_station_types();
+		TypedArray<CraftStationType> stations = database->get_stations_type();
 		for (int i = 0; i < stations.size(); i++) {
 			Ref<CraftStationType> station = stations[i];
 			if (station.is_valid()) {
@@ -201,13 +201,14 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 	TypedArray<ItemStack> ingredients = p_recipe->get_ingredients();
 	for (int i = 0; i < ingredients.size(); i++) {
 		Ref<ItemStack> ingredient = ingredients[i];
-		if (ingredient.is_valid() && ingredient->get_item_definition().is_valid()) {
+		if (ingredient.is_valid() && database.is_valid()) {
+			Ref<ItemDefinition> item_def = database->get_item(ingredient->get_item_id());
 			HBoxContainer *ingredient_row = memnew(HBoxContainer);
 			details_container->add_child(ingredient_row);
 			
 			Label *ingredient_label = memnew(Label);
 			ingredient_row->add_child(ingredient_label);
-			String item_name = ingredient->get_item_definition()->get_name();
+			String item_name = item_def.is_valid() ? item_def->get_name() : ingredient->get_item_id();
 			ingredient_label->set_text(String::num(ingredient->get_amount()) + "x " + item_name);
 		}
 	}
@@ -225,13 +226,14 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 	TypedArray<ItemStack> products = p_recipe->get_products();
 	for (int i = 0; i < products.size(); i++) {
 		Ref<ItemStack> product = products[i];
-		if (product.is_valid() && product->get_item_definition().is_valid()) {
+		if (product.is_valid() && database.is_valid()) {
+			Ref<ItemDefinition> item_def = database->get_item(product->get_item_id());
 			HBoxContainer *product_row = memnew(HBoxContainer);
 			details_container->add_child(product_row);
 			
 			Label *product_label = memnew(Label);
 			product_row->add_child(product_label);
-			String item_name = product->get_item_definition()->get_name();
+			String item_name = item_def.is_valid() ? item_def->get_name() : product->get_item_id();
 			product_label->set_text(String::num(product->get_amount()) + "x " + item_name);
 		}
 	}
@@ -249,13 +251,14 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 		TypedArray<ItemStack> required_items = p_recipe->get_required_items();
 		for (int i = 0; i < required_items.size(); i++) {
 			Ref<ItemStack> required_item = required_items[i];
-			if (required_item.is_valid() && required_item->get_item_definition().is_valid()) {
+			if (required_item.is_valid() && database.is_valid()) {
+				Ref<ItemDefinition> item_def = database->get_item(required_item->get_item_id());
 				HBoxContainer *required_row = memnew(HBoxContainer);
 				details_container->add_child(required_row);
 				
 				Label *required_label = memnew(Label);
 				required_row->add_child(required_label);
-				String item_name = required_item->get_item_definition()->get_name();
+				String item_name = item_def.is_valid() ? item_def->get_name() : required_item->get_item_id();
 				required_label->set_text(String::num(required_item->get_amount()) + "x " + item_name);
 			}
 		}
@@ -320,7 +323,7 @@ void RecipesEditor::_on_station_selected(int p_index) {
 			// "None" selected
 			current_recipe->set_station(Ref<CraftStationType>());
 		} else {
-			TypedArray<CraftStationType> stations = database->get_craft_station_types();
+			TypedArray<CraftStationType> stations = database->get_stations_type();
 			int station_index = p_index - 1; // -1 because of "None" option
 			if (station_index >= 0 && station_index < stations.size()) {
 				current_recipe->set_station(stations[station_index]);

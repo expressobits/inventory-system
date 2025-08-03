@@ -208,7 +208,7 @@ void ItemDefinitionsEditor::_update_details(const Ref<ItemDefinition> &p_item) {
 	CheckBox *can_stack_check = memnew(CheckBox);
 	details_container->add_child(can_stack_check);
 	can_stack_check->set_text("Can Stack");
-	can_stack_check->set_button_pressed(p_item->get_can_stack());
+	can_stack_check->set_pressed(p_item->get_can_stack());
 	can_stack_check->connect("toggled", callable_mp(this, &ItemDefinitionsEditor::_on_can_stack_changed));
 	
 	Label *max_stack_label = memnew(Label);
@@ -287,7 +287,7 @@ void ItemDefinitionsEditor::_update_details(const Ref<ItemDefinition> &p_item) {
 	TextureButton *icon_preview = memnew(TextureButton);
 	icon_container->add_child(icon_preview);
 	icon_preview->set_custom_minimum_size(Vector2(64, 64));
-	icon_preview->set_expand_mode(TextureButton::EXPAND_FIT_WIDTH_PROPORTIONAL);
+	// icon_preview->set_expand_mode(TextureButton::EXPAND_FIT_WIDTH_PROPORTIONAL); // API may have changed
 	icon_preview->set_stretch_mode(TextureButton::STRETCH_KEEP_ASPECT_CENTERED);
 	if (p_item->get_icon().is_valid()) {
 		icon_preview->set_texture_normal(p_item->get_icon());

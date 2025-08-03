@@ -193,15 +193,15 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 
 void InventoryDatabase::add_new_craft_station_type(const Ref<CraftStationType> craft_station_type) {
 	ERR_FAIL_NULL_MSG(craft_station_type, "'craft_station_type' is null.");
-	craft_station_types.append(craft_station_type);
+	stations_type.append(craft_station_type);
 }
 
 void InventoryDatabase::remove_craft_station_type(const Ref<CraftStationType> craft_station_type) {
 	ERR_FAIL_NULL_MSG(craft_station_type, "'craft_station_type' is null.");
 	
-	int index = craft_station_types.find(craft_station_type);
+	int index = stations_type.find(craft_station_type);
 	if (index > -1) {
-		craft_station_types.remove_at(index);
+		stations_type.remove_at(index);
 	}
 }
 
