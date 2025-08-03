@@ -51,8 +51,6 @@ private:
 	void _on_recipe_popup_menu_requested(const Vector2 &p_position);
 	
 	// Property change handlers
-	void _on_id_changed(const String &p_text);
-	void _on_id_focus_exited();
 	void _on_time_changed(double p_value);
 	void _on_station_selected(int p_index);
 

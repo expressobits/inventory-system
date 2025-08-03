@@ -539,14 +539,7 @@ void InventoryEditor::_on_new_recipe_button_pressed() {
 	if (database.is_null()) {
 		return;
 	}
-	
-	// Create new recipe
-	Ref<Recipe> new_recipe;
-	new_recipe.instantiate();
-	new_recipe->set_name("New Recipe");
-	new_recipe->set_id(""); // Empty ID will need to be filled by user
-	
-	database->add_new_recipe(new_recipe);
+	database->add_recipe();
 	_save_file();
 	_load_database(database);
 	tab_container->set_current_tab(1);
@@ -556,14 +549,8 @@ void InventoryEditor::_on_new_craft_station_button_pressed() {
 	if (database.is_null()) {
 		return;
 	}
-	
-	// Create new craft station type
-	Ref<CraftStationType> new_craft_station;
-	new_craft_station.instantiate();
-	new_craft_station->set_name("New Craft Station Type");
-	new_craft_station->set_id(""); // Empty ID will need to be filled by user
-	
-	database->add_new_craft_station_type(new_craft_station);
+
+	database->add_craft_station_type();
 	_save_file();
 	_load_database(database);
 	tab_container->set_current_tab(2);
@@ -574,14 +561,7 @@ void InventoryEditor::_on_new_category_button_pressed() {
 		return;
 	}
 	
-	// Create new category
-	Ref<ItemCategory> new_category;
-	new_category.instantiate();
-	new_category->set_name("New Item Category");
-	new_category->set_id(""); // Empty ID will need to be filled by user
-	new_category->set_color(Color(1.0, 1.0, 1.0, 1.0)); // Default to white
-	
-	database->add_new_category(new_category);
+	database->add_item_category();
 	_save_file();
 	_load_database(database);
 	tab_container->set_current_tab(3);

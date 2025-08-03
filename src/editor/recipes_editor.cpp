@@ -28,8 +28,6 @@ void RecipesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_recipe_popup_menu_requested", "at_position"), &RecipesEditor::_on_recipe_popup_menu_requested);
 	
 	// Property change handlers
-	ClassDB::bind_method(D_METHOD("_on_id_changed", "text"), &RecipesEditor::_on_id_changed);
-	ClassDB::bind_method(D_METHOD("_on_id_focus_exited"), &RecipesEditor::_on_id_focus_exited);
 	ClassDB::bind_method(D_METHOD("_on_time_changed", "value"), &RecipesEditor::_on_time_changed);
 	ClassDB::bind_method(D_METHOD("_on_station_selected", "index"), &RecipesEditor::_on_station_selected);
 
@@ -134,13 +132,6 @@ void RecipesEditor::_update_details(const Ref<Recipe> &p_recipe) {
 	Label *id_label = memnew(Label);
 	details_container->add_child(id_label);
 	id_label->set_text("Recipe ID:");
-	
-	LineEdit *id_edit = memnew(LineEdit);
-	details_container->add_child(id_edit);
-	id_edit->set_text(p_recipe->get_id());
-	id_edit->set_placeholder("Enter unique recipe ID");
-	id_edit->connect("text_submitted", callable_mp(this, &RecipesEditor::_on_id_changed));
-	id_edit->connect("focus_exited", callable_mp(this, &RecipesEditor::_on_id_focus_exited));
 	
 	// Time to craft
 	Label *time_label = memnew(Label);
@@ -289,26 +280,6 @@ void RecipesEditor::_on_recipe_selected(const Variant &p_recipe, int p_index) {
 void RecipesEditor::_on_recipe_popup_menu_requested(const Vector2 &p_position) {
 	// TODO: Show context menu with options like remove, etc.
 	print_line("Context menu requested for recipe at position: " + p_position);
-}
-
-// Property change handlers
-void RecipesEditor::_on_id_changed(const String &p_text) {
-	if (current_recipe.is_valid()) {
-		// Get the LineEdit widget from the current details container
-		Array children = details_container->get_children();
-		for (int i = 0; i < children.size(); i++) {
-			LineEdit *line_edit = Object::cast_to<LineEdit>(children[i]);
-			if (line_edit && line_edit->get_placeholder() == "Enter unique recipe ID") {
-				current_recipe->set_id(line_edit->get_text());
-				break;
-			}
-		}
-	}
-}
-
-void RecipesEditor::_on_id_focus_exited() {
-	// Handle focus exit - just trigger the change handler
-	_on_id_changed("");
 }
 
 void RecipesEditor::_on_time_changed(double p_value) {

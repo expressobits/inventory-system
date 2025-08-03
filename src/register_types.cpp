@@ -78,6 +78,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 		GDREGISTER_INTERNAL_CLASS(ItemCategoriesEditor);
 		GDREGISTER_INTERNAL_CLASS(CraftStationTypesEditor);
 		GDREGISTER_INTERNAL_CLASS(RecipesEditor);
+
+		EditorPlugins::add_by_type<InventoryEditorPlugin>();
 	}
 #endif
 }

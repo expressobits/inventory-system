@@ -48,8 +48,6 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("remove_item", "item"), &InventoryDatabase::remove_item);
 	ClassDB::bind_method(D_METHOD("add_new_category", "category"), &InventoryDatabase::add_new_category);
 	ClassDB::bind_method(D_METHOD("remove_category", "category"), &InventoryDatabase::remove_category);
-	ClassDB::bind_method(D_METHOD("add_new_recipe", "recipe"), &InventoryDatabase::add_new_recipe);
-	ClassDB::bind_method(D_METHOD("add_new_craft_station_type", "craft_station_type"), &InventoryDatabase::add_new_craft_station_type);
 	ClassDB::bind_method(D_METHOD("add_new_loot_table", "loot"), &InventoryDatabase::add_new_loot_table);
 	ClassDB::bind_method(D_METHOD("remove_loot_table", "loot"), &InventoryDatabase::remove_loot_table);
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
@@ -187,16 +185,6 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 		item_categories.remove_at(index);
 		_update_items_categories_cache();
 	}
-}
-
-void InventoryDatabase::add_new_recipe(const Ref<Recipe> recipe) {
-	ERR_FAIL_NULL_MSG(recipe, "'recipe' is null.");
-	recipes.append(recipe);
-}
-
-void InventoryDatabase::add_new_craft_station_type(const Ref<CraftStationType> craft_station_type) {
-	ERR_FAIL_NULL_MSG(craft_station_type, "'craft_station_type' is null.");
-	stations_type.append(craft_station_type);
 }
 
 void InventoryDatabase::add_new_loot_table(const Ref<Loot> loot) {
