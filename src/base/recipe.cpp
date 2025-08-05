@@ -12,7 +12,6 @@ void Recipe::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_required_items", "required_items"), &Recipe::set_required_items);
 	ClassDB::bind_method(D_METHOD("get_required_items"), &Recipe::get_required_items);
 
-	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "products", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemStack")), "set_products", "get_products");
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "time_to_craft"), "set_time_to_craft", "get_time_to_craft");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "station", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType"), "set_station", "get_station");
