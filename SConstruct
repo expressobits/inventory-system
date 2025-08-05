@@ -54,7 +54,6 @@ sources = [
 
 if env["target"] in ["editor", "template_debug"]:
     sources.append(Glob('src/editor/*.cpp'))
-    sources.append(Glob('src/editor/base/*.cpp'))
     try:
         doc_data = env.GodotCPPDocData("src/gen/doc_data.gen.cpp", source=Glob("doc_classes/*.xml"))
         sources.append(doc_data)
