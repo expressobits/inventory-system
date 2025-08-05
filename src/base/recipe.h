@@ -11,7 +11,6 @@ class Recipe : public Resource {
 	GDCLASS(Recipe, Resource);
 
 private:
-	String id;
 	TypedArray<ItemStack> products;
 	float time_to_craft = 4.0;
 	Ref<CraftStationType> station;
