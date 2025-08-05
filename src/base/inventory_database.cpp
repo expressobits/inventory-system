@@ -53,6 +53,7 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
 	ClassDB::bind_method(D_METHOD("has_item_category_id", "id"), &InventoryDatabase::has_item_category_id);
 	ClassDB::bind_method(D_METHOD("has_item_id", "id"), &InventoryDatabase::has_item_id);
+	ClassDB::bind_method(D_METHOD("has_item_name", "name"), &InventoryDatabase::has_item_name);
 	ClassDB::bind_method(D_METHOD("has_craft_station_type_id", "id"), &InventoryDatabase::has_craft_station_type_id);
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
 	ClassDB::bind_method(D_METHOD("get_new_valid_id"), &InventoryDatabase::get_new_valid_id);
@@ -77,6 +78,11 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("add_recipe"), &InventoryDatabase::add_recipe);
 	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
 	ClassDB::bind_method(D_METHOD("add_loot_table"), &InventoryDatabase::add_loot_table);
+
+	ClassDB::bind_method(D_METHOD("add_new_recipe", "recipe"), &InventoryDatabase::add_new_recipe);
+	ClassDB::bind_method(D_METHOD("remove_recipe", "recipe"), &InventoryDatabase::remove_recipe);
+	ClassDB::bind_method(D_METHOD("add_new_craft_station_type", "craft_station_type"), &InventoryDatabase::add_new_craft_station_type);
+	ClassDB::bind_method(D_METHOD("remove_craft_station_type", "craft_station_type"), &InventoryDatabase::remove_craft_station_type);
 
 	ClassDB::bind_method(D_METHOD("export_to_invdata"), &InventoryDatabase::export_to_invdata);
 	ClassDB::bind_method(D_METHOD("import_from_invdata", "json"), &InventoryDatabase::import_from_invdata);
@@ -221,6 +227,15 @@ bool InventoryDatabase::has_item_category_id(String id) const {
 
 bool InventoryDatabase::has_item_id(String id) const {
 	return items_cache.has(id);
+}
+
+bool InventoryDatabase::has_item_name(String name) const {
+	for (size_t i = 0; i < items.size(); i++) {
+		Ref<ItemDefinition> item = items[i];
+		if (item->get_name() == name)
+			return true;
+	}
+	return false;
 }
 
 bool InventoryDatabase::has_craft_station_type_id(String id) const {
@@ -471,6 +486,34 @@ void InventoryDatabase::add_craft_station_type() {
 void InventoryDatabase::add_loot_table() {
 	Ref<Loot> loot = memnew(Loot());
 	loot_tables.append(loot);
+}
+
+void InventoryDatabase::add_new_recipe(const Ref<Recipe> recipe) {
+	ERR_FAIL_NULL_MSG(recipe, "'recipe' is null.");
+	recipes.append(recipe);
+}
+
+void InventoryDatabase::remove_recipe(const Ref<Recipe> recipe) {
+	ERR_FAIL_NULL_MSG(recipe, "'recipe' is null.");
+	
+	int index = recipes.find(recipe);
+	if (index > -1) {
+		recipes.remove_at(index);
+	}
+}
+
+void InventoryDatabase::add_new_craft_station_type(const Ref<CraftStationType> craft_station_type) {
+	ERR_FAIL_NULL_MSG(craft_station_type, "'craft_station_type' is null.");
+	stations_type.append(craft_station_type);
+}
+
+void InventoryDatabase::remove_craft_station_type(const Ref<CraftStationType> craft_station_type) {
+	ERR_FAIL_NULL_MSG(craft_station_type, "'craft_station_type' is null.");
+	
+	int index = stations_type.find(craft_station_type);
+	if (index > -1) {
+		stations_type.remove_at(index);
+	}
 }
 
 Ref<ItemCategory> InventoryDatabase::get_category_from_id(String id) const {
