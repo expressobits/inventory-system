@@ -16,7 +16,7 @@
 #include "../base/recipe.h"
 #include "../base/item_stack.h"
 #include "../base/craft_station_type.h"
-#include "base/item_stack_selector.h"
+#include "item_stack_selector.h"
 
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/h_separator.hpp>

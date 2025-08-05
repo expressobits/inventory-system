@@ -13,7 +13,7 @@
 #ifndef ITEM_DEFINITIONS_EDITOR_H
 #define ITEM_DEFINITIONS_EDITOR_H
 
-#include "base/base_inventory_editor.h"
+#include "base_inventory_editor.h"
 #include "inventory_item_list_editor.h"
 #include "item_definition_editor.h"
 

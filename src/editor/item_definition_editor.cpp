@@ -14,10 +14,10 @@
 
 #include "../base/inventory_database.h"
 #include "../base/item_definition.h"
-#include "base/resource_id_editor.h"
-#include "base/icon_selector.h"
-#include "base/item_definition_property_editor.h"
-#include "base/categories_in_item_editor.h"
+#include "resource_id_editor.h"
+#include "icon_selector.h"
+#include "item_definition_property_editor.h"
+#include "categories_in_item_editor.h"
 
 #include <godot_cpp/classes/timer.hpp>
 #include <godot_cpp/classes/scene_tree.hpp>

@@ -28,10 +28,10 @@
 #include <godot_cpp/classes/v_separator.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/popup_menu.hpp>
-#include "base/resource_id_editor.h"
-#include "base/icon_selector.h"
-#include "base/custom_properties_editor.h"
-#include "base/categories_in_item_editor.h"
+#include "resource_id_editor.h"
+#include "icon_selector.h"
+#include "custom_properties_editor.h"
+#include "categories_in_item_editor.h"
 
 using namespace godot;
 

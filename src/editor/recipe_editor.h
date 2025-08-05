@@ -22,7 +22,7 @@
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/button.hpp>
 
-#include "base/item_stack_selector.h"
+#include "item_stack_selector.h"
 
 using namespace godot;
 

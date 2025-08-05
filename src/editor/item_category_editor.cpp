@@ -14,7 +14,7 @@
 
 #include "../base/inventory_database.h"
 #include "../base/item_category.h"
-#include "base/custom_properties_editor.h"
+#include "custom_properties_editor.h"
 
 #include <godot_cpp/classes/texture2d.hpp>
 

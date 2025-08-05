@@ -1,6 +1,6 @@
 #include "item_stack_selector.h"
-#include "../../base/inventory_database.h"
-#include "../../base/item_definition.h"
+#include "../base/inventory_database.h"
+#include "../base/item_definition.h"
 
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/spin_box.hpp>

@@ -13,7 +13,7 @@
 #ifndef RECIPES_EDITOR_H
 #define RECIPES_EDITOR_H
 
-#include "base/base_inventory_editor.h"
+#include "base_inventory_editor.h"
 
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>

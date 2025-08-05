@@ -6,7 +6,7 @@
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/theme.hpp>
-#include "../../base/inventory_database.h"
+#include "../base/inventory_database.h"
 
 using namespace godot;
 

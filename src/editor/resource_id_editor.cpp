@@ -1,5 +1,5 @@
 #include "resource_id_editor.h"
-#include "../../base/inventory_database.h"
+#include "../base/inventory_database.h"
 
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/line_edit.hpp>

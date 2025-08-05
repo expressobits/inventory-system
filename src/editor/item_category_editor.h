@@ -24,9 +24,9 @@
 #include <godot_cpp/classes/h_separator.hpp>
 #include <godot_cpp/classes/color_picker_button.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
-#include "base/icon_selector.h"
-#include "base/custom_properties_editor.h"
-#include "base/resource_id_editor.h"
+#include "icon_selector.h"
+#include "custom_properties_editor.h"
+#include "resource_id_editor.h"
 
 using namespace godot;
 

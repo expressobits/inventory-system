@@ -1,5 +1,5 @@
 #include "base_inventory_editor.h"
-#include "../../base/inventory_database.h"
+#include "../base/inventory_database.h"
 
 #include <godot_cpp/classes/confirmation_dialog.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>

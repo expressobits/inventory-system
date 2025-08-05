@@ -22,8 +22,8 @@
 #include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/h_separator.hpp>
-#include "base/icon_selector.h"
-#include "base/resource_id_editor.h"
+#include "icon_selector.h"
+#include "resource_id_editor.h"
 
 using namespace godot;
 

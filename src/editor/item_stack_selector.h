@@ -8,9 +8,9 @@
 #include <godot_cpp/classes/popup_menu.hpp>
 
 #include "resource_id_editor.h"
-#include "../../base/item_stack.h"
-#include "../../base/item_definition.h"
-#include "../../base/inventory_database.h"
+#include "../base/item_stack.h"
+#include "../base/item_definition.h"
+#include "../base/inventory_database.h"
 
 using namespace godot;
 

@@ -12,9 +12,9 @@
 
 #include "categories_in_item_editor.h"
 
-#include "../../base/inventory_database.h"
-#include "../../base/item_definition.h"
-#include "../../base/item_category.h"
+#include "../base/inventory_database.h"
+#include "../base/item_definition.h"
+#include "../base/item_category.h"
 
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/scroll_container.hpp>
