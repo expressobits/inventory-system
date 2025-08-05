@@ -57,6 +57,7 @@ public:
 	Ref<ItemDefinition> get_item(String id) const;
 	bool has_item_category_id(String id) const;
 	bool has_item_id(String id) const;
+	bool has_item_name(String name) const;
 	bool has_craft_station_type_id(String id) const;
 	String get_valid_id() const;
 	String get_new_valid_id() const;
@@ -80,6 +81,11 @@ public:
 	void add_recipe();
 	void add_craft_station_type();
 	void add_loot_table();
+
+	void add_new_recipe(const Ref<Recipe> recipe);
+	void remove_recipe(const Ref<Recipe> recipe);
+	void add_new_craft_station_type(const Ref<CraftStationType> craft_station_type);
+	void remove_craft_station_type(const Ref<CraftStationType> craft_station_type);
 
 	Ref<ItemCategory> get_category_from_id(String id) const;
 	Ref<CraftStationType> get_craft_station_from_id(String id) const;
