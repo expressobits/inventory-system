@@ -1,8 +1,6 @@
 #include "recipe.h"
 
 void Recipe::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_id", "id"), &Recipe::set_id);
-	ClassDB::bind_method(D_METHOD("get_id"), &Recipe::get_id);
 	ClassDB::bind_method(D_METHOD("set_products", "products"), &Recipe::set_products);
 	ClassDB::bind_method(D_METHOD("get_products"), &Recipe::get_products);
 	ClassDB::bind_method(D_METHOD("set_time_to_craft", "time_to_craft"), &Recipe::set_time_to_craft);
@@ -26,14 +24,6 @@ Recipe::Recipe() {
 }
 
 Recipe::~Recipe() {
-}
-
-void Recipe::set_id(const String &new_id) {
-	id = new_id;
-}
-
-String Recipe::get_id() const {
-	return id;
 }
 
 void Recipe::set_products(const TypedArray<ItemStack> &new_products) {

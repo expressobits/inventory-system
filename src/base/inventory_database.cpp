@@ -370,7 +370,6 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 
 Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 	Dictionary data = Dictionary();
-	data["id"] = recipe->get_id();
 	if (!recipe->get_products().is_empty())
 		data["products"] = serialize_item_stacks(recipe->get_products());
 	data["time_to_craft"] = recipe->get_time_to_craft();
@@ -385,9 +384,6 @@ Dictionary InventoryDatabase::serialize_recipe(const Ref<Recipe> recipe) const {
 }
 
 void InventoryDatabase::deserialize_recipe(Ref<Recipe> recipe, const Dictionary data) const {
-	if (data.has("id")) {
-		recipe->set_id(data["id"]);
-	}
 	if (data.has("products")) {
 		TypedArray<ItemStack> item_stacks = recipe->get_products();
 		deserialize_item_stacks(item_stacks, data["products"]);

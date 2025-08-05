@@ -24,8 +24,6 @@ protected:
 public:
 	Recipe();
 	~Recipe();
-	void set_id(const String &new_id);
-	String get_id() const;
 	void set_products(const TypedArray<ItemStack> &new_products);
 	TypedArray<ItemStack> get_products() const;
 	void set_time_to_craft(const float &new_time_to_craft);

@@ -626,30 +626,7 @@ void InventoryEditor::_remove_recipe(const Ref<Recipe> &p_recipe) {
 }
 
 void InventoryEditor::_duplicate_recipe(const Ref<Recipe> &p_recipe) {
-	if (p_recipe->get_id() == "") {
-		WARN_PRINT("Recipe with empty id cannot be duplicated.");
-		return;
-	}
 	Ref<Recipe> new_recipe = p_recipe->duplicate();
-	String base_id = new_recipe->get_id();
-	int counter = 2;
-	while (true) {
-		String test_id = base_id + "_" + String::num(counter);
-		bool found = false;
-		TypedArray<Recipe> recipes = database->get_recipes();
-		for (int i = 0; i < recipes.size(); i++) {
-			Ref<Recipe> recipe = recipes[i];
-			if (recipe.is_valid() && recipe->get_id() == test_id) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			new_recipe->set_id(test_id);
-			break;
-		}
-		counter++;
-	}
 	database->add_new_recipe(new_recipe);
 	_save_file();
 	_load_database(database);
