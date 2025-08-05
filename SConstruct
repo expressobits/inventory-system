@@ -44,8 +44,10 @@ Run the following command to download godot-cpp:
 env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
 
 env.Append(CPPPATH=["src/"])
+
+# Main library sources (excluding test_main.cpp)
 sources = [
-    Glob('src/*.cpp'),
+    Glob('src/*.cpp', exclude=['src/test_main.cpp']),
     Glob('src/base/*.cpp'),
     Glob('src/constraints/*.cpp'),
     Glob('src/core/*.cpp'),
@@ -62,6 +64,7 @@ if env["target"] in ["editor", "template_debug"]:
 
 file = "{}{}{}".format(libname, env["suffix"], env["SHLIBSUFFIX"])
 
+# Build main library
 libraryfile = "bin/{}/{}".format(env["platform"], file)
 library = env.SharedLibrary(
     libraryfile,
@@ -69,6 +72,27 @@ library = env.SharedLibrary(
 )
 
 copy = env.InstallAs("{}/addons/{}/bin/{}/{}".format(projectdir, projectdir, env["platform"], file), library)
+
+# Build test executable if requested
+test_sources = [
+    'src/test_main.cpp',
+    # Include needed source files for tests (excluding register_types.cpp)
+    Glob('src/base/*.cpp'),
+    Glob('src/constraints/*.cpp'),
+    Glob('src/core/*.cpp'),
+    Glob('src/craft/*.cpp'),
+]
+
+test_env = env.Clone()
+test_env.Append(CPPPATH=["src/"])
+
+# Check if tests target is requested
+if ARGUMENTS.get('tests', 0):
+    test_executable = test_env.Program(
+        target="bin/{}/inventory_tests{}".format(env["platform"], env["PROGSUFFIX"]),
+        source=test_sources
+    )
+    Alias('tests', test_executable)
 
 default_args = [library, copy]
 Default(*default_args)
