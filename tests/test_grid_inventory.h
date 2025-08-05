@@ -13,8 +13,8 @@
 #define TEST_GRID_INVENTORY_H
 
 #include "tests.h"
-#include "core/grid_inventory.h"
-#include "base/inventory_database.h"
+#include "../src/core/grid_inventory.h"
+#include "../src/base/inventory_database.h"
 
 using namespace godot;
 

@@ -13,8 +13,8 @@
 #define TEST_INVENTORY_H
 
 #include "tests.h"
-#include "core/inventory.h"
-#include "base/inventory_database.h"
+#include "../src/core/inventory.h"
+#include "../src/base/inventory_database.h"
 
 using namespace godot;
 

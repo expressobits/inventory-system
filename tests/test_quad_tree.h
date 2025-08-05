@@ -13,7 +13,7 @@
 #define TEST_QUAD_TREE_H
 
 #include "tests.h"
-#include "core/quad_tree.h"
+#include "../src/core/quad_tree.h"
 
 using namespace godot;
 

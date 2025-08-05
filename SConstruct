@@ -22,11 +22,13 @@ customs = ["custom.py"]
 customs = [os.path.abspath(path) for path in customs]
 
 opts = Variables(customs, ARGUMENTS)
+opts.Add(BoolVariable("tests", "Build tests", False))
 opts.Update(localEnv)
 
 Help(opts.GenerateHelpText(localEnv))
 
 env = localEnv.Clone()
+opts.Update(env)
 
 submodule_initialized = False
 dir_name = 'godot-cpp'
@@ -45,9 +47,9 @@ env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
 
 env.Append(CPPPATH=["src/"])
 
-# Main library sources (excluding test_main.cpp)
+# Main library sources
 sources = [
-    Glob('src/*.cpp', exclude=['src/test_main.cpp']),
+    Glob('src/*.cpp'),
     Glob('src/base/*.cpp'),
     Glob('src/constraints/*.cpp'),
     Glob('src/core/*.cpp'),
@@ -75,7 +77,7 @@ copy = env.InstallAs("{}/addons/{}/bin/{}/{}".format(projectdir, projectdir, env
 
 # Build test executable if requested
 test_sources = [
-    'src/test_main.cpp',
+    'tests/test_main.cpp',
     # Include needed source files for tests (excluding register_types.cpp)
     Glob('src/base/*.cpp'),
     Glob('src/constraints/*.cpp'),
@@ -84,10 +86,10 @@ test_sources = [
 ]
 
 test_env = env.Clone()
-test_env.Append(CPPPATH=["src/"])
+test_env.Append(CPPPATH=["src/", "tests/"])
 
 # Check if tests target is requested
-if ARGUMENTS.get('tests', 0):
+if env.get('tests', False):
     test_executable = test_env.Program(
         target="bin/{}/inventory_tests{}".format(env["platform"], env["PROGSUFFIX"]),
         source=test_sources
