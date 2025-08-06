@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdp1cblla6fd1"
-path="res://.godot/imported/new_loot.svg-9017466bef115ba6504dfe019df7775c.ctex"
+uid="uid://dq4jk4gujpu2x"
+path="res://.godot/imported/loot_table.svg-d55777d07488a97b24fed1e6b5c41235.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/new_loot.svg"
-dest_files=["res://.godot/imported/new_loot.svg-9017466bef115ba6504dfe019df7775c.ctex"]
+source_file="res://addons/inventory-system/icons/loot_table.svg"
+dest_files=["res://.godot/imported/loot_table.svg-d55777d07488a97b24fed1e6b5c41235.ctex"]
 
 [params]
 
