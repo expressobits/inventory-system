@@ -1,16 +1,16 @@
 #include "loot_generator.h"
 
 void LootGenerator::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("set_loot_table_id", "loot_table_id"), &LootGenerator::set_loot_table_id);
-	ClassDB::bind_method(D_METHOD("get_loot_table_id"), &LootGenerator::get_loot_table_id);
-	ClassDB::bind_method(D_METHOD("get_loot_table"), &LootGenerator::get_loot_table);
+	ClassDB::bind_method(D_METHOD("set_loot_id", "loot_id"), &LootGenerator::set_loot_id);
+	ClassDB::bind_method(D_METHOD("get_loot_id"), &LootGenerator::get_loot_id);
+	ClassDB::bind_method(D_METHOD("get_loot"), &LootGenerator::get_loot);
 	ClassDB::bind_method(D_METHOD("set_target_inventory_path", "target_inventory_path"), &LootGenerator::set_target_inventory_path);
 	ClassDB::bind_method(D_METHOD("get_target_inventory_path"), &LootGenerator::get_target_inventory_path);
 	ClassDB::bind_method(D_METHOD("get_target_inventory"), &LootGenerator::get_target_inventory);
 	ClassDB::bind_method(D_METHOD("generate_loot"), &LootGenerator::generate_loot);
 	ClassDB::bind_method(D_METHOD("generate_loot_count", "count"), &LootGenerator::generate_loot_count);
 
-	ADD_PROPERTY(PropertyInfo(Variant::STRING, "loot_table_id"), "set_loot_table_id", "get_loot_table_id");
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "loot_id"), "set_loot_id", "get_loot_id");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_inventory_path"), "set_target_inventory_path", "get_target_inventory_path");
 }
 
@@ -20,16 +20,16 @@ LootGenerator::LootGenerator() {
 LootGenerator::~LootGenerator() {
 }
 
-void LootGenerator::set_loot_table_id(const String &new_loot_table_id) {
-	loot_table_id = new_loot_table_id;
+void LootGenerator::set_loot_id(const String &new_loot_id) {
+	loot_id = new_loot_id;
 }
 
-String LootGenerator::get_loot_table_id() const {
-	return loot_table_id;
+String LootGenerator::get_loot_id() const {
+	return loot_id;
 }
 
-Ref<Loot> LootGenerator::get_loot_table() const {
-	if (loot_table_id.is_empty()) {
+Ref<Loot> LootGenerator::get_loot() const {
+	if (loot_id.is_empty()) {
 		return nullptr;
 	}
 	
@@ -37,7 +37,7 @@ Ref<Loot> LootGenerator::get_loot_table() const {
 		return nullptr;
 	}
 	
-	return get_database()->get_loot_table_from_id(loot_table_id);
+	return get_database()->get_loot_from_id(loot_id);
 }
 
 void LootGenerator::set_target_inventory_path(const NodePath &new_target_inventory_path) {
@@ -62,8 +62,8 @@ void LootGenerator::generate_loot() {
 }
 
 void LootGenerator::generate_loot_count(int count) {
-	if (loot_table_id.is_empty()) {
-		ERR_PRINT("LootGenerator: No loot table ID assigned");
+	if (loot_id.is_empty()) {
+		ERR_PRINT("LootGenerator: No loot ID assigned");
 		return;
 	}
 	
@@ -72,9 +72,9 @@ void LootGenerator::generate_loot_count(int count) {
 		return;
 	}
 	
-	Ref<Loot> loot_table = get_database()->get_loot_table_from_id(loot_table_id);
-	if (!loot_table.is_valid()) {
-		ERR_PRINT("LootGenerator: Loot table with ID '" + loot_table_id + "' not found in database");
+	Ref<Loot> loot = get_database()->get_loot_from_id(loot_id);
+	if (!loot.is_valid()) {
+		ERR_PRINT("LootGenerator: Loot with ID '" + loot_id + "' not found in database");
 		return;
 	}
 	
@@ -88,7 +88,7 @@ void LootGenerator::generate_loot_count(int count) {
 	rng->randomize();
 	
 	for (int i = 0; i < count; i++) {
-		Ref<LootItem> loot_item = loot_table->get_random_item();
+		Ref<LootItem> loot_item = loot->get_random_item();
 		if (!loot_item.is_valid()) {
 			continue;
 		}

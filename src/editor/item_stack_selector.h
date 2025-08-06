@@ -21,10 +21,12 @@ private:
     ResourceIDEditor* resource_id_editor;
     OptionButton* option_button;
     SpinBox* product_amount_spin_box;
+    Label* amount_label;
     
     Ref<ItemStack> item_stack;
     InventoryDatabase* database;
     TypedArray<ItemDefinition> ids_list;
+    bool show_quantity;
 
 protected:
     static void _bind_methods();
@@ -39,6 +41,9 @@ public:
     // Getters/Setters
     void set_item_stack(const Ref<ItemStack>& p_item_stack) { item_stack = p_item_stack; }
     Ref<ItemStack> get_item_stack() const { return item_stack; }
+    
+    void set_show_quantity(bool p_show_quantity);
+    bool get_show_quantity() const { return show_quantity; }
 
 private:
     void _on_product_id_spin_box_value_changed(const String& value);

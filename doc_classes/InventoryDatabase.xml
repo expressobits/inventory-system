@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="InventoryDatabase" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Database of items, recipe, categories, craftstations and loot tables.
+		Database of items, recipe, categories, craftstations and loots.
 	</brief_description>
 	<description>
-		The InventoryDatabase is the core resource that manages all inventory-related data including item definitions, recipes, categories, craft station types, and loot tables. It provides methods for adding, removing, and accessing these resources, as well as serialization capabilities for saving and loading data.
+		The InventoryDatabase is the core resource that manages all inventory-related data including item definitions, recipes, categories, craft station types, and loot resources. It provides methods for adding, removing, and accessing these resources, as well as serialization capabilities for saving and loading data.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -38,11 +38,11 @@
 				Add new [ItemDefinition] to database. This method update item definition code cache for fast check items id in running game.
 			</description>
 		</method>
-		<method name="add_new_loot_table">
+		<method name="add_new_loot">
 			<return type="void" />
 			<param index="0" name="loot" type="Loot" />
 			<description>
-				Add new [Loot] table to database. This method adds a loot table containing weighted items for random generation.
+				Add new [Loot] resource to database. This method adds a loot resource containing weighted items for random generation.
 			</description>
 		</method>
 		<method name="add_recipe">
@@ -50,10 +50,10 @@
 			<description>
 			</description>
 		</method>
-		<method name="add_loot_table">
+		<method name="add_loot">
 			<return type="void" />
 			<description>
-				Create and add an empty [Loot] table to the database.
+				Create and add an empty [Loot] resource to the database.
 			</description>
 		</method>
 		<method name="clear_current_data">
@@ -95,12 +95,12 @@
 			<description>
 			</description>
 		</method>
-		<method name="deserialize_loot_table" qualifiers="const">
+		<method name="deserialize_loot" qualifiers="const">
 			<return type="void" />
 			<param index="0" name="loot" type="Loot" />
 			<param index="1" name="data" type="Dictionary" />
 			<description>
-				Deserialize loot table data from a Dictionary into a [Loot] resource.
+				Deserialize loot data from a Dictionary into a [Loot] resource.
 			</description>
 		</method>
 		<method name="export_json_file">
@@ -191,11 +191,11 @@
 				Remove [ItemDefinition] from database. This method update item definition code cache for fast check items id in running game.
 			</description>
 		</method>
-		<method name="remove_loot_table">
+		<method name="remove_loot">
 			<return type="void" />
 			<param index="0" name="loot" type="Loot" />
 			<description>
-				Remove [Loot] table from database.
+				Remove [Loot] resource from database.
 			</description>
 		</method>
 		<method name="serialize_item_category" qualifiers="const">
@@ -222,11 +222,11 @@
 			<description>
 			</description>
 		</method>
-		<method name="serialize_loot_table" qualifiers="const">
+		<method name="serialize_loot" qualifiers="const">
 			<return type="Dictionary" />
 			<param index="0" name="loot" type="Loot" />
 			<description>
-				Serialize a [Loot] table resource into a Dictionary for storage.
+				Serialize a [Loot] resource into a Dictionary for storage.
 			</description>
 		</method>
 	</methods>
@@ -237,8 +237,8 @@
 		<member name="items" type="ItemDefinition[]" setter="set_items" getter="get_items" default="[]">
 			[ItemDefinition] list in database. Use [method add_new_item] for add and [method remove_item] for remove.
 		</member>
-		<member name="loot_tables" type="Loot[]" setter="set_loot_tables" getter="get_loot_tables" default="[]">
-			[Loot] table list in database. Use [method add_new_loot_table] for add and [method remove_loot_table] for remove.
+		<member name="loots" type="Loot[]" setter="set_loots" getter="get_loots" default="[]">
+			[Loot] resource list in database. Use [method add_new_loot] for add and [method remove_loot] for remove.
 		</member>
 		<member name="recipes" type="Recipe[]" setter="set_recipes" getter="get_recipes" default="[]">
 			[Recipe] list in database.

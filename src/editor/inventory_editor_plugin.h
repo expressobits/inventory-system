@@ -16,6 +16,7 @@
 #include "../base/item_definition.h"
 #include "../base/recipe.h"
 #include "../base/craft_station_type.h"
+#include "../base/loot.h"
 #include "item_definitions_editor.h"
 
 #include <godot_cpp/classes/config_file.hpp>
@@ -79,6 +80,7 @@ private:
 	// CraftStationTypesEditor *craft_station_types_editor;
 	// ItemCategoriesEditor *item_categories_editor;
 
+
 	// Dialogs
 	FileDialog *new_dialog;
 	FileDialog *save_dialog;
@@ -93,6 +95,7 @@ private:
 	Button *new_recipe_button;
 	Button *new_craft_station_type_button;
 	Button *new_item_categories_button;
+	Button *new_loot_button;
 
 	void _create_ui();
 	void _apply_theme();
@@ -114,6 +117,7 @@ private:
 	void _on_new_recipe_button_pressed();
 	void _on_new_craft_station_button_pressed();
 	void _on_new_category_button_pressed();
+	void _on_new_loot_button_pressed();
 
 	void _remove_item_definition(const Ref<ItemDefinition> &p_item_def);
 	void _duplicate_item_definition(const Ref<ItemDefinition> &p_item_def);
@@ -123,6 +127,8 @@ private:
 	void _duplicate_craft_station_type(const Ref<CraftStationType> &p_craft_station_type);
 	void _remove_item_category(const Ref<ItemCategory> &p_item_category);
 	void _duplicate_item_category(const Ref<ItemCategory> &p_item_category);
+	void _remove_loot(const Ref<Loot> &p_loot);
+	void _duplicate_loot(const Ref<Loot> &p_loot);
 
 protected:
 	static void _bind_methods();

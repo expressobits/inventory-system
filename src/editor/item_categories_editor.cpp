@@ -24,9 +24,6 @@ void ItemCategoriesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_inventory_item_list_item_popup_menu_requested", "at_position"), &ItemCategoriesEditor::_on_inventory_item_list_item_popup_menu_requested);
 	ClassDB::bind_method(D_METHOD("_on_items_popup_menu_id_pressed", "id"), &ItemCategoriesEditor::_on_items_popup_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_item_category_editor_changed", "id"), &ItemCategoriesEditor::_on_item_category_editor_changed);
-
-	ADD_SIGNAL(MethodInfo("removed", PropertyInfo(Variant::OBJECT, "item_category", PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")));
-	ADD_SIGNAL(MethodInfo("duplicated", PropertyInfo(Variant::OBJECT, "item_category", PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")));
 }
 
 void ItemCategoriesEditor::_notification(int p_what) {
