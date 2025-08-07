@@ -22,7 +22,7 @@ customs = ["custom.py"]
 customs = [os.path.abspath(path) for path in customs]
 
 opts = Variables(customs, ARGUMENTS)
-opts.Add(BoolVariable("tests", "Build tests", False))
+opts.Add(BoolVariable("tests", "Build test executable (cross-platform)", False))
 opts.Update(localEnv)
 
 Help(opts.GenerateHelpText(localEnv))
@@ -89,6 +89,11 @@ test_env = env.Clone()
 test_env.Append(CPPPATH=["src/", "tests/"])
 
 # Check if tests target is requested
+# Usage: scons tests=yes target=template_debug
+# Cross-platform: works on Linux, Windows, macOS
+# Output: bin/{platform}/inventory_tests{extension}
+#   Linux/macOS: bin/linux/inventory_tests
+#   Windows: bin/windows/inventory_tests.exe
 if env.get('tests', False):
     test_executable = test_env.Program(
         target="bin/{}/inventory_tests{}".format(env["platform"], env["PROGSUFFIX"]),

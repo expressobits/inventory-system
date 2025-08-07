@@ -8,7 +8,7 @@ The test suite provides comprehensive testing for the core inventory system func
 
 ## Test Structure
 
-### Base Framework (`src/tests.h`)
+### Base Framework (`tests/tests.h`)
 
 The test framework provides:
 - **Test Macros**: `CHECK()`, `CHECK_MESSAGE()`, `TEST_CASE()`, `TEST_CASE_END`
@@ -35,13 +35,21 @@ The test framework provides:
    - Item insertion/removal
    - Collision detection
 
-### Test Runner (`src/test_runner.h`, `src/test_main.cpp`)
+### Test Runner (`tests/test_runner.h`, `tests/test_main.cpp`)
 
 Command-line test execution with options:
-- Run all tests: `./inventory_tests`
-- Run specific suite: `./inventory_tests "Inventory Tests"`
-- List available suites: `./inventory_tests --list`
-- Show help: `./inventory_tests --help`
+
+#### Linux/macOS
+- Run all tests: `./bin/linux/inventory_tests`
+- Run specific suite: `./bin/linux/inventory_tests "Inventory Tests"`
+- List available suites: `./bin/linux/inventory_tests --list`
+- Show help: `./bin/linux/inventory_tests --help`
+
+#### Windows
+- Run all tests: `.\bin\windows\inventory_tests.exe`
+- Run specific suite: `.\bin\windows\inventory_tests.exe "Inventory Tests"`
+- List available suites: `.\bin\windows\inventory_tests.exe --list`
+- Show help: `.\bin\windows\inventory_tests.exe --help`
 
 ## Building Tests
 
@@ -51,18 +59,71 @@ Command-line test execution with options:
 
 ### Build Commands
 
+#### Linux/macOS
 ```bash
 # Build main library
 scons target=template_debug
 
 # Build test executable
-scons tests=1 target=template_debug
+scons tests=yes target=template_debug
 
 # Run tests
 ./bin/linux/inventory_tests
 ```
 
-## Test Development
+#### Windows
+```cmd
+# Build main library
+scons target=template_debug
+
+# Build test executable  
+scons tests=yes target=template_debug
+
+# Run tests
+.\bin\windows\inventory_tests.exe
+```
+
+#### Cross-platform build options
+```bash
+# Build for specific platform
+scons tests=yes target=template_debug platform=linux
+scons tests=yes target=template_debug platform=windows  
+scons tests=yes target=template_debug platform=macos
+
+# Build for specific architecture
+scons tests=yes target=template_debug platform=windows arch=x86_64
+scons tests=yes target=template_debug platform=windows arch=x86_32
+```
+
+## Platform Support
+
+The test framework supports all platforms that the gdextension supports:
+
+### Supported Platforms
+- **Linux**: x86_64
+- **Windows**: x86_64, x86_32  
+- **macOS**: Universal (x86_64 + arm64)
+- **Android**: arm64, arm32, x86_64, x86_32
+- **iOS**: arm64
+- **Web**: wasm32
+
+### Platform-specific Notes
+
+#### Windows
+- Test executable has `.exe` extension: `inventory_tests.exe`
+- Use backslashes in paths: `.\bin\windows\inventory_tests.exe`
+- Supports both x86_64 and x86_32 architectures
+- Can be built on Windows or cross-compiled from Linux
+
+#### Linux
+- Test executable has no extension: `inventory_tests`
+- Use forward slashes in paths: `./bin/linux/inventory_tests`
+- Requires executable permissions: `chmod +x bin/linux/inventory_tests`
+
+#### macOS
+- Test executable has no extension: `inventory_tests`
+- Universal binary supports both Intel and Apple Silicon
+- Use forward slashes in paths: `./bin/macos/inventory_tests`
 
 ### Creating New Tests
 
@@ -169,6 +230,23 @@ The tests are direct conversions from these GDScript files:
 2. **Missing Methods**: Check API validation output for method availability
 3. **Memory Issues**: Always pair `memnew()` with `memdelete()`
 4. **Resource Issues**: Use `Ref<>` for Godot resources
+
+### Platform-specific Issues
+
+#### Windows
+- **Path separators**: Use backslashes (`\`) in command line, forward slashes in SCons
+- **Executable not found**: Ensure `.exe` extension is included when running tests
+- **Permission denied**: Run command prompt as administrator if needed
+- **Build failures**: Install Visual Studio Build Tools or MSVC compiler
+
+#### Linux
+- **Permission denied**: Run `chmod +x bin/linux/inventory_tests` to make executable
+- **Library not found**: Ensure all dependencies are installed via package manager
+- **Build failures**: Install build-essential package: `sudo apt install build-essential`
+
+#### macOS
+- **Code signing**: May need to allow unsigned binary in System Preferences
+- **Architecture mismatch**: Ensure correct arch parameter (universal, x86_64, arm64)
 
 ### Debug Output
 
