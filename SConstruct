@@ -21,6 +21,9 @@ localEnv = Environment(tools=["default"], PLATFORM="")
 customs = ["custom.py"]
 customs = [os.path.abspath(path) for path in customs]
 
+# Filter out 'tests' parameter from ARGUMENTS for godot-cpp compatibility
+filtered_args = {k: v for k, v in ARGUMENTS.items() if k != 'tests'}
+
 opts = Variables(customs, ARGUMENTS)
 opts.Add(BoolVariable("tests", "Build test executable (cross-platform)", False))
 opts.Update(localEnv)
@@ -43,7 +46,24 @@ Run the following command to download godot-cpp:
     git submodule update --init --recursive""")
     sys.exit(1)
 
-env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
+# Store the tests parameter before calling godot-cpp SConstruct  
+tests_requested = env.get('tests', False)
+
+# Call godot-cpp SConstruct with filtered arguments to avoid warnings
+original_args = ARGUMENTS.copy()
+try:
+    # Temporarily remove tests from ARGUMENTS
+    if 'tests' in ARGUMENTS:
+        del ARGUMENTS['tests']
+    
+    env = SConscript("godot-cpp/SConstruct", {"env": env, "customs": customs})
+finally:
+    # Restore original ARGUMENTS
+    ARGUMENTS.clear()
+    ARGUMENTS.update(original_args)
+
+# Restore the tests parameter after godot-cpp SConstruct
+env['tests'] = tests_requested
 
 env.Append(CPPPATH=["src/"])
 
@@ -94,12 +114,21 @@ test_env.Append(CPPPATH=["src/", "tests/"])
 # Output: bin/{platform}/inventory_tests{extension}
 #   Linux/macOS: bin/linux/inventory_tests
 #   Windows: bin/windows/inventory_tests.exe
+# Check if tests target is requested
+# Usage: scons tests=yes target=template_debug
+# Cross-platform: works on Linux, Windows, macOS
+# Output: bin/{platform}/inventory_tests{extension}
+#   Linux/macOS: bin/linux/inventory_tests
+#   Windows: bin/windows/inventory_tests.exe
 if env.get('tests', False):
     test_executable = test_env.Program(
         target="bin/{}/inventory_tests{}".format(env["platform"], env["PROGSUFFIX"]),
         source=test_sources
     )
     Alias('tests', test_executable)
+    # Add tests to default build when tests=yes
+    default_args = [library, copy, test_executable]
+else:
+    default_args = [library, copy]
 
-default_args = [library, copy]
 Default(*default_args)
