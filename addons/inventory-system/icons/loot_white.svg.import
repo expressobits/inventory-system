@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b1ogd8vpvdb48"
-path="res://.godot/imported/loot_table_white.svg-4c0fbf0d21b213da1a58e75f7d6804c7.ctex"
+path="res://.godot/imported/loot_white.svg-339ad29e934d24b11191d23f365c544b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/inventory-system/icons/loot_table_white.svg"
-dest_files=["res://.godot/imported/loot_table_white.svg-4c0fbf0d21b213da1a58e75f7d6804c7.ctex"]
+source_file="res://addons/inventory-system/icons/loot_white.svg"
+dest_files=["res://.godot/imported/loot_white.svg-339ad29e934d24b11191d23f365c544b.ctex"]
 
 [params]
 
