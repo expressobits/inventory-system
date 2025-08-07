@@ -17,7 +17,8 @@ public:
     enum ResourceType {
         RESOURCE_TYPE_ITEM_DEFINITION,
         RESOURCE_TYPE_ITEM_CATEGORY,
-        RESOURCE_TYPE_CRAFT_STATION_TYPE
+        RESOURCE_TYPE_CRAFT_STATION_TYPE,
+        RESOURCE_TYPE_LOOT
     };
 
 private:

@@ -41,20 +41,21 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stations_type"), &InventoryDatabase::get_stations_type);
 	ClassDB::bind_method(D_METHOD("set_item_categories", "item_categories"), &InventoryDatabase::set_item_categories);
 	ClassDB::bind_method(D_METHOD("get_item_categories"), &InventoryDatabase::get_item_categories);
-	ClassDB::bind_method(D_METHOD("set_loot_tables", "loot_tables"), &InventoryDatabase::set_loot_tables);
-	ClassDB::bind_method(D_METHOD("get_loot_tables"), &InventoryDatabase::get_loot_tables);
+	ClassDB::bind_method(D_METHOD("set_loots", "loots"), &InventoryDatabase::set_loots);
+	ClassDB::bind_method(D_METHOD("get_loots"), &InventoryDatabase::get_loots);
 
 	ClassDB::bind_method(D_METHOD("add_new_item", "item"), &InventoryDatabase::add_new_item);
 	ClassDB::bind_method(D_METHOD("remove_item", "item"), &InventoryDatabase::remove_item);
 	ClassDB::bind_method(D_METHOD("add_new_category", "category"), &InventoryDatabase::add_new_category);
 	ClassDB::bind_method(D_METHOD("remove_category", "category"), &InventoryDatabase::remove_category);
-	ClassDB::bind_method(D_METHOD("add_new_loot_table", "loot"), &InventoryDatabase::add_new_loot_table);
-	ClassDB::bind_method(D_METHOD("remove_loot_table", "loot"), &InventoryDatabase::remove_loot_table);
+	ClassDB::bind_method(D_METHOD("add_new_loot", "loot"), &InventoryDatabase::add_new_loot);
+	ClassDB::bind_method(D_METHOD("remove_loot", "loot"), &InventoryDatabase::remove_loot);
 	ClassDB::bind_method(D_METHOD("get_item", "id"), &InventoryDatabase::get_item);
 	ClassDB::bind_method(D_METHOD("has_item_category_id", "id"), &InventoryDatabase::has_item_category_id);
 	ClassDB::bind_method(D_METHOD("has_item_id", "id"), &InventoryDatabase::has_item_id);
 	ClassDB::bind_method(D_METHOD("has_item_name", "name"), &InventoryDatabase::has_item_name);
 	ClassDB::bind_method(D_METHOD("has_craft_station_type_id", "id"), &InventoryDatabase::has_craft_station_type_id);
+	ClassDB::bind_method(D_METHOD("has_loot_id", "id"), &InventoryDatabase::has_loot_id);
 	ClassDB::bind_method(D_METHOD("get_valid_id"), &InventoryDatabase::get_valid_id);
 	ClassDB::bind_method(D_METHOD("get_new_valid_id"), &InventoryDatabase::get_new_valid_id);
 	ClassDB::bind_method(D_METHOD("get_category", "code"), &InventoryDatabase::get_category);
@@ -66,18 +67,18 @@ void InventoryDatabase::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize_recipe", "recipe", "data"), &InventoryDatabase::deserialize_recipe);
 	ClassDB::bind_method(D_METHOD("serialize_station_type", "station_type"), &InventoryDatabase::serialize_station_type);
 	ClassDB::bind_method(D_METHOD("deserialize_station_type", "station_type", "data"), &InventoryDatabase::deserialize_station_type);
-	ClassDB::bind_method(D_METHOD("serialize_loot_table", "loot"), &InventoryDatabase::serialize_loot_table);
-	ClassDB::bind_method(D_METHOD("deserialize_loot_table", "loot", "data"), &InventoryDatabase::deserialize_loot_table);
+	ClassDB::bind_method(D_METHOD("serialize_loot", "loot"), &InventoryDatabase::serialize_loot);
+	ClassDB::bind_method(D_METHOD("deserialize_loot", "loot", "data"), &InventoryDatabase::deserialize_loot);
 
 	ClassDB::bind_method(D_METHOD("get_category_from_id", "id"), &InventoryDatabase::get_category_from_id);
 	ClassDB::bind_method(D_METHOD("get_craft_station_from_id", "id"), &InventoryDatabase::get_craft_station_from_id);
-	ClassDB::bind_method(D_METHOD("get_loot_table_from_id", "id"), &InventoryDatabase::get_loot_table_from_id);
+	ClassDB::bind_method(D_METHOD("get_loot_from_id", "id"), &InventoryDatabase::get_loot_from_id);
 
 	ClassDB::bind_method(D_METHOD("add_item"), &InventoryDatabase::add_item);
 	ClassDB::bind_method(D_METHOD("add_item_category"), &InventoryDatabase::add_item_category);
 	ClassDB::bind_method(D_METHOD("add_recipe"), &InventoryDatabase::add_recipe);
 	ClassDB::bind_method(D_METHOD("add_craft_station_type"), &InventoryDatabase::add_craft_station_type);
-	ClassDB::bind_method(D_METHOD("add_loot_table"), &InventoryDatabase::add_loot_table);
+	ClassDB::bind_method(D_METHOD("add_loot"), &InventoryDatabase::add_loot);
 
 	ClassDB::bind_method(D_METHOD("add_new_recipe", "recipe"), &InventoryDatabase::add_new_recipe);
 	ClassDB::bind_method(D_METHOD("remove_recipe", "recipe"), &InventoryDatabase::remove_recipe);
@@ -96,7 +97,7 @@ void InventoryDatabase::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "recipes", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Recipe")), "set_recipes", "get_recipes");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "stations_type", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")), "set_stations_type", "get_stations_type");
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "item_categories", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")), "set_item_categories", "get_item_categories");
-	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "loot_tables", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Loot")), "set_loot_tables", "get_loot_tables");
+	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "loots", PROPERTY_HINT_ARRAY_TYPE, vformat("%s/%s:%s", Variant::OBJECT, PROPERTY_HINT_RESOURCE_TYPE, "Loot")), "set_loots", "get_loots");
 }
 
 InventoryDatabase::InventoryDatabase() {
@@ -139,12 +140,12 @@ TypedArray<ItemCategory> InventoryDatabase::get_item_categories() const {
 	return item_categories;
 }
 
-void InventoryDatabase::set_loot_tables(const TypedArray<Loot> &new_loot_tables) {
-	loot_tables = new_loot_tables;
+void InventoryDatabase::set_loots(const TypedArray<Loot> &new_loots) {
+	loots = new_loots;
 }
 
-TypedArray<Loot> InventoryDatabase::get_loot_tables() const {
-	return loot_tables;
+TypedArray<Loot> InventoryDatabase::get_loots() const {
+	return loots;
 }
 
 void InventoryDatabase::set_items_cache(const Dictionary &new_items_cache) {
@@ -193,17 +194,17 @@ void InventoryDatabase::remove_category(const Ref<ItemCategory> category) {
 	}
 }
 
-void InventoryDatabase::add_new_loot_table(const Ref<Loot> loot) {
+void InventoryDatabase::add_new_loot(const Ref<Loot> loot) {
 	ERR_FAIL_NULL_MSG(loot, "'loot' is null.");
-	loot_tables.append(loot);
+	loots.append(loot);
 }
 
-void InventoryDatabase::remove_loot_table(const Ref<Loot> loot) {
+void InventoryDatabase::remove_loot(const Ref<Loot> loot) {
 	ERR_FAIL_NULL_MSG(loot, "'loot' is null.");
 	
-	int index = loot_tables.find(loot);
+	int index = loots.find(loot);
 	if (index > -1) {
-		loot_tables.remove_at(index);
+		loots.remove_at(index);
 	}
 }
 
@@ -242,6 +243,15 @@ bool InventoryDatabase::has_craft_station_type_id(String id) const {
 	for (size_t i = 0; i < stations_type.size(); i++) {
 		Ref<CraftStationType> craft_station_type = stations_type[i];
 		if (craft_station_type->get_id() == id)
+			return true;
+	}
+	return false;
+}
+
+bool InventoryDatabase::has_loot_id(String id) const {
+	for (size_t i = 0; i < loots.size(); i++) {
+		Ref<Loot> loot = loots[i];
+		if (loot->get_id() == id)
 			return true;
 	}
 	return false;
@@ -428,11 +438,11 @@ void InventoryDatabase::deserialize_station_type(Ref<CraftStationType> craft_sta
 	}
 }
 
-Dictionary InventoryDatabase::serialize_loot_table(const Ref<Loot> loot) const {
+Dictionary InventoryDatabase::serialize_loot(const Ref<Loot> loot) const {
 	return loot->serialize();
 }
 
-void InventoryDatabase::deserialize_loot_table(Ref<Loot> loot, const Dictionary data) const {
+void InventoryDatabase::deserialize_loot(Ref<Loot> loot, const Dictionary data) const {
 	loot->deserialize(data);
 }
 
@@ -483,9 +493,9 @@ void InventoryDatabase::add_craft_station_type() {
 	stations_type.append(craft_station_type);
 }
 
-void InventoryDatabase::add_loot_table() {
+void InventoryDatabase::add_loot() {
 	Ref<Loot> loot = memnew(Loot());
-	loot_tables.append(loot);
+	loots.append(loot);
 }
 
 void InventoryDatabase::add_new_recipe(const Ref<Recipe> recipe) {
@@ -534,11 +544,11 @@ Ref<CraftStationType> InventoryDatabase::get_craft_station_from_id(String id) co
 	return nullptr;
 }
 
-Ref<Loot> InventoryDatabase::get_loot_table_from_id(String id) const {
-	for (size_t i = 0; i < loot_tables.size(); i++) {
-		Ref<Loot> loot_table = loot_tables[i];
-		if (loot_table.is_valid() && loot_table->get_name() == id)
-			return loot_table;
+Ref<Loot> InventoryDatabase::get_loot_from_id(String id) const {
+	for (size_t i = 0; i < loots.size(); i++) {
+		Ref<Loot> loot = loots[i];
+		if (loot.is_valid() && loot->get_id() == id)
+			return loot;
 	}
 	return nullptr;
 }
@@ -557,9 +567,9 @@ Dictionary InventoryDatabase::serialize() const {
 	Array craft_station_types_data = serialize_craft_station_types();
 	if (!craft_station_types_data.is_empty())
 		data["craft_station_types"] = craft_station_types_data;
-	Array loot_tables_data = serialize_loot_tables();
-	if (!loot_tables_data.is_empty())
-		data["loot_tables"] = loot_tables_data;
+	Array loots_data = serialize_loots();
+	if (!loots_data.is_empty())
+		data["loots"] = loots_data;
 	return data;
 }
 
@@ -577,8 +587,11 @@ void InventoryDatabase::deserialize(const Dictionary data) {
 	if (data.has("recipes")) {
 		deserialize_recipes(data["recipes"]);
 	}
-	if (data.has("loot_tables")) {
-		deserialize_loot_tables(data["loot_tables"]);
+	if (data.has("loots")) {
+		deserialize_loots(data["loots"]);
+	} else if (data.has("loot_tables")) {
+		// Backward compatibility with old save format
+		deserialize_loots(data["loot_tables"]);
 	}
 }
 
@@ -662,23 +675,23 @@ void InventoryDatabase::deserialize_recipes(Array datas) {
 	}
 }
 
-Array InventoryDatabase::serialize_loot_tables() const {
+Array InventoryDatabase::serialize_loots() const {
 	Array datas = Array();
-	for (size_t i = 0; i < this->loot_tables.size(); i++) {
-		Ref<Loot> loot = this->loot_tables[i];
+	for (size_t i = 0; i < this->loots.size(); i++) {
+		Ref<Loot> loot = this->loots[i];
 		if (loot == nullptr)
 			continue;
-		Dictionary data = serialize_loot_table(loot);
+		Dictionary data = serialize_loot(loot);
 		datas.append(data);
 	}
 	return datas;
 }
 
-void InventoryDatabase::deserialize_loot_tables(Array datas) {
+void InventoryDatabase::deserialize_loots(Array datas) {
 	for (size_t i = 0; i < datas.size(); i++) {
 		Ref<Loot> loot = memnew(Loot());
-		deserialize_loot_table(loot, datas[i]);
-		loot_tables.append(loot);
+		deserialize_loot(loot, datas[i]);
+		loots.append(loot);
 	}
 }
 
@@ -687,7 +700,7 @@ void InventoryDatabase::clear_current_data() {
 	item_categories.clear();
 	stations_type.clear();
 	recipes.clear();
-	loot_tables.clear();
+	loots.clear();
 }
 
 String InventoryDatabase::export_to_invdata() const {

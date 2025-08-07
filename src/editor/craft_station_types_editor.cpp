@@ -24,9 +24,6 @@ void CraftStationTypesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_inventory_item_list_item_popup_menu_requested", "at_position"), &CraftStationTypesEditor::_on_inventory_item_list_item_popup_menu_requested);
 	ClassDB::bind_method(D_METHOD("_on_items_popup_menu_id_pressed", "id"), &CraftStationTypesEditor::_on_items_popup_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_craft_station_type_editor_changed", "id"), &CraftStationTypesEditor::_on_craft_station_type_editor_changed);
-
-	ADD_SIGNAL(MethodInfo("removed", PropertyInfo(Variant::OBJECT, "craft_station_type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")));
-	ADD_SIGNAL(MethodInfo("duplicated", PropertyInfo(Variant::OBJECT, "craft_station_type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")));
 }
 
 void CraftStationTypesEditor::_notification(int p_what) {

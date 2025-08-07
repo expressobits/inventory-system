@@ -20,6 +20,7 @@
 #include "recipes_editor.h"
 #include "craft_station_types_editor.h"
 #include "item_categories_editor.h"
+#include "loots_editor.h"
 
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
@@ -48,6 +49,7 @@ void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_new_recipe_button_pressed"), &InventoryEditor::_on_new_recipe_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_craft_station_button_pressed"), &InventoryEditor::_on_new_craft_station_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_category_button_pressed"), &InventoryEditor::_on_new_category_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_new_loot_button_pressed"), &InventoryEditor::_on_new_loot_button_pressed);
 	ClassDB::bind_method(D_METHOD("_remove_item_definition", "item_def"), &InventoryEditor::_remove_item_definition);
 	ClassDB::bind_method(D_METHOD("_duplicate_item_definition", "item_def"), &InventoryEditor::_duplicate_item_definition);
 	ClassDB::bind_method(D_METHOD("_remove_recipe", "recipe"), &InventoryEditor::_remove_recipe);
@@ -56,6 +58,8 @@ void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_duplicate_craft_station_type", "craft_station_type"), &InventoryEditor::_duplicate_craft_station_type);
 	ClassDB::bind_method(D_METHOD("_remove_item_category", "item_category"), &InventoryEditor::_remove_item_category);
 	ClassDB::bind_method(D_METHOD("_duplicate_item_category", "item_category"), &InventoryEditor::_duplicate_item_category);
+	ClassDB::bind_method(D_METHOD("_remove_loot", "loot"), &InventoryEditor::_remove_loot);
+	ClassDB::bind_method(D_METHOD("_duplicate_loot", "loot"), &InventoryEditor::_duplicate_loot);
 }
 
 void InventoryEditor::_notification(int p_what) {
@@ -189,6 +193,21 @@ void InventoryEditor::_create_ui() {
 	VSeparator *sep5 = memnew(VSeparator);
 	toolbar->add_child(sep5);
 	
+	// New Loot Button - matches .tscn properties
+	new_loot_button = memnew(Button);
+	toolbar->add_child(new_loot_button);
+	new_loot_button->set_custom_minimum_size(Vector2(32, 32));
+	new_loot_button->set_text("New Loot");
+	new_loot_button->set_tooltip_text("New Loot");
+	new_loot_button->set_flat(true);
+	new_loot_button->set_disabled(true);
+	new_loot_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_loot_button_pressed));
+	new_loot_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
+
+	// VSeparator
+	VSeparator *sep6 = memnew(VSeparator);
+	toolbar->add_child(sep6);
+	
 	// Title Label - matches .tscn properties (expand fill, right alignment)
 	title_label = memnew(Label);
 	toolbar->add_child(title_label);
@@ -242,6 +261,13 @@ void InventoryEditor::_create_ui() {
 	categories_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_item_category));
 	categories_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_item_category));
 	
+	LootsEditor *loots_tab = memnew(LootsEditor);
+	tab_container->add_child(loots_tab);
+	loots_tab->set_name("Loots");
+	loots_tab->set_editor_plugin(editor_plugin);
+	loots_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_loot));
+	loots_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_loot));
+	
 	// Set current tab after all tabs are added
 	tab_container->set_current_tab(0);
 	
@@ -273,15 +299,7 @@ void InventoryEditor::_create_ui() {
 	save_inv_dialog->set_file_mode(FileDialog::FILE_MODE_SAVE_FILE);
 	save_inv_dialog->add_filter("*.json", "JSON File");
 	save_inv_dialog->connect("file_selected", callable_mp(this, &InventoryEditor::_on_save_inv_dialog_file_selected));
-}
 
-void InventoryEditor::_apply_theme() {
-	if (!editor_plugin || !database_button) {
-		return;
-	}
-	
-	database_button->set_tooltip_text("Database Menu");
-	
 	// Dialog sizes
 	float scale = EditorInterface::get_singleton()->get_editor_scale();
 	Vector2i min_size = Vector2i(600, 500) * scale;
@@ -290,6 +308,10 @@ void InventoryEditor::_apply_theme() {
 	open_dialog->set_min_size(min_size);
 	open_inv_dialog->set_min_size(min_size);
 	save_inv_dialog->set_min_size(min_size);
+}
+
+void InventoryEditor::_apply_theme() {
+	
 }
 
 void InventoryEditor::_build_database_menu() {
@@ -346,6 +368,7 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		new_recipe_button->set_disabled(false);
 		new_craft_station_type_button->set_disabled(false);
 		new_item_categories_button->set_disabled(false);
+		new_loot_button->set_disabled(false);
 		title_label->set_text(database_path.is_empty() ? "Untitled Database" : database_path);
 		
 		// Update tab editors
@@ -368,12 +391,18 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		if (categories_editor) {
 			categories_editor->load_from_database(database.ptr());
 		}
+		
+		LootsEditor *loots_editor = Object::cast_to<LootsEditor>(tab_container->get_tab_control(4));
+		if (loots_editor) {
+			loots_editor->load_from_database(database.ptr());
+		}
 	} else {
 		content->set_visible(false);
 		new_item_button->set_disabled(true);
 		new_recipe_button->set_disabled(true);
 		new_craft_station_type_button->set_disabled(true);
 		new_item_categories_button->set_disabled(true);
+		new_loot_button->set_disabled(true);
 		title_label->set_text("No Database");
 		
 		// Clear tab editors
@@ -395,6 +424,11 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		ItemCategoriesEditor *categories_editor = Object::cast_to<ItemCategoriesEditor>(tab_container->get_tab_control(3));
 		if (categories_editor) {
 			categories_editor->load_from_database(nullptr);
+		}
+		
+		LootsEditor *loots_editor = Object::cast_to<LootsEditor>(tab_container->get_tab_control(4));
+		if (loots_editor) {
+			loots_editor->load_from_database(nullptr);
 		}
 	}
 }
@@ -591,6 +625,17 @@ void InventoryEditor::_on_new_category_button_pressed() {
 	tab_container->set_current_tab(3);
 }
 
+void InventoryEditor::_on_new_loot_button_pressed() {
+	if (database.is_null()) {
+		return;
+	}
+	
+	database->add_loot();
+	_save_file();
+	_load_database(database);
+	tab_container->set_current_tab(4);
+}
+
 void InventoryEditor::_remove_item_definition(const Ref<ItemDefinition> &p_item_def) {
 	if (p_item_def.is_null()) {
 		return;
@@ -688,6 +733,25 @@ void InventoryEditor::_duplicate_item_category(const Ref<ItemCategory> &p_item_c
 	_load_database(database);
 	// Switch to item categories tab
 	tab_container->set_current_tab(3);
+}
+
+void InventoryEditor::_remove_loot(const Ref<Loot> &p_loot) {
+	if (p_loot.is_null()) {
+		return;
+	}
+	database->remove_loot(p_loot);
+	_save_file();
+}
+
+void InventoryEditor::_duplicate_loot(const Ref<Loot> &p_loot) {
+	Ref<Loot> new_loot = memnew(Loot);
+	new_loot->set_name(p_loot->get_name() + " (Copy)");
+	new_loot->set_items(p_loot->get_items());
+	database->add_new_loot(new_loot);
+	_save_file();
+	_load_database(database);
+	// Switch to loots tab
+	tab_container->set_current_tab(4);
 }
 
 // InventoryEditorPlugin

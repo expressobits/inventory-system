@@ -11,6 +11,7 @@ class Loot : public Resource {
 
 private:
 	TypedArray<LootItem> items;
+	String id = "";
 	String name = "";
 
 protected:
@@ -21,6 +22,8 @@ public:
 	~Loot();
 	void set_items(const TypedArray<LootItem> &new_items);
 	TypedArray<LootItem> get_items() const;
+	void set_id(const String &new_id);
+	String get_id() const;
 	void set_name(const String &new_name);
 	String get_name() const;
 	

@@ -14,6 +14,8 @@ void ItemStackSelector::_bind_methods() {
     ClassDB::bind_method(D_METHOD("setup", "item_stack", "database"), &ItemStackSelector::setup);
     ClassDB::bind_method(D_METHOD("set_item_stack", "item_stack"), &ItemStackSelector::set_item_stack);
     ClassDB::bind_method(D_METHOD("get_item_stack"), &ItemStackSelector::get_item_stack);
+    ClassDB::bind_method(D_METHOD("set_show_quantity", "show_quantity"), &ItemStackSelector::set_show_quantity);
+    ClassDB::bind_method(D_METHOD("get_show_quantity"), &ItemStackSelector::get_show_quantity);
     ClassDB::bind_method(D_METHOD("_on_product_id_spin_box_value_changed", "value"), &ItemStackSelector::_on_product_id_spin_box_value_changed);
     ClassDB::bind_method(D_METHOD("_on_product_amount_spin_box_value_changed", "value"), &ItemStackSelector::_on_product_amount_spin_box_value_changed);
     ClassDB::bind_method(D_METHOD("_on_option_button_item_selected", "index"), &ItemStackSelector::_on_option_button_item_selected);
@@ -25,7 +27,9 @@ ItemStackSelector::ItemStackSelector() {
     resource_id_editor = nullptr;
     option_button = nullptr;
     product_amount_spin_box = nullptr;
+    amount_label = nullptr;
     database = nullptr;
+    show_quantity = true;
 }
 
 ItemStackSelector::~ItemStackSelector() {
@@ -48,10 +52,10 @@ void ItemStackSelector::_ready() {
     add_child(option_button);
 
     // Create amount label
-    Label* label = memnew(Label);
-    label->set_text("Amount");
-    label->set_custom_minimum_size(Vector2(32, 0));
-    add_child(label);
+    amount_label = memnew(Label);
+    amount_label->set_text("Amount");
+    amount_label->set_custom_minimum_size(Vector2(32, 0));
+    add_child(amount_label);
 
     // Create amount spin box
     product_amount_spin_box = memnew(SpinBox);
@@ -61,6 +65,9 @@ void ItemStackSelector::_ready() {
     product_amount_spin_box->set_use_rounded_values(true);
     product_amount_spin_box->connect("value_changed", Callable(this, "_on_product_amount_spin_box_value_changed"));
     add_child(product_amount_spin_box);
+    
+    // Apply initial show_quantity setting
+    set_show_quantity(show_quantity);
 }
 
 void ItemStackSelector::setup(const Ref<ItemStack>& p_item_stack, InventoryDatabase* p_database) {
@@ -71,25 +78,42 @@ void ItemStackSelector::setup(const Ref<ItemStack>& p_item_stack, InventoryDatab
         return;
     }
 
-    if (!item_stack->get_item_id().is_empty()) {
-        String id = item_stack->get_item_id();
-        resource_id_editor->setup(database, id);
-        product_amount_spin_box->set_value(item_stack->get_amount());
-        ids_list.clear();
-        option_button->clear();
-    }
+    // Always clear the lists first to prevent duplication
+    ids_list.clear();
+    option_button->clear();
+
+    // Setup resource ID editor and amount
+    String id = item_stack->get_item_id();
+    resource_id_editor->setup(database, id);
+    product_amount_spin_box->set_value(item_stack->get_amount());
 
     // Populate option button with items from database
     TypedArray<ItemDefinition> items = database->get_items();
+    int selected_index = -1;
     for (int i = 0; i < items.size(); i++) {
         Ref<ItemDefinition> item = items[i];
         if (item.is_valid()) {
             option_button->add_icon_item(item->get_icon(), item->get_name());
             ids_list.append(item);
             if (item->get_id() == item_stack->get_item_id()) {
-                option_button->select(i);
+                selected_index = i;
             }
         }
+    }
+    
+    // If no valid selection found but items exist, select the first item
+    if (selected_index == -1 && ids_list.size() > 0) {
+        selected_index = 0;
+        // Update the item_stack with the first item's ID
+        Ref<ItemDefinition> first_item = ids_list[0];
+        if (first_item.is_valid()) {
+            item_stack->set_item_id(first_item->get_id());
+            resource_id_editor->setup(database, first_item->get_id());
+        }
+    }
+    
+    if (selected_index >= 0) {
+        option_button->select(selected_index);
     }
 
     // Set icon max width for popup menu
@@ -133,6 +157,7 @@ void ItemStackSelector::_on_product_id_spin_box_value_changed(const String& valu
                 break;
             }
         }
+        emit_signal("changed", item_stack);
     }
 }
 
@@ -155,5 +180,16 @@ void ItemStackSelector::_on_option_button_item_selected(int index) {
             resource_id_editor->setup(database, item->get_id());
         }
         emit_signal("changed", item_stack);
+    }
+}
+
+void ItemStackSelector::set_show_quantity(bool p_show_quantity) {
+    show_quantity = p_show_quantity;
+    
+    if (amount_label) {
+        amount_label->set_visible(show_quantity);
+    }
+    if (product_amount_spin_box) {
+        product_amount_spin_box->set_visible(show_quantity);
     }
 }

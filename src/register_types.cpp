@@ -45,6 +45,8 @@
 #include "editor/craft_station_type_editor.h"
 #include "editor/item_categories_editor.h"
 #include "editor/item_category_editor.h"
+#include "editor/loots_editor.h"
+#include "editor/loot_editor.h"
 #endif
 
 using namespace godot;
@@ -98,6 +100,8 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 		GDREGISTER_INTERNAL_CLASS(CraftStationTypeEditor);
 		GDREGISTER_INTERNAL_CLASS(ItemCategoriesEditor);
 		GDREGISTER_INTERNAL_CLASS(ItemCategoryEditor);
+		GDREGISTER_INTERNAL_CLASS(LootsEditor);
+		GDREGISTER_INTERNAL_CLASS(LootEditor);
 		EditorPlugins::add_by_type<InventoryEditorPlugin>();
 	}
 #endif
