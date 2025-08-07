@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene load_steps=17 format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" uid="uid://bcaks3srtnafk" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" uid="uid://7bxxqncb8akj" path="res://addons/inventory-system-demos/fps/constraints/category_grid_inventory_constraint.gd" id="8_qudo1"]
 [ext_resource type="PackedScene" uid="uid://cn6sy338tb7m4" path="res://addons/inventory-system-demos/fps/box_inventory.tscn" id="9_ia5mg"]
 [ext_resource type="Script" uid="uid://bo10v3ducgixv" path="res://addons/inventory-system-demos/base/setup_keys.gd" id="10_1ncja"]
+[ext_resource type="PackedScene" uid="uid://bwsuu1bxuwtha" path="res://addons/inventory-system-demos/fps/loot_box_inventory.tscn" id="11_bjrgh"]
 [ext_resource type="PackedScene" uid="uid://bvjagvllelgcf" path="res://addons/inventory-system-demos/fps/workbench.tscn" id="11_fkc5i"]
+[ext_resource type="PackedScene" uid="uid://bl0a58ab2yv3u" path="res://addons/inventory-system-demos/fps/level/sign.tscn" id="12_bjrgh"]
 [ext_resource type="Script" uid="uid://dg3mwe64ay1uq" path="res://addons/inventory-system-demos/fps/modding_demo.gd" id="13_ypmc3"]
 [ext_resource type="PackedScene" uid="uid://bnr02xnvoiun5" path="res://addons/inventory-system-demos/fps/player.tscn" id="14_kqlku"]
 [ext_resource type="PackedScene" uid="uid://d2gketv1q2cph" path="res://addons/inventory-system-demos/fps/level.tscn" id="16_46jkf"]
@@ -49,6 +51,16 @@ transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, 
 [node name="Campfire" parent="Level" instance=ExtResource("16_47qja")]
 transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612, -1.97455, 0, -3.89435)
 
+[node name="Loot Box Inventory" parent="Level" instance=ExtResource("11_bjrgh")]
+transform = Transform3D(0.0329458, 0, -0.999457, 0, 1, 0, 0.999457, 0, 0.0329458, 4.1378, 0.539644, -0.21014)
+
+[node name="Sign3" parent="Level" instance=ExtResource("12_bjrgh")]
+transform = Transform3D(0.298075, 0, -0.954543, 0, 1, 0, 0.954543, 0, 0.298075, 4.1052, 0, -1.18854)
+
+[node name="Label3D" parent="Level/Sign3" index="0"]
+text = "Random Loot
+on Open"
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Labels" parent="UI" instance=ExtResource("6_5epcx")]
@@ -58,4 +70,6 @@ transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("8_6rygg")
 
+[editable path="Level/Sign3"]
+[editable path="Level/Sign3/signpostSingle"]
 [editable path="UI/Inventory System UI"]
