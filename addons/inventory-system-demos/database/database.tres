@@ -329,4 +329,4 @@ items = Array[ItemDefinition]([SubResource("ItemDefinition_b5y1y"), SubResource(
 recipes = Array[Recipe]([SubResource("Recipe_fapod"), SubResource("Recipe_0u4cu"), SubResource("Recipe_bl2yk"), SubResource("Recipe_e1irj"), SubResource("Recipe_bhgkx"), SubResource("Recipe_7jg1y")])
 stations_type = Array[CraftStationType]([SubResource("CraftStationType_fnhd3"), SubResource("CraftStationType_voset")])
 item_categories = Array[ItemCategory]([SubResource("ItemCategory_w8bei"), SubResource("ItemCategory_ubgak"), SubResource("ItemCategory_mu46q"), SubResource("ItemCategory_epmnv")])
-loot_tables = Array[Loot]([SubResource("Loot_6ctep")])
+loots = Array[Loot]([SubResource("Loot_6ctep")])

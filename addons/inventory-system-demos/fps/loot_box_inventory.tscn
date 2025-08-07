@@ -8,6 +8,6 @@
 script = ExtResource("2_rt1wb")
 
 [node name="LootGenerator" type="LootGenerator" parent="." index="8"]
-loot_table_id = "tools"
+loot_id = "tools"
 target_inventory_path = NodePath("../Inventory")
 database = ExtResource("3_mscmp")
