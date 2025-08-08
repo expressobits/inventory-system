@@ -12,7 +12,7 @@ NodeInventories
 
 **Inherits:** ``Node``
 
-**Inherited By:** :ref:`CraftStation<class_CraftStation>`, :ref:`Hotbar<class_Hotbar>`, :ref:`Inventory<class_Inventory>`
+**Inherited By:** :ref:`CraftStation<class_CraftStation>`, :ref:`Hotbar<class_Hotbar>`, :ref:`Inventory<class_Inventory>`, :ref:`LootGenerator<class_LootGenerator>`
 
 Base node for nodes that use the inventory database.
 
