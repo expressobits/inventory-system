@@ -130,14 +130,16 @@ void InventoryEditor::_create_ui() {
 	// Toolbar HBoxContainer - matches .tscn separation
 	toolbar = memnew(HBoxContainer);
 	toolbar_margin->add_child(toolbar);
-	toolbar->add_theme_constant_override("separation", 0);
+	toolbar->add_theme_constant_override("separation", 4);
 	
 	// Database MenuButton - matches .tscn properties
 	database_button = memnew(MenuButton);
 	toolbar->add_child(database_button);
 	database_button->set_custom_minimum_size(Vector2(28, 28));
+	database_button->set_tooltip_text("Inventory Database Menu");
 	database_button->set_text("Database");
-	database_button->set_flat(false);
+	database_button->set_text_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
+	database_button->set_flat(true);
 	database_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_menu_pressed));
 	database_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_menu_id_pressed));
 	database_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_database_editor.svg"));
@@ -152,7 +154,7 @@ void InventoryEditor::_create_ui() {
 	item_definitions_tab_button->set_custom_minimum_size(Vector2(28, 28));
 	item_definitions_tab_button->set_tooltip_text("Item Definitions Editor");
 	item_definitions_tab_button->set_toggle_mode(true);
-	item_definitions_tab_button->set_flat(true);
+	item_definitions_tab_button->set_theme_type_variation("FlatButton");
 	item_definitions_tab_button->set_button_group(memnew(ButtonGroup));
 	item_definitions_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_definitions_tab_pressed));
 	item_definitions_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
@@ -162,7 +164,7 @@ void InventoryEditor::_create_ui() {
 	recipes_tab_button->set_custom_minimum_size(Vector2(28, 28));
 	recipes_tab_button->set_tooltip_text("Recipes Editor");
 	recipes_tab_button->set_toggle_mode(true);
-	recipes_tab_button->set_flat(true);
+	recipes_tab_button->set_theme_type_variation("FlatButton");
 	recipes_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	recipes_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_recipes_tab_pressed));
 	recipes_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
@@ -172,7 +174,7 @@ void InventoryEditor::_create_ui() {
 	craft_station_types_tab_button->set_custom_minimum_size(Vector2(28, 28));
 	craft_station_types_tab_button->set_tooltip_text("Craft Station Types Editor");
 	craft_station_types_tab_button->set_toggle_mode(true);
-	craft_station_types_tab_button->set_flat(true);
+	craft_station_types_tab_button->set_theme_type_variation("FlatButton");
 	craft_station_types_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	craft_station_types_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_craft_station_types_tab_pressed));
 	craft_station_types_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
@@ -182,7 +184,7 @@ void InventoryEditor::_create_ui() {
 	item_categories_tab_button->set_custom_minimum_size(Vector2(28, 28));
 	item_categories_tab_button->set_tooltip_text("Item Categories Editor");
 	item_categories_tab_button->set_toggle_mode(true);
-	item_categories_tab_button->set_flat(true);
+	item_categories_tab_button->set_theme_type_variation("FlatButton");
 	item_categories_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	item_categories_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_categories_tab_pressed));
 	item_categories_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
@@ -192,10 +194,10 @@ void InventoryEditor::_create_ui() {
 	loots_tab_button->set_custom_minimum_size(Vector2(28, 28));
 	loots_tab_button->set_tooltip_text("Loots Editor");
 	loots_tab_button->set_toggle_mode(true);
-	loots_tab_button->set_flat(true);
+	loots_tab_button->set_theme_type_variation("FlatButton");
 	loots_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	loots_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_loots_tab_pressed));
-	loots_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
+	loots_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/loot_white.svg"));
 	
 	// VSeparator after tab buttons
 	VSeparator *sep1 = memnew(VSeparator);
@@ -204,77 +206,77 @@ void InventoryEditor::_create_ui() {
 	// New Item Definition Button - matches .tscn properties  
 	new_item_button = memnew(Button);
 	toolbar->add_child(new_item_button);
-	new_item_button->set_custom_minimum_size(Vector2(32, 32));
-	new_item_button->set_text("New Item Definition");
+	new_item_button->set_custom_minimum_size(Vector2(28, 28));
+	// new_item_button->set_text("New Item Definition");
 	new_item_button->set_tooltip_text("New Inventory Item");
-	new_item_button->set_flat(true);
+	new_item_button->set_theme_type_variation("FlatButton");
 	new_item_button->set_disabled(true);
 	new_item_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_item_button_pressed));
 	new_item_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
 	
 	// VSeparator
-	VSeparator *sep2 = memnew(VSeparator);
-	toolbar->add_child(sep2);
+	// VSeparator *sep2 = memnew(VSeparator);
+	// toolbar->add_child(sep2);
 	
 	// New Recipe Button - matches .tscn properties
 	new_recipe_button = memnew(Button);
 	toolbar->add_child(new_recipe_button);
-	new_recipe_button->set_custom_minimum_size(Vector2(32, 32));
-	new_recipe_button->set_text("New Recipe");
+	new_recipe_button->set_custom_minimum_size(Vector2(28, 28));
+	// new_recipe_button->set_text("New Recipe");
 	new_recipe_button->set_tooltip_text("New Recipe");
-	new_recipe_button->set_flat(true);
+	new_recipe_button->set_theme_type_variation("FlatButton");
 	new_recipe_button->set_disabled(true);
 	new_recipe_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_recipe_button_pressed));
 	new_recipe_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
 
 	// VSeparator
-	VSeparator *sep3 = memnew(VSeparator);
-	toolbar->add_child(sep3);
+	// VSeparator *sep3 = memnew(VSeparator);
+	// toolbar->add_child(sep3);
 	
 	// New Craft Station Type Button - matches .tscn properties
 	new_craft_station_type_button = memnew(Button);
 	toolbar->add_child(new_craft_station_type_button);
-	new_craft_station_type_button->set_custom_minimum_size(Vector2(32, 32));
-	new_craft_station_type_button->set_text("New Craft Station Type");
+	new_craft_station_type_button->set_custom_minimum_size(Vector2(28, 28));
+	// new_craft_station_type_button->set_text("New Craft Station Type");
 	new_craft_station_type_button->set_tooltip_text("New Craft Station Type");
-	new_craft_station_type_button->set_flat(true);
+	new_craft_station_type_button->set_theme_type_variation("FlatButton");
 	new_craft_station_type_button->set_disabled(true);
 	new_craft_station_type_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_craft_station_button_pressed));
 	new_craft_station_type_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
 
 	// VSeparator
-	VSeparator *sep4 = memnew(VSeparator);
-	toolbar->add_child(sep4);
+	// VSeparator *sep4 = memnew(VSeparator);
+	// toolbar->add_child(sep4);
 	
 	// New Item Category Button - matches .tscn properties
 	new_item_categories_button = memnew(Button);
 	toolbar->add_child(new_item_categories_button);
-	new_item_categories_button->set_custom_minimum_size(Vector2(32, 32));
-	new_item_categories_button->set_text("New Item Category");
+	new_item_categories_button->set_custom_minimum_size(Vector2(28, 28));
+	// new_item_categories_button->set_text("New Item Category");
 	new_item_categories_button->set_tooltip_text("New Item Category");
-	new_item_categories_button->set_flat(true);
+	new_item_categories_button->set_theme_type_variation("FlatButton");
 	new_item_categories_button->set_disabled(true);
 	new_item_categories_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_category_button_pressed));
 	new_item_categories_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
 
 	// VSeparator
-	VSeparator *sep5 = memnew(VSeparator);
-	toolbar->add_child(sep5);
+	// VSeparator *sep5 = memnew(VSeparator);
+	// toolbar->add_child(sep5);
 	
 	// New Loot Button - matches .tscn properties
 	new_loot_button = memnew(Button);
 	toolbar->add_child(new_loot_button);
-	new_loot_button->set_custom_minimum_size(Vector2(32, 32));
-	new_loot_button->set_text("New Loot");
+	new_loot_button->set_custom_minimum_size(Vector2(28, 28));
+	// new_loot_button->set_text("New Loot");
 	new_loot_button->set_tooltip_text("New Loot");
-	new_loot_button->set_flat(true);
+	new_loot_button->set_theme_type_variation("FlatButton");
 	new_loot_button->set_disabled(true);
 	new_loot_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_loot_button_pressed));
 	new_loot_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
 
 	// VSeparator
-	VSeparator *sep6 = memnew(VSeparator);
-	toolbar->add_child(sep6);
+	// VSeparator *sep6 = memnew(VSeparator);
+	// toolbar->add_child(sep6);
 	
 	// Title Label - matches .tscn properties (expand fill, right alignment)
 	title_label = memnew(Label);
@@ -290,7 +292,7 @@ void InventoryEditor::_create_ui() {
 	content->set_visible(false); // Hidden by default like in .tscn
 	content->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	content->add_theme_constant_override("margin_left", 4);
-	content->add_theme_constant_override("margin_top", 4);
+	content->add_theme_constant_override("margin_top", 0);
 	content->add_theme_constant_override("margin_right", 4);
 	content->add_theme_constant_override("margin_bottom", 4);
 	
