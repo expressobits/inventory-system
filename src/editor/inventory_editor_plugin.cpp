@@ -40,6 +40,8 @@ using namespace godot;
 void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_database_menu_pressed"), &InventoryEditor::_on_database_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_menu_id_pressed", "id"), &InventoryEditor::_on_database_menu_id_pressed);
+	ClassDB::bind_method(D_METHOD("_on_misc_menu_pressed"), &InventoryEditor::_on_misc_menu_pressed);
+	ClassDB::bind_method(D_METHOD("_on_misc_menu_id_pressed", "id"), &InventoryEditor::_on_misc_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_recent_menu_id_pressed", "id"), &InventoryEditor::_on_recent_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_dialog_file_selected", "path"), &InventoryEditor::_on_new_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_open_dialog_file_selected", "path"), &InventoryEditor::_on_open_dialog_file_selected);
@@ -202,6 +204,21 @@ void InventoryEditor::_create_ui() {
 	// VSeparator after tab buttons
 	VSeparator *sep1 = memnew(VSeparator);
 	toolbar->add_child(sep1);
+
+	// Misc MenuButton - inspired by LimboAI's misc menu
+	misc_button = memnew(MenuButton);
+	toolbar->add_child(misc_button);
+	misc_button->set_custom_minimum_size(Vector2(28, 28));
+	misc_button->set_text("Misc");
+	misc_button->set_tooltip_text("Miscellaneous Options");
+	misc_button->set_flat(true);
+	misc_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_misc_menu_pressed));
+	misc_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_misc_menu_id_pressed));
+	misc_button->set_button_icon(get_theme_icon("Tools", "EditorIcons"));
+	
+	// VSeparator after misc button
+	VSeparator *sep2 = memnew(VSeparator);
+	toolbar->add_child(sep2);
 	
 	// New Item Definition Button - matches .tscn properties  
 	new_item_button = memnew(Button);
@@ -430,6 +447,17 @@ void InventoryEditor::_build_database_menu() {
 	menu->set_item_disabled(menu->get_item_index(DATABASE_EXPORT_JSON), database.is_null());
 }
 
+void InventoryEditor::_build_misc_menu() {
+	PopupMenu *menu = misc_button->get_popup();
+	menu->clear();
+
+	menu->add_icon_item(get_theme_icon("Help", "EditorIcons"), "Online Documentation", MISC_ONLINE_DOCUMENTATION);
+	menu->add_separator();
+	menu->add_icon_item(get_theme_icon("Tools", "EditorIcons"), "Project Settings...", MISC_PROJECT_SETTINGS);
+	menu->add_separator();
+	menu->add_icon_item(get_theme_icon("Godot", "EditorIcons"), "About Inventory System", MISC_ABOUT_INVENTORY_SYSTEM);
+}
+
 void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 	database = p_database;
 	
@@ -597,6 +625,10 @@ void InventoryEditor::_on_database_menu_pressed() {
 	_build_database_menu();
 }
 
+void InventoryEditor::_on_misc_menu_pressed() {
+	_build_misc_menu();
+}
+
 void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
 	switch (p_id) {
 		case DATABASE_NEW:
@@ -614,6 +646,34 @@ void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
 		case DATABASE_EXPORT_JSON:
 			save_inv_dialog->popup_centered();
 			break;
+	}
+}
+
+void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
+	switch (p_id) {
+		case MISC_ONLINE_DOCUMENTATION: {
+			// Open online documentation - placeholder URL
+			String url = "https://github.com/expressobits/inventory-system";
+			if (editor_plugin) {
+				editor_plugin->get_editor_interface()->get_base_control()->call("request_url", url);
+			}
+		} break;
+		case MISC_PROJECT_SETTINGS: {
+			// Open project settings
+			if (editor_plugin) {
+				editor_plugin->get_editor_interface()->get_base_control()->call("open_settings");
+			}
+		} break;
+		case MISC_ABOUT_INVENTORY_SYSTEM: {
+			// Show about dialog - simple implementation
+			String about_text = "Inventory System Plugin\n\nA flexible inventory management system for Godot.\n\nVisit: https://github.com/expressobits/inventory-system";
+			AcceptDialog *about_dialog = memnew(AcceptDialog);
+			about_dialog->set_text(about_text);
+			about_dialog->set_title("About Inventory System");
+			get_viewport()->add_child(about_dialog);
+			about_dialog->popup_centered();
+			about_dialog->connect("confirmed", callable_mp(about_dialog, &AcceptDialog::queue_free));
+		} break;
 	}
 }
 

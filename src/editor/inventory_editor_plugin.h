@@ -35,6 +35,7 @@
 #include <godot_cpp/classes/tab_container.hpp>
 #include <godot_cpp/classes/texture_button.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/accept_dialog.hpp>
 
 using namespace godot;
 
@@ -64,6 +65,12 @@ private:
 		NEW_ITEM_FROM_RESOURCE = 101,
 	};
 
+	enum MiscMenuId {
+		MISC_PROJECT_SETTINGS = 100,
+		MISC_ONLINE_DOCUMENTATION = 200,
+		MISC_ABOUT_INVENTORY_SYSTEM = 300,
+	};
+
 	EditorPlugin *editor_plugin;
 	Ref<InventoryDatabase> database;
 	String database_path;
@@ -91,6 +98,7 @@ private:
 
 	//Toolbar
 	MenuButton *database_button;
+	MenuButton *misc_button;
 	Button *item_definitions_tab_button;
 	Button *recipes_tab_button;
 	Button *craft_station_types_tab_button;
@@ -106,6 +114,7 @@ private:
 	void _create_ui();
 	void _apply_theme();
 	void _build_database_menu();
+	void _build_misc_menu();
 	void _load_database(const Ref<InventoryDatabase> &p_database);
 	void _new_file(const String &p_path);
 	void _open_file(const String &p_path);
@@ -114,6 +123,8 @@ private:
 
 	void _on_database_menu_pressed();
 	void _on_database_menu_id_pressed(int p_id);
+	void _on_misc_menu_pressed();
+	void _on_misc_menu_id_pressed(int p_id);
 	void _on_recent_menu_id_pressed(int p_id);
 	void _on_new_dialog_file_selected(const String &p_path);
 	void _on_open_dialog_file_selected(const String &p_path);
