@@ -19,6 +19,7 @@
 #include "../base/loot.h"
 #include "item_definitions_editor.h"
 
+#include <godot_cpp/classes/button_group.hpp>
 #include <godot_cpp/classes/config_file.hpp>
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>
