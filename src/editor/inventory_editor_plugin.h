@@ -90,6 +90,11 @@ private:
 
 	//Toolbar
 	MenuButton *database_button;
+	Button *item_definitions_tab_button;
+	Button *recipes_tab_button;
+	Button *craft_station_types_tab_button;
+	Button *item_categories_tab_button;
+	Button *loots_tab_button;
 	Label *title_label;
 	Button *new_item_button;
 	Button *new_recipe_button;
@@ -118,6 +123,12 @@ private:
 	void _on_new_craft_station_button_pressed();
 	void _on_new_category_button_pressed();
 	void _on_new_loot_button_pressed();
+	void _on_tab_button_pressed(int tab_index);
+	void _on_item_definitions_tab_pressed();
+	void _on_recipes_tab_pressed();
+	void _on_craft_station_types_tab_pressed();
+	void _on_item_categories_tab_pressed();
+	void _on_loots_tab_pressed();
 
 	void _remove_item_definition(const Ref<ItemDefinition> &p_item_def);
 	void _duplicate_item_definition(const Ref<ItemDefinition> &p_item_def);

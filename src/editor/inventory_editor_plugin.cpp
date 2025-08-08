@@ -50,6 +50,12 @@ void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_new_craft_station_button_pressed"), &InventoryEditor::_on_new_craft_station_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_category_button_pressed"), &InventoryEditor::_on_new_category_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_loot_button_pressed"), &InventoryEditor::_on_new_loot_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_tab_button_pressed", "tab_index"), &InventoryEditor::_on_tab_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_item_definitions_tab_pressed"), &InventoryEditor::_on_item_definitions_tab_pressed);
+	ClassDB::bind_method(D_METHOD("_on_recipes_tab_pressed"), &InventoryEditor::_on_recipes_tab_pressed);
+	ClassDB::bind_method(D_METHOD("_on_craft_station_types_tab_pressed"), &InventoryEditor::_on_craft_station_types_tab_pressed);
+	ClassDB::bind_method(D_METHOD("_on_item_categories_tab_pressed"), &InventoryEditor::_on_item_categories_tab_pressed);
+	ClassDB::bind_method(D_METHOD("_on_loots_tab_pressed"), &InventoryEditor::_on_loots_tab_pressed);
 	ClassDB::bind_method(D_METHOD("_remove_item_definition", "item_def"), &InventoryEditor::_remove_item_definition);
 	ClassDB::bind_method(D_METHOD("_duplicate_item_definition", "item_def"), &InventoryEditor::_duplicate_item_definition);
 	ClassDB::bind_method(D_METHOD("_remove_recipe", "recipe"), &InventoryEditor::_remove_recipe);
@@ -77,6 +83,13 @@ void InventoryEditor::_notification(int p_what) {
 
 InventoryEditor::InventoryEditor() {
 	editor_plugin = nullptr;
+	
+	// Initialize tab button pointers
+	item_definitions_tab_button = nullptr;
+	recipes_tab_button = nullptr;
+	craft_station_types_tab_button = nullptr;
+	item_categories_tab_button = nullptr;
+	loots_tab_button = nullptr;
 	
 	set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 	set_h_size_flags(Control::SIZE_EXPAND_FILL);
@@ -130,6 +143,61 @@ void InventoryEditor::_create_ui() {
 	database_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_database_editor.svg"));
 	
 	// VSeparator after database button
+	VSeparator *sep_after_db = memnew(VSeparator);
+	toolbar->add_child(sep_after_db);
+	
+	// Tab selector buttons - small buttons to select editor tabs
+	item_definitions_tab_button = memnew(Button);
+	toolbar->add_child(item_definitions_tab_button);
+	item_definitions_tab_button->set_custom_minimum_size(Vector2(28, 28));
+	item_definitions_tab_button->set_text("Items");
+	item_definitions_tab_button->set_tooltip_text("Item Definitions Editor");
+	item_definitions_tab_button->set_toggle_mode(true);
+	item_definitions_tab_button->set_button_group(memnew(ButtonGroup));
+	item_definitions_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_definitions_tab_pressed));
+	item_definitions_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
+	
+	recipes_tab_button = memnew(Button);
+	toolbar->add_child(recipes_tab_button);
+	recipes_tab_button->set_custom_minimum_size(Vector2(28, 28));
+	recipes_tab_button->set_text("Recipes");
+	recipes_tab_button->set_tooltip_text("Recipes Editor");
+	recipes_tab_button->set_toggle_mode(true);
+	recipes_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
+	recipes_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_recipes_tab_pressed));
+	recipes_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
+	
+	craft_station_types_tab_button = memnew(Button);
+	toolbar->add_child(craft_station_types_tab_button);
+	craft_station_types_tab_button->set_custom_minimum_size(Vector2(28, 28));
+	craft_station_types_tab_button->set_text("Stations");
+	craft_station_types_tab_button->set_tooltip_text("Craft Station Types Editor");
+	craft_station_types_tab_button->set_toggle_mode(true);
+	craft_station_types_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
+	craft_station_types_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_craft_station_types_tab_pressed));
+	craft_station_types_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
+	
+	item_categories_tab_button = memnew(Button);
+	toolbar->add_child(item_categories_tab_button);
+	item_categories_tab_button->set_custom_minimum_size(Vector2(28, 28));
+	item_categories_tab_button->set_text("Categories");
+	item_categories_tab_button->set_tooltip_text("Item Categories Editor");
+	item_categories_tab_button->set_toggle_mode(true);
+	item_categories_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
+	item_categories_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_categories_tab_pressed));
+	item_categories_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
+	
+	loots_tab_button = memnew(Button);
+	toolbar->add_child(loots_tab_button);
+	loots_tab_button->set_custom_minimum_size(Vector2(28, 28));
+	loots_tab_button->set_text("Loots");
+	loots_tab_button->set_tooltip_text("Loots Editor");
+	loots_tab_button->set_toggle_mode(true);
+	loots_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
+	loots_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_loots_tab_pressed));
+	loots_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
+	
+	// VSeparator after tab buttons
 	VSeparator *sep1 = memnew(VSeparator);
 	toolbar->add_child(sep1);
 	
@@ -226,11 +294,12 @@ void InventoryEditor::_create_ui() {
 	content->add_theme_constant_override("margin_right", 4);
 	content->add_theme_constant_override("margin_bottom", 4);
 	
-	// TabContainer - matches .tscn properties
+	// TabContainer - matches .tscn properties but with hidden tab bar
 	tab_container = memnew(TabContainer);
 	content->add_child(tab_container);
 	tab_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 	tab_container->set_mouse_filter(Control::MOUSE_FILTER_IGNORE);
+	tab_container->set_tabs_visible(false); // Hide the tab bar since we use toolbar buttons
 	
 	// Create tabs
 	item_definitions_editor = memnew(ItemDefinitionsEditor);
@@ -369,6 +438,18 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		new_craft_station_type_button->set_disabled(false);
 		new_item_categories_button->set_disabled(false);
 		new_loot_button->set_disabled(false);
+		
+		// Enable tab buttons
+		if (item_definitions_tab_button) item_definitions_tab_button->set_disabled(false);
+		if (recipes_tab_button) recipes_tab_button->set_disabled(false);
+		if (craft_station_types_tab_button) craft_station_types_tab_button->set_disabled(false);
+		if (item_categories_tab_button) item_categories_tab_button->set_disabled(false);
+		if (loots_tab_button) loots_tab_button->set_disabled(false);
+		
+		// Set the first tab as active
+		if (item_definitions_tab_button) item_definitions_tab_button->set_pressed(true);
+		tab_container->set_current_tab(0);
+		
 		title_label->set_text(database_path.is_empty() ? "Untitled Database" : database_path);
 		
 		// Update tab editors
@@ -403,6 +484,14 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		new_craft_station_type_button->set_disabled(true);
 		new_item_categories_button->set_disabled(true);
 		new_loot_button->set_disabled(true);
+		
+		// Disable tab buttons
+		if (item_definitions_tab_button) item_definitions_tab_button->set_disabled(true);
+		if (recipes_tab_button) recipes_tab_button->set_disabled(true);
+		if (craft_station_types_tab_button) craft_station_types_tab_button->set_disabled(true);
+		if (item_categories_tab_button) item_categories_tab_button->set_disabled(true);
+		if (loots_tab_button) loots_tab_button->set_disabled(true);
+		
 		title_label->set_text("No Database");
 		
 		// Clear tab editors
@@ -752,6 +841,39 @@ void InventoryEditor::_duplicate_loot(const Ref<Loot> &p_loot) {
 	_load_database(database);
 	// Switch to loots tab
 	tab_container->set_current_tab(4);
+}
+
+void InventoryEditor::_on_tab_button_pressed(int tab_index) {
+	if (tab_container && tab_index >= 0 && tab_index < tab_container->get_tab_count()) {
+		tab_container->set_current_tab(tab_index);
+		
+		// Update button states - make sure the correct button is pressed
+		if (item_definitions_tab_button) item_definitions_tab_button->set_pressed(tab_index == 0);
+		if (recipes_tab_button) recipes_tab_button->set_pressed(tab_index == 1);
+		if (craft_station_types_tab_button) craft_station_types_tab_button->set_pressed(tab_index == 2);
+		if (item_categories_tab_button) item_categories_tab_button->set_pressed(tab_index == 3);
+		if (loots_tab_button) loots_tab_button->set_pressed(tab_index == 4);
+	}
+}
+
+void InventoryEditor::_on_item_definitions_tab_pressed() {
+	_on_tab_button_pressed(0);
+}
+
+void InventoryEditor::_on_recipes_tab_pressed() {
+	_on_tab_button_pressed(1);
+}
+
+void InventoryEditor::_on_craft_station_types_tab_pressed() {
+	_on_tab_button_pressed(2);
+}
+
+void InventoryEditor::_on_item_categories_tab_pressed() {
+	_on_tab_button_pressed(3);
+}
+
+void InventoryEditor::_on_loots_tab_pressed() {
+	_on_tab_button_pressed(4);
 }
 
 // InventoryEditorPlugin
