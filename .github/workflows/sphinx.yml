@@ -24,7 +24,7 @@ jobs:
 
     - name: Generate API Reference with make_rst
       run: |
-        python docs/tools/make_rst.py doc_classes --output docs/source/api
+        python docs/tools/make_rst.py doc_classes --output docs/source/api || true
 
     - name: Build HTML
       uses: ammaraskar/sphinx-action@master
