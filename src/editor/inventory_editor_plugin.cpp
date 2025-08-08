@@ -672,7 +672,7 @@ void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
 			about_dialog->set_title("About Inventory System");
 			get_viewport()->add_child(about_dialog);
 			about_dialog->popup_centered();
-			about_dialog->connect("confirmed", callable_mp(about_dialog, &AcceptDialog::queue_free));
+			about_dialog->connect("confirmed", Callable(about_dialog, "queue_free"));
 		} break;
 	}
 }
