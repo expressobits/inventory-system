@@ -150,9 +150,9 @@ void InventoryEditor::_create_ui() {
 	item_definitions_tab_button = memnew(Button);
 	toolbar->add_child(item_definitions_tab_button);
 	item_definitions_tab_button->set_custom_minimum_size(Vector2(28, 28));
-	item_definitions_tab_button->set_text("Items");
 	item_definitions_tab_button->set_tooltip_text("Item Definitions Editor");
 	item_definitions_tab_button->set_toggle_mode(true);
+	item_definitions_tab_button->set_flat(true);
 	item_definitions_tab_button->set_button_group(memnew(ButtonGroup));
 	item_definitions_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_definitions_tab_pressed));
 	item_definitions_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
@@ -160,9 +160,9 @@ void InventoryEditor::_create_ui() {
 	recipes_tab_button = memnew(Button);
 	toolbar->add_child(recipes_tab_button);
 	recipes_tab_button->set_custom_minimum_size(Vector2(28, 28));
-	recipes_tab_button->set_text("Recipes");
 	recipes_tab_button->set_tooltip_text("Recipes Editor");
 	recipes_tab_button->set_toggle_mode(true);
+	recipes_tab_button->set_flat(true);
 	recipes_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	recipes_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_recipes_tab_pressed));
 	recipes_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
@@ -170,9 +170,9 @@ void InventoryEditor::_create_ui() {
 	craft_station_types_tab_button = memnew(Button);
 	toolbar->add_child(craft_station_types_tab_button);
 	craft_station_types_tab_button->set_custom_minimum_size(Vector2(28, 28));
-	craft_station_types_tab_button->set_text("Stations");
 	craft_station_types_tab_button->set_tooltip_text("Craft Station Types Editor");
 	craft_station_types_tab_button->set_toggle_mode(true);
+	craft_station_types_tab_button->set_flat(true);
 	craft_station_types_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	craft_station_types_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_craft_station_types_tab_pressed));
 	craft_station_types_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
@@ -180,9 +180,9 @@ void InventoryEditor::_create_ui() {
 	item_categories_tab_button = memnew(Button);
 	toolbar->add_child(item_categories_tab_button);
 	item_categories_tab_button->set_custom_minimum_size(Vector2(28, 28));
-	item_categories_tab_button->set_text("Categories");
 	item_categories_tab_button->set_tooltip_text("Item Categories Editor");
 	item_categories_tab_button->set_toggle_mode(true);
+	item_categories_tab_button->set_flat(true);
 	item_categories_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	item_categories_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_categories_tab_pressed));
 	item_categories_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
@@ -190,9 +190,9 @@ void InventoryEditor::_create_ui() {
 	loots_tab_button = memnew(Button);
 	toolbar->add_child(loots_tab_button);
 	loots_tab_button->set_custom_minimum_size(Vector2(28, 28));
-	loots_tab_button->set_text("Loots");
 	loots_tab_button->set_tooltip_text("Loots Editor");
 	loots_tab_button->set_toggle_mode(true);
+	loots_tab_button->set_flat(true);
 	loots_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	loots_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_loots_tab_pressed));
 	loots_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
