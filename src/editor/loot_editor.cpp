@@ -51,39 +51,21 @@ void LootEditor::_notification(int p_what) {
 	}
 }
 
-LootEditor::LootEditor() {
+LootEditor::LootEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	item_stack_selector = nullptr;
 	items_hsplit = nullptr;
 	items_left_vbox = nullptr;
 	items_right_vbox = nullptr;
-	
-	set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	set_v_size_flags(Control::SIZE_EXPAND_FILL);
 }
 
 LootEditor::~LootEditor() {
 }
 
 void LootEditor::_create_ui() {
-	// Use proper structure like item_definition_editor: ScrollContainer -> MarginContainer -> VBoxContainer
-	ScrollContainer *scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-	
-	MarginContainer *margin_container = memnew(MarginContainer);
-	scroll_container->add_child(margin_container);
-	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	// Match item_definition_editor margin pattern: 8,8,0,8
-	margin_container->add_theme_constant_override("margin_left", 8);
-	margin_container->add_theme_constant_override("margin_top", 8);
-	margin_container->add_theme_constant_override("margin_right", 0);
-	margin_container->add_theme_constant_override("margin_bottom", 8);
-
-	main_vbox = memnew(VBoxContainer);
-	margin_container->add_child(main_vbox);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
 
 	// Header section - using pattern from item_definition_editor
 	header_hbox = memnew(HBoxContainer);

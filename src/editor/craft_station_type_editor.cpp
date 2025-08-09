@@ -29,23 +29,11 @@ void CraftStationTypeEditor::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("changed", PropertyInfo(Variant::OBJECT, "craft_station_type", PROPERTY_HINT_RESOURCE_TYPE, "CraftStationType")));
 }
 
-void CraftStationTypeEditor::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			_create_ui();
-		} break;
-	}
-}
-
-CraftStationTypeEditor::CraftStationTypeEditor() {
+CraftStationTypeEditor::CraftStationTypeEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	resource_id_editor = nullptr;
 	icon_selector = nullptr;
-	
-	set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-	set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	set_v_size_flags(Control::SIZE_EXPAND_FILL);
 }
 
 CraftStationTypeEditor::~CraftStationTypeEditor() {
@@ -59,27 +47,12 @@ void CraftStationTypeEditor::set_editor_plugin(EditorPlugin* p_editor_plugin) {
 }
 
 void CraftStationTypeEditor::_create_ui() {
-	// Main scroll container
-	scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
+	
+	// Apply specific settings for craft station type editor
 	scroll_container->set_horizontal_scroll_mode(ScrollContainer::SCROLL_MODE_DISABLED);
 	scroll_container->set_visible(false);
-
-	// Margin container
-	margin_container = memnew(MarginContainer);
-	scroll_container->add_child(margin_container);
-	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	// Match addon margin constants - CraftStationTypeEditor uses 8,8,8,8 like ItemCategoryEditor
-	margin_container->add_theme_constant_override("margin_left", 8);
-	margin_container->add_theme_constant_override("margin_top", 8);
-	margin_container->add_theme_constant_override("margin_right", 8);
-	margin_container->add_theme_constant_override("margin_bottom", 8);
-
-	// Main VBox container
-	main_vbox = memnew(VBoxContainer);
-	margin_container->add_child(main_vbox);
 
 	// Resource ID - matches addon structure
 	resource_id_editor = memnew(ResourceIDEditor);

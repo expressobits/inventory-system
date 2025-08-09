@@ -13,15 +13,13 @@
 #ifndef RECIPE_EDITOR_H
 #define RECIPE_EDITOR_H
 
-#include <godot_cpp/classes/control.hpp>
-#include <godot_cpp/classes/editor_plugin.hpp>
-#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/button.hpp>
 
+#include "base_resource_editor.h"
 #include "item_stack_selector.h"
 
 using namespace godot;
@@ -31,8 +29,8 @@ class InventoryDatabase;
 class ItemStack;
 class CraftStationType;
 
-class RecipeEditor : public Control {
-	GDCLASS(RecipeEditor, Control);
+class RecipeEditor : public BaseResourceEditor {
+	GDCLASS(RecipeEditor, BaseResourceEditor);
 
 private:
 	EditorPlugin *editor_plugin;
@@ -40,8 +38,6 @@ private:
 	InventoryDatabase *database;
 	
 	// UI Components
-	MarginContainer *margin_container;
-	VBoxContainer *main_container;
 	SpinBox *time_to_craft_spin_box;
 	OptionButton *craft_station_type_option_button;
 	VBoxContainer *ingredients_container;
@@ -59,9 +55,9 @@ private:
 	
 	bool signals_connected;
 	
-	void _create_ui();
-	void _connect_signals();
-	void _disconnect_signals();
+	void _create_ui() override;
+	void _connect_signals() override;
+	void _disconnect_signals() override;
 	void _setup_station();
 	void _setup_ingredients();
 	void _setup_products();
@@ -88,7 +84,6 @@ private:
 
 protected:
 	static void _bind_methods();
-	void _notification(int p_what);
 
 public:
 	void set_editor_plugin(EditorPlugin *p_plugin);
