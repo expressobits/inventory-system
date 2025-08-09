@@ -211,61 +211,41 @@ void InventoryEditor::_create_ui() {
 	new_item_button = memnew(Button);
 	toolbar->add_child(new_item_button);
 	new_item_button->set_custom_minimum_size(Vector2(28, 28));
-	// new_item_button->set_text("New Item Definition");
 	new_item_button->set_tooltip_text("New Inventory Item");
 	new_item_button->set_theme_type_variation("FlatButton");
 	new_item_button->set_disabled(true);
 	new_item_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_item_button_pressed));
 	new_item_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
 	
-	// VSeparator
-	// VSeparator *sep2 = memnew(VSeparator);
-	// toolbar->add_child(sep2);
-	
 	// New Recipe Button - matches .tscn properties
 	new_recipe_button = memnew(Button);
 	toolbar->add_child(new_recipe_button);
 	new_recipe_button->set_custom_minimum_size(Vector2(28, 28));
-	// new_recipe_button->set_text("New Recipe");
 	new_recipe_button->set_tooltip_text("New Recipe");
 	new_recipe_button->set_theme_type_variation("FlatButton");
 	new_recipe_button->set_disabled(true);
 	new_recipe_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_recipe_button_pressed));
 	new_recipe_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
-
-	// VSeparator
-	// VSeparator *sep3 = memnew(VSeparator);
-	// toolbar->add_child(sep3);
 	
 	// New Craft Station Type Button - matches .tscn properties
 	new_craft_station_type_button = memnew(Button);
 	toolbar->add_child(new_craft_station_type_button);
 	new_craft_station_type_button->set_custom_minimum_size(Vector2(28, 28));
-	// new_craft_station_type_button->set_text("New Craft Station Type");
 	new_craft_station_type_button->set_tooltip_text("New Craft Station Type");
 	new_craft_station_type_button->set_theme_type_variation("FlatButton");
 	new_craft_station_type_button->set_disabled(true);
 	new_craft_station_type_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_craft_station_button_pressed));
 	new_craft_station_type_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
-
-	// VSeparator
-	// VSeparator *sep4 = memnew(VSeparator);
-	// toolbar->add_child(sep4);
 	
 	// New Item Category Button - matches .tscn properties
 	new_item_categories_button = memnew(Button);
 	toolbar->add_child(new_item_categories_button);
 	new_item_categories_button->set_custom_minimum_size(Vector2(28, 28));
-	// new_item_categories_button->set_text("New Item Category");
 	new_item_categories_button->set_tooltip_text("New Item Category");
 	new_item_categories_button->set_theme_type_variation("FlatButton");
 	new_item_categories_button->set_disabled(true);
 	new_item_categories_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_category_button_pressed));
 	new_item_categories_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
-
-	// VSeparator
-	// VSeparator *sep5 = memnew(VSeparator);
-	// toolbar->add_child(sep5);
 	
 	// New Loot Button - matches .tscn properties
 	new_loot_button = memnew(Button);
@@ -277,10 +257,6 @@ void InventoryEditor::_create_ui() {
 	new_loot_button->set_disabled(true);
 	new_loot_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_new_loot_button_pressed));
 	new_loot_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_loot.svg"));
-
-	// VSeparator
-	// VSeparator *sep6 = memnew(VSeparator);
-	// toolbar->add_child(sep6);
 	
 	// Title Label - matches .tscn properties (expand fill, right alignment)
 	title_label = memnew(Label);
