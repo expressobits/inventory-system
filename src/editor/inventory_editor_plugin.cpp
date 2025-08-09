@@ -140,11 +140,24 @@ void InventoryEditor::_create_ui() {
 	database_button->set_custom_minimum_size(Vector2(28, 28));
 	database_button->set_tooltip_text("Inventory Database Menu");
 	database_button->set_text("Database");
+	database_button->set_theme_type_variation("FlatMenuButton");
+	database_button->set_flat(false);
 	database_button->set_text_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
-	database_button->set_flat(true);
 	database_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_menu_pressed));
 	database_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_menu_id_pressed));
 	database_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_database_editor.svg"));
+
+	// Misc MenuButton - inspired by LimboAI's misc menu
+	misc_button = memnew(MenuButton);
+	toolbar->add_child(misc_button);
+	misc_button->set_custom_minimum_size(Vector2(28, 28));
+	misc_button->set_text("Misc");
+	misc_button->set_tooltip_text("Miscellaneous Options");
+	misc_button->set_theme_type_variation("FlatMenuButton");
+	misc_button->set_flat(false);
+	misc_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_misc_menu_pressed));
+	misc_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_misc_menu_id_pressed));
+	misc_button->set_button_icon(get_theme_icon("Tools", "EditorIcons"));
 	
 	// VSeparator after database button
 	VSeparator *sep_after_db = memnew(VSeparator);
@@ -159,7 +172,7 @@ void InventoryEditor::_create_ui() {
 	item_definitions_tab_button->set_theme_type_variation("FlatButton");
 	item_definitions_tab_button->set_button_group(memnew(ButtonGroup));
 	item_definitions_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_definitions_tab_pressed));
-	item_definitions_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_inventory_item.svg"));
+	item_definitions_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/item_definition_white.svg"));
 	
 	recipes_tab_button = memnew(Button);
 	toolbar->add_child(recipes_tab_button);
@@ -169,7 +182,7 @@ void InventoryEditor::_create_ui() {
 	recipes_tab_button->set_theme_type_variation("FlatButton");
 	recipes_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	recipes_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_recipes_tab_pressed));
-	recipes_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_recipe.svg"));
+	recipes_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/recipe_white.svg"));
 	
 	craft_station_types_tab_button = memnew(Button);
 	toolbar->add_child(craft_station_types_tab_button);
@@ -179,7 +192,7 @@ void InventoryEditor::_create_ui() {
 	craft_station_types_tab_button->set_theme_type_variation("FlatButton");
 	craft_station_types_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	craft_station_types_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_craft_station_types_tab_pressed));
-	craft_station_types_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_craft_station_type.svg"));
+	craft_station_types_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/craft_station_type_white.svg"));
 	
 	item_categories_tab_button = memnew(Button);
 	toolbar->add_child(item_categories_tab_button);
@@ -189,7 +202,7 @@ void InventoryEditor::_create_ui() {
 	item_categories_tab_button->set_theme_type_variation("FlatButton");
 	item_categories_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	item_categories_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_item_categories_tab_pressed));
-	item_categories_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/new_item_category.svg"));
+	item_categories_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/item_category_white.svg"));
 	
 	loots_tab_button = memnew(Button);
 	toolbar->add_child(loots_tab_button);
@@ -200,21 +213,6 @@ void InventoryEditor::_create_ui() {
 	loots_tab_button->set_button_group(item_definitions_tab_button->get_button_group());
 	loots_tab_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_loots_tab_pressed));
 	loots_tab_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/loot_white.svg"));
-	
-	// VSeparator after tab buttons
-	VSeparator *sep1 = memnew(VSeparator);
-	toolbar->add_child(sep1);
-
-	// Misc MenuButton - inspired by LimboAI's misc menu
-	misc_button = memnew(MenuButton);
-	toolbar->add_child(misc_button);
-	misc_button->set_custom_minimum_size(Vector2(28, 28));
-	misc_button->set_text("Misc");
-	misc_button->set_tooltip_text("Miscellaneous Options");
-	misc_button->set_flat(true);
-	misc_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_misc_menu_pressed));
-	misc_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_misc_menu_id_pressed));
-	misc_button->set_button_icon(get_theme_icon("Tools", "EditorIcons"));
 	
 	// VSeparator after misc button
 	VSeparator *sep2 = memnew(VSeparator);
@@ -653,7 +651,7 @@ void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
 	switch (p_id) {
 		case MISC_ONLINE_DOCUMENTATION: {
 			// Open online documentation - placeholder URL
-			String url = "https://github.com/expressobits/inventory-system";
+			String url = "https://expressobits.com/inventory-system";
 			if (editor_plugin) {
 				editor_plugin->get_editor_interface()->get_base_control()->call("request_url", url);
 			}
