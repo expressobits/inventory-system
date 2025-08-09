@@ -41,15 +41,7 @@ void RecipeEditor::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("changed_products", PropertyInfo(Variant::OBJECT, "recipe", PROPERTY_HINT_RESOURCE_TYPE, "Recipe")));
 }
 
-void RecipeEditor::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			_create_ui();
-		} break;
-	}
-}
-
-RecipeEditor::RecipeEditor() {
+RecipeEditor::RecipeEditor() : BaseResourceEditor() {
 	editor_plugin = nullptr;
 	database = nullptr;
 	signals_connected = false;
@@ -68,18 +60,12 @@ void RecipeEditor::set_editor_plugin(EditorPlugin *p_plugin) {
 }
 
 void RecipeEditor::_create_ui() {
-	// Main scroll container
-	scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
+	
+	// Apply specific settings for recipe editor
 	scroll_container->set_horizontal_scroll_mode(ScrollContainer::SCROLL_MODE_DISABLED);
 	scroll_container->set_visible(false);
-
-	// Main VBox container
-	main_vbox = memnew(VBoxContainer);
-	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	scroll_container->add_child(main_vbox);
 
 	// First separator (at top, matching GDScript)
 	HSeparator *separator1 = memnew(HSeparator);

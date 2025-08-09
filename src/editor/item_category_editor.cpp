@@ -32,15 +32,7 @@ void ItemCategoryEditor::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("changed", PropertyInfo(Variant::OBJECT, "item_category", PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")));
 }
 
-void ItemCategoryEditor::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			_create_ui();
-		} break;
-	}
-}
-
-ItemCategoryEditor::ItemCategoryEditor() {
+ItemCategoryEditor::ItemCategoryEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	resource_id_editor = nullptr;
@@ -65,18 +57,12 @@ void ItemCategoryEditor::set_editor_plugin(EditorPlugin* p_editor_plugin) {
 }
 
 void ItemCategoryEditor::_create_ui() {
-	// Main scroll container
-	scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
+	
+	// Apply specific settings for item category editor
 	scroll_container->set_horizontal_scroll_mode(ScrollContainer::SCROLL_MODE_DISABLED);
 	scroll_container->set_visible(false);
-
-	// Main VBox container
-	main_vbox = memnew(VBoxContainer);
-	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	scroll_container->add_child(main_vbox);
 
 	// Resource ID - matches addon structure
 	resource_id_editor = memnew(ResourceIDEditor);

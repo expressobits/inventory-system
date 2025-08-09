@@ -13,16 +13,13 @@
 #ifndef ITEM_CATEGORY_EDITOR_H
 #define ITEM_CATEGORY_EDITOR_H
 
-#include <godot_cpp/classes/control.hpp>
-#include <godot_cpp/classes/editor_plugin.hpp>
-#include <godot_cpp/classes/scroll_container.hpp>
-#include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/h_separator.hpp>
 #include <godot_cpp/classes/color_picker_button.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
+#include "base_resource_editor.h"
 #include "icon_selector.h"
 #include "custom_properties_editor.h"
 #include "resource_id_editor.h"
@@ -33,18 +30,14 @@ class InventoryDatabase;
 class ItemCategory;
 class CustomPropertiesEditor;
 
-class ItemCategoryEditor : public Control {
-	GDCLASS(ItemCategoryEditor, Control);
+class ItemCategoryEditor : public BaseResourceEditor {
+	GDCLASS(ItemCategoryEditor, BaseResourceEditor);
 
 private:
 	Ref<ItemCategory> item_category;
 	InventoryDatabase* database;
 	EditorPlugin* editor_plugin;
 
-	// UI Components matching addon structure
-	ScrollContainer* scroll_container;
-	VBoxContainer* main_vbox;
-	
 	// Form components
 	ResourceIDEditor* resource_id_editor;
 	LineEdit* name_edit;
@@ -55,9 +48,9 @@ private:
 	// Custom Properties section
 	CustomPropertiesEditor* custom_properties;
 
-	void _create_ui();
-	void _connect_signals();
-	void _disconnect_signals();
+	void _create_ui() override;
+	void _connect_signals() override;
+	void _disconnect_signals() override;
 
 	// Signal handlers - matching addon method names exactly
 	void _on_resource_id_editor_changed(const String& id);

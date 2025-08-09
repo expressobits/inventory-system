@@ -51,30 +51,21 @@ void LootEditor::_notification(int p_what) {
 	}
 }
 
-LootEditor::LootEditor() {
+LootEditor::LootEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	item_stack_selector = nullptr;
 	items_hsplit = nullptr;
 	items_left_vbox = nullptr;
 	items_right_vbox = nullptr;
-	
-	set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	set_v_size_flags(Control::SIZE_EXPAND_FILL);
 }
 
 LootEditor::~LootEditor() {
 }
 
 void LootEditor::_create_ui() {
-	ScrollContainer *scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-
-	main_vbox = memnew(VBoxContainer);
-	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	scroll_container->add_child(main_vbox);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
 
 	// Header section - using pattern from item_definition_editor
 	header_hbox = memnew(HBoxContainer);

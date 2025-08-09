@@ -52,21 +52,11 @@ void ItemDefinitionEditor::_bind_methods() {
 	ADD_SIGNAL(MethodInfo("changed", PropertyInfo(Variant::OBJECT, "item_definition", PROPERTY_HINT_RESOURCE_TYPE, "ItemDefinition")));
 }
 
-void ItemDefinitionEditor::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			_create_ui();
-		} break;
-	}
-}
-
-ItemDefinitionEditor::ItemDefinitionEditor() {
+ItemDefinitionEditor::ItemDefinitionEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	
 	// Initialize UI pointers
-	scroll_container = nullptr;
-	main_vbox = nullptr;
 	resource_id_editor = nullptr;
 	item_name_text_edit = nullptr;
 	item_max_stack_spin_box = nullptr;
@@ -92,16 +82,11 @@ void ItemDefinitionEditor::set_editor_plugin(EditorPlugin* p_editor_plugin) {
 }
 
 void ItemDefinitionEditor::_create_ui() {
-	// Match .tscn structure exactly: ScrollContainer -> MarginContainer -> VBoxContainer
-	scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	// Call base class to create ScrollContainer and main_vbox
+	BaseResourceEditor::_create_ui();
+	
+	// Set visibility to false initially (matching original logic)
 	scroll_container->set_visible(false);
-
-	main_vbox = memnew(VBoxContainer);
-	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	scroll_container->add_child(main_vbox);
 
 	// Create top section: HBoxContainer2 with side-by-side layout
 	HBoxContainer* top_hbox = memnew(HBoxContainer);
