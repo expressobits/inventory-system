@@ -15,9 +15,9 @@
 
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/editor_plugin.hpp>
-#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
+#include <godot_cpp/classes/scroll_container.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/button.hpp>
@@ -40,8 +40,8 @@ private:
 	InventoryDatabase *database;
 	
 	// UI Components
-	MarginContainer *margin_container;
-	VBoxContainer *main_container;
+	ScrollContainer *scroll_container;
+	VBoxContainer *main_vbox;
 	SpinBox *time_to_craft_spin_box;
 	OptionButton *craft_station_type_option_button;
 	VBoxContainer *ingredients_container;

@@ -19,7 +19,6 @@
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/line_edit.hpp>
-#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/h_separator.hpp>
 #include <godot_cpp/classes/color_picker_button.hpp>
@@ -44,7 +43,6 @@ private:
 
 	// UI Components matching addon structure
 	ScrollContainer* scroll_container;
-	MarginContainer* margin_container;
 	VBoxContainer* main_vbox;
 	
 	// Form components

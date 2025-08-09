@@ -67,23 +67,14 @@ LootEditor::~LootEditor() {
 }
 
 void LootEditor::_create_ui() {
-	// Use proper structure like item_definition_editor: ScrollContainer -> MarginContainer -> VBoxContainer
 	ScrollContainer *scroll_container = memnew(ScrollContainer);
 	add_child(scroll_container);
 	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-	
-	MarginContainer *margin_container = memnew(MarginContainer);
-	scroll_container->add_child(margin_container);
-	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	// Match item_definition_editor margin pattern: 8,8,0,8
-	margin_container->add_theme_constant_override("margin_left", 8);
-	margin_container->add_theme_constant_override("margin_top", 8);
-	margin_container->add_theme_constant_override("margin_right", 0);
-	margin_container->add_theme_constant_override("margin_bottom", 8);
 
 	main_vbox = memnew(VBoxContainer);
-	margin_container->add_child(main_vbox);
+	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	scroll_container->add_child(main_vbox);
 
 	// Header section - using pattern from item_definition_editor
 	header_hbox = memnew(HBoxContainer);

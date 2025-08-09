@@ -22,7 +22,6 @@
 #include <godot_cpp/classes/text_edit.hpp>
 #include <godot_cpp/classes/check_box.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
-#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/v_separator.hpp>
 #include <godot_cpp/classes/v_separator.hpp>
@@ -48,7 +47,6 @@ private:
 
 	// UI Components matching addon structure
 	ScrollContainer* scroll_container;
-	MarginContainer* margin_container;
 	VBoxContainer* main_vbox;
 	
 	// Form components

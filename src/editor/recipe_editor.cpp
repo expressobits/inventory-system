@@ -68,35 +68,26 @@ void RecipeEditor::set_editor_plugin(EditorPlugin *p_plugin) {
 }
 
 void RecipeEditor::_create_ui() {
-	// Main margin container (matching GDScript structure)
-	margin_container = memnew(MarginContainer);
-	add_child(margin_container);
-	margin_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
-	margin_container->add_theme_constant_override("margin_left", 0);
-	margin_container->add_theme_constant_override("margin_top", 0);
-	margin_container->add_theme_constant_override("margin_right", 0);
-	margin_container->add_theme_constant_override("margin_bottom", 0);
-	margin_container->set_visible(false);
-	
-	// Second margin container
-	MarginContainer *inner_margin = memnew(MarginContainer);
-	margin_container->add_child(inner_margin);
-	inner_margin->add_theme_constant_override("margin_left", 0);
-	inner_margin->add_theme_constant_override("margin_top", 0);
-	inner_margin->add_theme_constant_override("margin_right", 0);
-	inner_margin->add_theme_constant_override("margin_bottom", 0);
-	
+	// Main scroll container
+	scroll_container = memnew(ScrollContainer);
+	add_child(scroll_container);
+	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	scroll_container->set_horizontal_scroll_mode(ScrollContainer::SCROLL_MODE_DISABLED);
+	scroll_container->set_visible(false);
+
 	// Main VBox container
-	main_container = memnew(VBoxContainer);
-	inner_margin->add_child(main_container);
-	
+	main_vbox = memnew(VBoxContainer);
+	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	scroll_container->add_child(main_vbox);
+
 	// First separator (at top, matching GDScript)
 	HSeparator *separator1 = memnew(HSeparator);
-	main_container->add_child(separator1);
+	main_vbox->add_child(separator1);
 	
 	// PRODUCTS SECTION (FIRST - matching GDScript layout)
 	HBoxContainer *products_section = memnew(HBoxContainer);
-	main_container->add_child(products_section);
+	main_vbox->add_child(products_section);
 	
 	Label *products_label = memnew(Label);
 	products_section->add_child(products_label);
@@ -115,11 +106,11 @@ void RecipeEditor::_create_ui() {
 	
 	// Separator
 	HSeparator *separator2 = memnew(HSeparator);
-	main_container->add_child(separator2);
+	main_vbox->add_child(separator2);
 	
 	// INGREDIENTS SECTION (SECOND)
 	HBoxContainer *ingredients_section = memnew(HBoxContainer);
-	main_container->add_child(ingredients_section);
+	main_vbox->add_child(ingredients_section);
 	
 	Label *ingredients_label = memnew(Label);
 	ingredients_section->add_child(ingredients_label);
@@ -138,11 +129,11 @@ void RecipeEditor::_create_ui() {
 	
 	// Separator
 	HSeparator *separator3 = memnew(HSeparator);
-	main_container->add_child(separator3);
+	main_vbox->add_child(separator3);
 	
 	// REQUIRED ITEMS SECTION (THIRD)
 	HBoxContainer *required_section = memnew(HBoxContainer);
-	main_container->add_child(required_section);
+	main_vbox->add_child(required_section);
 	
 	Label *required_label = memnew(Label);
 	required_section->add_child(required_label);
@@ -161,11 +152,11 @@ void RecipeEditor::_create_ui() {
 	
 	// Separator
 	HSeparator *separator4 = memnew(HSeparator);
-	main_container->add_child(separator4);
+	main_vbox->add_child(separator4);
 	
 	// TIME TO CRAFT SECTION (FOURTH)
 	HBoxContainer *time_section = memnew(HBoxContainer);
-	main_container->add_child(time_section);
+	main_vbox->add_child(time_section);
 	
 	Label *time_label = memnew(Label);
 	time_section->add_child(time_label);
@@ -181,7 +172,7 @@ void RecipeEditor::_create_ui() {
 	
 	// CRAFT STATION TYPE SECTION (LAST)
 	HBoxContainer *station_section = memnew(HBoxContainer);
-	main_container->add_child(station_section);
+	main_vbox->add_child(station_section);
 	station_section->set_custom_minimum_size(Vector2(0, 32));
 	
 	Label *station_label = memnew(Label);
@@ -196,7 +187,7 @@ void RecipeEditor::_create_ui() {
 	
 	// Spacer at bottom
 	Control *spacer = memnew(Control);
-	main_container->add_child(spacer);
+	main_vbox->add_child(spacer);
 	spacer->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 }
 
@@ -235,12 +226,12 @@ void RecipeEditor::load_recipe(const Ref<Recipe> &p_recipe, InventoryDatabase *p
 	database = p_database;
 	
 	if (recipe.is_null() || !database) {
-		margin_container->set_visible(false);
+		scroll_container->set_visible(false);
 		return;
 	}
-	
-	margin_container->set_visible(true);
-	
+
+	scroll_container->set_visible(true);
+
 	// Update UI with recipe data
 	time_to_craft_spin_box->set_value(recipe->get_time_to_craft());
 	

@@ -66,7 +66,6 @@ ItemDefinitionEditor::ItemDefinitionEditor() {
 	
 	// Initialize UI pointers
 	scroll_container = nullptr;
-	margin_container = nullptr;
 	main_vbox = nullptr;
 	resource_id_editor = nullptr;
 	item_name_text_edit = nullptr;
@@ -99,18 +98,10 @@ void ItemDefinitionEditor::_create_ui() {
 	scroll_container->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
 	scroll_container->set_visible(false);
 
-	margin_container = memnew(MarginContainer);
-	scroll_container->add_child(margin_container);
-	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	// Match addon margin constants - ItemDefinitionEditor uses 8,8,0,8 
-	margin_container->add_theme_constant_override("margin_left", 8);
-	margin_container->add_theme_constant_override("margin_top", 8);
-	margin_container->add_theme_constant_override("margin_right", 0);
-	margin_container->add_theme_constant_override("margin_bottom", 8);
-
 	main_vbox = memnew(VBoxContainer);
-	margin_container->add_child(main_vbox);
+	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	scroll_container->add_child(main_vbox);
 
 	// Create top section: HBoxContainer2 with side-by-side layout
 	HBoxContainer* top_hbox = memnew(HBoxContainer);

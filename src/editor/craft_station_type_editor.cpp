@@ -66,20 +66,11 @@ void CraftStationTypeEditor::_create_ui() {
 	scroll_container->set_horizontal_scroll_mode(ScrollContainer::SCROLL_MODE_DISABLED);
 	scroll_container->set_visible(false);
 
-	// Margin container
-	margin_container = memnew(MarginContainer);
-	scroll_container->add_child(margin_container);
-	margin_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	margin_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
-	// Match addon margin constants - CraftStationTypeEditor uses 8,8,8,8 like ItemCategoryEditor
-	margin_container->add_theme_constant_override("margin_left", 8);
-	margin_container->add_theme_constant_override("margin_top", 8);
-	margin_container->add_theme_constant_override("margin_right", 8);
-	margin_container->add_theme_constant_override("margin_bottom", 8);
-
 	// Main VBox container
 	main_vbox = memnew(VBoxContainer);
-	margin_container->add_child(main_vbox);
+	main_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	main_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	scroll_container->add_child(main_vbox);
 
 	// Resource ID - matches addon structure
 	resource_id_editor = memnew(ResourceIDEditor);
