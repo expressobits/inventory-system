@@ -141,6 +141,7 @@ private:
 	void _on_craft_station_types_tab_pressed();
 	void _on_item_categories_tab_pressed();
 	void _on_loots_tab_pressed();
+	void _set_current_tab_and_update_buttons(int tab_index);
 
 	void _remove_item_definition(const Ref<ItemDefinition> &p_item_def);
 	void _duplicate_item_definition(const Ref<ItemDefinition> &p_item_def);

@@ -32,6 +32,7 @@
 #include <godot_cpp/classes/json.hpp>
 #include <godot_cpp/classes/file_access.hpp>
 #include <godot_cpp/classes/v_separator.hpp>
+#include <godot_cpp/classes/os.hpp>
 
 using namespace godot;
 
@@ -147,18 +148,6 @@ void InventoryEditor::_create_ui() {
 	database_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_menu_id_pressed));
 	database_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_database_editor.svg"));
 
-	// Misc MenuButton - inspired by LimboAI's misc menu
-	misc_button = memnew(MenuButton);
-	toolbar->add_child(misc_button);
-	misc_button->set_custom_minimum_size(Vector2(28, 28));
-	misc_button->set_text("Misc");
-	misc_button->set_tooltip_text("Miscellaneous Options");
-	misc_button->set_theme_type_variation("FlatMenuButton");
-	misc_button->set_flat(false);
-	misc_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_misc_menu_pressed));
-	misc_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_misc_menu_id_pressed));
-	misc_button->set_button_icon(get_theme_icon("Tools", "EditorIcons"));
-	
 	// VSeparator after database button
 	VSeparator *sep_after_db = memnew(VSeparator);
 	toolbar->add_child(sep_after_db);
@@ -300,6 +289,18 @@ void InventoryEditor::_create_ui() {
 	title_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	title_label->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_RIGHT);
 	title_label->set_vertical_alignment(VERTICAL_ALIGNMENT_CENTER);
+	
+	// About MenuButton - moved to end of toolbar as requested
+	misc_button = memnew(MenuButton);
+	toolbar->add_child(misc_button);
+	misc_button->set_custom_minimum_size(Vector2(28, 28));
+	misc_button->set_text("About");
+	misc_button->set_tooltip_text("About and Documentation");
+	misc_button->set_theme_type_variation("FlatMenuButton");
+	misc_button->set_flat(false);
+	misc_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_misc_menu_pressed));
+	misc_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_misc_menu_id_pressed));
+	misc_button->set_button_icon(get_theme_icon("Tools", "EditorIcons"));
 	
 	// Content MarginContainer - matches .tscn margins and visibility
 	content = memnew(MarginContainer);
@@ -476,7 +477,7 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		
 		// Set the first tab as active
 		if (item_definitions_tab_button) item_definitions_tab_button->set_pressed(true);
-		tab_container->set_current_tab(0);
+		_set_current_tab_and_update_buttons(0);
 		
 		title_label->set_text(database_path.is_empty() ? "Untitled Database" : database_path);
 		
@@ -650,11 +651,9 @@ void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
 void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
 	switch (p_id) {
 		case MISC_ONLINE_DOCUMENTATION: {
-			// Open online documentation - placeholder URL
-			String url = "https://expressobits.com/inventory-system";
-			if (editor_plugin) {
-				editor_plugin->get_editor_interface()->get_base_control()->call("request_url", url);
-			}
+			// Open GitHub repository for documentation
+			String url = "https://github.com/expressobits/inventory-system";
+			OS::get_singleton()->shell_open(url);
 		} break;
 		case MISC_PROJECT_SETTINGS: {
 			// Open project settings
@@ -739,7 +738,7 @@ void InventoryEditor::_on_new_item_button_pressed() {
 	database->add_new_item(new_item);
 	_save_file();
 	_load_database(database);
-	tab_container->set_current_tab(0);
+	_set_current_tab_and_update_buttons(0);
 }
 
 void InventoryEditor::_on_new_recipe_button_pressed() {
@@ -749,7 +748,7 @@ void InventoryEditor::_on_new_recipe_button_pressed() {
 	database->add_recipe();
 	_save_file();
 	_load_database(database);
-	tab_container->set_current_tab(1);
+	_set_current_tab_and_update_buttons(1);
 }
 
 void InventoryEditor::_on_new_craft_station_button_pressed() {
@@ -760,7 +759,7 @@ void InventoryEditor::_on_new_craft_station_button_pressed() {
 	database->add_craft_station_type();
 	_save_file();
 	_load_database(database);
-	tab_container->set_current_tab(2);
+	_set_current_tab_and_update_buttons(2);
 }
 
 void InventoryEditor::_on_new_category_button_pressed() {
@@ -771,7 +770,7 @@ void InventoryEditor::_on_new_category_button_pressed() {
 	database->add_item_category();
 	_save_file();
 	_load_database(database);
-	tab_container->set_current_tab(3);
+	_set_current_tab_and_update_buttons(3);
 }
 
 void InventoryEditor::_on_new_loot_button_pressed() {
@@ -782,7 +781,7 @@ void InventoryEditor::_on_new_loot_button_pressed() {
 	database->add_loot();
 	_save_file();
 	_load_database(database);
-	tab_container->set_current_tab(4);
+	_set_current_tab_and_update_buttons(4);
 }
 
 void InventoryEditor::_remove_item_definition(const Ref<ItemDefinition> &p_item_def) {
@@ -825,7 +824,7 @@ void InventoryEditor::_duplicate_recipe(const Ref<Recipe> &p_recipe) {
 	_save_file();
 	_load_database(database);
 	// Switch to recipes tab and select the new recipe
-	tab_container->set_current_tab(1);
+	_set_current_tab_and_update_buttons(1);
 }
 
 void InventoryEditor::_remove_craft_station_type(const Ref<CraftStationType> &p_craft_station_type) {
@@ -853,7 +852,7 @@ void InventoryEditor::_duplicate_craft_station_type(const Ref<CraftStationType> 
 	_save_file();
 	_load_database(database);
 	// Switch to craft station types tab
-	tab_container->set_current_tab(2);
+	_set_current_tab_and_update_buttons(2);
 }
 
 void InventoryEditor::_remove_item_category(const Ref<ItemCategory> &p_item_category) {
@@ -881,7 +880,7 @@ void InventoryEditor::_duplicate_item_category(const Ref<ItemCategory> &p_item_c
 	_save_file();
 	_load_database(database);
 	// Switch to item categories tab
-	tab_container->set_current_tab(3);
+	_set_current_tab_and_update_buttons(3);
 }
 
 void InventoryEditor::_remove_loot(const Ref<Loot> &p_loot) {
@@ -900,20 +899,24 @@ void InventoryEditor::_duplicate_loot(const Ref<Loot> &p_loot) {
 	_save_file();
 	_load_database(database);
 	// Switch to loots tab
-	tab_container->set_current_tab(4);
+	_set_current_tab_and_update_buttons(4);
 }
 
-void InventoryEditor::_on_tab_button_pressed(int tab_index) {
+void InventoryEditor::_set_current_tab_and_update_buttons(int tab_index) {
 	if (tab_container && tab_index >= 0 && tab_index < tab_container->get_tab_count()) {
 		tab_container->set_current_tab(tab_index);
 		
-		// Update button states - make sure the correct button is pressed
+		// Update button pressed states
 		if (item_definitions_tab_button) item_definitions_tab_button->set_pressed(tab_index == 0);
 		if (recipes_tab_button) recipes_tab_button->set_pressed(tab_index == 1);
 		if (craft_station_types_tab_button) craft_station_types_tab_button->set_pressed(tab_index == 2);
 		if (item_categories_tab_button) item_categories_tab_button->set_pressed(tab_index == 3);
 		if (loots_tab_button) loots_tab_button->set_pressed(tab_index == 4);
 	}
+}
+
+void InventoryEditor::_on_tab_button_pressed(int tab_index) {
+	_set_current_tab_and_update_buttons(tab_index);
 }
 
 void InventoryEditor::_on_item_definitions_tab_pressed() {
