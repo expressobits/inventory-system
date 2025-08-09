@@ -452,7 +452,8 @@ void InventoryEditor::_build_misc_menu() {
 
 	menu->add_icon_item(get_theme_icon("Help", "EditorIcons"), "Online Documentation", MISC_ONLINE_DOCUMENTATION);
 	menu->add_separator();
-	menu->add_icon_item(get_theme_icon("Tools", "EditorIcons"), "Project Settings...", MISC_PROJECT_SETTINGS);
+	menu->add_icon_item(get_theme_icon("ExternalLink", "EditorIcons"), "GitHub Repository", MISC_GITHUB_REPOSITORY);
+	menu->add_icon_item(get_theme_icon("Warning", "EditorIcons"), "Report Bug", MISC_REPORT_BUG);
 	menu->add_separator();
 	menu->add_icon_item(get_theme_icon("Godot", "EditorIcons"), "About Inventory System", MISC_ABOUT_INVENTORY_SYSTEM);
 }
@@ -651,15 +652,19 @@ void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
 void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
 	switch (p_id) {
 		case MISC_ONLINE_DOCUMENTATION: {
-			// Open GitHub repository for documentation
+			// Open documentation website
+			String url = "https://expressobits.com/inventory-system/";
+			OS::get_singleton()->shell_open(url);
+		} break;
+		case MISC_GITHUB_REPOSITORY: {
+			// Open GitHub repository
 			String url = "https://github.com/expressobits/inventory-system";
 			OS::get_singleton()->shell_open(url);
 		} break;
-		case MISC_PROJECT_SETTINGS: {
-			// Open project settings
-			if (editor_plugin) {
-				editor_plugin->get_editor_interface()->get_base_control()->call("open_settings");
-			}
+		case MISC_REPORT_BUG: {
+			// Open GitHub issues page for bug reports
+			String url = "https://github.com/expressobits/inventory-system/issues";
+			OS::get_singleton()->shell_open(url);
 		} break;
 		case MISC_ABOUT_INVENTORY_SYSTEM: {
 			// Show about dialog - simple implementation
