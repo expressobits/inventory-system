@@ -84,7 +84,6 @@ private:
 
 protected:
 	static void _bind_methods();
-	void _notification(int p_what);
 
 public:
 	void set_editor_plugin(EditorPlugin *p_plugin);
