@@ -16,9 +16,7 @@
 using namespace godot;
 
 void BaseResourceEditor::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("_create_ui"), &BaseResourceEditor::_create_ui);
-	ClassDB::bind_method(D_METHOD("_connect_signals"), &BaseResourceEditor::_connect_signals);
-	ClassDB::bind_method(D_METHOD("_disconnect_signals"), &BaseResourceEditor::_disconnect_signals);
+	// Do not bind protected virtual methods to GDScript.
 }
 
 BaseResourceEditor::BaseResourceEditor() {
