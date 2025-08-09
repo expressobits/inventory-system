@@ -13,23 +13,19 @@
 #ifndef LOOT_EDITOR_H
 #define LOOT_EDITOR_H
 
-#include <godot_cpp/classes/control.hpp>
-#include <godot_cpp/classes/editor_plugin.hpp>
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/h_split_container.hpp>
 #include <godot_cpp/classes/button.hpp>
-#include <godot_cpp/classes/scroll_container.hpp>
-#include <godot_cpp/classes/margin_container.hpp>
 #include <godot_cpp/classes/item_list.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
 #include <godot_cpp/classes/option_button.hpp>
 #include <godot_cpp/classes/popup_menu.hpp>
+#include "base_resource_editor.h"
 #include "resource_id_editor.h"
 #include "item_stack_selector.h"
-#include "base_inventory_editor.h"
 
 using namespace godot;
 
@@ -37,8 +33,8 @@ class InventoryDatabase;
 class Loot;
 class LootItem;
 
-class LootEditor : public Control {
-	GDCLASS(LootEditor, Control);
+class LootEditor : public BaseResourceEditor {
+	GDCLASS(LootEditor, BaseResourceEditor);
 
 private:
 	// Data
@@ -47,7 +43,6 @@ private:
 	EditorPlugin *editor_plugin;
 
 	// UI Components
-	VBoxContainer *main_vbox;
 	HBoxContainer *header_hbox;
 	ResourceIDEditor *id_editor;
 	LineEdit *name_line_edit;
