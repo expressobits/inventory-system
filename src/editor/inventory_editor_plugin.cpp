@@ -453,7 +453,7 @@ void InventoryEditor::_build_misc_menu() {
 	menu->add_icon_item(get_theme_icon("Help", "EditorIcons"), "Online Documentation", MISC_ONLINE_DOCUMENTATION);
 	menu->add_separator();
 	menu->add_icon_item(get_theme_icon("ExternalLink", "EditorIcons"), "GitHub Repository", MISC_GITHUB_REPOSITORY);
-	menu->add_icon_item(get_theme_icon("Warning", "EditorIcons"), "Report Bug", MISC_REPORT_BUG);
+	menu->add_icon_item(get_theme_icon("ExternalLink", "EditorIcons"), "Report Bug", MISC_REPORT_BUG);
 	menu->add_separator();
 	menu->add_icon_item(get_theme_icon("Godot", "EditorIcons"), "About Inventory System", MISC_ABOUT_INVENTORY_SYSTEM);
 }
