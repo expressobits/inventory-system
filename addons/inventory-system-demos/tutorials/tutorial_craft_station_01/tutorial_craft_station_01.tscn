@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmd2sow41fo62"]
+
+[ext_resource type="Script" uid="uid://r8ptmswlyj3p" path="res://addons/inventory-system-demos/tutorials/tutorial_craft_station_01/tutorial_craft_station_01.gd" id="1_t42fd"]
+[ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="2_1ifc2"]
+
+[node name="TutorialCraftStation01" type="Node3D"]
+script = ExtResource("1_t42fd")
+
+[node name="CraftStation" type="CraftStation" parent="."]
+input_inventories = Array[NodePath]([NodePath("Inventory")])
+output_inventories = Array[NodePath]([NodePath("Inventory")])
+type_id = "campfire"
+auto_craft = true
+database = ExtResource("2_1ifc2")
+
+[node name="Inventory" type="Inventory" parent="CraftStation"]
+database = ExtResource("2_1ifc2")
