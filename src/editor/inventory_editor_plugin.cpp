@@ -251,7 +251,6 @@ void InventoryEditor::_create_ui() {
 	new_loot_button = memnew(Button);
 	toolbar->add_child(new_loot_button);
 	new_loot_button->set_custom_minimum_size(Vector2(28, 28));
-	// new_loot_button->set_text("New Loot");
 	new_loot_button->set_tooltip_text("New Loot");
 	new_loot_button->set_theme_type_variation("FlatButton");
 	new_loot_button->set_disabled(true);
