@@ -25,6 +25,7 @@
 
 #ifdef TOOLS_ENABLED
 #include "editor/base_inventory_editor.h"
+#include "editor/base_resource_editor.h"
 #include "editor/icon_selector.h"
 #include "editor/resource_id_editor.h"
 #include "editor/item_stack_selector.h"
@@ -80,6 +81,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 	if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {
 		GDREGISTER_INTERNAL_CLASS(InventoryEditor);
 		GDREGISTER_INTERNAL_CLASS(BaseInventoryEditor);
+		GDREGISTER_INTERNAL_CLASS(BaseResourceEditor);
 		GDREGISTER_INTERNAL_CLASS(IconSelector);
 		GDREGISTER_INTERNAL_CLASS(ResourceIDEditor);
 		GDREGISTER_INTERNAL_CLASS(ItemStackSelector);
