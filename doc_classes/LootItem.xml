@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <class name="LootItem" inherits="Resource" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
 	<brief_description>
-		Resource representing a single item entry in a loot table with weight and amount ranges.
+		Resource representing a single item entry in a loot table with chance and amount ranges.
 	</brief_description>
 	<description>
-		The LootItem resource represents an individual entry in a [Loot] table. It defines which item can be generated, its probability weight relative to other items in the same loot table, and the range of amounts that can be generated.
+		The LootItem resource represents an individual entry in a [Loot] table. It defines which item can be generated, its probability chance (0.0 to 1.0), and the range of amounts that can be generated.
 		
-		Higher weight values make the item more likely to be selected during random generation. The min_amount and max_amount define the range for random quantity generation when this item is selected.
+		The chance value represents the independent probability of this item being selected, similar to the Minetest loot system. A chance of 0.5 means 50% probability, and 1.0 means 100% probability. The min_amount and max_amount define the range for random quantity generation when this item is selected.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -22,8 +22,8 @@
 		<member name="min_amount" type="int" setter="set_min_amount" getter="get_min_amount" default="1">
 			The minimum amount of this item that will be generated when this loot entry is selected. The actual amount will be randomly chosen between this value and [member max_amount] (inclusive).
 		</member>
-		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">
-			The probability weight of this loot item relative to other items in the same [Loot] table. Higher values increase the chance of this item being selected. For example, an item with weight 10.0 is twice as likely to be selected as an item with weight 5.0.
+		<member name="chance" type="float" setter="set_chance" getter="get_chance" default="1.0">
+			The probability chance (0.0 to 1.0) of this loot item being selected independently. A value of 0.5 represents a 50% chance, and 1.0 represents a 100% chance. This follows the Minetest loot system approach where each item has an independent probability rather than relative weights.
 		</member>
 	</members>
 </class>

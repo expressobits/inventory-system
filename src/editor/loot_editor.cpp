@@ -32,7 +32,7 @@ void LootEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_items_list_item_clicked", "index", "position", "mouse_button_index"), &LootEditor::_on_items_list_item_clicked);
 	ClassDB::bind_method(D_METHOD("_on_context_menu_id_pressed", "id"), &LootEditor::_on_context_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_item_stack_changed", "item_stack"), &LootEditor::_on_item_stack_changed);
-	ClassDB::bind_method(D_METHOD("_on_weight_value_changed", "value"), &LootEditor::_on_weight_value_changed);
+	ClassDB::bind_method(D_METHOD("_on_chance_value_changed", "value"), &LootEditor::_on_chance_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_min_amount_value_changed", "value"), &LootEditor::_on_min_amount_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_max_amount_value_changed", "value"), &LootEditor::_on_max_amount_value_changed);
 
@@ -101,19 +101,19 @@ void LootEditor::_create_ui() {
 	name_line_edit->connect("text_changed", callable_mp(this, &LootEditor::_on_name_text_changed));
 
 	// Total weight field - HBoxContainer following item_definition_editor pattern
-	HBoxContainer *weight_hbox = memnew(HBoxContainer);
-	left_vbox->add_child(weight_hbox);
-	weight_hbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	HBoxContainer *chance_hbox = memnew(HBoxContainer);
+	left_vbox->add_child(chance_hbox);
+	chance_hbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 
-	Label *weight_info_label = memnew(Label);
-	weight_hbox->add_child(weight_info_label);
-	weight_info_label->set_text("Total Weight");
-	weight_info_label->set_custom_minimum_size(Vector2(160, 0));
+	Label *chance_info_label = memnew(Label);
+	chance_hbox->add_child(chance_info_label);
+	chance_info_label->set_text("Items with independent chances (0.0-1.0)");
+	chance_info_label->set_custom_minimum_size(Vector2(160, 0));
 
-	total_weight_label = memnew(Label);
-	weight_hbox->add_child(total_weight_label);
-	total_weight_label->set_text("0.0");
-	total_weight_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	total_chance_label = memnew(Label);
+	chance_hbox->add_child(total_chance_label);
+	total_chance_label->set_text("Each item has independent probability");
+	total_chance_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
 	// Spacer Control matching item_definition_editor
 	Control *spacer = memnew(Control);
@@ -191,23 +191,23 @@ void LootEditor::_create_ui() {
 	item_stack_selector->set_show_quantity(false); // Hide quantity for loot editor
 	item_stack_selector->connect("changed", callable_mp(this, &LootEditor::_on_item_stack_changed));
 
-	// Weight
-	weight_hbox = memnew(HBoxContainer);
-	item_details_vbox->add_child(weight_hbox);
+	// Chance section (instead of weight)
+	chance_hbox = memnew(HBoxContainer);
+	item_details_vbox->add_child(chance_hbox);
 
-	weight_label = memnew(Label);
-	weight_hbox->add_child(weight_label);
-	weight_label->set_text("Weight:");
-	weight_label->set_custom_minimum_size(Vector2(160, 0)); // Match other editors
+	chance_label = memnew(Label);
+	chance_hbox->add_child(chance_label);
+	chance_label->set_text("Chance:");
+	chance_label->set_custom_minimum_size(Vector2(160, 0)); // Match other editors
 
-	weight_spinbox = memnew(SpinBox);
-	weight_hbox->add_child(weight_spinbox);
-	weight_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	weight_spinbox->set_min(0.0);
-	weight_spinbox->set_max(999999.0);
-	weight_spinbox->set_step(0.1);
-	weight_spinbox->set_value(1.0);
-	weight_spinbox->connect("value_changed", callable_mp(this, &LootEditor::_on_weight_value_changed));
+	chance_spinbox = memnew(SpinBox);
+	chance_hbox->add_child(chance_spinbox);
+	chance_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	chance_spinbox->set_min(0.0);
+	chance_spinbox->set_max(1.0);
+	chance_spinbox->set_step(0.01);
+	chance_spinbox->set_value(1.0);
+	chance_spinbox->connect("value_changed", callable_mp(this, &LootEditor::_on_chance_value_changed));
 
 	// Min and Max amount - combined in one horizontal container
 	HBoxContainer *amount_hbox = memnew(HBoxContainer);
@@ -311,7 +311,7 @@ void LootEditor::_update_ui() {
 		name_line_edit->set_text("");
 		items_list->clear();
 		item_details_vbox->set_visible(false);
-		_update_total_weight();
+		_update_total_chance();
 		return;
 	}
 
@@ -320,7 +320,7 @@ void LootEditor::_update_ui() {
 	}
 	name_line_edit->set_text(current_loot->get_name());
 	_update_items_list();
-	_update_total_weight();
+	_update_total_chance();
 }
 
 void LootEditor::_update_items_list() {
@@ -350,7 +350,7 @@ void LootEditor::_update_items_list() {
 			}
 			
 			// Show weight and min-max amount range
-			display_text += " (weight: " + String::num_real(item->get_weight()) + ") ";
+			display_text += " (chance: " + String::num_real(item->get_chance()) + ") ";
 			if (item->get_min_amount() == item->get_max_amount()) {
 				display_text += "(" + String::num_int64(item->get_min_amount()) + ")";
 			} else {
@@ -387,17 +387,15 @@ void LootEditor::_update_item_details() {
 		item_stack_selector->setup(item_stack, database);
 	}
 	
-	weight_spinbox->set_value(selected_item->get_weight());
+	chance_spinbox->set_value(selected_item->get_chance());
 	min_amount_spinbox->set_value(selected_item->get_min_amount());
 	max_amount_spinbox->set_value(selected_item->get_max_amount());
 }
 
-void LootEditor::_update_total_weight() {
-	float total = 0.0;
-	if (current_loot.is_valid()) {
-		total = current_loot->get_total_weight();
-	}
-	total_weight_label->set_text(String::num_real(total));
+void LootEditor::_update_total_chance() {
+	// In chance-based system, each item has independent probability
+	// No total calculation needed - just update the info label
+	total_chance_label->set_text("Each item has independent probability");
 }
 
 Ref<LootItem> LootEditor::_get_selected_loot_item() {
@@ -430,7 +428,7 @@ void LootEditor::_on_add_item_button_pressed() {
 
 	Ref<LootItem> new_item = memnew(LootItem);
 	new_item->set_item_id("");
-	new_item->set_weight(1.0);
+	new_item->set_chance(1.0);
 	new_item->set_min_amount(1);
 	new_item->set_max_amount(1);
 
@@ -439,7 +437,7 @@ void LootEditor::_on_add_item_button_pressed() {
 	current_loot->set_items(items);
 
 	_update_items_list();
-	_update_total_weight();
+	_update_total_chance();
 	
 	// Select the new item
 	if (items_list->get_item_count() > 0) {
@@ -462,7 +460,7 @@ void LootEditor::_on_remove_item_button_pressed() {
 		items.remove_at(index);
 		current_loot->set_items(items);
 		_update_items_list();
-		_update_total_weight();
+		_update_total_chance();
 		item_details_vbox->set_visible(false);
 		emit_signal("changed", current_loot);
 	}
@@ -508,7 +506,7 @@ void LootEditor::_on_context_menu_id_pressed(int p_id) {
 		case BaseInventoryEditor::ITEM_DUPLICATE: {
 			Ref<LootItem> new_item = memnew(LootItem);
 			new_item->set_item_id(selected_item->get_item_id());
-			new_item->set_weight(selected_item->get_weight());
+			new_item->set_chance(selected_item->get_chance());
 			new_item->set_min_amount(selected_item->get_min_amount());
 			new_item->set_max_amount(selected_item->get_max_amount());
 
@@ -517,7 +515,7 @@ void LootEditor::_on_context_menu_id_pressed(int p_id) {
 			current_loot->set_items(items);
 
 			_update_items_list();
-			_update_total_weight();
+			_update_total_chance();
 			emit_signal("changed", current_loot);
 		} break;
 	}
@@ -534,15 +532,15 @@ void LootEditor::_on_item_stack_changed(const Ref<ItemStack> &p_item_stack) {
 	emit_signal("changed", current_loot);
 }
 
-void LootEditor::_on_weight_value_changed(double p_value) {
+void LootEditor::_on_chance_value_changed(double p_value) {
 	Ref<LootItem> selected_item = _get_selected_loot_item();
 	if (selected_item.is_null()) {
 		return;
 	}
 
-	selected_item->set_weight(p_value);
+	selected_item->set_chance(p_value);
 	_update_items_list();
-	_update_total_weight();
+	_update_total_chance();
 	emit_signal("changed", current_loot);
 }
 

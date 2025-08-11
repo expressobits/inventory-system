@@ -46,7 +46,7 @@ private:
 	HBoxContainer *header_hbox;
 	ResourceIDEditor *id_editor;
 	LineEdit *name_line_edit;
-	Label *total_weight_label;
+	Label *total_chance_label;
 	
 	// Items section with horizontal split
 	HSplitContainer *items_hsplit;
@@ -63,9 +63,9 @@ private:
 	VBoxContainer *item_details_vbox;
 	Label *item_details_label;
 	ItemStackSelector *item_stack_selector;
-	HBoxContainer *weight_hbox;
-	Label *weight_label;
-	SpinBox *weight_spinbox;
+	HBoxContainer *chance_hbox;
+	Label *chance_label;
+	SpinBox *chance_spinbox;
 	Label *min_amount_label;
 	SpinBox *min_amount_spinbox;
 	Label *max_amount_label;
@@ -78,7 +78,7 @@ private:
 	void _update_ui();
 	void _update_items_list();
 	void _update_item_details();
-	void _update_total_weight();
+	void _update_total_chance();
 	void _update_item_id_options();
 
 	// Signal handlers
@@ -91,7 +91,7 @@ private:
 	void _on_items_list_item_rmb_selected(int p_index, const Vector2 &p_position);
 	void _on_context_menu_id_pressed(int p_id);
 	void _on_item_stack_changed(const Ref<ItemStack> &p_item_stack);
-	void _on_weight_value_changed(double p_value);
+	void _on_chance_value_changed(double p_value);
 	void _on_min_amount_value_changed(double p_value);
 	void _on_max_amount_value_changed(double p_value);
 

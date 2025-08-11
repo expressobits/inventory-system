@@ -4,9 +4,9 @@
 		Node that generates random loot from loot resources into target inventories.
 	</brief_description>
 	<description>
-		The LootGenerator node provides functionality for generating random items from weighted loot resources and placing them into target inventories. It inherits from [NodeInventories] and can access the inventory database for item validation. This is commonly used in survival games for treasure chests, enemy drops, and resource gathering mechanics.
+		The LootGenerator node provides functionality for generating random items from chance-based loot resources and placing them into target inventories. It inherits from [NodeInventories] and can access the inventory database for item validation. This is commonly used in survival games for treasure chests, enemy drops, and resource gathering mechanics.
 		
-		The loot generation uses weighted random selection where items with higher weights are more likely to be selected. Each loot item can specify minimum and maximum amounts to generate random quantities.
+		The loot generation uses independent chance-based selection where each item has its own probability (0.0 to 1.0) of being selected, similar to the Minetest loot system. Each loot item can specify minimum and maximum amounts to generate random quantities.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -33,7 +33,7 @@
 	</methods>
 	<members>
 		<member name="loot_id" type="String" setter="set_loot_id" getter="get_loot_id">
-			The ID of the [Loot] resource containing the weighted list of items that can be generated. This ID references a loot resource in the inventory database that defines which items can be generated and their relative probabilities.
+			The ID of the [Loot] resource containing the list of items with independent chance probabilities that can be generated. This ID references a loot resource in the inventory database that defines which items can be generated and their individual probabilities.
 		</member>
 		<member name="target_inventory_path" type="NodePath" setter="set_target_inventory_path" getter="get_target_inventory_path" default="NodePath(&quot;&quot;)">
 			The [NodePath] to the target [Inventory] node where generated loot will be placed. The path should point to a valid Inventory node in the scene tree.
