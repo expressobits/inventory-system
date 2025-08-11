@@ -112,7 +112,6 @@ void LootEditor::_create_ui() {
 
 	total_weight_label = memnew(Label);
 	weight_hbox->add_child(total_weight_label);
-	total_weight_label->set_text("0.0");
 	total_weight_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
 	// Spacer Control matching item_definition_editor
@@ -146,7 +145,6 @@ void LootEditor::_create_ui() {
 
 	add_item_button = memnew(Button);
 	items_header->add_child(add_item_button);
-	add_item_button->set_text("+");
 	add_item_button->set_tooltip_text("Add Item");
 	add_item_button->set_custom_minimum_size(Vector2(32, 32));
 	add_item_button->set_flat(true); // Make button flat
@@ -154,7 +152,6 @@ void LootEditor::_create_ui() {
 
 	remove_item_button = memnew(Button);
 	items_header->add_child(remove_item_button);
-	remove_item_button->set_text("-");
 	remove_item_button->set_tooltip_text("Remove Item");
 	remove_item_button->set_custom_minimum_size(Vector2(32, 32));
 	remove_item_button->set_flat(true); // Make button flat
