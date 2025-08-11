@@ -51,6 +51,9 @@ func _connect_item_signals(new_item: ItemStack) -> void:
 	if !new_item.updated.is_connected(_refresh):
 		new_item.updated.connect(_refresh)
 
+	if inventory != null and !inventory.updated_stack.is_connected(_update_stack_index):
+		inventory.updated_stack.connect(_update_stack_index)
+
 
 func _disconnect_item_signals() -> void:
 	if !is_instance_valid(stack):
@@ -58,6 +61,9 @@ func _disconnect_item_signals() -> void:
 	
 	if stack.updated.is_connected(_refresh):
 		stack.updated.disconnect(_refresh)
+
+	if inventory != null and inventory.updated_stack.is_connected(_update_stack_index):
+		inventory.updated_stack.disconnect(_update_stack_index)
 
 
 func _ready() -> void:
@@ -76,6 +82,10 @@ func _ready() -> void:
 	if stack == null:
 		deactivate()
 	
+	_refresh()
+
+
+func _update_stack_index(stack_index: int) -> void:
 	_refresh()
 
 
@@ -101,9 +111,17 @@ func _update_stack_size() -> void:
 		return
 	var stack_size: int = stack.amount
 	if stack_size <= 1:
-		stack_size_label.text = ""
+		if stack.properties.has("durability"):
+			var definition: ItemDefinition = inventory.database.get_item(stack.item_id)
+			if definition != null:
+				var actual : float = stack.properties["durability"]
+				var total : float = definition.properties["durability"]
+				stack_size_label.text = str(int(actual/total * 100.0)) + "%"
+				return
 	else:
 		stack_size_label.text = "%d" % stack_size
+		return
+	stack_size_label.text = ""
 
 
 func _refresh() -> void:

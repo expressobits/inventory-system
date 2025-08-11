@@ -97,7 +97,7 @@ weight = 1.0
 size = Vector2i(1, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_axe.tscn",
-"durability": 100.0,
+"durability": 250.0,
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_axe.tscn"
 }
 dynamic_properties = Array[String](["durability"])
@@ -114,7 +114,7 @@ weight = 1.0
 size = Vector2i(2, 2)
 properties = {
 "dropped_item": "res://addons/inventory-system-demos/fps/dropped_items/stone_pickaxe.tscn",
-"durability": 100.0,
+"durability": 150.0,
 "hand_item": "res://addons/inventory-system-demos/fps/hand_items/stone_pickaxe.tscn"
 }
 dynamic_properties = Array[String](["durability"])

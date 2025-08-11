@@ -21,6 +21,7 @@ corner_radius_bottom_left = 3
 [node name="GridItemStackUI" type="Panel"]
 offset_right = 80.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p43b5")
 script = ExtResource("1_xrm8g")
 stack_style = SubResource("StyleBoxFlat_p43b5")
 hover_stack_style = ExtResource("2_jll5p")
@@ -62,7 +63,6 @@ anchor_bottom = 1.0
 offset_right = -3.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "12"
 horizontal_alignment = 2
 vertical_alignment = 2
 
