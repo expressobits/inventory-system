@@ -8,7 +8,6 @@ void Loot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_id"), &Loot::get_id);
 	ClassDB::bind_method(D_METHOD("set_name", "name"), &Loot::set_name);
 	ClassDB::bind_method(D_METHOD("get_name"), &Loot::get_name);
-	ClassDB::bind_method(D_METHOD("get_total_weight"), &Loot::get_total_weight);
 	ClassDB::bind_method(D_METHOD("get_random_item"), &Loot::get_random_item);
 	ClassDB::bind_method(D_METHOD("serialize"), &Loot::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Loot::deserialize);
@@ -48,47 +47,28 @@ String Loot::get_name() const {
 	return name;
 }
 
-float Loot::get_total_weight() const {
-	float total = 0.0;
-	for (int i = 0; i < items.size(); i++) {
-		Ref<LootItem> item = items[i];
-		if (item.is_valid()) {
-			total += item->get_weight();
-		}
-	}
-	return total;
-}
-
 Ref<LootItem> Loot::get_random_item() const {
 	if (items.size() == 0) {
 		return Ref<LootItem>();
 	}
 
-	float total_weight = get_total_weight();
-	if (total_weight <= 0.0) {
-		return Ref<LootItem>();
-	}
-
 	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
 	rng->randomize();
-	float random_value = rng->randf() * total_weight;
 
-	float cumulative_weight = 0.0;
+	// Minetest-style probability selection: 
+	// Each item has an independent chance to be selected
 	for (int i = 0; i < items.size(); i++) {
 		Ref<LootItem> item = items[i];
 		if (item.is_valid()) {
-			cumulative_weight += item->get_weight();
-			if (random_value <= cumulative_weight) {
+			// Check if random value (0.0 to 1.0) is <= item chance
+			float random_value = rng->randf();
+			if (random_value <= item->get_chance()) {
 				return item;
 			}
 		}
 	}
 
-	// Fallback to last item if something goes wrong
-	if (items.size() > 0) {
-		return items[items.size() - 1];
-	}
-	
+	// No item was selected based on chance
 	return Ref<LootItem>();
 }
 

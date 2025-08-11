@@ -10,7 +10,7 @@ class LootItem : public Resource {
 
 private:
 	String item_id = "";
-	float weight = 1.0;
+	float chance = 1.0;
 	int min_amount = 1;
 	int max_amount = 1;
 
@@ -22,8 +22,8 @@ public:
 	~LootItem();
 	void set_item_id(const String &new_item_id);
 	String get_item_id() const;
-	void set_weight(const float &new_weight);
-	float get_weight() const;
+	void set_chance(const float &new_chance);
+	float get_chance() const;
 	void set_min_amount(const int &new_min_amount);
 	int get_min_amount() const;
 	void set_max_amount(const int &new_max_amount);

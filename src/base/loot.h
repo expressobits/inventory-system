@@ -28,7 +28,6 @@ public:
 	String get_name() const;
 	
 	// Helper methods for loot generation
-	float get_total_weight() const;
 	Ref<LootItem> get_random_item() const;
 	
 	// Serialization methods

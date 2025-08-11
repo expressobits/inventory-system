@@ -3,8 +3,8 @@
 void LootItem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_item_id", "item_id"), &LootItem::set_item_id);
 	ClassDB::bind_method(D_METHOD("get_item_id"), &LootItem::get_item_id);
-	ClassDB::bind_method(D_METHOD("set_weight", "weight"), &LootItem::set_weight);
-	ClassDB::bind_method(D_METHOD("get_weight"), &LootItem::get_weight);
+	ClassDB::bind_method(D_METHOD("set_chance", "chance"), &LootItem::set_chance);
+	ClassDB::bind_method(D_METHOD("get_chance"), &LootItem::get_chance);
 	ClassDB::bind_method(D_METHOD("set_min_amount", "min_amount"), &LootItem::set_min_amount);
 	ClassDB::bind_method(D_METHOD("get_min_amount"), &LootItem::get_min_amount);
 	ClassDB::bind_method(D_METHOD("set_max_amount", "max_amount"), &LootItem::set_max_amount);
@@ -13,7 +13,7 @@ void LootItem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &LootItem::deserialize);
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "item_id"), "set_item_id", "get_item_id");
-	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_weight", "get_weight");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "chance"), "set_chance", "get_chance");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "min_amount"), "set_min_amount", "get_min_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_amount"), "set_max_amount", "get_max_amount");
 }
@@ -32,12 +32,12 @@ String LootItem::get_item_id() const {
 	return item_id;
 }
 
-void LootItem::set_weight(const float &new_weight) {
-	weight = new_weight;
+void LootItem::set_chance(const float &new_chance) {
+	chance = new_chance;
 }
 
-float LootItem::get_weight() const {
-	return weight;
+float LootItem::get_chance() const {
+	return chance;
 }
 
 void LootItem::set_min_amount(const int &new_min_amount) {
@@ -59,7 +59,7 @@ int LootItem::get_max_amount() const {
 Dictionary LootItem::serialize() const {
 	Dictionary data = Dictionary();
 	data["item_id"] = item_id;
-	data["weight"] = weight;
+	data["chance"] = chance;
 	data["min_amount"] = min_amount;
 	data["max_amount"] = max_amount;
 	return data;
@@ -69,8 +69,8 @@ void LootItem::deserialize(const Dictionary &data) {
 	if (data.has("item_id")) {
 		item_id = data["item_id"];
 	}
-	if (data.has("weight")) {
-		weight = data["weight"];
+	if (data.has("chance")) {
+		chance = data["chance"];
 	}
 	if (data.has("min_amount")) {
 		min_amount = data["min_amount"];
