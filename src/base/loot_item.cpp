@@ -9,6 +9,8 @@ void LootItem::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_min_amount"), &LootItem::get_min_amount);
 	ClassDB::bind_method(D_METHOD("set_max_amount", "max_amount"), &LootItem::set_max_amount);
 	ClassDB::bind_method(D_METHOD("get_max_amount"), &LootItem::get_max_amount);
+	ClassDB::bind_method(D_METHOD("set_property_ranges", "property_ranges"), &LootItem::set_property_ranges);
+	ClassDB::bind_method(D_METHOD("get_property_ranges"), &LootItem::get_property_ranges);
 	ClassDB::bind_method(D_METHOD("serialize"), &LootItem::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &LootItem::deserialize);
 
@@ -16,6 +18,7 @@ void LootItem::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_weight", "get_weight");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "min_amount"), "set_min_amount", "get_min_amount");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_amount"), "set_max_amount", "get_max_amount");
+	ADD_PROPERTY(PropertyInfo(Variant::DICTIONARY, "property_ranges"), "set_property_ranges", "get_property_ranges");
 }
 
 LootItem::LootItem() {
@@ -56,12 +59,23 @@ int LootItem::get_max_amount() const {
 	return max_amount;
 }
 
+void LootItem::set_property_ranges(const Dictionary &new_property_ranges) {
+	property_ranges = new_property_ranges;
+}
+
+Dictionary LootItem::get_property_ranges() const {
+	return property_ranges;
+}
+
 Dictionary LootItem::serialize() const {
 	Dictionary data = Dictionary();
 	data["item_id"] = item_id;
 	data["weight"] = weight;
 	data["min_amount"] = min_amount;
 	data["max_amount"] = max_amount;
+	if (!property_ranges.is_empty()) {
+		data["property_ranges"] = property_ranges;
+	}
 	return data;
 }
 
@@ -77,5 +91,8 @@ void LootItem::deserialize(const Dictionary &data) {
 	}
 	if (data.has("max_amount")) {
 		max_amount = data["max_amount"];
+	}
+	if (data.has("property_ranges")) {
+		property_ranges = data["property_ranges"];
 	}
 }

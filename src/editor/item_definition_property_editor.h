@@ -37,7 +37,6 @@ private:
     Button* delete_button;
     ConfirmationDialog* remove_confirmation_dialog;
 
-    Dictionary icons_name;
     String key;
     Variant value;
     bool is_dynamic_property;

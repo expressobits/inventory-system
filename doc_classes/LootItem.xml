@@ -4,9 +4,11 @@
 		Resource representing a single item entry in a loot table with weight and amount ranges.
 	</brief_description>
 	<description>
-		The LootItem resource represents an individual entry in a [Loot] table. It defines which item can be generated, its probability weight relative to other items in the same loot table, and the range of amounts that can be generated.
+		The LootItem resource represents an individual entry in a [Loot] table. It defines which item can be generated, its probability weight relative to other items in the same loot table, the range of amounts that can be generated, and optional property ranges for randomizing item properties.
 		
 		Higher weight values make the item more likely to be selected during random generation. The min_amount and max_amount define the range for random quantity generation when this item is selected.
+		
+		Property ranges allow you to specify randomized values for item properties when the item is generated. This enables Minecraft-style loot generation where items can have randomized durability, damage, enchantments, or other properties within configurable ranges.
 	</description>
 	<tutorials>
 	</tutorials>
@@ -21,6 +23,16 @@
 		</member>
 		<member name="min_amount" type="int" setter="set_min_amount" getter="get_min_amount" default="1">
 			The minimum amount of this item that will be generated when this loot entry is selected. The actual amount will be randomly chosen between this value and [member max_amount] (inclusive).
+		</member>
+		<member name="property_ranges" type="Dictionary" setter="set_property_ranges" getter="get_property_ranges" default="{}">
+			Dictionary defining randomized value ranges for item properties. Keys are property names (String), values are dictionaries defining the range configuration.
+			
+			For integer/float ranges: [code]{"min": value, "max": value}[/code]
+			For boolean values: [code]{"value": bool}[/code]
+			
+			Example: [code]{"durability": {"min": 30, "max": 50}, "enchanted": {"value": true}}[/code]
+			
+			When the loot item is generated, these ranges will override the default property values from the [ItemDefinition], providing randomized values within the specified ranges.
 		</member>
 		<member name="weight" type="float" setter="set_weight" getter="get_weight" default="1.0">
 			The probability weight of this loot item relative to other items in the same [Loot] table. Higher values increase the chance of this item being selected. For example, an item with weight 10.0 is twice as likely to be selected as an item with weight 5.0.
