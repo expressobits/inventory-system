@@ -26,16 +26,20 @@ Creating CraftStationTypes
 CraftStationType resources are created and managed through the :ref:`InventoryDatabase<class_InventoryDatabase>` editor:
 
 1. **Open the Database Editor**
-   
-   Open your inventory database resource in the Inspector. The database editor will appear at the bottom of the editor.
+
+   Open your inventory database resource in the Inspector. The database editor will appear at the top of the editor.
 
 2. **Navigate to CraftStationTypes**
    
    In the database editor, locate the "CraftStationTypes" section.
 
+   .. image:: ./images/craft_station_type_editor.png
+
 3. **Add New CraftStationType**
    
    Click the "+" button to create a new craft station type. A new entry will appear in the list.
+
+   .. image:: ./images/add_craft_station_type.png
 
 4. **Configure Properties**
    
@@ -44,6 +48,8 @@ CraftStationType resources are created and managed through the :ref:`InventoryDa
    - **ID**: A unique identifier for the station type
    - **Name**: A human-readable name for the station type
    - **Icon**: An optional icon representing the station type
+
+   .. image:: ./images/craft_station_type_editing.png
 
 CraftStationType Properties
 ===========================
@@ -99,6 +105,8 @@ When creating recipes, you can assign a CraftStationType to specify which type o
 2. Set the **Station** property to your desired CraftStationType
 3. Save the database
 
+.. image:: ./images/add_craft_station_type_to_recipe.png
+
 Only :ref:`CraftStation<class_CraftStation>` nodes with a matching type will include this recipe in their available recipes.
 
 Assigning to CraftStations
@@ -109,6 +117,10 @@ CraftStation nodes use the CraftStationType to filter which recipes they can pro
 1. Select your CraftStation node in the scene
 2. In the Inspector, set the **Type** property to your desired CraftStationType
 3. The station will automatically load matching recipes when the scene starts
+
+.. image:: ./images/setup_type_in_craft_station.png
+
+You can assign a CraftStationType to a CraftStation node in code like this:
 
 .. code-block:: gdscript
 
