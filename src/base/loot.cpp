@@ -8,14 +8,20 @@ void Loot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_id"), &Loot::get_id);
 	ClassDB::bind_method(D_METHOD("set_name", "name"), &Loot::set_name);
 	ClassDB::bind_method(D_METHOD("get_name"), &Loot::get_name);
+	ClassDB::bind_method(D_METHOD("set_min_rolls", "min_rolls"), &Loot::set_min_rolls);
+	ClassDB::bind_method(D_METHOD("get_min_rolls"), &Loot::get_min_rolls);
+	ClassDB::bind_method(D_METHOD("set_max_rolls", "max_rolls"), &Loot::set_max_rolls);
+	ClassDB::bind_method(D_METHOD("get_max_rolls"), &Loot::get_max_rolls);
 	ClassDB::bind_method(D_METHOD("get_total_weight"), &Loot::get_total_weight);
-	ClassDB::bind_method(D_METHOD("get_random_item"), &Loot::get_random_item);
+	ClassDB::bind_method(D_METHOD("get_random_items", "rolls"), &Loot::get_random_items, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("serialize"), &Loot::serialize);
 	ClassDB::bind_method(D_METHOD("deserialize", "data"), &Loot::deserialize);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items", PROPERTY_HINT_ARRAY_TYPE, "LootItem"), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "id"), "set_id", "get_id");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "min_rolls"), "set_min_rolls", "get_min_rolls");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_rolls"), "set_max_rolls", "get_max_rolls");
 }
 
 Loot::Loot() {
@@ -48,6 +54,22 @@ String Loot::get_name() const {
 	return name;
 }
 
+void Loot::set_min_rolls(const int &new_min_rolls) {
+	min_rolls = new_min_rolls;
+}
+
+int Loot::get_min_rolls() const {
+	return min_rolls;
+}
+
+void Loot::set_max_rolls(const int &new_max_rolls) {
+	max_rolls = new_max_rolls;
+}
+
+int Loot::get_max_rolls() const {
+	return max_rolls;
+}
+
 float Loot::get_total_weight() const {
 	float total = 0.0;
 	for (int i = 0; i < items.size(); i++) {
@@ -59,43 +81,59 @@ float Loot::get_total_weight() const {
 	return total;
 }
 
-Ref<LootItem> Loot::get_random_item() const {
-	if (items.size() == 0) {
-		return Ref<LootItem>();
+TypedArray<LootItem> Loot::get_random_items(int rolls) const {
+	TypedArray<LootItem> result;
+	
+	// If rolls is -1, use the configured min/max rolls
+	if (rolls == -1) {
+		if (min_rolls <= 0 || max_rolls <= 0) {
+			return result;
+		}
+		
+		Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
+		rng->randomize();
+		
+		rolls = (min_rolls == max_rolls) ? min_rolls : rng->randi_range(min_rolls, max_rolls);
 	}
-
+	
+	// If rolls is still <= 0 or no items, return empty result
+	if (rolls <= 0 || items.size() == 0) {
+		return result;
+	}
+	
 	float total_weight = get_total_weight();
 	if (total_weight <= 0.0) {
-		return Ref<LootItem>();
+		return result;
 	}
-
+	
 	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
 	rng->randomize();
-	float random_value = rng->randf() * total_weight;
-
-	float cumulative_weight = 0.0;
-	for (int i = 0; i < items.size(); i++) {
-		Ref<LootItem> item = items[i];
-		if (item.is_valid()) {
-			cumulative_weight += item->get_weight();
-			if (random_value <= cumulative_weight) {
-				return item;
+	
+	for (int roll = 0; roll < rolls; roll++) {
+		float random_value = rng->randf() * total_weight;
+		float cumulative_weight = 0.0;
+		
+		for (int i = 0; i < items.size(); i++) {
+			Ref<LootItem> item = items[i];
+			if (item.is_valid()) {
+				cumulative_weight += item->get_weight();
+				if (random_value <= cumulative_weight) {
+					result.append(item);
+					break;
+				}
 			}
 		}
 	}
-
-	// Fallback to last item if something goes wrong
-	if (items.size() > 0) {
-		return items[items.size() - 1];
-	}
 	
-	return Ref<LootItem>();
+	return result;
 }
 
 Dictionary Loot::serialize() const {
 	Dictionary data = Dictionary();
 	data["id"] = id;
 	data["name"] = name;
+	data["min_rolls"] = min_rolls;
+	data["max_rolls"] = max_rolls;
 	
 	Array items_data = Array();
 	for (int i = 0; i < items.size(); i++) {
@@ -117,6 +155,12 @@ void Loot::deserialize(const Dictionary &data) {
 	}
 	if (data.has("name")) {
 		name = data["name"];
+	}
+	if (data.has("min_rolls")) {
+		min_rolls = data["min_rolls"];
+	}
+	if (data.has("max_rolls")) {
+		max_rolls = data["max_rolls"];
 	}
 	
 	if (data.has("items")) {

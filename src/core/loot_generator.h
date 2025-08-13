@@ -29,8 +29,11 @@ public:
 	Inventory* get_target_inventory() const;
 	
 	// Core loot generation functionality
-	void generate_loot();
-	void generate_loot_count(int count);
+	void generate_loot(int rolls = -1);
+	
+private:
+	// Helper method to apply property ranges from LootItem to properties
+	void apply_property_ranges(Dictionary &properties, const Dictionary &property_ranges, Ref<RandomNumberGenerator> &rng) const;
 };
 
 #endif // LOOT_GENERATOR_CLASS_H

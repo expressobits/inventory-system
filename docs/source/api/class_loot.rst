@@ -23,6 +23,10 @@ The Loot resource represents a loot table containing a weighted list of :ref:`Lo
 
 
 
+The loot system supports configurable rolls functionality, inspired by Minecraft-style loot tables. You can set minimum and maximum roll counts to generate multiple items in a single loot generation call. For example, setting min_rolls=2 and max_rolls=4 will generate between 2-4 items each time the loot table is used.
+
+
+
 The total weight is calculated automatically from all contained loot items, and the random selection uses this total to ensure proper probability distribution.
 
 .. rst-class:: classref-reftable-group
@@ -33,11 +37,15 @@ Properties
 .. table::
    :widths: auto
 
-   +--------------------------------------------------------------+-----------------------------------------+--------+
-   | :ref:`Array<class_Array>`\[:ref:`LootItem<class_LootItem>`\] | :ref:`items<class_Loot_property_items>` | ``[]`` |
-   +--------------------------------------------------------------+-----------------------------------------+--------+
-   | ``String``                                                   | :ref:`name<class_Loot_property_name>`   | ``""`` |
-   +--------------------------------------------------------------+-----------------------------------------+--------+
+   +--------------------------------------------------------------+-------------------------------------------------+--------+
+   | :ref:`Array<class_Array>`\[:ref:`LootItem<class_LootItem>`\] | :ref:`items<class_Loot_property_items>`         | ``[]`` |
+   +--------------------------------------------------------------+-------------------------------------------------+--------+
+   | ``int``                                                      | :ref:`max_rolls<class_Loot_property_max_rolls>` | ``1``  |
+   +--------------------------------------------------------------+-------------------------------------------------+--------+
+   | ``int``                                                      | :ref:`min_rolls<class_Loot_property_min_rolls>` | ``1``  |
+   +--------------------------------------------------------------+-------------------------------------------------+--------+
+   | ``String``                                                   | :ref:`name<class_Loot_property_name>`           | ``""`` |
+   +--------------------------------------------------------------+-------------------------------------------------+--------+
 
 .. rst-class:: classref-reftable-group
 
@@ -47,11 +55,11 @@ Methods
 .. table::
    :widths: auto
 
-   +---------------------------------+---------------------------------------------------------------------------+
-   | :ref:`LootItem<class_LootItem>` | :ref:`get_random_item<class_Loot_method_get_random_item>`\ (\ ) |const|   |
-   +---------------------------------+---------------------------------------------------------------------------+
-   | ``float``                       | :ref:`get_total_weight<class_Loot_method_get_total_weight>`\ (\ ) |const| |
-   +---------------------------------+---------------------------------------------------------------------------+
+   +--------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`\[:ref:`LootItem<class_LootItem>`\] | :ref:`get_random_items<class_Loot_method_get_random_items>`\ (\ rolls\: ``int`` = -1\ ) |const| |
+   +--------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
+   | ``float``                                                    | :ref:`get_total_weight<class_Loot_method_get_total_weight>`\ (\ ) |const|                       |
+   +--------------------------------------------------------------+-------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -79,6 +87,40 @@ Array of :ref:`LootItem<class_LootItem>` resources that define what items can be
 
 ----
 
+.. _class_Loot_property_max_rolls:
+
+.. rst-class:: classref-property
+
+``int`` **max_rolls** = ``1`` :ref:`🔗<class_Loot_property_max_rolls>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_max_rolls**\ (\ value\: ``int``\ )
+- ``int`` **get_max_rolls**\ (\ )
+
+Maximum number of rolls when generating random items. Combined with min_rolls to define a range for random roll count generation. Must be greater than or equal to min_rolls. For fixed roll counts, set this equal to min_rolls.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Loot_property_min_rolls:
+
+.. rst-class:: classref-property
+
+``int`` **min_rolls** = ``1`` :ref:`🔗<class_Loot_property_min_rolls>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_min_rolls**\ (\ value\: ``int``\ )
+- ``int`` **get_min_rolls**\ (\ )
+
+Minimum number of rolls when generating random items. Combined with max_rolls to define a range for random roll count generation. Must be at least 1. For fixed roll counts, set this equal to max_rolls.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_Loot_property_name:
 
 .. rst-class:: classref-property
@@ -101,13 +143,13 @@ Optional name for this loot table, useful for identification and organization in
 Method Descriptions
 -------------------
 
-.. _class_Loot_method_get_random_item:
+.. _class_Loot_method_get_random_items:
 
 .. rst-class:: classref-method
 
-:ref:`LootItem<class_LootItem>` **get_random_item**\ (\ ) |const| :ref:`🔗<class_Loot_method_get_random_item>`
+:ref:`Array<class_Array>`\[:ref:`LootItem<class_LootItem>`\] **get_random_items**\ (\ rolls\: ``int`` = -1\ ) |const| :ref:`🔗<class_Loot_method_get_random_items>`
 
-Returns a randomly selected :ref:`LootItem<class_LootItem>` from the loot table based on weighted probability. Items with higher weights have a greater chance of being selected. Returns null if the loot table is empty or if no valid items are found.
+Returns an array of randomly selected :ref:`LootItem<class_LootItem>` resources. When ``rolls`` is -1 (default), uses the configured roll range (min_rolls to max_rolls) with a random number of rolls within that range. When ``rolls`` is a positive number, uses that exact number of rolls, overriding the configured range. Each roll is an independent weighted selection from the loot table. Returns an empty array if no valid items can be generated.
 
 .. rst-class:: classref-item-separator
 
