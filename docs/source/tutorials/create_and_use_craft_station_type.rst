@@ -65,16 +65,33 @@ For our furnace example, let's create items for smelting:
    
    - In the "Item Definitions" section, add a new item
    - Set ID: "iron_ore", Name: "Iron Ore"
+   - Set Max Stack Size: 64
 
 2. **Iron Ingot** (product)
    
    - Add another item definition
    - Set ID: "iron_ingot", Name: "Iron Ingot"
+   - Set Max Stack Size: 64
 
 3. **Coal** (fuel - required item)
    
    - Add another item definition  
    - Set ID: "coal", Name: "Coal"
+   - Set Max Stack Size: 64
+
+4. **Stick** (product)
+
+   - Add another item definition
+   - Set ID: "stick", Name: "Stick"
+   - Set Max Stack Size: 64
+
+5. **Wood** (crafting ingredient)
+   
+   - Add another item definition
+   - Set ID: "wood", Name: "Wood"
+   - Set Max Stack Size: 64
+
+.. image:: ./images/create_and_use_craft_station_types_add_items.png
 
 Step 4: Create Furnace-Specific Recipe
 ---------------------------------------
@@ -83,10 +100,15 @@ Step 4: Create Furnace-Specific Recipe
    
    In the "Recipes" section, click "+" to create a new recipe.
 
+   .. image:: ./../manual/database/images/recipes_editor_add.png
+
+
 2. **Configure Recipe Properties**
    
    - **Time to Craft**: Set to 5.0 seconds (longer for smelting)
+
    - **Station**: Select the "Furnace" station type we just created
+
 
 3. **Add Recipe Components**
    
@@ -98,6 +120,8 @@ Step 4: Create Furnace-Specific Recipe
    
    **Products** (created when crafting completes):
    - Iron Ingot: amount 1
+
+.. image:: ./images/create_and_use_craft_station_types_recipe_iron_ingot.png
 
 4. **Save the Database**
 
@@ -119,6 +143,8 @@ To demonstrate the filtering, let's also create a recipe that works on any stati
    - **Station**: Leave this EMPTY (no station type)
    - **Ingredients**: Wood: amount 1
    - **Products**: Stick: amount 2
+
+.. image:: ./images/create_and_use_craft_station_types_recipe_stick.png
 
 .. note::
    When a recipe has no station type, it can only be crafted at stations that also have no station type assigned.
@@ -142,18 +168,26 @@ Step 6: Create a Furnace Scene
 3. **Configure Inventories**
    
    Set both inventories:
+
    - **Database**: Your InventoryDatabase
-   - **Size**: 10
 
 4. **Configure Furnace Station**
    
    Set the CraftStation properties:
+
    - **Database**: Your InventoryDatabase
+
    - **Type**: Select the "Furnace" CraftStationType
+
    - **Input Inventories**: Add InputInventory path
+
    - **Output Inventories**: Add OutputInventory path
+
    - **Can Processing Craftings**: Enabled
+
    - **Can Finish Craftings**: Enabled
+
+   .. image:: ./images/create_and_use_craft_station_types_setup_craft_station.png
 
 Step 7: Create a General Workbench Scene
 -----------------------------------------
@@ -171,6 +205,8 @@ Step 7: Create a General Workbench Scene
    Set the CraftStation properties the same as furnace, but:
    - **Type**: Leave this EMPTY (no station type)
 
+   .. image:: ./images/create_and_use_craft_station_types_setup_craft_station_workbench.png
+
 Adding Control Scripts
 ======================
 
@@ -182,73 +218,60 @@ Attach this script to the FurnaceTest root node:
 .. code-block:: gdscript
 
    extends Node
-   
+
+   extends Node
+
    @onready var craft_station = $FurnaceStation
    @onready var input_inventory = $InputInventory
    @onready var output_inventory = $OutputInventory
-   
+
    func _ready():
-       # Add test items to input inventory
-       _add_test_items()
-       
-       # Connect signals
-       craft_station.on_crafted.connect(_on_craft_completed)
-       
-       # Print station info
-       print("=== FURNACE STATION ===")
-       print("Station Type: ", craft_station.type.name if craft_station.type else "None")
-       print("Available recipes: ", craft_station.valid_recipes.size())
-       
-       # List available recipes
-       for i in craft_station.valid_recipes.size():
-           var recipe_index = craft_station.valid_recipes[i]
-           var recipe = craft_station.database.recipes[recipe_index]
-           var product_name = recipe.products[0].item.name if recipe.products.size() > 0 else "Unknown"
-           print("Recipe ", i, ": ", product_name)
-           
-           # Check if we can craft it
-           var can_craft = craft_station.can_craft(recipe)
-           print("  Can craft: ", can_craft)
-   
-   func _add_test_items():
-       # Add iron ore
-       var ore_stack = ItemStack.new()
-       ore_stack.item = input_inventory.database.get_item_definition_by_id("iron_ore")
-       ore_stack.amount = 10
-       input_inventory.add_item_stack(ore_stack)
-       
-       # Add coal (fuel)
-       var coal_stack = ItemStack.new()
-       coal_stack.item = input_inventory.database.get_item_definition_by_id("coal")
-       coal_stack.amount = 5
-       input_inventory.add_item_stack(coal_stack)
-       
-       # Add wood (to test it can't be used for smelting)
-       var wood_stack = ItemStack.new()
-       wood_stack.item = input_inventory.database.get_item_definition_by_id("wood")
-       wood_stack.amount = 5
-       input_inventory.add_item_stack(wood_stack)
-   
+      # Add iron ore
+      input_inventory.add("iron_ore", 10)
+
+      # Add coal (fuel)
+      input_inventory.add("coal", 5)
+
+      # Connect signals
+      craft_station.on_crafted.connect(_on_craft_completed)
+
+      # Print station info
+      print("=== FURNACE STATION ===")
+      print("Station Type: ", craft_station.type.name if craft_station.type else "None")
+      print("Available recipes: ", craft_station.valid_recipes.size())
+
+      # List available recipes
+      for i in craft_station.valid_recipes.size():
+         var recipe_index = craft_station.valid_recipes[i]
+         var recipe = craft_station.database.recipes[recipe_index]
+         var product_name = recipe.products[0].item_id if recipe.products.size() > 0 else "Unknown"
+         print("Recipe ", i, ": ", product_name)
+
+         # Check if we can craft it
+         var can_craft = craft_station.can_craft(recipe)
+         print("  Can craft: ", can_craft)
+      
+      
+
    func _input(event):
-       if event.is_action_pressed("ui_accept"):
-           _try_craft()
-   
-   func _try_craft():
-       if craft_station.valid_recipes.size() > 0:
-           print("Starting furnace smelting...")
-           craft_station.craft(0)
-       else:
-           print("No recipes available!")
-   
+      if event.is_action_pressed("ui_accept"):
+         if craft_station.valid_recipes.size() > 0:
+            print("Starting furnace smelting...")
+            craft_station.craft(0)
+         else:
+            print("No recipes available!")
+      
+
    func _on_craft_completed(recipe_index: int):
-       print("Smelting completed!")
-       
-       # Show output
-       for i in output_inventory.slots.size():
-           var slot = output_inventory.slots[i]
-           if slot.item_stack:
-               var stack = slot.item_stack
-               print("Produced: ", stack.amount, "x ", stack.item.name)
+      print("Smelting completed!")
+
+      # Show output
+      for i in output_inventory.stacks.size():
+         var stack = output_inventory.stacks[i]
+         if stack:
+            print("Produced: ", stack.amount, "x ", stack.item_id)
+
+
 
 Step 9: Script the Workbench Scene
 -----------------------------------
@@ -258,41 +281,50 @@ Attach this script to the WorkbenchTest root node:
 .. code-block:: gdscript
 
    extends Node
-   
-   @onready var craft_station = $CraftStation
+
+   @onready var craft_station = $WorkbenchStation
    @onready var input_inventory = $InputInventory
    @onready var output_inventory = $OutputInventory
-   
+
    func _ready():
-       # Add test items
-       var wood_stack = ItemStack.new()
-       wood_stack.item = input_inventory.database.get_item_definition_by_id("wood")
-       wood_stack.amount = 10
-       input_inventory.add_item_stack(wood_stack)
-       
-       # Connect signals
-       craft_station.on_crafted.connect(_on_craft_completed)
-       
-       # Print station info
-       print("=== WORKBENCH STATION ===")
-       print("Station Type: ", craft_station.type.name if craft_station.type else "None")
-       print("Available recipes: ", craft_station.valid_recipes.size())
-       
-       # List available recipes
-       for i in craft_station.valid_recipes.size():
-           var recipe_index = craft_station.valid_recipes[i]
-           var recipe = craft_station.database.recipes[recipe_index]
-           var product_name = recipe.products[0].item.name if recipe.products.size() > 0 else "Unknown"
-           print("Recipe ", i, ": ", product_name)
-   
+      # Add test items
+      input_inventory.add("wood", 30)
+
+      # Connect signals
+      craft_station.on_crafted.connect(_on_craft_completed)
+
+      # Print station info
+      print("=== WORKBENCH STATION ===")
+      print("Station Type: ", craft_station.type.name if craft_station.type else "None")
+      print("Available recipes: ", craft_station.valid_recipes.size())
+
+      # List available recipes
+      for i in craft_station.valid_recipes.size():
+         var recipe_index = craft_station.valid_recipes[i]
+         var recipe = craft_station.database.recipes[recipe_index]
+         var product_name = recipe.products[0].item_id if recipe.products.size() > 0 else "Unknown"
+         print("Recipe ", i, ": ", product_name)
+         
+         var can_craft = craft_station.can_craft(recipe)
+         print("  Can craft: ", can_craft)
+
    func _input(event):
-       if event.is_action_pressed("ui_accept"):
-           if craft_station.valid_recipes.size() > 0:
-               print("Starting crafting...")
-               craft_station.craft(0)
-   
+      if event.is_action_pressed("ui_accept"):
+         if craft_station.valid_recipes.size() > 0:
+            print("Starting crafting...")
+            craft_station.craft(1)
+         else:
+            print("No recipes available!")
+
    func _on_craft_completed(recipe_index: int):
-       print("Crafting completed!")
+      print("Crafting completed!")
+
+      # Show output
+      for i in output_inventory.stacks.size():
+         var stack = output_inventory.stacks[i]
+         if stack:
+            print("Produced: ", stack.amount, "x ", stack.item_id)
+
 
 Testing Station Types
 ======================
@@ -334,14 +366,9 @@ You can also assign station types in code:
 .. code-block:: gdscript
 
    func _ready():
-       # Get station type from database
-       var furnace_type = craft_station.database.get_craft_station_type_by_id("furnace")
        
        # Assign to station
-       craft_station.type = furnace_type
-       
-       # Reload valid recipes
-       craft_station.load_valid_recipes()
+       craft_station.type = "furnace"
 
 Troubleshooting
 ===============
