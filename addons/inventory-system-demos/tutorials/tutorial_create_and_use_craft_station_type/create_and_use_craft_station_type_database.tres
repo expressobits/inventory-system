@@ -1,0 +1,67 @@
+[gd_resource type="InventoryDatabase" load_steps=14 format=3 uid="uid://8g6jugqd8mtl"]
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_sodtm"]
+id = "iron_ore"
+max_stack = 20
+name = "Iron Ore"
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_fdrau"]
+id = "iron_ingot"
+max_stack = 64
+name = "Iron Ingot"
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_xbhx3"]
+id = "coal"
+max_stack = 64
+name = "Coal"
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_darwj"]
+id = "stick"
+max_stack = 64
+name = "Stick"
+
+[sub_resource type="ItemDefinition" id="ItemDefinition_5if61"]
+id = "wood"
+max_stack = 64
+name = "Wood"
+
+[sub_resource type="ItemStack" id="ItemStack_sodtm"]
+item_id = "iron_ore"
+amount = 2
+
+[sub_resource type="ItemStack" id="ItemStack_fdrau"]
+item_id = "iron_ingot"
+amount = 1
+
+[sub_resource type="ItemStack" id="ItemStack_xbhx3"]
+item_id = "coal"
+amount = 1
+
+[sub_resource type="CraftStationType" id="CraftStationType_sodtm"]
+id = "furnace"
+name = "Furnace"
+
+[sub_resource type="Recipe" id="Recipe_sodtm"]
+products = Array[ItemStack]([SubResource("ItemStack_fdrau")])
+time_to_craft = 5.0
+station = SubResource("CraftStationType_sodtm")
+ingredients = Array[ItemStack]([SubResource("ItemStack_sodtm")])
+required_items = Array[ItemStack]([SubResource("ItemStack_xbhx3")])
+
+[sub_resource type="ItemStack" id="ItemStack_darwj"]
+item_id = "wood"
+amount = 1
+
+[sub_resource type="ItemStack" id="ItemStack_5if61"]
+item_id = "stick"
+amount = 1
+
+[sub_resource type="Recipe" id="Recipe_fdrau"]
+products = Array[ItemStack]([SubResource("ItemStack_5if61")])
+time_to_craft = 1.0
+ingredients = Array[ItemStack]([SubResource("ItemStack_darwj")])
+
+[resource]
+items = Array[ItemDefinition]([SubResource("ItemDefinition_sodtm"), SubResource("ItemDefinition_fdrau"), SubResource("ItemDefinition_xbhx3"), SubResource("ItemDefinition_darwj"), SubResource("ItemDefinition_5if61")])
+recipes = Array[Recipe]([SubResource("Recipe_sodtm"), SubResource("Recipe_fdrau")])
+stations_type = Array[CraftStationType]([SubResource("CraftStationType_sodtm")])

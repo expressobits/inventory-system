@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkwte8idjpjtg"]
+
+[ext_resource type="Script" uid="uid://bhqqrkoyr7qfh" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/furnace_test.gd" id="1_nypqm"]
+[ext_resource type="InventoryDatabase" uid="uid://8g6jugqd8mtl" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/create_and_use_craft_station_type_database.tres" id="1_o0mvp"]
+
+[node name="FurnaceTest" type="Node"]
+script = ExtResource("1_nypqm")
+
+[node name="FurnaceStation" type="CraftStation" parent="."]
+input_inventories = Array[NodePath]([NodePath("../InputInventory")])
+output_inventories = Array[NodePath]([NodePath("../OutputInventory")])
+type_id = "furnace"
+database = ExtResource("1_o0mvp")
+
+[node name="InputInventory" type="Inventory" parent="."]
+database = ExtResource("1_o0mvp")
+
+[node name="OutputInventory" type="Inventory" parent="."]
+database = ExtResource("1_o0mvp")
