@@ -13,6 +13,7 @@ private:
 	float weight = 1.0;
 	int min_amount = 1;
 	int max_amount = 1;
+	Dictionary property_ranges;
 
 protected:
 	static void _bind_methods();
@@ -28,6 +29,8 @@ public:
 	int get_min_amount() const;
 	void set_max_amount(const int &new_max_amount);
 	int get_max_amount() const;
+	void set_property_ranges(const Dictionary &new_property_ranges);
+	Dictionary get_property_ranges() const;
 	
 	// Serialization methods
 	Dictionary serialize() const;

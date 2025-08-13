@@ -23,7 +23,11 @@ The LootGenerator node provides functionality for generating random items from w
 
 
 
-The loot generation uses weighted random selection where items with higher weights are more likely to be selected. Each loot item can specify minimum and maximum amounts to generate random quantities.
+The loot generation uses a unified API where a single method handles both default roll behavior (using the loot resource's configured min/max roll range) and custom roll counts. The rolls functionality allows for Minecraft-style loot table behavior where a loot table can generate multiple items in a single call.
+
+
+
+The loot generation uses weighted random selection where items with higher weights are more likely to be selected. Each loot item can specify minimum and maximum amounts to generate random quantities. Additionally, property ranges defined in :ref:`LootItem<class_LootItem>` resources allow for randomized item properties, enabling items to be generated with randomized durability, damage, enchantments, or other properties within configurable ranges.
 
 .. rst-class:: classref-reftable-group
 
@@ -47,13 +51,11 @@ Methods
 .. table::
    :widths: auto
 
-   +-----------------------------------+---------------------------------------------------------------------------------------------------+
-   | |void|                            | :ref:`generate_loot<class_LootGenerator_method_generate_loot>`\ (\ )                              |
-   +-----------------------------------+---------------------------------------------------------------------------------------------------+
-   | |void|                            | :ref:`generate_loot_count<class_LootGenerator_method_generate_loot_count>`\ (\ count\: ``int``\ ) |
-   +-----------------------------------+---------------------------------------------------------------------------------------------------+
-   | :ref:`Inventory<class_Inventory>` | :ref:`get_target_inventory<class_LootGenerator_method_get_target_inventory>`\ (\ ) |const|        |
-   +-----------------------------------+---------------------------------------------------------------------------------------------------+
+   +-----------------------------------+--------------------------------------------------------------------------------------------+
+   | |void|                            | :ref:`generate_loot<class_LootGenerator_method_generate_loot>`\ (\ rolls\: ``int`` = -1\ ) |
+   +-----------------------------------+--------------------------------------------------------------------------------------------+
+   | :ref:`Inventory<class_Inventory>` | :ref:`get_target_inventory<class_LootGenerator_method_get_target_inventory>`\ (\ ) |const| |
+   +-----------------------------------+--------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
 
@@ -107,21 +109,9 @@ Method Descriptions
 
 .. rst-class:: classref-method
 
-|void| **generate_loot**\ (\ ) :ref:`🔗<class_LootGenerator_method_generate_loot>`
+|void| **generate_loot**\ (\ rolls\: ``int`` = -1\ ) :ref:`🔗<class_LootGenerator_method_generate_loot>`
 
-Generate a single random item from the assigned loot resource and add it to the target inventory. This is equivalent to calling :ref:`generate_loot_count()<class_LootGenerator_method_generate_loot_count>` with a count of 1.
-
-.. rst-class:: classref-item-separator
-
-----
-
-.. _class_LootGenerator_method_generate_loot_count:
-
-.. rst-class:: classref-method
-
-|void| **generate_loot_count**\ (\ count\: ``int``\ ) :ref:`🔗<class_LootGenerator_method_generate_loot_count>`
-
-Generate the specified number of random items from the assigned loot resource and add them to the target inventory. Each generation is independent, so the same item may be selected multiple times. The actual amount of each item is randomly determined between the min_amount and max_amount specified in the :ref:`LootItem<class_LootItem>`.
+Generate random items from the assigned loot resource and add them to the target inventory. When ``rolls`` is -1 (default), uses the loot resource's configured roll range (min_rolls to max_rolls) with random selection. When ``rolls`` is greater than 0, uses that specific number of rolls, overriding the configured range. Each roll represents an independent weighted selection from the loot table. The actual amount of each item is randomly determined between the min_amount and max_amount specified in the :ref:`LootItem<class_LootItem>`. Additionally, any property ranges defined in the :ref:`LootItem<class_LootItem>` will be applied to randomize item properties within the specified ranges.
 
 .. rst-class:: classref-item-separator
 

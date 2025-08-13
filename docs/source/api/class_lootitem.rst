@@ -19,11 +19,15 @@ Resource representing a single item entry in a loot table with weight and amount
 Description
 -----------
 
-The LootItem resource represents an individual entry in a :ref:`Loot<class_Loot>` table. It defines which item can be generated, its probability weight relative to other items in the same loot table, and the range of amounts that can be generated.
+The LootItem resource represents an individual entry in a :ref:`Loot<class_Loot>` table. It defines which item can be generated, its probability weight relative to other items in the same loot table, the range of amounts that can be generated, and optional property ranges for randomizing item properties.
 
 
 
 Higher weight values make the item more likely to be selected during random generation. The min_amount and max_amount define the range for random quantity generation when this item is selected.
+
+
+
+Property ranges allow you to specify randomized values for item properties when the item is generated. This enables Minecraft-style loot generation where items can have randomized durability, damage, enchantments, or other properties within configurable ranges.
 
 .. rst-class:: classref-reftable-group
 
@@ -33,15 +37,17 @@ Properties
 .. table::
    :widths: auto
 
-   +------------+-------------------------------------------------------+---------+
-   | ``String`` | :ref:`item_id<class_LootItem_property_item_id>`       | ``""``  |
-   +------------+-------------------------------------------------------+---------+
-   | ``int``    | :ref:`max_amount<class_LootItem_property_max_amount>` | ``1``   |
-   +------------+-------------------------------------------------------+---------+
-   | ``int``    | :ref:`min_amount<class_LootItem_property_min_amount>` | ``1``   |
-   +------------+-------------------------------------------------------+---------+
-   | ``float``  | :ref:`weight<class_LootItem_property_weight>`         | ``1.0`` |
-   +------------+-------------------------------------------------------+---------+
+   +----------------+-----------------------------------------------------------------+---------+
+   | ``String``     | :ref:`item_id<class_LootItem_property_item_id>`                 | ``""``  |
+   +----------------+-----------------------------------------------------------------+---------+
+   | ``int``        | :ref:`max_amount<class_LootItem_property_max_amount>`           | ``1``   |
+   +----------------+-----------------------------------------------------------------+---------+
+   | ``int``        | :ref:`min_amount<class_LootItem_property_min_amount>`           | ``1``   |
+   +----------------+-----------------------------------------------------------------+---------+
+   | ``Dictionary`` | :ref:`property_ranges<class_LootItem_property_property_ranges>` | ``{}``  |
+   +----------------+-----------------------------------------------------------------+---------+
+   | ``float``      | :ref:`weight<class_LootItem_property_weight>`                   | ``1.0`` |
+   +----------------+-----------------------------------------------------------------+---------+
 
 .. rst-class:: classref-section-separator
 
@@ -98,6 +104,37 @@ The maximum amount of this item that can be generated when this loot entry is se
 - ``int`` **get_min_amount**\ (\ )
 
 The minimum amount of this item that will be generated when this loot entry is selected. The actual amount will be randomly chosen between this value and :ref:`max_amount<class_LootItem_property_max_amount>` (inclusive).
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_LootItem_property_property_ranges:
+
+.. rst-class:: classref-property
+
+``Dictionary`` **property_ranges** = ``{}`` :ref:`🔗<class_LootItem_property_property_ranges>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_property_ranges**\ (\ value\: ``Dictionary``\ )
+- ``Dictionary`` **get_property_ranges**\ (\ )
+
+Dictionary defining randomized value ranges for item properties. Keys are property names (String), values are dictionaries defining the range configuration.
+
+
+
+For integer/float ranges: ``{"min": value, "max": value}``\ 
+
+For boolean values: ``{"value": bool}``\ 
+
+
+
+Example: ``{"durability": {"min": 30, "max": 50}, "enchanted": {"value": true}}``\ 
+
+
+
+When the loot item is generated, these ranges will override the default property values from the :ref:`ItemDefinition<class_ItemDefinition>`, providing randomized values within the specified ranges.
 
 .. rst-class:: classref-item-separator
 
