@@ -22,7 +22,6 @@ Building Upon Tutorial 2
 We'll be enhancing the scenes you already created in Tutorial 2:
 
 - **FurnaceTest** scene with its furnace station type and iron smelting
-- **WorkbenchTest** scene with its general crafting capabilities
 
 Instead of creating new scenes, we'll add UI elements to these existing scenes to create a complete crafting experience.
 
@@ -267,196 +266,7 @@ Replace the existing script on your FurnaceTest node with this enhanced version 
         if event.is_action_pressed("ui_accept"):
             _smelt_all_possible()
 
-
-Adding UI to the Workbench Scene
-=================================
-
-Step 4: Open the WorkbenchTest Scene
-------------------------------------
-
-1. **Open your WorkbenchTest scene** from Tutorial 2
-
-2. **Add the Same UI Structure**
-   
-   Add the same UI nodes as you did for the furnace scene:
-   - CanvasLayer (name: "UI")
-   - MarginContainer and VBoxContainer structure
-   - But change the title to "Workbench Station"
-   - Change button text to "Add Wood" and "Craft All"
-
-Step 5: Update the Workbench Script
------------------------------------
-
-Replace the existing script on your WorkbenchTest node with this enhanced version:
-
-.. code-block:: gdscript
-
-   extends Node
-
-   # Existing nodes from Tutorial 2  
-   @onready var craft_station = $WorkbenchStation
-   @onready var input_inventory = $InputInventory
-   @onready var output_inventory = $OutputInventory
-
-   # UI nodes (same structure as furnace)
-   @onready var input_label = $UI/MarginContainer/VBoxContainer/StatusContainer/InputLabel
-   @onready var output_label = $UI/MarginContainer/VBoxContainer/StatusContainer/OutputLabel
-   @onready var recipes_list = $UI/MarginContainer/VBoxContainer/RecipesList
-   @onready var add_materials_button = $UI/MarginContainer/VBoxContainer/ControlsContainer/AddMaterialsButton
-   @onready var craft_all_button = $UI/MarginContainer/VBoxContainer/ControlsContainer/CraftAllButton
-   @onready var progress_label = $UI/MarginContainer/VBoxContainer/ProgressLabel
-   @onready var progress_bar = $UI/MarginContainer/VBoxContainer/ProgressBar
-
-   var recipe_buttons = []
-
-   func _ready():
-       # Original setup from Tutorial 2
-       _setup_initial_materials()
-       _setup_station()
-       
-       # UI setup
-       _setup_ui()
-       _connect_ui_signals()
-       _update_ui()
-
-   func _setup_initial_materials():
-       # Add wood (from Tutorial 2)
-       input_inventory.add("wood", 30)
-
-   func _setup_station():
-       # Connect station signals
-       craft_station.on_crafted.connect(_on_craft_completed)
-       craft_station.crafting_added.connect(_on_crafting_started)
-       
-       # Print station info
-       print("=== WORKBENCH STATION UI ===")
-       print("Station Type: ", craft_station.type.name if craft_station.type else "None")
-       print("Available recipes: ", craft_station.valid_recipes.size())
-
-   func _setup_ui():
-       progress_bar.value = 0
-       progress_bar.visible = false
-       _create_recipe_buttons()
-
-   func _connect_ui_signals():
-       add_materials_button.pressed.connect(_add_more_materials)
-       craft_all_button.pressed.connect(_craft_all_possible)
-       input_inventory.item_changed.connect(_update_ui)
-       output_inventory.item_changed.connect(_update_ui)
-
-   func _create_recipe_buttons():
-       for button in recipe_buttons:
-           button.queue_free()
-       recipe_buttons.clear()
-       
-       # Create buttons for workbench recipes
-       for i in craft_station.valid_recipes.size():
-           var recipe_index = craft_station.valid_recipes[i]
-           var recipe = craft_station.database.recipes[recipe_index]
-           
-           var button = Button.new()
-           var product_name = recipe.products[0].item_id if recipe.products.size() > 0 else "Unknown"
-           button.text = "Craft " + product_name
-           
-           button.pressed.connect(_craft_recipe.bind(i))
-           recipes_list.add_child(button)
-           recipe_buttons.append(button)
-
-   func _add_more_materials():
-       # Add more wood for crafting
-       input_inventory.add("wood", 10)
-       print("Added more wood")
-
-   func _craft_all_possible():
-       if craft_station.valid_recipes.size() > 0:
-           print("Starting workbench crafting...")
-           craft_station.craft(1)  # Using index 1 as in Tutorial 2
-
-   func _craft_recipe(recipe_list_index: int):
-       if recipe_list_index < craft_station.valid_recipes.size():
-           craft_station.craft(recipe_list_index)
-
-   func _update_ui():
-       # Update inventory counts
-       var input_count = _count_inventory_items(input_inventory)
-       var output_count = _count_inventory_items(output_inventory)
-       
-       input_label.text = "Input Materials: " + str(input_count) + " items"
-       output_label.text = "Output Products: " + str(output_count) + " items"
-       
-       # Update recipe buttons
-       for i in recipe_buttons.size():
-           var button = recipe_buttons[i]
-           if i < craft_station.valid_recipes.size():
-               var recipe_index = craft_station.valid_recipes[i]
-               var recipe = craft_station.database.recipes[recipe_index]
-               var can_craft = craft_station.can_craft(recipe)
-               
-               button.disabled = not can_craft
-               button.modulate = Color.WHITE if can_craft else Color.GRAY
-       
-       craft_all_button.disabled = not _has_craftable_recipes()
-       _update_progress()
-
-   func _count_inventory_items(inventory: Inventory) -> int:
-       var count = 0
-       for slot in inventory.slots:
-           if slot.item_stack:
-               count += slot.item_stack.amount
-       return count
-
-   func _has_craftable_recipes() -> bool:
-       for recipe_index in craft_station.valid_recipes:
-           var recipe = craft_station.database.recipes[recipe_index]
-           if craft_station.can_craft(recipe):
-               return true
-       return false
-
-   func _update_progress():
-       if craft_station.craftings.size() > 0:
-           var crafting = craft_station.craftings[0]
-           var recipe_index = crafting.get_recipe_index()
-           var recipe = craft_station.database.recipes[recipe_index]
-           
-           var progress = crafting.get_time() / recipe.time_to_craft
-           progress = clamp(progress, 0.0, 1.0)
-           
-           progress_bar.value = progress * 100
-           progress_bar.visible = true
-           
-           var product_name = recipe.products[0].item_id if recipe.products.size() > 0 else "Unknown"
-           progress_label.text = "Crafting " + product_name + "... " + str(int(progress * 100)) + "%"
-       else:
-           progress_bar.visible = false
-           progress_label.text = "Workbench ready"
-
-   func _on_crafting_started(crafting_index: int):
-       print("Crafting started: ", crafting_index)
-       _update_ui()
-
-   func _on_craft_completed(recipe_index: int):
-       print("Crafting completed!")
-       
-       for i in output_inventory.stacks.size():
-           var stack = output_inventory.stacks[i]
-           if stack:
-               print("Produced: ", stack.amount, "x ", stack.item_id)
-       
-       _update_ui()
-
-   func _process(_delta):
-       if craft_station.craftings.size() > 0:
-           _update_progress()
-
-   # Keep space key functionality from Tutorial 2
-   func _input(event):
-       if event.is_action_pressed("ui_accept"):
-           _craft_all_possible()
-
-Testing the Enhanced Scenes
-===========================
-
-Step 6: Test the Furnace UI
+Step 4: Test the Furnace UI
 ----------------------------
 
 1. **Run the FurnaceTest scene**
@@ -474,22 +284,6 @@ Step 6: Test the Furnace UI
    - Watch the progress bar fill up
    - See the input materials decrease and output products appear
 
-Step 7: Test the Workbench UI  
------------------------------
-
-1. **Run the WorkbenchTest scene**
-
-2. **You should see:**
-   - "Workbench Station" title  
-   - Similar UI but for general crafting
-   - "Craft Stick" button
-   - Wood-focused material management
-
-3. **Test the functionality:**
-   - Add more wood with the button
-   - Craft sticks and watch the progress
-   - Compare how different station types filter recipes
-
 Comparing Station Behaviors
 ==========================
 
@@ -499,11 +293,6 @@ Now that both scenes have UI, you can clearly see:
 - Only shows furnace-specific recipes (iron smelting)
 - Uses iron ore and coal as inputs
 - Produces metal products
-
-**Workbench Station:**
-- Only shows general recipes (stick crafting)
-- Uses wood as input
-- Produces basic crafted items
 
 This demonstrates how station types successfully filter recipes and create specialized crafting workflows.
 
@@ -543,7 +332,6 @@ Different Behavior Between Stations
 This is expected! The furnace and workbench should behave differently:
 
 - **Furnace**: Only iron smelting recipes, uses ore/coal
-- **Workbench**: Only general recipes, uses wood
 
 If they show the same recipes, check the station type assignments.
 
