@@ -498,6 +498,9 @@ bool CraftStation::get_can_finish_craftings() const {
 
 void CraftStation::set_type(const Ref<CraftStationType> &new_type) {
 	type = new_type;
+	if (is_node_ready() && !Engine::get_singleton()->is_editor_hint() && get_database() != nullptr) {
+		load_valid_recipes();
+	}
 }
 
 Ref<CraftStationType> CraftStation::get_type() const {
@@ -506,6 +509,9 @@ Ref<CraftStationType> CraftStation::get_type() const {
 
 void CraftStation::set_type_id(const String &new_type_id) {
 	type_id = new_type_id;
+	if (is_node_ready() && !Engine::get_singleton()->is_editor_hint() && get_database() != nullptr) {
+		load_valid_recipes();
+	}
 }
 
 String CraftStation::get_type_id() const {
