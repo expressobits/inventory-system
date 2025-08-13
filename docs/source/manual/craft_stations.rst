@@ -18,6 +18,10 @@ A :ref:`CraftStation<class_CraftStation>` node provides a complete crafting syst
 - Automatically moves ingredients and products between inventories
 - Provides signals for UI and game logic integration
 
+
+.. image:: ./craft_stations/images/craft_station_node.png
+
+
 Key Components
 ==============
 
@@ -330,5 +334,3 @@ Game Balance
    - :ref:`recipes` - Learn about creating recipes
    - :ref:`craft_station_type` - Learn about station types
    - :ref:`craft_station_ui_tutorial` - Complete CraftStation setup and UI tutorial
-
-**Image Description Needed**: Screenshot showing a complete craft station setup in the Godot editor with input inventories, output inventory, and the craft station node configured with proper connections.
