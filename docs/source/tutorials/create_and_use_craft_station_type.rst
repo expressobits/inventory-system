@@ -21,9 +21,8 @@ Creating the CraftStationType
 Step 1: Open the Database Editor
 ---------------------------------
 
-1. In your project, locate your InventoryDatabase resource (.tres file)
-2. Select the database resource in the FileSystem dock
-3. In the Inspector, the database editor will appear at the bottom
+1. In your project, open "Inventory" top menus
+2. Select "Database" to open the database editor
 
 Step 2: Create the Furnace Station Type
 ----------------------------------------
@@ -32,9 +31,13 @@ Step 2: Create the Furnace Station Type
    
    In the database editor, click on the "CraftStationTypes" section.
 
+   .. image:: ./../manual/database/images/craft_station_type_editor.png
+
 2. **Add New Station Type**
    
    Click the "+" button to create a new craft station type.
+
+   .. image:: ./../manual/database/images/add_craft_station_type.png
 
 3. **Configure Station Type Properties**
    
@@ -43,6 +46,8 @@ Step 2: Create the Furnace Station Type
    - **ID**: Enter "furnace" (this will be used in code)
    - **Name**: Enter "Furnace" (this will be displayed to users)
    - **Icon**: Optionally select a texture that represents a furnace
+
+   .. image:: ./../manual/database/images/craft_station_type_editing.png
 
 4. **Save the Database**
    
@@ -338,43 +343,6 @@ You can also assign station types in code:
        # Reload valid recipes
        craft_station.load_valid_recipes()
 
-Step 12: Creating Multiple Station Types
------------------------------------------
-
-Expand your crafting system with more station types:
-
-.. code-block:: gdscript
-
-   # In database editor, create these station types:
-   # - ID: "workbench", Name: "Crafting Workbench"
-   # - ID: "alchemy_table", Name: "Alchemy Table"  
-   # - ID: "anvil", Name: "Blacksmith Anvil"
-   
-   # Then create specialized recipes for each type
-
-Best Practices
-==============
-
-Organization Tips
------------------
-
-- Use consistent naming for station type IDs (lowercase, underscores)
-- Group related recipes under appropriate station types
-- Consider station progression (basic → advanced station types)
-
-Recipe Design
--------------
-
-- Make station-specific recipes thematically appropriate
-- Use required items for station-specific tools or fuel
-- Balance craft times based on station complexity
-
-Performance
------------
-
-- Station types filter recipes automatically, improving performance
-- Consider the number of recipes per station type for UI purposes
-
 Troubleshooting
 ===============
 
@@ -409,9 +377,3 @@ Now that you understand station types, you can:
    
    - :ref:`create_and_use_recipe` - Learn about creating recipes
    - :ref:`craft_station_ui_tutorial` - Build a complete crafting scene with UI
-
-**Image Description Needed**: Screenshot showing the database editor with CraftStationTypes section open, displaying a "Furnace" station type with ID "furnace", name "Furnace", and an icon.
-
-**Image Description Needed**: Screenshot showing a recipe in the database editor with the Station field set to "Furnace", demonstrating the station type assignment.
-
-**Image Description Needed**: Console output showing the furnace scene running with "Station Type: Furnace" and "Available recipes: 1" displaying only the smelting recipe.
