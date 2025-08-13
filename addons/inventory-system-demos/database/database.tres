@@ -206,6 +206,12 @@ description = "Helmet Labor: Protective gear for the head, increases safety duri
 [sub_resource type="LootItem" id="LootItem_6ctep"]
 item_id = "stone_axe"
 weight = 0.4
+property_ranges = {
+"durability": {
+"max": 100.0,
+"min": 25.0
+}
+}
 
 [sub_resource type="LootItem" id="LootItem_dqypk"]
 item_id = "stone_pickaxe"
