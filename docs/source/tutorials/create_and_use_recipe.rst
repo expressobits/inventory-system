@@ -21,9 +21,8 @@ Creating the Recipe
 Step 1: Open the Database Editor
 ---------------------------------
 
-1. In your project, locate your InventoryDatabase resource (.tres file)
-2. Select the database resource in the FileSystem dock
-3. In the Inspector, the database editor will appear at the bottom
+1. In your project, open "Inventory" top menus
+2. Select "Database" to open the database editor
 
 Step 2: Create Item Definitions
 --------------------------------
@@ -50,9 +49,13 @@ Step 3: Create the Recipe
    
    In the database editor, click on the "Recipes" section.
 
+   .. image:: ./../manual/database/images/recipes_editor_open.png
+
 2. **Add New Recipe**
    
    Click the "+" button to create a new recipe.
+
+   .. image:: ./../manual/database/images/recipes_editor_add.png
 
 3. **Configure Recipe Properties**
    
@@ -60,6 +63,8 @@ Step 3: Create the Recipe
    
    - **Time to Craft**: Set to 2.0 seconds for quick testing
    - **Station**: Leave empty for now (we'll create station types later)
+
+   .. image:: ./images/recipe_editor_edit.png
 
 4. **Add Ingredients**
    
@@ -301,9 +306,3 @@ Now that you have a working recipe, you can:
    
    - :ref:`create_and_use_craft_station_type` - Learn about station types
    - :ref:`craft_station_ui_tutorial` - Build a complete crafting system with UI
-
-**Image Description Needed**: Screenshot showing the database editor with a wood-to-planks recipe configured, displaying the ingredients section with 1 wood and products section with 4 planks.
-
-**Image Description Needed**: Screenshot of the simple test scene running, showing the UI with "Wood: 5 | Planks: 0" status and a "Craft Planks" button.
-
-**Image Description Needed**: Screenshot after crafting, showing "Wood: 4 | Planks: 4" status, demonstrating the recipe worked correctly.
