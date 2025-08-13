@@ -42,8 +42,9 @@ We are currently improving all documentation to improve your experience with the
    
    tutorials/how_to_test_multiplayer
    tutorials/create_and_use_recipe
-   tutorials/create_and_use_craft_station_type
-   tutorials/basic_craft_station
+   tutorials/craft_station_tutorial_1_resources
+   tutorials/craft_station_tutorial_2_nodes
+   tutorials/craft_station_tutorial_3_ui
 
 .. toctree::
    :maxdepth: 1

@@ -304,5 +304,6 @@ Now that you have a working recipe, you can:
 
 .. seealso::
    
-   - :ref:`create_and_use_craft_station_type` - Learn about station types
-   - :ref:`craft_station_ui_tutorial` - Build a complete crafting system with UI
+   - :ref:`craft_station_tutorial_1_resources` - Learn about station types and resources
+   - :ref:`craft_station_tutorial_2_nodes` - Learn about station setup and scripting
+   - :ref:`craft_station_tutorial_3_ui` - Build a complete crafting system with UI

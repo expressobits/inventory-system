@@ -222,4 +222,4 @@ For more complex games, you might have specialized station types:
    
    - :ref:`recipes` - Learn about creating and configuring recipes
    - :ref:`craft_stations` - Learn about using CraftStation nodes
-   - :ref:`create_and_use_craft_station_type` - Step-by-step tutorial for creating station types
+   - :ref:`craft_station_tutorial_1_resources` - Step-by-step tutorial for creating station types

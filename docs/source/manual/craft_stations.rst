@@ -333,4 +333,6 @@ Game Balance
    
    - :ref:`recipes` - Learn about creating recipes
    - :ref:`craft_station_type` - Learn about station types
-   - :ref:`craft_station_ui_tutorial` - Complete CraftStation setup and UI tutorial
+   - :ref:`craft_station_tutorial_1_resources` - Learn about creating station types and resources
+   - :ref:`craft_station_tutorial_2_nodes` - Learn about CraftStation setup and scripting
+   - :ref:`craft_station_tutorial_3_ui` - Complete CraftStation UI tutorial
