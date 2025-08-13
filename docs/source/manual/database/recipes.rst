@@ -30,9 +30,13 @@ Recipes are created and managed through the :ref:`InventoryDatabase<class_Invent
    
    In the database editor, locate the "Recipes" section.
 
+   .. image:: ./images/recipes_editor_open.png
+
 3. **Add New Recipe**
    
    Click the "+" button to create a new recipe. A new recipe entry will appear in the list.
+
+   .. image:: ./images/recipes_editor_add.png
 
 4. **Configure Recipe Properties**
    
@@ -43,6 +47,8 @@ Recipes are created and managed through the :ref:`InventoryDatabase<class_Invent
    - **Ingredients**: Add the items that will be consumed during crafting
    - **Required Items**: Add items needed but not consumed (like tools)
    - **Products**: Add the items that will be produced
+
+   .. image:: ./images/recipes_editor_edit.png
 
 Recipe Properties
 =================
@@ -134,5 +140,3 @@ Balancing
    - :ref:`craft_station_type` - Learn about CraftStationType resources
    - :ref:`craft_stations` - Learn about using CraftStation nodes
    - :ref:`create_and_use_recipe` - Step-by-step tutorial for creating recipes
-
-**Image Description Needed**: Screenshot showing the database editor with the Recipes section open, displaying a sample recipe with ingredients, products, and station type configured.
