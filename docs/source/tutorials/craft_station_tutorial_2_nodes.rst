@@ -85,7 +85,6 @@ Attach this script to the FurnaceTest root node:
 
    extends Node
 
-   extends Node
 
    @onready var craft_station = $FurnaceStation
    @onready var input_inventory = $InputInventory
