@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipes &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CraftStationType" href="craft_station_type.html" />
+    <link rel="prev" title="Item Category" href="item_category.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/add_simple_ui.html">Add Simple UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting_started/quickstart/operation_between_inventories.html">Operation between inventories</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../database.html">Database</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="inventory_database_editor.html">Inventory Database Editor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_definition.html">Item Definition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item_category.html">Item Category</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Recipes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#recipes-overview">Recipes Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-recipes">Creating Recipes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recipe-properties">Recipe Properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ingredients">Ingredients</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#required-items">Required Items</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#products">Products</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#station-type">Station Type</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#craft-time">Craft Time</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#recipe-validation">Recipe Validation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#recipe-organization">Recipe Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#station-type-assignment">Station Type Assignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#balancing">Balancing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="craft_station_type.html">CraftStationType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="using_database_in_scenes.html">Using the Database in Scenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="work_with_json.html">Work with JSON</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../craft_stations.html">Craft Stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/craft_station_tutorial_1_resources.html">CraftStation Tutorial 1: Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/craft_station_tutorial_2_nodes.html">CraftStation Tutorial 2: Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/craft_station_tutorial_3_ui.html">CraftStation Tutorial 3: UI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html#variant-types">Variant types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../database.html">Database</a></li>
+      <li class="breadcrumb-item active">Recipes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/manual/database/recipes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="recipes">
+<span id="id1"></span><h1>Recipes<a class="headerlink" href="#recipes" title="Permalink to this heading"></a></h1>
+<p>Recipes define what items can be created through crafting and what materials are required. In the inventory system, recipes are resources that contain all the information needed for crafting items at <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation"><span class="std std-ref">CraftStation</span></a> nodes.</p>
+<section id="recipes-overview">
+<h2>Recipes Overview<a class="headerlink" href="#recipes-overview" title="Permalink to this heading"></a></h2>
+<p>A recipe consists of several components:</p>
+<ul class="simple">
+<li><p><strong>Ingredients</strong>: Items that are consumed during crafting</p></li>
+<li><p><strong>Required Items</strong>: Items needed for crafting but not consumed (like tools)</p></li>
+<li><p><strong>Products</strong>: Items produced when crafting is completed</p></li>
+<li><p><strong>Station Type</strong>: The specific <a class="reference internal" href="../../api/class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> required for this recipe</p></li>
+<li><p><strong>Craft Time</strong>: How long the crafting process takes</p></li>
+</ul>
+</section>
+<section id="creating-recipes">
+<h2>Creating Recipes<a class="headerlink" href="#creating-recipes" title="Permalink to this heading"></a></h2>
+<p>Recipes are created and managed through the <a class="reference internal" href="../../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> editor. Here’s how to create a new recipe:</p>
+<ol class="arabic">
+<li><p><strong>Open the Database Editor</strong></p>
+<p>Open your inventory database resource in the Inspector. The database editor will appear at the bottom of the editor.</p>
+</li>
+<li><p><strong>Navigate to Recipes</strong></p>
+<p>In the database editor, locate the “Recipes” section.</p>
+<img alt="../../_images/recipes_editor_open.png" src="../../_images/recipes_editor_open.png" />
+</li>
+<li><p><strong>Add New Recipe</strong></p>
+<p>Click the “+” button to create a new recipe. A new recipe entry will appear in the list.</p>
+<img alt="../../_images/recipes_editor_add.png" src="../../_images/recipes_editor_add.png" />
+</li>
+<li><p><strong>Configure Recipe Properties</strong></p>
+<p>Set the following properties for your recipe:</p>
+<ul class="simple">
+<li><p><strong>Station</strong>: Select the <a class="reference internal" href="../../api/class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> required for this recipe (optional)</p></li>
+<li><p><strong>Time to Craft</strong>: Set the duration for crafting in seconds</p></li>
+<li><p><strong>Ingredients</strong>: Add the items that will be consumed during crafting</p></li>
+<li><p><strong>Required Items</strong>: Add items needed but not consumed (like tools)</p></li>
+<li><p><strong>Products</strong>: Add the items that will be produced</p></li>
+</ul>
+<img alt="../../_images/recipes_editor_edit.png" src="../../_images/recipes_editor_edit.png" />
+</li>
+</ol>
+</section>
+<section id="recipe-properties">
+<h2>Recipe Properties<a class="headerlink" href="#recipe-properties" title="Permalink to this heading"></a></h2>
+<section id="ingredients">
+<h3>Ingredients<a class="headerlink" href="#ingredients" title="Permalink to this heading"></a></h3>
+<p>Ingredients are items that get consumed during the crafting process. These items are removed from the input inventories of the craft station.</p>
+<p><strong>When ingredients are removed:</strong></p>
+<ul class="simple">
+<li><p>If <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a> is <code class="docutils literal notranslate"><span class="pre">false</span></code>: Ingredients are removed when crafting starts</p></li>
+<li><p>If <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a> is <code class="docutils literal notranslate"><span class="pre">true</span></code>: Ingredients are removed when crafting completes</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each ingredient is an <a class="reference internal" href="../../api/class_itemstack.html#class-itemstack"><span class="std std-ref">ItemStack</span></a> that specifies both the item and the quantity needed.</p>
+</div>
+</section>
+<section id="required-items">
+<h3>Required Items<a class="headerlink" href="#required-items" title="Permalink to this heading"></a></h3>
+<p>Required items are items that must be present in the input inventories for crafting to begin, but they are not consumed during the process. This is useful for tools or permanent equipment.</p>
+<p><strong>Example use cases:</strong></p>
+<ul class="simple">
+<li><p>Crafting tools (hammer, anvil, etc.)</p></li>
+<li><p>Fuel sources that aren’t consumed per recipe</p></li>
+<li><p>Permanent equipment or machinery</p></li>
+</ul>
+</section>
+<section id="products">
+<h3>Products<a class="headerlink" href="#products" title="Permalink to this heading"></a></h3>
+<p>Products are the items created when crafting is successfully completed. These items are added to the output inventories of the craft station.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Products are added to output inventories only when crafting completes successfully.</p>
+</div>
+</section>
+<section id="station-type">
+<h3>Station Type<a class="headerlink" href="#station-type" title="Permalink to this heading"></a></h3>
+<p>The station type determines which <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation"><span class="std std-ref">CraftStation</span></a> nodes can execute this recipe. Only craft stations with a matching <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-property-type"><span class="std std-ref">type</span></a> will include this recipe in their <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-property-valid-recipes"><span class="std std-ref">valid_recipes</span></a> list.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If no station type is set, the recipe will be available to craft stations that also have no type set.</p>
+</div>
+</section>
+<section id="craft-time">
+<h3>Craft Time<a class="headerlink" href="#craft-time" title="Permalink to this heading"></a></h3>
+<p>The time (in seconds) required to complete the crafting process. During this time, the recipe will be in the craft station’s <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-property-craftings"><span class="std std-ref">craftings</span></a> list.</p>
+</section>
+</section>
+<section id="recipe-validation">
+<h2>Recipe Validation<a class="headerlink" href="#recipe-validation" title="Permalink to this heading"></a></h2>
+<p>Before a recipe can be crafted, the system validates:</p>
+<ol class="arabic simple">
+<li><p><strong>Station Compatibility</strong>: The craft station must have the same type as the recipe (or both must have no type)</p></li>
+<li><p><strong>Ingredient Availability</strong>: All required ingredients must be available in input inventories</p></li>
+<li><p><strong>Required Item Availability</strong>: All required items must be present in input inventories</p></li>
+<li><p><strong>Output Space</strong>: There must be space in output inventories for the products</p></li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use the <a class="reference internal" href="../../api/class_craftstation.html#class-craftstation-method-can-craft"><span class="std std-ref">can_craft()</span></a> method to check if a recipe can be executed before starting the crafting process.</p>
+</div>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading"></a></h2>
+<section id="recipe-organization">
+<h3>Recipe Organization<a class="headerlink" href="#recipe-organization" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Group related recipes by station type</p></li>
+<li><p>Use descriptive names for easy identification</p></li>
+<li><p>Consider crafting time balance for gameplay</p></li>
+</ul>
+</section>
+<section id="station-type-assignment">
+<h3>Station Type Assignment<a class="headerlink" href="#station-type-assignment" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Assign specific station types to organize crafting (e.g., “Furnace”, “Workbench”, “Alchemy Table”)</p></li>
+<li><p>Leave station type empty for universal recipes that can be crafted anywhere</p></li>
+<li><p>Use consistent naming conventions for station types</p></li>
+</ul>
+</section>
+<section id="balancing">
+<h3>Balancing<a class="headerlink" href="#balancing" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Consider ingredient rarity and availability</p></li>
+<li><p>Balance crafting time with recipe complexity</p></li>
+<li><p>Ensure product value matches ingredient cost</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="craft_station_type.html#craft-station-type"><span class="std std-ref">CraftStationType</span></a> - Learn about CraftStationType resources</p></li>
+<li><p><a class="reference internal" href="../craft_stations.html#craft-stations"><span class="std std-ref">Craft Stations</span></a> - Learn about using CraftStation nodes</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="item_category.html" class="btn btn-neutral float-left" title="Item Category" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="craft_station_type.html" class="btn btn-neutral float-right" title="CraftStationType" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    Language: en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    
+    <dl>
+      <dt>Languages</dt>
+        
+          <dd><a href="en/index.html">en</a></dd>
+        
+          <dd><a href="pt_BR/index.html">pt_BR</a></dd>
+        
+    </dl>
+    
+    <!--  -->
+    <br>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftStation Tutorial 2: Nodes &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CraftStation Tutorial 3: UI" href="craft_station_tutorial_3_ui.html" />
+    <link rel="prev" title="CraftStation Tutorial 1: Resources" href="craft_station_tutorial_1_resources.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/add_simple_ui.html">Add Simple UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/operation_between_inventories.html">Operation between inventories</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../manual/database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/craft_stations.html">Craft Stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="craft_station_tutorial_1_resources.html">CraftStation Tutorial 1: Resources</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CraftStation Tutorial 2: Nodes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-test-scenes">Setting Up Test Scenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-6-create-a-furnace-scene">Step 6: Create a Furnace Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-7-create-a-general-workbench-scene">Step 7: Create a General Workbench Scene</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-control-scripts">Adding Control Scripts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-8-script-the-furnace-scene">Step 8: Script the Furnace Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-9-script-the-workbench-scene">Step 9: Script the Workbench Scene</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-station-types">Testing Station Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-10-test-the-filtering">Step 10: Test the Filtering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-11-dynamic-station-type-assignment">Step 11: Dynamic Station Type Assignment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#no-recipes-available">No Recipes Available</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wrong-recipes-showing">Wrong Recipes Showing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="craft_station_tutorial_3_ui.html">CraftStation Tutorial 3: UI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html#variant-types">Variant types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CraftStation Tutorial 2: Nodes</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/craft_station_tutorial_2_nodes.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="craftstation-tutorial-2-nodes">
+<span id="craft-station-tutorial-2-nodes"></span><h1>CraftStation Tutorial 2: Nodes<a class="headerlink" href="#craftstation-tutorial-2-nodes" title="Permalink to this heading"></a></h1>
+<p>This tutorial continues from <a class="reference internal" href="craft_station_tutorial_1_resources.html#craft-station-tutorial-1-resources"><span class="std std-ref">CraftStation Tutorial 1: Resources</span></a> and will guide you through setting up craft station nodes, creating test scenes, and implementing the crafting logic with scripts.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<p>Before starting this tutorial, make sure you have:</p>
+<ul class="simple">
+<li><p>Completed <a class="reference internal" href="craft_station_tutorial_1_resources.html#craft-station-tutorial-1-resources"><span class="std std-ref">CraftStation Tutorial 1: Resources</span></a></p></li>
+<li><p>A CraftStationType resource created (Furnace)</p></li>
+<li><p>Items and recipes set up from the previous tutorial</p></li>
+</ul>
+</section>
+<section id="setting-up-test-scenes">
+<h2>Setting Up Test Scenes<a class="headerlink" href="#setting-up-test-scenes" title="Permalink to this heading"></a></h2>
+<section id="step-6-create-a-furnace-scene">
+<h3>Step 6: Create a Furnace Scene<a class="headerlink" href="#step-6-create-a-furnace-scene" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Create New Scene</strong></p>
+<p>Create a new scene with Node as root (name: “FurnaceTest”).</p>
+</li>
+<li><p><strong>Add Scene Nodes</strong></p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/class_craftstation.html#class-craftstation"><span class="std std-ref">CraftStation</span></a> (name: “FurnaceStation”)</p></li>
+<li><p><a class="reference internal" href="../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> (name: “InputInventory”)</p></li>
+<li><p><a class="reference internal" href="../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> (name: “OutputInventory”)</p></li>
+</ul>
+</li>
+<li><p><strong>Configure Inventories</strong></p>
+<p>Set both inventories:</p>
+<ul class="simple">
+<li><p><strong>Database</strong>: Your InventoryDatabase</p></li>
+</ul>
+</li>
+<li><p><strong>Configure Furnace Station</strong></p>
+<p>Set the CraftStation properties:</p>
+<ul class="simple">
+<li><p><strong>Database</strong>: Your InventoryDatabase</p></li>
+<li><p><strong>Type</strong>: Select the “Furnace” CraftStationType</p></li>
+<li><p><strong>Input Inventories</strong>: Add InputInventory path</p></li>
+<li><p><strong>Output Inventories</strong>: Add OutputInventory path</p></li>
+<li><p><strong>Can Processing Craftings</strong>: Enabled</p></li>
+<li><p><strong>Can Finish Craftings</strong>: Enabled</p></li>
+</ul>
+<img alt="../_images/create_and_use_craft_station_types_setup_craft_station.png" src="../_images/create_and_use_craft_station_types_setup_craft_station.png" />
+</li>
+</ol>
+</section>
+<section id="step-7-create-a-general-workbench-scene">
+<h3>Step 7: Create a General Workbench Scene<a class="headerlink" href="#step-7-create-a-general-workbench-scene" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Create Another Scene</strong></p>
+<p>Create a new scene (name: “WorkbenchTest”).</p>
+</li>
+<li><p><strong>Add Same Nodes</strong></p>
+<p>Add the same node structure as the furnace scene.</p>
+</li>
+<li><p><strong>Configure Workbench Station</strong></p>
+<p>Set the CraftStation properties the same as furnace, but:
+- <strong>Type</strong>: Leave this EMPTY (no station type)</p>
+<img alt="../_images/create_and_use_craft_station_types_setup_craft_station_workbench.png" src="../_images/create_and_use_craft_station_types_setup_craft_station_workbench.png" />
+</li>
+</ol>
+</section>
+</section>
+<section id="adding-control-scripts">
+<h2>Adding Control Scripts<a class="headerlink" href="#adding-control-scripts" title="Permalink to this heading"></a></h2>
+<section id="step-8-script-the-furnace-scene">
+<h3>Step 8: Script the Furnace Scene<a class="headerlink" href="#step-8-script-the-furnace-scene" title="Permalink to this heading"></a></h3>
+<p>Attach this script to the FurnaceTest root node:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>extends Node
+
+
+@onready var craft_station = $FurnaceStation
+@onready var input_inventory = $InputInventory
+@onready var output_inventory = $OutputInventory
+
+func _ready():
+   # Add iron ore
+   input_inventory.add(&quot;iron_ore&quot;, 10)
+
+   # Add coal (fuel)
+   input_inventory.add(&quot;coal&quot;, 5)
+
+   # Connect signals
+   craft_station.on_crafted.connect(_on_craft_completed)
+
+   # Print station info
+   print(&quot;=== FURNACE STATION ===&quot;)
+   print(&quot;Station Type: &quot;, craft_station.type.name if craft_station.type else &quot;None&quot;)
+   print(&quot;Available recipes: &quot;, craft_station.valid_recipes.size())
+
+   # List available recipes
+   for i in craft_station.valid_recipes.size():
+      var recipe_index = craft_station.valid_recipes[i]
+      var recipe = craft_station.database.recipes[recipe_index]
+      var product_name = recipe.products[0].item_id if recipe.products.size() &gt; 0 else &quot;Unknown&quot;
+      print(&quot;Recipe &quot;, i, &quot;: &quot;, product_name)
+
+      # Check if we can craft it
+      var can_craft = craft_station.can_craft(recipe)
+      print(&quot;  Can craft: &quot;, can_craft)
+
+
+
+func _input(event):
+   if event.is_action_pressed(&quot;ui_accept&quot;):
+      if craft_station.valid_recipes.size() &gt; 0:
+         print(&quot;Starting furnace smelting...&quot;)
+         craft_station.craft(0)
+      else:
+         print(&quot;No recipes available!&quot;)
+
+
+func _on_craft_completed(recipe_index: int):
+   print(&quot;Smelting completed!&quot;)
+
+   # Show output
+   for i in output_inventory.stacks.size():
+      var stack = output_inventory.stacks[i]
+      if stack:
+         print(&quot;Produced: &quot;, stack.amount, &quot;x &quot;, stack.item_id)
+</pre></div>
+</div>
+</section>
+<section id="step-9-script-the-workbench-scene">
+<h3>Step 9: Script the Workbench Scene<a class="headerlink" href="#step-9-script-the-workbench-scene" title="Permalink to this heading"></a></h3>
+<p>Attach this script to the WorkbenchTest root node:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>extends Node
+
+@onready var craft_station = $WorkbenchStation
+@onready var input_inventory = $InputInventory
+@onready var output_inventory = $OutputInventory
+
+func _ready():
+   # Add test items
+   input_inventory.add(&quot;wood&quot;, 30)
+
+   # Connect signals
+   craft_station.on_crafted.connect(_on_craft_completed)
+
+   # Print station info
+   print(&quot;=== WORKBENCH STATION ===&quot;)
+   print(&quot;Station Type: &quot;, craft_station.type.name if craft_station.type else &quot;None&quot;)
+   print(&quot;Available recipes: &quot;, craft_station.valid_recipes.size())
+
+   # List available recipes
+   for i in craft_station.valid_recipes.size():
+      var recipe_index = craft_station.valid_recipes[i]
+      var recipe = craft_station.database.recipes[recipe_index]
+      var product_name = recipe.products[0].item_id if recipe.products.size() &gt; 0 else &quot;Unknown&quot;
+      print(&quot;Recipe &quot;, i, &quot;: &quot;, product_name)
+
+      var can_craft = craft_station.can_craft(recipe)
+      print(&quot;  Can craft: &quot;, can_craft)
+
+func _input(event):
+   if event.is_action_pressed(&quot;ui_accept&quot;):
+      if craft_station.valid_recipes.size() &gt; 0:
+         print(&quot;Starting crafting...&quot;)
+         craft_station.craft(1)
+      else:
+         print(&quot;No recipes available!&quot;)
+
+func _on_craft_completed(recipe_index: int):
+   print(&quot;Crafting completed!&quot;)
+
+   # Show output
+   for i in output_inventory.stacks.size():
+      var stack = output_inventory.stacks[i]
+      if stack:
+         print(&quot;Produced: &quot;, stack.amount, &quot;x &quot;, stack.item_id)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="testing-station-types">
+<h2>Testing Station Types<a class="headerlink" href="#testing-station-types" title="Permalink to this heading"></a></h2>
+<section id="step-10-test-the-filtering">
+<h3>Step 10: Test the Filtering<a class="headerlink" href="#step-10-test-the-filtering" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Run the Furnace Scene</strong></p>
+<p>When you run the furnace scene, you should see:
+- Station Type: “Furnace”
+- Available recipes: 1 (only the iron smelting recipe)
+- The recipe should show “Iron Ingot”
+- Press Space to start smelting</p>
+</li>
+<li><p><strong>Run the Workbench Scene</strong></p>
+<p>When you run the workbench scene, you should see:
+- Station Type: “None”
+- Available recipes: 1 (only the stick crafting recipe)
+- The recipe should show “Stick”
+- Press Space to start crafting</p>
+</li>
+<li><p><strong>Verify Recipe Filtering</strong></p>
+<p>This demonstrates that:
+- Furnace stations only see furnace recipes
+- General stations only see general recipes
+- Station types successfully filter available recipes</p>
+</li>
+</ol>
+</section>
+</section>
+<section id="advanced-usage">
+<h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this heading"></a></h2>
+<section id="step-11-dynamic-station-type-assignment">
+<h3>Step 11: Dynamic Station Type Assignment<a class="headerlink" href="#step-11-dynamic-station-type-assignment" title="Permalink to this heading"></a></h3>
+<p>You can also assign station types in code:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">():</span>
+
+<span class="w">    </span><span class="c1"># Assign to station</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;furnace&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this heading"></a></h2>
+<section id="no-recipes-available">
+<h3>No Recipes Available<a class="headerlink" href="#no-recipes-available" title="Permalink to this heading"></a></h3>
+<p>If a station shows no available recipes:</p>
+<ul class="simple">
+<li><p>Check that recipe station types match the craft station type</p></li>
+<li><p>Verify both are using the same CraftStationType resource</p></li>
+<li><p>Ensure recipes have the correct station type assigned</p></li>
+</ul>
+</section>
+<section id="wrong-recipes-showing">
+<h3>Wrong Recipes Showing<a class="headerlink" href="#wrong-recipes-showing" title="Permalink to this heading"></a></h3>
+<p>If the wrong recipes appear:</p>
+<ul class="simple">
+<li><p>Double-check recipe station type assignments</p></li>
+<li><p>Verify craft station type is set correctly</p></li>
+<li><p>Remember: empty station type only matches other empty station types</p></li>
+</ul>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading"></a></h2>
+<p>Now that you understand how to set up craft station nodes and implement the basic crafting logic, you can continue to the next tutorial to learn how to create a complete UI for your crafting system.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="craft_station_tutorial_1_resources.html#craft-station-tutorial-1-resources"><span class="std std-ref">CraftStation Tutorial 1: Resources</span></a> - Review the resource creation steps</p></li>
+<li><p><a class="reference internal" href="craft_station_tutorial_3_ui.html#craft-station-tutorial-3-ui"><span class="std std-ref">CraftStation Tutorial 3: UI</span></a> - Build a complete crafting UI</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="craft_station_tutorial_1_resources.html" class="btn btn-neutral float-left" title="CraftStation Tutorial 1: Resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="craft_station_tutorial_3_ui.html" class="btn btn-neutral float-right" title="CraftStation Tutorial 3: UI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    Language: en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    
+    <dl>
+      <dt>Languages</dt>
+        
+          <dd><a href="en/index.html">en</a></dd>
+        
+          <dd><a href="pt_BR/index.html">pt_BR</a></dd>
+        
+    </dl>
+    
+    <!--  -->
+    <br>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

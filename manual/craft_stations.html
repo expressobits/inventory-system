@@ -60,11 +60,52 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="database.html">Database</a></li>
 <li class="toctree-l1"><a class="reference internal" href="inventories.html">Inventories</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Craft Stations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Craft Stations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-components">Key Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#station-type">Station Type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-inventories">Input Inventories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-inventories">Output Inventories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#valid-recipes">Valid Recipes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-a-craft-station">Setting Up a Craft Station</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#crafting-process">Crafting Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-a-craft">Starting a Craft</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#craft-processing">Craft Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finishing-crafts">Finishing Crafts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#monitoring-crafting">Monitoring Crafting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#signals">Signals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#current-crafts">Current Crafts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recipe-availability">Recipe Availability</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#common-patterns">Common Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#furnace-example">Furnace Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#workbench-example">Workbench Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-experience">User Experience</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#game-balance">Game Balance</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_1_resources.html">CraftStation Tutorial 1: Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_2_nodes.html">CraftStation Tutorial 2: Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_3_ui.html">CraftStation Tutorial 3: UI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul>
@@ -102,7 +143,313 @@
              
   <section id="craft-stations">
 <span id="id1"></span><h1>Craft Stations<a class="headerlink" href="#craft-stations" title="Permalink to this heading"></a></h1>
-<p>No documentation at the moment, please contribute!</p>
+<p>Craft Stations are nodes that manage the crafting process in your inventory system. They connect input inventories containing ingredients to output inventories where crafted products are placed, and they process <a class="reference internal" href="../api/class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a> resources to transform items over time.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading"></a></h2>
+<p>A <a class="reference internal" href="../api/class_craftstation.html#class-craftstation"><span class="std std-ref">CraftStation</span></a> node provides a complete crafting system that:</p>
+<ul class="simple">
+<li><p>Filters available recipes based on station type</p></li>
+<li><p>Validates ingredient availability before starting crafts</p></li>
+<li><p>Manages multiple concurrent crafting processes</p></li>
+<li><p>Handles timing and progression of crafts</p></li>
+<li><p>Automatically moves ingredients and products between inventories</p></li>
+<li><p>Provides signals for UI and game logic integration</p></li>
+</ul>
+<img alt="../_images/craft_station_node.png" src="../_images/craft_station_node.png" />
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Permalink to this heading"></a></h2>
+<section id="station-type">
+<h3>Station Type<a class="headerlink" href="#station-type" title="Permalink to this heading"></a></h3>
+<p>Each craft station can have a <a class="reference internal" href="../api/class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> that determines which recipes it can process. This allows you to create specialized crafting stations like furnaces, workbenches, or alchemy tables.</p>
+</section>
+<section id="input-inventories">
+<h3>Input Inventories<a class="headerlink" href="#input-inventories" title="Permalink to this heading"></a></h3>
+<p>Input inventories provide the ingredients and required items for crafting. These are <a class="reference internal" href="../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> nodes that the craft station monitors for available materials.</p>
+</section>
+<section id="output-inventories">
+<h3>Output Inventories<a class="headerlink" href="#output-inventories" title="Permalink to this heading"></a></h3>
+<p>Output inventories receive the products when crafting completes. Products are automatically added to these inventories when a craft finishes successfully.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Output inventories and Input inventories can be the same inventory.</p>
+</div>
+</section>
+<section id="valid-recipes">
+<h3>Valid Recipes<a class="headerlink" href="#valid-recipes" title="Permalink to this heading"></a></h3>
+<p>The station automatically builds a list of recipes it can process based on:</p>
+<ul class="simple">
+<li><p>Recipes in the connected <a class="reference internal" href="../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a></p></li>
+<li><p>Station type compatibility</p></li>
+<li><p>Current ingredient availability</p></li>
+</ul>
+</section>
+</section>
+<section id="setting-up-a-craft-station">
+<h2>Setting Up a Craft Station<a class="headerlink" href="#setting-up-a-craft-station" title="Permalink to this heading"></a></h2>
+<section id="basic-setup">
+<h3>Basic Setup<a class="headerlink" href="#basic-setup" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Add CraftStation Node</strong></p>
+<p>Add a <a class="reference internal" href="../api/class_craftstation.html#class-craftstation"><span class="std std-ref">CraftStation</span></a> node to your scene.</p>
+</li>
+<li><p><strong>Connect Database</strong></p>
+<p>Set the <a class="reference internal" href="../api/class_nodeinventories.html#class-nodeinventories-property-database"><span class="std std-ref">database</span></a> property to your <a class="reference internal" href="../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> resource.</p>
+</li>
+<li><p><strong>Add Inventories</strong></p>
+<p>Create <a class="reference internal" href="../api/class_inventory.html#class-inventory"><span class="std std-ref">Inventory</span></a> nodes for inputs and outputs, then connect them to the craft station.</p>
+</li>
+<li><p><strong>Configure Station Type (Optional)</strong></p>
+<p>Set the <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-property-type"><span class="std std-ref">type</span></a> property to a specific <a class="reference internal" href="../api/class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a> if you want to limit which recipes this station can process.</p>
+</li>
+</ol>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span># Example: Basic craft station setup in code
+@onready var craft_station = $CraftStation
+@onready var input_inventory = $InputInventory
+@onready var output_inventory = $OutputInventory
+
+func _ready():
+    # Connect inventories
+    craft_station.add_input_inventory(input_inventory)
+    craft_station.output_inventories = [output_inventory.get_path()]
+
+    # Set station type (optional)
+    var furnace_type = database.get_craft_station_type_by_id(&quot;furnace&quot;)
+    craft_station.type = furnace_type
+</pre></div>
+</div>
+</section>
+<section id="advanced-configuration">
+<h3>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Permalink to this heading"></a></h3>
+<p><strong>Processing Mode</strong></p>
+<p>Configure how multiple crafts are handled:</p>
+<ul class="simple">
+<li><p><strong>Sequential</strong>: Crafts process one at a time</p></li>
+<li><p><strong>Parallel</strong>: Multiple crafts process simultaneously</p></li>
+</ul>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set processing mode</span>
+<span class="n">craft_station</span><span class="o">.</span><span class="n">processing_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CraftStation</span><span class="o">.</span><span class="n">ProcessingMode</span><span class="o">.</span><span class="n">PARALLEL</span>
+</pre></div>
+</div>
+<p><strong>Craft Limits</strong></p>
+<p>Limit the number of concurrent crafts:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable craft limits</span>
+<span class="n">craft_station</span><span class="o">.</span><span class="n">has_limit_crafts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+<span class="n">craft_station</span><span class="o">.</span><span class="n">limit_number_crafts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+</pre></div>
+</div>
+<p><strong>Auto Crafting</strong></p>
+<p>Enable automatic crafting when ingredients are available:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Enable auto-crafting</span>
+<span class="n">craft_station</span><span class="o">.</span><span class="n">auto_craft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="bp">true</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is used on campfire in fps demo.</p>
+</div>
+</section>
+</section>
+<section id="crafting-process">
+<h2>Crafting Process<a class="headerlink" href="#crafting-process" title="Permalink to this heading"></a></h2>
+<section id="starting-a-craft">
+<h3>Starting a Craft<a class="headerlink" href="#starting-a-craft" title="Permalink to this heading"></a></h3>
+<p>Crafting is initiated by calling the <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-method-craft"><span class="std std-ref">craft()</span></a> method with a recipe index:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Start crafting the first available recipe</span>
+<span class="k">if</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">valid_recipes</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">craft</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The system will:</p>
+<ol class="arabic simple">
+<li><p>Validate the recipe is available and ingredients are present</p></li>
+<li><p>Remove ingredients from input inventories (unless <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a> is enabled)</p></li>
+<li><p>Add a new <a class="reference internal" href="../api/class_crafting.html#class-crafting"><span class="std std-ref">Crafting</span></a> process to the station’s list</p></li>
+<li><p>Begin timing the craft duration</p></li>
+</ol>
+</section>
+<section id="craft-processing">
+<h3>Craft Processing<a class="headerlink" href="#craft-processing" title="Permalink to this heading"></a></h3>
+<p>Active crafts are processed based on the <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-property-tick-update-method"><span class="std std-ref">tick_update_method</span></a>:</p>
+<ul class="simple">
+<li><p><strong>Process</strong>: Uses Godot’s <code class="docutils literal notranslate"><span class="pre">_process()</span></code> callback</p></li>
+<li><p><strong>Physics Process</strong>: Uses Godot’s <code class="docutils literal notranslate"><span class="pre">_physics_process()</span></code> callback</p></li>
+<li><p><strong>Custom</strong>: Manual timing via code</p></li>
+</ul>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example: Custom timing</span>
+<span class="n">craft_station</span><span class="o">.</span><span class="n">tick_update_method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CraftStation</span><span class="o">.</span><span class="n">TickUpdateMethod</span><span class="o">.</span><span class="n">CUSTOM</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">_process</span><span class="p">(</span><span class="n">delta</span><span class="p">):</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">tick</span><span class="p">(</span><span class="n">delta</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Custom timing is important for multiplayer server games with ticks.</p>
+</div>
+</section>
+<section id="finishing-crafts">
+<h3>Finishing Crafts<a class="headerlink" href="#finishing-crafts" title="Permalink to this heading"></a></h3>
+<p>When a craft completes:</p>
+<ol class="arabic simple">
+<li><p>Products are added to output inventories</p></li>
+<li><p>Ingredients are removed (if <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-property-only-remove-ingredients-after-craft"><span class="std std-ref">only_remove_ingredients_after_craft</span></a> is enabled)</p></li>
+<li><p>The <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-signal-on-crafted"><span class="std std-ref">on_crafted</span></a> signal is emitted</p></li>
+<li><p>The craft is removed from the active list</p></li>
+</ol>
+</section>
+</section>
+<section id="monitoring-crafting">
+<h2>Monitoring Crafting<a class="headerlink" href="#monitoring-crafting" title="Permalink to this heading"></a></h2>
+<section id="signals">
+<h3>Signals<a class="headerlink" href="#signals" title="Permalink to this heading"></a></h3>
+<p>CraftStation provides several signals for monitoring the crafting process:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="k">func</span><span class="w"> </span><span class="n">_ready</span><span class="p">():</span>
+<span class="w">    </span><span class="c1"># Connect to crafting signals</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">on_request_craft</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_craft_requested</span><span class="p">)</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">crafting_added</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_crafting_added</span><span class="p">)</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">on_crafted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_craft_completed</span><span class="p">)</span>
+<span class="w">    </span><span class="n">craft_station</span><span class="o">.</span><span class="n">crafting_removed</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">_on_crafting_removed</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_craft_requested</span><span class="p">(</span><span class="n">recipe_index</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Craft requested for recipe: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">recipe_index</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_crafting_added</span><span class="p">(</span><span class="n">crafting_index</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Crafting started: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">crafting_index</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_craft_completed</span><span class="p">(</span><span class="n">recipe_index</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Craft completed for recipe: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">recipe_index</span><span class="p">)</span>
+
+<span class="k">func</span><span class="w"> </span><span class="n">_on_crafting_removed</span><span class="p">(</span><span class="n">crafting_index</span><span class="p">:</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="p">):</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Crafting removed: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">crafting_index</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="current-crafts">
+<h3>Current Crafts<a class="headerlink" href="#current-crafts" title="Permalink to this heading"></a></h3>
+<p>Monitor active crafting processes:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Check if station is crafting</span>
+<span class="k">if</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">is_crafting</span><span class="p">():</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Station is currently crafting&quot;</span><span class="p">)</span>
+
+<span class="c1"># Get current crafting processes</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">craftings</span><span class="o">.</span><span class="n">size</span><span class="p">():</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">crafting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">craftings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">crafting</span><span class="o">.</span><span class="n">get_time</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">recipe</span><span class="o">.</span><span class="n">time_to_craft</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Craft &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; progress: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">progress</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="recipe-availability">
+<h3>Recipe Availability<a class="headerlink" href="#recipe-availability" title="Permalink to this heading"></a></h3>
+<p>Check which recipes are available:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get available recipes</span>
+<span class="k">for</span><span class="w"> </span><span class="n">recipe_index</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">valid_recipes</span><span class="p">:</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">recipe</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">database</span><span class="o">.</span><span class="n">recipes</span><span class="p">[</span><span class="n">recipe_index</span><span class="p">]</span>
+<span class="w">    </span><span class="k">var</span><span class="w"> </span><span class="n">can_craft</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">craft_station</span><span class="o">.</span><span class="n">can_craft</span><span class="p">(</span><span class="n">recipe</span><span class="p">)</span>
+<span class="w">    </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Recipe: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">recipe</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; - Can craft: &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">can_craft</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="common-patterns">
+<h2>Common Patterns<a class="headerlink" href="#common-patterns" title="Permalink to this heading"></a></h2>
+<section id="furnace-example">
+<h3>Furnace Example<a class="headerlink" href="#furnace-example" title="Permalink to this heading"></a></h3>
+<p>A furnace that smelts ore into metal:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>@onready var craft_station = $CraftStation
+@onready var fuel_inventory = $FuelInventory
+@onready var ore_inventory = $OreInventory
+@onready var output_inventory = $OutputInventory
+
+var is_burning = false
+
+func _ready():
+    # Setup inventories
+    craft_station.add_input_inventory(fuel_inventory)
+    craft_station.add_input_inventory(ore_inventory)
+    craft_station.output_inventories = [output_inventory.get_path()]
+
+    # Set furnace type
+    var furnace_type = database.get_craft_station_type_by_id(&quot;furnace&quot;)
+    craft_station.type = furnace_type
+
+    # Monitor fuel changes
+    fuel_inventory.item_changed.connect(_update_burning_state)
+
+func _update_burning_state():
+    # Check if we have fuel
+    is_burning = fuel_inventory.has_item(&quot;coal&quot;) or fuel_inventory.has_item(&quot;wood&quot;)
+
+    # Enable/disable crafting based on fuel
+    craft_station.can_processing_craftings = is_burning
+    craft_station.auto_craft = is_burning
+</pre></div>
+</div>
+</section>
+<section id="workbench-example">
+<h3>Workbench Example<a class="headerlink" href="#workbench-example" title="Permalink to this heading"></a></h3>
+<p>A workbench for general item crafting:</p>
+<div class="highlight-gdscript notranslate"><div class="highlight"><pre><span></span>@onready var craft_station = $CraftStation
+@onready var materials_inventory = $MaterialsInventory
+@onready var tools_inventory = $ToolsInventory
+@onready var output_inventory = $OutputInventory
+
+func _ready():
+    # Setup inventories
+    craft_station.add_input_inventory(materials_inventory)
+    craft_station.add_input_inventory(tools_inventory)
+    craft_station.output_inventories = [output_inventory.get_path()]
+
+    # Set workbench type
+    var workbench_type = database.get_craft_station_type_by_id(&quot;workbench&quot;)
+    craft_station.type = workbench_type
+
+    # Enable parallel processing for multiple crafts
+    craft_station.processing_mode = CraftStation.ProcessingMode.PARALLEL
+    craft_station.has_limit_crafts = true
+    craft_station.limit_number_crafts = 4
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading"></a></h2>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Use appropriate <a class="reference internal" href="../api/class_craftstation.html#class-craftstation-property-tick-update-method"><span class="std std-ref">tick_update_method</span></a> for your needs</p></li>
+<li><p>Limit concurrent crafts for complex recipes</p></li>
+<li><p>Consider using Custom tick method for precise timing control</p></li>
+</ul>
+</section>
+<section id="user-experience">
+<h3>User Experience<a class="headerlink" href="#user-experience" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Provide clear visual feedback for crafting progress</p></li>
+<li><p>Use signals to update UI elements</p></li>
+<li><p>Consider auto-crafting for convenience features</p></li>
+</ul>
+</section>
+<section id="game-balance">
+<h3>Game Balance<a class="headerlink" href="#game-balance" title="Permalink to this heading"></a></h3>
+<ul class="simple">
+<li><p>Set appropriate craft times for pacing</p></li>
+<li><p>Balance ingredient requirements with output value</p></li>
+<li><p>Use station types to create progression systems</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="database/recipes.html#recipes"><span class="std std-ref">Recipes</span></a> - Learn about creating recipes</p></li>
+<li><p><a class="reference internal" href="database/craft_station_type.html#craft-station-type"><span class="std std-ref">CraftStationType</span></a> - Learn about station types</p></li>
+<li><p><a class="reference internal" href="../tutorials/craft_station_tutorial_1_resources.html#craft-station-tutorial-1-resources"><span class="std std-ref">CraftStation Tutorial 1: Resources</span></a> - Learn about creating station types and resources</p></li>
+<li><p><a class="reference internal" href="../tutorials/craft_station_tutorial_2_nodes.html#craft-station-tutorial-2-nodes"><span class="std std-ref">CraftStation Tutorial 2: Nodes</span></a> - Learn about CraftStation setup and scripting</p></li>
+<li><p><a class="reference internal" href="../tutorials/craft_station_tutorial_3_ui.html#craft-station-tutorial-3-ui"><span class="std std-ref">CraftStation Tutorial 3: UI</span></a> - Complete CraftStation UI tutorial</p></li>
+</ul>
+</div>
+</section>
+</section>
 </section>
 
 

@@ -12,7 +12,14 @@ InventoryDatabase
 
 **Inherits:** ``Resource``
 
-Database of items, recipe, categories and craftstations.
+Database of items, recipe, categories, craftstations and loots.
+
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+The InventoryDatabase is the core resource that manages all inventory-related data including item definitions, recipes, categories, craft station types, and loot resources. It provides methods for adding, removing, and accessing these resources, as well as serialization capabilities for saving and loading data.
 
 .. rst-class:: classref-reftable-group
 
@@ -26,6 +33,8 @@ Properties
    | :ref:`Array<class_Array>`\[:ref:`ItemCategory<class_ItemCategory>`\]         | :ref:`item_categories<class_InventoryDatabase_property_item_categories>` | ``[]`` |
    +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------+
    | :ref:`Array<class_Array>`\[:ref:`ItemDefinition<class_ItemDefinition>`\]     | :ref:`items<class_InventoryDatabase_property_items>`                     | ``[]`` |
+   +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------+
+   | :ref:`Array<class_Array>`\[:ref:`Loot<class_Loot>`\]                         | :ref:`loots<class_InventoryDatabase_property_loots>`                     | ``[]`` |
    +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------+
    | :ref:`Array<class_Array>`\[:ref:`Recipe<class_Recipe>`\]                     | :ref:`recipes<class_InventoryDatabase_property_recipes>`                 | ``[]`` |
    +------------------------------------------------------------------------------+--------------------------------------------------------------------------+--------+
@@ -51,7 +60,11 @@ Methods
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                      | :ref:`add_new_item<class_InventoryDatabase_method_add_new_item>`\ (\ item\: :ref:`ItemDefinition<class_ItemDefinition>`\ )                                                                    |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                      | :ref:`add_new_loot<class_InventoryDatabase_method_add_new_loot>`\ (\ loot\: :ref:`Loot<class_Loot>`\ )                                                                                        |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                      | :ref:`add_recipe<class_InventoryDatabase_method_add_recipe>`\ (\ )                                                                                                                            |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                      | :ref:`add_loot<class_InventoryDatabase_method_add_loot>`\ (\ )                                                                                                                                |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                      | :ref:`clear_current_data<class_InventoryDatabase_method_clear_current_data>`\ (\ )                                                                                                            |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -64,6 +77,8 @@ Methods
    | |void|                                      | :ref:`deserialize_recipe<class_InventoryDatabase_method_deserialize_recipe>`\ (\ recipe\: :ref:`Recipe<class_Recipe>`, data\: ``Dictionary``\ ) |const|                                       |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                      | :ref:`deserialize_station_type<class_InventoryDatabase_method_deserialize_station_type>`\ (\ station_type\: :ref:`CraftStationType<class_CraftStationType>`, data\: ``Dictionary``\ ) |const| |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                      | :ref:`deserialize_loot<class_InventoryDatabase_method_deserialize_loot>`\ (\ loot\: :ref:`Loot<class_Loot>`, data\: ``Dictionary``\ ) |const|                                                 |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | Error                                       | :ref:`export_json_file<class_InventoryDatabase_method_export_json_file>`\ (\ path\: ``String``\ )                                                                                             |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -93,6 +108,8 @@ Methods
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                      | :ref:`remove_item<class_InventoryDatabase_method_remove_item>`\ (\ item\: :ref:`ItemDefinition<class_ItemDefinition>`\ )                                                                      |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                      | :ref:`remove_loot<class_InventoryDatabase_method_remove_loot>`\ (\ loot\: :ref:`Loot<class_Loot>`\ )                                                                                          |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | ``Dictionary``                              | :ref:`serialize_item_category<class_InventoryDatabase_method_serialize_item_category>`\ (\ category\: :ref:`ItemCategory<class_ItemCategory>`\ ) |const|                                      |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | ``Dictionary``                              | :ref:`serialize_item_definition<class_InventoryDatabase_method_serialize_item_definition>`\ (\ definition\: :ref:`ItemDefinition<class_ItemDefinition>`\ ) |const|                            |
@@ -100,6 +117,8 @@ Methods
    | ``Dictionary``                              | :ref:`serialize_recipe<class_InventoryDatabase_method_serialize_recipe>`\ (\ recipe\: :ref:`Recipe<class_Recipe>`\ ) |const|                                                                  |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | ``Dictionary``                              | :ref:`serialize_station_type<class_InventoryDatabase_method_serialize_station_type>`\ (\ station_type\: :ref:`CraftStationType<class_CraftStationType>`\ ) |const|                            |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | ``Dictionary``                              | :ref:`serialize_loot<class_InventoryDatabase_method_serialize_loot>`\ (\ loot\: :ref:`Loot<class_Loot>`\ ) |const|                                                                            |
    +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 .. rst-class:: classref-section-separator
@@ -140,6 +159,23 @@ Property Descriptions
 - :ref:`Array<class_Array>`\[:ref:`ItemDefinition<class_ItemDefinition>`\] **get_items**\ (\ )
 
 :ref:`ItemDefinition<class_ItemDefinition>` list in database. Use :ref:`add_new_item()<class_InventoryDatabase_method_add_new_item>` for add and :ref:`remove_item()<class_InventoryDatabase_method_remove_item>` for remove.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_InventoryDatabase_property_loots:
+
+.. rst-class:: classref-property
+
+:ref:`Array<class_Array>`\[:ref:`Loot<class_Loot>`\] **loots** = ``[]`` :ref:`🔗<class_InventoryDatabase_property_loots>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_loots**\ (\ value\: :ref:`Array<class_Array>`\[:ref:`Loot<class_Loot>`\]\ )
+- :ref:`Array<class_Array>`\[:ref:`Loot<class_Loot>`\] **get_loots**\ (\ )
+
+:ref:`Loot<class_Loot>` resource list in database. Use :ref:`add_new_loot()<class_InventoryDatabase_method_add_new_loot>` for add and :ref:`remove_loot()<class_InventoryDatabase_method_remove_loot>` for remove.
 
 .. rst-class:: classref-item-separator
 
@@ -250,6 +286,18 @@ Add new :ref:`ItemDefinition<class_ItemDefinition>` to database. This method upd
 
 ----
 
+.. _class_InventoryDatabase_method_add_new_loot:
+
+.. rst-class:: classref-method
+
+|void| **add_new_loot**\ (\ loot\: :ref:`Loot<class_Loot>`\ ) :ref:`🔗<class_InventoryDatabase_method_add_new_loot>`
+
+Add new :ref:`Loot<class_Loot>` resource to database. This method adds a loot resource containing weighted items for random generation.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_InventoryDatabase_method_add_recipe:
 
 .. rst-class:: classref-method
@@ -259,6 +307,18 @@ Add new :ref:`ItemDefinition<class_ItemDefinition>` to database. This method upd
 .. container:: contribute
 
 	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_InventoryDatabase_method_add_loot:
+
+.. rst-class:: classref-method
+
+|void| **add_loot**\ (\ ) :ref:`🔗<class_InventoryDatabase_method_add_loot>`
+
+Create and add an empty :ref:`Loot<class_Loot>` resource to the database.
 
 .. rst-class:: classref-item-separator
 
@@ -343,6 +403,18 @@ Add new :ref:`ItemDefinition<class_ItemDefinition>` to database. This method upd
 .. container:: contribute
 
 	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_InventoryDatabase_method_deserialize_loot:
+
+.. rst-class:: classref-method
+
+|void| **deserialize_loot**\ (\ loot\: :ref:`Loot<class_Loot>`, data\: ``Dictionary``\ ) |const| :ref:`🔗<class_InventoryDatabase_method_deserialize_loot>`
+
+Deserialize loot data from a Dictionary into a :ref:`Loot<class_Loot>` resource.
 
 .. rst-class:: classref-item-separator
 
@@ -530,6 +602,18 @@ Remove :ref:`ItemDefinition<class_ItemDefinition>` from database. This method up
 
 ----
 
+.. _class_InventoryDatabase_method_remove_loot:
+
+.. rst-class:: classref-method
+
+|void| **remove_loot**\ (\ loot\: :ref:`Loot<class_Loot>`\ ) :ref:`🔗<class_InventoryDatabase_method_remove_loot>`
+
+Remove :ref:`Loot<class_Loot>` resource from database.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_InventoryDatabase_method_serialize_item_category:
 
 .. rst-class:: classref-method
@@ -581,6 +665,18 @@ Remove :ref:`ItemDefinition<class_ItemDefinition>` from database. This method up
 .. container:: contribute
 
 	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_InventoryDatabase_method_serialize_loot:
+
+.. rst-class:: classref-method
+
+``Dictionary`` **serialize_loot**\ (\ loot\: :ref:`Loot<class_Loot>`\ ) |const| :ref:`🔗<class_InventoryDatabase_method_serialize_loot>`
+
+Serialize a :ref:`Loot<class_Loot>` resource into a Dictionary for storage.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`

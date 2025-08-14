@@ -30,6 +30,9 @@ Variant types
     class_itemcategory
     class_itemdefinition
     class_itemstack
+    class_loot
+    class_lootgenerator
+    class_lootitem
     class_nodeinventories
     class_quadnode
     class_quadrect

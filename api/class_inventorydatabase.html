@@ -65,6 +65,9 @@
 <p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials/how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_1_resources.html">CraftStation Tutorial 1: Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_2_nodes.html">CraftStation Tutorial 2: Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/craft_station_tutorial_3_ui.html">CraftStation Tutorial 3: UI</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
 <ul>
@@ -83,6 +86,7 @@
 <li class="toctree-l2"><a class="reference internal" href="class_inventory.html">Inventory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_inventoryconstraint.html">InventoryConstraint</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">InventoryDatabase</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#description">Description</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#properties">Properties</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#methods">Methods</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#property-descriptions">Property Descriptions</a></li>
@@ -92,6 +96,9 @@
 <li class="toctree-l2"><a class="reference internal" href="class_itemcategory.html">ItemCategory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_itemdefinition.html">ItemDefinition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_itemstack.html">ItemStack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_loot.html">Loot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_lootgenerator.html">LootGenerator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="class_lootitem.html">LootItem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_nodeinventories.html">NodeInventories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadnode.html">QuadNode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="class_quadrect.html">QuadRect</a></li>
@@ -131,7 +138,11 @@
   <section id="inventorydatabase">
 <span id="class-inventorydatabase"></span><h1>InventoryDatabase<a class="headerlink" href="#inventorydatabase" title="Permalink to this heading"></a></h1>
 <p><strong>Inherits:</strong> <code class="docutils literal notranslate"><span class="pre">Resource</span></code></p>
-<p>Database of items, recipe, categories and craftstations.</p>
+<p>Database of items, recipe, categories, craftstations and loots.</p>
+<section class="classref-introduction-group" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>The InventoryDatabase is the core resource that manages all inventory-related data including item definitions, recipes, categories, craft station types, and loot resources. It provides methods for adding, removing, and accessing these resources, as well as serialization capabilities for saving and loading data.</p>
+</section>
 <section class="classref-reftable-group" id="properties">
 <h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading"></a></h2>
 <table class="docutils align-default">
@@ -144,11 +155,15 @@
 <td><p><a class="reference internal" href="#class-inventorydatabase-property-items"><span class="std std-ref">items</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>]</p></td>
+<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>]</p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-property-loots"><span class="std std-ref">loots</span></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>]</p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-property-recipes"><span class="std std-ref">recipes</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>]</p></td>
+<tr class="row-odd"><td><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>]</p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-property-stations-type"><span class="std std-ref">stations_type</span></a></p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
@@ -175,7 +190,13 @@
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-add-new-item"><span class="std std-ref">add_new_item</span></a>(item: <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>)</p></td>
 </tr>
 <tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-add-new-loot"><span class="std std-ref">add_new_loot</span></a>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-add-recipe"><span class="std std-ref">add_recipe</span></a>()</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-add-loot"><span class="std std-ref">add_loot</span></a>()</p></td>
 </tr>
 <tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-clear-current-data"><span class="std std-ref">clear_current_data</span></a>()</p></td>
@@ -195,47 +216,53 @@
 <tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-deserialize-station-type"><span class="std std-ref">deserialize_station_type</span></a>(station_type: <a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>, data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
-<tr class="row-odd"><td><p>Error</p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-export-json-file"><span class="std std-ref">export_json_file</span></a>(path: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-export-to-invdata"><span class="std std-ref">export_to_invdata</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-category"><span class="std std-ref">get_category</span></a>(code: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-category-from-id"><span class="std std-ref">get_category_from_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-item"><span class="std std-ref">get_item</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-new-valid-id"><span class="std std-ref">get_new_valid_id</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-valid-id"><span class="std std-ref">get_valid_id</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-craft-station-type-id"><span class="std std-ref">has_craft_station_type_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-item-category-id"><span class="std std-ref">has_item_category_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-item-id"><span class="std std-ref">has_item_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
-</tr>
 <tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-import-from-invdata"><span class="std std-ref">import_from_invdata</span></a>(json: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-deserialize-loot"><span class="std std-ref">deserialize_loot</span></a>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>, data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
 <tr class="row-even"><td><p>Error</p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-import-json-file"><span class="std std-ref">import_json_file</span></a>(path: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-export-json-file"><span class="std std-ref">export_json_file</span></a>(path: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
 </tr>
-<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
-<td><p><a class="reference internal" href="#class-inventorydatabase-method-remove-category"><span class="std std-ref">remove_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>)</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-export-to-invdata"><span class="std std-ref">export_to_invdata</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-category"><span class="std std-ref">get_category</span></a>(code: <code class="docutils literal notranslate"><span class="pre">int</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-category-from-id"><span class="std std-ref">get_category_from_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-item"><span class="std std-ref">get_item</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-new-valid-id"><span class="std std-ref">get_new_valid_id</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">String</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-get-valid-id"><span class="std std-ref">get_valid_id</span></a>() <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-craft-station-type-id"><span class="std std-ref">has_craft_station_type_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-item-category-id"><span class="std std-ref">has_item_category_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-has-item-id"><span class="std std-ref">has_item_id</span></a>(id: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
 <tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-import-from-invdata"><span class="std std-ref">import_from_invdata</span></a>(json: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Error</p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-import-json-file"><span class="std std-ref">import_json_file</span></a>(path: <code class="docutils literal notranslate"><span class="pre">String</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-remove-category"><span class="std std-ref">remove_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><abbr title="No return value.">void</abbr></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-remove-item"><span class="std std-ref">remove_item</span></a>(item: <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><abbr title="No return value.">void</abbr></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-remove-loot"><span class="std std-ref">remove_loot</span></a>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>)</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-serialize-item-category"><span class="std std-ref">serialize_item_category</span></a>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
@@ -248,6 +275,9 @@
 </tr>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
 <td><p><a class="reference internal" href="#class-inventorydatabase-method-serialize-station-type"><span class="std std-ref">serialize_station_type</span></a>(station_type: <a class="reference internal" href="class_craftstationtype.html#class-craftstationtype"><span class="std std-ref">CraftStationType</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code></p></td>
+<td><p><a class="reference internal" href="#class-inventorydatabase-method-serialize-loot"><span class="std std-ref">serialize_loot</span></a>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr></p></td>
 </tr>
 </tbody>
 </table>
@@ -268,6 +298,13 @@
 <li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>] <strong>get_items</strong>()</p></li>
 </ul>
 <p><a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a> list in database. Use <a class="reference internal" href="#class-inventorydatabase-method-add-new-item"><span class="std std-ref">add_new_item()</span></a> for add and <a class="reference internal" href="#class-inventorydatabase-method-remove-item"><span class="std std-ref">remove_item()</span></a> for remove.</p>
+<hr class="classref-item-separator docutils" />
+<p class="classref-property" id="class-inventorydatabase-property-loots"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>] <strong>loots</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-inventorydatabase-property-loots"><span class="std std-ref">🔗</span></a></p>
+<ul class="classref-property-setget simple">
+<li><p><abbr title="No return value.">void</abbr> <strong>set_loots</strong>(value: <span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>])</p></li>
+<li><p><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>] <strong>get_loots</strong>()</p></li>
+</ul>
+<p><a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource list in database. Use <a class="reference internal" href="#class-inventorydatabase-method-add-new-loot"><span class="std std-ref">add_new_loot()</span></a> for add and <a class="reference internal" href="#class-inventorydatabase-method-remove-loot"><span class="std std-ref">remove_loot()</span></a> for remove.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-property" id="class-inventorydatabase-property-recipes"><span class="xref std std-ref">Array</span>[<a class="reference internal" href="class_recipe.html#class-recipe"><span class="std std-ref">Recipe</span></a>] <strong>recipes</strong> = <code class="docutils literal notranslate"><span class="pre">[]</span></code> <a class="reference internal" href="#class-inventorydatabase-property-recipes"><span class="std std-ref">🔗</span></a></p>
 <ul class="classref-property-setget simple">
@@ -307,10 +344,16 @@
 <p class="classref-method" id="class-inventorydatabase-method-add-new-item"><abbr title="No return value.">void</abbr> <strong>add_new_item</strong>(item: <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>) <a class="reference internal" href="#class-inventorydatabase-method-add-new-item"><span class="std std-ref">🔗</span></a></p>
 <p>Add new <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a> to database. This method update item definition code cache for fast check items id in running game.</p>
 <hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventorydatabase-method-add-new-loot"><abbr title="No return value.">void</abbr> <strong>add_new_loot</strong>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>) <a class="reference internal" href="#class-inventorydatabase-method-add-new-loot"><span class="std std-ref">🔗</span></a></p>
+<p>Add new <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource to database. This method adds a loot resource containing weighted items for random generation.</p>
+<hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventorydatabase-method-add-recipe"><abbr title="No return value.">void</abbr> <strong>add_recipe</strong>() <a class="reference internal" href="#class-inventorydatabase-method-add-recipe"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
 </div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventorydatabase-method-add-loot"><abbr title="No return value.">void</abbr> <strong>add_loot</strong>() <a class="reference internal" href="#class-inventorydatabase-method-add-loot"><span class="std std-ref">🔗</span></a></p>
+<p>Create and add an empty <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource to the database.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventorydatabase-method-clear-current-data"><abbr title="No return value.">void</abbr> <strong>clear_current_data</strong>() <a class="reference internal" href="#class-inventorydatabase-method-clear-current-data"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">
@@ -341,6 +384,9 @@
 <div class="contribute docutils container">
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
 </div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventorydatabase-method-deserialize-loot"><abbr title="No return value.">void</abbr> <strong>deserialize_loot</strong>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>, data: <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventorydatabase-method-deserialize-loot"><span class="std std-ref">🔗</span></a></p>
+<p>Deserialize loot data from a Dictionary into a <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource.</p>
 <hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventorydatabase-method-export-json-file">Error <strong>export_json_file</strong>(path: <code class="docutils literal notranslate"><span class="pre">String</span></code>) <a class="reference internal" href="#class-inventorydatabase-method-export-json-file"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">
@@ -398,6 +444,9 @@
 <p class="classref-method" id="class-inventorydatabase-method-remove-item"><abbr title="No return value.">void</abbr> <strong>remove_item</strong>(item: <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a>) <a class="reference internal" href="#class-inventorydatabase-method-remove-item"><span class="std std-ref">🔗</span></a></p>
 <p>Remove <a class="reference internal" href="class_itemdefinition.html#class-itemdefinition"><span class="std std-ref">ItemDefinition</span></a> from database. This method update item definition code cache for fast check items id in running game.</p>
 <hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventorydatabase-method-remove-loot"><abbr title="No return value.">void</abbr> <strong>remove_loot</strong>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>) <a class="reference internal" href="#class-inventorydatabase-method-remove-loot"><span class="std std-ref">🔗</span></a></p>
+<p>Remove <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource from database.</p>
+<hr class="classref-item-separator docutils" />
 <p class="classref-method" id="class-inventorydatabase-method-serialize-item-category"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>serialize_item_category</strong>(category: <a class="reference internal" href="class_itemcategory.html#class-itemcategory"><span class="std std-ref">ItemCategory</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventorydatabase-method-serialize-item-category"><span class="std std-ref">🔗</span></a></p>
 <div class="contribute docutils container">
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
@@ -417,6 +466,9 @@
 <div class="contribute docutils container">
 <p>There is currently no description for this method. Please help us by <span class="xref std std-ref">contributing one</span>!</p>
 </div>
+<hr class="classref-item-separator docutils" />
+<p class="classref-method" id="class-inventorydatabase-method-serialize-loot"><code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> <strong>serialize_loot</strong>(loot: <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a>) <abbr title="This method has no side effects. It doesn't modify any of the instance's member variables.">const</abbr> <a class="reference internal" href="#class-inventorydatabase-method-serialize-loot"><span class="std std-ref">🔗</span></a></p>
+<p>Serialize a <a class="reference internal" href="class_loot.html#class-loot"><span class="std std-ref">Loot</span></a> resource into a Dictionary for storage.</p>
 </section>
 </section>
 

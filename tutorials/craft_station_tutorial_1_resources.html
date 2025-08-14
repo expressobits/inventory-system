@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CraftStation Tutorial 1: Resources &mdash; Inventory System 2.3.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/general.css?v=c0a7eb24" />
+      <link rel="stylesheet" type="text/css" href="../_static/dark_mode_css/dark.css?v=70edf1c7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=45cafc09"></script>
+      <script src="../_static/doctools.js?v=888ff710"></script>
+      <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="../_static/dark_mode_js/default_light.js?v=c2e647ce"></script>
+      <script src="../_static/dark_mode_js/theme_switcher.js?v=358d3910"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="CraftStation Tutorial 2: Nodes" href="craft_station_tutorial_2_nodes.html" />
+    <link rel="prev" title="How to Test Multiplayer" href="how_to_test_multiplayer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Inventory System
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation and Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/create_database.html">Creating a Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/create_item_definition.html">Create Item Definition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/add_items_to_inventory.html">Add items to Inventory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/add_simple_ui.html">Add Simple UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/quickstart/operation_between_inventories.html">Operation between inventories</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../manual/database.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/inventories.html">Inventories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual/craft_stations.html">Craft Stations</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Tutorials</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="how_to_test_multiplayer.html">How to Test Multiplayer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CraftStation Tutorial 1: Resources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-the-craftstationtype">Creating the CraftStationType</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-open-the-database-editor">Step 1: Open the Database Editor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-create-the-furnace-station-type">Step 2: Create the Furnace Station Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-station-specific-items">Creating Station-Specific Items</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-create-smelting-items">Step 3: Create Smelting Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-4-create-furnace-specific-recipe">Step 4: Create Furnace-Specific Recipe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-general-recipe">Creating a General Recipe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-5-create-a-universal-recipe">Step 5: Create a Universal Recipe</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="craft_station_tutorial_2_nodes.html">CraftStation Tutorial 2: Nodes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="craft_station_tutorial_3_ui.html">CraftStation Tutorial 3: UI</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing/cmake_support.html">CMake support</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">All classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html#variant-types">Variant types</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Inventory System</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">CraftStation Tutorial 1: Resources</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tutorials/craft_station_tutorial_1_resources.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="craftstation-tutorial-1-resources">
+<span id="craft-station-tutorial-1-resources"></span><h1>CraftStation Tutorial 1: Resources<a class="headerlink" href="#craftstation-tutorial-1-resources" title="Permalink to this heading"></a></h1>
+<p>This tutorial will guide you through creating a CraftStationType and the related items and recipes. We’ll create a “Furnace” station type and recipes that can only be crafted at furnaces.</p>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
+<p>Before starting this tutorial, make sure you have:</p>
+<ul class="simple">
+<li><p>An inventory system project set up</p></li>
+<li><p>An <a class="reference internal" href="../api/class_inventorydatabase.html#class-inventorydatabase"><span class="std std-ref">InventoryDatabase</span></a> resource created</p></li>
+</ul>
+</section>
+<section id="creating-the-craftstationtype">
+<h2>Creating the CraftStationType<a class="headerlink" href="#creating-the-craftstationtype" title="Permalink to this heading"></a></h2>
+<section id="step-1-open-the-database-editor">
+<h3>Step 1: Open the Database Editor<a class="headerlink" href="#step-1-open-the-database-editor" title="Permalink to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>In your project, open “Inventory” top menus</p></li>
+<li><p>Select “Database” to open the database editor</p></li>
+</ol>
+</section>
+<section id="step-2-create-the-furnace-station-type">
+<h3>Step 2: Create the Furnace Station Type<a class="headerlink" href="#step-2-create-the-furnace-station-type" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Navigate to CraftStationTypes</strong></p>
+<p>In the database editor, click on the “CraftStationTypes” section.</p>
+<img alt="../_images/craft_station_type_editor.png" src="../_images/craft_station_type_editor.png" />
+</li>
+<li><p><strong>Add New Station Type</strong></p>
+<p>Click the “+” button to create a new craft station type.</p>
+<img alt="../_images/add_craft_station_type.png" src="../_images/add_craft_station_type.png" />
+</li>
+<li><p><strong>Configure Station Type Properties</strong></p>
+<p>Set the following properties:</p>
+<ul class="simple">
+<li><p><strong>ID</strong>: Enter “furnace” (this will be used in code)</p></li>
+<li><p><strong>Name</strong>: Enter “Furnace” (this will be displayed to users)</p></li>
+<li><p><strong>Icon</strong>: Optionally select a texture that represents a furnace</p></li>
+</ul>
+<img alt="../_images/craft_station_type_editing.png" src="../_images/craft_station_type_editing.png" />
+</li>
+<li><p><strong>Save the Database</strong></p>
+<p>Save your InventoryDatabase resource (Ctrl+S).</p>
+</li>
+</ol>
+</section>
+</section>
+<section id="creating-station-specific-items">
+<h2>Creating Station-Specific Items<a class="headerlink" href="#creating-station-specific-items" title="Permalink to this heading"></a></h2>
+<section id="step-3-create-smelting-items">
+<h3>Step 3: Create Smelting Items<a class="headerlink" href="#step-3-create-smelting-items" title="Permalink to this heading"></a></h3>
+<p>For our furnace example, let’s create items for smelting:</p>
+<ol class="arabic simple">
+<li><p><strong>Iron Ore</strong> (ingredient)</p>
+<ul class="simple">
+<li><p>In the “Item Definitions” section, add a new item</p></li>
+<li><p>Set ID: “iron_ore”, Name: “Iron Ore”</p></li>
+<li><p>Set Max Stack Size: 64</p></li>
+</ul>
+</li>
+<li><p><strong>Iron Ingot</strong> (product)</p>
+<ul class="simple">
+<li><p>Add another item definition</p></li>
+<li><p>Set ID: “iron_ingot”, Name: “Iron Ingot”</p></li>
+<li><p>Set Max Stack Size: 64</p></li>
+</ul>
+</li>
+<li><p><strong>Coal</strong> (fuel - required item)</p>
+<ul class="simple">
+<li><p>Add another item definition</p></li>
+<li><p>Set ID: “coal”, Name: “Coal”</p></li>
+<li><p>Set Max Stack Size: 64</p></li>
+</ul>
+</li>
+<li><p><strong>Stick</strong> (product)</p>
+<ul class="simple">
+<li><p>Add another item definition</p></li>
+<li><p>Set ID: “stick”, Name: “Stick”</p></li>
+<li><p>Set Max Stack Size: 64</p></li>
+</ul>
+</li>
+<li><p><strong>Wood</strong> (crafting ingredient)</p>
+<ul class="simple">
+<li><p>Add another item definition</p></li>
+<li><p>Set ID: “wood”, Name: “Wood”</p></li>
+<li><p>Set Max Stack Size: 64</p></li>
+</ul>
+</li>
+</ol>
+<img alt="../_images/create_and_use_craft_station_types_add_items.png" src="../_images/create_and_use_craft_station_types_add_items.png" />
+</section>
+<section id="step-4-create-furnace-specific-recipe">
+<h3>Step 4: Create Furnace-Specific Recipe<a class="headerlink" href="#step-4-create-furnace-specific-recipe" title="Permalink to this heading"></a></h3>
+<ol class="arabic">
+<li><p><strong>Add New Recipe</strong></p>
+<p>In the “Recipes” section, click “+” to create a new recipe.</p>
+<img alt="../_images/recipes_editor_add.png" src="../_images/recipes_editor_add.png" />
+</li>
+<li><p><strong>Configure Recipe Properties</strong></p>
+<ul class="simple">
+<li><p><strong>Time to Craft</strong>: Set to 5.0 seconds (longer for smelting)</p></li>
+<li><p><strong>Station</strong>: Select the “Furnace” station type we just created</p></li>
+</ul>
+</li>
+<li><p><strong>Add Recipe Components</strong></p>
+<p><strong>Ingredients</strong> (consumed during crafting):
+- Iron Ore: amount 2</p>
+<p><strong>Required Items</strong> (needed but not consumed):
+- Coal: amount 1</p>
+<p><strong>Products</strong> (created when crafting completes):
+- Iron Ingot: amount 1</p>
+</li>
+</ol>
+<img alt="../_images/create_and_use_craft_station_types_recipe_iron_ingot.png" src="../_images/create_and_use_craft_station_types_recipe_iron_ingot.png" />
+<ol class="arabic simple" start="4">
+<li><p><strong>Save the Database</strong></p></li>
+</ol>
+</section>
+</section>
+<section id="creating-a-general-recipe">
+<h2>Creating a General Recipe<a class="headerlink" href="#creating-a-general-recipe" title="Permalink to this heading"></a></h2>
+<section id="step-5-create-a-universal-recipe">
+<h3>Step 5: Create a Universal Recipe<a class="headerlink" href="#step-5-create-a-universal-recipe" title="Permalink to this heading"></a></h3>
+<p>To demonstrate the filtering, let’s also create a recipe that works on any station:</p>
+<ol class="arabic">
+<li><p><strong>Add Another Recipe</strong></p>
+<p>Create a new recipe for crafting sticks from wood.</p>
+</li>
+<li><p><strong>Configure Universal Recipe</strong></p>
+<ul class="simple">
+<li><p><strong>Time to Craft</strong>: 1.0 seconds</p></li>
+<li><p><strong>Station</strong>: Leave this EMPTY (no station type)</p></li>
+<li><p><strong>Ingredients</strong>: Wood: amount 1</p></li>
+<li><p><strong>Products</strong>: Stick: amount 2</p></li>
+</ul>
+</li>
+</ol>
+<img alt="../_images/create_and_use_craft_station_types_recipe_stick.png" src="../_images/create_and_use_craft_station_types_recipe_stick.png" />
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When a recipe has no station type, it can only be crafted at stations that also have no station type assigned.</p>
+</div>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this heading"></a></h2>
+<p>Now that you have created the resource foundations (CraftStationType, items, and recipes), you can continue to the next tutorial to learn how to set up the actual craft station nodes and implement the crafting logic.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="craft_station_tutorial_2_nodes.html#craft-station-tutorial-2-nodes"><span class="std std-ref">CraftStation Tutorial 2: Nodes</span></a> - Learn how to set up craft station nodes and scripting</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="how_to_test_multiplayer.html" class="btn btn-neutral float-left" title="How to Test Multiplayer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="craft_station_tutorial_2_nodes.html" class="btn btn-neutral float-right" title="CraftStation Tutorial 2: Nodes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Expresso Bits.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    Language: en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    
+    <dl>
+      <dt>Languages</dt>
+        
+          <dd><a href="en/index.html">en</a></dd>
+        
+          <dd><a href="pt_BR/index.html">pt_BR</a></dd>
+        
+    </dl>
+    
+    <!--  -->
+    <br>
+    </dl>
+  </div>
+</div><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
