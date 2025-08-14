@@ -88,8 +88,7 @@ Basic Setup
        craft_station.output_inventories = [output_inventory.get_path()]
        
        # Set station type (optional)
-       var furnace_type = database.get_craft_station_type_by_id("furnace")
-       craft_station.type = furnace_type
+       craft_station.type = "furnace"
 
 Advanced Configuration
 ----------------------
@@ -239,71 +238,6 @@ Check which recipes are available:
        var recipe = database.recipes[recipe_index]
        var can_craft = craft_station.can_craft(recipe)
        print("Recipe: ", recipe.name, " - Can craft: ", can_craft)
-
-Common Patterns
-===============
-
-Furnace Example
----------------
-
-A furnace that smelts ore into metal:
-
-.. code-block:: gdscript
-
-   @onready var craft_station = $CraftStation
-   @onready var fuel_inventory = $FuelInventory
-   @onready var ore_inventory = $OreInventory
-   @onready var output_inventory = $OutputInventory
-   
-   var is_burning = false
-   
-   func _ready():
-       # Setup inventories
-       craft_station.add_input_inventory(fuel_inventory)
-       craft_station.add_input_inventory(ore_inventory)
-       craft_station.output_inventories = [output_inventory.get_path()]
-       
-       # Set furnace type
-       var furnace_type = database.get_craft_station_type_by_id("furnace")
-       craft_station.type = furnace_type
-       
-       # Monitor fuel changes
-       fuel_inventory.item_changed.connect(_update_burning_state)
-   
-   func _update_burning_state():
-       # Check if we have fuel
-       is_burning = fuel_inventory.has_item("coal") or fuel_inventory.has_item("wood")
-       
-       # Enable/disable crafting based on fuel
-       craft_station.can_processing_craftings = is_burning
-       craft_station.auto_craft = is_burning
-
-Workbench Example
------------------
-
-A workbench for general item crafting:
-
-.. code-block:: gdscript
-
-   @onready var craft_station = $CraftStation
-   @onready var materials_inventory = $MaterialsInventory
-   @onready var tools_inventory = $ToolsInventory
-   @onready var output_inventory = $OutputInventory
-   
-   func _ready():
-       # Setup inventories
-       craft_station.add_input_inventory(materials_inventory)
-       craft_station.add_input_inventory(tools_inventory)
-       craft_station.output_inventories = [output_inventory.get_path()]
-       
-       # Set workbench type
-       var workbench_type = database.get_craft_station_type_by_id("workbench")
-       craft_station.type = workbench_type
-       
-       # Enable parallel processing for multiple crafts
-       craft_station.processing_mode = CraftStation.ProcessingMode.PARALLEL
-       craft_station.has_limit_crafts = true
-       craft_station.limit_number_crafts = 4
 
 Best Practices
 ==============
