@@ -39,11 +39,14 @@ using namespace godot;
 // InventoryEditor
 
 void InventoryEditor::_bind_methods() {
-	ClassDB::bind_method(D_METHOD("_on_database_menu_pressed"), &InventoryEditor::_on_database_menu_pressed);
-	ClassDB::bind_method(D_METHOD("_on_database_menu_id_pressed", "id"), &InventoryEditor::_on_database_menu_id_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_new_button_pressed"), &InventoryEditor::_on_database_new_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_open_menu_pressed"), &InventoryEditor::_on_database_open_menu_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_open_menu_id_pressed", "id"), &InventoryEditor::_on_database_open_menu_id_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_save_button_pressed"), &InventoryEditor::_on_database_save_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_json_menu_pressed"), &InventoryEditor::_on_database_json_menu_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_json_menu_id_pressed", "id"), &InventoryEditor::_on_database_json_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_misc_menu_pressed"), &InventoryEditor::_on_misc_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_misc_menu_id_pressed", "id"), &InventoryEditor::_on_misc_menu_id_pressed);
-	ClassDB::bind_method(D_METHOD("_on_recent_menu_id_pressed", "id"), &InventoryEditor::_on_recent_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_dialog_file_selected", "path"), &InventoryEditor::_on_new_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_open_dialog_file_selected", "path"), &InventoryEditor::_on_open_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_save_inv_dialog_file_selected", "path"), &InventoryEditor::_on_save_inv_dialog_file_selected);
@@ -128,6 +131,8 @@ void InventoryEditor::_create_ui() {
 	toolbar_margin = memnew(MarginContainer);
 	main_vbox->add_child(toolbar_margin);
 	toolbar_margin->add_theme_constant_override("margin_left", 4);
+	toolbar_margin->add_theme_constant_override("margin_top", 0);
+	toolbar_margin->add_theme_constant_override("margin_bottom", 0);
 	toolbar_margin->add_theme_constant_override("margin_right", 4);
 	
 	// Toolbar HBoxContainer - matches .tscn separation
@@ -135,20 +140,48 @@ void InventoryEditor::_create_ui() {
 	toolbar_margin->add_child(toolbar);
 	toolbar->add_theme_constant_override("separation", 4);
 	
-	// Database MenuButton - matches .tscn properties
-	database_button = memnew(MenuButton);
-	toolbar->add_child(database_button);
-	database_button->set_custom_minimum_size(Vector2(28, 28));
-	database_button->set_tooltip_text("Inventory Database Menu");
-	database_button->set_text("Database");
-	database_button->set_theme_type_variation("FlatMenuButton");
-	database_button->set_flat(false);
-	database_button->set_text_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
-	database_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_menu_pressed));
-	database_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_menu_id_pressed));
-	database_button->set_button_icon(ResourceLoader::get_singleton()->load("res://addons/inventory-system/icons/inventory_database_editor.svg"));
+	// Database buttons - separate icon buttons
+	// New button
+	database_new_button = memnew(Button);
+	toolbar->add_child(database_new_button);
+	database_new_button->set_custom_minimum_size(Vector2(28, 28));
+	database_new_button->set_tooltip_text("New Database");
+	database_new_button->set_theme_type_variation("FlatButton");
+	database_new_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_database_new_button_pressed));
+	database_new_button->set_button_icon(get_theme_icon("New", "EditorIcons"));
 
-	// VSeparator after database button
+	// Open MenuButton (includes Open and Open Recent)
+	database_open_button = memnew(MenuButton);
+	toolbar->add_child(database_open_button);
+	database_open_button->set_custom_minimum_size(Vector2(28, 28));
+	database_open_button->set_tooltip_text("Open Database");
+	database_open_button->set_theme_type_variation("FlatMenuButton");
+	database_open_button->set_flat(false);
+	database_open_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_open_menu_pressed));
+	database_open_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_open_menu_id_pressed));
+	database_open_button->set_button_icon(get_theme_icon("Load", "EditorIcons"));
+
+	// Save button
+	database_save_button = memnew(Button);
+	toolbar->add_child(database_save_button);
+	database_save_button->set_custom_minimum_size(Vector2(28, 28));
+	database_save_button->set_tooltip_text("Save Database");
+	database_save_button->set_theme_type_variation("FlatButton");
+	database_save_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_database_save_button_pressed));
+	database_save_button->set_button_icon(get_theme_icon("Save", "EditorIcons"));
+
+	// JSON MenuButton for import/export
+	database_json_button = memnew(MenuButton);
+	toolbar->add_child(database_json_button);
+	database_json_button->set_custom_minimum_size(Vector2(28, 28));
+	database_json_button->set_tooltip_text("JSON Operations");
+	database_json_button->set_theme_type_variation("FlatMenuButton");
+	database_json_button->set_flat(false);
+	database_json_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_json_menu_pressed));
+	database_json_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_json_menu_id_pressed));
+	database_json_button->set_button_icon(get_theme_icon("File", "EditorIcons"));
+
+	// VSeparator after database buttons
 	VSeparator *sep_after_db = memnew(VSeparator);
 	toolbar->add_child(sep_after_db);
 	
@@ -285,7 +318,7 @@ void InventoryEditor::_create_ui() {
 	content->add_theme_constant_override("margin_left", 4);
 	content->add_theme_constant_override("margin_top", 0);
 	content->add_theme_constant_override("margin_right", 4);
-	content->add_theme_constant_override("margin_bottom", 4);
+	content->add_theme_constant_override("margin_bottom", 2);
 	
 	// TabContainer - matches .tscn properties but with hidden tab bar
 	tab_container = memnew(TabContainer);
@@ -376,47 +409,42 @@ void InventoryEditor::_apply_theme() {
 	
 }
 
-void InventoryEditor::_build_database_menu() {
-	PopupMenu *menu = database_button->get_popup();
+void InventoryEditor::_build_open_menu() {
+	PopupMenu *menu = database_open_button->get_popup();
 	menu->clear();
 
-	menu->add_icon_item(get_theme_icon("New", "EditorIcons"), "New Database", DATABASE_NEW);
-	menu->add_icon_item(get_theme_icon("Load", "EditorIcons"), "Open Database...", DATABASE_OPEN);
+	// Add Open... option first
+	menu->add_icon_item(get_theme_icon("Load", "EditorIcons"), "Open...", DATABASE_OPEN);
+	
+	// Add separator before recent files
+	menu->add_separator();
 
-	// Add Open Recent submenu
+	// Add recent files submenu
 	Array recent_files = InventorySettings::get_recent_files();
 	if (!recent_files.is_empty()) {
-		PopupMenu *recent_menu = memnew(PopupMenu);
-		recent_menu->set_name("recent_menu");
-		menu->add_child(recent_menu);
-		
 		for (int i = 0; i < recent_files.size() && i < 10; i++) {
 			String path = recent_files[i];
 			String display_name = path.get_file();
-			recent_menu->add_icon_item(get_theme_icon("File", "EditorIcons"), display_name, DATABASE_OPEN_RECENT + i);
-			recent_menu->set_item_tooltip(i, path);
+			menu->add_icon_item(get_theme_icon("File", "EditorIcons"), display_name, DATABASE_OPEN_RECENT + i);
+			menu->set_item_tooltip(menu->get_item_count() - 1, path);
 		}
 		
-		recent_menu->add_separator();
-		recent_menu->add_item("Clear Recent Files", DATABASE_OPEN_RECENT + 100);
-		recent_menu->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_recent_menu_id_pressed));
-		
-		menu->add_submenu_item("Open Recent", "recent_menu");
-		menu->set_item_icon(2, get_theme_icon("Load", "EditorIcons"));
-		menu->set_item_disabled(menu->get_item_index(DATABASE_OPEN_RECENT), false);
+		menu->add_separator();
+		menu->add_item("Clear Recent Files", DATABASE_OPEN_RECENT + 100);
 	} else {
-		menu->add_item("Open Recent", DATABASE_OPEN_RECENT);
-		menu->set_item_disabled(menu->get_item_index(DATABASE_OPEN_RECENT), true);
+		menu->add_item("No Recent Files", -1);
+		menu->set_item_disabled(menu->get_item_count() - 1, true);
 	}
-	
-	menu->add_separator();
-	menu->add_icon_item(get_theme_icon("Save", "EditorIcons"), "Save", DATABASE_SAVE);
-	menu->add_separator();
+}
+
+void InventoryEditor::_build_json_menu() {
+	PopupMenu *menu = database_json_button->get_popup();
+	menu->clear();
+
 	menu->add_item("Import JSON...", DATABASE_IMPORT_JSON);
 	menu->add_item("Export JSON...", DATABASE_EXPORT_JSON);
 
 	// Disable items if no database is loaded
-	menu->set_item_disabled(menu->get_item_index(DATABASE_SAVE), database.is_null());
 	menu->set_item_disabled(menu->get_item_index(DATABASE_IMPORT_JSON), database.is_null());
 	menu->set_item_disabled(menu->get_item_index(DATABASE_EXPORT_JSON), database.is_null());
 }
@@ -450,6 +478,10 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		if (craft_station_types_tab_button) craft_station_types_tab_button->set_disabled(false);
 		if (item_categories_tab_button) item_categories_tab_button->set_disabled(false);
 		if (loots_tab_button) loots_tab_button->set_disabled(false);
+		
+		// Enable database buttons based on loaded state
+		if (database_save_button) database_save_button->set_disabled(false);
+		if (database_json_button) database_json_button->set_disabled(false);
 		
 		// Set the first tab as active
 		if (item_definitions_tab_button) item_definitions_tab_button->set_pressed(true);
@@ -496,6 +528,14 @@ void InventoryEditor::_load_database(const Ref<InventoryDatabase> &p_database) {
 		if (craft_station_types_tab_button) craft_station_types_tab_button->set_disabled(true);
 		if (item_categories_tab_button) item_categories_tab_button->set_disabled(true);
 		if (loots_tab_button) loots_tab_button->set_disabled(true);
+		
+		// Disable database buttons that require a loaded database
+		if (database_save_button) database_save_button->set_disabled(true);
+		if (database_json_button) database_json_button->set_disabled(true);
+		
+		// Disable database buttons that require a loaded database
+		if (database_save_button) database_save_button->set_disabled(true);
+		if (database_json_button) database_json_button->set_disabled(true);
 		
 		title_label->set_text("No Database");
 		
@@ -596,25 +636,28 @@ void InventoryEditor::_import_inv_file(const String &p_path) {
 	print_line("Database imported from JSON: " + p_path);
 }
 
-void InventoryEditor::_on_database_menu_pressed() {
-	_build_database_menu();
-}
-
 void InventoryEditor::_on_misc_menu_pressed() {
 	_build_misc_menu();
 }
 
-void InventoryEditor::_on_database_menu_id_pressed(int p_id) {
+void InventoryEditor::_on_database_new_button_pressed() {
+	new_dialog->popup_centered();
+}
+
+void InventoryEditor::_on_database_open_menu_pressed() {
+	_build_open_menu();
+}
+
+void InventoryEditor::_on_database_save_button_pressed() {
+	_save_file();
+}
+
+void InventoryEditor::_on_database_json_menu_pressed() {
+	_build_json_menu();
+}
+
+void InventoryEditor::_on_database_json_menu_id_pressed(int p_id) {
 	switch (p_id) {
-		case DATABASE_NEW:
-			new_dialog->popup_centered();
-			break;
-		case DATABASE_OPEN:
-			open_dialog->popup_centered();
-			break;
-		case DATABASE_SAVE:
-			_save_file();
-			break;
 		case DATABASE_IMPORT_JSON:
 			open_inv_dialog->popup_centered();
 			break;
@@ -654,7 +697,12 @@ void InventoryEditor::_on_misc_menu_id_pressed(int p_id) {
 	}
 }
 
-void InventoryEditor::_on_recent_menu_id_pressed(int p_id) {
+void InventoryEditor::_on_database_open_menu_id_pressed(int p_id) {
+	if (p_id == DATABASE_OPEN) {
+		open_dialog->popup_centered();
+		return;
+	}
+	
 	Array recent_files = InventorySettings::get_recent_files();
 	
 	if (p_id >= DATABASE_OPEN_RECENT + 100) {
