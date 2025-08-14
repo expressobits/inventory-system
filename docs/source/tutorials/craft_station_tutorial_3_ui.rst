@@ -358,13 +358,12 @@ Now that you have working UIs for both station types, you can enhance them furth
 Conclusion
 ==========
 
-You have successfully created comprehensive UIs for both crafting stations from Tutorial 2! The key achievements:
+You have successfully created comprehensive UIs for both crafting stations from Tutorial 2! 
 
 1. **Enhanced the existing furnace scene** with a specialized smelting interface
-2. **Enhanced the existing workbench scene** with a general crafting interface  
-3. **Maintained the station type filtering** from Tutorial 2
-4. **Added real-time progress tracking** and material management
-5. **Created reusable UI patterns** that can be applied to other station types
+2. **Maintained the station type filtering** from Tutorial 2
+3. **Added real-time progress tracking** and material management
+4. **Created reusable UI patterns** that can be applied to other station types
 
 The tutorials now form a complete progression:
 
