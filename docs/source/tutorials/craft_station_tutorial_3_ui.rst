@@ -23,7 +23,7 @@ We'll be enhancing the scenes you already created in Tutorial 2:
 
 - **FurnaceTest** scene with its furnace station type and iron smelting
 
-Instead of creating new scenes, we'll add UI elements to these existing scenes to create a complete crafting experience.
+Instead of creating new scenes, we'll add UI elements to the existing FurnaceTest scene to create a complete crafting experience.
 
 Adding UI to the Furnace Scene
 ==============================
