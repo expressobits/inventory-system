@@ -98,7 +98,10 @@ private:
 	FileDialog *save_inv_dialog;
 
 	//Toolbar
-	MenuButton *database_button;
+	Button *database_new_button;
+	MenuButton *database_open_button;
+	Button *database_save_button;
+	MenuButton *database_json_button;
 	MenuButton *misc_button;
 	Button *item_definitions_tab_button;
 	Button *recipes_tab_button;
@@ -114,7 +117,8 @@ private:
 
 	void _create_ui();
 	void _apply_theme();
-	void _build_database_menu();
+	void _build_open_menu();
+	void _build_json_menu();
 	void _build_misc_menu();
 	void _load_database(const Ref<InventoryDatabase> &p_database);
 	void _new_file(const String &p_path);
@@ -122,11 +126,14 @@ private:
 	void _save_file();
 	void _import_inv_file(const String &p_path);
 
-	void _on_database_menu_pressed();
-	void _on_database_menu_id_pressed(int p_id);
+	void _on_database_new_button_pressed();
+	void _on_database_open_menu_pressed();
+	void _on_database_open_menu_id_pressed(int p_id);
+	void _on_database_save_button_pressed();
+	void _on_database_json_menu_pressed();
+	void _on_database_json_menu_id_pressed(int p_id);
 	void _on_misc_menu_pressed();
 	void _on_misc_menu_id_pressed(int p_id);
-	void _on_recent_menu_id_pressed(int p_id);
 	void _on_new_dialog_file_selected(const String &p_path);
 	void _on_open_dialog_file_selected(const String &p_path);
 	void _on_save_inv_dialog_file_selected(const String &p_path);
