@@ -17,3 +17,49 @@ database = ExtResource("1_o0mvp")
 
 [node name="OutputInventory" type="Inventory" parent="."]
 database = ExtResource("1_o0mvp")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Furnace Station"
+
+[node name="StatusContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer"]
+layout_mode = 2
+
+[node name="OutputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer"]
+layout_mode = 2
+
+[node name="RecipesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Available Smelting Recipes:"
+
+[node name="RecipesList" type="VBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ControlsContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="AddMaterialsButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer"]
+layout_mode = 2
+text = "Add Materials"
+
+[node name="SmeltAllButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer"]
+layout_mode = 2
+text = "Smelt All"
+
+[node name="ProgressLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="UI/MarginContainer/VBoxContainer"]
+layout_mode = 2
