@@ -18,6 +18,8 @@ To use the inventory system you need to have at least one resource created in yo
    database/inventory_database_editor
    database/item_definition
    database/item_category
+   database/recipes
+   database/craft_station_type
    database/using_database_in_scenes
    database/work_with_json
 
