@@ -13,7 +13,6 @@ Before starting this tutorial, make sure you have:
 
 - An inventory system project set up
 - An :ref:`InventoryDatabase<class_InventoryDatabase>` resource created
-- Basic understanding of the :ref:`create_and_use_recipe` tutorial
 
 Creating the CraftStationType
 =============================
@@ -157,4 +156,3 @@ Now that you have created the resource foundations (CraftStationType, items, and
 .. seealso::
    
    - :ref:`craft_station_tutorial_2_nodes` - Learn how to set up craft station nodes and scripting
-   - :ref:`create_and_use_recipe` - Learn about creating recipes

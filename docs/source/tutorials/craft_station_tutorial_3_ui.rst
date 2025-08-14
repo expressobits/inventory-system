@@ -376,4 +376,3 @@ The tutorials now form a complete progression:
    
    - :ref:`craft_station_tutorial_1_resources` - Review resource creation
    - :ref:`craft_station_tutorial_2_nodes` - Review node setup and scripting
-   - :ref:`create_and_use_recipe` - Learn more about recipe creation

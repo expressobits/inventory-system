@@ -139,4 +139,3 @@ Balancing
    
    - :ref:`craft_station_type` - Learn about CraftStationType resources
    - :ref:`craft_stations` - Learn about using CraftStation nodes
-   - :ref:`create_and_use_recipe` - Step-by-step tutorial for creating recipes
