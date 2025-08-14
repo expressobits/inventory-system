@@ -41,6 +41,9 @@ We are currently improving all documentation to improve your experience with the
    :caption: Tutorials
    
    tutorials/how_to_test_multiplayer
+   tutorials/craft_station_tutorial_1_resources
+   tutorials/craft_station_tutorial_2_nodes
+   tutorials/craft_station_tutorial_3_ui
 
 .. toctree::
    :maxdepth: 1

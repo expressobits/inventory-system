@@ -64,3 +64,4 @@ build/
 
 #Ignore docs html generated files
 /docs/build
+docs/_build/
