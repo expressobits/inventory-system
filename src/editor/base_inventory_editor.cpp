@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #include "base_inventory_editor.h"
 #include "../base/inventory_database.h"
 
@@ -93,3 +95,5 @@ void BaseInventoryEditor::_on_remove_confirmation_dialog_confirmed() {
 }
 
 } // namespace godot
+
+#endif // TOOLS_ENABLED

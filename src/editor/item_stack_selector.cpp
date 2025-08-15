@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #include "item_stack_selector.h"
 #include "../base/inventory_database.h"
 #include "../base/item_definition.h"
@@ -193,3 +195,5 @@ void ItemStackSelector::set_show_quantity(bool p_show_quantity) {
         product_amount_spin_box->set_visible(show_quantity);
     }
 }
+
+#endif // TOOLS_ENABLED

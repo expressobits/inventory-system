@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #ifndef ITEM_STACK_SELECTOR_H
 #define ITEM_STACK_SELECTOR_H
 
@@ -52,3 +54,5 @@ private:
 };
 
 #endif // ITEM_STACK_SELECTOR_H
+
+#endif // TOOLS_ENABLED

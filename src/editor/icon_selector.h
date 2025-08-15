@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #ifndef ICON_SELECTOR_H
 #define ICON_SELECTOR_H
 
@@ -33,3 +35,5 @@ private:
 };
 
 #endif // ICON_SELECTOR_H
+
+#endif // TOOLS_ENABLED
