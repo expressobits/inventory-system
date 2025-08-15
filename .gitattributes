@@ -3,3 +3,5 @@
 
 /icons/original_icons export-ignore
 /icons/original_icons/** export-ignore
+# Ignore editor folder
+/editor export-ignore
