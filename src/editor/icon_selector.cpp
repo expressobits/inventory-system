@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #include "icon_selector.h"
 
 #include <godot_cpp/classes/editor_resource_picker.hpp>
@@ -55,4 +57,4 @@ void IconSelector::_on_texture_picker_resource_changed(const Ref<Resource>& reso
     emit_signal("icon_changed", texture);
 }
 
-// namespace godot
+#endif // TOOLS_ENABLED

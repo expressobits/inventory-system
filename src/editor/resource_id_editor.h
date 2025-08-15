@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #ifndef RESOURCE_ID_EDITOR_H
 #define RESOURCE_ID_EDITOR_H
 
@@ -63,3 +65,5 @@ private:
 VARIANT_ENUM_CAST(ResourceIDEditor::ResourceType);
 
 #endif // RESOURCE_ID_EDITOR_H
+
+#endif // TOOLS_ENABLED

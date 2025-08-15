@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #include "resource_id_editor.h"
 #include "../base/inventory_database.h"
 
@@ -182,3 +184,5 @@ void ResourceIDEditor::_on_theme_changed() {
 void ResourceIDEditor::_on_id_value_changed(const String& value) {
     _check_valid_id();
 }
+
+#endif // TOOLS_ENABLED

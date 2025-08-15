@@ -1,3 +1,5 @@
+#ifdef TOOLS_ENABLED
+
 #ifndef BASE_INVENTORY_EDITOR_H
 #define BASE_INVENTORY_EDITOR_H
 
@@ -61,3 +63,5 @@ private:
 } // namespace godot
 
 #endif // BASE_INVENTORY_EDITOR_H
+
+#endif // TOOLS_ENABLED
