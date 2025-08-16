@@ -48,6 +48,7 @@
 #include "editor/item_category_editor.h"
 #include "editor/loots_editor.h"
 #include "editor/loot_editor.h"
+#include "editor/loot_item_editor.h"
 #endif
 
 using namespace godot;
@@ -104,6 +105,7 @@ void initialize_gdextension_types(ModuleInitializationLevel p_level) {
 		GDREGISTER_INTERNAL_CLASS(ItemCategoryEditor);
 		GDREGISTER_INTERNAL_CLASS(LootsEditor);
 		GDREGISTER_INTERNAL_CLASS(LootEditor);
+		GDREGISTER_INTERNAL_CLASS(LootItemEditor);
 		EditorPlugins::add_by_type<InventoryEditorPlugin>();
 	}
 #endif
