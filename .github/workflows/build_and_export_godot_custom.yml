@@ -28,7 +28,7 @@ jobs:
       - name: Compile Godot
         run: |
           cd godot
-          scons platform=linuxbsd tools=yes target=debug debug_symbols=true -j$(nproc)
+          scons platform=linuxbsd tools=yes target=template_debug debug_symbols=true -j$(nproc)
 
       # Step 5: Export the project using the compiled Godot binary
       - name: Export project
