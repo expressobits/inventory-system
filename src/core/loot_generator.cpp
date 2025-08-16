@@ -8,6 +8,7 @@ void LootGenerator::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_target_inventory_path"), &LootGenerator::get_target_inventory_path);
 	ClassDB::bind_method(D_METHOD("get_target_inventory"), &LootGenerator::get_target_inventory);
 	ClassDB::bind_method(D_METHOD("generate_loot", "rolls"), &LootGenerator::generate_loot, DEFVAL(-1));
+	ClassDB::bind_method(D_METHOD("add_loot_to_inventory", "rolls"), &LootGenerator::add_loot_to_inventory, DEFVAL(-1));
 
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "loot_id"), "set_loot_id", "get_loot_id");
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "target_inventory_path"), "set_target_inventory_path", "get_target_inventory_path");
@@ -56,31 +57,26 @@ Inventory *LootGenerator::get_target_inventory() const {
 	return Object::cast_to<Inventory>(node);
 }
 
-void LootGenerator::generate_loot(int rolls) {
+TypedArray<ItemStack> LootGenerator::generate_loot(int rolls) {
+	TypedArray<ItemStack> generated_loot;
+
 	if (loot_id.is_empty()) {
 		ERR_PRINT("LootGenerator: No loot ID assigned");
-		return;
+		return generated_loot;
 	}
 
 	if (!get_database().is_valid()) {
 		ERR_PRINT("LootGenerator: No database assigned");
-		return;
+		return generated_loot;
 	}
 
 	Ref<Loot> loot = get_database()->get_loot_from_id(loot_id);
 	if (!loot.is_valid()) {
 		ERR_PRINT("LootGenerator: Loot with ID '" + loot_id + "' not found in database");
-		return;
-	}
-
-	Inventory *target_inventory = get_target_inventory();
-	if (!target_inventory) {
-		ERR_PRINT("LootGenerator: No target inventory found at path");
-		return;
+		return generated_loot;
 	}
 
 	// Use the unified loot API - when rolls = -1 (default), uses configured min/max rolls
-	// when rolls > 0, uses that specific roll count
 	TypedArray<LootItem> loot_items = loot->get_random_items(rolls);
 
 	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
@@ -112,8 +108,31 @@ void LootGenerator::generate_loot(int rolls) {
 			apply_property_ranges(properties, property_ranges, rng);
 		}
 
-		// Add items to the inventory using the item_id and amount
-		target_inventory->add(loot_item->get_item_id(), amount, properties);
+		// Create an ItemStack and add it to the generated loot
+		Ref<ItemStack> item_stack = memnew(ItemStack);
+		item_stack->set_item_id(loot_item->get_item_id());
+		item_stack->set_amount(amount);
+		item_stack->set_properties(properties);
+
+		generated_loot.append(item_stack);
+	}
+
+	return generated_loot;
+}
+
+void LootGenerator::add_loot_to_inventory(int rolls) {
+	Inventory *target_inventory = get_target_inventory();
+	if (!target_inventory) {
+		ERR_PRINT("LootGenerator: No target inventory found at path");
+		return;
+	}
+
+	TypedArray<ItemStack> loot = generate_loot(rolls);
+	for (int i = 0; i < loot.size(); i++) {
+		Ref<ItemStack> item_stack = loot[i];
+		if (item_stack.is_valid()) {
+			target_inventory->add(item_stack->get_item_id(), item_stack->get_amount(), item_stack->get_properties());
+		}
 	}
 }
 

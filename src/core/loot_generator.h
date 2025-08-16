@@ -29,7 +29,10 @@ public:
 	Inventory *get_target_inventory() const;
 
 	// Core loot generation functionality
-	void generate_loot(int rolls = -1);
+	TypedArray<ItemStack> generate_loot(int rolls = -1);
+
+	// Helper method to add generated loot to the inventory
+	void add_loot_to_inventory(int rolls = -1);
 
 private:
 	// Helper method to apply property ranges from LootItem to properties
