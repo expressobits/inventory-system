@@ -55,7 +55,7 @@ String Loot::get_name() const {
 }
 
 void Loot::set_min_rolls(const int &new_min_rolls) {
-	min_rolls = new_min_rolls;
+	min_rolls = MAX(0, new_min_rolls);
 }
 
 int Loot::get_min_rolls() const {
@@ -86,7 +86,7 @@ TypedArray<LootItem> Loot::get_random_items(int rolls) const {
 	
 	// If rolls is -1, use the configured min/max rolls
 	if (rolls == -1) {
-		if (min_rolls <= 0 || max_rolls <= 0) {
+		if (min_rolls < 0 || max_rolls < 0) {
 			return result;
 		}
 		

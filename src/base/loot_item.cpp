@@ -44,7 +44,7 @@ float LootItem::get_weight() const {
 }
 
 void LootItem::set_min_amount(const int &new_min_amount) {
-	min_amount = new_min_amount;
+	min_amount = MAX(0, new_min_amount);
 }
 
 int LootItem::get_min_amount() const {

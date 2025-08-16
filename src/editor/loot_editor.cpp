@@ -147,7 +147,7 @@ void LootEditor::_create_ui() {
 	min_rolls_spinbox = memnew(SpinBox);
 	rolls_hbox->add_child(min_rolls_spinbox);
 	min_rolls_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	min_rolls_spinbox->set_min(1);
+	min_rolls_spinbox->set_min(0);
 	min_rolls_spinbox->set_max(999);
 	min_rolls_spinbox->set_step(1);
 	min_rolls_spinbox->set_value(1);
@@ -161,7 +161,7 @@ void LootEditor::_create_ui() {
 	max_rolls_spinbox = memnew(SpinBox);
 	rolls_hbox->add_child(max_rolls_spinbox);
 	max_rolls_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	max_rolls_spinbox->set_min(1);
+	max_rolls_spinbox->set_min(0);
 	max_rolls_spinbox->set_max(999);
 	max_rolls_spinbox->set_step(1);
 	max_rolls_spinbox->set_value(1);
@@ -271,7 +271,7 @@ void LootEditor::_create_ui() {
 	min_amount_spinbox = memnew(SpinBox);
 	amount_hbox->add_child(min_amount_spinbox);
 	min_amount_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	min_amount_spinbox->set_min(1);
+	min_amount_spinbox->set_min(0);
 	min_amount_spinbox->set_max(999999);
 	min_amount_spinbox->set_step(1);
 	min_amount_spinbox->set_value(1);
@@ -285,7 +285,7 @@ void LootEditor::_create_ui() {
 	max_amount_spinbox = memnew(SpinBox);
 	amount_hbox->add_child(max_amount_spinbox);
 	max_amount_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
-	max_amount_spinbox->set_min(1);
+	max_amount_spinbox->set_min(0);
 	max_amount_spinbox->set_max(999999);
 	max_amount_spinbox->set_step(1);
 	max_amount_spinbox->set_value(1);
