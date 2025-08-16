@@ -5,19 +5,30 @@
 	</brief_description>
 	<description>
 		The LootGenerator node provides functionality for generating random items from weighted loot resources and placing them into target inventories. It inherits from [NodeInventories] and can access the inventory database for item validation. This is commonly used in survival games for treasure chests, enemy drops, and resource gathering mechanics.
-		
+
 		The loot generation uses a unified API where a single method handles both default roll behavior (using the loot resource's configured min/max roll range) and custom roll counts. The rolls functionality allows for Minecraft-style loot table behavior where a loot table can generate multiple items in a single call.
-		
+
 		The loot generation uses weighted random selection where items with higher weights are more likely to be selected. Each loot item can specify minimum and maximum amounts to generate random quantities. Additionally, property ranges defined in [LootItem] resources allow for randomized item properties, enabling items to be generated with randomized durability, damage, enchantments, or other properties within configurable ranges.
 	</description>
 	<tutorials>
 	</tutorials>
 	<methods>
-		<method name="generate_loot">
+		<method name="add_loot_to_inventory">
 			<return type="void" />
 			<param index="0" name="rolls" type="int" default="-1" />
 			<description>
+			</description>
+		</method>
+		<method name="generate_loot">
+			<return type="ItemStack[]" />
+			<param index="0" name="rolls" type="int" default="-1" />
+			<description>
 				Generate random items from the assigned loot resource and add them to the target inventory. When [param rolls] is -1 (default), uses the loot resource's configured roll range (min_rolls to max_rolls) with random selection. When [param rolls] is greater than 0, uses that specific number of rolls, overriding the configured range. Each roll represents an independent weighted selection from the loot table. The actual amount of each item is randomly determined between the min_amount and max_amount specified in the [LootItem]. Additionally, any property ranges defined in the [LootItem] will be applied to randomize item properties within the specified ranges.
+			</description>
+		</method>
+		<method name="get_loot" qualifiers="const">
+			<return type="Loot" />
+			<description>
 			</description>
 		</method>
 		<method name="get_target_inventory" qualifiers="const">
@@ -28,7 +39,7 @@
 		</method>
 	</methods>
 	<members>
-		<member name="loot_id" type="String" setter="set_loot_id" getter="get_loot_id">
+		<member name="loot_id" type="String" setter="set_loot_id" getter="get_loot_id" default="&quot;&quot;">
 			The ID of the [Loot] resource containing the weighted list of items that can be generated. This ID references a loot resource in the inventory database that defines which items can be generated and their relative probabilities.
 		</member>
 		<member name="target_inventory_path" type="NodePath" setter="set_target_inventory_path" getter="get_target_inventory_path" default="NodePath(&quot;&quot;)">

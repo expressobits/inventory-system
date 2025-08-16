@@ -24,11 +24,23 @@
 			<description>
 			</description>
 		</method>
+		<method name="add_loot">
+			<return type="void" />
+			<description>
+				Create and add an empty [Loot] resource to the database.
+			</description>
+		</method>
 		<method name="add_new_category">
 			<return type="void" />
 			<param index="0" name="category" type="ItemCategory" />
 			<description>
 				Add new [ItemCategory] to database. This method update category code cache for fast check categories in running game.
+			</description>
+		</method>
+		<method name="add_new_craft_station_type">
+			<return type="void" />
+			<param index="0" name="craft_station_type" type="CraftStationType" />
+			<description>
 			</description>
 		</method>
 		<method name="add_new_item">
@@ -45,15 +57,15 @@
 				Add new [Loot] resource to database. This method adds a loot resource containing weighted items for random generation.
 			</description>
 		</method>
-		<method name="add_recipe">
+		<method name="add_new_recipe">
 			<return type="void" />
+			<param index="0" name="recipe" type="Recipe" />
 			<description>
 			</description>
 		</method>
-		<method name="add_loot">
+		<method name="add_recipe">
 			<return type="void" />
 			<description>
-				Create and add an empty [Loot] resource to the database.
 			</description>
 		</method>
 		<method name="clear_current_data">
@@ -81,6 +93,14 @@
 			<description>
 			</description>
 		</method>
+		<method name="deserialize_loot" qualifiers="const">
+			<return type="void" />
+			<param index="0" name="loot" type="Loot" />
+			<param index="1" name="data" type="Dictionary" />
+			<description>
+				Deserialize loot data from a Dictionary into a [Loot] resource.
+			</description>
+		</method>
 		<method name="deserialize_recipe" qualifiers="const">
 			<return type="void" />
 			<param index="0" name="recipe" type="Recipe" />
@@ -93,14 +113,6 @@
 			<param index="0" name="station_type" type="CraftStationType" />
 			<param index="1" name="data" type="Dictionary" />
 			<description>
-			</description>
-		</method>
-		<method name="deserialize_loot" qualifiers="const">
-			<return type="void" />
-			<param index="0" name="loot" type="Loot" />
-			<param index="1" name="data" type="Dictionary" />
-			<description>
-				Deserialize loot data from a Dictionary into a [Loot] resource.
 			</description>
 		</method>
 		<method name="export_json_file">
@@ -127,11 +139,23 @@
 			<description>
 			</description>
 		</method>
+		<method name="get_craft_station_from_id" qualifiers="const">
+			<return type="CraftStationType" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
 		<method name="get_item" qualifiers="const">
 			<return type="ItemDefinition" />
 			<param index="0" name="id" type="String" />
 			<description>
 				Returns an [ItemDefinition] based on the param [param id]. This ID is searched for in the cache list managed by this database, this list is updated when we run the game.
+			</description>
+		</method>
+		<method name="get_loot_from_id" qualifiers="const">
+			<return type="Loot" />
+			<param index="0" name="id" type="String" />
+			<description>
 			</description>
 		</method>
 		<method name="get_new_valid_id" qualifiers="const">
@@ -165,6 +189,18 @@
 				Returns true if there is an [ItemDefinition] with the [param id].
 			</description>
 		</method>
+		<method name="has_item_name" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="name" type="String" />
+			<description>
+			</description>
+		</method>
+		<method name="has_loot_id" qualifiers="const">
+			<return type="bool" />
+			<param index="0" name="id" type="String" />
+			<description>
+			</description>
+		</method>
 		<method name="import_from_invdata">
 			<return type="void" />
 			<param index="0" name="json" type="String" />
@@ -184,6 +220,12 @@
 				Remove [ItemCategory] from database. This method updates the category bitflag cache.
 			</description>
 		</method>
+		<method name="remove_craft_station_type">
+			<return type="void" />
+			<param index="0" name="craft_station_type" type="CraftStationType" />
+			<description>
+			</description>
+		</method>
 		<method name="remove_item">
 			<return type="void" />
 			<param index="0" name="item" type="ItemDefinition" />
@@ -198,6 +240,12 @@
 				Remove [Loot] resource from database.
 			</description>
 		</method>
+		<method name="remove_recipe">
+			<return type="void" />
+			<param index="0" name="recipe" type="Recipe" />
+			<description>
+			</description>
+		</method>
 		<method name="serialize_item_category" qualifiers="const">
 			<return type="Dictionary" />
 			<param index="0" name="category" type="ItemCategory" />
@@ -210,6 +258,13 @@
 			<description>
 			</description>
 		</method>
+		<method name="serialize_loot" qualifiers="const">
+			<return type="Dictionary" />
+			<param index="0" name="loot" type="Loot" />
+			<description>
+				Serialize a [Loot] resource into a Dictionary for storage.
+			</description>
+		</method>
 		<method name="serialize_recipe" qualifiers="const">
 			<return type="Dictionary" />
 			<param index="0" name="recipe" type="Recipe" />
@@ -220,13 +275,6 @@
 			<return type="Dictionary" />
 			<param index="0" name="station_type" type="CraftStationType" />
 			<description>
-			</description>
-		</method>
-		<method name="serialize_loot" qualifiers="const">
-			<return type="Dictionary" />
-			<param index="0" name="loot" type="Loot" />
-			<description>
-				Serialize a [Loot] resource into a Dictionary for storage.
 			</description>
 		</method>
 	</methods>

@@ -5,14 +5,20 @@
 	</brief_description>
 	<description>
 		The Loot resource represents a loot table containing a weighted list of [LootItem] resources. It provides functionality for weighted random selection of items, commonly used in survival games for treasure chests, enemy drops, and resource gathering. Items with higher weights are more likely to be selected during random generation.
-		
+
 		The loot system supports configurable rolls functionality, inspired by Minecraft-style loot tables. You can set minimum and maximum roll counts to generate multiple items in a single loot generation call. For example, setting min_rolls=2 and max_rolls=4 will generate between 2-4 items each time the loot table is used.
-		
+
 		The total weight is calculated automatically from all contained loot items, and the random selection uses this total to ensure proper probability distribution.
 	</description>
 	<tutorials>
 	</tutorials>
 	<methods>
+		<method name="deserialize">
+			<return type="void" />
+			<param index="0" name="data" type="Dictionary" />
+			<description>
+			</description>
+		</method>
 		<method name="get_random_items" qualifiers="const">
 			<return type="LootItem[]" />
 			<param index="0" name="rolls" type="int" default="-1" />
@@ -26,8 +32,15 @@
 				Calculates and returns the total weight of all [LootItem] resources in this loot table. This is used internally for weighted random selection calculations.
 			</description>
 		</method>
+		<method name="serialize" qualifiers="const">
+			<return type="Dictionary" />
+			<description>
+			</description>
+		</method>
 	</methods>
 	<members>
+		<member name="id" type="String" setter="set_id" getter="get_id" default="&quot;&quot;">
+		</member>
 		<member name="items" type="LootItem[]" setter="set_items" getter="get_items" default="[]">
 			Array of [LootItem] resources that define what items can be generated and their relative probabilities. Each loot item contains an item ID, weight for probability calculation, and minimum/maximum amount ranges.
 		</member>
@@ -39,6 +52,8 @@
 		</member>
 		<member name="name" type="String" setter="set_name" getter="get_name" default="&quot;&quot;">
 			Optional name for this loot table, useful for identification and organization in the inventory database.
+		</member>
+		<member name="none_weight" type="float" setter="set_none_weight" getter="get_none_weight" default="0.0">
 		</member>
 	</members>
 </class>

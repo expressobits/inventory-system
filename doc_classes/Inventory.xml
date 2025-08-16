@@ -75,7 +75,7 @@
 			<param index="1" name="item_id" type="String" />
 			<param index="2" name="amount" type="int" default="1" />
 			<param index="3" name="properties" type="Dictionary" default="{}" />
-			<param index="4" name="can_emit_item_added_signal" type="bool" default="true" />
+			<param index="4" name="_unnamed_arg4" type="bool" default="true" />
 			<description>
 				Adds an amount of item_id to the specified stack and returns the amount that cannot be added.
 				[codeblocks]

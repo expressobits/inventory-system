@@ -31,6 +31,8 @@
 		<member name="categories" type="ItemCategory[]" setter="set_categories" getter="get_categories" default="[]">
 			Categories this item is in are used for categorized stacks to only accept specific items. See in [member InventoryConstraint]
 		</member>
+		<member name="description" type="String" setter="set_description" getter="get_description" default="&quot;&quot;">
+		</member>
 		<member name="dynamic_properties" type="String[]" setter="set_dynamic_properties" getter="get_dynamic_properties" default="[]">
 			Properties that are defined as dynamic and are calculated for individual items within the stack. Can only be used when [member max_stack] is 1.
 		</member>
