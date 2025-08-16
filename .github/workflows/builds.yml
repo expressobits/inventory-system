@@ -116,8 +116,26 @@ jobs:
           pattern: inventory-system-*
           delete-merged: true
 
+  # Run tests on a subset of platforms before post-build
+  test:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        # Run tests on key platforms to validate functionality
+        target:
+          - { platform: linux, arch: x86_64, os: ubuntu-22.04 }
+          - { platform: windows, arch: x86_64, os: windows-latest }
+        float-precision: [single]
+    uses: ./.github/workflows/test.yml
+    with:
+      platform: ${{ matrix.target.platform }}
+      arch: ${{ matrix.target.arch }}
+      os: ${{ matrix.target.os }}
+      float-precision: ${{ matrix.float-precision }}
+
   post-build:
-    needs: merge
+    needs: [merge, test]
     uses: ./.github/workflows/post-build.yml
     with:
       artifact-name: inventory-system
