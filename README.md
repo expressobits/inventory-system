@@ -31,6 +31,8 @@ New here? Read our new [Documentation](https://expressobits.com/inventory-system
 ✔️ Demonstrations of dropped items and item pickup.
 
 ✔️ Multiplayer compatible (Including example).
+
+✔️ Loot System (https://github.com/expressobits/inventory-system/issues/152).
  
 ✔️ Hotbar.
 
