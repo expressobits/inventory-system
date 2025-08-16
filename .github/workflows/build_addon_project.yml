@@ -19,8 +19,8 @@ jobs:
         run: |
           wget https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip -O godot.zip
           unzip godot.zip -d godot
-          chmod +x godot/Godot_v4.4.1-stable_mono_linux_headless.64
-          mv godot/Godot_v4.4.1-stable_mono_linux_headless.64 /usr/local/bin/godot
+          chmod +x godot/Godot_v4.4.1-stable_linux.x86_64
+          mv godot/Godot_v4.4.1-stable_linux.x86_64 /usr/local/bin/godot
 
       # Export the project
       - name: Export project for ${{ matrix.platform }}
