@@ -1,0 +1,38 @@
+name: Build Godot Project
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [Windows Desktop, Linux]
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Godot Headless
+      - name: Download Godot Headless
+        run: |
+          wget https://downloads.tuxfamily.org/godotengine/4.4.1/mono/Godot_v4.4.1-stable_mono_linux_headless.64.zip -O godot.zip
+          unzip godot.zip -d godot
+          chmod +x godot/Godot_v4.4.1-stable_mono_linux_headless.64
+          mv godot/Godot_v4.4.1-stable_mono_linux_headless.64 /usr/local/bin/godot
+
+      # Export the project
+      - name: Export project for ${{ matrix.platform }}
+        run: |
+          godot --headless --export-debug --verbose "${{ matrix.platform }}"
+
+      # Upload the exported build as an artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-${{ matrix.platform }}
+          path: export/${{ matrix.platform }}
