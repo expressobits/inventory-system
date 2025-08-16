@@ -28,7 +28,7 @@ jobs:
       - name: Compile Godot
         run: |
           cd godot
-          scons platform=linuxbsd target=template_editor debug_symbols=true -j$(nproc)
+          scons platform=linuxbsd target=template_debug debug_symbols=true -j$(nproc)
 
       - name: Check folder contents
         run: |
