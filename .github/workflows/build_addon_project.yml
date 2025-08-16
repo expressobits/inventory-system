@@ -15,21 +15,13 @@ jobs:
         uses: actions/checkout@v4
 
       # Set up Godot Headless
-      - name: Download Godot Headless
-        run: |
-          wget https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip -O godot.zip
-          unzip godot.zip -d godot
-          chmod +x godot/Godot_v4.4.1-stable_linux.x86_64
-          mv godot/Godot_v4.4.1-stable_linux.x86_64 /usr/local/bin/godot
-
-      # Export the project
-      - name: Export project for ${{ matrix.platform }}
-        run: |
-          godot --headless --export-debug --verbose "${{ matrix.platform }}"
-
-      # Upload the exported build as an artifact
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - name: export game
+        id: export
+        # Use latest version (see releases for all versions)
+        uses: firebelley/godot-export@v6.0.0
         with:
-          name: build-${{ matrix.platform }}
-          path: export/${{ matrix.platform }}
+          # Defining all the required inputs
+          godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
