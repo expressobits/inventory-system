@@ -26,7 +26,7 @@
 #include <godot_cpp/classes/check_box.hpp>
 #include "base_resource_editor.h"
 #include "resource_id_editor.h"
-#include "item_stack_selector.h"
+#include "loot_item_editor.h"
 
 using namespace godot;
 
@@ -64,35 +64,7 @@ private:
 	ItemList *items_list;
 	
 	// Item details section (right side)
-	VBoxContainer *item_details_vbox;
-	Label *item_details_label;
-	ItemStackSelector *item_stack_selector;
-	HBoxContainer *weight_hbox;
-	Label *weight_label;
-	SpinBox *weight_spinbox;
-	Label *min_amount_label;
-	SpinBox *min_amount_spinbox;
-	Label *max_amount_label;
-	SpinBox *max_amount_spinbox;
-	
-	// Property ranges section
-	Label *property_ranges_label;
-	Button *add_property_range_button;
-	Button *remove_property_range_button;
-	ItemList *property_ranges_list;
-	
-	// Property range details
-	VBoxContainer *property_range_details_vbox;
-	Label *property_range_details_label;
-	LineEdit *property_name_line_edit;
-	OptionButton *property_type_option;
-	HBoxContainer *range_values_hbox;
-	Label *min_value_label;
-	SpinBox *min_value_spinbox;
-	Label *max_value_label;
-	SpinBox *max_value_spinbox;
-	Label *bool_value_label;
-	CheckBox *bool_value_checkbox;
+	LootItemEditor *loot_item_editor;
 	
 	PopupMenu *context_menu;
 
@@ -100,11 +72,8 @@ private:
 	void _apply_theme();
 	void _update_ui();
 	void _update_items_list();
-	void _update_item_details();
 	void _update_total_weight();
 	void _update_item_id_options();
-	void _update_property_ranges_list();
-	void _update_property_range_details();
 
 	// Signal handlers
 	void _on_id_changed(const String &p_id);
@@ -118,18 +87,7 @@ private:
 	void _on_items_list_item_clicked(int p_index, const Vector2 &p_position, int p_mouse_button_index);
 	void _on_items_list_item_rmb_selected(int p_index, const Vector2 &p_position);
 	void _on_context_menu_id_pressed(int p_id);
-	void _on_item_stack_changed(const Ref<ItemStack> &p_item_stack);
-	void _on_weight_value_changed(double p_value);
-	void _on_min_amount_value_changed(double p_value);
-	void _on_max_amount_value_changed(double p_value);
-	void _on_add_property_range_button_pressed();
-	void _on_remove_property_range_button_pressed();
-	void _on_property_ranges_list_item_selected(int p_index);
-	void _on_property_name_text_changed(const String &p_text);
-	void _on_property_type_item_selected(int p_index);
-	void _on_min_value_value_changed(double p_value);
-	void _on_max_value_value_changed(double p_value);
-	void _on_bool_value_toggled(bool p_pressed);
+	void _on_loot_item_changed(const Ref<LootItem> &p_loot_item);
 
 	Ref<LootItem> _get_selected_loot_item();
 
