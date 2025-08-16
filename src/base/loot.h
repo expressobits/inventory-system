@@ -15,6 +15,7 @@ private:
 	String name = "";
 	int min_rolls = 1;
 	int max_rolls = 1;
+	float none_weight = 0.0;
 
 protected:
 	static void _bind_methods();
@@ -32,6 +33,8 @@ public:
 	int get_min_rolls() const;
 	void set_max_rolls(const int &new_max_rolls);
 	int get_max_rolls() const;
+	void set_none_weight(const float &new_none_weight);
+	float get_none_weight() const;
 	
 	// Helper methods for loot generation
 	float get_total_weight() const;
