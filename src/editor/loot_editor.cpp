@@ -29,6 +29,7 @@ void LootEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_name_text_changed", "text"), &LootEditor::_on_name_text_changed);
 	ClassDB::bind_method(D_METHOD("_on_min_rolls_value_changed", "value"), &LootEditor::_on_min_rolls_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_max_rolls_value_changed", "value"), &LootEditor::_on_max_rolls_value_changed);
+	ClassDB::bind_method(D_METHOD("_on_none_weight_value_changed", "value"), &LootEditor::_on_none_weight_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_add_item_button_pressed"), &LootEditor::_on_add_item_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_remove_item_button_pressed"), &LootEditor::_on_remove_item_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_items_list_item_selected", "index"), &LootEditor::_on_items_list_item_selected);
@@ -71,6 +72,7 @@ LootEditor::LootEditor() : BaseResourceEditor() {
 	items_right_vbox = nullptr;
 	min_rolls_spinbox = nullptr;
 	max_rolls_spinbox = nullptr;
+	none_weight_spinbox = nullptr;
 	property_ranges_list = nullptr;
 	property_range_details_vbox = nullptr;
 	property_name_line_edit = nullptr;
@@ -166,6 +168,25 @@ void LootEditor::_create_ui() {
 	max_rolls_spinbox->set_step(1);
 	max_rolls_spinbox->set_value(1);
 	max_rolls_spinbox->connect("value_changed", callable_mp(this, &LootEditor::_on_max_rolls_value_changed));
+
+	// None weight - for "no loot" selection probability
+	HBoxContainer *none_weight_hbox = memnew(HBoxContainer);
+	left_vbox->add_child(none_weight_hbox);
+	none_weight_hbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+
+	Label *none_weight_label = memnew(Label);
+	none_weight_hbox->add_child(none_weight_label);
+	none_weight_label->set_text("None Weight");
+	none_weight_label->set_custom_minimum_size(Vector2(160, 0));
+
+	none_weight_spinbox = memnew(SpinBox);
+	none_weight_hbox->add_child(none_weight_spinbox);
+	none_weight_spinbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	none_weight_spinbox->set_min(0.0);
+	none_weight_spinbox->set_max(999999.0);
+	none_weight_spinbox->set_step(0.01);
+	none_weight_spinbox->set_value(0.0);
+	none_weight_spinbox->connect("value_changed", callable_mp(this, &LootEditor::_on_none_weight_value_changed));
 
 	// Spacer Control matching item_definition_editor
 	Control *spacer = memnew(Control);
@@ -512,6 +533,9 @@ void LootEditor::_update_ui() {
 		if (max_rolls_spinbox) {
 			max_rolls_spinbox->set_value(1);
 		}
+		if (none_weight_spinbox) {
+			none_weight_spinbox->set_value(0.0);
+		}
 		items_list->clear();
 		item_details_vbox->set_visible(false);
 		_update_total_weight();
@@ -527,6 +551,9 @@ void LootEditor::_update_ui() {
 	}
 	if (max_rolls_spinbox) {
 		max_rolls_spinbox->set_value(current_loot->get_max_rolls());
+	}
+	if (none_weight_spinbox) {
+		none_weight_spinbox->set_value(current_loot->get_none_weight());
 	}
 	_update_items_list();
 	_update_total_weight();
@@ -664,6 +691,14 @@ void LootEditor::_on_max_rolls_value_changed(double p_value) {
 			}
 		}
 		
+		emit_signal("changed", current_loot);
+	}
+}
+
+void LootEditor::_on_none_weight_value_changed(double p_value) {
+	if (current_loot.is_valid()) {
+		current_loot->set_none_weight((float)p_value);
+		_update_total_weight();
 		emit_signal("changed", current_loot);
 	}
 }

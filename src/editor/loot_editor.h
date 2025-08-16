@@ -50,6 +50,7 @@ private:
 	Label *total_weight_label;
 	SpinBox *min_rolls_spinbox;
 	SpinBox *max_rolls_spinbox;
+	SpinBox *none_weight_spinbox;
 	
 	// Items section with horizontal split
 	HSplitContainer *items_hsplit;
@@ -110,6 +111,7 @@ private:
 	void _on_name_text_changed(const String &p_text);
 	void _on_min_rolls_value_changed(double p_value);
 	void _on_max_rolls_value_changed(double p_value);
+	void _on_none_weight_value_changed(double p_value);
 	void _on_add_item_button_pressed();
 	void _on_remove_item_button_pressed();
 	void _on_items_list_item_selected(int p_index);

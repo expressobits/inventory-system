@@ -12,6 +12,8 @@ void Loot::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_min_rolls"), &Loot::get_min_rolls);
 	ClassDB::bind_method(D_METHOD("set_max_rolls", "max_rolls"), &Loot::set_max_rolls);
 	ClassDB::bind_method(D_METHOD("get_max_rolls"), &Loot::get_max_rolls);
+	ClassDB::bind_method(D_METHOD("set_none_weight", "none_weight"), &Loot::set_none_weight);
+	ClassDB::bind_method(D_METHOD("get_none_weight"), &Loot::get_none_weight);
 	ClassDB::bind_method(D_METHOD("get_total_weight"), &Loot::get_total_weight);
 	ClassDB::bind_method(D_METHOD("get_random_items", "rolls"), &Loot::get_random_items, DEFVAL(-1));
 	ClassDB::bind_method(D_METHOD("serialize"), &Loot::serialize);
@@ -22,6 +24,7 @@ void Loot::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "name"), "set_name", "get_name");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "min_rolls"), "set_min_rolls", "get_min_rolls");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_rolls"), "set_max_rolls", "get_max_rolls");
+	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "none_weight"), "set_none_weight", "get_none_weight");
 }
 
 Loot::Loot() {
@@ -70,8 +73,16 @@ int Loot::get_max_rolls() const {
 	return max_rolls;
 }
 
+void Loot::set_none_weight(const float &new_none_weight) {
+	none_weight = MAX(0.0, new_none_weight);
+}
+
+float Loot::get_none_weight() const {
+	return none_weight;
+}
+
 float Loot::get_total_weight() const {
-	float total = 0.0;
+	float total = none_weight;
 	for (int i = 0; i < items.size(); i++) {
 		Ref<LootItem> item = items[i];
 		if (item.is_valid()) {
@@ -113,6 +124,14 @@ TypedArray<LootItem> Loot::get_random_items(int rolls) const {
 		float random_value = rng->randf() * total_weight;
 		float cumulative_weight = 0.0;
 		
+		// Check if we hit the "none" weight range first
+		cumulative_weight += none_weight;
+		if (random_value <= cumulative_weight) {
+			// Don't add anything to result for "none" case
+			continue;
+		}
+		
+		// Check regular items
 		for (int i = 0; i < items.size(); i++) {
 			Ref<LootItem> item = items[i];
 			if (item.is_valid()) {
@@ -134,6 +153,7 @@ Dictionary Loot::serialize() const {
 	data["name"] = name;
 	data["min_rolls"] = min_rolls;
 	data["max_rolls"] = max_rolls;
+	data["none_weight"] = none_weight;
 	
 	Array items_data = Array();
 	for (int i = 0; i < items.size(); i++) {
@@ -161,6 +181,9 @@ void Loot::deserialize(const Dictionary &data) {
 	}
 	if (data.has("max_rolls")) {
 		max_rolls = data["max_rolls"];
+	}
+	if (data.has("none_weight")) {
+		none_weight = data["none_weight"];
 	}
 	
 	if (data.has("items")) {
