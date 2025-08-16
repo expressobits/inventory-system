@@ -1,27 +1,39 @@
-name: Build Godot Project
-
-on:
+# Whenever a tag push matching pattern "v*" then run the job
+on: 
   workflow_dispatch:
 
 jobs:
-  build:
+  # job id, can be anything
+  export_game:
+    # Always use ubuntu-latest for this action
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        platform: [Windows Desktop, Linux]
+    # Add permission for release creation. Can be made narrower according to your needs
+    permissions: write-all
+    # Job name, can be anything
+    name: Export Addon Game
     steps:
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # Always include the checkout step so that 
+      # your project is available for Godot to export
+    - name: checkout
+      uses: actions/checkout@v4
+  
+    - name: export game
+      id: export
+      # Use latest version (see releases for all versions)
+      uses: firebelley/godot-export@v6.0.0
+      with:
+        # Defining all the required inputs
+        godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
+        godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz
+        relative_project_path: ./
+        archive_output: true
 
-      # Set up Godot Headless
-      - name: export game
-        id: export
-        # Use latest version (see releases for all versions)
-        uses: firebelley/godot-export@v6.0.0
-        with:
-          # Defining all the required inputs
-          godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_linux.x86_64.zip
-          godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.4.1-stable/Godot_v4.4.1-stable_export_templates.tpz
-          relative_project_path: ./
-          archive_output: true
+      # This release action has worked well for me. However, you can most likely use any release action of your choosing.
+      # https://github.com/ncipollo/release-action
+    # - name: create release
+    #   uses: ncipollo/release-action@v1.14.0
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     generateReleaseNotes: true
+    #     tag: ${{ github.ref_name }}
+    #     artifacts: ${{ steps.export.outputs.archive_directory }}/*
