@@ -31,11 +31,11 @@ Ref<Loot> LootGenerator::get_loot() const {
 	if (loot_id.is_empty()) {
 		return nullptr;
 	}
-	
+
 	if (!get_database().is_valid()) {
 		return nullptr;
 	}
-	
+
 	return get_database()->get_loot_from_id(loot_id);
 }
 
@@ -47,12 +47,12 @@ NodePath LootGenerator::get_target_inventory_path() const {
 	return target_inventory_path;
 }
 
-Inventory* LootGenerator::get_target_inventory() const {
+Inventory *LootGenerator::get_target_inventory() const {
 	if (target_inventory_path.is_empty()) {
 		return nullptr;
 	}
-	
-	Node* node = get_node_or_null(target_inventory_path);
+
+	Node *node = get_node_or_null(target_inventory_path);
 	return Object::cast_to<Inventory>(node);
 }
 
@@ -61,57 +61,57 @@ void LootGenerator::generate_loot(int rolls) {
 		ERR_PRINT("LootGenerator: No loot ID assigned");
 		return;
 	}
-	
+
 	if (!get_database().is_valid()) {
 		ERR_PRINT("LootGenerator: No database assigned");
 		return;
 	}
-	
+
 	Ref<Loot> loot = get_database()->get_loot_from_id(loot_id);
 	if (!loot.is_valid()) {
 		ERR_PRINT("LootGenerator: Loot with ID '" + loot_id + "' not found in database");
 		return;
 	}
-	
-	Inventory* target_inventory = get_target_inventory();
+
+	Inventory *target_inventory = get_target_inventory();
 	if (!target_inventory) {
 		ERR_PRINT("LootGenerator: No target inventory found at path");
 		return;
 	}
-	
+
 	// Use the unified loot API - when rolls = -1 (default), uses configured min/max rolls
 	// when rolls > 0, uses that specific roll count
 	TypedArray<LootItem> loot_items = loot->get_random_items(rolls);
-	
+
 	Ref<RandomNumberGenerator> rng = memnew(RandomNumberGenerator);
 	rng->randomize();
-	
+
 	for (int i = 0; i < loot_items.size(); i++) {
 		Ref<LootItem> loot_item = loot_items[i];
 		if (!loot_item.is_valid()) {
 			continue;
 		}
-		
+
 		// Check if the item exists in the database
 		Ref<ItemDefinition> item_def = get_item_from_id(loot_item->get_item_id());
 		if (!item_def.is_valid()) {
 			ERR_PRINT("LootGenerator: Item with ID '" + loot_item->get_item_id() + "' not found in database");
 			continue;
 		}
-		
+
 		// Generate random amount between min and max
 		int min_amount = loot_item->get_min_amount();
 		int max_amount = loot_item->get_max_amount();
 		int amount = rng->randi_range(min_amount, max_amount);
 
 		Dictionary properties = get_database()->create_dynamic_properties(loot_item->get_item_id());
-		
+
 		// Apply property ranges from LootItem
 		Dictionary property_ranges = loot_item->get_property_ranges();
 		if (!property_ranges.is_empty()) {
 			apply_property_ranges(properties, property_ranges, rng);
 		}
-		
+
 		// Add items to the inventory using the item_id and amount
 		target_inventory->add(loot_item->get_item_id(), amount, properties);
 	}
@@ -119,16 +119,16 @@ void LootGenerator::generate_loot(int rolls) {
 
 void LootGenerator::apply_property_ranges(Dictionary &properties, const Dictionary &property_ranges, Ref<RandomNumberGenerator> &rng) const {
 	Array property_keys = property_ranges.keys();
-	
+
 	for (int i = 0; i < property_keys.size(); i++) {
 		String property_name = property_keys[i];
 		Dictionary range_config = property_ranges[property_name];
-		
+
 		if (range_config.has("min") && range_config.has("max")) {
 			// Handle range-based properties (int/float)
 			Variant min_val = range_config["min"];
 			Variant max_val = range_config["max"];
-			
+
 			if (min_val.get_type() == Variant::INT && max_val.get_type() == Variant::INT) {
 				// Integer range
 				int min_int = min_val;
