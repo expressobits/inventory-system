@@ -30,10 +30,6 @@ jobs:
           cd godot
           scons platform=linuxbsd target=template_debug debug_symbols=true -j$(nproc)
 
-      - name: Check folder contents
-        run: |
-          tree
-
       # Step 5: Export the project using the compiled Godot binary
       - name: Export project
         run: |
