@@ -37,7 +37,7 @@ jobs:
       # Step 5: Export the project using the compiled Godot binary
       - name: Export project
         run: |
-          ./godot/bin/godot.linux.editor.x86_64.console --headless --export-debug --verbose "Windows Desktop"
+          ./godot/bin/godot.linuxbsd.template_debug.x86_64 --headless --export-debug --verbose "Windows Desktop"
 
       # Step 6: Upload the exported build as an artifact
       - name: Upload build artifact
