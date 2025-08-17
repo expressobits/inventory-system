@@ -32,8 +32,7 @@ jobs:
 
       - name: Check folder contents
         run: |
-          cd bin
-          ls -l
+          tree
 
       # Step 5: Export the project using the compiled Godot binary
       - name: Export project
