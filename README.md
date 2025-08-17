@@ -1,5 +1,5 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-2.9.2-blue.svg?cacheSeconds=2592000)
+![Version](https://img.shields.io/badge/version-2.9.3-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-green.svg)](https://expressobits.com/inventory-system/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
