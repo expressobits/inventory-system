@@ -28,12 +28,12 @@ jobs:
       - name: Compile Godot
         run: |
           cd godot
-          scons platform=linuxbsd tools=yes target=template_debug debug_symbols=true -j$(nproc)
+          scons platform=linux target=template_debug debug_symbols=true -j$(nproc)
 
       # Step 5: Export the project using the compiled Godot binary
       - name: Export project
         run: |
-          ./godot/bin/godot.linuxbsd.tools.64 --headless --export-debug --verbose "Windows Desktop"
+          ./godot/bin/godot.linuxbsd.template_debug.x86_64 --headless --export-release --verbose "Windows Desktop"
 
       # Step 6: Upload the exported build as an artifact
       - name: Upload build artifact
