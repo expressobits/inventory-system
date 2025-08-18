@@ -1,8 +1,8 @@
 {
   "title": "Inventory System",
-  "description": "Modular inventory system for godot 4 with nodes, compatible with multiplayer, separate logic from the UI, Using items as separate resources.\nDocs: https://expressobits.com/inventory-system-docs/",
+  "description": "Modular inventory system for godot 4 with nodes, compatible with multiplayer, separate logic from the UI, Using items as separate resources.\nDocs: https://expressobits.com/inventory-system/",
   "category_id": "6",
-  "godot_version": "4.1",
+  "godot_version": "4.4",
   "version_string": "{{ env.PLUGIN_VERSION }}",
   "cost": "MIT",
   "download_provider": "GitHub",
