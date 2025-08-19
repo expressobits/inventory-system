@@ -59,7 +59,7 @@ New here? Read our new [Documentation](https://expressobits.com/inventory-system
 📅 Inventory UI dynamic #83
 
 ## Install
-See in [Docs](https://expressobits.com/inventory-system-docs/getting_started/installation/)
+See in [Docs](https://expressobits.com/inventory-system/getting_started/installation.html)
 
 ## Struture
 ### [Gloot](https://github.com/peter-kish/gloot)
