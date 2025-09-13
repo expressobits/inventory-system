@@ -1,4 +1,5 @@
 #include "hotbar.h"
+#include "grid_inventory.h"
 #include <godot_cpp/variant/utility_functions.hpp>
 
 void Hotbar::_on_contents_changed() {
@@ -18,6 +19,11 @@ void Hotbar::_on_contents_changed() {
 			unequip(i);
 		}
 	}
+	
+	// Perform auto-equip if enabled
+	if (auto_equip_mode != AUTO_EQUIP_DISABLED) {
+		_perform_auto_equip();
+	}
 }
 
 void Hotbar::_bind_methods() {
@@ -28,6 +34,8 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_max_slots"), &Hotbar::get_max_slots);
 	ClassDB::bind_method(D_METHOD("set_selection_index", "selection_index"), &Hotbar::set_selection_index);
 	ClassDB::bind_method(D_METHOD("get_selection_index"), &Hotbar::get_selection_index);
+	ClassDB::bind_method(D_METHOD("set_auto_equip_mode", "auto_equip_mode"), &Hotbar::set_auto_equip_mode);
+	ClassDB::bind_method(D_METHOD("get_auto_equip_mode"), &Hotbar::get_auto_equip_mode);
 
 	ClassDB::bind_method(D_METHOD("active_slot", "slot_index"), &Hotbar::active_slot);
 	ClassDB::bind_method(D_METHOD("deactive_slot", "slot_index"), &Hotbar::deactive_slot);
@@ -41,6 +49,10 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stack_on_slot", "slot_index"), &Hotbar::get_stack_on_slot);
 	ClassDB::bind_method(D_METHOD("get_stack_on_selection"), &Hotbar::get_stack_on_selection);
 
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_DISABLED);
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_BY_STACK_ORDER);
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_BY_GRID_POSITION);
+
 	ADD_SIGNAL(MethodInfo("on_change_selection", PropertyInfo(Variant::INT, "selection_index")));
 	ADD_SIGNAL(MethodInfo("equipped_stack_changed", PropertyInfo(Variant::INT, "slot_index")));
 	ADD_SIGNAL(MethodInfo("equipped", PropertyInfo(Variant::INT, "slot_index")));
@@ -50,6 +62,7 @@ void Hotbar::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory"), "set_inventory_path", "get_inventory_path");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_slots"), "set_max_slots", "get_max_slots");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "selection_index"), "set_selection_index", "get_selection_index");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "auto_equip_mode", PROPERTY_HINT_ENUM, "Disabled,By Stack Order,By Grid Position"), "set_auto_equip_mode", "get_auto_equip_mode");
 }
 
 void Hotbar::set_inventory_path(const NodePath &new_inventory) {
@@ -221,6 +234,67 @@ Ref<ItemStack> Hotbar::get_stack_on_selection() const {
 	return get_stack_on_slot(selection_index);
 }
 
+void Hotbar::set_auto_equip_mode(AutoEquipMode new_auto_equip_mode) {
+	auto_equip_mode = new_auto_equip_mode;
+	// Trigger auto-equip when mode is changed to enabled
+	if (auto_equip_mode != AUTO_EQUIP_DISABLED && is_node_ready()) {
+		_perform_auto_equip();
+	}
+}
+
+Hotbar::AutoEquipMode Hotbar::get_auto_equip_mode() const {
+	return auto_equip_mode;
+}
+
+void Hotbar::_perform_auto_equip() {
+	Inventory *inventory = get_inventory();
+	if (inventory == nullptr) {
+		return;
+	}
+
+	TypedArray<ItemStack> inventory_stacks = inventory->get_stacks();
+	
+	if (auto_equip_mode == AUTO_EQUIP_BY_STACK_ORDER) {
+		// Auto-equip by stack order (index in inventory)
+		for (size_t i = 0; i < inventory_stacks.size() && i < (size_t)max_slots; i++) {
+			Ref<ItemStack> stack = inventory_stacks[i];
+			if (stack.is_valid() && stack->has_valid()) {
+				// Only equip if slot is active and not already equipped with this stack
+				if (i < slots.size()) {
+					Ref<Slot> slot = slots[i];
+					if (slot->is_active() && slot->get_stack() != stack) {
+						slot->set_stack(stack);
+						emit_signal("equipped", (int)i);
+					}
+				}
+			}
+		}
+	} else if (auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		// Auto-equip by grid position (for GridInventory only)
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(inventory);
+		if (grid_inventory != nullptr) {
+			for (size_t i = 0; i < inventory_stacks.size(); i++) {
+				Ref<ItemStack> stack = inventory_stacks[i];
+				if (stack.is_valid() && stack->has_valid()) {
+					Vector2i position = grid_inventory->get_stack_position(stack);
+					// Calculate hotbar slot from grid position (x + y * grid_width)
+					// For the requested mapping: x=0,y=0 -> slot 0, x=1,y=0 -> slot 1
+					int hotbar_slot = position.x + position.y * grid_inventory->get_size().x;
+					
+					// Only equip if within hotbar slot range
+					if (hotbar_slot >= 0 && hotbar_slot < max_slots && hotbar_slot < slots.size()) {
+						Ref<Slot> slot = slots[hotbar_slot];
+						if (slot->is_active() && slot->get_stack() != stack) {
+							slot->set_stack(stack);
+							emit_signal("equipped", hotbar_slot);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 Hotbar::Hotbar() {
 	set_max_slots(max_slots);
 }
@@ -241,6 +315,11 @@ void Hotbar::_ready() {
 	}
 	if (inventory != nullptr) {
 		inventory->connect("contents_changed", callable_mp(this, &Hotbar::_on_contents_changed));
+		
+		// Perform initial auto-equip if enabled
+		if (auto_equip_mode != AUTO_EQUIP_DISABLED) {
+			_perform_auto_equip();
+		}
 	}
 	NodeInventories::_ready();
 }

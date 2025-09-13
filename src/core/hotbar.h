@@ -10,6 +10,12 @@ class Hotbar : public NodeInventories {
 	GDCLASS(Hotbar, NodeInventories);
 
 public:
+	enum AutoEquipMode {
+		AUTO_EQUIP_DISABLED = 0,
+		AUTO_EQUIP_BY_STACK_ORDER = 1,
+		AUTO_EQUIP_BY_GRID_POSITION = 2
+	};
+
 	class Slot : public RefCounted {
         GDCLASS(Slot, RefCounted);
     private:
@@ -31,8 +37,10 @@ private:
 	NodePath inventory_path;
 	int max_slots = 4;
 	int selection_index = -1;
+	AutoEquipMode auto_equip_mode = AUTO_EQUIP_DISABLED;
 	TypedArray<Slot> slots;
 	void _on_contents_changed();
+	void _perform_auto_equip();
 
 protected:
 	static void _bind_methods();
@@ -48,6 +56,8 @@ public:
 	int get_max_slots() const;
 	void set_selection_index(const int &new_selection_index);
 	int get_selection_index() const;
+	void set_auto_equip_mode(AutoEquipMode new_auto_equip_mode);
+	AutoEquipMode get_auto_equip_mode() const;
 	void set_slots(const TypedArray<Hotbar::Slot> new_slots);
 	TypedArray<Hotbar::Slot> get_slots() const;
 
@@ -64,5 +74,7 @@ public:
 	Ref<ItemStack> get_stack_on_slot(const int slot_index) const;
 	Ref<ItemStack> get_stack_on_selection() const;
 };
+
+VARIANT_ENUM_CAST(Hotbar::AutoEquipMode);
 
 #endif // HOTBAR_CLASS_H
