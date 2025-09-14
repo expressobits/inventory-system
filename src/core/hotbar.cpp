@@ -166,6 +166,9 @@ void Hotbar::unequip(const int slot_index) {
 }
 
 void Hotbar::next_item() {
+	// Get the current stack to check if it's a multi-slot item
+	Ref<ItemStack> current_stack = get_stack_on_slot(selection_index);
+	
 	int new_selection = selection_index + 1;
 	if (new_selection >= max_slots) {
 		new_selection -= max_slots;
@@ -173,12 +176,38 @@ void Hotbar::next_item() {
 	if (new_selection < 0) {
 		new_selection += max_slots;
 	}
+	
+	// If current stack is valid and it's a multi-slot item, skip slots containing the same item
+	if (current_stack.is_valid() && auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(get_inventory());
+		if (grid_inventory != nullptr) {
+			Vector2i stack_size = grid_inventory->get_stack_size(current_stack);
+			if (stack_size.x > 1 || stack_size.y > 1) {
+				// Skip slots that contain the same multi-slot item
+				while (new_selection != selection_index) {
+					Ref<ItemStack> next_stack = get_stack_on_slot(new_selection);
+					if (next_stack != current_stack) {
+						break; // Found a different item or empty slot
+					}
+					
+					new_selection++;
+					if (new_selection >= max_slots) {
+						new_selection -= max_slots;
+					}
+				}
+			}
+		}
+	}
+	
 	set_selection_index(new_selection);
 	if (!is_active_slot(new_selection))
 		next_item();
 }
 
 void Hotbar::previous_item() {
+	// Get the current stack to check if it's a multi-slot item
+	Ref<ItemStack> current_stack = get_stack_on_slot(selection_index);
+	
 	int new_selection = selection_index - 1;
 	if (new_selection >= max_slots) {
 		new_selection -= max_slots;
@@ -186,6 +215,32 @@ void Hotbar::previous_item() {
 	if (new_selection < 0) {
 		new_selection += max_slots;
 	}
+	
+	// If current stack is valid and it's a multi-slot item, skip slots containing the same item
+	if (current_stack.is_valid() && auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(get_inventory());
+		if (grid_inventory != nullptr) {
+			Vector2i stack_size = grid_inventory->get_stack_size(current_stack);
+			if (stack_size.x > 1 || stack_size.y > 1) {
+				// Skip slots that contain the same multi-slot item
+				while (new_selection != selection_index) {
+					Ref<ItemStack> prev_stack = get_stack_on_slot(new_selection);
+					if (prev_stack != current_stack) {
+						break; // Found a different item or empty slot
+					}
+					
+					new_selection--;
+					if (new_selection >= max_slots) {
+						new_selection -= max_slots;
+					}
+					if (new_selection < 0) {
+						new_selection += max_slots;
+					}
+				}
+			}
+		}
+	}
+	
 	set_selection_index(new_selection);
 	if (!is_active_slot(new_selection))
 		previous_item();
