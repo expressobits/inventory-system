@@ -1,4 +1,5 @@
 #include "hotbar.h"
+#include "grid_inventory.h"
 #include <godot_cpp/variant/utility_functions.hpp>
 
 void Hotbar::_on_contents_changed() {
@@ -18,6 +19,11 @@ void Hotbar::_on_contents_changed() {
 			unequip(i);
 		}
 	}
+	
+	// Perform auto-equip if enabled
+	if (auto_equip_mode != AUTO_EQUIP_DISABLED) {
+		_perform_auto_equip();
+	}
 }
 
 void Hotbar::_bind_methods() {
@@ -28,6 +34,8 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_max_slots"), &Hotbar::get_max_slots);
 	ClassDB::bind_method(D_METHOD("set_selection_index", "selection_index"), &Hotbar::set_selection_index);
 	ClassDB::bind_method(D_METHOD("get_selection_index"), &Hotbar::get_selection_index);
+	ClassDB::bind_method(D_METHOD("set_auto_equip_mode", "auto_equip_mode"), &Hotbar::set_auto_equip_mode);
+	ClassDB::bind_method(D_METHOD("get_auto_equip_mode"), &Hotbar::get_auto_equip_mode);
 
 	ClassDB::bind_method(D_METHOD("active_slot", "slot_index"), &Hotbar::active_slot);
 	ClassDB::bind_method(D_METHOD("deactive_slot", "slot_index"), &Hotbar::deactive_slot);
@@ -41,6 +49,10 @@ void Hotbar::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_stack_on_slot", "slot_index"), &Hotbar::get_stack_on_slot);
 	ClassDB::bind_method(D_METHOD("get_stack_on_selection"), &Hotbar::get_stack_on_selection);
 
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_DISABLED);
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_BY_STACK_ORDER);
+	BIND_ENUM_CONSTANT(AUTO_EQUIP_BY_GRID_POSITION);
+
 	ADD_SIGNAL(MethodInfo("on_change_selection", PropertyInfo(Variant::INT, "selection_index")));
 	ADD_SIGNAL(MethodInfo("equipped_stack_changed", PropertyInfo(Variant::INT, "slot_index")));
 	ADD_SIGNAL(MethodInfo("equipped", PropertyInfo(Variant::INT, "slot_index")));
@@ -50,6 +62,7 @@ void Hotbar::_bind_methods() {
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "inventory", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "Inventory"), "set_inventory_path", "get_inventory_path");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "max_slots"), "set_max_slots", "get_max_slots");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "selection_index"), "set_selection_index", "get_selection_index");
+	ADD_PROPERTY(PropertyInfo(Variant::INT, "auto_equip_mode", PROPERTY_HINT_ENUM, "Disabled,By Stack Order,By Grid Position"), "set_auto_equip_mode", "get_auto_equip_mode");
 }
 
 void Hotbar::set_inventory_path(const NodePath &new_inventory) {
@@ -153,6 +166,9 @@ void Hotbar::unequip(const int slot_index) {
 }
 
 void Hotbar::next_item() {
+	// Get the current stack to check if it's a multi-slot item
+	Ref<ItemStack> current_stack = get_stack_on_slot(selection_index);
+	
 	int new_selection = selection_index + 1;
 	if (new_selection >= max_slots) {
 		new_selection -= max_slots;
@@ -160,12 +176,38 @@ void Hotbar::next_item() {
 	if (new_selection < 0) {
 		new_selection += max_slots;
 	}
+	
+	// If current stack is valid and it's a multi-slot item, skip slots containing the same item
+	if (current_stack.is_valid() && auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(get_inventory());
+		if (grid_inventory != nullptr) {
+			Vector2i stack_size = grid_inventory->get_stack_size(current_stack);
+			if (stack_size.x > 1 || stack_size.y > 1) {
+				// Skip slots that contain the same multi-slot item
+				while (new_selection != selection_index) {
+					Ref<ItemStack> next_stack = get_stack_on_slot(new_selection);
+					if (next_stack != current_stack) {
+						break; // Found a different item or empty slot
+					}
+					
+					new_selection++;
+					if (new_selection >= max_slots) {
+						new_selection -= max_slots;
+					}
+				}
+			}
+		}
+	}
+	
 	set_selection_index(new_selection);
 	if (!is_active_slot(new_selection))
 		next_item();
 }
 
 void Hotbar::previous_item() {
+	// Get the current stack to check if it's a multi-slot item
+	Ref<ItemStack> current_stack = get_stack_on_slot(selection_index);
+	
 	int new_selection = selection_index - 1;
 	if (new_selection >= max_slots) {
 		new_selection -= max_slots;
@@ -173,6 +215,32 @@ void Hotbar::previous_item() {
 	if (new_selection < 0) {
 		new_selection += max_slots;
 	}
+	
+	// If current stack is valid and it's a multi-slot item, skip slots containing the same item
+	if (current_stack.is_valid() && auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(get_inventory());
+		if (grid_inventory != nullptr) {
+			Vector2i stack_size = grid_inventory->get_stack_size(current_stack);
+			if (stack_size.x > 1 || stack_size.y > 1) {
+				// Skip slots that contain the same multi-slot item
+				while (new_selection != selection_index) {
+					Ref<ItemStack> prev_stack = get_stack_on_slot(new_selection);
+					if (prev_stack != current_stack) {
+						break; // Found a different item or empty slot
+					}
+					
+					new_selection--;
+					if (new_selection >= max_slots) {
+						new_selection -= max_slots;
+					}
+					if (new_selection < 0) {
+						new_selection += max_slots;
+					}
+				}
+			}
+		}
+	}
+	
 	set_selection_index(new_selection);
 	if (!is_active_slot(new_selection))
 		previous_item();
@@ -221,6 +289,88 @@ Ref<ItemStack> Hotbar::get_stack_on_selection() const {
 	return get_stack_on_slot(selection_index);
 }
 
+void Hotbar::set_auto_equip_mode(AutoEquipMode new_auto_equip_mode) {
+	auto_equip_mode = new_auto_equip_mode;
+	// Trigger auto-equip when mode is changed to enabled
+	if (auto_equip_mode != AUTO_EQUIP_DISABLED && is_node_ready()) {
+		_perform_auto_equip();
+	}
+}
+
+Hotbar::AutoEquipMode Hotbar::get_auto_equip_mode() const {
+	return auto_equip_mode;
+}
+
+void Hotbar::_perform_auto_equip() {
+	Inventory *inventory = get_inventory();
+	if (inventory == nullptr) {
+		return;
+	}
+
+	TypedArray<ItemStack> inventory_stacks = inventory->get_stacks();
+	
+	if (auto_equip_mode == AUTO_EQUIP_BY_STACK_ORDER) {
+		// Auto-equip by stack order (index in inventory)
+		for (size_t i = 0; i < inventory_stacks.size() && i < (size_t)max_slots; i++) {
+			Ref<ItemStack> stack = inventory_stacks[i];
+			if (stack.is_valid() && stack->has_valid()) {
+				// Only equip if slot is active and not already equipped with this stack
+				if (i < slots.size()) {
+					Ref<Slot> slot = slots[i];
+					if (slot->is_active() && slot->get_stack() != stack) {
+						slot->set_stack(stack);
+						emit_signal("equipped", (int)i);
+					}
+				}
+			}
+		}
+	} else if (auto_equip_mode == AUTO_EQUIP_BY_GRID_POSITION) {
+		// Auto-equip by grid position (for GridInventory only)
+		GridInventory *grid_inventory = Object::cast_to<GridInventory>(inventory);
+		if (grid_inventory != nullptr) {
+			int grid_width = grid_inventory->get_size().x;
+			
+			// Loop through available hotbar slots
+			for (int hotbar_slot = 0; hotbar_slot < max_slots && hotbar_slot < slots.size(); hotbar_slot++) {
+				Ref<Slot> slot = slots[hotbar_slot];
+				if (!slot->is_active()) {
+					continue;
+				}
+				
+				// Calculate grid position from hotbar slot (inverse of x + y * grid_width)
+				int x = hotbar_slot % grid_width;
+				int y = hotbar_slot / grid_width;
+				Vector2i grid_position = Vector2i(x, y);
+				
+				// Find stack at this grid position
+				Ref<ItemStack> stack = grid_inventory->get_stack_at(grid_position);
+				
+				if (stack.is_valid() && stack->has_valid()) {
+					// Get the stack's actual position and size to check if it occupies this slot
+					Vector2i stack_position = grid_inventory->get_stack_position(stack);
+					Vector2i stack_size = grid_inventory->get_stack_size(stack);
+					Rect2i stack_rect = Rect2i(stack_position, stack_size);
+					
+					// Check if the hotbar slot's grid position is within the stack's occupied area
+					if (stack_rect.has_point(grid_position)) {
+						// Only equip if not already equipped with this stack
+						if (slot->get_stack() != stack) {
+							slot->set_stack(stack);
+							emit_signal("equipped", hotbar_slot);
+						}
+					}
+				} else {
+					// No stack at this position, clear the hotbar slot if it has something
+					if (slot->get_stack().is_valid()) {
+						slot->clear();
+						emit_signal("equipped_stack_changed", hotbar_slot);
+					}
+				}
+			}
+		}
+	}
+}
+
 Hotbar::Hotbar() {
 	set_max_slots(max_slots);
 }
@@ -241,6 +391,11 @@ void Hotbar::_ready() {
 	}
 	if (inventory != nullptr) {
 		inventory->connect("contents_changed", callable_mp(this, &Hotbar::_on_contents_changed));
+		
+		// Perform initial auto-equip if enabled
+		if (auto_equip_mode != AUTO_EQUIP_DISABLED) {
+			_perform_auto_equip();
+		}
 	}
 	NodeInventories::_ready();
 }
