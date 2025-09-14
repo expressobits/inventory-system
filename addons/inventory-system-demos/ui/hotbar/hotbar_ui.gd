@@ -1,5 +1,5 @@
 class_name HotbarUI
-extends Node
+extends Control
 
 ## [PackedScene] which is used to instantiate [SlotUI] for each slot added in [Hotbar]
 @export var slot_ui_scene: PackedScene
@@ -51,9 +51,9 @@ func _update_slots():
 	
 	for i in hotbar.max_slots:
 		var stack = hotbar.get_stack_on_slot(i)
-		var stack_ui = slot_ui_scene.instantiate()
+		var stack_ui: HotbarSlotUI = slot_ui_scene.instantiate()
 		slots_container.add_child(stack_ui)
-		stack_ui.update_info_with_stack(hotbar.database, stack, i)
+		stack_ui.update_info_with_stack(hotbar.database, stack, hotbar.get_inventory(), i)
 		stack_ui.visible = hotbar.is_active_slot(i)
 		ui_stacks.append(stack_ui)
 	

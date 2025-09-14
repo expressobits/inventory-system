@@ -60,6 +60,12 @@ func _ready():
 		return
 	hotbar.active_slot(0)
 	hotbar.active_slot(1)
+	hotbar.active_slot(2)
+	hotbar.active_slot(3)
+	hotbar.active_slot(4)
+	hotbar.active_slot(5)
+	hotbar.active_slot(6)
+	hotbar.active_slot(7)
 	## Setup for enabled/disabled mouse 🖱️😀
 	if change_mouse_state:
 		opened_inventory.connect(_update_opened_inventories)

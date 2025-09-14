@@ -66,6 +66,10 @@ camera = NodePath("../../Camera3D")
 [node name="ObjectPlacer" parent="CharacterInventorySystem/Interactor" index="0"]
 database = ExtResource("4_0qsek")
 
+[node name="Hotbar" parent="CharacterInventorySystem" index="4"]
+max_slots = 8
+auto_equip_mode = 2
+
 [node name="UseItemsExample" type="Node3D" parent="." node_paths=PackedStringArray("hotbar")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("10_mt1fm")
