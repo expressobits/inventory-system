@@ -20,33 +20,33 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 script = ExtResource("1_nmk33")
 
-[node name="Icon" type="TextureRect" parent="."]
-custom_minimum_size = Vector2(32, 32)
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Icon" type="TextureRect" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
 expand_mode = 2
 stretch_mode = 5
 
 [node name="SlotIndexLabel" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
 offset_top = -23.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 0
 text = "1"
 horizontal_alignment = 2
