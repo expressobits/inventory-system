@@ -273,21 +273,42 @@ void Hotbar::_perform_auto_equip() {
 		// Auto-equip by grid position (for GridInventory only)
 		GridInventory *grid_inventory = Object::cast_to<GridInventory>(inventory);
 		if (grid_inventory != nullptr) {
-			for (size_t i = 0; i < inventory_stacks.size(); i++) {
-				Ref<ItemStack> stack = inventory_stacks[i];
+			int grid_width = grid_inventory->get_size().x;
+			
+			// Loop through available hotbar slots
+			for (int hotbar_slot = 0; hotbar_slot < max_slots && hotbar_slot < slots.size(); hotbar_slot++) {
+				Ref<Slot> slot = slots[hotbar_slot];
+				if (!slot->is_active()) {
+					continue;
+				}
+				
+				// Calculate grid position from hotbar slot (inverse of x + y * grid_width)
+				int x = hotbar_slot % grid_width;
+				int y = hotbar_slot / grid_width;
+				Vector2i grid_position = Vector2i(x, y);
+				
+				// Find stack at this grid position
+				Ref<ItemStack> stack = grid_inventory->get_stack_at(grid_position);
+				
 				if (stack.is_valid() && stack->has_valid()) {
-					Vector2i position = grid_inventory->get_stack_position(stack);
-					// Calculate hotbar slot from grid position (x + y * grid_width)
-					// For the requested mapping: x=0,y=0 -> slot 0, x=1,y=0 -> slot 1
-					int hotbar_slot = position.x + position.y * grid_inventory->get_size().x;
+					// Get the stack's actual position and size to check if it occupies this slot
+					Vector2i stack_position = grid_inventory->get_stack_position(stack);
+					Vector2i stack_size = grid_inventory->get_stack_size(stack);
+					Rect2i stack_rect = Rect2i(stack_position, stack_size);
 					
-					// Only equip if within hotbar slot range
-					if (hotbar_slot >= 0 && hotbar_slot < max_slots && hotbar_slot < slots.size()) {
-						Ref<Slot> slot = slots[hotbar_slot];
-						if (slot->is_active() && slot->get_stack() != stack) {
+					// Check if the hotbar slot's grid position is within the stack's occupied area
+					if (stack_rect.has_point(grid_position)) {
+						// Only equip if not already equipped with this stack
+						if (slot->get_stack() != stack) {
 							slot->set_stack(stack);
 							emit_signal("equipped", hotbar_slot);
 						}
+					}
+				} else {
+					// No stack at this position, clear the hotbar slot if it has something
+					if (slot->get_stack().is_valid()) {
+						slot->clear();
+						emit_signal("equipped_stack_changed", hotbar_slot);
 					}
 				}
 			}
