@@ -433,7 +433,7 @@ void ItemDefinitionEditor::_can_stack_check_box_toggled(bool value) {
 		max_stack_container->set_visible(item->get_can_stack());
 		emit_signal("changed", item);
 		if (custom_properties) {
-			custom_properties->loading_properties(); // Reload custom properties when can_stack changes
+			custom_properties->load_resource(database, item); // Reload custom properties when can_stack changes
 		}
 	}
 }

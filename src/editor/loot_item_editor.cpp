@@ -19,6 +19,7 @@
 #include "item_stack_selector.h"
 
 #include <godot_cpp/classes/h_separator.hpp>
+#include <godot_cpp/classes/h_split_container.hpp>
 
 using namespace godot;
 
@@ -139,9 +140,20 @@ void LootItemEditor::_create_ui() {
 	HSeparator *prop_sep = memnew(HSeparator);
 	main_vbox->add_child(prop_sep);
 
-	// Property ranges section header
+	// Create horizontal split container for property ranges list and details
+	HSplitContainer* property_ranges_split = memnew(HSplitContainer);
+	main_vbox->add_child(property_ranges_split);
+	property_ranges_split->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+
+	// Create VBoxContainer for left side (property ranges header + list)
+	VBoxContainer* property_ranges_left_container = memnew(VBoxContainer);
+	property_ranges_split->add_child(property_ranges_left_container);
+	property_ranges_left_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	property_ranges_left_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+
+	// Property ranges section header - inside the left container
 	HBoxContainer *property_ranges_header = memnew(HBoxContainer);
-	main_vbox->add_child(property_ranges_header);
+	property_ranges_left_container->add_child(property_ranges_header);
 	
 	property_ranges_label = memnew(Label);
 	property_ranges_header->add_child(property_ranges_label);
@@ -163,16 +175,26 @@ void LootItemEditor::_create_ui() {
 	remove_property_range_button->set_disabled(true);
 	remove_property_range_button->connect("pressed", callable_mp(this, &LootItemEditor::_on_remove_property_range_button_pressed));
 
-	// Property ranges list
+	// Property ranges list - inside the left container
 	property_ranges_list = memnew(ItemList);
-	main_vbox->add_child(property_ranges_list);
-	property_ranges_list->set_custom_minimum_size(Vector2(0, 100));
+	property_ranges_left_container->add_child(property_ranges_list);
+	property_ranges_list->set_custom_minimum_size(Vector2(200, 100));
+	property_ranges_list->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	property_ranges_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	property_ranges_list->connect("item_selected", callable_mp(this, &LootItemEditor::_on_property_ranges_list_item_selected));
 
-	// Property range details section
+	// Create persistent details container - right side (never hidden to maintain size)
+	VBoxContainer* property_range_details_container = memnew(VBoxContainer);
+	property_ranges_split->add_child(property_range_details_container);
+	property_range_details_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	property_range_details_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	property_range_details_container->set_custom_minimum_size(Vector2(300, 0));
+
+	// Property range details section - inside the persistent container
 	property_range_details_vbox = memnew(VBoxContainer);
-	main_vbox->add_child(property_range_details_vbox);
+	property_range_details_container->add_child(property_range_details_vbox);
+	property_range_details_vbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	property_range_details_vbox->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	property_range_details_vbox->set_visible(false);
 
 	property_range_details_label = memnew(Label);
