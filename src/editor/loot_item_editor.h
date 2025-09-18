@@ -18,6 +18,7 @@
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
+#include <godot_cpp/classes/h_split_container.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/item_list.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
