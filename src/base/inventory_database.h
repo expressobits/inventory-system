@@ -77,6 +77,12 @@ public:
 	Array serialize_item_stacks(const TypedArray<ItemStack> stacks) const;
 	void deserialize_item_stacks(TypedArray<ItemStack> stacks, const Array data) const;
 
+private:
+	Dictionary _convert_resources_to_paths(const Dictionary& properties) const;
+	Dictionary _convert_paths_to_resources(const Dictionary& properties) const;
+
+public:
+
 	void add_item();
 	void add_item_category();
 	void add_recipe();

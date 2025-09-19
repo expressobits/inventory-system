@@ -273,6 +273,54 @@ Ref<ItemCategory> InventoryDatabase::get_category(int code) {
 	return categories_code_cache[code];
 }
 
+Dictionary InventoryDatabase::_convert_resources_to_paths(const Dictionary& properties) const {
+	Dictionary converted_properties = properties.duplicate();
+	Array keys = converted_properties.keys();
+	
+	for (int i = 0; i < keys.size(); i++) {
+		Variant key = keys[i];
+		Variant value = converted_properties[key];
+		
+		// Check if this value is a resource reference
+		if (value.get_type() == Variant::OBJECT) {
+			Ref<Resource> resource = value;
+			if (resource.is_valid() && !resource->get_path().is_empty()) {
+				// Convert resource to path
+				converted_properties[key] = resource->get_path();
+			}
+		}
+	}
+	
+	return converted_properties;
+}
+
+Dictionary InventoryDatabase::_convert_paths_to_resources(const Dictionary& properties) const {
+	Dictionary converted_properties = properties.duplicate();
+	Array keys = converted_properties.keys();
+	
+	for (int i = 0; i < keys.size(); i++) {
+		Variant key = keys[i];
+		Variant value = converted_properties[key];
+		
+		// Check if this value is a resource path (string that looks like a resource path)
+		if (value.get_type() == Variant::STRING) {
+			String str_value = value;
+			if (str_value.ends_with(".tres") || str_value.ends_with(".res") || 
+			    str_value.ends_with(".tscn") || str_value.ends_with(".scn") || 
+			    str_value.begins_with("res://")) {
+				// Try to load the resource from path
+				Ref<Resource> resource = ResourceLoader::get_singleton()->load(str_value);
+				if (resource.is_valid()) {
+					converted_properties[key] = resource;
+				}
+				// If loading fails, keep the path as string (fallback)
+			}
+		}
+	}
+	
+	return converted_properties;
+}
+
 Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition> definition) const {
 	Dictionary data = Dictionary();
 	data["id"] = definition->get_id();
@@ -283,8 +331,10 @@ Dictionary InventoryDatabase::serialize_item_definition(const Ref<ItemDefinition
 		data["icon"] = definition->get_icon()->get_path();
 	}
 	data["weight"] = definition->get_weight();
-	if (!definition->get_properties().is_empty())
-		data["properties"] = definition->get_properties();
+	if (!definition->get_properties().is_empty()) {
+		// Convert any resource references to paths for better serialization
+		data["properties"] = _convert_resources_to_paths(definition->get_properties());
+	}
 	if (!definition->get_dynamic_properties().is_empty())
 		data["dynamic_properties"] = definition->get_dynamic_properties();
 	if (!definition->get_categories().is_empty()) {
@@ -320,7 +370,9 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 		definition->set_weight(data["weight"]);
 	}
 	if (data.has("properties")) {
-		definition->set_properties(data["properties"]);
+		// Convert any resource paths back to resources
+		Dictionary converted_properties = _convert_paths_to_resources(data["properties"]);
+		definition->set_properties(converted_properties);
 	}
 	if (data.has("dynamic_properties")) {
 		definition->set_dynamic_properties(data["dynamic_properties"]);
@@ -349,8 +401,10 @@ Dictionary InventoryDatabase::serialize_item_category(const Ref<ItemCategory> ca
 		data["icon"] = category->get_icon()->get_path();
 	}
 	data["color"] = category->get_color().to_html();
-	if (!category->get_item_properties().is_empty())
-		data["item_properties"] = category->get_item_properties();
+	if (!category->get_item_properties().is_empty()) {
+		// Convert any resource references to paths for better serialization
+		data["item_properties"] = _convert_resources_to_paths(category->get_item_properties());
+	}
 	if (!category->get_item_dynamic_properties().is_empty())
 		data["item_dynamic_properties"] = category->get_item_dynamic_properties();
 	return data;
@@ -371,7 +425,9 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 		category->set_color(Color::html(data["color"]));
 	}
 	if (data.has("item_properties")) {
-		category->set_item_properties(data["item_properties"]);
+		// Convert any resource paths back to resources
+		Dictionary converted_properties = _convert_paths_to_resources(data["item_properties"]);
+		category->set_item_properties(converted_properties);
 	}
 	if (data.has("item_dynamic_properties")) {
 		category->set_item_dynamic_properties(data["item_dynamic_properties"]);
