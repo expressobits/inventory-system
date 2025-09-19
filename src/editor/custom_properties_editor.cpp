@@ -215,6 +215,12 @@ void CustomPropertiesEditor::load_resource(InventoryDatabase *p_database, const 
 	database = p_database;
 	current_resource = p_resource;
 	_update_properties_list();
+	// If no selection but items exist, hide details
+	if (properties_list->get_selected_items().is_empty() && properties_list->get_item_count() > 0) {
+		property_details_vbox->set_visible(false);
+	} else {
+		_update_property_details();
+	}
 }
 
 Dictionary CustomPropertiesEditor::get_properties_from_resource() {
@@ -467,13 +473,6 @@ void CustomPropertiesEditor::_update_properties_list() {
 
 	// Update button states
 	remove_property_button->set_disabled(properties_list->get_item_count() == 0);
-
-	// If no selection but items exist, hide details
-	if (properties_list->get_selected_items().is_empty() && properties_list->get_item_count() > 0) {
-		property_details_vbox->set_visible(false);
-	} else {
-		_update_property_details();
-	}
 }
 
 void CustomPropertiesEditor::_update_property_details() {
@@ -536,12 +535,10 @@ void CustomPropertiesEditor::_update_property_details() {
 		case Variant::COLOR:
 			color_value_picker->set_pick_color(value);
 			break;
-		case Variant::OBJECT:
-			{
-				Ref<Resource> resource = value;
-				resource_value_picker->set_edited_resource(resource);
-			}
-			break;
+		case Variant::OBJECT: {
+			Ref<Resource> resource = value;
+			resource_value_picker->set_edited_resource(resource);
+		} break;
 	}
 
 	// Update dynamic property checkbox
