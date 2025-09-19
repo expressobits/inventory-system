@@ -749,6 +749,8 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 	properties[selected_property_name] = new_value;
 	set_properties_to_resource(properties);
 
+	_update_properties_list();
+
 	_show_property_value_control(type);
 	_update_property_details(); // Refresh the value display
 }
