@@ -19,6 +19,7 @@
 #include <godot_cpp/classes/spin_box.hpp>
 #include <godot_cpp/classes/check_box.hpp>
 #include <godot_cpp/classes/color_picker_button.hpp>
+#include <godot_cpp/classes/editor_resource_picker.hpp>
 #include "item_definition_property_editor.h"
 
 using namespace godot;
@@ -60,6 +61,7 @@ private:
     SpinBox* float_value_spinbox;
     CheckBox* bool_value_checkbox;
     ColorPickerButton* color_value_picker;
+    EditorResourcePicker* resource_value_picker;
     CheckBox* dynamic_property_checkbox;
     
     // State
@@ -102,6 +104,7 @@ private:
     void _on_float_value_changed(double value);
     void _on_bool_value_toggled(bool pressed);
     void _on_color_value_changed(const Color& color);
+    void _on_resource_value_changed(const Ref<Resource>& resource);
     void _on_dynamic_property_toggled(bool pressed);
 };
 

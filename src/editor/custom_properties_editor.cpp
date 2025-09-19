@@ -10,6 +10,7 @@
 #include <godot_cpp/classes/color_picker_button.hpp>
 #include <godot_cpp/classes/control.hpp>
 #include <godot_cpp/classes/editor_interface.hpp>
+#include <godot_cpp/classes/editor_resource_picker.hpp>
 #include <godot_cpp/classes/h_box_container.hpp>
 #include <godot_cpp/classes/h_split_container.hpp>
 #include <godot_cpp/classes/item_list.hpp>
@@ -40,6 +41,7 @@ void CustomPropertiesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_float_value_changed", "value"), &CustomPropertiesEditor::_on_float_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_bool_value_toggled", "pressed"), &CustomPropertiesEditor::_on_bool_value_toggled);
 	ClassDB::bind_method(D_METHOD("_on_color_value_changed", "color"), &CustomPropertiesEditor::_on_color_value_changed);
+	ClassDB::bind_method(D_METHOD("_on_resource_value_changed", "resource"), &CustomPropertiesEditor::_on_resource_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_dynamic_property_toggled", "pressed"), &CustomPropertiesEditor::_on_dynamic_property_toggled);
 
 	BIND_ENUM_CONSTANT(RESOURCE_TYPE_ITEM_DEFINITION);
@@ -66,6 +68,7 @@ CustomPropertiesEditor::CustomPropertiesEditor() {
 	float_value_spinbox = nullptr;
 	bool_value_checkbox = nullptr;
 	color_value_picker = nullptr;
+	resource_value_picker = nullptr;
 	dynamic_property_checkbox = nullptr;
 	selected_property_name = "";
 }
@@ -389,6 +392,23 @@ void CustomPropertiesEditor::_create_value_controls() {
 	color_hbox->add_child(color_value_picker);
 	color_value_picker->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	color_value_picker->connect("color_changed", callable_mp(this, &CustomPropertiesEditor::_on_color_value_changed));
+
+	// Resource value control
+	HBoxContainer *resource_hbox = memnew(HBoxContainer);
+	property_value_container->add_child(resource_hbox);
+	resource_hbox->set_anchors_and_offsets_preset(Control::PRESET_FULL_RECT);
+	resource_hbox->set_visible(false);
+
+	Label *resource_label = memnew(Label);
+	resource_hbox->add_child(resource_label);
+	resource_label->set_text("Resource Value:");
+	resource_label->set_custom_minimum_size(Vector2(160, 0));
+
+	resource_value_picker = memnew(EditorResourcePicker);
+	resource_hbox->add_child(resource_value_picker);
+	resource_value_picker->set_base_type("Resource");
+	resource_value_picker->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	resource_value_picker->connect("resource_changed", callable_mp(this, &CustomPropertiesEditor::_on_resource_value_changed));
 }
 
 void CustomPropertiesEditor::_apply_theme() {
@@ -516,6 +536,12 @@ void CustomPropertiesEditor::_update_property_details() {
 		case Variant::COLOR:
 			color_value_picker->set_pick_color(value);
 			break;
+		case Variant::OBJECT:
+			{
+				Ref<Resource> resource = value;
+				resource_value_picker->set_edited_resource(resource);
+			}
+			break;
 	}
 
 	// Update dynamic property checkbox
@@ -554,6 +580,9 @@ void CustomPropertiesEditor::_show_property_value_control(int type) {
 		case Variant::COLOR:
 			control_index = 4;
 			break;
+		case Variant::OBJECT:
+			control_index = 5; // Resource picker
+			break;
 	}
 
 	if (control_index >= 0 && control_index < property_value_container->get_child_count()) {
@@ -575,6 +604,7 @@ void CustomPropertiesEditor::build_type_options() {
 	property_type_option->add_icon_item(get_theme_icon("float", "EditorIcons"), "Float", Variant::FLOAT);
 	property_type_option->add_icon_item(get_theme_icon("String", "EditorIcons"), "String", Variant::STRING);
 	property_type_option->add_icon_item(get_theme_icon("Color", "EditorIcons"), "Color", Variant::COLOR);
+	property_type_option->add_icon_item(get_theme_icon("Object", "EditorIcons"), "Resource", Variant::OBJECT);
 
 	// Select the first item after adding all items
 	if (property_type_option->get_item_count() > 0) {
@@ -711,6 +741,9 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 		case Variant::COLOR:
 			new_value = Color();
 			break;
+		case Variant::OBJECT:
+			new_value = Ref<Resource>();
+			break;
 		default:
 			new_value = String();
 			break;
@@ -770,6 +803,16 @@ void CustomPropertiesEditor::_on_color_value_changed(const Color &color) {
 
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = color;
+	set_properties_to_resource(properties);
+}
+
+void CustomPropertiesEditor::_on_resource_value_changed(const Ref<Resource> &resource) {
+	if (!current_resource.is_valid() || selected_property_name.is_empty()) {
+		return;
+	}
+
+	Dictionary properties = get_properties_from_resource();
+	properties[selected_property_name] = resource;
 	set_properties_to_resource(properties);
 }
 
