@@ -17,9 +17,11 @@
 #include "../base/item_category.h"
 
 #include <godot_cpp/classes/label.hpp>
-#include <godot_cpp/classes/scroll_container.hpp>
-#include <godot_cpp/classes/h_flow_container.hpp>
-#include <godot_cpp/classes/check_box.hpp>
+#include <godot_cpp/classes/v_box_container.hpp>
+#include <godot_cpp/classes/item_list.hpp>
+#include <godot_cpp/classes/option_button.hpp>
+#include <godot_cpp/classes/button.hpp>
+#include <godot_cpp/classes/popup_menu.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
@@ -29,6 +31,14 @@ void CategoriesInItemEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("load_item", "database", "item"), &CategoriesInItemEditor::load_item);
 	ClassDB::bind_method(D_METHOD("loading_categories"), &CategoriesInItemEditor::loading_categories);
 
+	// Theme and UI methods
+	ClassDB::bind_method(D_METHOD("_apply_theme"), &CategoriesInItemEditor::_apply_theme);
+
+	// Signal handlers
+	ClassDB::bind_method(D_METHOD("_on_category_selected", "index"), &CategoriesInItemEditor::_on_category_selected);
+	ClassDB::bind_method(D_METHOD("_on_add_button_pressed"), &CategoriesInItemEditor::_on_add_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_remove_button_pressed"), &CategoriesInItemEditor::_on_remove_button_pressed);
+
 	// Signal matching addon
 	ADD_SIGNAL(MethodInfo("changed"));
 }
@@ -37,6 +47,10 @@ void CategoriesInItemEditor::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_READY: {
 			_create_ui();
+			_apply_theme();
+		} break;
+		case NOTIFICATION_THEME_CHANGED: {
+			_apply_theme();
 		} break;
 	}
 }
@@ -46,34 +60,73 @@ CategoriesInItemEditor::CategoriesInItemEditor() {
 	
 	// Initialize UI pointers
 	categories_label = nullptr;
-	scroll_container = nullptr;
-	h_flow_container = nullptr;
+	categories_container = nullptr;
+	categories_list = nullptr;
+	add_category_container = nullptr;
+	available_categories_option = nullptr;
+	add_button = nullptr;
+	remove_button = nullptr;
 
-	// Set minimum size matching addon
-	set_custom_minimum_size(Vector2(0, 64));
+	// Set minimum size to accommodate the new UI layout
+	set_custom_minimum_size(Vector2(0, 140));
 }
 
 CategoriesInItemEditor::~CategoriesInItemEditor() {
 }
 
 void CategoriesInItemEditor::_create_ui() {
-	// Match .tscn structure exactly: HBoxContainer -> Label + ScrollContainer -> HFlowContainer
-	
+	// Container for the categories content - positioned to the right
+	categories_container = memnew(VBoxContainer);
+	add_child(categories_container);
+	categories_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+
 	// Categories label - matching addon with 160px width
 	categories_label = memnew(Label);
-	add_child(categories_label);
+	categories_container->add_child(categories_label);
 	categories_label->set_text("Categories");
+	categories_label->set_horizontal_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
+	categories_label->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	categories_label->set_custom_minimum_size(Vector2(160, 0));
 
-	// ScrollContainer for the category checkboxes
-	scroll_container = memnew(ScrollContainer);
-	add_child(scroll_container);
-	scroll_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	// Container for add category controls
+	add_category_container = memnew(HBoxContainer);
+	categories_container->add_child(add_category_container);
+	add_category_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
-	// HFlowContainer inside ScrollContainer for checkbox layout
-	h_flow_container = memnew(HFlowContainer);
-	scroll_container->add_child(h_flow_container);
-	h_flow_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	// OptionButton for selecting available categories
+	available_categories_option = memnew(OptionButton);
+	add_category_container->add_child(available_categories_option);
+	available_categories_option->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	// available_categories_option->set_expand_icon(true);
+	available_categories_option->add_theme_constant_override("icon_max_width", 16);
+	available_categories_option->set_custom_minimum_size(Vector2(120, 32));
+
+	add_button = memnew(Button);
+	add_category_container->add_child(add_button);
+	add_button->set_tooltip_text("Add");
+	add_button->set_custom_minimum_size(Vector2(32, 32));
+	add_button->set_flat(true);
+
+	remove_button = memnew(Button);
+	add_category_container->add_child(remove_button);
+	remove_button->set_tooltip_text("Remove");
+	remove_button->set_custom_minimum_size(Vector2(32, 32));
+	remove_button->set_flat(true);
+	remove_button->set_disabled(true);
+
+	// ItemList for assigned categories only
+	categories_list = memnew(ItemList);
+	categories_container->add_child(categories_list);
+	categories_list->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	categories_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+	categories_list->set_select_mode(ItemList::SELECT_SINGLE); // Single selection for removal
+	categories_list->set_fixed_icon_size(Vector2i(16, 16));
+	categories_list->set_custom_minimum_size(Vector2(160, 80));
+
+	// Connect signals
+	categories_list->connect("item_selected", callable_mp(this, &CategoriesInItemEditor::_on_category_selected));
+	add_button->connect("pressed", callable_mp(this, &CategoriesInItemEditor::_on_add_button_pressed));
+	remove_button->connect("pressed", callable_mp(this, &CategoriesInItemEditor::_on_remove_button_pressed));
 }
 
 void CategoriesInItemEditor::load_item(InventoryDatabase* p_database, const Ref<ItemDefinition>& p_item) {
@@ -89,84 +142,158 @@ void CategoriesInItemEditor::loading_categories() {
 		return;
 	}
 
-	// Get all available categories from database
-	TypedArray<ItemCategory> available_categories = database->get_item_categories();
+	// Store the item's current categories
+	item_categories = item->get_categories().duplicate();
 	
-	for (int i = 0; i < available_categories.size(); i++) {
-		Ref<ItemCategory> category = available_categories[i];
-		if (category.is_null()) {
-			continue;
-		}
-
-		// Create CheckBox for this category
-		CheckBox* category_checkbox = memnew(CheckBox);
-		h_flow_container->add_child(category_checkbox);
-		
-		// Set properties matching addon
-		category_checkbox->set_text(category->get_name());
-		category_checkbox->set_button_icon(category->get_icon());
-		category_checkbox->set_expand_icon(true);
-		
-		// Check if item is in this category
-		TypedArray<ItemCategory> item_categories = item->get_categories();
-		bool is_in_category = false;
-		for (int j = 0; j < item_categories.size(); j++) {
-			Ref<ItemCategory> item_cat = item_categories[j];
-			if (item_cat.is_valid() && category.is_valid() && 
-			    item_cat->get_id() == category->get_id()) {
-				is_in_category = true;
-				break;
-			}
-		}
-		category_checkbox->set_pressed(is_in_category);
-
-		// Connect signal with category bound
-		category_checkbox->connect("toggled", callable_mp(this, &CategoriesInItemEditor::_on_category_toggled).bind(category));
-		
-		// Store reference for cleanup
-		category_checkboxes.append(category_checkbox);
-	}
+	// Update both the item list and available categories option
+	_update_item_categories_list();
+	_update_available_categories_option();
 }
 
 void CategoriesInItemEditor::_clear_categories() {
-	// Remove all existing checkboxes
-	for (int i = 0; i < category_checkboxes.size(); i++) {
-		CheckBox* checkbox = Object::cast_to<CheckBox>(category_checkboxes[i]);
-		if (checkbox) {
-			checkbox->queue_free();
-		}
+	if (categories_list) {
+		categories_list->clear();
 	}
-	category_checkboxes.clear();
+	if (available_categories_option) {
+		available_categories_option->clear();
+	}
+	item_categories.clear();
 }
 
-void CategoriesInItemEditor::_on_category_toggled(bool toggled, const Ref<ItemCategory>& category) {
-	if (item.is_null() || category.is_null()) {
-		return;
-	}
-
-	// Get current categories array
-	TypedArray<ItemCategory> current_categories = item->get_categories();
-	TypedArray<ItemCategory> new_categories;
+void CategoriesInItemEditor::_update_item_categories_list() {
+	if (!categories_list) return;
 	
-	// Copy existing categories (except the one being toggled)
-	for (int i = 0; i < current_categories.size(); i++) {
-		Ref<ItemCategory> existing_cat = current_categories[i];
-		if (existing_cat.is_valid() && category.is_valid() && 
-		    existing_cat->get_id() != category->get_id()) {
-			new_categories.append(existing_cat);
+	categories_list->clear();
+	
+	// Populate the ItemList with only the categories assigned to the item
+	for (int i = 0; i < item_categories.size(); i++) {
+		Ref<ItemCategory> category = item_categories[i];
+		if (category.is_valid()) {
+			categories_list->add_item(category->get_name());
+			
+			// Set icon if available
+			Ref<Texture2D> icon = category->get_icon();
+			if (icon.is_valid()) {
+				categories_list->set_item_icon(i, icon);
+			}
+		}
+	}
+}
+
+void CategoriesInItemEditor::_update_available_categories_option() {
+	if (!available_categories_option || !database) return;
+	
+	available_categories_option->clear();
+	available_categories_option->add_item("Select category to add...", -1);
+	
+	// Get all available categories from database
+	TypedArray<ItemCategory> all_categories = database->get_item_categories();
+	
+	for (int i = 0; i < all_categories.size(); i++) {
+		Ref<ItemCategory> category = all_categories[i];
+		if (!category.is_valid()) continue;
+		
+		// Check if this category is already assigned to the item
+		bool already_assigned = false;
+		for (int j = 0; j < item_categories.size(); j++) {
+			Ref<ItemCategory> item_cat = item_categories[j];
+			if (item_cat.is_valid() && item_cat->get_id() == category->get_id()) {
+				already_assigned = true;
+				break;
+			}
+		}
+		
+		// Only add to option button if not already assigned
+		if (!already_assigned) {
+			available_categories_option->add_icon_item(category->get_icon(), category->get_name(), i);
+			// Store the category reference in the metadata
+			available_categories_option->set_item_metadata(available_categories_option->get_item_count() - 1, category);
+			available_categories_option->get_popup()->set_item_icon_max_width(available_categories_option->get_item_count() - 1, 16);
 		}
 	}
 	
-	// Add the category if toggled on
-	if (toggled) {
-		new_categories.append(category);
+	// Disable add button if no categories available to add
+	if (add_button) {
+		add_button->set_disabled(available_categories_option->get_item_count() <= 1);
 	}
+}
+
+void CategoriesInItemEditor::_on_category_selected(int index) {
+	// Enable/disable remove button based on selection
+	if (remove_button) {
+		remove_button->set_disabled(index < 0);
+	}
+}
+
+void CategoriesInItemEditor::_on_add_button_pressed() {
+	if (!available_categories_option || !item.is_valid()) return;
 	
-	// Update item categories
-	item->set_categories(new_categories);
+	int selected_index = available_categories_option->get_selected();
+	if (selected_index <= 0) return; // First item is placeholder
+	
+	// Get the category from metadata
+	Variant metadata = available_categories_option->get_item_metadata(selected_index);
+	Ref<ItemCategory> category = metadata;
+	
+	if (category.is_valid()) {
+		// Add the category to the item
+		item_categories.append(category);
+		item->set_categories(item_categories.duplicate());
+		
+		// Update both lists
+		_update_item_categories_list();
+		_update_available_categories_option();
+		
+		// Reset selection
+		available_categories_option->select(0);
+		
+		// Emit changed signal
+		emit_signal("changed");
+	}
+}
+
+void CategoriesInItemEditor::_on_remove_button_pressed() {
+	if (!categories_list || !item.is_valid()) return;
+	
+	PackedInt32Array selected_items = categories_list->get_selected_items();
+	if (selected_items.size() == 0) return;
+	
+	int selected_index = selected_items[0];
+	if (selected_index < 0 || selected_index >= item_categories.size()) return;
+	
+	// Remove the category from the item
+	item_categories.remove_at(selected_index);
+	item->set_categories(item_categories.duplicate());
+	
+	// Update both lists
+	_update_item_categories_list();
+	_update_available_categories_option();
+	
+	// Clear selection
+	categories_list->deselect_all();
+	if (remove_button) {
+		remove_button->set_disabled(true);
+	}
 	
 	// Emit changed signal
 	emit_signal("changed");
+}
+
+void CategoriesInItemEditor::_apply_theme() {
+	if (!add_button || !remove_button) {
+		return;
+	}
+
+	// Set icons for add and remove buttons, similar to custom properties editor
+	Ref<Texture2D> add_icon = get_theme_icon("Add", "EditorIcons");
+	if (add_icon.is_valid()) {
+		add_button->set_button_icon(add_icon);
+	}
+
+	Ref<Texture2D> remove_icon = get_theme_icon("Remove", "EditorIcons");
+	if (remove_icon.is_valid()) {
+		remove_button->set_button_icon(remove_icon);
+	}
 }
 
 #endif // TOOLS_ENABLED

@@ -50,6 +50,7 @@ void ItemStackSelector::_ready() {
     option_button = memnew(OptionButton);
     option_button->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     option_button->set_expand_icon(true);
+    option_button->add_theme_constant_override("icon_max_width", 20);
     option_button->connect("item_selected", Callable(this, "_on_option_button_item_selected"));
     add_child(option_button);
 
@@ -96,6 +97,7 @@ void ItemStackSelector::setup(const Ref<ItemStack>& p_item_stack, InventoryDatab
         Ref<ItemDefinition> item = items[i];
         if (item.is_valid()) {
             option_button->add_icon_item(item->get_icon(), item->get_name());
+            option_button->get_popup()->set_item_icon_max_width(option_button->get_item_count() - 1, 20);
             ids_list.append(item);
             if (item->get_id() == item_stack->get_item_id()) {
                 selected_index = i;
@@ -116,14 +118,6 @@ void ItemStackSelector::setup(const Ref<ItemStack>& p_item_stack, InventoryDatab
     
     if (selected_index >= 0) {
         option_button->select(selected_index);
-    }
-
-    // Set icon max width for popup menu
-    PopupMenu* popup = option_button->get_popup();
-    if (popup) {
-        for (int i = 0; i < items.size(); i++) {
-            popup->set_item_icon_max_width(i, 24);
-        }
     }
 }
 

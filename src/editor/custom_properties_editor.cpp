@@ -83,6 +83,7 @@ void CustomPropertiesEditor::_ready() {
 	// Title label
 	Label *title_label = memnew(Label);
 	title_label->set_text(title_text);
+	title_label->set_horizontal_alignment(HorizontalAlignment::HORIZONTAL_ALIGNMENT_CENTER);
 	title_label->set_horizontal_alignment(HORIZONTAL_ALIGNMENT_CENTER);
 	add_child(title_label);
 

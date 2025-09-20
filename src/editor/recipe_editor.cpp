@@ -170,6 +170,7 @@ void RecipeEditor::_create_ui() {
 	station_section->add_child(craft_station_type_option_button);
 	craft_station_type_option_button->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 	craft_station_type_option_button->set_clip_contents(true);
+	craft_station_type_option_button->set_expand_icon(true);
 	
 	// Spacer at bottom
 	Control *spacer = memnew(Control);
@@ -259,8 +260,9 @@ void RecipeEditor::_setup_station() {
 			if (display_name.is_empty()) {
 				display_name = "Unnamed Station";
 			}
-			
-			craft_station_type_option_button->add_item(display_name);
+
+			craft_station_type_option_button->add_icon_item(station->get_icon(), display_name);
+			craft_station_type_option_button->get_popup()->set_item_icon_max_width(craft_station_type_option_button->get_item_count() - 1, 20);
 			stations_list.append(station);
 			
 			// Select current station

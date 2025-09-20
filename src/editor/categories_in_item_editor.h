@@ -14,10 +14,11 @@
 #define CATEGORIES_IN_ITEM_EDITOR_H
 
 #include <godot_cpp/classes/h_box_container.hpp>
+#include <godot_cpp/classes/v_box_container.hpp>
 #include <godot_cpp/classes/label.hpp>
-#include <godot_cpp/classes/scroll_container.hpp>
-#include <godot_cpp/classes/h_flow_container.hpp>
-#include <godot_cpp/classes/check_box.hpp>
+#include <godot_cpp/classes/item_list.hpp>
+#include <godot_cpp/classes/option_button.hpp>
+#include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/variant/typed_array.hpp>
 
 using namespace godot;
@@ -32,16 +33,25 @@ class CategoriesInItemEditor : public HBoxContainer {
 private:
 	InventoryDatabase* database;
 	Ref<ItemDefinition> item;
-	TypedArray<CheckBox> category_checkboxes;
+	TypedArray<ItemCategory> item_categories; // Categories assigned to the item
 
-	// UI Components matching addon structure
+	// UI Components 
 	Label* categories_label;
-	ScrollContainer* scroll_container;
-	HFlowContainer* h_flow_container;
+	VBoxContainer* categories_container;
+	ItemList* categories_list;       // Shows only assigned categories
+	HBoxContainer* add_category_container;
+	OptionButton* available_categories_option;  // Shows unassigned categories
+	Button* add_button;
+	Button* remove_button;
 
 	void _create_ui();
 	void _clear_categories();
-	void _on_category_toggled(bool toggled, const Ref<ItemCategory>& category);
+	void _update_item_categories_list();
+	void _update_available_categories_option();
+	void _apply_theme();
+	void _on_category_selected(int index);
+	void _on_add_button_pressed();
+	void _on_remove_button_pressed();
 
 protected:
 	static void _bind_methods();

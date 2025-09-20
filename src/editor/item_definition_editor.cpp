@@ -56,6 +56,10 @@ ItemDefinitionEditor::ItemDefinitionEditor() : BaseResourceEditor() {
 	database = nullptr;
 	editor_plugin = nullptr;
 	
+	// Initialize layout containers
+	properties_container = nullptr;
+	categories_custom_container = nullptr;
+	
 	// Initialize UI pointers
 	resource_id_editor = nullptr;
 	item_name_text_edit = nullptr;
@@ -88,9 +92,15 @@ void ItemDefinitionEditor::_create_ui() {
 	// Set visibility to false initially (matching original logic)
 	scroll_container->set_visible(false);
 
+	// Create VBoxContainer for all properties (excluding categories and custom properties)
+	properties_container = memnew(VBoxContainer);
+	main_vbox->add_child(properties_container);
+	properties_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	// properties_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+
 	// Create top section: HBoxContainer2 with side-by-side layout
 	HBoxContainer* top_hbox = memnew(HBoxContainer);
-	main_vbox->add_child(top_hbox);
+	properties_container->add_child(top_hbox);
 
 	// Left side: VBoxContainer for ID and Name
 	VBoxContainer* left_vbox = memnew(VBoxContainer);
@@ -135,7 +145,7 @@ void ItemDefinitionEditor::_create_ui() {
 
 	// Description section
 	HBoxContainer* desc_hbox = memnew(HBoxContainer);
-	main_vbox->add_child(desc_hbox);
+	properties_container->add_child(desc_hbox);
 
 	Label* desc_label = memnew(Label);
 	desc_hbox->add_child(desc_label);
@@ -150,7 +160,7 @@ void ItemDefinitionEditor::_create_ui() {
 
 	// Can Stack and Max Stack section
 	HBoxContainer* can_stack_and_max_stack_hbox = memnew(HBoxContainer);
-	main_vbox->add_child(can_stack_and_max_stack_hbox);
+	properties_container->add_child(can_stack_and_max_stack_hbox);
 	can_stack_and_max_stack_hbox->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
 	// Can Stack section
@@ -188,7 +198,7 @@ void ItemDefinitionEditor::_create_ui() {
 
 	// Weight and Size section
 	HBoxContainer* weight_size_hbox = memnew(HBoxContainer);
-	main_vbox->add_child(weight_size_hbox);
+	properties_container->add_child(weight_size_hbox);
 
 	// Weight subsection
 	HBoxContainer* weight_hbox = memnew(HBoxContainer);
@@ -253,23 +263,31 @@ void ItemDefinitionEditor::_create_ui() {
 	size_y_spin_box->set_value(1.0);
 	size_y_spin_box->set_allow_greater(true);
 
-	// Add separator before categories
-	HSeparator* categories_separator = memnew(HSeparator);
-	main_vbox->add_child(categories_separator);
-	
-	// Categories section
-	categories_in_item = memnew(CategoriesInItemEditor);
-	main_vbox->add_child(categories_in_item);
+	// HSeparator between properties and categories/custom properties sides
+	HSeparator* h_sep = memnew(HSeparator);
+	main_vbox->add_child(h_sep);
 
-	// Add separator before custom properties
-	HSeparator* separator = memnew(HSeparator);
-	main_vbox->add_child(separator);
+	// Create HBoxContainer for categories and custom properties
+	categories_custom_container = memnew(HBoxContainer);
+	main_vbox->add_child(categories_custom_container);
+	categories_custom_container->set_h_size_flags(Control::SIZE_EXPAND_FILL);
+	categories_custom_container->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	
-	// Custom Properties section
+	// Categories section (left side of HBox)
+	categories_in_item = memnew(CategoriesInItemEditor);
+	categories_custom_container->add_child(categories_in_item);
+	categories_in_item->set_custom_minimum_size(Vector2(160, 0));
+
+	// VSeparator between left and right sides
+	VSeparator* categories_sep = memnew(VSeparator);
+	categories_custom_container->add_child(categories_sep);
+
+	// Custom Properties section (right side of HBox)
 	custom_properties = memnew(CustomPropertiesEditor);
 	custom_properties->set_resource_type(CustomPropertiesEditor::RESOURCE_TYPE_ITEM_DEFINITION);
 	custom_properties->set_title("Custom Properties");
-	main_vbox->add_child(custom_properties);
+	categories_custom_container->add_child(custom_properties);
+	custom_properties->set_h_size_flags(Control::SIZE_EXPAND_FILL);
 
 	_connect_signals();
 }
@@ -463,6 +481,10 @@ void ItemDefinitionEditor::_on_item_description_text_edit_text_changed() {
 
 void ItemDefinitionEditor::_on_categories_in_item_changed() {
 	if (item.is_valid()) {
+		// Reload custom properties when categories change
+		if (custom_properties) {
+			custom_properties->load_resource(database, item);
+		}
 		emit_signal("changed", item);
 	}
 }

@@ -42,6 +42,10 @@ private:
 	InventoryDatabase* database;
 	EditorPlugin* editor_plugin;
 
+	// Layout containers
+	VBoxContainer* properties_container;
+	HBoxContainer* categories_custom_container;
+
 	// Form components
 	ResourceIDEditor* resource_id_editor;
 	LineEdit* item_name_text_edit;
