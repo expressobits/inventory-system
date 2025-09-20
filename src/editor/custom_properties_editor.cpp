@@ -17,6 +17,7 @@
 #include <godot_cpp/classes/label.hpp>
 #include <godot_cpp/classes/line_edit.hpp>
 #include <godot_cpp/classes/option_button.hpp>
+#include <godot_cpp/classes/resource_loader.hpp>
 #include <godot_cpp/classes/scroll_container.hpp>
 #include <godot_cpp/classes/spin_box.hpp>
 #include <godot_cpp/classes/theme.hpp>
@@ -729,12 +730,27 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 	int type = property_type_option->get_item_id(index);
 	Dictionary properties = get_properties_from_resource();
 
-	// Convert current value to new type with appropriate default
+	// Get current value before conversion for intelligent conversion
+	Variant current_value = properties[selected_property_name];
+	int current_type = current_value.get_type();
+
+	// Convert current value to new type with intelligent conversion
 	Variant new_value;
 	switch (type) {
-		case Variant::STRING:
-			new_value = String();
+		case Variant::STRING: {
+			// Intelligent conversion: Resource -> String (use resource path)
+			if (current_type == Variant::OBJECT) {
+				Ref<Resource> resource = current_value;
+				if (resource.is_valid() && !resource->get_path().is_empty()) {
+					new_value = resource->get_path();
+				} else {
+					new_value = String();
+				}
+			} else {
+				new_value = String();
+			}
 			break;
+		}
 		case Variant::INT:
 			new_value = 0;
 			break;
@@ -747,9 +763,28 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 		case Variant::COLOR:
 			new_value = Color();
 			break;
-		case Variant::OBJECT:
-			new_value = Ref<Resource>();
+		case Variant::OBJECT: {
+			// Intelligent conversion: String -> Resource (try to load from path)
+			if (current_type == Variant::STRING) {
+				String str_value = current_value;
+				if (str_value.ends_with(".tres") || str_value.ends_with(".res") || 
+				    str_value.ends_with(".tscn") || str_value.ends_with(".scn") || 
+				    str_value.begins_with("res://")) {
+					// Try to load the resource from path
+					Ref<Resource> resource = ResourceLoader::get_singleton()->load(str_value);
+					if (resource.is_valid()) {
+						new_value = resource;
+					} else {
+						new_value = Ref<Resource>();
+					}
+				} else {
+					new_value = Ref<Resource>();
+				}
+			} else {
+				new_value = Ref<Resource>();
+			}
 			break;
+		}
 		default:
 			new_value = String();
 			break;
