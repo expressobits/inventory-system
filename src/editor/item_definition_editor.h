@@ -79,6 +79,7 @@ private:
 	void _on_size_y_spin_box_value_changed(double value);
 	void _on_item_description_text_edit_text_changed();
 	void _on_categories_in_item_changed();
+	void _on_custom_properties_changed();
 
 protected:
 	static void _bind_methods();

@@ -28,6 +28,7 @@ void ItemCategoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_color_changed", "color"), &ItemCategoryEditor::_on_color_changed);
 	ClassDB::bind_method(D_METHOD("_on_code_changed", "value"), &ItemCategoryEditor::_on_code_changed);
 	ClassDB::bind_method(D_METHOD("_on_icon_changed", "icon"), &ItemCategoryEditor::_on_icon_changed);
+	ClassDB::bind_method(D_METHOD("_on_custom_properties_changed"), &ItemCategoryEditor::_on_custom_properties_changed);
 
 	ADD_SIGNAL(MethodInfo("changed", PropertyInfo(Variant::OBJECT, "item_category", PROPERTY_HINT_RESOURCE_TYPE, "ItemCategory")));
 }
@@ -157,6 +158,9 @@ void ItemCategoryEditor::_connect_signals() {
 	if (icon_selector) {
 		icon_selector->connect("icon_changed", callable_mp(this, &ItemCategoryEditor::_on_icon_changed));
 	}
+	if (custom_properties) {
+		custom_properties->connect("changed", callable_mp(this, &ItemCategoryEditor::_on_custom_properties_changed));
+	}
 }
 
 void ItemCategoryEditor::_disconnect_signals() {
@@ -175,6 +179,9 @@ void ItemCategoryEditor::_disconnect_signals() {
 	}
 	if (icon_selector && icon_selector->is_connected("icon_changed", callable_mp(this, &ItemCategoryEditor::_on_icon_changed))) {
 		icon_selector->disconnect("icon_changed", callable_mp(this, &ItemCategoryEditor::_on_icon_changed));
+	}
+	if (custom_properties && custom_properties->is_connected("changed", callable_mp(this, &ItemCategoryEditor::_on_custom_properties_changed))) {
+		custom_properties->disconnect("changed", callable_mp(this, &ItemCategoryEditor::_on_custom_properties_changed));
 	}
 }
 
@@ -227,6 +234,7 @@ void ItemCategoryEditor::_on_resource_id_editor_changed(const String& id) {
 void ItemCategoryEditor::_on_name_changed(const String& text) {
 	if (item_category.is_valid()) {
 		item_category->set_name(text);
+		emit_signal("changed", item_category);
 	}
 }
 
@@ -239,18 +247,27 @@ void ItemCategoryEditor::_on_name_focus_exited() {
 void ItemCategoryEditor::_on_color_changed(const Color& color) {
 	if (item_category.is_valid()) {
 		item_category->set_color(color);
+		emit_signal("changed", item_category);
 	}
 }
 
 void ItemCategoryEditor::_on_code_changed(double value) {
 	if (item_category.is_valid()) {
 		item_category->set_code((int)value);
+		emit_signal("changed", item_category);
 	}
 }
 
 void ItemCategoryEditor::_on_icon_changed(const Ref<Texture2D>& icon) {
 	if (item_category.is_valid()) {
 		item_category->set_icon(icon);
+		emit_signal("changed", item_category);
+	}
+}
+
+void ItemCategoryEditor::_on_custom_properties_changed() {
+	if (item_category.is_valid()) {
+		emit_signal("changed", item_category);
 	}
 }
 

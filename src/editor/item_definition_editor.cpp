@@ -42,6 +42,7 @@ void ItemDefinitionEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_size_y_spin_box_value_changed", "value"), &ItemDefinitionEditor::_on_size_y_spin_box_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_item_description_text_edit_text_changed"), &ItemDefinitionEditor::_on_item_description_text_edit_text_changed);
 	ClassDB::bind_method(D_METHOD("_on_categories_in_item_changed"), &ItemDefinitionEditor::_on_categories_in_item_changed);
+	ClassDB::bind_method(D_METHOD("_on_custom_properties_changed"), &ItemDefinitionEditor::_on_custom_properties_changed);
 
 	// Public methods
 	ClassDB::bind_method(D_METHOD("set_editor_plugin", "editor_plugin"), &ItemDefinitionEditor::set_editor_plugin);
@@ -317,6 +318,9 @@ void ItemDefinitionEditor::_connect_signals() {
 	if (categories_in_item) {
 		categories_in_item->connect("changed", callable_mp(this, &ItemDefinitionEditor::_on_categories_in_item_changed));
 	}
+	if (custom_properties) {
+		custom_properties->connect("changed", callable_mp(this, &ItemDefinitionEditor::_on_custom_properties_changed));
+	}
 	if (size_x_spin_box) {
 		size_x_spin_box->connect("value_changed", callable_mp(this, &ItemDefinitionEditor::_on_size_x_spin_box_value_changed));
 	}
@@ -349,6 +353,9 @@ void ItemDefinitionEditor::_disconnect_signals() {
 	}
 	if (categories_in_item && categories_in_item->is_connected("changed", callable_mp(this, &ItemDefinitionEditor::_on_categories_in_item_changed))) {
 		categories_in_item->disconnect("changed", callable_mp(this, &ItemDefinitionEditor::_on_categories_in_item_changed));
+	}
+	if (custom_properties && custom_properties->is_connected("changed", callable_mp(this, &ItemDefinitionEditor::_on_custom_properties_changed))) {
+		custom_properties->disconnect("changed", callable_mp(this, &ItemDefinitionEditor::_on_custom_properties_changed));
 	}
 	if (size_x_spin_box && size_x_spin_box->is_connected("value_changed", callable_mp(this, &ItemDefinitionEditor::_on_size_x_spin_box_value_changed))) {
 		size_x_spin_box->disconnect("value_changed", callable_mp(this, &ItemDefinitionEditor::_on_size_x_spin_box_value_changed));
@@ -485,6 +492,12 @@ void ItemDefinitionEditor::_on_categories_in_item_changed() {
 		if (custom_properties) {
 			custom_properties->load_resource(database, item);
 		}
+		emit_signal("changed", item);
+	}
+}
+
+void ItemDefinitionEditor::_on_custom_properties_changed() {
+	if (item.is_valid()) {
 		emit_signal("changed", item);
 	}
 }

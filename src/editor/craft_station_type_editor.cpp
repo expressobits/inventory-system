@@ -155,6 +155,7 @@ void CraftStationTypeEditor::_on_resource_id_editor_changed(const String& id) {
 void CraftStationTypeEditor::_on_name_changed(const String& text) {
 	if (craft_station_type.is_valid()) {
 		craft_station_type->set_name(text);
+		emit_signal("changed", craft_station_type);
 	}
 }
 
@@ -167,6 +168,7 @@ void CraftStationTypeEditor::_on_name_focus_exited() {
 void CraftStationTypeEditor::_on_icon_changed(const Ref<Texture2D>& icon) {
 	if (craft_station_type.is_valid()) {
 		craft_station_type->set_icon(icon);
+		emit_signal("changed", craft_station_type);
 	}
 }
 

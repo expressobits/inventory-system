@@ -207,6 +207,7 @@ void CraftStationTypesEditor::_on_craft_station_type_editor_changed(const Ref<Cr
 			inventory_item_list_editor->update_item(current_index);
 		}
 	}
+	emit_signal("data_changed");
 }
 
 #endif // TOOLS_ENABLED

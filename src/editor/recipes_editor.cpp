@@ -111,6 +111,7 @@ void RecipesEditor::_on_recipe_editor_changed() {
 	if (recipes_list) {
 		recipes_list->update_recipes_ui();
 	}
+	emit_signal("data_changed");
 }
 
 void RecipesEditor::_on_recipe_item_editor_request_remove(const Ref<Recipe> &p_recipe) {

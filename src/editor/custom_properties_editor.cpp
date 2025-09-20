@@ -44,6 +44,8 @@ void CustomPropertiesEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_resource_value_changed", "resource"), &CustomPropertiesEditor::_on_resource_value_changed);
 	ClassDB::bind_method(D_METHOD("_on_dynamic_property_toggled", "pressed"), &CustomPropertiesEditor::_on_dynamic_property_toggled);
 
+	ADD_SIGNAL(MethodInfo("changed"));
+
 	BIND_ENUM_CONSTANT(RESOURCE_TYPE_ITEM_DEFINITION);
 	BIND_ENUM_CONSTANT(RESOURCE_TYPE_ITEM_CATEGORY);
 }
@@ -623,6 +625,8 @@ void CustomPropertiesEditor::_on_add_property_button_pressed() {
 	properties[new_prop_name] = String();
 	set_properties_to_resource(properties);
 
+	emit_signal("changed");
+
 	_update_properties_list();
 
 	// Select the newly added property
@@ -664,6 +668,8 @@ void CustomPropertiesEditor::_on_remove_property_button_pressed() {
 		set_dynamic_properties_to_resource(dynamic_properties);
 	}
 
+	emit_signal("changed");
+
 	selected_property_name = "";
 	_update_properties_list();
 	property_details_vbox->set_visible(false);
@@ -703,6 +709,8 @@ void CustomPropertiesEditor::_on_property_name_text_changed(const String &text) 
 
 	selected_property_name = text;
 	_update_properties_list();
+
+	emit_signal("changed");
 
 	// Reselect the renamed property
 	for (int i = 0; i < properties_list->get_item_count(); i++) {
@@ -754,6 +762,8 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 
 	_show_property_value_control(type);
 	_update_property_details(); // Refresh the value display
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_string_value_text_changed(const String &text) {
@@ -764,6 +774,8 @@ void CustomPropertiesEditor::_on_string_value_text_changed(const String &text) {
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = text;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_int_value_changed(double value) {
@@ -774,6 +786,8 @@ void CustomPropertiesEditor::_on_int_value_changed(double value) {
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = (int)value;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_float_value_changed(double value) {
@@ -784,6 +798,8 @@ void CustomPropertiesEditor::_on_float_value_changed(double value) {
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = value;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_bool_value_toggled(bool pressed) {
@@ -794,6 +810,8 @@ void CustomPropertiesEditor::_on_bool_value_toggled(bool pressed) {
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = pressed;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_color_value_changed(const Color &color) {
@@ -804,6 +822,8 @@ void CustomPropertiesEditor::_on_color_value_changed(const Color &color) {
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = color;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_resource_value_changed(const Ref<Resource> &resource) {
@@ -814,6 +834,8 @@ void CustomPropertiesEditor::_on_resource_value_changed(const Ref<Resource> &res
 	Dictionary properties = get_properties_from_resource();
 	properties[selected_property_name] = resource;
 	set_properties_to_resource(properties);
+
+	emit_signal("changed");
 }
 
 void CustomPropertiesEditor::_on_dynamic_property_toggled(bool pressed) {
@@ -832,6 +854,8 @@ void CustomPropertiesEditor::_on_dynamic_property_toggled(bool pressed) {
 			dynamic_properties.remove_at(index);
 		}
 		set_dynamic_properties_to_resource(dynamic_properties);
+
+		emit_signal("changed");
 	}
 }
 

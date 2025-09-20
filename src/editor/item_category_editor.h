@@ -59,6 +59,7 @@ private:
 	void _on_color_changed(const Color& color);
 	void _on_code_changed(double value);
 	void _on_icon_changed(const Ref<Texture2D>& icon);
+	void _on_custom_properties_changed();
 
 protected:
 	static void _bind_methods();

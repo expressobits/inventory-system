@@ -125,6 +125,7 @@ private:
 	void _open_file(const String &p_path);
 	void _save_file();
 	void _import_inv_file(const String &p_path);
+	void _on_data_changed();
 
 	void _on_database_new_button_pressed();
 	void _on_database_open_menu_pressed();

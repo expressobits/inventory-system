@@ -72,6 +72,7 @@ void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_duplicate_item_category", "item_category"), &InventoryEditor::_duplicate_item_category);
 	ClassDB::bind_method(D_METHOD("_remove_loot", "loot"), &InventoryEditor::_remove_loot);
 	ClassDB::bind_method(D_METHOD("_duplicate_loot", "loot"), &InventoryEditor::_duplicate_loot);
+	ClassDB::bind_method(D_METHOD("_on_data_changed"), &InventoryEditor::_on_data_changed);
 }
 
 void InventoryEditor::_notification(int p_what) {
@@ -334,6 +335,7 @@ void InventoryEditor::_create_ui() {
 	item_definitions_editor->set_editor_plugin(editor_plugin);
 	item_definitions_editor->connect("removed", callable_mp(this, &InventoryEditor::_remove_item_definition));
 	item_definitions_editor->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_item_definition));
+	item_definitions_editor->connect("data_changed", callable_mp(this, &InventoryEditor::_on_data_changed));
 
 	RecipesEditor *recipes_tab = memnew(RecipesEditor);
 	tab_container->add_child(recipes_tab);
@@ -341,6 +343,7 @@ void InventoryEditor::_create_ui() {
 	recipes_tab->set_editor_plugin(editor_plugin);
 	recipes_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_recipe));
 	recipes_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_recipe));
+	recipes_tab->connect("data_changed", callable_mp(this, &InventoryEditor::_on_data_changed));
 	
 	CraftStationTypesEditor *craft_stations_tab = memnew(CraftStationTypesEditor);
 	tab_container->add_child(craft_stations_tab);
@@ -348,6 +351,7 @@ void InventoryEditor::_create_ui() {
 	craft_stations_tab->set_editor_plugin(editor_plugin);
 	craft_stations_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_craft_station_type));
 	craft_stations_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_craft_station_type));
+	craft_stations_tab->connect("data_changed", callable_mp(this, &InventoryEditor::_on_data_changed));
 	
 	ItemCategoriesEditor *categories_tab = memnew(ItemCategoriesEditor);
 	tab_container->add_child(categories_tab);
@@ -355,6 +359,7 @@ void InventoryEditor::_create_ui() {
 	categories_tab->set_editor_plugin(editor_plugin);
 	categories_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_item_category));
 	categories_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_item_category));
+	categories_tab->connect("data_changed", callable_mp(this, &InventoryEditor::_on_data_changed));
 	
 	LootsEditor *loots_tab = memnew(LootsEditor);
 	tab_container->add_child(loots_tab);
@@ -362,6 +367,7 @@ void InventoryEditor::_create_ui() {
 	loots_tab->set_editor_plugin(editor_plugin);
 	loots_tab->connect("removed", callable_mp(this, &InventoryEditor::_remove_loot));
 	loots_tab->connect("duplicated", callable_mp(this, &InventoryEditor::_duplicate_loot));
+	loots_tab->connect("data_changed", callable_mp(this, &InventoryEditor::_on_data_changed));
 	
 	// Set current tab after all tabs are added
 	tab_container->set_current_tab(0);
@@ -634,6 +640,9 @@ void InventoryEditor::_import_inv_file(const String &p_path) {
 	database->deserialize(data);
 	_load_database(database);
 	print_line("Database imported from JSON: " + p_path);
+	
+	// Trigger auto-save after JSON import
+	_on_data_changed();
 }
 
 void InventoryEditor::_on_misc_menu_pressed() {
@@ -965,6 +974,13 @@ void InventoryEditor::_on_item_categories_tab_pressed() {
 
 void InventoryEditor::_on_loots_tab_pressed() {
 	_on_tab_button_pressed(4);
+}
+
+void InventoryEditor::_on_data_changed() {
+	// Auto-save immediately when data changes
+	if (!database.is_null() && !database_path.is_empty()) {
+		_save_file();
+	}
 }
 
 // InventoryEditorPlugin
