@@ -370,9 +370,8 @@ void InventoryDatabase::deserialize_item_definition(Ref<ItemDefinition> definiti
 		definition->set_weight(data["weight"]);
 	}
 	if (data.has("properties")) {
-		// Convert any resource paths back to resources
-		Dictionary converted_properties = _convert_paths_to_resources(data["properties"]);
-		definition->set_properties(converted_properties);
+		// Keep properties as strings (including resource paths) - don't convert to resource objects
+		definition->set_properties(data["properties"]);
 	}
 	if (data.has("dynamic_properties")) {
 		definition->set_dynamic_properties(data["dynamic_properties"]);
@@ -425,9 +424,8 @@ void InventoryDatabase::deserialize_item_category(Ref<ItemCategory> category, co
 		category->set_color(Color::html(data["color"]));
 	}
 	if (data.has("item_properties")) {
-		// Convert any resource paths back to resources
-		Dictionary converted_properties = _convert_paths_to_resources(data["item_properties"]);
-		category->set_item_properties(converted_properties);
+		// Keep properties as strings (including resource paths) - don't convert to resource objects
+		category->set_item_properties(data["item_properties"]);
 	}
 	if (data.has("item_dynamic_properties")) {
 		category->set_item_dynamic_properties(data["item_dynamic_properties"]);

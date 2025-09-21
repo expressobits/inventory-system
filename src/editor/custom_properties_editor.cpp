@@ -511,6 +511,17 @@ void CustomPropertiesEditor::_update_property_details() {
 	// Update property value and type
 	Variant value = properties[property_name];
 	int type = value.get_type();
+	
+	// Check if this is a string that represents a resource path
+	// If so, treat it as a resource type for UI purposes
+	if (type == Variant::STRING) {
+		String str_value = value;
+		if (str_value.ends_with(".tres") || str_value.ends_with(".res") || 
+		    str_value.ends_with(".tscn") || str_value.ends_with(".scn") || 
+		    str_value.begins_with("res://")) {
+			type = Variant::OBJECT; // Treat as resource for UI
+		}
+	}
 
 	// Set the type option
 	for (int i = 0; i < property_type_option->get_item_count(); i++) {
@@ -540,7 +551,18 @@ void CustomPropertiesEditor::_update_property_details() {
 			color_value_picker->set_pick_color(value);
 			break;
 		case Variant::OBJECT: {
-			Ref<Resource> resource = value;
+			// Value might be a string path (for resource properties) or actual resource
+			Ref<Resource> resource;
+			if (value.get_type() == Variant::STRING) {
+				// Load resource from path
+				String path = value;
+				if (!path.is_empty()) {
+					resource = ResourceLoader::get_singleton()->load(path);
+				}
+			} else {
+				// Direct resource object (for backward compatibility)
+				resource = value;
+			}
 			resource_value_picker->set_edited_resource(resource);
 		} break;
 	}
@@ -764,24 +786,20 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 			new_value = Color();
 			break;
 		case Variant::OBJECT: {
-			// Intelligent conversion: String -> Resource (try to load from path)
+			// Store as string path, not resource object
+			// Intelligent conversion: String -> String (keep the path)
 			if (current_type == Variant::STRING) {
 				String str_value = current_value;
 				if (str_value.ends_with(".tres") || str_value.ends_with(".res") || 
 				    str_value.ends_with(".tscn") || str_value.ends_with(".scn") || 
 				    str_value.begins_with("res://")) {
-					// Try to load the resource from path
-					Ref<Resource> resource = ResourceLoader::get_singleton()->load(str_value);
-					if (resource.is_valid()) {
-						new_value = resource;
-					} else {
-						new_value = Ref<Resource>();
-					}
+					// Keep the path as string
+					new_value = str_value;
 				} else {
-					new_value = Ref<Resource>();
+					new_value = String();
 				}
 			} else {
-				new_value = Ref<Resource>();
+				new_value = String();
 			}
 			break;
 		}
@@ -867,7 +885,12 @@ void CustomPropertiesEditor::_on_resource_value_changed(const Ref<Resource> &res
 	}
 
 	Dictionary properties = get_properties_from_resource();
-	properties[selected_property_name] = resource;
+	// Store as string path instead of resource object to avoid database save issues
+	if (resource.is_valid() && !resource->get_path().is_empty()) {
+		properties[selected_property_name] = resource->get_path();
+	} else {
+		properties[selected_property_name] = String();
+	}
 	set_properties_to_resource(properties);
 
 	emit_signal("changed");
