@@ -556,7 +556,7 @@ void CustomPropertiesEditor::_update_property_details() {
 			if (value.get_type() == Variant::STRING) {
 				// Load resource from path
 				String path = value;
-				if (!path.is_empty()) {
+				if (!path.is_empty() && path != "res://") {
 					resource = ResourceLoader::get_singleton()->load(path);
 				}
 			} else {
@@ -796,10 +796,12 @@ void CustomPropertiesEditor::_on_property_type_item_selected(int index) {
 					// Keep the path as string
 					new_value = str_value;
 				} else {
-					new_value = String();
+					// Use special marker for empty resource properties
+					new_value = "res://";
 				}
 			} else {
-				new_value = String();
+				// Use special marker for empty resource properties
+				new_value = "res://";
 			}
 			break;
 		}
@@ -889,7 +891,8 @@ void CustomPropertiesEditor::_on_resource_value_changed(const Ref<Resource> &res
 	if (resource.is_valid() && !resource->get_path().is_empty()) {
 		properties[selected_property_name] = resource->get_path();
 	} else {
-		properties[selected_property_name] = String();
+		// Use special marker for empty resource properties to maintain resource type
+		properties[selected_property_name] = "res://";
 	}
 	set_properties_to_resource(properties);
 
