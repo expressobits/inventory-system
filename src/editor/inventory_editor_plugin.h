@@ -56,6 +56,7 @@ private:
 		DATABASE_OPEN = 200,
 		DATABASE_OPEN_RECENT = 250,
 		DATABASE_SAVE = 300,
+		DATABASE_SAVE_AS = 301,
 		DATABASE_IMPORT_JSON = 401,
 		DATABASE_EXPORT_JSON = 501,
 	};
@@ -75,6 +76,7 @@ private:
 	EditorPlugin *editor_plugin;
 	Ref<InventoryDatabase> database;
 	String database_path;
+	bool autosave_enabled;
 
 	// UI Components
 	VBoxContainer *main_vbox;
@@ -93,6 +95,7 @@ private:
 	// Dialogs
 	FileDialog *new_dialog;
 	FileDialog *save_dialog;
+	FileDialog *save_as_dialog;
 	FileDialog *open_dialog;
 	FileDialog *open_inv_dialog;
 	FileDialog *save_inv_dialog;
@@ -100,7 +103,7 @@ private:
 	//Toolbar
 	Button *database_new_button;
 	MenuButton *database_open_button;
-	Button *database_save_button;
+	MenuButton *database_save_button;
 	MenuButton *database_json_button;
 	MenuButton *misc_button;
 	Button *item_definitions_tab_button;
@@ -118,25 +121,29 @@ private:
 	void _create_ui();
 	void _apply_theme();
 	void _build_open_menu();
+	void _build_save_menu();
 	void _build_json_menu();
 	void _build_misc_menu();
 	void _load_database(const Ref<InventoryDatabase> &p_database);
 	void _new_file(const String &p_path);
 	void _open_file(const String &p_path);
 	void _save_file();
+	void _save_file_as(const String &p_path);
 	void _import_inv_file(const String &p_path);
 	void _on_data_changed();
 
 	void _on_database_new_button_pressed();
 	void _on_database_open_menu_pressed();
 	void _on_database_open_menu_id_pressed(int p_id);
-	void _on_database_save_button_pressed();
+	void _on_database_save_menu_pressed();
+	void _on_database_save_menu_id_pressed(int p_id);
 	void _on_database_json_menu_pressed();
 	void _on_database_json_menu_id_pressed(int p_id);
 	void _on_misc_menu_pressed();
 	void _on_misc_menu_id_pressed(int p_id);
 	void _on_new_dialog_file_selected(const String &p_path);
 	void _on_open_dialog_file_selected(const String &p_path);
+	void _on_save_as_dialog_file_selected(const String &p_path);
 	void _on_save_inv_dialog_file_selected(const String &p_path);
 	void _on_open_inv_dialog_file_selected(const String &p_path);
 	void _on_new_item_button_pressed();

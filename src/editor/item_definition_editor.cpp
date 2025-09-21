@@ -389,7 +389,9 @@ void ItemDefinitionEditor::load_item(const Ref<ItemDefinition>& p_item, Inventor
 			icon_selector->load_icon(item->get_icon());
 		}
 		
-		max_stack_container->set_visible(item->get_can_stack());
+		// Always show max_stack_container but disable/enable the spinbox based on can_stack
+		max_stack_container->set_visible(true);
+		item_max_stack_spin_box->set_editable(item->get_can_stack());
 		size_x_spin_box->set_value(item->get_size().x);
 		size_y_spin_box->set_value(item->get_size().y);
 		item_description_text_edit->set_text(item->get_description());
@@ -455,7 +457,8 @@ void ItemDefinitionEditor::_on_weight_spin_box_value_changed(double value) {
 void ItemDefinitionEditor::_can_stack_check_box_toggled(bool value) {
 	if (item.is_valid()) {
 		item->set_can_stack(value);
-		max_stack_container->set_visible(item->get_can_stack());
+		// Always show max_stack_container but disable/enable the spinbox based on can_stack
+		item_max_stack_spin_box->set_editable(item->get_can_stack());
 		emit_signal("changed", item);
 		if (custom_properties) {
 			custom_properties->load_resource(database, item); // Reload custom properties when can_stack changes

@@ -42,13 +42,15 @@ void InventoryEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_on_database_new_button_pressed"), &InventoryEditor::_on_database_new_button_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_open_menu_pressed"), &InventoryEditor::_on_database_open_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_open_menu_id_pressed", "id"), &InventoryEditor::_on_database_open_menu_id_pressed);
-	ClassDB::bind_method(D_METHOD("_on_database_save_button_pressed"), &InventoryEditor::_on_database_save_button_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_save_menu_pressed"), &InventoryEditor::_on_database_save_menu_pressed);
+	ClassDB::bind_method(D_METHOD("_on_database_save_menu_id_pressed", "id"), &InventoryEditor::_on_database_save_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_json_menu_pressed"), &InventoryEditor::_on_database_json_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_database_json_menu_id_pressed", "id"), &InventoryEditor::_on_database_json_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_misc_menu_pressed"), &InventoryEditor::_on_misc_menu_pressed);
 	ClassDB::bind_method(D_METHOD("_on_misc_menu_id_pressed", "id"), &InventoryEditor::_on_misc_menu_id_pressed);
 	ClassDB::bind_method(D_METHOD("_on_new_dialog_file_selected", "path"), &InventoryEditor::_on_new_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_open_dialog_file_selected", "path"), &InventoryEditor::_on_open_dialog_file_selected);
+	ClassDB::bind_method(D_METHOD("_on_save_as_dialog_file_selected", "path"), &InventoryEditor::_on_save_as_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_save_inv_dialog_file_selected", "path"), &InventoryEditor::_on_save_inv_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_open_inv_dialog_file_selected", "path"), &InventoryEditor::_on_open_inv_dialog_file_selected);
 	ClassDB::bind_method(D_METHOD("_on_new_item_button_pressed"), &InventoryEditor::_on_new_item_button_pressed);
@@ -90,6 +92,7 @@ void InventoryEditor::_notification(int p_what) {
 
 InventoryEditor::InventoryEditor() {
 	editor_plugin = nullptr;
+	autosave_enabled = true; // Autosave is enabled by default
 	
 	// Initialize tab button pointers
 	item_definitions_tab_button = nullptr;
@@ -162,13 +165,15 @@ void InventoryEditor::_create_ui() {
 	database_open_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_open_menu_id_pressed));
 	database_open_button->set_button_icon(get_theme_icon("Load", "EditorIcons"));
 
-	// Save button
-	database_save_button = memnew(Button);
+	// Save MenuButton with Save, Save As and Autosave options
+	database_save_button = memnew(MenuButton);
 	toolbar->add_child(database_save_button);
 	database_save_button->set_custom_minimum_size(Vector2(28, 28));
-	database_save_button->set_tooltip_text("Save Database");
-	database_save_button->set_theme_type_variation("FlatButton");
-	database_save_button->connect("pressed", callable_mp(this, &InventoryEditor::_on_database_save_button_pressed));
+	database_save_button->set_tooltip_text("Save Options");
+	database_save_button->set_theme_type_variation("FlatMenuButton");
+	database_save_button->set_flat(false);
+	database_save_button->connect("about_to_popup", callable_mp(this, &InventoryEditor::_on_database_save_menu_pressed));
+	database_save_button->get_popup()->connect("id_pressed", callable_mp(this, &InventoryEditor::_on_database_save_menu_id_pressed));
 	database_save_button->set_button_icon(get_theme_icon("Save", "EditorIcons"));
 
 	// JSON MenuButton for import/export
@@ -400,6 +405,13 @@ void InventoryEditor::_create_ui() {
 	save_inv_dialog->set_file_mode(FileDialog::FILE_MODE_SAVE_FILE);
 	save_inv_dialog->add_filter("*.json", "JSON File");
 	save_inv_dialog->connect("file_selected", callable_mp(this, &InventoryEditor::_on_save_inv_dialog_file_selected));
+	
+	save_as_dialog = memnew(FileDialog);
+	add_child(save_as_dialog);
+	save_as_dialog->set_access(FileDialog::ACCESS_RESOURCES);
+	save_as_dialog->set_file_mode(FileDialog::FILE_MODE_SAVE_FILE);
+	save_as_dialog->add_filter("*.tres", "Godot Resource");
+	save_as_dialog->connect("file_selected", callable_mp(this, &InventoryEditor::_on_save_as_dialog_file_selected));
 
 	// Dialog sizes
 	float scale = EditorInterface::get_singleton()->get_editor_scale();
@@ -441,6 +453,22 @@ void InventoryEditor::_build_open_menu() {
 		menu->add_item("No Recent Files", -1);
 		menu->set_item_disabled(menu->get_item_count() - 1, true);
 	}
+}
+
+void InventoryEditor::_build_save_menu() {
+	PopupMenu *menu = database_save_button->get_popup();
+	menu->clear();
+
+	menu->add_item("Save", DATABASE_SAVE);
+	menu->add_item("Save As...", DATABASE_SAVE_AS);
+	menu->add_separator();
+	menu->add_check_item("Autosave", -1);
+	menu->set_item_checked(menu->get_item_count() - 1, autosave_enabled);
+	menu->set_item_metadata(menu->get_item_count() - 1, "autosave");
+
+	// Disable items if no database is loaded
+	menu->set_item_disabled(menu->get_item_index(DATABASE_SAVE), database.is_null());
+	menu->set_item_disabled(menu->get_item_index(DATABASE_SAVE_AS), database.is_null());
 }
 
 void InventoryEditor::_build_json_menu() {
@@ -610,6 +638,19 @@ void InventoryEditor::_save_file() {
 	}
 }
 
+void InventoryEditor::_save_file_as(const String &p_path) {
+	if (database.is_null()) {
+		return;
+	}
+	
+	database_path = p_path;
+	ResourceSaver::get_singleton()->save(database, database_path);
+	if (editor_plugin) {
+		editor_plugin->get_editor_interface()->get_resource_filesystem()->scan();
+	}
+	title_label->set_text(p_path);
+}
+
 void InventoryEditor::_import_inv_file(const String &p_path) {
 	if (database.is_null()) {
 		return;
@@ -657,8 +698,30 @@ void InventoryEditor::_on_database_open_menu_pressed() {
 	_build_open_menu();
 }
 
-void InventoryEditor::_on_database_save_button_pressed() {
-	_save_file();
+void InventoryEditor::_on_database_save_menu_pressed() {
+	_build_save_menu();
+}
+
+void InventoryEditor::_on_database_save_menu_id_pressed(int p_id) {
+	switch (p_id) {
+		case DATABASE_SAVE:
+			_save_file();
+			break;
+		case DATABASE_SAVE_AS:
+			save_as_dialog->popup_centered();
+			break;
+		default: {
+			// Handle autosave checkbox toggle
+			PopupMenu *menu = database_save_button->get_popup();
+			for (int i = 0; i < menu->get_item_count(); i++) {
+				if (menu->get_item_metadata(i) == "autosave") {
+					autosave_enabled = !menu->is_item_checked(i);
+					menu->set_item_checked(i, autosave_enabled);
+					break;
+				}
+			}
+		} break;
+	}
 }
 
 void InventoryEditor::_on_database_json_menu_pressed() {
@@ -733,6 +796,10 @@ void InventoryEditor::_on_new_dialog_file_selected(const String &p_path) {
 
 void InventoryEditor::_on_open_dialog_file_selected(const String &p_path) {
 	_open_file(p_path);
+}
+
+void InventoryEditor::_on_save_as_dialog_file_selected(const String &p_path) {
+	_save_file_as(p_path);
 }
 
 void InventoryEditor::_on_save_inv_dialog_file_selected(const String &p_path) {
@@ -977,8 +1044,8 @@ void InventoryEditor::_on_loots_tab_pressed() {
 }
 
 void InventoryEditor::_on_data_changed() {
-	// Auto-save immediately when data changes
-	if (!database.is_null() && !database_path.is_empty()) {
+	// Auto-save immediately when data changes if autosave is enabled
+	if (autosave_enabled && !database.is_null() && !database_path.is_empty()) {
 		_save_file();
 	}
 }
