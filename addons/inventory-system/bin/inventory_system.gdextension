@@ -5,7 +5,7 @@ compatibility_minimum = "4.1"
 
 [libraries]
 ; Relative paths ensure that our GDExtension can be placed anywhere in the project directory.
-macos.debug = "./macos/libinventory_system.macos.template_debug.dylib"
+macos.debug = "./macos/libinventory_system.macos.editor.dylib"
 macos.editor = "./macos/libinventory_system.macos.editor.dylib"
 macos.release = "./macos/libinventory_system.macos.template_release.dylib"
 ios.debug = "./ios/libinventory_system.ios.template_debug.arm64.dylib"
