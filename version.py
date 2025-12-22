@@ -1,8 +1,8 @@
 short_name = "inventory-system"
 name = "Inventory System"
 major = 2
-minor = 10
-patch = 1
+minor = 11
+patch = 0
 status = "dev"
 module_config = ""
 website = "https://expressobits.com/inventory-system"
