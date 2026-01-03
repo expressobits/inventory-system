@@ -12,7 +12,7 @@ func _ready():
 	main_inventory.add("helmet_labor", 1)
 	main_inventory.add("wood", 16)
 	main_inventory.add("stone", 8)
-	
+
 #
 func _process(_delta):
 	pass

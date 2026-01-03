@@ -156,7 +156,7 @@ func _on_crafting_started(crafting_index: int):
 	print("Smelting started: ", crafting_index)
 	_update_ui()
 
-func _on_craft_completed(recipe_index: int):
+func _on_craft_completed(_recipe_index: int):
 	print("Smelting completed!")
 
 	# Show output (enhanced from Tutorial 2)

@@ -1,6 +1,7 @@
 extends Workbench
 
 
+@warning_ignore("shadowed_variable_base_class")
 func interact(character : Node, _action_index : int = 0):
 	if multiplayer.is_server():
 		interact_rpc(character.get_path(), _action_index)

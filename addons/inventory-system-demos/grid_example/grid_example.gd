@@ -12,9 +12,9 @@ func _ready() -> void:
 	ctrl_inventory_right.request_transfer_to.connect(_request_transfer_to)
 	ctrl_inventory_left.request_sort.connect(_on_inventory_sort.bind(ctrl_inventory_left.inventory))
 	ctrl_inventory_right.request_sort.connect(_on_inventory_sort.bind(ctrl_inventory_right.inventory))
-	
+
 	await get_tree().create_timer(0.2).timeout
-	
+
 	ctrl_inventory_left.inventory.add("wood", 16)
 	await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_left.inventory.add("stone_axe")
@@ -40,7 +40,7 @@ func _ready() -> void:
 	ctrl_inventory_right.inventory.add("lashing", 3)
 	await get_tree().create_timer(0.2).timeout
 	ctrl_inventory_right.inventory.add("helmet_labor", 2)
-	
+
 
 func _request_split(inventory: GridInventory, stack_index: int, amount: int):
 	inventory.split(stack_index, amount)

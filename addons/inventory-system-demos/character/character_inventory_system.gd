@@ -115,11 +115,11 @@ func inventory_inputs():
 	if Input.is_action_just_released(toggle_inventory_input):
 		if not is_any_station_or_inventory_opened():
 			open_main_inventory()
-	
+
 	if Input.is_action_just_released(exit_inventory_and_craft_panel_input):
 		close_inventories()
 		close_craft_stations()
-			
+
 	if Input.is_action_just_released(toggle_craft_panel_input):
 		if not is_any_station_or_inventory_opened():
 			open_main_craft_station()
@@ -127,22 +127,22 @@ func inventory_inputs():
 func pick_to_inventory(node : Node):
 	if main_inventory == null:
 		return
-	
+
 	if node == null:
 		return
 
 	if !node.get("is_pickable"):
 		return
-		
+
 	var item_id = node.item_id
 	var item_properties = node.item_properties
 	var amount = node.amount
-	
+
 	if main_inventory.add(item_id, amount, item_properties, true) == 0:
 		picked.emit(node)
 		node.queue_free();
 		return
-		
+
 	printerr("pick_to_inventory return false");
 
 func transfer(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, amount: int):
@@ -176,10 +176,10 @@ func drop(stack: ItemStack, inventory: Inventory):
 	var stack_index = inventory.stacks.find(stack)
 	if stack_index == -1:
 		return
-	
+
 	inventory.drop_from_inventory(stack_index, stack.amount, stack.properties)
-	
-	
+
+
 func drop_all_items():
 	main_inventory.drop_all_stacks()
 	equipment_inventory.drop_all_stacks()
@@ -215,7 +215,7 @@ func hotbar_change_selection(index : int):
 
 func hotbar_previous_item():
 	hotbar.previous_item()
-	
+
 
 func hotbar_next_item():
 	hotbar.next_item()
@@ -238,11 +238,11 @@ func add_open_inventory(inventory : Inventory):
 	if not is_open_main_inventory():
 		#inventory.request_drop_obj.connect(_on_request_drop_obj)
 		open_main_inventory()
-	
+
 func open_main_inventory():
 	open_inventory(main_inventory)
-	
-	
+
+
 func close_inventory(inventory : Inventory):
 	if main_inventory != inventory:
 		inventory.get_parent().close(get_parent())
@@ -264,7 +264,7 @@ func close_inventories():
 
 func is_open_any_inventory():
 	return !opened_inventories.is_empty()
-	
+
 func is_open_main_inventory():
 	return is_open_inventory(main_inventory)
 #endregion

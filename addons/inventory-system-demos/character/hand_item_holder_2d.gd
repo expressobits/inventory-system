@@ -6,11 +6,11 @@ const Interactor = preload("../interaction_system/inventory_interactor.gd")
 @export_node_path("Node2D") var default_hand_item_object_path = NodePath("DefaultHandItem")
 @export_node_path("Hotbar") var hotbar_path = NodePath("../InventoryHandler/Hotbar")
 
-@onready var default_hand_item_object := get_node(default_hand_item_object_path) 
-@onready var hotbar : Hotbar = get_node(hotbar_path) 
+@onready var default_hand_item_object := get_node(default_hand_item_object_path)
+@onready var hotbar : Hotbar = get_node(hotbar_path)
 
 @export_node_path var interactor_path = NodePath("../../CharacterInventorySystem/Interactor")
-@onready var interactor : Interactor = get_node(interactor_path) 
+@onready var interactor : Interactor = get_node(interactor_path)
 
 var last_item : ItemDefinition = null
 var objects_per_id : Dictionary
@@ -26,7 +26,7 @@ func _on_update_selection_slot():
 	_on_change_selection(hotbar.selection_index)
 
 
-func _on_change_selection(new_index : int):
+func _on_change_selection(_new_index : int):
 	_clear_last_selection()
 	if not hotbar.has_valid_item_id():
 		interactor.actual_hand_object = null
@@ -57,4 +57,4 @@ func _clear_last_selection():
 	if last_item == null:
 		return
 	if objects_per_id.has(last_item):
-		objects_per_id[last_item].visible = false		
+		objects_per_id[last_item].visible = false

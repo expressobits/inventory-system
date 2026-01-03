@@ -11,7 +11,7 @@ func check():
 	if not multiplayer.is_server():
 		return
 	super.check()
-	
+
 
 func _on_connected(_id : int):
 	_changed_burning_state(is_burning)
@@ -30,6 +30,7 @@ func _changed_burning_state_rpc(is_burning_now : bool):
 	self.is_burning = is_burning_now
 
 
+@warning_ignore("shadowed_variable_base_class")
 func interact(character : Node, _action_index : int = 0):
 	if multiplayer.is_server():
 		interact_rpc(character.get_path(), _action_index)

@@ -14,7 +14,7 @@ func open(character : Node):
 	characters.append(character)
 	is_open = true
 	opened.emit(character)
-	
+
 func close(character : Node):
 	if !is_open:
 		return
