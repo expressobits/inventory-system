@@ -94,7 +94,7 @@ func get_first_test() -> void:
 	assert(first != null)
 	assert(first.rect == Rect2i(1, 1, 1, 1))
 	assert(first.metadata == 43)
-	
+
 	first = quadtree.get_first(Vector2i(0, 0))
 	assert(first != null)
 	assert(first.rect == Rect2i(0, 0, 1, 1))

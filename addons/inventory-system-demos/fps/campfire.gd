@@ -18,13 +18,13 @@ var active_fire : bool = true:
 			is_burning = fuel > 0.0
 		else:
 			is_burning = false
-		
+
 
 var fuel := 0.0:
 	set(new_value):
 		fuel = new_value
 		is_burning = fuel > 0.0
-		
+
 var max_seconds := 120.0
 
 var is_burning := false:
@@ -34,13 +34,13 @@ var is_burning := false:
 			check()
 			changed_burning_state.emit(is_burning)
 			_update_is_burning()
-			
+
 
 func _ready():
 	_update_is_burning()
 	craft_station.on_crafted.connect(_on_crafted)
 	input_inventory.contents_changed.connect(_on_input_inventory_contents_changed)
-	
+
 
 func _update_is_burning():
 	$Node.visible = is_burning

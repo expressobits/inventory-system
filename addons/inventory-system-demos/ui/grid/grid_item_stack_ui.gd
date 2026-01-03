@@ -34,7 +34,7 @@ func setup(inv: Inventory, new_stack: ItemStack):
 			image.rotate_90(CLOCKWISE)
 			texture = ImageTexture.create_from_image(image)
 		%ItemIcon.texture = texture
-		
+
 		activate()
 		_disconnect_item_signals()
 		_connect_item_signals(stack)
@@ -47,7 +47,7 @@ func setup(inv: Inventory, new_stack: ItemStack):
 func _connect_item_signals(new_item: ItemStack) -> void:
 	if new_item == null:
 		return
-	
+
 	if !new_item.updated.is_connected(_refresh):
 		new_item.updated.connect(_refresh)
 
@@ -58,7 +58,7 @@ func _connect_item_signals(new_item: ItemStack) -> void:
 func _disconnect_item_signals() -> void:
 	if !is_instance_valid(stack):
 		return
-	
+
 	if stack.updated.is_connected(_refresh):
 		stack.updated.disconnect(_refresh)
 
@@ -81,11 +81,11 @@ func _ready() -> void:
 	)
 	if stack == null:
 		deactivate()
-	
+
 	_refresh()
 
 
-func _update_stack_index(stack_index: int) -> void:
+func _update_stack_index(_stack_index: int) -> void:
 	_refresh()
 
 

@@ -18,7 +18,6 @@
 
 [sub_resource type="GridInventoryConstraint" id="GridInventoryConstraint_i88gv"]
 script = ExtResource("8_qudo1")
-category_position = {}
 is_only_one_category_for_slots = true
 one_category_for_slots = "tools"
 

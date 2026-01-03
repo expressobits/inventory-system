@@ -22,7 +22,7 @@ func _ready():
 		var recipe = craft_station.database.recipes[recipe_index]
 		var product_name = recipe.products[0].item_id if recipe.products.size() > 0 else "Unknown"
 		print("Recipe ", i, ": ", product_name)
-		
+
 		var can_craft = craft_station.can_craft(recipe)
 		print("  Can craft: ", can_craft)
 
@@ -34,7 +34,7 @@ func _input(event):
 		else:
 			print("No recipes available!")
 
-func _on_craft_completed(recipe_index: int):
+func _on_craft_completed(_recipe_index: int):
 	print("Crafting completed!")
 
 	# Show output

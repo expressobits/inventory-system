@@ -10,7 +10,7 @@ func _ready():
 		super._ready()
 
 
-func _on_request_drop_obj(dropped_item : String, item_id : String, amount : int, properties : Dictionary):
+func _on_request_drop_obj(dropped_item : String, _item_id : String, amount : int, properties : Dictionary):
 	if(drop_item_spawner == null):
 		printerr("Spawner is null!")
 		return
