@@ -27,6 +27,7 @@ void InventoryItemListEditor::_bind_methods() {
 	
 	ClassDB::bind_method(D_METHOD("_on_search_text_changed", "text"), &InventoryItemListEditor::_on_search_text_changed);
 	ClassDB::bind_method(D_METHOD("_on_item_list_item_selected", "index"), &InventoryItemListEditor::_on_item_list_item_selected);
+	ClassDB::bind_method(D_METHOD("_on_item_list_item_clicked", "index", "at_position", "button_index"), &InventoryItemListEditor::_on_item_list_item_clicked);
 
 	ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "items"), "set_items", "get_items");
 	ADD_PROPERTY(PropertyInfo(Variant::STRING, "filter"), "set_filter", "get_filter");
@@ -84,6 +85,7 @@ void InventoryItemListEditor::_create_ui() {
 	item_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
 	item_list->set_fixed_icon_size(Vector2i(16, 16));
 	item_list->connect("item_selected", callable_mp(this, &InventoryItemListEditor::_on_item_list_item_selected));
+	item_list->connect("item_clicked", callable_mp(this, &InventoryItemListEditor::_on_item_list_item_clicked));
 }
 
 void InventoryItemListEditor::set_items(const Array &p_items) {
@@ -270,6 +272,23 @@ void InventoryItemListEditor::_on_item_list_item_selected(int p_index) {
 	}
 	
 	_emit_item_selected(item_list_handler[p_index], p_index);
+}
+
+void InventoryItemListEditor::_on_item_list_item_clicked(int p_index, const Vector2 &p_at_position, int p_button_index) {
+	if (!item_list->is_item_selectable(p_index) || p_index >= item_list_handler.size()) {
+		return;
+	}
+
+	if (p_button_index != MouseButton::MOUSE_BUTTON_RIGHT) {
+		return;
+	}
+
+	if (!item_list->get_selected_items().has(p_index)) {
+		item_list->select(p_index);
+		item_list->emit_signal("item_selected", p_index);
+	}
+
+	_emit_item_popup_menu_requested(p_at_position);
 }
 
 #endif // TOOLS_ENABLED
