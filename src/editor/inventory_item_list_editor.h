@@ -46,6 +46,7 @@ private:
 
 	void _on_search_text_changed(const String &p_text);
 	void _on_item_list_item_selected(int p_index);
+	void _on_item_list_item_clicked(int p_index, const Vector2 &p_at_position, int p_button_index);
 
 protected:
 	static void _bind_methods();
