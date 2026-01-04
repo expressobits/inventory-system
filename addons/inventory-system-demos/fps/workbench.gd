@@ -29,9 +29,9 @@ func interact(_character : Node, action_index : int = 0):
 		_character.character_inventory_system.open_station(craft_station)
 	else:
 		self.rotate(Vector3.UP, 90)
-	
+
 func open(_character : Node):
 	openable.open(_character)
-	
+
 func close(_character : Node):
 	openable.close(_character)

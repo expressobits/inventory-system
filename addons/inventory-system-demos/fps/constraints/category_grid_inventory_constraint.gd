@@ -9,13 +9,13 @@ func _can_add_on_position(inventory: Node, position: Vector2i, item_id: String, 
 	var def: ItemDefinition = inventory.database.get_item(item_id)
 	if def == null:
 		return false
-	
+
 	var size: Vector2i
 	if _is_rotated:
 		size = Vector2i(def.size.y, def.size.x)
 	else:
 		size = def.size
-	
+
 	for x in range(position.x,position.x + size.x):
 		for y in range(position.y,position.y + size.y):
 			var pos = Vector2i(x, y)

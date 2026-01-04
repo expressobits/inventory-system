@@ -10,7 +10,7 @@ extends Node3D
 func _ready() -> void:
 	button_move_to_right.pressed.connect(_on_button_move_to_right_pressed)
 	button_move_to_left.pressed.connect(_on_button_move_to_left_pressed)
-	
+
 	inventory_left.add("wood", 16)
 	await get_tree().create_timer(0.2).timeout
 	inventory_left.add("stone_axe")

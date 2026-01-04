@@ -33,11 +33,11 @@ func _ready():
 	character_inventory_system.opened_inventory.connect(_on_player_inventory_opened)
 	character_inventory_system.closed_inventory.connect(_on_player_inventory_closed)
 	#character_inventory_system.hotbar.on_change_selection.connect(_on_hotbar_changed)
-	
-	
+
+
 func _on_inventory_handler_picked(_dropped_item):
 	picked_audio.play()
-	
+
 
 func _on_player_inventory_opened(_inventory : Inventory):
 	player_inventory_open_audio.play()
@@ -85,6 +85,6 @@ func rotate_camera(mouse_axis : Vector2) -> void:
 	rot.y -= mouse_axis.x * mouse_sensitivity
 	# Vertical mouse look.
 	rot.x = clamp(rot.x - mouse_axis.y * mouse_sensitivity, -vertical_angle_limit, vertical_angle_limit)
-	
+
 	rotation.y = rot.y
 	$Camera3D.rotation.x = rot.x

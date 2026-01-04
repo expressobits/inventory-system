@@ -11,8 +11,10 @@ func _ready():
 	multiplayer.peer_connected.connect(_player_connected)
 	multiplayer.peer_disconnected.connect(_player_disconnected)
 
-func _process(delta: float) -> void:
+
+func _process(_delta: float) -> void:
 	pass
+
 
 func create_player(peer_id : int):
 	connected_peer_ids.append(peer_id)
@@ -25,7 +27,7 @@ func create_player(peer_id : int):
 		$"UI/Inventory System UI".setup(player.get_node("CharacterInventorySystem"))
 
 
-@rpc	
+@rpc
 func add_newly_connected_player_character(new_peer_id):
 	create_player(new_peer_id)
 
@@ -33,7 +35,7 @@ func add_newly_connected_player_character(new_peer_id):
 @rpc
 func add_previously_connected_player_characters(peer_ids):
 	for peer_id in peer_ids:
-		create_player(peer_id)	
+		create_player(peer_id)
 
 
 func host_game():

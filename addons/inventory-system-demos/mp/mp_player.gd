@@ -9,6 +9,7 @@ func _enter_tree():
 	$CharacterInventorySystem/CraftStation/SyncCraftStation.set_multiplayer_authority(1)
 	$Dropper.set_multiplayer_authority(1)
 
+
 func _ready():
 	super._ready()
 	if is_multiplayer_authority():

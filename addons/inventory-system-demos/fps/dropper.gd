@@ -26,7 +26,7 @@ func drop(item: String, amount:int = 1, properties: Dictionary = {}):
 
 
 func _on_request_drop_obj(dropped_item : String, item_id: String, amount: int, properties: Dictionary):
-	var database: InventoryDatabase = inventories[0].database
+	var _database: InventoryDatabase = inventories[0].database
 	var packed_scene : PackedScene = load(dropped_item)
 	var node = packed_scene.instantiate()
 	get_parent().get_parent().add_child(node)

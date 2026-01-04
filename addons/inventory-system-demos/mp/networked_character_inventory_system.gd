@@ -1,3 +1,4 @@
+@tool
 class_name NetworkedCharacterInventorySystem
 extends "../character/character_inventory_system.gd"
 
@@ -130,7 +131,7 @@ func hotbar_previous_item():
 		super.hotbar_previous_item()
 	else:
 		hotbar_previous_item_rpc.rpc_id(1)
-	
+
 
 func hotbar_next_item():
 	if multiplayer.is_server():
@@ -158,7 +159,7 @@ func craft(craft_station : CraftStation, recipe_index : int):
 		craft_rpc(craft_station.get_path(), recipe_index)
 	else:
 		craft_rpc.rpc(craft_station.get_path(), recipe_index)
-	
+
 
 func open_station(craft_station : CraftStation):
 	if multiplayer.is_server():
@@ -324,7 +325,7 @@ func close_stations_rpc():
 func craft_rpc(craft_station_path : NodePath, recipe_index : int):
 	var station = get_node(craft_station_path)
 	station.craft(recipe_index)
-	
+
 
 func _physics_process(_delta : float):
 	if Engine.is_editor_hint():

@@ -20,22 +20,22 @@ func try_interact():
 	var pos : Vector2 = Vector2.ZERO
 	if object != null and object.has_method("get_interaction_position") and camera != null:
 		pos = camera.unproject_position(object.get_interaction_position(raycast.get_collision_point()))
-	
+
 	var node = object as Node
-	
+
 	var total_actions : Array = []
-	
+
 	var object_actions : Array = []
 	var hand_actions = get_actions(actual_hand_object)
-	
+
 	if raycast.is_colliding():
 		object_actions = get_actions(node)
-	
+
 	total_actions.append_array(object_actions)
 	total_actions.append_array(hand_actions)
-		
+
 	preview_interacted.emit(total_actions, pos)
-	
+
 	interact_object(object, object_actions)
 	interact_hand_item(actual_hand_object, hand_actions)
 

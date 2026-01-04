@@ -7,12 +7,12 @@ extends Node
 
 @export var inventory : GridInventory
 
-## Networked version of inventory where server sends rpcs to client for 
+## Networked version of inventory where server sends rpcs to client for
 ## slot update, add and remove signals
-## 
+##
 ## Why not use [MultiplayerSyncronizer]?
-## The idea of using rpc signals only when changed saves a lot of bandwidth, 
-## but at the cost of being sure which signals will be called, ie calling 
+## The idea of using rpc signals only when changed saves a lot of bandwidth,
+## but at the cost of being sure which signals will be called, ie calling
 ## slot[i] = new Dictionary is not replicated across the network.
 ## Also keep in mind that signals need to be handled if switching to a use of
 ## MultiplayerSyncronizer
@@ -34,7 +34,7 @@ func setup():
 		inventory.stack_added.connect(_on_stack_added)
 		inventory.updated_stack.connect(_on_updated_stack)
 		inventory.stack_removed.connect(_on_stack_removed)
-	
+
 
 
 func _on_contents_changed():
@@ -54,7 +54,7 @@ func _on_connected(id):
 func _on_stack_added(stack_index : int):
 	if not multiplayer.is_server():
 		return
-	
+
 	var item_id = inventory.stacks[stack_index].item_id
 	var amount = inventory.stacks[stack_index].amount
 	var properties = inventory.stacks[stack_index].properties
@@ -72,7 +72,7 @@ func _on_updated_stack(stack_index : int):
 func _on_stack_removed(stack_index : int):
 	if not multiplayer.is_server():
 		return
-	
+
 	_stack_removed_rpc.rpc(stack_index)
 
 
@@ -84,7 +84,7 @@ func _update_inventory_rpc(inv_data : Dictionary):
 
 
 @rpc
-func _stack_added_rpc(stack_index: int, item_id: String, amount: int, properties: Dictionary, position: Vector2i, rotation: bool):
+func _stack_added_rpc(_stack_index: int, item_id: String, amount: int, properties: Dictionary, position: Vector2i, rotation: bool):
 	if multiplayer.is_server():
 		return
 	inventory.add_at_position(position, item_id, amount, properties, rotation)

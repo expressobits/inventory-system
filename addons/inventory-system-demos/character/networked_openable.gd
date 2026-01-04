@@ -8,7 +8,7 @@ func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_connected.bind())
 	opened.connect(_on_opened.bind())
 	closed.connect(_on_closed.bind())
-	
+
 
 func _on_connected(id):
 	if not multiplayer.is_server():

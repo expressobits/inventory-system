@@ -20,7 +20,7 @@ func _ready():
 	preview.position.x = 2
 
 
-func _process(delta):
+func _process(_delta: float):
 	if interactor != null:
 		if can_preview(interactor):
 			preview.global_position = interactor.raycast.get_collision_point()
@@ -36,7 +36,8 @@ func get_interact_actions(_interactor : Interactor) -> Array:
 	return []
 
 
-func can_preview(interactor : Interactor) -> bool:
+@warning_ignore("shadowed_variable")
+func can_preview(interactor: Interactor) -> bool:
 	if not visible:
 		return false
 	var object = interactor.last_interact_object
@@ -45,7 +46,7 @@ func can_preview(interactor : Interactor) -> bool:
 	var node : Node3D = object as Node3D
 	if not node.is_in_group(group_name_for_place_area):
 		return false
-	
+
 	var stack = interactor.get_parent().hotbar.get_stack_on_selection()
 	if stack == null:
 		return false

@@ -2,7 +2,7 @@ class_name VisualSlot3D
 extends Node3D
 
 @export_node_path("Node3D") var default_hand_item_object_path = NodePath("DefaultItem3D")
-@onready var default_hand_item_object := get_node(default_hand_item_object_path) 
+@onready var default_hand_item_object := get_node(default_hand_item_object_path)
 @export var distance_for_stack : float = 0.05
 
 var property_name_of_visual : String
@@ -38,7 +38,7 @@ func _on_updated_slot(changed_slot_index : int):
 		var path = definition.properties[property_name_of_visual]
 		item_scene = load(path)
 	last_item_id = item_id
-	
+
 	if item_scene == null:
 #		default_hand_item_object.visible = true
 		return
@@ -61,4 +61,4 @@ func _clear_last_visual():
 		i.queue_free()
 	objects.clear()
 #	if objects_per_id.has(last_item):
-#		objects_per_id[last_item].visible = false	
+#		objects_per_id[last_item].visible = false

@@ -27,8 +27,8 @@ func _get_configuration_warnings() -> PackedStringArray:
 				"This node is not linked to an inventory, so it can't display any content.\n" + \
 				"Set the inventory_path property to point to an Inventory node."])
 	return PackedStringArray()
-	
-	
+
+
 func _ready():
 	item_activated.connect(_on_list_item_activated)
 	item_clicked.connect(_on_list_item_clicked)
@@ -57,12 +57,12 @@ func _on_list_item_activated(index: int) -> void:
 	inventory_item_activated.emit(_get_inventory_item(index))
 
 
-func _on_list_item_clicked(index: int, at_position: Vector2, mouse_button_index: int) -> void:
+func _on_list_item_clicked(index: int, _at_position: Vector2, mouse_button_index: int) -> void:
 	if mouse_button_index == MOUSE_BUTTON_RIGHT:
 		inventory_item_context_activated.emit(_get_inventory_item(index))
 
 
-func _on_stack_updated(stack_index : int) -> void:
+func _on_stack_updated(_stack_index : int) -> void:
 	_queue_refresh()
 
 
@@ -104,7 +104,7 @@ func _get_item_title(item : ItemStack, definition : ItemDefinition) -> String:
 		title = "%s (x%d)" % [title, stack_size]
 
 	return title
-	
+
 
 ## Returns the currently selected item. In case multiple items are selected,
 ## the first one is returned.
