@@ -1,11 +1,11 @@
 # <img src="https://raw.githubusercontent.com/expressobits/inventory-system/addon/icon.png" alt= “icon” width="32" height="32"> Welcome to Expresso Inventory System 👋
-![Version](https://img.shields.io/badge/version-2.2.0-blue.svg?cacheSeconds=2592000)
-[![Documentation](https://img.shields.io/badge/documentation-no-red.svg)](https://github.com/ExpressoBits/inventory-system/wiki)
+![Version](https://img.shields.io/badge/version-2.12.0-blue.svg?cacheSeconds=2592000)
+[![Documentation](https://img.shields.io/badge/documentation-yes-green.svg)](https://expressobits.com/inventory-system/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](MIT)
 
 ![Demo](https://raw.githubusercontent.com/wiki/ExpressoBits/inventory-system/demo.gif)
 
-New here? Read our new [Documentation](https://expressobits.com/inventory-system-docs/)
+New here? Read our new [Documentation](https://expressobits.com/inventory-system/)
 
 ## Branchs Map
 
@@ -31,6 +31,8 @@ New here? Read our new [Documentation](https://expressobits.com/inventory-system
 ✔️ Demonstrations of dropped items and item pickup.
 
 ✔️ Multiplayer compatible (Including example).
+
+✔️ Loot System (https://github.com/expressobits/inventory-system/issues/152).
  
 ✔️ Hotbar.
 
@@ -57,7 +59,7 @@ New here? Read our new [Documentation](https://expressobits.com/inventory-system
 📅 Inventory UI dynamic #83
 
 ## Install
-See in [Docs](https://expressobits.com/inventory-system-docs/getting_started/installation/)
+See in [Docs](https://expressobits.com/inventory-system/getting_started/installation.html)
 
 ## Struture
 ### [Gloot](https://github.com/peter-kish/gloot)
