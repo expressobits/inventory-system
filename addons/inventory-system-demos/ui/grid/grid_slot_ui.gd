@@ -19,8 +19,8 @@ var item_dragged: bool = false:
 	set(value):
 		pass
 		#print("item_grabbed",value)
-		
-		
+
+
 func setup(grid_position: Vector2i, new_inventory: GridInventory):
 	self._grid_position = grid_position
 	self.inventory = new_inventory

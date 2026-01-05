@@ -28,6 +28,7 @@ func get_interaction_position(interaction_point : Vector3) -> Vector3:
 			slot_index = i
 	return near_position
 
+
 func interact_with_slot(character : Node, action_index : int = 0, actual_slot_index := 0):
 	if openable.is_open:
 		return
@@ -48,6 +49,7 @@ func interact_with_slot(character : Node, action_index : int = 0, actual_slot_in
 		if definition != null:
 			char_inventory.transfer_at(char_slot_index, inventory, actual_slot_index)
 		return
+
 
 func interact(character : Node, action_index : int = 0):
 	interact_with_slot(character, action_index, slot_index)

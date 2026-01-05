@@ -33,7 +33,7 @@ New here? Read our new [Documentation](https://expressobits.com/inventory-system
 ✔️ Multiplayer compatible (Including example).
 
 ✔️ Loot System (https://github.com/expressobits/inventory-system/issues/152).
- 
+
 ✔️ Hotbar.
 
 ✔️ Craft System.
@@ -70,7 +70,7 @@ The grid system and its UI were based on this repository.
 ## CMake support
 
 ### git submodule setup in main repository
-`git submodule init`  
+`git submodule init`
 `git submodule update`
 
 ### cmake configure in main repository

@@ -32,12 +32,12 @@ var _recipe_uis : Array[RecipeUI]
 
 ## Configure a craftstation for the [Recipe] list and [CraftingsUI] list
 func open(_craft_station : CraftStation):
-	
+
 	if(self.craft_station != null):
 		for i in self.craft_station.input_inventories.size():
 			if self.craft_station.get_input_inventory(i).contents_changed.is_connected(_on_input_inventory_contents_changed):
 				self.craft_station.get_input_inventory(i).contents_changed.disconnect(_on_input_inventory_contents_changed)
-	
+
 	self.craft_station = _craft_station
 	_clear()
 	_craftings_ui.set_craft_station(craft_station)
@@ -53,13 +53,13 @@ func open(_craft_station : CraftStation):
 	visible = true
 	var valid_input = view_input_inventory and craft_station.input_inventories.size() > 0 and craft_station.input_inventories[0] != null
 	var valid_output = view_output_inventory and craft_station.output_inventories.size() > 0 and craft_station.output_inventories[0] != null
-	if valid_input: 
+	if valid_input:
 		input_inventory_ui.inventory = craft_station.get_input_inventory(0)
-	if valid_output: 
+	if valid_output:
 		input_inventory_ui.inventory = craft_station.get_input_inventory(0)
 	input_inventory_ui.visible = valid_input
 	output_inventory_ui.visible = valid_output
-	
+
 	for i in craft_station.input_inventories.size():
 		craft_station.get_input_inventory(i).contents_changed.connect(_on_input_inventory_contents_changed)
 

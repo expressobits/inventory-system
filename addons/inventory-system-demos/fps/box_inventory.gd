@@ -13,6 +13,7 @@ func _ready():
 	openable.opened.connect(_on_openable_opened)
 	inventory.grid_constraints = constraints
 
+
 func get_inventory() -> Inventory:
 	return $Inventory
 

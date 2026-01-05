@@ -20,6 +20,7 @@ func _process(_delta: float):
 		inventory.remove(item_id, 1)
 		print_inventory()
 
+
 func print_inventory():
 	print("Inventory Items:")
 	for item in inventory.stacks:

@@ -5,6 +5,7 @@ extends Node
 
 var main_inventory : Inventory
 
+
 func _ready():
 	$"UI/Inventory System UI".setup($"Player/CharacterInventorySystem")
 	main_inventory = $"Player/CharacterInventorySystem".main_inventory
@@ -13,7 +14,7 @@ func _ready():
 	main_inventory.add("wood", 16)
 	main_inventory.add("stone", 8)
 
-#
+
 func _process(_delta):
 	pass
 	if Input.is_action_just_released("add_item_a"):

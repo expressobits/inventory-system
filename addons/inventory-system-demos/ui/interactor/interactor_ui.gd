@@ -12,6 +12,7 @@ var default_interact_message_position : Vector2
 var interact_object
 var interact_hand_object
 
+
 func setup(_interactor : Interactor):
 	if self.interactor != null:
 		interactor.preview_interacted.disconnect(_on_preview_interacted)
@@ -41,7 +42,6 @@ func preview_interact(actions : Array, position_on_screen : Vector2):
 		var interact_message = interact_messages[i]
 		if i < actions.size():
 			interact_message.show_message(actions[i].input, actions[i].description)
-			
+
 		else:
 			interact_message.hide_message()
-		

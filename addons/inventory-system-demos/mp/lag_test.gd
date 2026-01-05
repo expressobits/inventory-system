@@ -3,6 +3,7 @@ class_name LagTest
 
 @export var actived := false
 
+
 func _process(_delta: float) -> void:
 	if not actived:
 		return

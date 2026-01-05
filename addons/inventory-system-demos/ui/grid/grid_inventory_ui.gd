@@ -2,7 +2,6 @@ extends Control
 class_name GridInventoryUI
 
 #region Signals
-
 ## Emitted when a grabbed [ItemStack] is dropped.
 signal item_dropped(item: ItemStack, offset)
 ## Emitted when the selection has changed. Use [method get_selected_inventory_item]
@@ -23,7 +22,6 @@ signal item_mouse_exited(item)
 signal request_split(inventory : Inventory, stack_index : int, amount : int)
 signal request_transfer_to(origin_inventory: GridInventory, origin_position: Vector2i, inventory: GridInventory, destination_position: Vector2i, amount: int, is_rotated: bool)
 signal request_fast_transfer(origin_inventory: GridInventory, origin_position: Vector2i, amount: int)
-
 #endregion
 
 enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
@@ -45,7 +43,7 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 
 		if is_inside_tree():
 			assert(node is GridInventory)
-			
+
 		inventory = node
 		update_configuration_warnings()
 
@@ -75,10 +73,10 @@ enum SelectMode {SELECT_SINGLE = 0, SELECT_MULTI = 1}
 ## The [Inventory] node linked to this control.
 var inventory: GridInventory = null:
 	set(new_inventory):
-		
+
 		if inventory == new_inventory:
 			return
-		
+
 		_clear_selection()
 		_disconnect_inventory_signals()
 		inventory = new_inventory
@@ -97,7 +95,6 @@ var _ctrl_item_container: Control = null
 var _grid_drop_zone_ui: GridDropZoneUI = null
 #endregion
 
-
 #region Default Functions
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -108,7 +105,7 @@ func _ready() -> void:
 
 	if has_node(inventory_path):
 		inventory = get_node_or_null(inventory_path)
-		
+
 	_grid_slots_container = Control.new()
 	_grid_slots_container.name = "GridSlotsContainer"
 	add_child(_grid_slots_container)
@@ -118,7 +115,7 @@ func _ready() -> void:
 	_grid_inventory_content_ui.resized.connect(_update_size)
 	_grid_inventory_content_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_grid_inventory_content_ui)
-	
+
 	_ctrl_item_container = Control.new()
 	_ctrl_item_container.size = size
 	_ctrl_item_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -139,7 +136,7 @@ func _ready() -> void:
 
 	_update_size()
 	_queue_refresh()
-	
+
 func _process(_delta) -> void:
 	if _refresh_queued:
 		_refresh()
@@ -152,12 +149,11 @@ func _get_configuration_warnings() -> PackedStringArray:
 				"This node is not linked to an inventory and it can't display any content.\n" + \
 				"Set the inventory_path property to point to an InventoryGrid node."])
 	return PackedStringArray()
-	
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_DRAG_END:
 		_grid_drop_zone_ui.deactivate()
-		
 
 
 func _input(event) -> void:
@@ -201,7 +197,7 @@ func _update_stacks():
 	_stack_uis.clear()
 	for stack_index in inventory.stacks.size():
 		_on_inventory_stack_added(stack_index)
-	
+
 
 func _on_inventory_stack_added(stack_index: int):
 	var stack = inventory.stacks[stack_index]
@@ -217,7 +213,7 @@ func _on_inventory_stack_removed(stack_index: int):
 func _refresh() -> void:
 	_refresh_grid_slots()
 	size = custom_minimum_size
-	
+
 	if is_instance_valid(_grid_drop_zone_ui):
 		_grid_drop_zone_ui.deactivate()
 	if is_instance_valid(_grid_inventory_content_ui):
@@ -226,7 +222,7 @@ func _refresh() -> void:
 
 func _queue_refresh() -> void:
 	_refresh_queued = true
-		
+
 
 #region Grid Slots
 func get_grid_slot_coords(local_pos: Vector2) -> Vector2i:
@@ -252,7 +248,7 @@ func _refresh_grid_slots() -> void:
 
 	if !is_instance_valid(inventory):
 		return
-	
+
 	for i in range(inventory.size.x):
 		_grid_slots.append([])
 		for j in range(inventory.size.y):
@@ -262,8 +258,8 @@ func _refresh_grid_slots() -> void:
 			grid_slot_ui.setup(Vector2i(i, j), inventory)
 			_grid_slots_container.add_child(grid_slot_ui)
 			_grid_slots[i].append(grid_slot_ui)
-			
-			
+
+
 func _set_selected_grid_slots(rect: Rect2i, selected: bool) -> void:
 	var h_range = min(rect.size.x + rect.position.x, inventory.size.x)
 	for i in range(rect.position.x, h_range):
@@ -348,7 +344,7 @@ func get_selected_inventory_item() -> GridItemStackUI:
 func get_selected_stacks() -> Array[GridItemStackUI]:
 	return _selected_stacks.duplicate()
 
-	
+
 #region ContentUI
 func _on_item_drop(zone: GridDropZoneUI, drop_position: Vector2, grid_item_stack_ui: GridItemStackUI) -> void:
 	var stack: ItemStack = grid_item_stack_ui.item
@@ -379,13 +375,13 @@ func add_grid_item_stack_ui(stack: ItemStack):
 
 	_ctrl_item_container.add_child(grid_item_stack_ui)
 	_stack_uis.append(grid_item_stack_ui)
-	
-		
+
+
 func _on_item_middle_clicked(grid_item_stack_ui) -> void:
 	var stack = grid_item_stack_ui.stack
 	if !is_instance_valid(stack):
 		return
-	
+
 	var stack_size : int = stack.amount
 	var stack_index = inventory.stacks.find(stack)
 
@@ -398,15 +394,15 @@ func _on_item_clicked(grid_item_stack_ui) -> void:
 	var stack = grid_item_stack_ui.stack
 	if !is_instance_valid(stack):
 			return
-	
+
 	if Input.is_action_pressed("ui_inventory_transfer"):
 		var stack_position : Vector2i = inventory.get_stack_position(stack)
 		#TODO make rotation with R key or mouse wheel
 		var _is_rotated: bool = inventory.is_stack_rotated(stack)
-		
+
 		request_fast_transfer.emit(inventory, stack_position, stack.amount)
 	else:
-		
+
 		if select_mode == SelectMode.SELECT_MULTI && Input.is_key_pressed(KEY_CTRL):
 			if !_is_item_selected(stack):
 				_select(grid_item_stack_ui)
@@ -442,19 +438,19 @@ func _on_dragable_dropped(dragable: GridDraggableElementUI, drop_position: Vecto
 
 func _handle_stack_transfer(stack: ItemStack, drop_position: Vector2, source_inventory : Inventory) -> void:
 	var grid_slot_coords = get_grid_slot_coords(drop_position + (grid_slot_size / 2))
-	
+
 	if source_inventory == null:
 		printerr("source_inventory is null?")
 		return
-	
+
 	if source_inventory.database != inventory.database:
 		return
-		
+
 	var stack_position : Vector2i = source_inventory.get_stack_position(stack)
 	#TODO make rotation with R key or mouse wheel
 	var is_rotated: bool = source_inventory.is_stack_rotated(stack)
 	request_transfer_to.emit(source_inventory, stack_position, inventory, grid_slot_coords, stack.amount, is_rotated)
-
+#endregion
 
 #region Stack UI Utils
 func get_stack_rect(stack: ItemStack) -> Rect2:
@@ -524,8 +520,8 @@ func _select(stack_ui: GridItemStackUI) -> void:
 	_selected_stacks.append(stack_ui)
 	_on_selection_changed()
 	stack_ui.select()
-	
-	
+
+
 func _deselect(stack_ui: GridItemStackUI) -> void:
 	var stack = stack_ui.stack
 	if !(stack in _selected_stacks):
@@ -546,13 +542,12 @@ func _clear_selection() -> void:
 			selected_stack.unselect()
 	_selected_stacks.clear()
 	selection_changed.emit()
-	
-	
+
+
 func _on_item_activated(grid_item_stack_ui: GridItemStackUI) -> void:
 	var stack = grid_item_stack_ui.stack
 	if !stack:
 		return
 
 	inventory_item_activated.emit(stack)
-#endregion
 #endregion

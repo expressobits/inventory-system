@@ -13,7 +13,6 @@ extends HBoxContainer
 	set(value):
 		description = value
 		setup_description(value)
-		
 
 
 func setup_icon(input_text : String):

@@ -6,6 +6,7 @@ extends MultiplayerSpawner
 
 @export var database : InventoryDatabase
 
+
 func _init():
 	spawn_function = _spawn_custom
 

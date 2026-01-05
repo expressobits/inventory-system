@@ -18,6 +18,7 @@ var recipe_index : int
 var craft_station : CraftStation
 var _ingredients : Array[IngredientUI]
 
+
 ## Configures the recipe with index values from [Recipe] from [InventoryDatabase].
 ## Called by [CraftStationUI].
 func set_recipe(_craft_station : CraftStation, _recipe : Recipe, _recipe_index : int):
@@ -44,7 +45,7 @@ func set_recipe(_craft_station : CraftStation, _recipe : Recipe, _recipe_index :
 func _clear_ingredients():
 	for ingredient_ui in _ingredients:
 		ingredient_ui.queue_free()
-		_ingredients.clear()		
+		_ingredients.clear()
 
 
 func check_if_has_ingredients():

@@ -44,11 +44,11 @@ var property_map: Dictionary = {
 		4194342: "f11",
 		4194343: "f12",
 	},
-	
+
 	"mouse_button": [
 		"lmb", "rmb", "mmb", "mw_up", "mw_down", "mw_left", "mw_right", "mb1", "mb2"
 	],
-	
+
 	"gp_button": [
 		"bot", "right", "left", "top",
 		"back", "guide", "start",
@@ -58,7 +58,7 @@ var property_map: Dictionary = {
 		"misc", "pad1", "pad2", "pad3", "pad4",
 		"touch"
 	],
-	
+
 	"gp_motion": [
 		{"-": "ls_left", "+": "ls_right"},
 		{"-": "ls_down", "+": "ls_up"},
