@@ -462,6 +462,17 @@ void CustomPropertiesEditor::_update_properties_list() {
 			String property_name = keys[i];
 			Variant property_value = properties[property_name];
 			Variant::Type property_type = property_value.get_type();
+			
+			// Check if this is a string that represents a resource path
+			// If so, treat it as a resource type for UI purposes
+			if (property_type == Variant::STRING) {
+				String str_value = property_value;
+				if (str_value.ends_with(".tres") || str_value.ends_with(".res") || 
+					str_value.ends_with(".tscn") || str_value.ends_with(".scn") || 
+					str_value.begins_with("res://")) {
+					property_type = Variant::OBJECT; // Treat as resource for UI
+				}
+			}
 
 			// Add item with icon based on property type
 			properties_list->add_item(property_name);
