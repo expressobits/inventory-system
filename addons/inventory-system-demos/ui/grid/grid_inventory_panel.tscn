@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://1dijqt6vr078"]
+[gd_scene format=3 uid="uid://1dijqt6vr078"]
 
 [ext_resource type="Script" uid="uid://d0wo2gh3a0u7j" path="res://addons/inventory-system-demos/ui/grid/grid_inventory_panel.gd" id="1_gc205"]
 [ext_resource type="Texture2D" uid="uid://dsewxlrqmqe30" path="res://addons/inventory-system/icons/crafter.svg" id="2_lh5b3"]
