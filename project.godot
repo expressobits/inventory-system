@@ -29,6 +29,10 @@ gdscript/warnings/directory_rules={
 
 project/assembly_name="inventory-system-demos"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/inventory-system/plugin.cfg")
+
 [input]
 
 forward_move={
