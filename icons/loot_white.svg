@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   version="1.1"
+   viewBox="0 0 4.2333 4.2333"
+   id="svg264"
+   sodipodi:docname="loot_white.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs268" />
+  <sodipodi:namedview
+     id="namedview266"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     showgrid="true"
+     inkscape:lockguides="false"
+     inkscape:zoom="32"
+     inkscape:cx="11"
+     inkscape:cy="8.296875"
+     inkscape:window-width="2560"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg264">
+    <inkscape:grid
+       id="grid3"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.26458125"
+       spacingy="0.26458125"
+       empcolor="#e50000"
+       empopacity="0.30196078"
+       color="#e5008c"
+       opacity="0.14901961"
+       empspacing="8"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
+  <path
+     id="rect7-1"
+     style="fill:#e0e0e0;stroke-width:0.319096;fill-opacity:1"
+     d="M 1.058325 0.5291625 C 0.76516896 0.5291625 0.5291625 0.76516896 0.5291625 1.058325 L 0.5291625 1.5874875 L 3.7041375 1.5874875 L 3.7041375 1.058325 C 3.7041375 0.76516896 3.468131 0.5291625 3.174975 0.5291625 L 1.058325 0.5291625 z M 0.5291625 2.11665 L 0.5291625 3.174975 C 0.5291625 3.468131 0.76516896 3.7041375 1.058325 3.7041375 L 3.174975 3.7041375 C 3.468131 3.7041375 3.7041375 3.468131 3.7041375 3.174975 L 3.7041375 2.11665 L 2.6458125 2.11665 L 2.6458125 2.3812312 L 2.6458125 2.6458125 L 1.5874875 2.6458125 L 1.5874875 2.3812312 L 1.5874875 2.11665 L 0.5291625 2.11665 z " />
+</svg>

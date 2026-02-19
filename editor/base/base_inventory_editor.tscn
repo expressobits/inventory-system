@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://y7s1081jj0hp"]
+
+[ext_resource type="Script" uid="uid://fahfxm8mkibg" path="res://addons/inventory-system/editor/base/base_inventory_editor.gd" id="1_dd1ol"]
+
+[node name="BaseInventoryEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_dd1ol")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = -128
+
+[node name="RemoveConfirmationDialog" type="ConfirmationDialog" parent="."]
+unique_name_in_owner = true
+size = Vector2i(400, 100)

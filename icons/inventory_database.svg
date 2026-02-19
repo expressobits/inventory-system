@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="16" height="16" version="1.1" viewBox="0 0 4.2333 4.2333" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#35d4f4">
+  <rect x="6.2711" y="7.7306" width="0" height="3.1242" rx="2" ry="2" stroke="#fff" stroke-width="2"/>
+  <rect x="1.3545" y="1.419" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".52917"/>
+  <rect x=".26458" y="3.7042" width="3.7042" height=".52917"/>
+  <rect x=".26458" y="-4.2206e-8" width="3.7042" height=".52917"/>
+  <rect transform="rotate(-90)" x="-4.2333" y="4.7201e-8" width="4.2333" height=".52917" ry=".26868"/>
+  <rect transform="rotate(-90)" x="-4.2333" y="3.7042" width="4.2333" height=".52917" ry=".26458"/>
+  <rect x=".79375" y=".79375" width=".52917" height=".79375" rx="4.2206e-8" ry="6.3309e-8"/>
+  <rect x=".79375" y="1.8521" width=".52917" height=".52917" rx="4.2206e-8" ry="4.2206e-8"/>
+  <rect x=".79375" y="2.6458" width=".52917" height=".79375" rx="4.2206e-8" ry="6.3309e-8"/>
+  <rect x="1.5875" y=".79375" width="1.0583" height=".79375" rx="8.4412e-8" ry="6.3309e-8"/>
+  <rect x="1.5875" y="2.6458" width="1.8521" height=".79375" rx="1.4772e-7" ry="6.3309e-8"/>
+  <rect x="1.5875" y="1.8521" width=".79375" height=".52917" rx="6.3309e-8" ry="4.2206e-8"/>
+  <rect x="2.6458" y="1.8521" width=".79375" height=".52917" rx="6.3309e-8" ry="4.2206e-8"/>
+  <rect x="2.9104" y=".79375" width=".52917" height=".79375" rx="4.2206e-8" ry="6.3309e-8"/>
+ </g>
+</svg>

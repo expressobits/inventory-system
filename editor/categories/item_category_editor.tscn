@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://dqcgncj4oicwn"]
+
+[ext_resource type="Script" uid="uid://uf1neksemcpp" path="res://addons/inventory-system/editor/categories/item_category_editor.gd" id="1_pk45a"]
+[ext_resource type="Script" uid="uid://cldkwwe5x8urh" path="res://addons/inventory-system/editor/categories/item_category_id_editor.gd" id="2_3658w"]
+[ext_resource type="PackedScene" uid="uid://cv8naqmqxqy8k" path="res://addons/inventory-system/editor/categories/category_custom_properties.tscn" id="2_nl7i2"]
+[ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_c5p76"]
+
+[node name="ItemCategoryEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_pk45a")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="IDEditor" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("2_3658w")
+
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Name"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Name"
+
+[node name="NameTextEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Name"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Place Item Name Here"
+
+[node name="Color" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Color"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Color"
+
+[node name="ColorPicker" type="ColorPickerButton" parent="MarginContainer/VBoxContainer/Color"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="IconSelector" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("3_c5p76")
+
+[node name="CategoryCustomProperties" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_nl7i2")]
+layout_mode = 2
+
+[connection signal="theme_changed" from="." to="." method="_on_theme_changed"]
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/Name/NameTextEdit" to="." method="_on_name_text_edit_text_changed"]
+[connection signal="color_changed" from="MarginContainer/VBoxContainer/Color/ColorPicker" to="." method="_on_color_picker_color_changed"]

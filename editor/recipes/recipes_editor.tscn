@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://c20tt03af3qw6"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/base_inventory_editor.tscn" id="1_8r7ns"]
+[ext_resource type="Script" uid="uid://snjetvtbdq78" path="res://addons/inventory-system/editor/recipes/recipes_editor.gd" id="1_hp38j"]
+[ext_resource type="PackedScene" uid="uid://bkrqq2gbr45r5" path="res://addons/inventory-system/editor/recipes/recipes_list_editor.tscn" id="3_aawwx"]
+[ext_resource type="PackedScene" uid="uid://c5qc6bmfbgi4h" path="res://addons/inventory-system/editor/recipes/recipe_editor.tscn" id="3_b42ug"]
+
+[node name="RecipesEditor" instance=ExtResource("1_8r7ns")]
+script = ExtResource("1_hp38j")
+
+[node name="RecipesListEditor" parent="HSplitContainer" index="0" instance=ExtResource("3_aawwx")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RecipeEditor" parent="HSplitContainer" index="1" instance=ExtResource("3_b42ug")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 0)
+layout_mode = 2

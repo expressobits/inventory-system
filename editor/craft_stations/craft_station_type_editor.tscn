@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdv6y2uu0ywq0"]
+
+[ext_resource type="Script" uid="uid://c1bq50hrivxkw" path="res://addons/inventory-system/editor/craft_stations/craft_station_type_editor.gd" id="1_rih6e"]
+[ext_resource type="Script" uid="uid://bp6f231s4c4cf" path="res://addons/inventory-system/editor/craft_stations/craft_station_id_editor.gd" id="2_mcdya"]
+[ext_resource type="Script" uid="uid://d2183xcpsntk1" path="res://addons/inventory-system/editor/base/icon_selector.gd" id="3_ct0mp"]
+
+[node name="CraftStationTypeEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_rih6e")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="CraftStationTypeIDEditor" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("2_mcdya")
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Name"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Name"
+
+[node name="NameTextEdit" type="LineEdit" parent="MarginContainer/VBoxContainer/Name"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Place Item Name Here"
+
+[node name="IconSelector" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+script = ExtResource("3_ct0mp")
+
+[connection signal="text_changed" from="MarginContainer/VBoxContainer/Name/NameTextEdit" to="." method="_on_name_text_edit_text_changed"]

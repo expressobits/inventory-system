@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="16" height="16" version="1.1" viewBox="0 0 4.2333 4.2333" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#35d4f4">
+  <rect x="6.2711" y="7.7306" width="0" height="3.1242" rx="2" ry="2" stroke="#fff" stroke-width="2"/>
+  <rect x="1.3545" y="1.419" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width=".52917"/>
+  <rect x=".52917" y="2.9104" width="3.175" height=".52917"/>
+  <rect x=".52917" y=".79375" width="3.175" height=".52917"/>
+  <rect transform="rotate(-90)" x="-3.4396" y=".26458" width="2.6458" height=".52917" ry=".26868"/>
+  <rect transform="rotate(-90)" x="-3.4396" y="3.4396" width="2.6458" height=".52917" ry=".26458"/>
+  <rect x="1.0583" y="1.5875" width="1.0583" height="1.0583" rx=".26458" ry=".26458"/>
+  <rect x="2.3812" y="1.7198" width=".79375" height=".79375" rx=".26458" ry=".26458"/>
+  <rect x=".92604" y=".52917" width="1.1906" height=".79375" rx=".39687" ry=".26458"/>
+  <rect x=".92604" y="2.9104" width="1.1906" height=".79375" rx=".39687" ry=".26458"/>
+ </g>
+</svg>

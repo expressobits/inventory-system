@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bl40ri4you0n5"]
+
+[ext_resource type="Script" uid="uid://bxbv4smi0115m" path="res://addons/inventory-system/editor/items/categories_in_item.gd" id="1_eq3id"]
+
+[node name="CategoriesInItem" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
+script = ExtResource("1_eq3id")
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Categories"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HFlowContainer" type="HFlowContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3

@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkrqq2gbr45r5"]
+
+[ext_resource type="Script" uid="uid://cs36uxrbmg4vy" path="res://addons/inventory-system/editor/recipes/recipes_list_editor.gd" id="1_ctpv3"]
+
+[node name="RecipesListEditor" type="Control"]
+custom_minimum_size = Vector2(336, 0)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ctpv3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="SearchLineEdit" type="LineEdit" parent="VBoxContainer/Control"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Product Items"
+draw_control_chars = true
+
+[node name="SearchIcon" type="TextureRect" parent="VBoxContainer/Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+expand_mode = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 2

@@ -1,0 +1,135 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5qc6bmfbgi4h"]
+
+[ext_resource type="Script" uid="uid://bopp5xk1h3hyr" path="res://addons/inventory-system/editor/recipes/recipe_editor.gd" id="1_lv37o"]
+
+[node name="RecipeEditor" type="Control"]
+custom_minimum_size = Vector2(0, 384)
+layout_mode = 3
+anchors_preset = 0
+offset_bottom = 384.0
+size_flags_horizontal = 3
+script = ExtResource("1_lv37o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HSeparator4" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Products" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/Products"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Products"
+
+[node name="ProductsVBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/Products"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NewProductButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/Products/ProductsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Add New Product"
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Ingredients" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/Ingredients"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Ingredients"
+
+[node name="IngredientsVBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/Ingredients"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NewIngredientButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/Ingredients/IngredientsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Add New Ingredient"
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ExtraRequiredItems" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/ExtraRequiredItems"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+size_flags_vertical = 1
+text = "Required Items"
+
+[node name="RequiredItemsVBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/ExtraRequiredItems"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NewRequiredItemButton" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/ExtraRequiredItems/RequiredItemsVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+text = "Add Required Item (Items not used by craft)"
+
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TimeToCraft" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/TimeToCraft"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Time To Craft"
+
+[node name="TimeToCraftSpinBox" type="SpinBox" parent="MarginContainer/MarginContainer/VBoxContainer/TimeToCraft"]
+layout_mode = 2
+max_value = 1e+08
+
+[node name="CraftStationType" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/CraftStationType"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Craft Station Type"
+
+[node name="CraftStationTypeOptionButton" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer/CraftStationType"]
+layout_mode = 2
+size_flags_horizontal = 3
+expand_icon = true
+
+[node name="Control" type="Control" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/Products/ProductsVBoxContainer/NewProductButton" to="." method="_on_new_product_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MarginContainer/VBoxContainer/Ingredients/IngredientsVBoxContainer/NewIngredientButton" to="." method="_on_new_ingredient_button_pressed"]

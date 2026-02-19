@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfevgv38d1bll"]
+
+[ext_resource type="PackedScene" uid="uid://y7s1081jj0hp" path="res://addons/inventory-system/editor/base/base_inventory_editor.tscn" id="1_7csdk"]
+[ext_resource type="Script" uid="uid://dycxtndxpf56i" path="res://addons/inventory-system/editor/categories/categories_editor.gd" id="2_eyvx1"]
+[ext_resource type="Script" uid="uid://baoflx32svgcc" path="res://addons/inventory-system/editor/inventory_item_list_editor.gd" id="3_xhxmq"]
+[ext_resource type="PackedScene" uid="uid://dqcgncj4oicwn" path="res://addons/inventory-system/editor/categories/item_category_editor.tscn" id="4_0s65b"]
+
+[node name="CategoriesEditor" instance=ExtResource("1_7csdk")]
+script = ExtResource("2_eyvx1")
+
+[node name="ItemCategoriesItemList" type="VBoxContainer" parent="HSplitContainer" index="0"]
+custom_minimum_size = Vector2(256, 0)
+layout_mode = 2
+script = ExtResource("3_xhxmq")
+
+[node name="SearchItems" type="Control" parent="HSplitContainer/ItemCategoriesItemList" index="0"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="LineEdit" type="LineEdit" parent="HSplitContainer/ItemCategoriesItemList/SearchItems" index="0"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+placeholder_text = "Search Items"
+draw_control_chars = true
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/ItemCategoriesItemList/SearchItems" index="1"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+expand_mode = 1
+
+[node name="ItemList" type="ItemList" parent="HSplitContainer/ItemCategoriesItemList" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+allow_rmb_select = true
+fixed_icon_size = Vector2i(16, 16)
+
+[node name="ItemCategoryEditor" parent="HSplitContainer" index="1" instance=ExtResource("4_0s65b")]
+layout_mode = 2
+
+[node name="ItemCategoryPopupMenu" type="PopupMenu" parent="." index="1"]
+size = Vector2i(28, 8)
+
+[connection signal="item_popup_menu_requested" from="HSplitContainer/ItemCategoriesItemList" to="." method="_on_item_categories_item_list_item_popup_menu_requested"]
+[connection signal="item_selected" from="HSplitContainer/ItemCategoriesItemList" to="." method="_on_item_categories_item_list_item_selected"]
+[connection signal="changed" from="HSplitContainer/ItemCategoryEditor" to="." method="_on_item_category_editor_changed"]
+[connection signal="id_pressed" from="ItemCategoryPopupMenu" to="." method="_on_item_category_popup_menu_id_pressed"]
