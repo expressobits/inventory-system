@@ -1,65 +1,65 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkwte8idjpjtg"]
+[gd_scene format=3 uid="uid://dkwte8idjpjtg"]
 
 [ext_resource type="Script" uid="uid://bhqqrkoyr7qfh" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/furnace_test.gd" id="1_nypqm"]
 [ext_resource type="InventoryDatabase" uid="uid://8g6jugqd8mtl" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/create_and_use_craft_station_type_database.tres" id="1_o0mvp"]
 
-[node name="FurnaceTest" type="Node"]
+[node name="FurnaceTest" type="Node" unique_id=4389177]
 script = ExtResource("1_nypqm")
 
-[node name="FurnaceStation" type="CraftStation" parent="."]
+[node name="FurnaceStation" type="CraftStation" parent="." unique_id=774006278]
 input_inventories = Array[NodePath]([NodePath("../InputInventory")])
 output_inventories = Array[NodePath]([NodePath("../OutputInventory")])
 type_id = "furnace"
 database = ExtResource("1_o0mvp")
 
-[node name="InputInventory" type="Inventory" parent="."]
+[node name="InputInventory" type="Inventory" parent="." unique_id=1482106115]
 database = ExtResource("1_o0mvp")
 
-[node name="OutputInventory" type="Inventory" parent="."]
+[node name="OutputInventory" type="Inventory" parent="." unique_id=2040645190]
 database = ExtResource("1_o0mvp")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=113536940]
 
-[node name="MarginContainer" type="MarginContainer" parent="UI"]
+[node name="MarginContainer" type="MarginContainer" parent="UI" unique_id=114315062]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MarginContainer" unique_id=155147508]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1174922704]
 layout_mode = 2
 text = "Furnace Station"
 
-[node name="StatusContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+[node name="StatusContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer" unique_id=1045645765]
 layout_mode = 2
 
-[node name="InputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer"]
+[node name="InputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer" unique_id=119112860]
 layout_mode = 2
 
-[node name="OutputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer"]
+[node name="OutputLabel" type="Label" parent="UI/MarginContainer/VBoxContainer/StatusContainer" unique_id=970990698]
 layout_mode = 2
 
-[node name="RecipesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+[node name="RecipesLabel" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1308823111]
 layout_mode = 2
 text = "Available Smelting Recipes:"
 
-[node name="RecipesList" type="VBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+[node name="RecipesList" type="VBoxContainer" parent="UI/MarginContainer/VBoxContainer" unique_id=1235397529]
 layout_mode = 2
 
-[node name="ControlsContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer"]
+[node name="ControlsContainer" type="HBoxContainer" parent="UI/MarginContainer/VBoxContainer" unique_id=1372962450]
 layout_mode = 2
 
-[node name="AddMaterialsButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer"]
+[node name="AddMaterialsButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer" unique_id=487803881]
 layout_mode = 2
 text = "Add Materials"
 
-[node name="SmeltAllButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer"]
+[node name="SmeltAllButton" type="Button" parent="UI/MarginContainer/VBoxContainer/ControlsContainer" unique_id=1199882360]
 layout_mode = 2
 text = "Smelt All"
 
-[node name="ProgressLabel" type="Label" parent="UI/MarginContainer/VBoxContainer"]
+[node name="ProgressLabel" type="Label" parent="UI/MarginContainer/VBoxContainer" unique_id=1784957947]
 layout_mode = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="UI/MarginContainer/VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="UI/MarginContainer/VBoxContainer" unique_id=1078906551]
 layout_mode = 2

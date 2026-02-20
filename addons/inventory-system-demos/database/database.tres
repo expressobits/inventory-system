@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=59 format=3 uid="uid://de5qy8ycey7yn"]
+[gd_resource type="InventoryDatabase" format=3 uid="uid://de5qy8ycey7yn"]
 
 [ext_resource type="Texture2D" uid="uid://bvo40fysfxnx8" path="res://addons/inventory-system-demos/assets/icons/fire-svgrepo-com.svg" id="1_pegli"]
 [ext_resource type="Texture2D" uid="uid://bw4m1qyegtyin" path="res://addons/inventory-system-demos/assets/icons/branch.png" id="1_wk1an"]

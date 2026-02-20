@@ -1,18 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://cvb3qbx5btxfh"]
+[gd_scene format=3 uid="uid://cvb3qbx5btxfh"]
 
 [ext_resource type="InventoryDatabase" uid="uid://8g6jugqd8mtl" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/create_and_use_craft_station_type_database.tres" id="1_5layf"]
 [ext_resource type="Script" uid="uid://duh6m6wgu0mpm" path="res://addons/inventory-system-demos/tutorials/tutorial_create_and_use_craft_station_type/workbench_test.gd" id="1_hjptr"]
 
-[node name="WorkbenchTest" type="Node"]
+[node name="WorkbenchTest" type="Node" unique_id=314430442]
 script = ExtResource("1_hjptr")
 
-[node name="WorkbenchStation" type="CraftStation" parent="."]
+[node name="WorkbenchStation" type="CraftStation" parent="." unique_id=1627798297]
 input_inventories = Array[NodePath]([NodePath("../InputInventory")])
 output_inventories = Array[NodePath]([NodePath("../OutputInventory")])
 database = ExtResource("1_5layf")
 
-[node name="InputInventory" type="Inventory" parent="."]
+[node name="InputInventory" type="Inventory" parent="." unique_id=884410584]
 database = ExtResource("1_5layf")
 
-[node name="OutputInventory" type="Inventory" parent="."]
+[node name="OutputInventory" type="Inventory" parent="." unique_id=2115648927]
 database = ExtResource("1_5layf")

@@ -1,4 +1,4 @@
-[gd_resource type="InventoryDatabase" load_steps=14 format=3 uid="uid://8g6jugqd8mtl"]
+[gd_resource type="InventoryDatabase" format=3 uid="uid://8g6jugqd8mtl"]
 
 [sub_resource type="ItemDefinition" id="ItemDefinition_sodtm"]
 id = "iron_ore"

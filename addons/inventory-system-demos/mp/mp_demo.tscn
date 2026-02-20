@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bbqbopdyaknlx"]
+[gd_scene format=3 uid="uid://bbqbopdyaknlx"]
 
 [ext_resource type="Script" uid="uid://c3ivrisldwxdo" path="res://addons/inventory-system-demos/mp/mp_demo.gd" id="1_fcmcx"]
 [ext_resource type="PackedScene" uid="uid://dnlxnu6jpej17" path="res://addons/inventory-system-demos/mp/mp_player.tscn" id="2_01e0j"]
@@ -17,17 +17,17 @@
 [ext_resource type="PackedScene" uid="uid://b7kev3be161jq" path="res://addons/inventory-system-demos/mp/mp_workbench.tscn" id="16_qnjnu"]
 [ext_resource type="PackedScene" uid="uid://ccgrlrqx2vvqf" path="res://addons/inventory-system-demos/mp/mp_campfire.tscn" id="17_qo5oj"]
 
-[node name="MPDemo" type="Node"]
+[node name="MPDemo" type="Node" unique_id=1010871262]
 script = ExtResource("1_fcmcx")
 player_scene = ExtResource("2_01e0j")
 database = ExtResource("3_aep54")
 
-[node name="Setup Keys" type="Node" parent="."]
+[node name="Setup Keys" type="Node" parent="." unique_id=1609396518]
 script = ExtResource("10_efc1k")
 
-[node name="Level" parent="." instance=ExtResource("8_kfwho")]
+[node name="Level" parent="." unique_id=517138670 instance=ExtResource("8_kfwho")]
 
-[node name="Box Inventory" parent="." instance=ExtResource("9_y0513")]
+[node name="Box Inventory" parent="." unique_id=1349828493 instance=ExtResource("9_y0513")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 script = ExtResource("10_4488h")
 
@@ -37,7 +37,7 @@ inventory_name = "Dynamic Inventory"
 [node name="Openable" parent="Box Inventory" index="7"]
 script = ExtResource("10_kjp1o")
 
-[node name="Box Inventory2" parent="." instance=ExtResource("9_y0513")]
+[node name="Box Inventory2" parent="." unique_id=1910181654 instance=ExtResource("9_y0513")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 script = ExtResource("10_4488h")
 
@@ -47,34 +47,37 @@ inventory_name = "Static Inventory"
 [node name="Openable" parent="Box Inventory2" index="7"]
 script = ExtResource("10_kjp1o")
 
-[node name="Workbench" parent="." instance=ExtResource("16_qnjnu")]
+[node name="Workbench" parent="." unique_id=507846072 instance=ExtResource("16_qnjnu")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, -4)
 
-[node name="Campfire" parent="." instance=ExtResource("17_qo5oj")]
+[node name="Campfire" parent="." unique_id=549362611 instance=ExtResource("17_qo5oj")]
 burnable_category = "burnables"
 
-[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="."]
+[node name="DroppedItemSpawner" type="MultiplayerSpawner" parent="." unique_id=1192609868]
 spawn_path = NodePath("..")
 script = ExtResource("8_m78qf")
 database = ExtResource("3_aep54")
 
-[node name="PlaceableItemSpawner" type="MultiplayerSpawner" parent="."]
+[node name="PlaceableItemSpawner" type="MultiplayerSpawner" parent="." unique_id=519747578]
 spawn_path = NodePath("..")
 script = ExtResource("12_tyg5k")
 
-[node name="LagTest" type="Node" parent="."]
+[node name="LagTest" type="Node" parent="." unique_id=1073574167]
 script = ExtResource("15_7tjb2")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=139625013]
 
-[node name="Labels" parent="UI" instance=ExtResource("5_rvlsk")]
+[node name="Labels" parent="UI" unique_id=1065802277 instance=ExtResource("5_rvlsk")]
 
-[node name="Inventory System UI" parent="UI" instance=ExtResource("6_asmwx")]
+[node name="Inventory System UI" parent="UI" unique_id=1670447752 instance=ExtResource("6_asmwx")]
 
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("6_52d7a")
 
-[node name="Connect Panel" type="ColorRect" parent="UI"]
+[node name="StackPopupMenu" parent="UI/Inventory System UI" index="6"]
+size = Vector2i(32, 8)
+
+[node name="Connect Panel" type="ColorRect" parent="UI" unique_id=1275888040]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -82,7 +85,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.490196, 0.388235, 0.34902, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Connect Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Connect Panel" unique_id=2117127942]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -96,11 +99,11 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HostButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+[node name="HostButton" type="Button" parent="UI/Connect Panel/VBoxContainer" unique_id=1109653486]
 layout_mode = 2
 text = "HOST"
 
-[node name="ConnectButton" type="Button" parent="UI/Connect Panel/VBoxContainer"]
+[node name="ConnectButton" type="Button" parent="UI/Connect Panel/VBoxContainer" unique_id=414314011]
 layout_mode = 2
 text = "CONNECT TO LOCALHOST"
 

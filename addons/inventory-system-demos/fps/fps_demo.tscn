@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cldhwvccvg8ma"]
+[gd_scene format=3 uid="uid://cldhwvccvg8ma"]
 
 [ext_resource type="Script" uid="uid://bcaks3srtnafk" path="res://addons/inventory-system-demos/fps/fps_demo.gd" id="1_mxj54"]
 [ext_resource type="InventoryDatabase" uid="uid://de5qy8ycey7yn" path="res://addons/inventory-system-demos/database/database.tres" id="5_3pgnb"]
@@ -21,53 +21,56 @@ script = ExtResource("8_qudo1")
 is_only_one_category_for_slots = true
 one_category_for_slots = "tools"
 
-[node name="Demo" type="Node"]
+[node name="Demo" type="Node" unique_id=109045411]
 script = ExtResource("1_mxj54")
 database = ExtResource("5_3pgnb")
 
-[node name="ModdingDemo" type="Node" parent="."]
+[node name="ModdingDemo" type="Node" parent="." unique_id=660923261]
 script = ExtResource("13_ypmc3")
 database = ExtResource("5_3pgnb")
 modding_file_path = "res://addons/inventory-system-demos/fps/modding_test.inv"
 
-[node name="Player" parent="." instance=ExtResource("14_kqlku")]
+[node name="Player" parent="." unique_id=1873441211 instance=ExtResource("14_kqlku")]
 
-[node name="Setup Keys" type="Node" parent="."]
+[node name="Setup Keys" type="Node" parent="." unique_id=2038816418]
 script = ExtResource("10_1ncja")
 
-[node name="Level" parent="." instance=ExtResource("16_46jkf")]
+[node name="Level" parent="." unique_id=132144020 instance=ExtResource("16_46jkf")]
 
-[node name="Box Inventory" parent="Level" instance=ExtResource("9_ia5mg")]
+[node name="Box Inventory" parent="Level" unique_id=1106340862 instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -4)
 
-[node name="Box Inventory2" parent="Level" instance=ExtResource("9_ia5mg")]
+[node name="Box Inventory2" parent="Level" unique_id=1947741071 instance=ExtResource("9_ia5mg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.65824, 0.5, -4)
 constraints = Array[GridInventoryConstraint]([SubResource("GridInventoryConstraint_i88gv")])
 
-[node name="Workbench" parent="Level" instance=ExtResource("11_fkc5i")]
+[node name="Workbench" parent="Level" unique_id=940668156 instance=ExtResource("11_fkc5i")]
 transform = Transform3D(0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, -3.75, 0, -4)
 
-[node name="Campfire" parent="Level" instance=ExtResource("16_47qja")]
+[node name="Campfire" parent="Level" unique_id=2083479070 instance=ExtResource("16_47qja")]
 transform = Transform3D(0.999612, 0, -0.0278519, 0, 1, 0, 0.0278519, 0, 0.999612, -1.97455, 0, -3.89435)
 
-[node name="Loot Box Inventory" parent="Level" instance=ExtResource("11_bjrgh")]
+[node name="Loot Box Inventory" parent="Level" unique_id=628563503 instance=ExtResource("11_bjrgh")]
 transform = Transform3D(0.0329458, 0, -0.999457, 0, 1, 0, 0.999457, 0, 0.0329458, 4.1378, 0.539644, -0.21014)
 
-[node name="Sign3" parent="Level" instance=ExtResource("12_bjrgh")]
+[node name="Sign3" parent="Level" unique_id=361420341 instance=ExtResource("12_bjrgh")]
 transform = Transform3D(0.298075, 0, -0.954543, 0, 1, 0, 0.954543, 0, 0.298075, 4.1052, 0, -1.18854)
 
 [node name="Label3D" parent="Level/Sign3" index="0"]
 text = "Random Loot
 on Open"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1503648226]
 
-[node name="Labels" parent="UI" instance=ExtResource("6_5epcx")]
+[node name="Labels" parent="UI" unique_id=596893576 instance=ExtResource("6_5epcx")]
 
-[node name="Inventory System UI" parent="UI" instance=ExtResource("6_gphqh")]
+[node name="Inventory System UI" parent="UI" unique_id=791706295 instance=ExtResource("6_gphqh")]
 
 [node name="InteractorUI" parent="UI/Inventory System UI" index="0"]
 input_icons = ExtResource("8_6rygg")
+
+[node name="StackPopupMenu" parent="UI/Inventory System UI" index="6"]
+size = Vector2i(32, 8)
 
 [editable path="Level/Sign3"]
 [editable path="Level/Sign3/signpostSingle"]
