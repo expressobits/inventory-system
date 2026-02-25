@@ -31,7 +31,6 @@ func _on_crafting_added(crafting_index : int):
 	craftings_data.append(crafting.serialize())
 
 
-
 func _on_crafting_removed(crafting_index : int):
 	if not multiplayer.is_server():
 		return
@@ -58,11 +57,13 @@ func crafting_added_rpc(recipe_index : int):
 	var recipe = craft_station.database.recipes[recipe_index]
 	craft_station.add_crafting(recipe_index, recipe)
 
+
 @rpc
 func crafting_removed_rpc(crafting_index : int):
 	if multiplayer.is_server():
 		return
 	craft_station.remove_crafting(crafting_index)
+
 
 @rpc
 @warning_ignore("shadowed_variable")
@@ -73,9 +74,11 @@ func _update_craftings_rpc(craftings_data : Array):
 		crafting.deserialize(data)
 		craft_station.craftings.append(crafting)
 
+
 @rpc
 func input_inventory_added_rpc(inventory_path : NodePath):
 	craft_station.add_input_inventory(craft_station.get_node(inventory_path))
+
 
 @rpc
 func input_inventory_removed_rpc(inventory_path : NodePath):

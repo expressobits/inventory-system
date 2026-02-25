@@ -32,35 +32,35 @@ enum InputType {INVALID, KEYBOARD, MOUSE, GP_BTN, GP_MOTION}
 	"PS5 Controller": "ps",
 	"PS4 Controller": "ps",
 	"Switch": "switch",
-} 
+}
 
 @export var labels: Dictionary = {
 	"mouse": [
 		"LMB", "RMB", "MMB", "MW Up", "MW Down", "MW Left", "MW Right", "MB1", "MB2"
 	],
-	
+
 	"xbox": [
 		"A", "B", "X", "Y", "Back", "Home", "Start", "L", "R", "LB", "RB",
 		"DPad Up", "DPad Down", "DPad Left", "DPad Right", "Share"
 	],
-	
+
 	"ps": [
 		"Cross", "Circle", "Square", "Triangle", "Select", "PS", "Start",
 		"L3", "R3", "L1", "R1", "DPad Up", "DPad Down", "DPad Left",
 		"DPad Right", "Microphone"
 	],
-	
+
 	"switch": [
 		"B", "A", "Y", "X", "Minus", "", "Plus", "", "", "", "",
 		"DPad Up", "DPad Down", "DPad Left", "DPad Right", "Capture"
 	],
-	
+
 	"other": [
 		"A", "B", "X", "Y", "Back", "Home", "Start", "L", "R", "LB", "RB",
 		"DPad Up", "DPad Down", "DPad Left", "DPad Right", "Share",
 		"Paddle 1", "Paddle 2", "Paddle 3", "Paddle 4", "Touch"
 	],
-	
+
 	"motion": [
 		{"-": "LStick Left", "+": "LStick Right"},
 		{"-": "LStick Up", "+": "LStick Down"},
@@ -76,18 +76,18 @@ func get_event_id(event: InputEvent) -> int:
 	if event is InputEventKey:
 		if event.physical_keycode == 0:
 			return -1
-		
+
 		return event.physical_keycode | event.get_modifiers_mask()
-	
+
 	if event is InputEventMouseButton:
 		return event.button_index | event.get_modifiers_mask()
-	
+
 	if event is InputEventJoypadButton:
 		return event.button_index
-	
+
 	if event is InputEventJoypadMotion:
 		return event.axis
-	
+
 	return -1
 
 
@@ -95,14 +95,14 @@ func set_event_id(event: InputEvent, id: int) -> void:
 	if event is InputEventKey:
 		event.physical_keycode = id & ~(KEY_MASK_SHIFT | KEY_MASK_CTRL | KEY_MASK_ALT)
 		_set_event_modifiers(event, id)
-	
+
 	if event is InputEventMouseButton:
 		event.button_index = id & ~(KEY_MASK_SHIFT | KEY_MASK_CTRL | KEY_MASK_ALT)
 		_set_event_modifiers(event, id)
-	
+
 	if event is InputEventJoypadButton:
 		event.button_index = id
-	
+
 	if event is InputEventJoypadMotion:
 		event.axis = id
 
@@ -110,16 +110,16 @@ func set_event_id(event: InputEvent, id: int) -> void:
 func get_event_type(event: InputEvent) -> InputType:
 	if event is InputEventKey:
 		return InputType.KEYBOARD
-	
+
 	if event is InputEventMouseButton:
 		return InputType.MOUSE
-	
+
 	if event is InputEventJoypadButton:
 		return InputType.GP_BTN
-	
+
 	if event is InputEventJoypadMotion:
 		return InputType.GP_MOTION
-	
+
 	return InputType.INVALID
 
 
@@ -141,16 +141,16 @@ func input_already_exists(event: InputEvent, self_action: String) -> Array:
 	for action in InputMap.get_actions():
 		if action.begins_with("ui_"):
 			continue
-		
+
 		if action == self_action:
 			continue
-		
+
 		if InputMap.action_has_event(action, event):
 			return [true, action]
-	
+
 	return [false, ""]
 
- 
+
 func _set_event_modifiers(event: InputEventWithModifiers, modifier_mask: int) -> void:
 	event.shift_pressed = bool(modifier_mask & KEY_MASK_SHIFT)
 	event.ctrl_pressed = bool(modifier_mask & KEY_MASK_CTRL)
@@ -158,23 +158,22 @@ func _set_event_modifiers(event: InputEventWithModifiers, modifier_mask: int) ->
 
 
 ### Events as Text
-
 func get_event_as_text(event: InputEvent) -> String:
 	if get_event_id(event) == -1:
 		return "INVALID"
-	
+
 	if event is InputEventKey:
 		return OS.get_keycode_string(event.get_physical_keycode_with_modifiers())
-	
+
 	if event is InputEventMouseButton:
 		return _get_mouse_event_as_text(event)
-	
+
 	if event is InputEventJoypadButton:
 		return _get_gp_btn_event_as_text(event)
-	
+
 	if event is InputEventJoypadMotion:
 		return _get_gp_motion_event_as_text(event)
-	
+
 	return ""
 
 
@@ -182,14 +181,14 @@ func _get_modifiers_as_string(event: InputEventWithModifiers) -> String:
 	var modifiers: PackedStringArray
 	if event.shift_pressed:
 		modifiers.append("Shift")
-	
+
 	if event.ctrl_pressed:
 		modifiers.append("Ctrl")
-	
+
 	if event.alt_pressed:
 		modifiers.append("Alt")
-	
-	var modifiers_string: String = "+".join(modifiers) 
+
+	var modifiers_string: String = "+".join(modifiers)
 	return modifiers_string
 
 
@@ -223,50 +222,49 @@ func _get_gp_motion_event_as_text(event: InputEventJoypadMotion) -> String:
 func get_event_as_icon(event: InputEvent, icon_db: InputIcons) -> Texture2D:
 	if event is InputEventKey:
 		return _get_keyboard_event_as_icon(event, icon_db)
-		
+
 	if event is InputEventMouseButton:
 		return _get_mouse_event_as_icon(event, icon_db)
-	
+
 	if event is InputEventJoypadButton:
 		return _get_gp_btn_event_as_icon(event, icon_db)
-	
+
 	if event is InputEventJoypadMotion:
 		return _get_gp_motion_event_as_icon(event, icon_db)
-	
+
 	return null
 
 
 func _get_keyboard_event_as_icon(event: InputEventKey, icon_db: InputIcons) -> Texture2D:
 	var keycode: int = event.physical_keycode
 	var icon: Texture2D = icon_db.get_keyboard_button_texture(keycode)
-	
+
 	return icon
 
 
 func _get_mouse_event_as_icon(event: InputEventMouse, icon_db: InputIcons) -> Texture2D:
 	var button_index: int = event.button_index
 	var icon: Texture2D = icon_db.get_mouse_button_texture(button_index)
-	
+
 	return icon
 
 
 func _get_gp_btn_event_as_icon(event: InputEventJoypadButton, icon_db: InputIcons) -> Texture2D:
 	var device_name: String = Input.get_joy_name(event.device)
 	device_name = _get_joy_name_abbr(device_name)
-	
+
 	var button_index: int = event.button_index
 	var icon: Texture2D = icon_db.get_gp_button_texture(device_name, button_index)
-	
+
 	return icon
 
 
 func _get_gp_motion_event_as_icon(event: InputEventJoypadMotion, icon_db: InputIcons) -> Texture2D:
 	var device_name: String = Input.get_joy_name(event.device)
 	device_name = _get_joy_name_abbr(device_name)
-	
+
 	var axis: int = event.axis
 	var axis_dir: String = "-" if event.axis_value < 1 else "+"
 	var icon: Texture2D = icon_db.get_gp_motion_texture(device_name, axis, axis_dir)
-	
-	return icon
 
+	return icon

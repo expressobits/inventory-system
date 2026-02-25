@@ -5,6 +5,7 @@ class_name CategoryGridInventoryConstraint
 @export var is_only_one_category_for_slots: bool
 @export var one_category_for_slots: String
 
+
 func _can_add_on_position(inventory: Node, position: Vector2i, item_id: String, _amount: int, _properties: Dictionary, _is_rotated: bool):
 	var def: ItemDefinition = inventory.database.get_item(item_id)
 	if def == null:
@@ -33,6 +34,7 @@ func contains_category(def: ItemDefinition, category: String):
 		return false
 	else:
 		return true
+
 
 func get_category(position: Vector2i) -> String:
 	if is_only_one_category_for_slots:

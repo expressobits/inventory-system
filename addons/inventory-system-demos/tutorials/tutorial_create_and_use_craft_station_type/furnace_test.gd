@@ -16,6 +16,7 @@ extends Node
 
 var recipe_buttons = []
 
+
 func _ready():
 	# Original setup from Tutorial 2
 	_setup_initial_materials()
@@ -26,10 +27,12 @@ func _ready():
 	_connect_ui_signals()
 	_update_ui()
 
+
 func _setup_initial_materials():
 	# Add iron ore and coal (from Tutorial 2)
 	input_inventory.add("iron_ore", 10)
 	input_inventory.add("coal", 5)
+
 
 func _setup_station():
 	# Connect station signals
@@ -41,6 +44,7 @@ func _setup_station():
 	print("Station Type: ", craft_station.type.name if craft_station.type else "None")
 	print("Available recipes: ", craft_station.valid_recipes.size())
 
+
 func _setup_ui():
 	# Configure progress bar
 	progress_bar.value = 0
@@ -48,6 +52,7 @@ func _setup_ui():
 
 	# Create recipe buttons based on valid furnace recipes
 	_create_recipe_buttons()
+
 
 func _connect_ui_signals():
 	# Connect button signals
@@ -57,6 +62,7 @@ func _connect_ui_signals():
 	# Connect inventory signals for UI updates
 	input_inventory.contents_changed.connect(_update_ui)
 	output_inventory.contents_changed.connect(_update_ui)
+
 
 func _create_recipe_buttons():
 	# Clear existing buttons
@@ -77,11 +83,13 @@ func _create_recipe_buttons():
 		recipes_list.add_child(button)
 		recipe_buttons.append(button)
 
+
 func _add_more_materials():
 	# Add more smelting materials
 	input_inventory.add("iron_ore", 5)
 	input_inventory.add("coal", 3)
 	print("Added more iron ore and coal")
+
 
 func _smelt_all_possible():
 	# Try to start smelting if possible
@@ -89,10 +97,12 @@ func _smelt_all_possible():
 		print("Starting furnace smelting...")
 		craft_station.craft(0)
 
+
 func _craft_recipe(recipe_list_index: int):
 	if recipe_list_index < craft_station.valid_recipes.size():
 		print("Starting specific recipe: ", recipe_list_index)
 		craft_station.craft(recipe_list_index)
+
 
 func _update_ui():
 	# Update inventory status
@@ -119,6 +129,7 @@ func _update_ui():
 	# Update progress
 	_update_progress()
 
+
 func _count_inventory_items(inventory: Inventory) -> int:
 	var count = 0
 	for stack in inventory.stacks:
@@ -126,12 +137,14 @@ func _count_inventory_items(inventory: Inventory) -> int:
 			count += stack.amount
 	return count
 
+
 func _has_craftable_recipes() -> bool:
 	for recipe_index in craft_station.valid_recipes:
 		var recipe = craft_station.database.recipes[recipe_index]
 		if craft_station.can_craft(recipe):
 			return true
 	return false
+
 
 func _update_progress():
 	if craft_station.craftings.size() > 0:
@@ -151,10 +164,12 @@ func _update_progress():
 		progress_bar.visible = false
 		progress_label.text = "Furnace ready"
 
+
 # Enhanced signal handlers
 func _on_crafting_started(crafting_index: int):
 	print("Smelting started: ", crafting_index)
 	_update_ui()
+
 
 func _on_craft_completed(_recipe_index: int):
 	print("Smelting completed!")
@@ -167,10 +182,12 @@ func _on_craft_completed(_recipe_index: int):
 
 	_update_ui()
 
+
 # Continue updating progress during smelting
 func _process(_delta):
 	if craft_station.craftings.size() > 0:
 		_update_progress()
+
 
 # Keep the space key functionality from Tutorial 2
 func _input(event):

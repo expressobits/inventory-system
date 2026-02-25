@@ -124,6 +124,7 @@ func inventory_inputs():
 		if not is_any_station_or_inventory_opened():
 			open_main_craft_station()
 
+
 func pick_to_inventory(node : Node):
 	if main_inventory == null:
 		return
@@ -144,6 +145,7 @@ func pick_to_inventory(node : Node):
 		return
 
 	printerr("pick_to_inventory return false");
+
 
 func transfer(inventory: GridInventory, origin_pos: Vector2i, destination: GridInventory, amount: int):
 	var stack_index = inventory.get_stack_index_at(origin_pos)
@@ -184,12 +186,10 @@ func drop_all_items():
 	main_inventory.drop_all_stacks()
 	equipment_inventory.drop_all_stacks()
 
-#endregion
 
 #region Crafter
 func craft(craft_station : CraftStation, recipe_index : int):
 	craft_station.craft(recipe_index)
-
 #endregion
 
 #region Hotbar
@@ -226,6 +226,7 @@ func hotbar_next_item():
 func is_open_inventory(inventory : Inventory):
 	return opened_inventories.find(inventory) != -1
 
+
 func open_inventory(inventory : Inventory):
 	if is_open_inventory(inventory):
 		return
@@ -238,6 +239,7 @@ func add_open_inventory(inventory : Inventory):
 	if not is_open_main_inventory():
 		#inventory.request_drop_obj.connect(_on_request_drop_obj)
 		open_main_inventory()
+
 
 func open_main_inventory():
 	open_inventory(main_inventory)
@@ -264,6 +266,7 @@ func close_inventories():
 
 func is_open_any_inventory():
 	return !opened_inventories.is_empty()
+
 
 func is_open_main_inventory():
 	return is_open_inventory(main_inventory)
@@ -306,6 +309,7 @@ func open_main_craft_station():
 func close_craft_stations():
 	for index in range(opened_stations.size() - 1, -1, -1):
 		close_station(opened_stations[index])
+
 
 func is_open_any_station():
 	return !opened_stations.is_empty()

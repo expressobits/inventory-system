@@ -4,6 +4,7 @@ extends Node
 @onready var input_inventory = $InputInventory
 @onready var output_inventory = $OutputInventory
 
+
 func _ready():
 	# Add test items
 	input_inventory.add("wood", 30)
@@ -26,6 +27,7 @@ func _ready():
 		var can_craft = craft_station.can_craft(recipe)
 		print("  Can craft: ", can_craft)
 
+
 func _input(event):
 	if event.is_action_pressed("ui_accept"):
 		if craft_station.valid_recipes.size() > 0:
@@ -33,6 +35,7 @@ func _input(event):
 			craft_station.craft(1)
 		else:
 			print("No recipes available!")
+
 
 func _on_craft_completed(_recipe_index: int):
 	print("Crafting completed!")

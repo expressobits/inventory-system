@@ -19,6 +19,7 @@ extends Node
 ##
 ## Note: Slot categories are not synced
 
+
 func _ready():
 	if Engine.is_editor_hint():
 		return
@@ -34,7 +35,6 @@ func setup():
 		inventory.stack_added.connect(_on_stack_added)
 		inventory.updated_stack.connect(_on_updated_stack)
 		inventory.stack_removed.connect(_on_stack_removed)
-
 
 
 func _on_contents_changed():
@@ -97,6 +97,7 @@ func _updated_slot_rpc(stack_index : int, slot_data : Array):
 	var stack : ItemStack = inventory.stacks[stack_index]
 	stack.deserialize(slot_data)
 	inventory.updated_stack.emit(stack_index)
+
 
 @rpc
 func _stack_removed_rpc(stack_index : int):

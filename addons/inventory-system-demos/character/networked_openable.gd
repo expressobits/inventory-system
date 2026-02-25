@@ -16,6 +16,7 @@ func _on_connected(id):
 	if is_open:
 		_opened_rpc.rpc_id(id)
 
+
 func _on_opened(character : Node):
 	if not multiplayer.is_server():
 		return

@@ -7,7 +7,7 @@ extends Control
 var station : CraftStation
 
 ## Crafting information (Time and recipe)
-var crafting : Crafting 
+var crafting : Crafting
 
 @onready var _icon : TextureRect = %Icon
 @onready var _progress_bar : ProgressBar = %ProgressBar

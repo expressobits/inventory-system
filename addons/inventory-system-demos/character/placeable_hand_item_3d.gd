@@ -13,6 +13,7 @@ var interactor : Interactor
 
 var preview : Node3D
 
+
 func _ready():
 	preview = self.duplicate(0)
 	preview.rotation = Vector3.ZERO

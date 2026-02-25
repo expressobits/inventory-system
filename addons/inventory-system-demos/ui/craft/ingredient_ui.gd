@@ -7,6 +7,7 @@ extends Control
 @onready var amount : Label = get_node("Amount")
 var database : InventoryDatabase
 
+
 ## Setup ingredient
 func setup(_database : InventoryDatabase, item_stack : ItemStack):
 	self.database = _database

@@ -27,6 +27,7 @@ func _process(_delta: float) -> void:
 	if def == null:
 		return
 
+
 func update_info_with_stack(_database: InventoryDatabase, _stack: ItemStack, _inventory: Inventory, slot_indexes: PackedInt32Array):
 	self.database = _database
 	self.stack = _stack
@@ -39,21 +40,21 @@ func update_info_with_stack(_database: InventoryDatabase, _stack: ItemStack, _in
 		if slot_indexes.size() != i + 1:
 			slot_text += " "
 	slot_index_label.text = slot_text
-	
+
 	if stack == null:
 		icon.visible = false
 		return
-		
+
 	var def = database.get_item(stack.item_id)
 	if def == null:
 		icon.visible = false
 		size = default_size
 		custom_minimum_size = default_size
 		return
-		
+
 	size = Vector2(def.size.x * default_size.x, def.size.y * default_size.y)
 	custom_minimum_size = Vector2(def.size.x * default_size.x, def.size.y * default_size.y)
-		
+
 	icon.visible = true
 	icon.texture = def.icon
 	icon.size = Vector2(def.size.x * default_size.x, def.size.y * default_size.y)

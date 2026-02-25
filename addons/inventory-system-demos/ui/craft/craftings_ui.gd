@@ -21,14 +21,14 @@ func set_craft_station(craft_station : CraftStation):
 		craft_station.crafting_added.connect(_on_add_crafting_at)
 		craft_station.crafting_removed.connect(_on_remove_crafting_at)
 	_craft_station = craft_station
-	
+
 	for i in craft_station.craftings.size():
 		_on_add_crafting_at(i)
 
 
 func _clear():
 	for crafting in _craftings:
-		crafting.queue_free()	
+		crafting.queue_free()
 	_craftings.clear()
 
 

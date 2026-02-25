@@ -7,6 +7,7 @@ var connected_peer_ids : Array
 var players : Array
 var peer : ENetMultiplayerPeer
 
+
 func _ready():
 	multiplayer.peer_connected.connect(_player_connected)
 	multiplayer.peer_disconnected.connect(_player_disconnected)

@@ -25,8 +25,8 @@ func cleanup_suite() -> void:
 # Called before a unit test is run
 func init_test() -> void:
 	pass
-	
-	
+
+
 # Called after a unit test is run
 func cleanup_test() -> void:
 	pass
